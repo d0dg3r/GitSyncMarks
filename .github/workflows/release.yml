@@ -1,0 +1,58 @@
+name: Build & Release Extension
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
+
+      - name: Build extension ZIP
+        run: |
+          mkdir -p build
+          zip -r "build/BookHub-${{ steps.version.outputs.VERSION }}.zip" \
+            manifest.json \
+            background.js \
+            popup.html \
+            popup.js \
+            popup.css \
+            options.html \
+            options.js \
+            options.css \
+            lib/ \
+            icons/ \
+            README.md
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "BookHub ${{ steps.version.outputs.VERSION }}"
+          body: |
+            ## BookHub ${{ steps.version.outputs.VERSION }}
+
+            ### Installation
+
+            1. `BookHub-${{ steps.version.outputs.VERSION }}.zip` herunterladen
+            2. ZIP entpacken
+            3. In Chromium/Chrome `chrome://extensions/` öffnen
+            4. **Entwicklermodus** aktivieren (Toggle oben rechts)
+            5. **Entpackte Erweiterung laden** klicken
+            6. Den entpackten Ordner auswählen
+
+            Weitere Infos: [README](https://github.com/${{ github.repository }}/blob/main/README.md)
+          files: build/BookHub-${{ steps.version.outputs.VERSION }}.zip
+          draft: false
+          prerelease: false

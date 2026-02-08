@@ -14,14 +14,22 @@ Chromium-Extension, die deine Bookmarks bidirektional mit einem GitHub-Repositor
 
 ## Installation
 
-### 1. Repository klonen
+### Option A: Fertiges Release herunterladen (empfohlen)
+
+1. Gehe zur [Releases-Seite](https://github.com/d0dg3r/BookHub/releases)
+2. Lade die neueste `BookHub-vX.X.X.zip` herunter
+3. Entpacke das ZIP in einen Ordner
+4. Öffne Chromium/Chrome und navigiere zu `chrome://extensions/`
+5. Aktiviere den **Entwicklermodus** (Toggle oben rechts)
+6. Klicke auf **Entpackte Erweiterung laden**
+7. Wähle den entpackten Ordner aus
+
+### Option B: Repository klonen (für Entwickler)
 
 ```bash
 git clone git@github.com:d0dg3r/BookHub.git
 cd BookHub
 ```
-
-### 2. Extension in Chromium laden
 
 1. Öffne Chromium/Chrome und navigiere zu `chrome://extensions/`
 2. Aktiviere den **Entwicklermodus** (Toggle oben rechts)
