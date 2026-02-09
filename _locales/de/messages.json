@@ -234,5 +234,31 @@
   },
   "serializer_untitled": {
     "message": "(Ohne Titel)"
+  },
+
+  "popup_reportIssue": {
+    "message": "Problem melden"
+  },
+
+  "options_about": {
+    "message": "Über"
+  },
+  "options_version": {
+    "message": "Version"
+  },
+  "options_githubRepo": {
+    "message": "GitHub-Repository"
+  },
+  "options_documentation": {
+    "message": "Dokumentation"
+  },
+  "options_reportBug": {
+    "message": "Fehler melden / Feature vorschlagen"
+  },
+  "options_privacyPolicy": {
+    "message": "Datenschutzerklärung"
+  },
+  "options_license": {
+    "message": "Lizenz (MIT)"
   }
 }

@@ -277,3 +277,32 @@ input[type="checkbox"]:checked + .toggle-slider::after {
   align-items: center;
   margin-top: 8px;
 }
+
+/* About Section */
+
+.card-about {
+  margin-top: 20px;
+}
+
+.about-version {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-bottom: 16px;
+}
+
+.about-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.about-links a {
+  font-size: 14px;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.about-links a:hover {
+  text-decoration: underline;
+}

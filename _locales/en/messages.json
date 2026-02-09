@@ -234,5 +234,31 @@
   },
   "serializer_untitled": {
     "message": "(Untitled)"
+  },
+
+  "popup_reportIssue": {
+    "message": "Report Issue"
+  },
+
+  "options_about": {
+    "message": "About"
+  },
+  "options_version": {
+    "message": "Version"
+  },
+  "options_githubRepo": {
+    "message": "GitHub Repository"
+  },
+  "options_documentation": {
+    "message": "Documentation"
+  },
+  "options_reportBug": {
+    "message": "Report a Bug / Feature Request"
+  },
+  "options_privacyPolicy": {
+    "message": "Privacy Policy"
+  },
+  "options_license": {
+    "message": "License (MIT)"
   }
 }

@@ -38,6 +38,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   populateLanguageDropdown();
   applyI18n();
   await loadSettings();
+
+  // Show version from manifest
+  const versionEl = document.getElementById('app-version');
+  if (versionEl) {
+    versionEl.textContent = chrome.runtime.getManifest().version;
+  }
 });
 
 /**

@@ -259,6 +259,10 @@ body {
   padding-top: 10px;
   border-top: 1px solid var(--color-border);
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
 }
 
 .popup-footer a {
@@ -269,4 +273,9 @@ body {
 
 .popup-footer a:hover {
   text-decoration: underline;
+}
+
+.footer-sep {
+  font-size: 12px;
+  color: var(--color-text-secondary);
 }
