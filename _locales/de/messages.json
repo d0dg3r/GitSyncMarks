@@ -260,5 +260,51 @@
   },
   "options_license": {
     "message": "Lizenz (MIT)"
+  },
+
+  "options_tabSettings": {
+    "message": "Einstellungen"
+  },
+  "options_tabImportExport": {
+    "message": "Import / Export"
+  },
+  "options_tabAbout": {
+    "message": "Über"
+  },
+  "options_bookmarksCard": {
+    "message": "Lesezeichen"
+  },
+  "options_settingsCard": {
+    "message": "Einstellungen"
+  },
+  "options_exportBookmarks": {
+    "message": "Lesezeichen exportieren"
+  },
+  "options_importBookmarks": {
+    "message": "Lesezeichen importieren"
+  },
+  "options_exportSettings": {
+    "message": "Einstellungen exportieren"
+  },
+  "options_importSettings": {
+    "message": "Einstellungen importieren"
+  },
+  "options_importBookmarksWarning": {
+    "message": "Der Import ersetzt alle aktuellen Lesezeichen. Dies kann nicht rückgängig gemacht werden."
+  },
+  "options_importSettingsWarning": {
+    "message": "Der Import ersetzt alle aktuellen Einstellungen. Die Seite wird danach neu geladen."
+  },
+  "options_selectFile": {
+    "message": "Datei auswählen..."
+  },
+  "options_importSuccess": {
+    "message": "Import erfolgreich!"
+  },
+  "options_exportSuccess": {
+    "message": "Export erfolgreich!"
+  },
+  "options_importError": {
+    "message": "Import fehlgeschlagen: $1"
   }
 }

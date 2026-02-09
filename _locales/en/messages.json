@@ -260,5 +260,51 @@
   },
   "options_license": {
     "message": "License (MIT)"
+  },
+
+  "options_tabSettings": {
+    "message": "Settings"
+  },
+  "options_tabImportExport": {
+    "message": "Import / Export"
+  },
+  "options_tabAbout": {
+    "message": "About"
+  },
+  "options_bookmarksCard": {
+    "message": "Bookmarks"
+  },
+  "options_settingsCard": {
+    "message": "Settings"
+  },
+  "options_exportBookmarks": {
+    "message": "Export Bookmarks"
+  },
+  "options_importBookmarks": {
+    "message": "Import Bookmarks"
+  },
+  "options_exportSettings": {
+    "message": "Export Settings"
+  },
+  "options_importSettings": {
+    "message": "Import Settings"
+  },
+  "options_importBookmarksWarning": {
+    "message": "Importing will replace all your current bookmarks. This cannot be undone."
+  },
+  "options_importSettingsWarning": {
+    "message": "Importing will replace all current settings. The page will reload afterwards."
+  },
+  "options_selectFile": {
+    "message": "Select file..."
+  },
+  "options_importSuccess": {
+    "message": "Import successful!"
+  },
+  "options_exportSuccess": {
+    "message": "Export successful!"
+  },
+  "options_importError": {
+    "message": "Import failed: $1"
   }
 }

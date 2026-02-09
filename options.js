@@ -1,10 +1,12 @@
 /**
  * Options Page Logic
- * Handles loading/saving settings, token validation, and language selection.
+ * Handles tab navigation, settings, token validation, language selection,
+ * and bookmark/settings import/export.
  */
 
 import { GitHubAPI } from './lib/github-api.js';
 import { initI18n, applyI18n, getMessage, reloadI18n, getLanguage, SUPPORTED_LANGUAGES } from './lib/i18n.js';
+import { serializeToJson, deserializeFromJson } from './lib/bookmark-serializer.js';
 
 const STORAGE_KEYS = {
   GITHUB_TOKEN: 'githubToken',
@@ -17,7 +19,7 @@ const STORAGE_KEYS = {
   LANGUAGE: 'language',
 };
 
-// DOM elements
+// ---- DOM elements: Settings Tab ----
 const tokenInput = document.getElementById('token');
 const toggleTokenBtn = document.getElementById('toggle-token');
 const ownerInput = document.getElementById('owner');
@@ -32,7 +34,40 @@ const saveBtn = document.getElementById('save-btn');
 const saveResult = document.getElementById('save-result');
 const languageSelect = document.getElementById('language-select');
 
-// Load settings on page open
+// ---- DOM elements: Import/Export Tab ----
+const exportBookmarksBtn = document.getElementById('export-bookmarks-btn');
+const importBookmarksFile = document.getElementById('import-bookmarks-file');
+const importBookmarksBtn = document.getElementById('import-bookmarks-btn');
+const exportBookmarksResult = document.getElementById('export-bookmarks-result');
+const importBookmarksResult = document.getElementById('import-bookmarks-result');
+
+const exportSettingsBtn = document.getElementById('export-settings-btn');
+const importSettingsFile = document.getElementById('import-settings-file');
+const importSettingsBtn = document.getElementById('import-settings-btn');
+const exportSettingsResult = document.getElementById('export-settings-result');
+const importSettingsResult = document.getElementById('import-settings-result');
+
+// ==============================
+// Tab Navigation
+// ==============================
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    // Deactivate all tabs
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+    // Activate clicked tab
+    btn.classList.add('active');
+    const tabId = `tab-${btn.dataset.tab}`;
+    document.getElementById(tabId).classList.add('active');
+  });
+});
+
+// ==============================
+// Initialization
+// ==============================
+
 document.addEventListener('DOMContentLoaded', async () => {
   await initI18n();
   populateLanguageDropdown();
@@ -46,19 +81,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
-/**
- * Populate the language dropdown with supported languages.
- */
+// ==============================
+// Settings Tab: Language
+// ==============================
+
 function populateLanguageDropdown() {
   languageSelect.innerHTML = '';
 
-  // "Auto (Browser)" option
   const autoOption = document.createElement('option');
   autoOption.value = 'auto';
   autoOption.textContent = getMessage('options_langAuto');
   languageSelect.appendChild(autoOption);
 
-  // Each supported language
   for (const lang of SUPPORTED_LANGUAGES) {
     const option = document.createElement('option');
     option.value = lang.code;
@@ -91,29 +125,24 @@ async function loadSettings() {
   languageSelect.value = settings[STORAGE_KEYS.LANGUAGE];
 }
 
-// Language change: re-translate the page instantly
 languageSelect.addEventListener('change', async () => {
   const newLang = languageSelect.value;
   await chrome.storage.sync.set({ [STORAGE_KEYS.LANGUAGE]: newLang });
   await reloadI18n();
   populateLanguageDropdown();
-  // Re-select the chosen value (dropdown was rebuilt)
   languageSelect.value = newLang;
   applyI18n();
-  // Update the page title
-  document.title = `BookHub – ${getMessage('options_subtitle')}`;
+  document.title = `BookHub – ${getMessage('options_tabSettings')}`;
 });
 
-// Toggle token visibility
+// ==============================
+// Settings Tab: Token Validation
+// ==============================
+
 toggleTokenBtn.addEventListener('click', () => {
-  if (tokenInput.type === 'password') {
-    tokenInput.type = 'text';
-  } else {
-    tokenInput.type = 'password';
-  }
+  tokenInput.type = tokenInput.type === 'password' ? 'text' : 'password';
 });
 
-// Validate token
 validateBtn.addEventListener('click', async () => {
   const token = tokenInput.value.trim();
   const owner = ownerInput.value.trim();
@@ -130,20 +159,17 @@ validateBtn.addEventListener('click', async () => {
   try {
     const api = new GitHubAPI(token, owner, repo, branch);
 
-    // Validate token
     const tokenResult = await api.validateToken();
     if (!tokenResult.valid) {
       showValidation(getMessage('options_invalidToken'), 'error');
       return;
     }
 
-    // Check scopes
     if (!tokenResult.scopes.includes('repo')) {
       showValidation(getMessage('options_tokenValidMissingScope', [tokenResult.username]), 'error');
       return;
     }
 
-    // Check repo access if owner and repo are provided
     if (owner && repo) {
       const repoExists = await api.checkRepo();
       if (!repoExists) {
@@ -164,7 +190,10 @@ function showValidation(message, type) {
   validationResult.className = `validation-result ${type}`;
 }
 
-// Save settings
+// ==============================
+// Settings Tab: Save
+// ==============================
+
 saveBtn.addEventListener('click', async () => {
   const settings = {
     [STORAGE_KEYS.GITHUB_TOKEN]: tokenInput.value.trim(),
@@ -179,14 +208,10 @@ saveBtn.addEventListener('click', async () => {
 
   try {
     await chrome.storage.sync.set(settings);
-
-    // Notify background script that settings changed
     await chrome.runtime.sendMessage({ action: 'settingsChanged' });
 
     showSaveResult(getMessage('options_settingsSaved'), 'success');
-    setTimeout(() => {
-      saveResult.textContent = '';
-    }, 3000);
+    setTimeout(() => { saveResult.textContent = ''; }, 3000);
   } catch (err) {
     showSaveResult(getMessage('options_errorSaving', [err.message]), 'error');
   }
@@ -195,4 +220,178 @@ saveBtn.addEventListener('click', async () => {
 function showSaveResult(message, type) {
   saveResult.textContent = message;
   saveResult.className = `save-result ${type}`;
+}
+
+// ==============================
+// Import/Export: Bookmarks
+// ==============================
+
+// Enable import button only when a file is selected
+importBookmarksFile.addEventListener('change', () => {
+  importBookmarksBtn.disabled = !importBookmarksFile.files.length;
+});
+
+importSettingsFile.addEventListener('change', () => {
+  importSettingsBtn.disabled = !importSettingsFile.files.length;
+});
+
+/**
+ * Export current bookmarks as a JSON file download.
+ */
+exportBookmarksBtn.addEventListener('click', async () => {
+  try {
+    const tree = await chrome.bookmarks.getTree();
+    const deviceId = crypto.randomUUID();
+    const data = serializeToJson(tree, deviceId);
+    const json = JSON.stringify(data, null, 2);
+
+    const date = new Date().toISOString().slice(0, 10);
+    downloadFile(`bookmarks-export-${date}.json`, json, 'application/json');
+
+    showResult(exportBookmarksResult, getMessage('options_exportSuccess'), 'success');
+  } catch (err) {
+    showResult(exportBookmarksResult, getMessage('options_importError', [err.message]), 'error');
+  }
+});
+
+/**
+ * Import bookmarks from a JSON file, replacing all local bookmarks.
+ */
+importBookmarksBtn.addEventListener('click', async () => {
+  const file = importBookmarksFile.files[0];
+  if (!file) return;
+
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+    const bookmarks = deserializeFromJson(data);
+
+    // Replace all local bookmarks
+    await replaceLocalBookmarks(bookmarks);
+
+    showResult(importBookmarksResult, getMessage('options_importSuccess'), 'success');
+    importBookmarksFile.value = '';
+    importBookmarksBtn.disabled = true;
+  } catch (err) {
+    showResult(importBookmarksResult, getMessage('options_importError', [err.message]), 'error');
+  }
+});
+
+// ==============================
+// Import/Export: Settings
+// ==============================
+
+/**
+ * Export current settings as a JSON file download.
+ */
+exportSettingsBtn.addEventListener('click', async () => {
+  try {
+    const settings = await chrome.storage.sync.get(null);
+    const json = JSON.stringify(settings, null, 2);
+
+    const date = new Date().toISOString().slice(0, 10);
+    downloadFile(`bookhub-settings-${date}.json`, json, 'application/json');
+
+    showResult(exportSettingsResult, getMessage('options_exportSuccess'), 'success');
+  } catch (err) {
+    showResult(exportSettingsResult, getMessage('options_importError', [err.message]), 'error');
+  }
+});
+
+/**
+ * Import settings from a JSON file, replacing all current settings.
+ */
+importSettingsBtn.addEventListener('click', async () => {
+  const file = importSettingsFile.files[0];
+  if (!file) return;
+
+  try {
+    const text = await file.text();
+    const settings = JSON.parse(text);
+
+    // Validate it's a plain object
+    if (typeof settings !== 'object' || Array.isArray(settings)) {
+      throw new Error('Invalid settings format.');
+    }
+
+    await chrome.storage.sync.set(settings);
+    await chrome.runtime.sendMessage({ action: 'settingsChanged' });
+
+    showResult(importSettingsResult, getMessage('options_importSuccess'), 'success');
+
+    // Reload after a short delay so the user sees the success message
+    setTimeout(() => { location.reload(); }, 1000);
+  } catch (err) {
+    showResult(importSettingsResult, getMessage('options_importError', [err.message]), 'error');
+  }
+});
+
+// ==============================
+// Helpers
+// ==============================
+
+/**
+ * Trigger a file download in the browser.
+ */
+function downloadFile(filename, content, mimeType) {
+  const blob = new Blob([content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+/**
+ * Show a result message next to an import/export button.
+ */
+function showResult(el, message, type) {
+  el.textContent = message;
+  el.className = `ie-result ${type}`;
+  setTimeout(() => { el.textContent = ''; el.className = 'ie-result'; }, 4000);
+}
+
+/**
+ * Replace all local bookmarks with the given bookmark structure.
+ * Mirrors the logic in sync-engine.js replaceLocalBookmarks.
+ */
+async function replaceLocalBookmarks(remoteBookmarks) {
+  const tree = await chrome.bookmarks.getTree();
+  const rootChildren = tree[0]?.children || [];
+
+  for (let i = 0; i < rootChildren.length && i < remoteBookmarks.length; i++) {
+    const localFolder = rootChildren[i];
+    const remoteFolder = remoteBookmarks[i];
+
+    // Remove existing children in reverse order
+    if (localFolder.children) {
+      for (const child of [...localFolder.children].reverse()) {
+        try { await chrome.bookmarks.removeTree(child.id); } catch (e) { /* ignore */ }
+      }
+    }
+
+    // Recreate from imported data
+    if (remoteFolder.children) {
+      for (const child of remoteFolder.children) {
+        await createBookmarkTree(child, localFolder.id);
+      }
+    }
+  }
+}
+
+/**
+ * Recursively create a bookmark tree from serialized data.
+ */
+async function createBookmarkTree(node, parentId) {
+  if (node.type === 'bookmark') {
+    await chrome.bookmarks.create({ parentId, title: node.title, url: node.url });
+  } else if (node.type === 'folder') {
+    const folder = await chrome.bookmarks.create({ parentId, title: node.title });
+    if (node.children) {
+      for (const child of node.children) {
+        await createBookmarkTree(child, folder.id);
+      }
+    }
+  }
 }
