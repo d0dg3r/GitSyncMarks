@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "short_name": "BookHub",
+  "version": "1.5.0",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "homepage_url": "https://github.com/d0dg3r/BookHub",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "bookhub@d0dg3r",
+      "strict_min_version": "128.0"
+    }
+  },
+  "permissions": [
+    "bookmarks",
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://api.github.com/*"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
