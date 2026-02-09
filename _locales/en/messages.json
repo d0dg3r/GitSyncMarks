@@ -3,7 +3,7 @@
     "message": "BookHub"
   },
   "extDescription": {
-    "message": "Your bookmarks, safe on GitHub – always in sync, available everywhere."
+    "message": "Your bookmarks, safe on GitHub — always in sync, available everywhere. Auto-sync, import/export, and conflict detection included."
   },
 
   "popup_configureFirst": {

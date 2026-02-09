@@ -7,6 +7,7 @@
 import { GitHubAPI } from './lib/github-api.js';
 import { initI18n, applyI18n, getMessage, reloadI18n, getLanguage, SUPPORTED_LANGUAGES } from './lib/i18n.js';
 import { serializeToJson, deserializeFromJson } from './lib/bookmark-serializer.js';
+import { replaceLocalBookmarks } from './lib/sync-engine.js';
 import { encryptToken, decryptToken, migrateTokenIfNeeded } from './lib/crypto.js';
 
 const STORAGE_KEYS = {
@@ -378,46 +379,4 @@ function showResult(el, message, type) {
   setTimeout(() => { el.textContent = ''; el.className = 'ie-result'; }, 4000);
 }
 
-/**
- * Replace all local bookmarks with the given bookmark structure.
- * Mirrors the logic in sync-engine.js replaceLocalBookmarks.
- */
-async function replaceLocalBookmarks(remoteBookmarks) {
-  const tree = await chrome.bookmarks.getTree();
-  const rootChildren = tree[0]?.children || [];
-
-  for (let i = 0; i < rootChildren.length && i < remoteBookmarks.length; i++) {
-    const localFolder = rootChildren[i];
-    const remoteFolder = remoteBookmarks[i];
-
-    // Remove existing children in reverse order
-    if (localFolder.children) {
-      for (const child of [...localFolder.children].reverse()) {
-        try { await chrome.bookmarks.removeTree(child.id); } catch (e) { /* ignore */ }
-      }
-    }
-
-    // Recreate from imported data
-    if (remoteFolder.children) {
-      for (const child of remoteFolder.children) {
-        await createBookmarkTree(child, localFolder.id);
-      }
-    }
-  }
-}
-
-/**
- * Recursively create a bookmark tree from serialized data.
- */
-async function createBookmarkTree(node, parentId) {
-  if (node.type === 'bookmark') {
-    await chrome.bookmarks.create({ parentId, title: node.title, url: node.url });
-  } else if (node.type === 'folder') {
-    const folder = await chrome.bookmarks.create({ parentId, title: node.title });
-    if (node.children) {
-      for (const child of node.children) {
-        await createBookmarkTree(child, folder.id);
-      }
-    }
-  }
-}
+// replaceLocalBookmarks is imported from lib/sync-engine.js (single source of truth)
