@@ -24,6 +24,7 @@ The version is declared in `manifest.json` → `"version"`.
 | `1.1.0` | Open source (MIT license), English translation |
 | `1.2.0` | Chrome Web Store preparation, privacy policy |
 | `1.3.0` | Multilanguage support (i18n) with manual language selection |
+| `1.4.0` | Tabbed options page, import/export, GitHub project links, improved description |
 
 ## How to Create a New Release
 

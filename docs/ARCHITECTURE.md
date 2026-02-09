@@ -85,11 +85,16 @@ All text is translated via `data-i18n` attributes and `getMessage()`.
 
 ### `options.html` / `options.js` — Settings Page
 
-Full-page settings UI (opens in a tab). Sections:
+Full-page settings UI (opens in a tab) with three tabs:
 
-1. **Language** — Dropdown for manual language selection (Auto / English / Deutsch)
-2. **GitHub Connection** — Token (PAT), owner, repo, branch, file path, connection test
-3. **Synchronization** — Auto-sync toggle, sync interval
+1. **Settings Tab**
+   - **Language** — Dropdown for manual language selection (Auto / English / Deutsch)
+   - **GitHub Connection** — Token (PAT), owner, repo, branch, file path, connection test
+   - **Synchronization** — Auto-sync toggle, sync interval
+2. **Import/Export Tab**
+   - **Bookmarks** — Export current bookmarks as JSON; import bookmarks from JSON (replaces all local bookmarks)
+   - **Settings** — Export extension settings as JSON; import settings from JSON (reloads page)
+3. **About Tab** — Version info, links to GitHub repo, documentation, issues, privacy policy, and license
 
 Settings are stored in `chrome.storage.sync`. Language changes re-translate the page instantly without reload.
 

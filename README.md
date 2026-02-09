@@ -10,6 +10,8 @@ A Chromium extension that bidirectionally syncs your bookmarks with a GitHub rep
 - **Manual sync**: Push, Pull, and full Sync via popup buttons
 - **Conflict detection**: Notifies you when both local and remote bookmarks were modified
 - **Dual format**: Bookmarks are stored as JSON (for sync) and Markdown (human-readable on GitHub)
+- **Import/Export**: Export and import bookmarks or extension settings as JSON files
+- **Multilanguage**: English and German, with manual language selection (extensible)
 - **No server needed**: Everything runs directly via the GitHub REST API with your Personal Access Token
 
 ## Installation
@@ -96,6 +98,8 @@ If you modify bookmarks on two devices simultaneously, a conflict may occur:
 - **GitHub Contents API** for file operations
 - **SHA-based conflict detection**: If the SHA doesn't match on push, remote was modified
 - **Debounce**: Multiple rapid bookmark changes are bundled into a single sync (5s)
+- **Tabbed settings page**: Settings, Import/Export, and About in a clean tab layout
+- **Custom i18n system**: Runtime language switching without page reload
 
 ## Requirements
 

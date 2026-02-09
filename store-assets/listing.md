@@ -10,7 +10,7 @@ Use this file as a reference when filling out the Chrome Developer Dashboard.
 BookHub
 
 ### Summary (max 132 characters)
-Sync your browser bookmarks bidirectionally with a GitHub repository. Auto-sync, conflict detection, and Markdown export included.
+Your bookmarks, safe on GitHub — always in sync, available everywhere. Auto-sync, import/export, and conflict detection included.
 
 ### Detailed Description
 BookHub syncs your browser bookmarks with a GitHub repository — bidirectionally, automatically, and without any external server.
@@ -22,6 +22,8 @@ Features:
 • Manual Push, Pull, and full Sync via the popup
 • Conflict detection when both local and remote bookmarks were modified
 • Dual format: bookmarks stored as JSON (for sync) and Markdown (human-readable on GitHub)
+• Import/Export: back up and restore bookmarks or extension settings as JSON files
+• Multilanguage: English and German with manual language selection (more languages coming)
 • No external server — communicates directly with the GitHub API using your Personal Access Token
 
 How it works:
