@@ -76,6 +76,32 @@ No.
 
 ---
 
+## Test Instructions Tab
+
+### Username
+*(leave empty)*
+
+### Password
+*(leave empty)*
+
+### Additional Instructions
+
+This extension requires a GitHub Personal Access Token (PAT) to function. No shared test account is needed — the reviewer can create their own in under 2 minutes:
+
+1. Go to https://github.com/settings/tokens/new?scopes=repo&description=BookHub+Test
+2. Click "Generate token" and copy it
+3. Create a new empty repository on GitHub (e.g. "bookmark-test")
+4. Click the BookHub extension icon, then "Settings"
+5. Enter the token, your GitHub username as "Repository Owner", and the repo name
+6. Click "Test Connection" — it should show "Connection OK!"
+7. Click "Save Settings"
+8. Return to the popup and click "Sync Now"
+9. Verify bookmarks appear in the GitHub repository as bookmarks.json and bookmarks.md
+
+No login credentials are required. The extension only communicates with api.github.com using the reviewer's own token.
+
+---
+
 ## Distribution Tab
 
 ### Visibility
