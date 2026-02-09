@@ -3,7 +3,7 @@
     "message": "BookHub"
   },
   "extDescription": {
-    "message": "Deine Lesezeichen, sicher auf GitHub – immer synchron, überall verfügbar."
+    "message": "Deine Lesezeichen, sicher auf GitHub – immer synchron, überall verfügbar. Auto-Sync, Import/Export und Konflikterkennung inklusive."
   },
 
   "popup_configureFirst": {
