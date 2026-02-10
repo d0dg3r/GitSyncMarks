@@ -1,10 +1,10 @@
-# Chrome Web Store Listing - BookHub
+# Store Listings — BookHub
 
-Use this file as a reference when filling out the Chrome Developer Dashboard.
+Reference file for both the **Chrome Web Store** and **Firefox Add-ons (AMO)** listings.
 
 ---
 
-## Store Listing Tab
+## Chrome Web Store
 
 ### Name
 BookHub
@@ -24,7 +24,7 @@ Features:
 • Manual Push, Pull, and full Sync via the popup
 • Conflict detection when automatic merge is not possible
 • A README.md with all bookmarks is generated in the repo for easy browsing
-• Automation: add bookmarks via Git, CLI, or GitHub Actions
+• Automation: add bookmarks via Git, CLI, or GitHub Actions — no browser needed
 • Import/Export: back up and restore bookmarks or settings as JSON files
 • Multilanguage: English and German with manual language selection
 • No external server — communicates directly with the GitHub API using your Personal Access Token
@@ -35,7 +35,14 @@ How it works:
 3. Configure BookHub with your token and repository
 4. Click "Sync Now" — done!
 
-Each bookmark is stored as an individual JSON file in your repository, organized into folders that mirror your bookmark hierarchy. A README.md gives you a clean overview directly on GitHub. You can even add bookmarks by creating files in the repo — the extension picks them up automatically.
+Each bookmark is stored as an individual JSON file in your repository, organized into folders that mirror your bookmark hierarchy. A README.md gives you a clean overview directly on GitHub.
+
+Automation:
+You can add bookmarks without even opening the browser. BookHub includes a GitHub Actions workflow (add-bookmark.yml) that lets you add bookmarks via the GitHub web UI or the command line:
+
+  gh workflow run add-bookmark.yml -f url="https://example.com" -f title="Example" -f folder="toolbar"
+
+You can also create bookmark files directly in the repository — just add a JSON file with "title" and "url" to any bookmark folder. The extension detects new files automatically on the next sync and normalizes them into its canonical format.
 
 BookHub is fully open source: https://github.com/d0dg3r/BookHub
 
@@ -47,7 +54,57 @@ English
 
 ---
 
-## Privacy Tab
+## Firefox AMO
+
+### Name
+BookHub
+
+### Summary (max 250 characters)
+Sync your bookmarks with GitHub — per-file storage, three-way merge, auto-sync. Add bookmarks via Git, CLI, or GitHub Actions. Open source, no server needed.
+
+### Detailed Description
+BookHub syncs your Firefox bookmarks with a GitHub repository — bidirectionally, automatically, and without any external server.
+
+Features:
+• Per-file storage: each bookmark is an individual JSON file — human-readable and diff-friendly
+• Three-way merge: automatic conflict-free sync when changes happen on both sides
+• Full Firefox support including the Bookmarks Menu folder
+• Auto-sync on every bookmark change (with 5-second debounce)
+• Periodic sync every 15 minutes to detect remote changes (configurable)
+• Manual Push, Pull, and full Sync via the popup
+• Conflict detection when automatic merge is not possible
+• A README.md with all bookmarks is generated in the repo for easy browsing
+• Automation: add bookmarks via Git, CLI, or GitHub Actions — no browser needed
+• Import/Export: back up and restore bookmarks or settings as JSON files
+• Multilanguage: English and German with manual language selection
+• No external server — communicates directly with the GitHub API using your Personal Access Token
+
+How it works:
+1. Create a GitHub repository for your bookmarks
+2. Generate a Personal Access Token with the "repo" scope
+3. Configure BookHub with your token and repository
+4. Click "Sync Now" — done!
+
+Each bookmark is stored as an individual JSON file in your repository, organized into folders that mirror your Firefox bookmark hierarchy (Bookmarks Toolbar, Bookmarks Menu, Other Bookmarks, Mobile Bookmarks). A README.md gives you a clean overview directly on GitHub.
+
+Automation:
+You can add bookmarks without even opening Firefox. BookHub includes a GitHub Actions workflow (add-bookmark.yml) that lets you add bookmarks via the GitHub web UI or the command line:
+
+  gh workflow run add-bookmark.yml -f url="https://example.com" -f title="Example" -f folder="toolbar"
+
+You can also create bookmark files directly in the repository — just add a JSON file with "title" and "url" to any bookmark folder. The extension detects new files automatically on the next sync.
+
+BookHub is fully open source: https://github.com/d0dg3r/BookHub
+
+### Categories
+Bookmarks
+
+### Tags
+bookmarks, sync, github, backup, automation
+
+---
+
+## Privacy (both stores)
 
 ### Single Purpose
 Sync browser bookmarks with a GitHub repository.
@@ -81,7 +138,7 @@ No.
 
 ---
 
-## Test Instructions Tab
+## Test Instructions (both stores)
 
 ### Username
 *(leave empty)*
@@ -95,7 +152,7 @@ No shared account needed. Create a GitHub PAT at github.com/settings/tokens (rep
 
 ---
 
-## Distribution Tab
+## Distribution
 
 ### Visibility
 Public
@@ -107,7 +164,14 @@ All regions
 
 ## Store Assets Checklist
 
-- [ ] `store-assets/icon128-store.png` — 128x128px store icon (upload in Store Listing)
+### Chrome Web Store
+- [ ] `store-assets/icon128-store.png` — 128x128px store icon
 - [ ] `store-assets/screenshot-1.png` — 1280x800px popup screenshot
 - [ ] `store-assets/screenshot-2.png` — 1280x800px settings screenshot
 - [ ] `store-assets/promo-small.png` — 440x280px small promo tile
+
+### Firefox AMO
+- [x] `store-assets/screenshot-firefox-settings.png` — "Settings: Configure your GitHub connection, Personal Access Token, repository, branch, and sync interval."
+- [x] `store-assets/screenshot-firefox-import-export.png` — "Import/Export: Back up and restore your bookmarks or extension settings as JSON files."
+- [x] `store-assets/screenshot-firefox-automation.png` — "Automation: Add bookmarks via Git, CLI, or GitHub Actions. Includes file format reference and CLI examples."
+- [x] `store-assets/screenshot-firefox-about.png` — "About: Version info, links to repository, documentation, bug tracker, and privacy policy."
