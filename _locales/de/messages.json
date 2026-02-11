@@ -75,6 +75,9 @@
   "popup_lastDataChange": {
     "message": "Letzte Datenänderung: $1"
   },
+  "popup_lastCommit": {
+    "message": "Letzter Commit:"
+  },
 
   "options_subtitle": {
     "message": "Einstellungen"

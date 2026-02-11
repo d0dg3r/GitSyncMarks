@@ -11,8 +11,8 @@ const configuredEl = document.getElementById('configured');
 const statusBox = document.getElementById('status-box');
 const statusIcon = document.getElementById('status-icon');
 const statusMessage = document.getElementById('status-message');
-const lastSyncEl = document.getElementById('last-sync');
-const lastChangeEl = document.getElementById('last-change');
+const lastDataChangeEl = document.getElementById('last-data-change');
+const lastCommitWrap = document.getElementById('last-commit-wrap');
 const conflictBox = document.getElementById('conflict-box');
 const autoSyncStatus = document.getElementById('auto-sync-status');
 const autoSyncDot = document.getElementById('auto-sync-dot');
@@ -72,24 +72,32 @@ function updateUI(status) {
     conflictBox.style.display = 'none';
   }
 
-  // Last sync time
-  if (status.lastSyncTime) {
-    const syncDate = new Date(status.lastSyncTime);
-    lastSyncEl.textContent = getMessage('popup_lastSync', [formatRelativeTime(syncDate)]);
-    lastSyncEl.style.display = '';
+  // Last data change (timestamp)
+  const dataChangeTime = status.lastSyncWithChangesTime || status.lastSyncTime;
+  if (dataChangeTime) {
+    lastDataChangeEl.textContent = getMessage('popup_lastDataChange', [formatRelativeTime(new Date(dataChangeTime))]);
+    lastDataChangeEl.style.display = '';
   } else {
-    lastSyncEl.textContent = '';
-    lastSyncEl.style.display = 'none';
+    lastDataChangeEl.style.display = 'none';
   }
 
-  // Last data change (only when different from last sync)
-  if (status.lastSyncWithChangesTime && status.lastSyncTime &&
-      status.lastSyncWithChangesTime !== status.lastSyncTime) {
-    const changeDate = new Date(status.lastSyncWithChangesTime);
-    lastChangeEl.textContent = getMessage('popup_lastDataChange', [formatRelativeTime(changeDate)]);
-    lastChangeEl.style.display = '';
+  // Last commit (hash as link)
+  if (status.lastCommitSha && status.repoOwner && status.repoName) {
+    const shortSha = status.lastCommitSha.substring(0, 7);
+    const url = `https://github.com/${status.repoOwner}/${status.repoName}/commit/${status.lastCommitSha}`;
+    lastCommitWrap.innerHTML = '';
+    lastCommitWrap.appendChild(document.createTextNode(getMessage('popup_lastCommit') + ' '));
+    const a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.className = 'commit-link';
+    a.textContent = shortSha;
+    lastCommitWrap.appendChild(a);
+    lastCommitWrap.style.display = '';
   } else {
-    lastChangeEl.style.display = 'none';
+    lastCommitWrap.innerHTML = '';
+    lastCommitWrap.style.display = 'none';
   }
 
   // Auto-sync status
