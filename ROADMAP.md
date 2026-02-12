@@ -1,0 +1,35 @@
+# Roadmap
+
+Planned features and ideas for BookHub. See [CHANGELOG.md](CHANGELOG.md) for released changes.
+
+Contributions and ideas welcome — open an issue or pull request.
+
+---
+
+## Planned for v2.2 / v2.3 (Near term)
+
+- **Browser notifications** - Notifications on sync success/failure.
+
+- **Multiple sync profiles** - Work/personal repos, switch between different GitHub targets.
+
+---
+
+## Planned for v3.0 (Larger milestones)
+
+- **GitLab support** — GitLab API wrapper (different endpoints than GitHub), provider abstraction (`lib/git-provider.js`), GitLab CI/CD automation equivalent. Current `lib/github-api.js` is tightly coupled to `api.github.com`.
+
+- **New layout** — Redesign of popup and/or options page (tabs, sidebar, more compact UI, improved responsive behaviour).
+
+---
+
+## Backlog / ideas (No timeline)
+
+| Idea | Description | Effort |
+|------|-------------|--------|
+| Multiple sync profiles | Work/personal repos, switch between different GitHub/GitLab targets | Medium |
+| Selective folder sync | Sync only specific bookmark folders instead of all | Medium |
+| Sync history / rollback | Restore previous sync states (requires storing commit history) | Medium |
+| Conflict resolution UI | Diff view for merge conflicts instead of force push/pull only | Medium |
+| Keyboard shortcuts | Quick sync, open options from popup | Small |
+| More languages | Extend i18n (e.g. French, Spanish) | Small |
+| Self-hosted Git (Gitea, Forgejo) | Broader provider support beyond GitHub/GitLab | Large |

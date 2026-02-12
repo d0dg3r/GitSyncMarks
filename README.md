@@ -9,7 +9,7 @@
   Supports Chrome and Firefox.
 </p>
 
-See [CHANGELOG.md](CHANGELOG.md) for version history and release notes.
+See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROADMAP.md](ROADMAP.md) for planned features.
 
 ## Features
 
