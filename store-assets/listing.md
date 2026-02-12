@@ -223,21 +223,21 @@ All regions
 ### Chrome Web Store
 - [ ] `store-assets/icon128-store.png` — 128x128px store icon
 - [ ] `store-assets/promo-small.png` — 440x280px small promo tile
-- [x] `store-assets/screenshot-chrome-github.png` — "GitHub: connection, token, repository"
-- [x] `store-assets/screenshot-chrome-settings.png` — "Synchronization: sync profile, auto-sync"
-- [x] `store-assets/screenshot-chrome-import-export.png` — "Backup: export/import bookmarks and settings"
-- [x] `store-assets/screenshot-chrome-automation.png` — "Automation: Git file format, GitHub Action, CLI usage"
-- [x] `store-assets/screenshot-chrome-dialog.png` — "Popup: browser toolbar popup dialog"
+- [x] `store-assets/screenshot-chrome-github.png` — "GitHub tab: Personal Access Token, repository owner/name, branch, file path, test connection"
+- [x] `store-assets/screenshot-chrome-settings.png` — "Synchronization tab: auto-sync toggle, sync profile (real-time/frequent/normal/power-save), sync on start, sync on focus"
+- [x] `store-assets/screenshot-chrome-import-export.png` — "Backup tab: export/import bookmarks, export/import settings (JSON), file picker"
+- [x] `store-assets/screenshot-chrome-automation.png` — "Automation tab: add bookmarks via Git, JSON file format, GitHub Action workflow, CLI examples"
+- [x] `store-assets/screenshot-chrome-dialog.png` — "Popup: sync status, Sync Now, Push, Pull, auto-sync indicator, links to Settings/GitHub/Report issue"
 
 ### Chrome Web Store (German / Deutsch)
-- [x] `store-assets/screenshot-chrome-de-github.png` — "GitHub: Verbindung, Token, Repository"
-- [x] `store-assets/screenshot-chrome-de-settings.png` — "Synchronisierung: Sync-Profil, Auto-Sync"
-- [x] `store-assets/screenshot-chrome-de-import-export.png` — "Backup: Lesezeichen und Einstellungen exportieren/importieren"
-- [x] `store-assets/screenshot-chrome-de-automation.png` — "Automatisierung: Git-Dateiformat, GitHub Action, CLI-Nutzung"
-- [x] `store-assets/screenshot-chrome-de-dialog.png` — "Popup: Browser-Toolbar Popup-Dialog"
+- [x] `store-assets/screenshot-chrome-de-github.png` — "GitHub-Tab: Personal Access Token, Repository-Besitzer/Name, Branch, Dateipfad, Verbindung testen"
+- [x] `store-assets/screenshot-chrome-de-settings.png` — "Synchronisierung-Tab: Auto-Sync, Sync-Profil (Echtzeit/häufig/normal/Stromsparen), Sync beim Start, Sync bei Fokus"
+- [x] `store-assets/screenshot-chrome-de-import-export.png` — "Backup-Tab: Lesezeichen exportieren/importieren, Einstellungen exportieren/importieren (JSON), Dateiauswahl"
+- [x] `store-assets/screenshot-chrome-de-automation.png` — "Automatisierung-Tab: Lesezeichen über Git hinzufügen, JSON-Dateiformat, GitHub Action Workflow, CLI-Beispiele"
+- [x] `store-assets/screenshot-chrome-de-dialog.png` — "Popup: Sync-Status, Jetzt synchronisieren, Push, Pull, Auto-Sync-Anzeige, Links zu Einstellungen/GitHub/Problem melden"
 
 ### Firefox AMO
-- [x] `store-assets/screenshot-firefox-settings.png` — "Settings: Configure your GitHub connection, Personal Access Token, repository, branch, and sync interval."
-- [x] `store-assets/screenshot-firefox-import-export.png` — "Backup: Export/import bookmarks and extension settings as JSON files."
-- [x] `store-assets/screenshot-firefox-automation.png` — "Automation: Add bookmarks via Git, CLI, or GitHub Actions. Includes file format reference and CLI examples."
-- [x] `store-assets/screenshot-firefox-about.png` — "About: Version info, links to repository, documentation, bug tracker, and privacy policy."
+- [x] `store-assets/screenshot-firefox-settings.png` — "GitHub tab: Personal Access Token, repository owner/name, branch, file path"
+- [x] `store-assets/screenshot-firefox-import-export.png` — "Backup tab: Export/import bookmarks and settings as JSON files, file picker"
+- [x] `store-assets/screenshot-firefox-automation.png` — "Automation tab: Add bookmarks via Git, JSON file format, GitHub Action, CLI examples"
+- [x] `store-assets/screenshot-firefox-about.png` — "About tab: Version, links to GitHub repository, documentation, bug tracker, privacy policy, license"
