@@ -6,6 +6,11 @@
   "scripts": {
     "build": "bash scripts/build.sh",
     "build:chrome": "bash scripts/build.sh chrome",
-    "build:firefox": "bash scripts/build.sh firefox"
+    "build:firefox": "bash scripts/build.sh firefox",
+    "generate-icons": "node scripts/generate-icons.js"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.0",
+    "png-to-ico": "^2.1.0"
   }
 }
