@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.2] - 2025-02-13
+
+### Added
+
+- **Store buttons in README**: Chrome Web Store and Firefox Add-on badges with direct links
+- **Testing guide** ([docs/TESTING.md](docs/TESTING.md)): Instructions for Chrome, Firefox desktop, and Firefox Android
+
+### Changed
+
+- **Responsive mobile layout** for Firefox Android: Popup and options page adapt to narrow viewports; tab bar scrolls horizontally; header stacks on small screens
+
 ## [2.1.1] - TBD
 
 ### Changed
