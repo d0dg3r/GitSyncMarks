@@ -1,6 +1,7 @@
 # Build artifacts
 build/
 *.zip
+.favicon-48-tmp.png
 
 # OS files
 .DS_Store
