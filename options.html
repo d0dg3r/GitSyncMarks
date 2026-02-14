@@ -37,6 +37,17 @@
     <!-- ==================== GitHub Tab ==================== -->
     <div class="tab-content active" id="tab-github">
 
+      <section class="card profile-selector-card">
+        <h2 data-i18n="options_profile">Profile</h2>
+        <div class="profile-selector-row">
+          <label for="profile-select" class="sr-only" data-i18n="options_profile">Profile</label>
+          <select id="profile-select" class="profile-select"></select>
+          <span id="profile-switching-msg" class="profile-switching-msg" style="display: none;"></span>
+          <button type="button" id="profile-add-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileAdd">+ Add</button>
+          <button type="button" id="profile-delete-btn" class="btn btn-secondary btn-sm btn-danger" data-i18n="options_profileDelete" title="" style="display: none;">Delete</button>
+        </div>
+      </section>
+
       <section class="card">
         <h2 data-i18n="options_githubConnection">GitHub Connection</h2>
 

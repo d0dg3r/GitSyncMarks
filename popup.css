@@ -116,6 +116,21 @@ body {
   gap: 2px;
 }
 
+.status-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.profile-badge {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  background: var(--color-btn-secondary);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
 .last-sync {
   font-size: 11px;
   color: var(--color-text-secondary);

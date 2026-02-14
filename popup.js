@@ -11,6 +11,7 @@ const notConfiguredEl = document.getElementById('not-configured');
 const configuredEl = document.getElementById('configured');
 const statusBox = document.getElementById('status-box');
 const statusIcon = document.getElementById('status-icon');
+const profileBadge = document.getElementById('profile-badge');
 const statusMessage = document.getElementById('status-message');
 const lastDataChangeEl = document.getElementById('last-data-change');
 const lastCommitWrap = document.getElementById('last-commit-wrap');
@@ -61,6 +62,14 @@ function updateUI(status) {
 
   notConfiguredEl.style.display = 'none';
   configuredEl.style.display = 'block';
+
+  // Active profile badge
+  if (status.profileName) {
+    profileBadge.textContent = status.profileName;
+    profileBadge.style.display = '';
+  } else {
+    profileBadge.style.display = 'none';
+  }
 
   // Status message
   if (status.hasConflict) {

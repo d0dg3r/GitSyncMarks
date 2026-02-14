@@ -82,6 +82,24 @@
   "options_subtitle": {
     "message": "Settings"
   },
+  "options_profile": {
+    "message": "Profile"
+  },
+  "options_profileAdd": {
+    "message": "+ Add"
+  },
+  "options_profileDelete": {
+    "message": "Delete"
+  },
+  "options_profileSwitchConfirm": {
+    "message": "Switch to \"$1\"? Your bookmarks will be replaced with that profile's bookmarks."
+  },
+  "options_profileDeleteConfirm": {
+    "message": "Delete profile \"$1\"? This cannot be undone."
+  },
+  "options_profileSwitching": {
+    "message": "Switching profile..."
+  },
   "options_githubConnection": {
     "message": "GitHub Connection"
   },

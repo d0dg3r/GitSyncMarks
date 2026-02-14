@@ -82,6 +82,24 @@
   "options_subtitle": {
     "message": "Einstellungen"
   },
+  "options_profile": {
+    "message": "Profil"
+  },
+  "options_profileAdd": {
+    "message": "+ Hinzufügen"
+  },
+  "options_profileDelete": {
+    "message": "Löschen"
+  },
+  "options_profileSwitchConfirm": {
+    "message": "Zu \"$1\" wechseln? Deine Lesezeichen werden durch die Lesezeichen dieses Profils ersetzt."
+  },
+  "options_profileDeleteConfirm": {
+    "message": "Profil \"$1\" löschen? Dies kann nicht rückgängig gemacht werden."
+  },
+  "options_profileSwitching": {
+    "message": "Profil wird gewechselt..."
+  },
   "options_githubConnection": {
     "message": "GitHub-Verbindung"
   },

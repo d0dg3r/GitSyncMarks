@@ -10,6 +10,16 @@ import { initTheme, applyTheme } from './lib/theme.js';
 import { serializeToJson, deserializeFromJson } from './lib/bookmark-serializer.js';
 import { replaceLocalBookmarks, SYNC_PRESETS } from './lib/sync-engine.js';
 import { encryptToken, decryptToken, migrateTokenIfNeeded } from './lib/crypto.js';
+import {
+  getProfiles,
+  getActiveProfileId,
+  getProfileSettings,
+  saveProfile,
+  addProfile,
+  deleteProfile,
+  switchProfile,
+  migrateToProfiles,
+} from './lib/profile-manager.js';
 
 const STORAGE_KEYS = {
   GITHUB_TOKEN: 'githubToken',
@@ -30,6 +40,10 @@ const STORAGE_KEYS = {
 };
 
 // ---- DOM elements: Settings Tab ----
+const profileSelect = document.getElementById('profile-select');
+const profileAddBtn = document.getElementById('profile-add-btn');
+const profileDeleteBtn = document.getElementById('profile-delete-btn');
+const profileSwitchingMsg = document.getElementById('profile-switching-msg');
 const tokenInput = document.getElementById('token');
 const toggleTokenBtn = document.getElementById('toggle-token');
 const ownerInput = document.getElementById('owner');
@@ -151,50 +165,60 @@ function populateLanguageDropdown() {
 }
 
 async function loadSettings() {
-  // Migrate legacy plain-text token from sync to encrypted local storage
   await migrateTokenIfNeeded();
+  await migrateToProfiles();
 
+  const profiles = await getProfiles();
+  const activeId = await getActiveProfileId();
+
+  // Populate profile dropdown
+  profileSelect.innerHTML = '';
+  for (const [id, p] of Object.entries(profiles)) {
+    const opt = document.createElement('option');
+    opt.value = id;
+    opt.textContent = p.name || id;
+    opt.dataset.profileId = id;
+    if (id === activeId) opt.selected = true;
+    profileSelect.appendChild(opt);
+  }
+
+  profileDeleteBtn.style.display = Object.keys(profiles).length > 1 ? 'inline-block' : 'none';
+
+  // Load active profile's GitHub settings
+  const profileSettings = await getProfileSettings(activeId);
+  if (profileSettings) {
+    tokenInput.value = profileSettings.githubToken || '';
+    ownerInput.value = profileSettings.repoOwner || '';
+    repoInput.value = profileSettings.repoName || '';
+    branchInput.value = profileSettings.branch || 'main';
+    filepathInput.value = profileSettings.filePath || 'bookmarks';
+  }
+
+  // Load global sync settings
   const syncDefaults = {
-    [STORAGE_KEYS.REPO_OWNER]: '',
-    [STORAGE_KEYS.REPO_NAME]: '',
-    [STORAGE_KEYS.BRANCH]: 'main',
-    [STORAGE_KEYS.FILE_PATH]: 'bookmarks',
-    [STORAGE_KEYS.AUTO_SYNC]: true,
-    [STORAGE_KEYS.SYNC_INTERVAL]: 15,
-    [STORAGE_KEYS.SYNC_ON_STARTUP]: false,
-    [STORAGE_KEYS.SYNC_ON_FOCUS]: false,
-    [STORAGE_KEYS.SYNC_PROFILE]: 'normal',
-    [STORAGE_KEYS.NOTIFICATIONS_MODE]: 'all',
-    [STORAGE_KEYS.DEBOUNCE_DELAY]: 5000,
-    [STORAGE_KEYS.NOTIFICATIONS_ENABLED]: undefined, // legacy, for migration
-    [STORAGE_KEYS.LANGUAGE]: 'auto',
-    [STORAGE_KEYS.THEME]: 'auto',
+    autoSync: true,
+    syncInterval: 15,
+    syncOnStartup: false,
+    syncOnFocus: false,
+    syncProfile: 'normal',
+    debounceDelay: 5000,
+    notificationsMode: 'all',
+    notificationsEnabled: undefined,
+    language: 'auto',
+    theme: 'auto',
   };
+  const globals = await chrome.storage.sync.get(syncDefaults);
 
-  const settings = await chrome.storage.sync.get(syncDefaults);
-
-  // Load encrypted token from local storage
-  const localData = await chrome.storage.local.get({ [STORAGE_KEYS.GITHUB_TOKEN]: '' });
-  const token = await decryptToken(localData[STORAGE_KEYS.GITHUB_TOKEN]);
-
-  tokenInput.value = token;
-  ownerInput.value = settings[STORAGE_KEYS.REPO_OWNER];
-  repoInput.value = settings[STORAGE_KEYS.REPO_NAME];
-  branchInput.value = settings[STORAGE_KEYS.BRANCH];
-  filepathInput.value = settings[STORAGE_KEYS.FILE_PATH];
-  autoSyncInput.checked = settings[STORAGE_KEYS.AUTO_SYNC];
-  syncIntervalInput.value = settings[STORAGE_KEYS.SYNC_INTERVAL];
-  debounceDelayInput.value = Math.round((settings[STORAGE_KEYS.DEBOUNCE_DELAY] ?? 5000) / 1000);
-  const profile = detectSyncProfile(
-    settings[STORAGE_KEYS.SYNC_INTERVAL],
-    settings[STORAGE_KEYS.DEBOUNCE_DELAY]
-  );
+  autoSyncInput.checked = globals.autoSync !== false;
+  syncIntervalInput.value = globals.syncInterval ?? 15;
+  debounceDelayInput.value = Math.round((globals.debounceDelay ?? 5000) / 1000);
+  const profile = detectSyncProfile(globals.syncInterval, globals.debounceDelay);
   syncProfileSelect.value = profile;
   syncCustomFields.style.display = profile === 'custom' ? 'block' : 'none';
-  syncOnStartupInput.checked = settings[STORAGE_KEYS.SYNC_ON_STARTUP] === true;
-  syncOnFocusInput.checked = settings[STORAGE_KEYS.SYNC_ON_FOCUS] === true;
-  const mode = settings[STORAGE_KEYS.NOTIFICATIONS_MODE];
-  const oldEnabled = settings[STORAGE_KEYS.NOTIFICATIONS_ENABLED];
+  syncOnStartupInput.checked = globals.syncOnStartup === true;
+  syncOnFocusInput.checked = globals.syncOnFocus === true;
+  const mode = globals.notificationsMode;
+  const oldEnabled = globals.notificationsEnabled;
   const displayMode = (mode && ['off', 'all', 'errorsOnly'].includes(mode))
     ? mode
     : (oldEnabled === false ? 'off' : 'all');
@@ -203,12 +227,75 @@ async function loadSettings() {
     await chrome.storage.sync.set({ [STORAGE_KEYS.NOTIFICATIONS_MODE]: displayMode });
     await chrome.storage.sync.remove(STORAGE_KEYS.NOTIFICATIONS_ENABLED);
   }
-  languageSelect.value = settings[STORAGE_KEYS.LANGUAGE];
-  const theme = settings[STORAGE_KEYS.THEME] || 'auto';
+  languageSelect.value = globals.language || 'auto';
+  const theme = globals.theme || 'auto';
   themeButtons.forEach(btn => {
     btn.classList.toggle('active', btn.dataset.theme === theme);
   });
 }
+
+// Profile selector: switching profiles replaces bookmarks
+profileSelect.addEventListener('change', async (e) => {
+  const targetId = e.target.value;
+  const activeId = await getActiveProfileId();
+  if (targetId === activeId) return;
+
+  const profiles = await getProfiles();
+  const targetProfile = profiles[targetId];
+  if (!targetProfile) return;
+
+  const confirmed = confirm(getMessage('options_profileSwitchConfirm', [targetProfile.name || targetId]));
+  if (!confirmed) {
+    e.target.value = activeId;
+    return;
+  }
+
+  try {
+    profileSelect.disabled = true;
+    profileAddBtn.disabled = true;
+    profileDeleteBtn.disabled = true;
+    profileSwitchingMsg.textContent = getMessage('options_profileSwitching');
+    profileSwitchingMsg.style.display = '';
+    await switchProfile(targetId);
+    await loadSettings();
+  } catch (err) {
+    alert(getMessage('options_error', [err.message]));
+    e.target.value = activeId;
+  } finally {
+    profileSelect.disabled = false;
+    profileAddBtn.disabled = false;
+    profileDeleteBtn.disabled = false;
+    profileSwitchingMsg.style.display = 'none';
+  }
+});
+
+profileAddBtn.addEventListener('click', async () => {
+  try {
+    const name = prompt(getMessage('options_profile') + ' name:', 'New Profile');
+    if (!name || !name.trim()) return;
+    await addProfile(name.trim());
+    await loadSettings();
+  } catch (err) {
+    alert(getMessage('options_error', [err.message]));
+  }
+});
+
+profileDeleteBtn.addEventListener('click', async () => {
+  const activeId = await getActiveProfileId();
+  const profiles = await getProfiles();
+  const profile = profiles[activeId];
+  if (!profile || Object.keys(profiles).length <= 1) return;
+
+  const confirmed = confirm(getMessage('options_profileDeleteConfirm', [profile.name || activeId]));
+  if (!confirmed) return;
+
+  try {
+    await deleteProfile(activeId);
+    await loadSettings();
+  } catch (err) {
+    alert(getMessage('options_error', [err.message]));
+  }
+});
 
 syncProfileSelect.addEventListener('change', () => {
   const isCustom = syncProfileSelect.value === 'custom';
@@ -301,28 +388,30 @@ function showValidation(message, type) {
 // ==============================
 
 async function saveSettings() {
-  const syncSettings = {
-    [STORAGE_KEYS.REPO_OWNER]: ownerInput.value.trim(),
-    [STORAGE_KEYS.REPO_NAME]: repoInput.value.trim(),
-    [STORAGE_KEYS.BRANCH]: branchInput.value.trim() || 'main',
-    [STORAGE_KEYS.FILE_PATH]: filepathInput.value.trim() || 'bookmarks',
-    [STORAGE_KEYS.AUTO_SYNC]: autoSyncInput.checked,
-    [STORAGE_KEYS.SYNC_INTERVAL]: getEffectiveSyncInterval(),
-    [STORAGE_KEYS.DEBOUNCE_DELAY]: getEffectiveDebounceMs(),
-    [STORAGE_KEYS.SYNC_PROFILE]: syncProfileSelect.value,
-    [STORAGE_KEYS.SYNC_ON_STARTUP]: syncOnStartupInput.checked,
-    [STORAGE_KEYS.SYNC_ON_FOCUS]: syncOnFocusInput.checked,
-    [STORAGE_KEYS.NOTIFICATIONS_MODE]: notificationsModeSelect.value,
-    [STORAGE_KEYS.LANGUAGE]: languageSelect.value,
-  };
-
   try {
-    // Encrypt token and store in local storage (never in sync)
-    const encryptedToken = await encryptToken(tokenInput.value.trim());
-    await chrome.storage.local.set({ [STORAGE_KEYS.GITHUB_TOKEN]: encryptedToken });
+    const activeId = await getActiveProfileId();
 
-    // Store other settings in sync storage
-    await chrome.storage.sync.set(syncSettings);
+    // Save profile-specific GitHub settings
+    await saveProfile(activeId, {
+      owner: ownerInput.value.trim(),
+      repo: repoInput.value.trim(),
+      branch: branchInput.value.trim() || 'main',
+      filePath: filepathInput.value.trim() || 'bookmarks',
+      token: tokenInput.value.trim(),
+    });
+
+    // Save global sync settings
+    await chrome.storage.sync.set({
+      [STORAGE_KEYS.AUTO_SYNC]: autoSyncInput.checked,
+      [STORAGE_KEYS.SYNC_INTERVAL]: getEffectiveSyncInterval(),
+      [STORAGE_KEYS.DEBOUNCE_DELAY]: getEffectiveDebounceMs(),
+      [STORAGE_KEYS.SYNC_PROFILE]: syncProfileSelect.value,
+      [STORAGE_KEYS.SYNC_ON_STARTUP]: syncOnStartupInput.checked,
+      [STORAGE_KEYS.SYNC_ON_FOCUS]: syncOnFocusInput.checked,
+      [STORAGE_KEYS.NOTIFICATIONS_MODE]: notificationsModeSelect.value,
+      [STORAGE_KEYS.LANGUAGE]: languageSelect.value,
+    });
+
     await chrome.runtime.sendMessage({ action: 'settingsChanged' });
 
     showSaveResult(getMessage('options_settingsSaved'), 'success');
@@ -424,18 +513,30 @@ importBookmarksBtn.addEventListener('click', async () => {
 
 /**
  * Export current settings as a JSON file download.
- * Includes the decrypted token so the export is complete and portable.
+ * Includes profiles with decrypted tokens so the export is complete and portable.
  */
 exportSettingsBtn.addEventListener('click', async () => {
   try {
     const syncSettings = await chrome.storage.sync.get(null);
+    const localData = await chrome.storage.local.get({ profileTokens: {}, syncState: {} });
 
-    // Include decrypted token in the export
-    const localData = await chrome.storage.local.get({ [STORAGE_KEYS.GITHUB_TOKEN]: '' });
-    const token = await decryptToken(localData[STORAGE_KEYS.GITHUB_TOKEN]);
-    syncSettings[STORAGE_KEYS.GITHUB_TOKEN] = token;
+    // Build export with decrypted tokens per profile
+    const profiles = syncSettings.profiles || {};
+    const profileTokens = localData.profileTokens || {};
+    const exportedProfiles = {};
+    for (const [id, p] of Object.entries(profiles)) {
+      let token = '';
+      try {
+        token = profileTokens[id] ? await decryptToken(profileTokens[id]) : '';
+      } catch { /* ignore */ }
+      exportedProfiles[id] = { ...p, token };
+    }
+    const exportData = {
+      ...syncSettings,
+      profiles: exportedProfiles,
+    };
 
-    const json = JSON.stringify(syncSettings, null, 2);
+    const json = JSON.stringify(exportData, null, 2);
 
     const date = new Date().toISOString().slice(0, 10);
     downloadFile(`gitsyncmarks-settings-${date}.json`, json, 'application/json');
@@ -448,7 +549,7 @@ exportSettingsBtn.addEventListener('click', async () => {
 
 /**
  * Import settings from a JSON file, replacing all current settings.
- * If the import contains a githubToken, it's encrypted and stored in local storage.
+ * Supports both legacy (flat) format and profile format.
  */
 importSettingsBtn.addEventListener('click', async () => {
   const file = importSettingsFile.files[0];
@@ -458,19 +559,71 @@ importSettingsBtn.addEventListener('click', async () => {
     const text = await file.text();
     const settings = JSON.parse(text);
 
-    // Validate it's a plain object
     if (typeof settings !== 'object' || Array.isArray(settings)) {
       throw new Error('Invalid settings format.');
     }
 
-    // Extract token if present, encrypt it, and store separately in local
-    if (settings[STORAGE_KEYS.GITHUB_TOKEN]) {
-      const encrypted = await encryptToken(settings[STORAGE_KEYS.GITHUB_TOKEN]);
-      await chrome.storage.local.set({ [STORAGE_KEYS.GITHUB_TOKEN]: encrypted });
-      delete settings[STORAGE_KEYS.GITHUB_TOKEN];
+    // New format: profiles with embedded token
+    if (settings.profiles && Object.keys(settings.profiles).length > 0) {
+      const profileTokens = {};
+      const profilesToSave = {};
+      for (const [id, p] of Object.entries(settings.profiles)) {
+        profilesToSave[id] = {
+          id: p.id || id,
+          name: p.name || 'Default',
+          owner: p.owner || '',
+          repo: p.repo || '',
+          branch: p.branch || 'main',
+          filePath: p.filePath || 'bookmarks',
+        };
+        if (p.token) {
+          profileTokens[id] = await encryptToken(p.token);
+        }
+      }
+      await chrome.storage.sync.set({
+        profiles: profilesToSave,
+        activeProfileId: settings.activeProfileId || Object.keys(profilesToSave)[0],
+        autoSync: settings.autoSync !== false,
+        syncInterval: settings.syncInterval ?? 15,
+        syncOnStartup: settings.syncOnStartup || false,
+        syncOnFocus: settings.syncOnFocus || false,
+        syncProfile: settings.syncProfile || 'normal',
+        debounceDelay: settings.debounceDelay ?? 5000,
+        notificationsMode: settings.notificationsMode || 'all',
+        language: settings.language || 'auto',
+        theme: settings.theme || 'auto',
+      });
+      await chrome.storage.local.set({ profileTokens });
+    } else {
+      // Legacy format: flat repoOwner, repoName, githubToken
+      const defaultProfile = {
+        id: 'default',
+        name: 'Default',
+        owner: settings.repoOwner || '',
+        repo: settings.repoName || '',
+        branch: settings.branch || 'main',
+        filePath: settings.filePath || 'bookmarks',
+      };
+      const profileTokens = {};
+      if (settings.githubToken) {
+        profileTokens.default = await encryptToken(settings.githubToken);
+      }
+      await chrome.storage.sync.set({
+        profiles: { default: defaultProfile },
+        activeProfileId: 'default',
+        autoSync: settings.autoSync !== false,
+        syncInterval: settings.syncInterval ?? 15,
+        syncOnStartup: settings.syncOnStartup || false,
+        syncOnFocus: settings.syncOnFocus || false,
+        syncProfile: settings.syncProfile || 'normal',
+        debounceDelay: settings.debounceDelay ?? 5000,
+        notificationsMode: settings.notificationsMode || 'all',
+        language: settings.language || 'auto',
+        theme: settings.theme || 'auto',
+      });
+      await chrome.storage.local.set({ profileTokens });
     }
 
-    await chrome.storage.sync.set(settings);
     await chrome.runtime.sendMessage({ action: 'settingsChanged' });
 
     showResult(importSettingsResult, getMessage('options_importSuccess'), 'success');
@@ -478,7 +631,6 @@ importSettingsBtn.addEventListener('click', async () => {
     importSettingsBtn.disabled = true;
     importSettingsFilename.textContent = '';
 
-    // Reload after a short delay so the user sees the success message
     setTimeout(() => { location.reload(); }, 1000);
   } catch (err) {
     showResult(importSettingsResult, getMessage('options_importError', [err.message]), 'error');

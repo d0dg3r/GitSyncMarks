@@ -20,6 +20,7 @@ import {
 } from './lib/sync-engine.js';
 import { GitHubAPI } from './lib/github-api.js';
 import { migrateTokenIfNeeded } from './lib/crypto.js';
+import { migrateToProfiles, getActiveProfileId, getActiveProfile, getSyncState } from './lib/profile-manager.js';
 
 const ALARM_NAME = 'bookmarkSyncPull';
 const NOTIFICATION_ID = 'gitsyncmarks-sync';
@@ -110,8 +111,9 @@ chrome.windows.onFocusChanged.addListener(async (windowId) => {
   const settings = await getSettings();
   if (!settings[STORAGE_KEYS.SYNC_ON_FOCUS] || !isConfigured(settings)) return;
 
-  const stored = await chrome.storage.local.get(STORAGE_KEYS.LAST_SYNC_TIME);
-  const lastSync = stored[STORAGE_KEYS.LAST_SYNC_TIME];
+  const profileId = settings.profileId || await getActiveProfileId();
+  const syncState = await getSyncState(profileId);
+  const lastSync = syncState.lastSyncTime;
   if (lastSync) {
     const elapsed = Date.now() - new Date(lastSync).getTime();
     if (elapsed < FOCUS_SYNC_COOLDOWN_MS) return;
@@ -149,9 +151,12 @@ async function checkAndMigrate() {
     const settings = await getSettings();
     if (!isConfigured(settings)) return;
 
-    // Check if we already have the new format state
-    const stored = await chrome.storage.local.get(STORAGE_KEYS.LAST_SYNC_FILES);
-    if (stored[STORAGE_KEYS.LAST_SYNC_FILES]) return; // Already migrated
+    // Check if we already have the new format state (per-profile after migrateToProfiles)
+    const profileId = settings.profileId || await getActiveProfileId();
+    const syncState = await getSyncState(profileId);
+    const hasNewFormat = syncState?.lastSyncFiles && typeof syncState.lastSyncFiles === 'object'
+      && Object.keys(syncState.lastSyncFiles).length > 0;
+    if (hasNewFormat) return; // Already migrated
 
     const api = new GitHubAPI(
       settings[STORAGE_KEYS.GITHUB_TOKEN],
@@ -195,7 +200,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
   if (message.action === 'getStatus') {
-    getSyncStatus().then(sendResponse);
+    Promise.all([getSyncStatus(), getActiveProfile()])
+      .then(([status, profile]) => {
+        sendResponse({ ...status, profileName: profile?.name || null });
+      })
+      .catch((err) => {
+        console.error('[GitSyncMarks] getStatus failed:', err);
+        sendResponse({ configured: false, hasConflict: false, profileName: null });
+      });
     return true;
   }
   if (message.action === 'settingsChanged') {
@@ -209,6 +221,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 chrome.runtime.onInstalled.addListener(async (details) => {
   console.log('[GitSyncMarks] Extension installed/updated:', details.reason);
   await migrateTokenIfNeeded();
+  await migrateToProfiles();
   await initI18n();
   await setupAlarm();
   await checkAndMigrate();
@@ -217,6 +230,7 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 chrome.runtime.onStartup.addListener(async () => {
   console.log('[GitSyncMarks] Browser started');
   await migrateTokenIfNeeded();
+  await migrateToProfiles();
   await initI18n();
   await setupAlarm();
   await checkAndMigrate();
@@ -236,7 +250,10 @@ chrome.runtime.onStartup.addListener(async () => {
 });
 
 // Initial setup
-migrateTokenIfNeeded();
-initI18n();
-setupAlarm();
-checkAndMigrate();
+migrateTokenIfNeeded().then(() =>
+  migrateToProfiles().then(() => {
+    initI18n();
+    setupAlarm();
+    checkAndMigrate();
+  })
+);
