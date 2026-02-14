@@ -14,6 +14,7 @@ Desktop.ini
 *~
 .vscode/
 .idea/
+.cursor/
 
 # Node (falls spaeter benoetigt)
 node_modules/
