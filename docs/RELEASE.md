@@ -34,6 +34,35 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 | `2.1.1` | New icon (blue bookmark + green sync arrow) for extension, store assets, and favicons |
 | `2.1.0` | Sync profiles, sync on startup/focus, theme (light/dark/auto), redesigned Backup tab, tabbed options (GitHub/Sync/Backup), commit link in popup, pre-release workflow — see [CHANGELOG.md](../CHANGELOG.md) |
 
+## Branch Workflow
+
+Two phases: development and release.
+
+### Phase 1: Development
+
+| Step | Action |
+|------|--------|
+| 1 | Create a feature branch from `main`: `feature/browser-notifications` or `develop/2.2.0` |
+| 2 | Implement features, commit |
+| 3 | Open PR from `feature/xxx` to `main` |
+| 4 | Review, merge |
+| 5 | For more features: create new feature branches from `main`, again PR → main |
+
+**Naming:** Single feature `feature/xyz`; multiple features for a version `develop/2.2.0`; bugfixes `fix/description`.
+
+### Phase 2: Release
+
+| Step | Action |
+|------|--------|
+| 1 | Create release branch from `main`: `release/v2.2.0` |
+| 2 | Bump version in `manifest.json`, `manifest.firefox.json`, `package.json` to `2.2.0` |
+| 3 | Update `CHANGELOG.md` with v2.2.0 entry |
+| 4 | Update version history in `docs/RELEASE.md` |
+| 5 | Open PR from `release/v2.2.0` to `main` |
+| 6 | Merge (main now has the release version) |
+| 7 | Tag and push: `git tag v2.2.0 && git push origin v2.2.0` |
+| 8 | GitHub Actions creates the release with ZIPs |
+
 ## How to Create a New Release
 
 ### 1. Update the version
