@@ -412,7 +412,12 @@ async function saveSettings() {
       [STORAGE_KEYS.LANGUAGE]: languageSelect.value,
     });
 
-    await chrome.runtime.sendMessage({ action: 'settingsChanged' });
+    try {
+      await chrome.runtime.sendMessage({ action: 'settingsChanged' });
+    } catch (msgErr) {
+      // Background may be terminated (e.g. Firefox Android). Settings are saved;
+      // alarm will update when background runs again (next sync, popup open).
+    }
 
     showSaveResult(getMessage('options_settingsSaved'), 'success');
     setTimeout(() => {
