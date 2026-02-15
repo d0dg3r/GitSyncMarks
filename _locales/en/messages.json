@@ -151,6 +151,33 @@
   "options_testConnection": {
     "message": "Test Connection"
   },
+  "options_githubReposTitle": {
+    "message": "GitHub Repos Folder"
+  },
+  "options_githubReposDesc": {
+    "message": "Create a folder with bookmarks to all your GitHub repositories (public and private)."
+  },
+  "options_githubReposEnabled": {
+    "message": "GitHub Repos folder"
+  },
+  "options_githubReposParentLabel": {
+    "message": "Position"
+  },
+  "options_githubReposParentToolbar": {
+    "message": "Bookmarks Bar"
+  },
+  "options_githubReposParentOther": {
+    "message": "Other Bookmarks"
+  },
+  "options_githubReposParentMenu": {
+    "message": "Bookmarks Menu"
+  },
+  "options_githubReposRefresh": {
+    "message": "Update GitHub Repos"
+  },
+  "options_githubReposRefreshSuccess": {
+    "message": "Added $1 repos for $2"
+  },
   "options_synchronization": {
     "message": "Synchronization"
   },

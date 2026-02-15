@@ -151,6 +151,33 @@
   "options_testConnection": {
     "message": "Verbindung testen"
   },
+  "options_githubReposTitle": {
+    "message": "GitHub-Repos-Ordner"
+  },
+  "options_githubReposDesc": {
+    "message": "Ordner mit Lesezeichen zu allen deinen GitHub-Repositories (öffentlich und privat) anlegen."
+  },
+  "options_githubReposEnabled": {
+    "message": "GitHub-Repos-Ordner"
+  },
+  "options_githubReposParentLabel": {
+    "message": "Position"
+  },
+  "options_githubReposParentToolbar": {
+    "message": "Lesezeichen-Symbolleiste"
+  },
+  "options_githubReposParentOther": {
+    "message": "Weitere Lesezeichen"
+  },
+  "options_githubReposParentMenu": {
+    "message": "Lesezeichen-Menü"
+  },
+  "options_githubReposRefresh": {
+    "message": "GitHub-Repos aktualisieren"
+  },
+  "options_githubReposRefreshSuccess": {
+    "message": "$1 Repos für $2 hinzugefügt"
+  },
   "options_synchronization": {
     "message": "Synchronisierung"
   },

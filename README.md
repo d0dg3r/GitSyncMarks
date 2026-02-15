@@ -32,6 +32,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 - **Conflict detection**: Notifies you when automatic merge is not possible
 - **Readable overview**: A `README.md` with all bookmarks is generated in the repo for easy browsing on GitHub
 - **Automation**: Add bookmarks via Git, CLI, or GitHub Actions — the extension picks them up automatically
+- **GitHub Repos folder**: Optional folder with bookmarks to all your GitHub repositories (public and private); configurable position (toolbar/other/menu); manual refresh; preserved on pull when not in Git
 - **Import/Export**: Export and import bookmarks or extension settings as JSON files
 - **Multilanguage**: English, German, French, and Spanish, with manual language selection
 - **No server needed**: Communicates directly with the GitHub API using your Personal Access Token
@@ -138,6 +139,8 @@ See the **Automation** tab in the extension settings for details.
 | Sync on Start | Off | Sync when the browser starts |
 | Sync on Focus | Off | Sync when the browser gains focus |
 | Switch without confirmation | Off | Skip confirmation when changing profiles |
+| GitHub Repos folder | Off | Create folder with bookmarks to all your GitHub repos |
+| GitHub Repos position | Other Bookmarks | Where to place the folder (toolbar/other/menu) |
 
 ## Conflict Resolution
 

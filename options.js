@@ -10,6 +10,7 @@ import { initI18n, applyI18n, getMessage, reloadI18n, getLanguage, SUPPORTED_LAN
 import { initTheme, applyTheme } from './lib/theme.js';
 import { serializeToJson, deserializeFromJson } from './lib/bookmark-serializer.js';
 import { replaceLocalBookmarks, SYNC_PRESETS } from './lib/sync-engine.js';
+import { updateGitHubReposFolder } from './lib/github-repos.js';
 import { encryptToken, decryptToken, migrateTokenIfNeeded } from './lib/crypto.js';
 import {
   getProfiles,
@@ -73,6 +74,13 @@ const saveGitHubBtn = document.getElementById('save-github-btn');
 const saveSyncBtn = document.getElementById('save-sync-btn');
 const saveGitHubResult = document.getElementById('save-github-result');
 const saveSyncResult = document.getElementById('save-sync-result');
+const githubReposCard = document.getElementById('github-repos-card');
+const githubReposEnabledInput = document.getElementById('github-repos-enabled');
+const githubReposOptions = document.getElementById('github-repos-options');
+const githubReposParentSelect = document.getElementById('github-repos-parent');
+const githubReposRefreshBtn = document.getElementById('github-repos-refresh-btn');
+const githubReposSpinner = document.getElementById('github-repos-spinner');
+const githubReposResult = document.getElementById('github-repos-result');
 const languageSelect = document.getElementById('language-select');
 const themeButtons = document.querySelectorAll('.theme-icon-btn');
 
@@ -195,13 +203,21 @@ async function loadSettings() {
 
   // Load active profile's GitHub settings
   const profileSettings = await getProfileSettings(activeId);
+  const activeProfile = profiles[activeId];
   if (profileSettings) {
     tokenInput.value = profileSettings.githubToken || '';
     ownerInput.value = profileSettings.repoOwner || '';
     repoInput.value = profileSettings.repoName || '';
     branchInput.value = profileSettings.branch || 'main';
     filepathInput.value = profileSettings.filePath || 'bookmarks';
+    githubReposEnabledInput.checked = activeProfile?.githubReposEnabled ?? false;
+    githubReposParentSelect.value = activeProfile?.githubReposParent ?? 'other';
   }
+
+  // Show GitHub Repos card only when token is configured
+  const isConfigured = !!(tokenInput.value.trim() && ownerInput.value.trim() && repoInput.value.trim());
+  githubReposCard.style.display = isConfigured ? 'block' : 'none';
+  githubReposOptions.style.display = githubReposEnabledInput.checked ? 'block' : 'none';
 
   // Load global sync settings
   const syncDefaults = {
@@ -404,6 +420,42 @@ toggleTokenBtn.addEventListener('click', () => {
   tokenInput.type = tokenInput.type === 'password' ? 'text' : 'password';
 });
 
+// GitHub Repos: toggle options visibility
+githubReposEnabledInput.addEventListener('change', () => {
+  githubReposOptions.style.display = githubReposEnabledInput.checked ? 'block' : 'none';
+});
+
+// GitHub Repos: refresh button
+githubReposRefreshBtn.addEventListener('click', async () => {
+  const token = tokenInput.value.trim();
+  const activeId = await getActiveProfileId();
+  const profiles = await getProfiles();
+  const profile = profiles[activeId];
+  if (!token) {
+    githubReposResult.textContent = getMessage('options_pleaseEnterToken');
+    githubReposResult.className = 'validation-result error';
+    return;
+  }
+  try {
+    githubReposRefreshBtn.disabled = true;
+    githubReposSpinner.style.display = 'inline-block';
+    githubReposResult.textContent = '';
+    const parent = githubReposParentSelect.value || 'other';
+    const result = await updateGitHubReposFolder(token, parent, profile?.githubReposUsername || '', async (username) => {
+      await saveProfile(activeId, { githubReposUsername: username });
+    });
+    githubReposResult.textContent = getMessage('options_githubReposRefreshSuccess', [result.count.toString(), result.username || '']);
+    githubReposResult.className = 'validation-result success';
+    await loadSettings();
+  } catch (err) {
+    githubReposResult.textContent = getMessage('options_error', [err.message]);
+    githubReposResult.className = 'validation-result error';
+  } finally {
+    githubReposRefreshBtn.disabled = false;
+    githubReposSpinner.style.display = 'none';
+  }
+});
+
 validateBtn.addEventListener('click', async () => {
   const token = tokenInput.value.trim();
   const owner = ownerInput.value.trim();
@@ -498,6 +550,8 @@ async function saveSettings() {
       branch: branchInput.value.trim() || 'main',
       filePath: filepathInput.value.trim() || 'bookmarks',
       token: tokenInput.value.trim(),
+      githubReposEnabled: githubReposEnabledInput.checked,
+      githubReposParent: githubReposParentSelect.value,
     });
 
     // Save global sync settings

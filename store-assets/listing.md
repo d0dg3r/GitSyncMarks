@@ -20,6 +20,7 @@ Features:
 • Three-way merge: automatic conflict-free sync when changes happen on both sides
 • Cross-browser: works with Chrome, Chromium, Brave, Edge, and Firefox
 • Multiple bookmark profiles: work and personal sets with separate GitHub repos; switch replaces local bookmarks
+• GitHub Repos folder: optional folder with bookmarks to all your GitHub repositories (public and private)
 • Onboarding: create folder or pull bookmarks when configuring a new profile
 • Sync profiles: real-time, frequent, normal, or power-save (preset intervals and debounce)
 • Auto-sync on every bookmark change (debounce configurable per profile)
@@ -74,6 +75,7 @@ Funktionen:
 • Drei-Wege-Merge: automatische konfliktfreie Synchronisierung bei Änderungen auf beiden Seiten
 • Cross-Browser: funktioniert mit Chrome, Chromium, Brave, Edge und Firefox
 • Mehrere Lesezeichen-Profile: Arbeit und Privat mit getrennten GitHub-Repos; Wechsel ersetzt lokale Lesezeichen
+• GitHub-Repos-Ordner: optionaler Ordner mit Lesezeichen zu allen deinen GitHub-Repositories (öffentlich und privat)
 • Onboarding: Ordner anlegen oder Lesezeichen laden beim Konfigurieren eines neuen Profils
 • Sync-Profile: Echtzeit, häufig, normal oder Stromsparen (vorkonfigurierte Intervalle)
 • Auto-Sync bei jeder Lesezeichen-Änderung (Verzögerung pro Profil konfigurierbar)
@@ -128,6 +130,7 @@ Features:
 • Three-way merge: automatic conflict-free sync when changes happen on both sides
 • Full Firefox support including the Bookmarks Menu folder
 • Multiple bookmark profiles: work and personal sets with separate GitHub repos; switch replaces local bookmarks
+• GitHub Repos folder: optional folder with bookmarks to all your GitHub repositories (public and private)
 • Onboarding: create folder or pull bookmarks when configuring a new profile
 • Sync profiles: real-time, frequent, normal, or power-save
 • Auto-sync on every bookmark change (debounce configurable per profile)
@@ -181,6 +184,7 @@ https://github.com/d0dg3r/GitSyncMarks/blob/main/PRIVACY.md
 | `bookmarks` | Required to read and write the user's bookmarks for synchronization with GitHub. |
 | `storage` | Required to store extension settings (token, repo config) and sync state (timestamps, SHAs) locally in the browser. |
 | `alarms` | Required to schedule periodic background sync checks for remote changes. |
+| `notifications` | Required to show sync success or failure notifications (user-configurable). |
 | `host_permissions: https://api.github.com/*` | Required to communicate with the GitHub REST API to read and write bookmark files in the user's repository. |
 
 ### Data Use Disclosure

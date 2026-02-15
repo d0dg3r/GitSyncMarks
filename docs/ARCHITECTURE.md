@@ -19,6 +19,7 @@ flowchart TB
         subgraph Lib["lib/"]
             SE["sync-engine.js"]
             GH["github-api.js"]
+            GR["github-repos.js"]
             BS["bookmark-serializer.js"]
             PM["profile-manager.js"]
             OB["onboarding.js"]
@@ -166,6 +167,16 @@ First-time and new-profile setup when configuring GitHub:
 | `createMinimalBookmarkStructure(basePath)` | Build `_index.json` and role folders with `_order.json` |
 | `initializeRemoteFolder(api, basePath)` | Create minimal structure via `atomicCommit` |
 
+### `lib/github-repos.js` — GitHub Repos Folder
+
+Fetches the authenticated user's repos via GitHub REST API and maintains a "GitHubRepos (username)" folder:
+
+| Function | Description |
+|---|---|
+| `fetchCurrentUser(token)` | GET /user → `{ login }` for folder name |
+| `fetchUserRepos(token)` | GET /user/repos (paginated) → `{ full_name, html_url, private }` |
+| `updateGitHubReposFolder(token, parentRole, username?, onUsername?)` | Find/create folder, diff existing bookmarks with API list, add/remove/update; optional callback to persist username on first run |
+
 ### `lib/remote-fetch.js` — Remote File Map
 
 | Function | Description |
@@ -190,7 +201,8 @@ GitSyncMarks/
 │   ├── github-api.js             # GitHub REST + Git Data API
 │   ├── bookmark-serializer.js    # Per-file bookmark conversion
 │   ├── bookmark-replace.js       # Replace local bookmarks (used by sync + profile switch)
-│   ├── profile-manager.js        # Multiple profiles, switchProfile, migration
+│   ├── github-repos.js          # GitHub Repos folder (user repos as bookmarks)
+│   ├── profile-manager.js       # Multiple profiles, switchProfile, migration
 │   ├── onboarding.js            # checkPathSetup, initializeRemoteFolder
 │   ├── remote-fetch.js           # fetchRemoteFileMap
 │   ├── crypto.js                 # Token encryption (AES-256-GCM)

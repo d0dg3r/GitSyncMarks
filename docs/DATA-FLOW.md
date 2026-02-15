@@ -163,9 +163,15 @@ Root folders are mapped by role:
 
 When loading into Chrome (which has no `menu` root), `bookmarks/menu/` content is merged under Other Bookmarks as a subfolder "Bookmarks Menu" — so all bookmarks appear in both browsers.
 
+### GitHub Repos Folder (Optional)
+
+When enabled (`githubReposEnabled`), a folder "GitHubRepos (username)" is created under the configured root (toolbar/other/menu). It contains bookmarks to all user repos (public and private). Updated manually via "Update GitHub Repos"; changes are synced through the normal bookmark sync. On pull, if the folder is not in Git, it is preserved locally.
+
 ## Local Storage
 
 ### `chrome.storage.sync` — User Settings
+
+Per-profile keys (repo config, githubRepos) live in `profiles[id]`; others are global.
 
 | Key | Type | Default | Description |
 |---|---|---|---|
@@ -173,6 +179,9 @@ When loading into Chrome (which has no `menu` root), `bookmarks/menu/` content i
 | `repoName` | `string` | `""` | Repository name |
 | `branch` | `string` | `"main"` | Git branch |
 | `filePath` | `string` | `"bookmarks"` | Base path in repo |
+| `githubReposEnabled` | `boolean` | `false` | Show GitHub Repos folder |
+| `githubReposParent` | `string` | `"other"` | Folder position: `toolbar`, `other`, or `menu` |
+| `githubReposUsername` | `string` | `""` | GitHub username (set on first refresh, for folder name) |
 | `autoSync` | `boolean` | `true` | Auto-sync enabled |
 | `syncInterval` | `number` | `15` | Sync interval (minutes) |
 | `language` | `string` | `"auto"` | UI language |

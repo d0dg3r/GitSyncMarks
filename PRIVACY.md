@@ -51,6 +51,7 @@ All data is stored locally in your browser or in your own GitHub repository. Git
 | `bookmarks` | Read and write bookmarks for synchronization |
 | `storage` | Store extension settings and sync state locally |
 | `alarms` | Schedule periodic sync checks |
+| `notifications` | Show sync success or failure notifications (user-configurable) |
 | `host_permissions (api.github.com)` | Communicate with the GitHub API to read/write bookmark files |
 
 ## Open Source

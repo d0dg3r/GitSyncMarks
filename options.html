@@ -109,6 +109,36 @@
         </div>
       </section>
 
+      <section class="card" id="github-repos-card" style="display: none;">
+        <h2 data-i18n="options_githubReposTitle">GitHub Repos Folder</h2>
+        <p class="card-desc" data-i18n="options_githubReposDesc">Create a folder with bookmarks to all your GitHub repositories (public and private).</p>
+
+        <div class="form-group toggle-group">
+          <label for="github-repos-enabled" class="toggle-label">
+            <span data-i18n="options_githubReposEnabled">GitHub Repos folder</span>
+            <input type="checkbox" id="github-repos-enabled">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div id="github-repos-options" style="display: none;">
+          <div class="form-group">
+            <label for="github-repos-parent" data-i18n="options_githubReposParentLabel">Position</label>
+            <select id="github-repos-parent">
+              <option value="toolbar" data-i18n="options_githubReposParentToolbar">Bookmarks Bar</option>
+              <option value="other" data-i18n="options_githubReposParentOther">Other Bookmarks</option>
+              <option value="menu" data-i18n="options_githubReposParentMenu">Bookmarks Menu</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <button id="github-repos-refresh-btn" class="btn btn-secondary" data-i18n="options_githubReposRefresh">Update GitHub Repos</button>
+            <span id="github-repos-spinner" class="spinner" style="display: none;"></span>
+            <span id="github-repos-result" class="validation-result"></span>
+          </div>
+        </div>
+      </section>
+
       <div class="actions">
         <button id="save-github-btn" class="btn btn-primary" data-i18n="options_saveSettings">Save Settings</button>
         <span id="save-github-result" class="save-result"></span>

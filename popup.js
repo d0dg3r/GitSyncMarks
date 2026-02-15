@@ -249,6 +249,12 @@ function setLoading(loading) {
   profileSelect.disabled = loading;
   syncSpinner.style.display = loading ? 'inline-block' : 'none';
   syncText.textContent = loading ? getMessage('popup_syncing') : getMessage('popup_syncNow');
+  if (loading) {
+    statusMessage.textContent = getMessage('popup_syncing');
+    statusArea.classList.add('status-loading');
+  } else {
+    statusArea.classList.remove('status-loading');
+  }
 }
 
 async function handleAction(action) {
