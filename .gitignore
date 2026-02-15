@@ -21,3 +21,10 @@ docs/ANNOUNCEMENT_v2.2.0.md
 
 # Node (falls spaeter benoetigt)
 node_modules/
+
+# E2E test credentials (never commit)
+.env
+
+# Playwright E2E (generated)
+playwright-report/
+test-results/
