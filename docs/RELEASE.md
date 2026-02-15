@@ -97,12 +97,10 @@ This triggers the **GitHub Actions workflow** automatically.
 
 The GitHub Actions workflow will:
 1. Check out the code and detect prerelease (Pre-tags: `-pre.N`, `-alpha.N`, etc.)
-2. Build Chrome for E2E (directory only, no ZIP)
-3. Run E2E tests: **Pre-tags** = Smoke only; **Release-tags** = full suite (Connection, Sync)
-4. If tests pass: Build both ZIPs (`GitSyncMarks-vX.X.X-chrome.zip`, `GitSyncMarks-vX.X.X-firefox.zip`)
-5. Generate screenshots (release-tags only) and create the GitHub Release
+2. Build both ZIPs (`GitSyncMarks-vX.X.X-chrome.zip`, `GitSyncMarks-vX.X.X-firefox.zip`)
+3. Create the GitHub Release
 
-Failed E2E tests stop the workflow — ZIPs are only created and published when tests succeed.
+E2E tests and screenshot generation in CI are currently disabled (see [ROADMAP.md](../ROADMAP.md) backlog). Run them locally before tagging.
 
 You can monitor progress at: `https://github.com/d0dg3r/GitSyncMarks/actions`
 
@@ -143,22 +141,18 @@ It runs **only** when a tag matching `v*` (e.g., `v1.3.0`) is pushed.
 
 ### What it does
 
-1. **Setup:** Checkout, detect prerelease, install Node and Playwright
-2. **E2E phase:** Build Chrome (directory only, `build.sh chrome --no-zip`) → run E2E tests
-   - **Pre-tags** (`v2.2.0-pre.1`): Smoke tests only (no credentials)
-   - **Release-tags** (`v2.2.0`): Full suite (requires secrets; see below)
-3. **Build:** If E2E passes, `build.sh` creates both ZIP packages
-4. **Screenshots** (release-tags only), then **Create GitHub Release**
+1. **Setup:** Checkout, detect prerelease, install Node
+2. **Build:** `build.sh` creates both ZIP packages (Chrome and Firefox)
+3. **Release:** Create GitHub Release with both ZIPs attached
+
+E2E tests and screenshot generation are disabled in CI (see [ROADMAP.md](../ROADMAP.md) backlog).
 
 ```mermaid
 flowchart TD
     Tag["Push tag v*"] --> Checkout["Checkout, detect prerelease"]
-    Checkout --> Setup["Setup Node, Playwright"]
-    Setup --> BuildChrome["Build Chrome (--no-zip)"]
-    BuildChrome --> E2E["E2E: Smoke or Full"]
-    E2E --> BuildZIPs["Build both ZIPs"]
-    BuildZIPs --> Screenshots["Screenshots (release only)"]
-    Screenshots --> Release["Create GitHub Release"]
+    Checkout --> Setup["Setup Node"]
+    Setup --> Build["Build both ZIPs"]
+    Build --> Release["Create GitHub Release"]
 ```
 
 The Chrome package uses `manifest.json`, the Firefox package uses `manifest.firefox.json` (renamed to `manifest.json` during build).
@@ -180,19 +174,9 @@ README.md
 
 **Excluded** from the ZIP: `docs/`, `store-assets/`, `.github/`, `.gitignore`, `.git/`, `manifest.firefox.json`, `scripts/`, `package.json`
 
-### Required permissions and secrets
+### Required permissions
 
 The workflow needs `contents: write` permission to create releases (already configured).
-
-**Release-tags (full E2E):** Same secrets and variables as the E2E workflow. Without them, Connection and Sync tests are skipped. Configure in **Settings → Secrets and variables → Actions**:
-
-| Type     | Name                         | Purpose                    |
-|----------|------------------------------|----------------------------|
-| Secret   | `GITSYNCMARKS_TEST_PAT`      | GitHub PAT with `repo` scope |
-| Variable | `GITSYNCMARKS_TEST_REPO_OWNER` | Test repo owner            |
-| Variable | `GITSYNCMARKS_TEST_REPO`     | Test repo name             |
-
-See [e2e/README.md](../e2e/README.md) for setup. Pre-tags run only smoke tests and do not need these.
 
 ## Chrome Web Store Update Process
 

@@ -30,6 +30,8 @@ Contributions and ideas welcome — open an issue or pull request.
 
 | Idea | Description | Effort |
 |------|-------------|--------|
+| **CI E2E Tests** | E2E-Workflow in GitHub Actions reaktivieren (xvfb/headed, Service-Worker-Start). Aktuell lokal mit `npm run test:e2e`. | Medium |
+| **CI Screenshots** | Screenshot-Generierung und Push im Release-Workflow. Aktuell lokal mit `npm run screenshots`. | Small |
 | **Folder browse/select** | Select or browse the sync folder in the Git repo instead of typing the path manually | Small |
 | **Browser import files** | Automatically generate import files for common browsers (e.g. Netscape HTML) alongside README.md. Enables importing directly from the repo without the extension. | Medium |
 | **Open tabs sync** | Save open tabs to Git; full history in repo for restore/jump-back; default tabs per profile. | Large |

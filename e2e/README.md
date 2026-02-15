@@ -29,30 +29,7 @@ Sync tests require a private GitHub repo and a Personal Access Token.
 
 ## CI (GitHub Actions)
 
-**E2E workflow** (`.github/workflows/test-e2e.yml`): Runs on push/PR to main, develop, develop/** — full E2E suite.
-
-**Release workflow** (`.github/workflows/release.yml`): On tag push, E2E runs before the release is built:
-- **Pre-tags** (`v2.2.0-pre.1`): Smoke tests only (no secrets needed)
-- **Release-tags** (`v2.2.0`): Full suite (secrets required)
-
-To enable full sync tests in CI:
-
-1. Create the test repo (once, locally):  
-   `GITSYNCMARKS_TEST_PAT=ghp_xxx node scripts/create-test-repo.js`
-
-2. **PAT must have `repo` scope.** Without it, Connection and Sync tests fail with "missing repo scope".
-   - Classic token: [Create with repo scope](https://github.com/settings/tokens/new?scopes=repo)
-   - Fine-grained: Contents read/write, Metadata read
-
-3. In **Settings → Secrets and variables → Actions**:
-
-   | Type     | Name                         | Description                    |
-   |----------|------------------------------|--------------------------------|
-   | Secret   | `GITSYNCMARKS_TEST_PAT`      | GitHub PAT with `repo` scope   |
-   | Variable | `GITSYNCMARKS_TEST_REPO_OWNER` | Username or org               |
-   | Variable | `GITSYNCMARKS_TEST_REPO`     | `GitSyncMarks-test-sync`       |
-
-Without these, only smoke and invalid-token tests run; connection/sync tests are skipped. Release-tags need these for full E2E coverage in the release workflow.
+**E2E in CI is currently disabled** (see [ROADMAP.md](../ROADMAP.md) backlog). Tests run **locally only**. The E2E workflow (`.github/workflows/test-e2e.yml`) can be triggered manually via Actions → E2E Tests → Run workflow. The release workflow no longer runs E2E.
 
 ## Test Reports
 
