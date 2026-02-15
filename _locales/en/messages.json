@@ -97,6 +97,12 @@
   "options_profileAdd": {
     "message": "+ Add"
   },
+  "options_profileRename": {
+    "message": "Rename"
+  },
+  "options_profileRenamePrompt": {
+    "message": "New name for \"$1\":"
+  },
   "options_profileDelete": {
     "message": "Delete"
   },

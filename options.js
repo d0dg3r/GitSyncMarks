@@ -47,6 +47,7 @@ const STORAGE_KEYS = {
 // ---- DOM elements: Settings Tab ----
 const profileSelect = document.getElementById('profile-select');
 const profileAddBtn = document.getElementById('profile-add-btn');
+const profileRenameBtn = document.getElementById('profile-rename-btn');
 const profileDeleteBtn = document.getElementById('profile-delete-btn');
 const profileLimitEl = document.getElementById('profile-limit');
 const profileSpinner = document.getElementById('profile-spinner');
@@ -203,8 +204,9 @@ async function loadSettings() {
     profileSelect.appendChild(opt);
   }
 
-  profileDeleteBtn.style.display = Object.keys(profiles).length > 1 ? 'inline-block' : 'none';
   const profileCount = Object.keys(profiles).length;
+  profileRenameBtn.style.display = profileCount > 0 ? 'inline-block' : 'none';
+  profileDeleteBtn.style.display = profileCount > 1 ? 'inline-block' : 'none';
   profileLimitEl.textContent = getMessage('options_profilesLimit', [String(profileCount), String(MAX_PROFILES)]);
   profileAddBtn.disabled = profileCount >= MAX_PROFILES;
 
@@ -281,6 +283,7 @@ async function doProfileSwitch(targetId) {
   try {
     profileSelect.disabled = true;
     profileAddBtn.disabled = true;
+    profileRenameBtn.disabled = true;
     profileDeleteBtn.disabled = true;
     profileSpinner.style.display = 'inline-block';
     profileSwitchingMsg.textContent = getMessage('options_profileSwitching');
@@ -293,6 +296,7 @@ async function doProfileSwitch(targetId) {
   } finally {
     profileSelect.disabled = false;
     profileAddBtn.disabled = false;
+    profileRenameBtn.disabled = false;
     profileDeleteBtn.disabled = false;
     profileSpinner.style.display = 'none';
     profileSwitchingMsg.style.display = 'none';
@@ -347,6 +351,7 @@ profileAddBtn.addEventListener('click', async () => {
     const newId = await addProfile(name.trim());
     profileSelect.disabled = true;
     profileAddBtn.disabled = true;
+    profileRenameBtn.disabled = true;
     profileDeleteBtn.disabled = true;
     profileSpinner.style.display = 'inline-block';
     profileSwitchingMsg.textContent = getMessage('options_profileSwitching');
@@ -357,6 +362,7 @@ profileAddBtn.addEventListener('click', async () => {
     } finally {
       profileSelect.disabled = false;
       profileAddBtn.disabled = false;
+      profileRenameBtn.disabled = false;
       profileDeleteBtn.disabled = false;
       profileSpinner.style.display = 'none';
       profileSwitchingMsg.style.display = 'none';
@@ -364,6 +370,7 @@ profileAddBtn.addEventListener('click', async () => {
   } catch (err) {
     profileSelect.disabled = false;
     profileAddBtn.disabled = false;
+    profileRenameBtn.disabled = false;
     profileDeleteBtn.disabled = false;
     profileSpinner.style.display = 'none';
     profileSwitchingMsg.style.display = 'none';
@@ -372,17 +379,36 @@ profileAddBtn.addEventListener('click', async () => {
 });
 
 profileDeleteBtn.addEventListener('click', async () => {
-  const activeId = await getActiveProfileId();
+  const selectedId = profileSelect.value;
   const profiles = await getProfiles();
-  const profile = profiles[activeId];
+  const profile = profiles[selectedId];
   if (!profile || Object.keys(profiles).length <= 1) return;
 
-  const confirmed = confirm(getMessage('options_profileDeleteConfirm', [profile.name || activeId]));
+  const confirmed = confirm(getMessage('options_profileDeleteConfirm', [profile.name || selectedId]));
   if (!confirmed) return;
 
   try {
-    await deleteProfile(activeId);
+    await deleteProfile(selectedId);
     await loadSettings();
+  } catch (err) {
+    alert(getMessage('options_error', [err.message]));
+  }
+});
+
+profileRenameBtn.addEventListener('click', async () => {
+  const selectedId = profileSelect.value;
+  const profiles = await getProfiles();
+  const profile = profiles[selectedId];
+  if (!profile) return;
+
+  const currentName = profile.name || selectedId;
+  const newName = prompt(getMessage('options_profileRenamePrompt', [currentName]), currentName);
+  if (!newName || !newName.trim()) return;
+
+  try {
+    await saveProfile(selectedId, { name: newName.trim() });
+    await loadSettings();
+    showSaveResult(getMessage('options_settingsSaved'), 'success');
   } catch (err) {
     alert(getMessage('options_error', [err.message]));
   }
