@@ -195,6 +195,135 @@ body {
   margin-bottom: 0;
 }
 
+/* ---- GitHub Tab: compact to match Backup/Automation/Help ---- */
+#tab-github .card {
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+
+#tab-github .card h2 {
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  font-size: 16px;
+}
+
+#tab-github .card-desc {
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+#tab-github .form-group {
+  margin-bottom: 12px;
+}
+
+#tab-github .form-group small {
+  margin-top: 4px;
+}
+
+#tab-github .form-group label {
+  font-size: 13px;
+}
+
+#tab-github .profile-selector-card {
+  margin-bottom: 12px;
+}
+
+#tab-github .profile-main-row {
+  margin-bottom: 8px;
+  gap: 10px;
+}
+
+#tab-github .profile-options {
+  margin-bottom: 8px;
+}
+
+#tab-github .profile-switch-confirm {
+  padding: 8px 12px;
+  gap: 10px;
+}
+
+#tab-github #github-repos-card .form-group.toggle-group {
+  margin-bottom: 10px;
+}
+
+#tab-github #github-repos-options .form-group {
+  margin-bottom: 10px;
+}
+
+#tab-github .actions {
+  margin-top: 4px;
+}
+
+/* ---- Sync Tab: compact to match GitHub ---- */
+#tab-sync .card {
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+
+#tab-sync .card h2 {
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  font-size: 16px;
+}
+
+#tab-sync .form-group {
+  margin-bottom: 12px;
+}
+
+#tab-sync .form-group small {
+  margin-top: 4px;
+}
+
+#tab-sync .form-group label {
+  font-size: 13px;
+}
+
+#tab-sync #sync-custom-fields .form-group {
+  margin-bottom: 12px;
+}
+
+#tab-sync .actions {
+  margin-top: 4px;
+}
+
+/* ---- About Tab: compact ---- */
+#tab-about .about-card.card {
+  padding: 16px 20px;
+  margin-bottom: 0;
+}
+
+#tab-about .about-header {
+  margin-bottom: 14px;
+  gap: 12px;
+}
+
+#tab-about .about-meta {
+  padding-top: 12px;
+}
+
+#tab-about .about-author {
+  margin-bottom: 12px;
+}
+
+#tab-about .about-contributors-block {
+  margin-bottom: 14px;
+}
+
+#tab-about .about-contributors-block h3,
+#tab-about .about-links-block h3 {
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+#tab-about .about-links-block {
+  padding-top: 12px;
+  margin-top: 12px;
+}
+
+#tab-about .about-links {
+  gap: 6px;
+}
+
 /* Profile selector */
 .profile-selector-card {
   margin-bottom: 20px;
