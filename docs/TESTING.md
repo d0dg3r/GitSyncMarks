@@ -19,7 +19,11 @@ npm run test:e2e:report   # Open HTML report after a run
 
 **Sync tests** require a private test repo and credentials — see [e2e/README.md](../e2e/README.md) if present, or `.env.example`.
 
-**CI (GitHub Actions):** E2E runs on push/PR. Configure 1 secret (`GITSYNCMARKS_TEST_PAT`) and 2 variables (`GITSYNCMARKS_TEST_REPO_OWNER`, `GITSYNCMARKS_TEST_REPO`) in repo Settings → Secrets and variables → Actions. See [e2e/README.md](../e2e/README.md).
+**CI (GitHub Actions):**
+- **E2E workflow** (`.github/workflows/test-e2e.yml`): Runs on push/PR to main, develop, develop/** — full E2E suite.
+- **Release workflow** (`.github/workflows/release.yml`): Runs on tag push. E2E before release: **Pre-tags** = Smoke only; **Release-tags** = full suite. ZIPs are built only after tests pass.
+
+Configure 1 secret (`GITSYNCMARKS_TEST_PAT`) and 2 variables (`GITSYNCMARKS_TEST_REPO_OWNER`, `GITSYNCMARKS_TEST_REPO`) in repo Settings → Secrets and variables → Actions for full sync tests. See [e2e/README.md](../e2e/README.md).
 
 ---
 

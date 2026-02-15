@@ -96,9 +96,13 @@ This triggers the **GitHub Actions workflow** automatically.
 ### 4. Wait for the workflow
 
 The GitHub Actions workflow will:
-1. Check out the code
-2. Create a ZIP file (`GitSyncMarks-v1.4.0.zip`) containing all extension files
-3. Create a GitHub Release with the ZIP as a download asset
+1. Check out the code and detect prerelease (Pre-tags: `-pre.N`, `-alpha.N`, etc.)
+2. Build Chrome for E2E (directory only, no ZIP)
+3. Run E2E tests: **Pre-tags** = Smoke only; **Release-tags** = full suite (Connection, Sync)
+4. If tests pass: Build both ZIPs (`GitSyncMarks-vX.X.X-chrome.zip`, `GitSyncMarks-vX.X.X-firefox.zip`)
+5. Generate screenshots (release-tags only) and create the GitHub Release
+
+Failed E2E tests stop the workflow — ZIPs are only created and published when tests succeed.
 
 You can monitor progress at: `https://github.com/d0dg3r/GitSyncMarks/actions`
 
@@ -139,16 +143,22 @@ It runs **only** when a tag matching `v*` (e.g., `v1.3.0`) is pushed.
 
 ### What it does
 
-The build script (`scripts/build.sh`) generates **separate packages** for Chrome and Firefox:
+1. **Setup:** Checkout, detect prerelease, install Node and Playwright
+2. **E2E phase:** Build Chrome (directory only, `build.sh chrome --no-zip`) → run E2E tests
+   - **Pre-tags** (`v2.2.0-pre.1`): Smoke tests only (no credentials)
+   - **Release-tags** (`v2.2.0`): Full suite (requires secrets; see below)
+3. **Build:** If E2E passes, `build.sh` creates both ZIP packages
+4. **Screenshots** (release-tags only), then **Create GitHub Release**
 
 ```mermaid
-flowchart LR
-    Tag["Push tag v*"] --> Checkout["Checkout code"]
-    Checkout --> Build["Run build.sh"]
-    Build --> ChromeZIP["GitSyncMarks-vX.Y.Z-chrome.zip"]
-    Build --> FirefoxZIP["GitSyncMarks-vX.Y.Z-firefox.zip"]
-    ChromeZIP --> Release["Create GitHub Release\nwith both ZIPs"]
-    FirefoxZIP --> Release
+flowchart TD
+    Tag["Push tag v*"] --> Checkout["Checkout, detect prerelease"]
+    Checkout --> Setup["Setup Node, Playwright"]
+    Setup --> BuildChrome["Build Chrome (--no-zip)"]
+    BuildChrome --> E2E["E2E: Smoke or Full"]
+    E2E --> BuildZIPs["Build both ZIPs"]
+    BuildZIPs --> Screenshots["Screenshots (release only)"]
+    Screenshots --> Release["Create GitHub Release"]
 ```
 
 The Chrome package uses `manifest.json`, the Firefox package uses `manifest.firefox.json` (renamed to `manifest.json` during build).
@@ -170,16 +180,19 @@ README.md
 
 **Excluded** from the ZIP: `docs/`, `store-assets/`, `.github/`, `.gitignore`, `.git/`, `manifest.firefox.json`, `scripts/`, `package.json`
 
-### Required permissions
+### Required permissions and secrets
 
-The workflow needs `contents: write` permission to create releases:
+The workflow needs `contents: write` permission to create releases (already configured).
 
-```yaml
-permissions:
-  contents: write
-```
+**Release-tags (full E2E):** Same secrets and variables as the E2E workflow. Without them, Connection and Sync tests are skipped. Configure in **Settings → Secrets and variables → Actions**:
 
-This is already configured in the workflow file.
+| Type     | Name                         | Purpose                    |
+|----------|------------------------------|----------------------------|
+| Secret   | `GITSYNCMARKS_TEST_PAT`      | GitHub PAT with `repo` scope |
+| Variable | `GITSYNCMARKS_TEST_REPO_OWNER` | Test repo owner            |
+| Variable | `GITSYNCMARKS_TEST_REPO`     | Test repo name             |
+
+See [e2e/README.md](../e2e/README.md) for setup. Pre-tags run only smoke tests and do not need these.
 
 ## Chrome Web Store Update Process
 
@@ -242,4 +255,4 @@ Check the Actions tab on GitHub for error logs. Common issues:
 
 ### ZIP doesn't include new files
 
-If you added new top-level files or directories, update the `zip` command in `.github/workflows/release.yml` to include them.
+The ZIPs are created by `scripts/build.sh`. If you added new top-level files or directories, add them to the `SHARED_FILES` or `SHARED_DIRS` arrays in `scripts/build.sh`.

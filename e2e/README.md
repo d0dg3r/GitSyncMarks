@@ -29,7 +29,13 @@ Sync tests require a private GitHub repo and a Personal Access Token.
 
 ## CI (GitHub Actions)
 
-E2E tests run on push/PR to main and develop. To enable full sync tests in CI:
+**E2E workflow** (`.github/workflows/test-e2e.yml`): Runs on push/PR to main, develop, develop/** — full E2E suite.
+
+**Release workflow** (`.github/workflows/release.yml`): On tag push, E2E runs before the release is built:
+- **Pre-tags** (`v2.2.0-pre.1`): Smoke tests only (no secrets needed)
+- **Release-tags** (`v2.2.0`): Full suite (secrets required)
+
+To enable full sync tests in CI:
 
 1. Create the test repo (once, locally):  
    `GITSYNCMARKS_TEST_PAT=ghp_xxx node scripts/create-test-repo.js`
@@ -46,7 +52,7 @@ E2E tests run on push/PR to main and develop. To enable full sync tests in CI:
    | Variable | `GITSYNCMARKS_TEST_REPO_OWNER` | Username or org               |
    | Variable | `GITSYNCMARKS_TEST_REPO`     | `GitSyncMarks-test-sync`       |
 
-Without these, only smoke and invalid-token tests run; connection/sync tests are skipped.
+Without these, only smoke and invalid-token tests run; connection/sync tests are skipped. Release-tags need these for full E2E coverage in the release workflow.
 
 ## Test Reports
 

@@ -217,7 +217,8 @@ GitSyncMarks/
 │   └── build.sh                  # Build Chrome + Firefox packages
 ├── package.json                  # npm scripts for building
 ├── .github/workflows/
-│   ├── release.yml               # CI: build + release on tag
+│   ├── test-e2e.yml              # E2E tests on push/PR to main, develop
+│   ├── release.yml               # CI: E2E (Pre=Smoke, Release=Full), build ZIPs, release on tag
 │   └── add-bookmark.yml          # Automation: add bookmark via dispatch
 ├── docs/                         # Architecture documentation
 ├── store-assets/                 # Chrome Web Store assets

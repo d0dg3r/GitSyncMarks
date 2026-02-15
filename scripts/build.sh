@@ -4,9 +4,10 @@
 # Creates distributable ZIP packages for Chrome and Firefox.
 #
 # Usage:
-#   ./scripts/build.sh           # Build both Chrome and Firefox
-#   ./scripts/build.sh chrome    # Build Chrome only
-#   ./scripts/build.sh firefox   # Build Firefox only
+#   ./scripts/build.sh              # Build both Chrome and Firefox
+#   ./scripts/build.sh chrome       # Build Chrome only
+#   ./scripts/build.sh firefox      # Build Firefox only
+#   ./scripts/build.sh chrome --no-zip  # Build Chrome dir only, no ZIP (for E2E)
 #
 
 set -euo pipefail
@@ -94,10 +95,13 @@ build_chrome() {
   cp "$ROOT_DIR/manifest.json" "$chrome_dir/manifest.json"
   sed -i 's/"version": "[^"]*"/"version": "'"$VERSION"'"/' "$chrome_dir/manifest.json"
 
-  # Create ZIP
-  (cd "$chrome_dir" && zip -r "$BUILD_DIR/$zip_name" . -x ".*") > /dev/null
-
-  log "Chrome package: build/$zip_name"
+  # Create ZIP (unless --no-zip)
+  if [[ -z "${NO_ZIP:-}" ]]; then
+    (cd "$chrome_dir" && zip -r "$BUILD_DIR/$zip_name" . -x ".*") > /dev/null
+    log "Chrome package: build/$zip_name"
+  else
+    log "Chrome dir: build/chrome/ (no ZIP)"
+  fi
 }
 
 # ---- Build Firefox ----
@@ -118,15 +122,20 @@ build_firefox() {
   cp "$ROOT_DIR/manifest.firefox.json" "$firefox_dir/manifest.json"
   sed -i 's/"version": "[^"]*"/"version": "'"$VERSION"'"/' "$firefox_dir/manifest.json"
 
-  # Create ZIP
-  (cd "$firefox_dir" && zip -r "$BUILD_DIR/$zip_name" . -x ".*") > /dev/null
-
-  log "Firefox package: build/$zip_name"
+  # Create ZIP (unless --no-zip)
+  if [[ -z "${NO_ZIP:-}" ]]; then
+    (cd "$firefox_dir" && zip -r "$BUILD_DIR/$zip_name" . -x ".*") > /dev/null
+    log "Firefox package: build/$zip_name"
+  else
+    log "Firefox dir: build/firefox/ (no ZIP)"
+  fi
 }
 
 # ---- Main ----
 
 TARGET="${1:-all}"
+NO_ZIP=""
+[[ "${2:-}" == "--no-zip" ]] && NO_ZIP=1
 
 mkdir -p "$BUILD_DIR"
 
