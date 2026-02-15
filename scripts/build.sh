@@ -20,6 +20,15 @@ BUILD_DIR="$ROOT_DIR/build"
 # Read version from manifest.json
 VERSION=$(grep '"version"' "$ROOT_DIR/manifest.json" | head -1 | sed 's/.*: *"\(.*\)".*/\1/')
 
+# Resolve display version: tag (v2.2.0-pre.8 → 2.2.0-pre.8), or manifest + -dev
+if [[ -n "${RELEASE:-}" ]]; then
+  : # VERSION stays from manifest
+elif TAG=$(cd "$ROOT_DIR" && git describe --tags --exact-match 2>/dev/null); then
+  VERSION="${TAG#v}"
+else
+  VERSION="${VERSION}-dev"
+fi
+
 # Shared files to include in both packages
 SHARED_FILES=(
   background.js
@@ -83,6 +92,7 @@ build_chrome() {
 
   # Chrome uses the standard manifest.json
   cp "$ROOT_DIR/manifest.json" "$chrome_dir/manifest.json"
+  sed -i 's/"version": "[^"]*"/"version": "'"$VERSION"'"/' "$chrome_dir/manifest.json"
 
   # Create ZIP
   (cd "$chrome_dir" && zip -r "$BUILD_DIR/$zip_name" . -x ".*") > /dev/null
@@ -106,6 +116,7 @@ build_firefox() {
 
   # Firefox uses the Firefox-specific manifest
   cp "$ROOT_DIR/manifest.firefox.json" "$firefox_dir/manifest.json"
+  sed -i 's/"version": "[^"]*"/"version": "'"$VERSION"'"/' "$firefox_dir/manifest.json"
 
   # Create ZIP
   (cd "$firefox_dir" && zip -r "$BUILD_DIR/$zip_name" . -x ".*") > /dev/null
