@@ -2,15 +2,13 @@
  * Sync tests: Push and Pull.
  * Requires: GITSYNCMARKS_TEST_PAT, GITSYNCMARKS_TEST_REPO_OWNER, GITSYNCMARKS_TEST_REPO
  *
- * Sync three-way merge and Conflict (skipped: hard to trigger same-file conflict).
+ * Sync three-way merge.
  */
 
 const { test } = require('./fixtures/extension.js');
 const { resetTestRepo } = require('./helpers/repo-reset.js');
 const {
   addBookmarkToRepo,
-  updateBookmarkInRepo,
-  getFirstBookmarkFileInToolbar,
   hasBookmarkFiles,
   hasMinimalStructure,
   countBookmarkFilesInToolbar,
@@ -127,64 +125,6 @@ test.describe('Sync', () => {
     // 5. Verify both local and remote bookmarks merged into repo (count increased)
     const countAfterSync = await countBookmarkFilesInToolbar();
     test.expect(countAfterSync).toBeGreaterThan(countAfterPush);
-  });
-
-  test.skip('Conflict detection and resolution', async ({
-    page,
-    context,
-    extensionId,
-  }) => {
-    // 1. Add bookmark via API, configure, pull (ensures we have a known file)
-    await addBookmarkToRepo('E2E Conflict Test', 'https://e2e-conflict.example.com');
-    await configureExtension(page, extensionId);
-
-    const popup = await page.context().newPage();
-    await popup.goto(`chrome-extension://${extensionId}/popup.html`);
-    await popup.waitForLoadState('networkidle');
-    await popup.locator('#pull-btn').click();
-    await test.expect(popup.locator('#status-message')).toContainText(/success|ready|synced|loaded from github/i, { timeout: 15000 });
-
-    // 2. Get bookmark filename and modify remotely
-    const filePath = await getFirstBookmarkFileInToolbar();
-    test.expect(filePath).toBeTruthy();
-    await updateBookmarkInRepo(filePath, {
-      title: 'Remote Modified Title',
-      url: 'https://e2e-conflict.example.com',
-    });
-
-    // 3. Modify same bookmark locally (options page has chrome.bookmarks)
-    await page.goto(`chrome-extension://${extensionId}/options.html`);
-    await page.waitForLoadState('networkidle');
-    await page.evaluate(async () => {
-      const tree = await chrome.bookmarks.getTree();
-      const findBookmark = (nodes) => {
-        for (const n of nodes) {
-          if (n.url && n.url.includes('e2e-conflict.example.com')) return n;
-          if (n.children) {
-            const found = findBookmark(n.children);
-            if (found) return found;
-          }
-        }
-        return null;
-      };
-      const bm = findBookmark(tree);
-      if (bm) await chrome.bookmarks.update(bm.id, { title: 'Local Modified Title' });
-    });
-
-    // 4. Trigger sync -> conflict
-    await popup.goto(`chrome-extension://${extensionId}/popup.html`);
-    await popup.waitForLoadState('networkidle');
-    await popup.locator('#sync-btn').click();
-
-    // 5. Verify conflict box visible (sync returns conflict, popup shows conflict UI)
-    await test.expect(popup.locator('#conflict-box')).toBeVisible({ timeout: 15000 });
-    await test.expect(popup.locator('#conflict-box')).toContainText(/conflict|Conflict/i);
-
-    // 6. Resolve: GitHub → Local
-    await popup.locator('#force-pull-btn').click();
-    await test.expect(popup.locator('#conflict-box')).not.toBeVisible({ timeout: 10000 });
-    await test.expect(popup.locator('#status-message')).toContainText(/success|ready|synced|loaded from github/i);
-    await popup.close();
   });
   });
 });
