@@ -11,6 +11,9 @@ Open items and next steps for further development. Updated each session.
 - **Profile Add** – Auto-switch to new profile on add
 - **Profile Switch UX** – Inline confirmation, toggle "Switch without confirmation", redesigned layout
 - **Popup Overhaul** – Header with profile dropdown; simplified status area; theme-aware spinner; compact footer; shorter pull success message ("Loaded from GitHub.")
+- **Keyboard Shortcuts** – Quick sync (Ctrl+Shift+.), open options (Ctrl+Shift+,)
+- **Help Tab** – Shortcuts and main features in options (before About)
+- **Options Header** – Language label removed, dropdown only
 
 ---
 

@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Onboarding**: Test Connection checks the target path; offers to create the folder structure when empty, or to pull existing bookmarks when found
 - **Profile Add**: When adding a new profile, automatically switch to it for immediate configuration
 - **Spinner**: Loading indicators during profile switch and Test Connection
+- **Keyboard shortcuts**: Quick sync (Ctrl+Shift+.), open options (Ctrl+Shift+,); customizable in browser extension settings
+- **Help tab**: New tab in options with keyboard shortcuts and main features overview (popup, profiles, auto-sync, conflicts)
 
 ### Changed
 
@@ -20,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Profile layout**: Redesigned Profile card (label, dropdown, actions, toggle, inline confirmation)
 - **Popup**: Restructured layout — profile dropdown in header; simplified status area (status line + meta); theme-aware spinner; compact footer; auto-sync and countdown on one line
 - **Pull success message**: Shortened to "Loaded from GitHub." / "Von GitHub geladen."
+- **Options header**: Language label removed; dropdown only
 
 ## [2.1.2] - 2025-02-13
 
