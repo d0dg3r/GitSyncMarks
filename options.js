@@ -737,6 +737,9 @@ importSettingsBtn.addEventListener('click', async () => {
           repo: p.repo || '',
           branch: p.branch || 'main',
           filePath: p.filePath || 'bookmarks',
+          githubReposEnabled: p.githubReposEnabled ?? false,
+          githubReposParent: p.githubReposParent ?? 'other',
+          githubReposUsername: p.githubReposUsername ?? '',
         };
         if (p.token) {
           profileTokens[id] = await encryptToken(p.token);
@@ -754,6 +757,7 @@ importSettingsBtn.addEventListener('click', async () => {
         notificationsMode: settings.notificationsMode || 'all',
         language: settings.language || 'auto',
         theme: settings.theme || 'auto',
+        profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
       });
       await chrome.storage.local.set({ profileTokens });
     } else {
@@ -782,6 +786,7 @@ importSettingsBtn.addEventListener('click', async () => {
         notificationsMode: settings.notificationsMode || 'all',
         language: settings.language || 'auto',
         theme: settings.theme || 'auto',
+        profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
       });
       await chrome.storage.local.set({ profileTokens });
     }
