@@ -118,6 +118,9 @@
   "options_profileSwitchCancelBtn": {
     "message": "Abbrechen"
   },
+  "options_profilesLimit": {
+    "message": "$1/$2 Profile"
+  },
   "options_githubConnection": {
     "message": "GitHub-Verbindung"
   },

@@ -219,6 +219,11 @@ body {
   color: var(--color-text-secondary);
   margin: 0;
 }
+.profile-limit {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  min-width: 2.5em;
+}
 .profile-actions {
   display: flex;
   align-items: center;

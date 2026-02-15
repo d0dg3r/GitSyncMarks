@@ -22,6 +22,7 @@ import {
   deleteProfile,
   switchProfile,
   migrateToProfiles,
+  MAX_PROFILES,
 } from './lib/profile-manager.js';
 
 const STORAGE_KEYS = {
@@ -47,6 +48,7 @@ const STORAGE_KEYS = {
 const profileSelect = document.getElementById('profile-select');
 const profileAddBtn = document.getElementById('profile-add-btn');
 const profileDeleteBtn = document.getElementById('profile-delete-btn');
+const profileLimitEl = document.getElementById('profile-limit');
 const profileSpinner = document.getElementById('profile-spinner');
 const profileSwitchingMsg = document.getElementById('profile-switching-msg');
 const profileSwitchWithoutConfirmInput = document.getElementById('profile-switch-without-confirm');
@@ -202,6 +204,9 @@ async function loadSettings() {
   }
 
   profileDeleteBtn.style.display = Object.keys(profiles).length > 1 ? 'inline-block' : 'none';
+  const profileCount = Object.keys(profiles).length;
+  profileLimitEl.textContent = getMessage('options_profilesLimit', [String(profileCount), String(MAX_PROFILES)]);
+  profileAddBtn.disabled = profileCount >= MAX_PROFILES;
 
   // Load active profile's GitHub settings
   const profileSettings = await getProfileSettings(activeId);

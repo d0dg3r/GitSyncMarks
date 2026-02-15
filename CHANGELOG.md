@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2025-02-15
+
 ### Added
 
 - **GitHub Repos folder**: Auto-generated folder with all user repos as bookmarks (public/private); toggle, configurable position (toolbar/other/menu), manual refresh; folder preserved on pull when not in Git; changes synced via normal bookmark sync
@@ -17,6 +19,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Keyboard shortcuts**: Quick sync (Ctrl+Shift+.), open options (Ctrl+Shift+,); customizable in browser extension settings
 - **Help tab**: New tab in options with keyboard shortcuts and main features overview (popup, profiles, auto-sync, conflicts)
 - **French and Spanish**: New languages (Français, Español) in the language selector
+- **Profile limit display**: Shows current/max profiles (e.g. 3/10) in the Profile card; Add button disabled when limit reached
+
+### Fixed
+
+- **Settings import**: Restores `profileSwitchWithoutConfirm` and per-profile GitHub Repos fields (`githubReposEnabled`, `githubReposParent`, `githubReposUsername`) on round-trip
 
 ### Changed
 
@@ -129,7 +136,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release: bookmark sync with GitHub
 
-[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.1.2...HEAD
+[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.1.2...v2.2.0
 [2.1.1]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.0.0...v2.0.1
