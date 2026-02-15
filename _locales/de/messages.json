@@ -578,6 +578,12 @@
     "message": "Diskussionen"
   },
 
+  "options_backupTitle": {
+    "message": "Backup"
+  },
+  "options_backupIntro": {
+    "message": "Lesezeichen und Einstellungen als JSON exportieren oder importieren."
+  },
   "options_bookmarksCard": {
     "message": "Lesezeichen"
   },
@@ -588,7 +594,7 @@
     "message": "Lesezeichen exportieren"
   },
   "options_exportBookmarksDesc": {
-    "message": "Lesezeichen als JSON-Datei sichern."
+    "message": "Alle Lesezeichen als JSON."
   },
   "options_exportBtn": {
     "message": "Export"
@@ -606,16 +612,16 @@
     "message": "Einstellungen exportieren"
   },
   "options_exportSettingsDesc": {
-    "message": "GitHub-Verbindung und Sync-Einstellungen sichern."
+    "message": "GitHub-Verbindung und Sync (inkl. Profile)."
   },
   "options_importSettings": {
     "message": "Einstellungen importieren"
   },
   "options_importBookmarksWarning": {
-    "message": "Der Import ersetzt alle aktuellen Lesezeichen. Dies kann nicht rückgängig gemacht werden."
+    "message": "Ersetzt alle Lesezeichen. Unwiderruflich."
   },
   "options_importSettingsWarning": {
-    "message": "Der Import ersetzt alle aktuellen Einstellungen. Die Seite wird danach neu geladen."
+    "message": "Ersetzt alle Einstellungen. Seite lädt neu."
   },
   "options_selectFile": {
     "message": "Datei auswählen..."
@@ -637,48 +643,21 @@
     "message": "Lesezeichen über Git hinzufügen"
   },
   "options_automationIntro": {
-    "message": "Du kannst Lesezeichen direkt im Git-Repository anlegen. Die Extension erkennt sie beim nächsten Sync und normalisiert sie automatisch."
+    "message": "Lesezeichen direkt im Repository anlegen. Die Extension erkennt sie beim nächsten Sync und normalisiert Dateinamen automatisch."
   },
   "options_automationFormatTitle": {
     "message": "Dateiformat"
   },
-  "options_automationFormatDesc": {
-    "message": "Erstelle eine JSON-Datei mit beliebigem Namen in einem der Lesezeichen-Ordner:"
-  },
-  "options_automationFolders": {
-    "message": "Verfügbare Stammordner im Repository:"
-  },
-  "options_automationFolderToolbar": {
-    "message": "Lesezeichen-Symbolleiste"
-  },
-  "options_automationFolderOther": {
-    "message": "Weitere Lesezeichen"
-  },
-  "options_automationFolderMenu": {
-    "message": "Lesezeichen-Menü (Firefox)"
-  },
-  "options_automationFolderMobile": {
-    "message": "Mobile Lesezeichen"
-  },
-  "options_automationNormalize": {
-    "message": "Beim nächsten Sync wird die Extension die Datei in das kanonische Format umbenennen und in die Ordner-Reihenfolge einfügen."
+  "options_automationFoldersLabel": {
+    "message": "Ordner:"
   },
   "options_automationGithubActionTitle": {
     "message": "GitHub Action"
   },
-  "options_automationGithubActionDesc": {
-    "message": "Ein GitHub Action Workflow ist enthalten, um Lesezeichen über die GitHub-Oberfläche oder CLI hinzuzufügen. Kopiere <code>.github/workflows/add-bookmark.yml</code> in dein Lesezeichen-Repository."
-  },
-  "options_automationGithubActionUsage": {
-    "message": "Nutzung über GitHub CLI"
+  "options_automationWorkflowLink": {
+    "message": "add-bookmark.yml in dein Repo kopieren"
   },
   "options_automationGithubActionParams": {
-    "message": "folder = Root (toolbar/other/menu/mobile); path = optionaler Unterordner. base-path nutzen, wenn dein Dateipfad vom Standard \"bookmarks\" abweicht."
-  },
-  "options_automationGithubActionWeb": {
-    "message": "Nutzung über die GitHub-Weboberfläche"
-  },
-  "options_automationGithubActionWebDesc": {
-    "message": "Gehe zu deinem Repository → Actions → \"Add Bookmark\" → Workflow ausführen. Fülle URL, Titel und Zielordner aus."
+    "message": "folder = Root; path = optionaler Unterordner; base-path bei abweichendem Dateipfad"
   }
 }

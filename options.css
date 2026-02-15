@@ -547,45 +547,39 @@ input[type="checkbox"]:checked + .toggle-slider::after {
 
 /* Backup Tab */
 
-.backup-block {
-  margin-bottom: 24px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid var(--color-border);
+.backup-card .card-desc {
+  margin-bottom: 20px;
 }
 
-.backup-block:last-child {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  border-bottom: none;
+.backup-card .backup-block.automation-block {
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border-secondary);
 }
 
-.backup-block-title {
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0 0 4px 0;
-  color: var(--color-text);
+.backup-card .backup-block.automation-block:first-of-type {
+  padding-top: 0;
+  border-top: none;
 }
 
 .backup-block-desc {
   font-size: 13px;
   color: var(--color-text-secondary);
-  margin: 0 0 12px 0;
+  margin: 0 0 8px 0;
   line-height: 1.4;
 }
 
-.backup-block-import .backup-block-desc {
-  margin-bottom: 0;
+.backup-warning {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin: 0 0 8px 0;
 }
 
 .backup-actions {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 12px;
-}
-
-.backup-block:not(.backup-block-import) .backup-actions {
-  margin-top: 0;
 }
 
 .backup-file-picker {
@@ -593,7 +587,7 @@ input[type="checkbox"]:checked + .toggle-slider::after {
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
-  margin: 12px 0;
+  margin: 6px 0 8px;
 }
 
 .backup-file-input {
@@ -634,6 +628,11 @@ input[type="checkbox"]:checked + .toggle-slider::after {
   font-weight: 500;
   margin-top: 8px;
   min-height: 18px;
+}
+
+.backup-block .ie-result {
+  margin-top: 4px;
+  min-height: 16px;
 }
 
 .ie-result.success {
@@ -762,6 +761,66 @@ input[type="checkbox"]:checked + .toggle-slider::after {
 }
 
 /* ---- Automation Tab ---- */
+
+.automation-card .card-desc {
+  margin-bottom: 20px;
+}
+
+.automation-block {
+  margin-bottom: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border-secondary);
+}
+
+.automation-block:first-of-type {
+  padding-top: 0;
+  border-top: none;
+}
+
+.automation-block-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.automation-folders {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin: 8px 0 0;
+}
+
+.automation-folders code {
+  background: var(--color-code-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-right: 4px;
+  font-size: 12px;
+}
+
+.automation-workflow-link {
+  margin-bottom: 10px;
+}
+
+.automation-workflow-link a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.automation-workflow-link a:hover {
+  text-decoration: underline;
+}
+
+.code-block-sm {
+  padding: 8px 12px;
+  margin: 6px 0 10px;
+  font-size: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
 
 .code-block {
   background: var(--color-bg-tertiary);

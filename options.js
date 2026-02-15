@@ -342,6 +342,7 @@ profileSwitchWithoutConfirmInput.addEventListener('change', async () => {
     const activeId = await getActiveProfileId();
     profileSelect.value = activeId;
   }
+  await saveSettings();
 });
 
 profileAddBtn.addEventListener('click', async () => {
@@ -453,13 +454,15 @@ toggleTokenBtn.addEventListener('click', () => {
   tokenInput.type = tokenInput.type === 'password' ? 'text' : 'password';
 });
 
-// GitHub Repos: toggle options visibility
+// GitHub Repos: toggle options visibility + auto-save on change
 githubReposEnabledInput.addEventListener('change', () => {
   githubReposOptions.style.display = githubReposEnabledInput.checked ? 'block' : 'none';
+  saveSettings();
 });
 
-// GitHub Repos: refresh button
+// GitHub Repos: refresh button (saves first so current form state is persisted)
 githubReposRefreshBtn.addEventListener('click', async () => {
+  await saveSettings();
   const token = tokenInput.value.trim();
   const activeId = await getActiveProfileId();
   const profiles = await getProfiles();
@@ -490,6 +493,7 @@ githubReposRefreshBtn.addEventListener('click', async () => {
 });
 
 validateBtn.addEventListener('click', async () => {
+  await saveSettings();
   const token = tokenInput.value.trim();
   const owner = ownerInput.value.trim();
   const repo = repoInput.value.trim();
@@ -626,6 +630,11 @@ function showSaveResult(message, type) {
 
 saveGitHubBtn.addEventListener('click', saveSettings);
 saveSyncBtn.addEventListener('click', saveSettings);
+
+// Switches: auto-save on change (user often forgets to click Save)
+autoSyncInput.addEventListener('change', saveSettings);
+syncOnStartupInput.addEventListener('change', saveSettings);
+syncOnFocusInput.addEventListener('change', saveSettings);
 
 // ==============================
 // Import/Export: Bookmarks
