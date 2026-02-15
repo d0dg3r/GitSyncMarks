@@ -13,7 +13,11 @@
 
 <p align="center">
   A browser extension that bidirectionally syncs your bookmarks with a GitHub repository.<br>
-  Supports Chrome and Firefox.
+  Supports Chrome and Firefox. No server needed — syncs directly via the GitHub API.
+</p>
+
+<p align="center">
+  <strong>Why GitSyncMarks?</strong> Your bookmarks live in <em>your</em> Git repo. Per-file storage means every bookmark is a readable JSON file — you can edit, version, and browse them on GitHub. Use multiple profiles for work/personal, automate bookmarking via CLI or GitHub Actions, and keep everything in sync across devices.
 </p>
 
 <table align="center">
@@ -47,8 +51,8 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 - **Three-way merge**: Automatic conflict-free sync when changes happen on both sides simultaneously
 - **Cross-browser**: Works with Chrome, Chromium, Brave, Edge, and Firefox
 - **Auto-sync**: Automatically syncs on every bookmark change (configurable debounce)
-- **Multiple profiles**: Work and personal bookmark sets with separate GitHub repos; switch between profiles; each profile has its own sync state
-- **Sync profiles**: Real-time, frequent, normal, or power-save presets; optional sync on browser start or focus
+- **Multiple profiles**: Up to 10 profiles (work, personal, etc.); each has its own GitHub repo config and bookmark set; Add, Rename, Delete; switching replaces local bookmarks with the target profile's data
+- **Sync profiles**: Presets — Real-time (1 min), Frequent (5 min), Normal (15 min), Power save (60 min); Custom for manual interval and debounce
 - **Theme**: Light, dark, or auto (follow system) in options and popup
 - **Periodic sync**: Checks for remote changes at configurable intervals (1–120 minutes)
 - **Manual sync**: Push, Pull, and full Sync via popup buttons
@@ -58,6 +62,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 - **GitHub Repos folder**: Optional folder with bookmarks to all your GitHub repositories (public and private); configurable position (toolbar/other/menu); manual refresh; preserved on pull when not in Git
 - **Import/Export**: Export and import bookmarks or extension settings as JSON files
 - **Multilanguage**: English, German, French, and Spanish, with manual language selection
+- **Keyboard shortcuts**: Quick sync (`Ctrl+Shift+.`), Open settings (`Ctrl+Shift+,`) — customizable in browser extension settings
 - **No server needed**: Communicates directly with the GitHub API using your Personal Access Token
 
 ## Installation
@@ -77,6 +82,8 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 3. Open `about:debugging#/runtime/this-firefox`
 4. Click **Load Temporary Add-on** and select the ZIP file
 
+> **Note:** For Firefox, "Load Temporary Add-on" loads the extension until you restart the browser. For a permanent install, use the [Firefox Add-on](https://addons.mozilla.org/en-US/firefox/addon/gitsyncmarks/) store.
+
 ### Create a GitHub Personal Access Token
 
 1. Go to [GitHub Settings > Tokens](https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks+Sync)
@@ -85,18 +92,56 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 
 ### Configure the extension
 
-1. Click the extension icon in the toolbar
-2. Go to **Settings** (GitHub tab)
-3. Select a **Profile** (or add one with + Add)
-4. Enter your **Personal Access Token**, **Repository Owner**, and **Repository Name**
-5. Click **Test Connection** to verify. If the folder does not exist yet, you can create it; if bookmarks are already in the repo, you can pull them
-6. Save the settings
+1. Click the extension icon in the toolbar, then **Open Settings**
+2. In the **GitHub** tab, select a **Profile** (or add one with **+ Add** — you can have up to 10 profiles)
+3. Enter your **Personal Access Token**, **Repository Owner**, and **Repository Name**
+4. Set **Branch** (usually `main`) and **File Path** (default `bookmarks` — the folder in your repo where bookmark files will live)
+5. Click **Test Connection** to verify:
+   - If the folder is **empty**: You can create the base structure (toolbar, other, menu, mobile)
+   - If **bookmarks already exist** in the repo: You can pull them into this browser
+6. Click **Save**
 
 ### First sync
 
 1. Click the extension icon
-2. Click **Sync Now**
-3. Your bookmarks will be pushed to your GitHub repository as individual files
+2. Click **Sync Now** — a full three-way merge sync runs
+3. Your bookmarks are pushed to your GitHub repository as individual JSON files, organized by folder
+
+---
+
+## Profiles
+
+Each profile has its own bookmark set and GitHub repo configuration. Use profiles to separate work and personal bookmarks, or different projects.
+
+- **Add**: Click **+ Add**, enter a name — a new profile is created and you switch to it
+- **Rename**: Select a profile, click **Rename**, enter the new name
+- **Delete**: Select the profile to remove, click **Delete** — the selected profile is deleted (not the active one)
+- **Switch**: Select another profile in the dropdown. Your current bookmarks are saved and pushed to the current profile's repo; the target profile's bookmarks replace the local ones
+- **Limit**: Up to 10 profiles; the UI shows the count (e.g. `3/10 profiles`)
+
+Use **Switch without confirmation** in the profile options to skip the confirmation dialog when switching.
+
+---
+
+## Popup
+
+Click the extension icon to open the popup:
+
+- **Profile selector**: Change profile directly from the header
+- **Sync Now**: Full three-way merge — local and remote changes are merged automatically when possible
+- **Push ↑**: Upload local bookmarks to GitHub (overwrites remote changes)
+- **Pull ↓**: Download from GitHub (overwrites local changes)
+
+Status line shows last sync time and next scheduled sync. When a conflict occurs, the icon shows a **!** badge and you must choose Push or Pull.
+
+---
+
+## Backup
+
+In the **Backup** tab of the options page:
+
+- **Export / Import Bookmarks**: Export all browser bookmarks as JSON; import replaces all local bookmarks (use with caution)
+- **Export / Import Settings**: Export GitHub connection and sync settings, including all profiles with decrypted tokens. Import replaces all settings and reloads the page. Useful for migrating to another browser or device
 
 ## Files in the GitHub Repository
 
@@ -104,18 +149,20 @@ After the first sync, your repository will contain:
 
 ```
 bookmarks/
-  _index.json                     # Metadata (format version)
-  README.md                       # Human-readable overview (auto-generated)
-  toolbar/
-    _order.json                   # Ordering of bookmarks and subfolders
-    github_a1b2.json             # { "title": "GitHub", "url": "https://github.com" }
+  _index.json                     # Metadata (format version, device info)
+  README.md                       # Auto-generated overview — browse all bookmarks on GitHub
+  toolbar/                        # Bookmarks Bar
+    _order.json                   # Defines order of items and subfolders in this folder
+    github_a1b2.json              # One file per bookmark
     stackoverflow_c3d4.json
     dev-tools/
       _order.json
       mdn-web-docs_e5f6.json
-  other/
+  other/                          # Other Bookmarks
     _order.json
     ...
+  menu/                           # Bookmarks Menu (Firefox)
+  mobile/                         # Mobile bookmarks
 ```
 
 Each bookmark is a simple JSON file:
@@ -126,11 +173,15 @@ Each bookmark is a simple JSON file:
 }
 ```
 
+The `README.md` in the repo is regenerated on each sync — it lists all bookmarks with links, so you can browse your bookmarks directly on GitHub.
+
 ## Automation
 
-You can add bookmarks directly in the Git repo — just create a `.json` file with `title` and `url` in any bookmark folder. The extension picks it up on the next sync and normalizes the filename and ordering automatically.
+Add bookmarks without opening the browser:
 
-A **GitHub Action** workflow (`.github/workflows/add-bookmark.yml`) is included for adding bookmarks via CLI or the GitHub web UI:
+1. **Directly in Git**: Create a `.json` file with `title` and `url` in any bookmark folder (e.g. `bookmarks/toolbar/` or `bookmarks/toolbar/dev-tools/`). The extension detects it on the next sync and normalizes the filename and folder order.
+
+2. **GitHub Action**: Copy `.github/workflows/add-bookmark.yml` to your bookmark repo. Run it via the GitHub web UI (Actions → Add Bookmark) or via CLI:
 
 ```bash
 gh workflow run add-bookmark.yml \
@@ -141,10 +192,10 @@ gh workflow run add-bookmark.yml \
 ```
 
 - `folder`: Root folder (`toolbar`, `other`, `menu`, or `mobile`)
-- `path`: Optional subfolder within root (e.g. `dev-tools` for `bookmarks/toolbar/dev-tools/`)
-- `base-path`: Base folder in repo (default `bookmarks`; must match the extension's File Path setting)
+- `path`: Optional subfolder (e.g. `dev-tools` → `bookmarks/toolbar/dev-tools/`)
+- `base-path`: Base folder in repo (default `bookmarks`; must match the extension's **File Path** setting)
 
-See the **Automation** tab in the extension settings for details.
+See the **Automation** tab in the extension settings for more examples and parameters.
 
 ## Configuration
 
@@ -164,33 +215,58 @@ See the **Automation** tab in the extension settings for details.
 | Switch without confirmation | Off | Skip confirmation when changing profiles |
 | GitHub Repos folder | Off | Create folder with bookmarks to all your GitHub repos |
 | GitHub Repos position | Other Bookmarks | Where to place the folder (toolbar/other/menu) |
+| Notifications | All | When to show sync notifications: All, Errors only, or Off |
+| Theme | Auto | Light, Dark, or Auto (follow system) — options page and popup |
+| Language | Auto | Auto (browser), English, German, French, or Spanish |
+| Debounce delay | 5 s | Wait time before syncing after bookmark changes (varies by sync profile) |
 
 ## Conflict Resolution
 
-If both local and remote bookmarks changed and cannot be merged automatically:
+A conflict occurs when both your local bookmarks and the remote (GitHub) version have been modified, and automatic merge is not possible.
 
 1. The extension icon shows a **!** badge
-2. Open the popup
+2. Open the popup — you'll see a conflict message with two options
 3. Choose:
-   - **Local → GitHub**: Your local bookmarks overwrite the remote version
-   - **GitHub → Local**: The remote version overwrites your local bookmarks
+   - **Local → GitHub** (Push): Your local bookmarks overwrite the remote version
+   - **GitHub → Local** (Pull): The remote version overwrites your local bookmarks
+
+There is no automatic merge for conflicts — you must pick one side. Choose based on which version has the changes you want to keep.
 
 ## Technical Details
 
 - **Manifest V3** browser extension (Chrome + Firefox)
-- **Per-file bookmark storage**: One JSON file per bookmark, directory structure mirrors folder hierarchy
+- **Per-file bookmark storage**: One JSON file per bookmark; directory structure mirrors folder hierarchy
 - **GitHub Git Data API** for atomic multi-file commits (blobs, trees, commits, refs)
-- **Three-way merge**: Base vs Local vs Remote comparison with per-file diff
+- **Three-way merge**: Base vs Local vs Remote comparison with per-file diff; automatic when no overlap
 - **Role-based folder mapping**: Cross-browser root folder detection (toolbar, other, menu, mobile)
-- **Debounced auto-sync**: Multiple rapid changes bundled into a single sync (configurable, 2–10s by profile)
+- **Debounced auto-sync**: Rapid changes are bundled into one sync (2–10 s delay by profile)
 - **Token encryption**: AES-256-GCM at rest in `chrome.storage.local`
 - **Custom i18n**: Runtime language switching without page reload
+
+## Troubleshooting
+
+| Issue | What to check |
+|-------|---------------|
+| Token invalid | Ensure the PAT has the `repo` scope; token may have been revoked |
+| Repo not found | Verify Repository Owner and Name; check repo exists and you have access |
+| Sync takes long | Many changed bookmarks = many API calls; see *Why does sync take long?* in Options → Help |
+| Conflict not resolving | You must choose Push or Pull in the popup; there is no automatic merge for conflicts |
+| Profile switch slow | When switching to a new (empty) profile, sync is fast; when the current profile has many bookmarks, it pushes to GitHub first |
+
+## Documentation & Help
+
+- **[docs/](docs/)** — Architecture, release process, testing guide
+- **Options → Help tab** — Keyboard shortcuts, feature overview, conflict explanation, full feature list
+- **[docs/TESTING.md](docs/TESTING.md)** — Local testing (Chrome, Firefox desktop, Firefox Android)
+- **[CHANGELOG.md](CHANGELOG.md)** — Version history
+- **[ROADMAP.md](ROADMAP.md)** — Planned features
+- **[Discussions](https://github.com/d0dg3r/GitSyncMarks/discussions)** · **[Issues](https://github.com/d0dg3r/GitSyncMarks/issues)** — Feedback, questions, bug reports
 
 ## Requirements
 
 - Chrome, Chromium, Brave, Edge, or Firefox
 - GitHub account with a repository for bookmarks
-- Personal Access Token with `repo` scope
+- Personal Access Token with the `repo` scope
 
 ## License
 
