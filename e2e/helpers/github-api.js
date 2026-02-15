@@ -111,6 +111,38 @@ async function hasBookmarkFiles() {
 }
 
 /**
+ * Update an existing bookmark file in the repo (for conflict test).
+ * @param {string} filePath - e.g. 'bookmarks/toolbar/example-domain_xxxx.json'
+ * @param {{ title: string, url: string }} content
+ */
+async function updateBookmarkInRepo(filePath, { title, url }) {
+  const fileData = await githubFetch(`/contents/${filePath}`);
+  const newContent = JSON.stringify({ title, url }, null, 2);
+  await createOrUpdateFile(filePath, newContent, `E2E: update bookmark`, fileData.sha);
+}
+
+/**
+ * Get the first bookmark filename in toolbar (for conflict test).
+ */
+async function getFirstBookmarkFileInToolbar() {
+  const entries = await listDir('bookmarks/toolbar');
+  const bookmark = entries.find(
+    (e) => e.name.endsWith('.json') && !e.name.startsWith('_')
+  );
+  return bookmark ? `bookmarks/toolbar/${bookmark.name}` : null;
+}
+
+/**
+ * Count bookmark JSON files in toolbar (excluding _order.json).
+ */
+async function countBookmarkFilesInToolbar() {
+  const entries = await listDir('bookmarks/toolbar');
+  return entries.filter(
+    (e) => e.name.endsWith('.json') && !e.name.startsWith('_')
+  ).length;
+}
+
+/**
  * Check if the repo has the minimal structure (push completed successfully).
  */
 async function hasMinimalStructure() {
@@ -128,6 +160,9 @@ module.exports = {
   getFileContent,
   listDir,
   addBookmarkToRepo,
+  updateBookmarkInRepo,
+  getFirstBookmarkFileInToolbar,
   hasBookmarkFiles,
   hasMinimalStructure,
+  countBookmarkFilesInToolbar,
 };

@@ -27,6 +27,23 @@ Sync tests require a private GitHub repo and a Personal Access Token.
    npm run test:e2e:sync
    ```
 
+## CI (GitHub Actions)
+
+E2E tests run on push/PR to main and develop. To enable full sync tests in CI:
+
+1. Create the test repo (once, locally):  
+   `GITSYNCMARKS_TEST_PAT=ghp_xxx node scripts/create-test-repo.js`
+
+2. In **Settings → Secrets and variables → Actions**:
+
+   | Type     | Name                         | Description                    |
+   |----------|------------------------------|--------------------------------|
+   | Secret   | `GITSYNCMARKS_TEST_PAT`      | GitHub PAT with `repo` scope   |
+   | Variable | `GITSYNCMARKS_TEST_REPO_OWNER` | Username or org               |
+   | Variable | `GITSYNCMARKS_TEST_REPO`     | `GitSyncMarks-test-sync`       |
+
+Without these, only smoke and invalid-token tests run; connection/sync tests are skipped.
+
 ## Test Reports
 
 After a run:

@@ -27,8 +27,8 @@ jobs:
       - name: Run E2E tests
         env:
           GITSYNCMARKS_TEST_PAT: ${{ secrets.GITSYNCMARKS_TEST_PAT }}
-          GITSYNCMARKS_TEST_REPO_OWNER: ${{ secrets.GITSYNCMARKS_TEST_REPO_OWNER }}
-          GITSYNCMARKS_TEST_REPO: ${{ secrets.GITSYNCMARKS_TEST_REPO }}
+          GITSYNCMARKS_TEST_REPO_OWNER: ${{ vars.GITSYNCMARKS_TEST_REPO_OWNER }}
+          GITSYNCMARKS_TEST_REPO: ${{ vars.GITSYNCMARKS_TEST_REPO }}
         run: npm run test:e2e
 
       - name: Upload report and results on failure
