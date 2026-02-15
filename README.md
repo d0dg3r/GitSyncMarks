@@ -16,6 +16,29 @@
   Supports Chrome and Firefox.
 </p>
 
+<table align="center">
+<tr>
+<td align="center">
+  <img src="store-assets/en/chrome-dialog.png" width="380" alt="Popup" />
+  <br><sub>Popup — Sync Now, Push, Pull</sub>
+</td>
+<td align="center">
+  <img src="store-assets/en/chrome-github.png" width="380" alt="Options — GitHub" />
+  <br><sub>Options — GitHub connection & profiles</sub>
+</td>
+</tr>
+<tr>
+<td align="center">
+  <img src="store-assets/en/chrome-settings.png" width="380" alt="Options — Sync" />
+  <br><sub>Options — Synchronization</sub>
+</td>
+<td align="center">
+  <img src="store-assets/en/chrome-import-export.png" width="380" alt="Options — Backup" />
+  <br><sub>Options — Backup & import/export</sub>
+</td>
+</tr>
+</table>
+
 See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROADMAP.md](ROADMAP.md) for planned features.
 
 ## Features
