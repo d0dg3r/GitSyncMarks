@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Auto-save on switches**: Toggles (GitHub Repos, auto-sync, sync on startup/focus, profile switch without confirm) save automatically on change; no need to click Save for switch changes
+- **Auto-save before actions**: "Update GitHub Repos" and "Test Connection" save current settings before running, so state is never lost
 - **GitHub Repos folder**: Auto-generated folder with all user repos as bookmarks (public/private); toggle, configurable position (toolbar/other/menu), manual refresh; folder preserved on pull when not in Git; changes synced via normal bookmark sync
 - **Multiple profiles**: Work and personal bookmark sets with separate GitHub repos; up to 10 profiles; switching replaces local bookmarks with the selected profile's data
 - **Onboarding**: Test Connection checks the target path; offers to create the folder structure when empty, or to pull existing bookmarks when found
@@ -27,6 +29,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Backup tab**: Compact design matching Automation (single card, automation-block style); shorter i18n texts (EN/DE/FR/ES); equal spacing for Import/Export buttons
+- **Help tab**: Collapsible accordion sections; "Why does sync sometimes take long?" moved to position 2; only Getting Started and Links open by default; compact styling
+- **Options tabs**: All tabs (GitHub, Sync, Backup, Automation, Help, About) use consistent compact styling — reduced padding, margins, font sizes
+- **Contributors**: Updated Special Thanks to Patrick W., Gernot B.
 - **Profile switch**: Inline confirmation instead of `confirm()`; optional toggle "Switch without confirmation"
 - **Profile layout**: Redesigned Profile card (label, dropdown, actions, toggle, inline confirmation)
 - **Popup**: Restructured layout — profile dropdown in header; simplified status area (status line + meta); theme-aware spinner; compact footer; auto-sync and countdown on one line

@@ -13,8 +13,11 @@ Open items and next steps for further development. Updated each session.
 - **Profile Switch UX** – Inline confirmation, toggle "Switch without confirmation", redesigned layout
 - **Popup Overhaul** – Header with profile dropdown; simplified status area; theme-aware spinner; compact footer; shorter pull success message ("Loaded from GitHub.")
 - **Keyboard Shortcuts** – Quick sync (Ctrl+Shift+.), open options (Ctrl+Shift+,)
-- **Help Tab** – Shortcuts and main features in options (before About)
+- **Help Tab** – Collapsible accordion, "Why slow?" second, Getting Started + Links open by default; compact styling
 - **Options Header** – Language label removed, dropdown only
+- **Auto-save** – Switches save on change; Update GitHub Repos and Test Connection save before running
+- **Compact Options UI** – All tabs (GitHub, Sync, Backup, Automation, Help, About) use consistent compact styling
+- **Backup tab** – Compact design (automation-block style), shorter i18n in all languages
 
 ---
 

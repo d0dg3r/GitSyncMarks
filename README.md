@@ -60,6 +60,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 - **Readable overview**: A `README.md` with all bookmarks is generated in the repo for easy browsing on GitHub
 - **Automation**: Add bookmarks via Git, CLI, or GitHub Actions — the extension picks them up automatically
 - **GitHub Repos folder**: Optional folder with bookmarks to all your GitHub repositories (public and private); configurable position (toolbar/other/menu); manual refresh; preserved on pull when not in Git
+- **Auto-save**: Switches and action buttons (Update GitHub Repos, Test Connection) save settings automatically
 - **Import/Export**: Export and import bookmarks or extension settings as JSON files
 - **Multilanguage**: English, German, French, and Spanish, with manual language selection
 - **Keyboard shortcuts**: Quick sync (`Ctrl+Shift+.`), Open settings (`Ctrl+Shift+,`) — customizable in browser extension settings
@@ -96,10 +97,10 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 2. In the **GitHub** tab, select a **Profile** (or add one with **+ Add** — you can have up to 10 profiles)
 3. Enter your **Personal Access Token**, **Repository Owner**, and **Repository Name**
 4. Set **Branch** (usually `main`) and **File Path** (default `bookmarks` — the folder in your repo where bookmark files will live)
-5. Click **Test Connection** to verify:
+5. Click **Test Connection** to verify (settings are saved automatically before the test):
    - If the folder is **empty**: You can create the base structure (toolbar, other, menu, mobile)
    - If **bookmarks already exist** in the repo: You can pull them into this browser
-6. Click **Save**
+6. Click **Save** (switches save automatically; Save is needed for text fields)
 
 ### First sync
 
