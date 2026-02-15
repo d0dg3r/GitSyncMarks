@@ -39,12 +39,31 @@
 
       <section class="card profile-selector-card">
         <h2 data-i18n="options_profile">Profile</h2>
-        <div class="profile-selector-row">
-          <label for="profile-select" class="sr-only" data-i18n="options_profile">Profile</label>
-          <select id="profile-select" class="profile-select"></select>
-          <span id="profile-switching-msg" class="profile-switching-msg" style="display: none;"></span>
-          <button type="button" id="profile-add-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileAdd">+ Add</button>
-          <button type="button" id="profile-delete-btn" class="btn btn-secondary btn-sm btn-danger" data-i18n="options_profileDelete" title="" style="display: none;">Delete</button>
+        <div class="profile-main-row">
+          <div class="profile-select-wrap">
+            <label for="profile-select" class="form-label-inline" data-i18n="options_profile">Profile</label>
+            <select id="profile-select" class="profile-select"></select>
+          </div>
+          <div class="profile-actions">
+            <span id="profile-spinner" class="spinner" style="display: none;"></span>
+            <span id="profile-switching-msg" class="profile-switching-msg" style="display: none;"></span>
+            <button type="button" id="profile-add-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileAdd">+ Add</button>
+            <button type="button" id="profile-delete-btn" class="btn btn-secondary btn-sm btn-danger" data-i18n="options_profileDelete" title="" style="display: none;">Delete</button>
+          </div>
+        </div>
+        <div class="profile-options">
+          <label for="profile-switch-without-confirm" class="profile-option-toggle">
+            <input type="checkbox" id="profile-switch-without-confirm">
+            <span class="toggle-slider toggle-slider-sm"></span>
+            <span data-i18n="options_profileSwitchWithoutConfirm">Switch without confirmation</span>
+          </label>
+        </div>
+        <div id="profile-switch-confirm" class="profile-switch-confirm" style="display: none;">
+          <span id="profile-switch-confirm-text" class="profile-switch-confirm-text"></span>
+          <div class="profile-switch-confirm-actions">
+            <button type="button" id="profile-switch-confirm-btn" class="btn btn-primary btn-sm" data-i18n="options_profileSwitchConfirmBtn">Switch</button>
+            <button type="button" id="profile-switch-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+          </div>
         </div>
       </section>
 
@@ -85,6 +104,7 @@
 
         <div class="form-group">
           <button id="validate-btn" class="btn btn-secondary" data-i18n="options_testConnection">Test Connection</button>
+          <span id="validation-spinner" class="spinner" style="display: none;"></span>
           <span id="validation-result" class="validation-result"></span>
         </div>
       </section>

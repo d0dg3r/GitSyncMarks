@@ -100,6 +100,15 @@
   "options_profileSwitching": {
     "message": "Profil wird gewechselt..."
   },
+  "options_profileSwitchWithoutConfirm": {
+    "message": "Ohne Nachfrage wechseln"
+  },
+  "options_profileSwitchConfirmBtn": {
+    "message": "Wechseln"
+  },
+  "options_profileSwitchCancelBtn": {
+    "message": "Abbrechen"
+  },
   "options_githubConnection": {
     "message": "GitHub-Verbindung"
   },

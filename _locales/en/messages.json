@@ -100,6 +100,15 @@
   "options_profileSwitching": {
     "message": "Switching profile..."
   },
+  "options_profileSwitchWithoutConfirm": {
+    "message": "Switch without confirmation"
+  },
+  "options_profileSwitchConfirmBtn": {
+    "message": "Switch"
+  },
+  "options_profileSwitchCancelBtn": {
+    "message": "Cancel"
+  },
   "options_githubConnection": {
     "message": "GitHub Connection"
   },

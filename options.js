@@ -38,13 +38,21 @@ const STORAGE_KEYS = {
   DEBOUNCE_DELAY: 'debounceDelay',
   LANGUAGE: 'language',
   THEME: 'theme',
+  PROFILE_SWITCH_WITHOUT_CONFIRM: 'profileSwitchWithoutConfirm',
 };
 
 // ---- DOM elements: Settings Tab ----
 const profileSelect = document.getElementById('profile-select');
 const profileAddBtn = document.getElementById('profile-add-btn');
 const profileDeleteBtn = document.getElementById('profile-delete-btn');
+const profileSpinner = document.getElementById('profile-spinner');
 const profileSwitchingMsg = document.getElementById('profile-switching-msg');
+const profileSwitchWithoutConfirmInput = document.getElementById('profile-switch-without-confirm');
+const profileSwitchConfirm = document.getElementById('profile-switch-confirm');
+const profileSwitchConfirmText = document.getElementById('profile-switch-confirm-text');
+const profileSwitchConfirmBtn = document.getElementById('profile-switch-confirm-btn');
+const profileSwitchCancelBtn = document.getElementById('profile-switch-cancel-btn');
+const validationSpinner = document.getElementById('validation-spinner');
 const tokenInput = document.getElementById('token');
 const toggleTokenBtn = document.getElementById('toggle-token');
 const ownerInput = document.getElementById('owner');
@@ -207,8 +215,9 @@ async function loadSettings() {
     notificationsEnabled: undefined,
     language: 'auto',
     theme: 'auto',
+    profileSwitchWithoutConfirm: false,
   };
-  const globals = await chrome.storage.sync.get(syncDefaults);
+  const globals = { ...syncDefaults, ...(await chrome.storage.sync.get(syncDefaults)) };
 
   autoSyncInput.checked = globals.autoSync !== false;
   syncIntervalInput.value = globals.syncInterval ?? 15;
@@ -233,9 +242,40 @@ async function loadSettings() {
   themeButtons.forEach(btn => {
     btn.classList.toggle('active', btn.dataset.theme === theme);
   });
+  profileSwitchWithoutConfirmInput.checked = globals.profileSwitchWithoutConfirm === true;
+  profileSwitchConfirm.style.display = 'none';
 }
 
 // Profile selector: switching profiles replaces bookmarks
+let pendingProfileSwitchId = null;
+
+async function doProfileSwitch(targetId) {
+  const activeId = await getActiveProfileId();
+  if (targetId === activeId) return;
+  profileSwitchConfirm.style.display = 'none';
+  pendingProfileSwitchId = null;
+
+  try {
+    profileSelect.disabled = true;
+    profileAddBtn.disabled = true;
+    profileDeleteBtn.disabled = true;
+    profileSpinner.style.display = 'inline-block';
+    profileSwitchingMsg.textContent = getMessage('options_profileSwitching');
+    profileSwitchingMsg.style.display = '';
+    await switchProfile(targetId);
+    await loadSettings();
+  } catch (err) {
+    alert(getMessage('options_error', [err.message]));
+    profileSelect.value = activeId;
+  } finally {
+    profileSelect.disabled = false;
+    profileAddBtn.disabled = false;
+    profileDeleteBtn.disabled = false;
+    profileSpinner.style.display = 'none';
+    profileSwitchingMsg.style.display = 'none';
+  }
+}
+
 profileSelect.addEventListener('change', async (e) => {
   const targetId = e.target.value;
   const activeId = await getActiveProfileId();
@@ -245,28 +285,35 @@ profileSelect.addEventListener('change', async (e) => {
   const targetProfile = profiles[targetId];
   if (!targetProfile) return;
 
-  const confirmed = confirm(getMessage('options_profileSwitchConfirm', [targetProfile.name || targetId]));
-  if (!confirmed) {
-    e.target.value = activeId;
+  if (profileSwitchWithoutConfirmInput.checked) {
+    await doProfileSwitch(targetId);
     return;
   }
 
-  try {
-    profileSelect.disabled = true;
-    profileAddBtn.disabled = true;
-    profileDeleteBtn.disabled = true;
-    profileSwitchingMsg.textContent = getMessage('options_profileSwitching');
-    profileSwitchingMsg.style.display = '';
-    await switchProfile(targetId);
-    await loadSettings();
-  } catch (err) {
-    alert(getMessage('options_error', [err.message]));
-    e.target.value = activeId;
-  } finally {
-    profileSelect.disabled = false;
-    profileAddBtn.disabled = false;
-    profileDeleteBtn.disabled = false;
-    profileSwitchingMsg.style.display = 'none';
+  pendingProfileSwitchId = targetId;
+  profileSwitchConfirmText.textContent = getMessage('options_profileSwitchConfirm', [targetProfile.name || targetId]);
+  profileSwitchConfirm.style.display = '';
+});
+
+profileSwitchConfirmBtn.addEventListener('click', async () => {
+  if (pendingProfileSwitchId) {
+    await doProfileSwitch(pendingProfileSwitchId);
+  }
+});
+
+profileSwitchCancelBtn.addEventListener('click', async () => {
+  const activeId = await getActiveProfileId();
+  profileSelect.value = activeId;
+  profileSwitchConfirm.style.display = 'none';
+  pendingProfileSwitchId = null;
+});
+
+profileSwitchWithoutConfirmInput.addEventListener('change', async () => {
+  if (profileSwitchWithoutConfirmInput.checked) {
+    profileSwitchConfirm.style.display = 'none';
+    pendingProfileSwitchId = null;
+    const activeId = await getActiveProfileId();
+    profileSelect.value = activeId;
   }
 });
 
@@ -274,9 +321,29 @@ profileAddBtn.addEventListener('click', async () => {
   try {
     const name = prompt(getMessage('options_profile') + ' name:', 'New Profile');
     if (!name || !name.trim()) return;
-    await addProfile(name.trim());
-    await loadSettings();
+    const newId = await addProfile(name.trim());
+    profileSelect.disabled = true;
+    profileAddBtn.disabled = true;
+    profileDeleteBtn.disabled = true;
+    profileSpinner.style.display = 'inline-block';
+    profileSwitchingMsg.textContent = getMessage('options_profileSwitching');
+    profileSwitchingMsg.style.display = '';
+    try {
+      await switchProfile(newId, { skipConfirm: true });
+      await loadSettings();
+    } finally {
+      profileSelect.disabled = false;
+      profileAddBtn.disabled = false;
+      profileDeleteBtn.disabled = false;
+      profileSpinner.style.display = 'none';
+      profileSwitchingMsg.style.display = 'none';
+    }
   } catch (err) {
+    profileSelect.disabled = false;
+    profileAddBtn.disabled = false;
+    profileDeleteBtn.disabled = false;
+    profileSpinner.style.display = 'none';
+    profileSwitchingMsg.style.display = 'none';
     alert(getMessage('options_error', [err.message]));
   }
 });
@@ -413,6 +480,7 @@ validateBtn.addEventListener('click', async () => {
 function showValidation(message, type) {
   validationResult.textContent = message;
   validationResult.className = `validation-result ${type}`;
+  validationSpinner.style.display = type === 'loading' ? 'inline-block' : 'none';
 }
 
 // ==============================
@@ -442,6 +510,7 @@ async function saveSettings() {
       [STORAGE_KEYS.SYNC_ON_FOCUS]: syncOnFocusInput.checked,
       [STORAGE_KEYS.NOTIFICATIONS_MODE]: notificationsModeSelect.value,
       [STORAGE_KEYS.LANGUAGE]: languageSelect.value,
+      [STORAGE_KEYS.PROFILE_SWITCH_WITHOUT_CONFIRM]: profileSwitchWithoutConfirmInput.checked,
     });
 
     try {
