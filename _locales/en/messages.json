@@ -442,6 +442,114 @@
   "options_tabHelp": {
     "message": "Help"
   },
+  "help_gettingStartedTitle": {
+    "message": "Getting Started"
+  },
+  "help_gettingStartedIntro": {
+    "message": "Create a GitHub repository for your bookmarks, then create a Personal Access Token (PAT) with the <code>repo</code> scope. In the GitHub tab, enter token, repository owner, name, branch (usually <code>main</code>), and the folder path (default: <code>bookmarks</code>). Click <strong>Test Connection</strong> to verify."
+  },
+  "help_onboarding": {
+    "message": "If the folder is empty, you can create the base structure (toolbar, other, menu, mobile). If bookmarks already exist in the repo, you can pull them into this browser."
+  },
+  "help_profilesTitle": {
+    "message": "Profiles"
+  },
+  "help_profilesIntro": {
+    "message": "Each profile has its own bookmark set and GitHub repo config. Use profiles for work/personal or different devices."
+  },
+  "help_profilesAdd": {
+    "message": "Add, Rename, Delete"
+  },
+  "help_profilesAddDesc": {
+    "message": "Select a profile in the dropdown, then Add (new profile), Rename, or Delete. Up to 10 profiles. Deleting removes the selected profile."
+  },
+  "help_profilesSwitch": {
+    "message": "Profile switch"
+  },
+  "help_profilesSwitchDesc": {
+    "message": "Select another profile to switch. Your current bookmarks are saved and pushed to the current profile's repo before switching. The target profile's bookmarks replace the local ones. Use Switch without confirmation to skip the confirm dialog."
+  },
+  "help_githubReposTitle": {
+    "message": "GitHub Repos Folder"
+  },
+  "help_githubReposDesc": {
+    "message": "Optional: Create a folder with bookmarks to all your GitHub repositories (public and private). Choose the position (toolbar, other, menu). The folder is synced like normal bookmarks; use <strong>Update GitHub Repos</strong> to refresh the list."
+  },
+  "help_popupTitle": {
+    "message": "Popup (extension icon)"
+  },
+  "help_popupProfile": {
+    "message": "Profile selector"
+  },
+  "help_popupProfileDesc": {
+    "message": "Switch profiles directly from the popup header."
+  },
+  "help_popupSyncNow": {
+    "message": "Sync Now"
+  },
+  "help_popupSyncNowDesc": {
+    "message": "Full three-way merge sync: local and remote changes are merged automatically when possible."
+  },
+  "help_popupPush": {
+    "message": "Push ↑"
+  },
+  "help_popupPushDesc": {
+    "message": "Upload local bookmarks to GitHub (overwrites remote changes)."
+  },
+  "help_popupPull": {
+    "message": "Pull ↓"
+  },
+  "help_popupPullDesc": {
+    "message": "Download from GitHub (overwrites local changes)."
+  },
+  "help_syncTitle": {
+    "message": "Synchronization"
+  },
+  "help_autoSyncTitle": {
+    "message": "Auto-sync"
+  },
+  "help_autoSyncDesc": {
+    "message": "When enabled, syncs automatically when you add, edit, or remove bookmarks. A debounce delay waits for rapid changes to finish before syncing."
+  },
+  "help_syncProfiles": {
+    "message": "Sync profiles"
+  },
+  "help_syncProfilesDesc": {
+    "message": "Real-time (1 min), Frequent (5 min), Normal (15 min), or Power save (60 min). Custom lets you set interval and debounce manually."
+  },
+  "help_syncStartup": {
+    "message": "Sync on startup / focus"
+  },
+  "help_syncStartupDesc": {
+    "message": "Optional: sync when the browser starts or when you return to the browser window (with cooldown)."
+  },
+  "help_notificationsTitle": {
+    "message": "Notifications"
+  },
+  "help_notificationsDesc": {
+    "message": "Choose when to show sync notifications: All (success and failure), Errors only, or Off."
+  },
+  "help_backupTitle": {
+    "message": "Backup"
+  },
+  "help_backupBookmarks": {
+    "message": "Export / Import Bookmarks"
+  },
+  "help_backupBookmarksDesc": {
+    "message": "Export all browser bookmarks as JSON. Import replaces all local bookmarks with the file contents."
+  },
+  "help_backupSettings": {
+    "message": "Export / Import Settings"
+  },
+  "help_backupSettingsDesc": {
+    "message": "Export GitHub connection and sync settings (profiles with decrypted tokens). Import replaces all settings; the page reloads afterwards."
+  },
+  "help_conflictTitle": {
+    "message": "Conflicts"
+  },
+  "help_conflictDesc": {
+    "message": "When both local and remote bookmarks changed, the popup shows a conflict. Choose <strong>Push</strong> (local wins, overwrite remote) or <strong>Pull</strong> (remote wins, overwrite local). There is no automatic merge for conflicts."
+  },
   "help_shortcuts": {
     "message": "Keyboard Shortcuts"
   },
@@ -453,33 +561,6 @@
   },
   "help_shortcutsNote": {
     "message": "You can customize shortcuts in the browser's extension settings."
-  },
-  "help_mainFeatures": {
-    "message": "Main Features"
-  },
-  "help_popupTitle": {
-    "message": "Popup (extension icon)"
-  },
-  "help_popupDesc": {
-    "message": "Sync Now: full three-way sync. Push: upload local to GitHub. Pull: download from GitHub."
-  },
-  "help_profilesTitle": {
-    "message": "Profiles"
-  },
-  "help_profilesDesc": {
-    "message": "Switch between bookmark sets (e.g. work/personal). Each profile has its own GitHub repo config."
-  },
-  "help_autoSyncTitle": {
-    "message": "Auto-sync"
-  },
-  "help_autoSyncDesc": {
-    "message": "Syncs automatically when you add, edit, or remove bookmarks. Debounce delay prevents multiple syncs for rapid changes."
-  },
-  "help_conflictTitle": {
-    "message": "Conflicts"
-  },
-  "help_conflictDesc": {
-    "message": "When both local and remote changed, choose Push (local wins) or Pull (remote wins) in the popup."
   },
   "help_whySlowTitle": {
     "message": "Why does sync sometimes take long?"

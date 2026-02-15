@@ -442,6 +442,114 @@
   "options_tabHelp": {
     "message": "Hilfe"
   },
+  "help_gettingStartedTitle": {
+    "message": "Erste Schritte"
+  },
+  "help_gettingStartedIntro": {
+    "message": "Erstelle ein GitHub-Repository für deine Lesezeichen und einen Personal Access Token (PAT) mit dem <code>repo</code>-Scope. Im GitHub-Tab gibst du Token, Repository-Inhaber, Name, Branch (meist <code>main</code>) und den Ordnergpfad (Standard: <code>bookmarks</code>) ein. Klicke auf <strong>Verbindung testen</strong> zur Prüfung."
+  },
+  "help_onboarding": {
+    "message": "Ist der Ordner leer, kannst du die Basisstruktur (toolbar, other, menu, mobile) anlegen. Existieren schon Lesezeichen im Repo, kannst du sie in diesen Browser holen."
+  },
+  "help_profilesTitle": {
+    "message": "Profile"
+  },
+  "help_profilesIntro": {
+    "message": "Jedes Profil hat sein eigenes Lesezeichen-Set und eigene GitHub-Repo-Konfiguration. Nützlich für Arbeit/Privat oder verschiedene Geräte."
+  },
+  "help_profilesAdd": {
+    "message": "Hinzufügen, Umbenennen, Löschen"
+  },
+  "help_profilesAddDesc": {
+    "message": "Wähle ein Profil im Dropdown, dann Hinzufügen (neues Profil), Umbenennen oder Löschen. Maximal 10 Profile. Beim Löschen wird das ausgewählte Profil entfernt."
+  },
+  "help_profilesSwitch": {
+    "message": "Profilwechsel"
+  },
+  "help_profilesSwitchDesc": {
+    "message": "Wähle ein anderes Profil zum Wechsel. Aktuelle Lesezeichen werden gespeichert und zum Repo des aktuellen Profils gepusht. Die Lesezeichen des Zielfprofils ersetzen die lokalen. „Ohne Nachfrage wechseln“ überspringt den Bestätigungsdialog."
+  },
+  "help_githubReposTitle": {
+    "message": "GitHub-Repos-Ordner"
+  },
+  "help_githubReposDesc": {
+    "message": "Optional: Ordner mit Lesezeichen zu allen deinen GitHub-Repositories (öffentlich und privat). Position wählbar (toolbar, other, menu). Der Ordner wird wie normale Lesezeichen synchronisiert; <strong>GitHub Repos aktualisieren</strong> lädt die Liste neu."
+  },
+  "help_popupTitle": {
+    "message": "Popup (Erweiterungssymbol)"
+  },
+  "help_popupProfile": {
+    "message": "Profilauswahl"
+  },
+  "help_popupProfileDesc": {
+    "message": "Profile direkt im Popup-Header wechseln."
+  },
+  "help_popupSyncNow": {
+    "message": "Jetzt synchronisieren"
+  },
+  "help_popupSyncNowDesc": {
+    "message": "Vollständiger 3-Wege-Merge-Sync: lokale und remote Änderungen werden automatisch zusammengeführt, wenn möglich."
+  },
+  "help_popupPush": {
+    "message": "Push ↑"
+  },
+  "help_popupPushDesc": {
+    "message": "Lokale Lesezeichen zu GitHub hochladen (überschreibt remote Änderungen)."
+  },
+  "help_popupPull": {
+    "message": "Pull ↓"
+  },
+  "help_popupPullDesc": {
+    "message": "Von GitHub herunterladen (überschreibt lokale Änderungen)."
+  },
+  "help_syncTitle": {
+    "message": "Synchronisation"
+  },
+  "help_autoSyncTitle": {
+    "message": "Auto-Sync"
+  },
+  "help_autoSyncDesc": {
+    "message": "Bei Aktivierung synchronisiert die Erweiterung automatisch bei Hinzufügen, Ändern oder Löschen. Eine Verzögerung wartet auf schnell aufeinanderfolgende Änderungen, bevor synchronisiert wird."
+  },
+  "help_syncProfiles": {
+    "message": "Sync-Profile"
+  },
+  "help_syncProfilesDesc": {
+    "message": "Echtzeit (1 Min.), Häufig (5 Min.), Normal (15 Min.) oder Stromsparen (60 Min.). Bei Benutzerdefiniert Interval und Verzögerung manuell einstellbar."
+  },
+  "help_syncStartup": {
+    "message": "Sync beim Start / Fokus"
+  },
+  "help_syncStartupDesc": {
+    "message": "Optional: Sync beim Browserstart oder beim Zurückkehren ins Browserfenster (mit Pause)."
+  },
+  "help_notificationsTitle": {
+    "message": "Benachrichtigungen"
+  },
+  "help_notificationsDesc": {
+    "message": "Festlegen, wann Sync-Benachrichtigungen angezeigt werden: Alle (Erfolg und Fehler), Nur Fehler oder Aus."
+  },
+  "help_backupTitle": {
+    "message": "Sicherung"
+  },
+  "help_backupBookmarks": {
+    "message": "Lesezeichen exportieren / importieren"
+  },
+  "help_backupBookmarksDesc": {
+    "message": "Alle Browser-Lesezeichen als JSON exportieren. Import ersetzt alle lokalen Lesezeichen durch den Dateiinhalt."
+  },
+  "help_backupSettings": {
+    "message": "Einstellungen exportieren / importieren"
+  },
+  "help_backupSettingsDesc": {
+    "message": "GitHub-Verbindung und Sync-Einstellungen exportieren (Profile mit entschlüsselten Tokens). Import ersetzt alle Einstellungen; die Seite wird danach neu geladen."
+  },
+  "help_conflictTitle": {
+    "message": "Konflikte"
+  },
+  "help_conflictDesc": {
+    "message": "Wenn lokal und remote geändert wurden, erscheint im Popup ein Konflikt. Wähle <strong>Push</strong> (lokal gewinnt) oder <strong>Pull</strong> (remote gewinnt). Es gibt keine automatische Konfliktlösung."
+  },
   "help_shortcuts": {
     "message": "Tastaturkürzel"
   },
@@ -453,33 +561,6 @@
   },
   "help_shortcutsNote": {
     "message": "Die Kürzel können in den Erweiterungseinstellungen des Browsers angepasst werden."
-  },
-  "help_mainFeatures": {
-    "message": "Wichtigste Funktionen"
-  },
-  "help_popupTitle": {
-    "message": "Popup (Erweiterungssymbol)"
-  },
-  "help_popupDesc": {
-    "message": "Jetzt synchronisieren: vollständiger 3-Wege-Sync. Push: Lokal zu GitHub hochladen. Pull: Von GitHub herunterladen."
-  },
-  "help_profilesTitle": {
-    "message": "Profile"
-  },
-  "help_profilesDesc": {
-    "message": "Wechsel zwischen Lesezeichen-Sets (z. B. Arbeit/Privat). Jedes Profil hat seine eigene GitHub-Repo-Konfiguration."
-  },
-  "help_autoSyncTitle": {
-    "message": "Auto-Sync"
-  },
-  "help_autoSyncDesc": {
-    "message": "Synchronisiert automatisch bei Hinzufügen, Ändern oder Entfernen von Lesezeichen. Die Verzögerung verhindert mehrere Syncs bei schnellen Änderungen."
-  },
-  "help_conflictTitle": {
-    "message": "Konflikte"
-  },
-  "help_conflictDesc": {
-    "message": "Wenn lokal und remote geändert wurden, wähle im Popup Push (lokal gewinnt) oder Pull (remote gewinnt)."
   },
   "help_whySlowTitle": {
     "message": "Warum dauert der Sync manchmal lange?"
