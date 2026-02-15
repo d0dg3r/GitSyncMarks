@@ -312,14 +312,31 @@
     <!-- ==================== Help Tab ==================== -->
     <div class="tab-content" id="tab-help">
 
-      <section class="card">
-        <h2 data-i18n="help_gettingStartedTitle">Getting Started</h2>
-        <p data-i18n-html="help_gettingStartedIntro">Create a GitHub repository for your bookmarks, then create a Personal Access Token (PAT) with the <code>repo</code> scope. In the GitHub tab, enter token, repository owner, name, branch (usually <code>main</code>), and the folder path (default: <code>bookmarks</code>). Click <strong>Test Connection</strong> to verify.</p>
-        <p data-i18n="help_onboarding">If the folder is empty, you can create the base structure (toolbar, other, menu, mobile). If bookmarks already exist in the repo, you can pull them into this browser.</p>
-      </section>
+      <details class="help-details card" open>
+        <summary>
+          <h2 data-i18n="help_gettingStartedTitle">Getting Started</h2>
+        </summary>
+        <div class="help-details-body">
+          <p data-i18n-html="help_gettingStartedIntro">Create a GitHub repository for your bookmarks, then create a Personal Access Token (PAT) with the <code>repo</code> scope. In the GitHub tab, enter token, repository owner, name, branch (usually <code>main</code>), and the folder path (default: <code>bookmarks</code>). Click <strong>Test Connection</strong> to verify.</p>
+          <p data-i18n="help_onboarding">If the folder is empty, you can create the base structure (toolbar, other, menu, mobile). If bookmarks already exist in the repo, you can pull them into this browser.</p>
+        </div>
+      </details>
 
-      <section class="card">
-        <h2 data-i18n="help_profilesTitle">Profiles</h2>
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_whySlowTitle">Why does sync sometimes take long?</h2>
+        </summary>
+        <div class="help-details-body">
+          <p data-i18n="help_whySlowIntro">GitSyncMarks uses GitHub's Git Data API for atomic commits. Each changed or new bookmark file requires an API call. With many changes, this adds up.</p>
+          <p data-i18n="help_whyAtomic">All changes are written in a single atomic commit: either everything succeeds or nothing does. This prevents partial or corrupted state if the sync is interrupted. One commit instead of many also avoids hitting API rate limits and keeps the Git history clean.</p>
+        </div>
+      </details>
+
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_profilesTitle">Profiles</h2>
+        </summary>
+        <div class="help-details-body">
         <p data-i18n="help_profilesIntro">Each profile has its own bookmark set and GitHub repo config. Use profiles for work/personal or different devices.</p>
         <dl class="help-dl">
           <dt data-i18n="help_profilesAdd">Add, Rename, Delete</dt>
@@ -327,15 +344,23 @@
           <dt data-i18n="help_profilesSwitch">Profile switch</dt>
           <dd data-i18n="help_profilesSwitchDesc">Select another profile to switch. Your current bookmarks are saved and pushed to the current profile's repo before switching. The target profile's bookmarks replace the local ones. Use “Switch without confirmation” to skip the confirm dialog.</dd>
         </dl>
-      </section>
+        </div>
+      </details>
 
-      <section class="card">
-        <h2 data-i18n="help_githubReposTitle">GitHub Repos Folder</h2>
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_githubReposTitle">GitHub Repos Folder</h2>
+        </summary>
+        <div class="help-details-body">
         <p data-i18n-html="help_githubReposDesc">Optional: Create a folder with bookmarks to all your GitHub repositories (public and private). Choose the position (toolbar, other, menu). The folder is synced like normal bookmarks; use <strong>Update GitHub Repos</strong> to refresh the list.</p>
-      </section>
+        </div>
+      </details>
 
-      <section class="card">
-        <h2 data-i18n="help_popupTitle">Popup (extension icon)</h2>
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_popupTitle">Popup (extension icon)</h2>
+        </summary>
+        <div class="help-details-body">
         <dl class="help-dl">
           <dt data-i18n="help_popupProfile">Profile selector</dt>
           <dd data-i18n="help_popupProfileDesc">Switch profiles directly from the popup header.</dd>
@@ -346,10 +371,14 @@
           <dt data-i18n="help_popupPull">Pull ↓</dt>
           <dd data-i18n="help_popupPullDesc">Download from GitHub (overwrites local changes).</dd>
         </dl>
-      </section>
+        </div>
+      </details>
 
-      <section class="card">
-        <h2 data-i18n="help_syncTitle">Synchronization</h2>
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_syncTitle">Synchronization</h2>
+        </summary>
+        <div class="help-details-body">
         <dl class="help-dl">
           <dt data-i18n="help_autoSyncTitle">Auto-sync</dt>
           <dd data-i18n="help_autoSyncDesc">When enabled, syncs automatically when you add, edit, or remove bookmarks. A debounce delay waits for rapid changes to finish before syncing.</dd>
@@ -358,51 +387,66 @@
           <dt data-i18n="help_syncStartup">Sync on startup / focus</dt>
           <dd data-i18n="help_syncStartupDesc">Optional: sync when the browser starts or when you return to the browser window (with cooldown).</dd>
         </dl>
-      </section>
+        </div>
+      </details>
 
-      <section class="card">
-        <h2 data-i18n="help_notificationsTitle">Notifications</h2>
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_notificationsTitle">Notifications</h2>
+        </summary>
+        <div class="help-details-body">
         <p data-i18n="help_notificationsDesc">Choose when to show sync notifications: All (success and failure), Errors only, or Off.</p>
-      </section>
+        </div>
+      </details>
 
-      <section class="card">
-        <h2 data-i18n="help_backupTitle">Backup</h2>
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_backupTitle">Backup</h2>
+        </summary>
+        <div class="help-details-body">
         <dl class="help-dl">
           <dt data-i18n="help_backupBookmarks">Export / Import Bookmarks</dt>
           <dd data-i18n="help_backupBookmarksDesc">Export all browser bookmarks as JSON. Import replaces all local bookmarks with the file contents.</dd>
           <dt data-i18n="help_backupSettings">Export / Import Settings</dt>
           <dd data-i18n="help_backupSettingsDesc">Export GitHub connection and sync settings (profiles with decrypted tokens). Import replaces all settings; the page reloads afterwards.</dd>
         </dl>
-      </section>
+        </div>
+      </details>
 
-      <section class="card">
-        <h2 data-i18n="help_conflictTitle">Conflicts</h2>
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_conflictTitle">Conflicts</h2>
+        </summary>
+        <div class="help-details-body">
         <p data-i18n-html="help_conflictDesc">When both local and remote bookmarks changed, the popup shows a conflict. Choose <strong>Push</strong> (local wins, overwrite remote) or <strong>Pull</strong> (remote wins, overwrite local). There is no automatic merge for conflicts.</p>
-      </section>
+        </div>
+      </details>
 
-      <section class="card">
-        <h2 data-i18n="help_shortcuts">Keyboard Shortcuts</h2>
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_shortcuts">Keyboard Shortcuts</h2>
+        </summary>
+        <div class="help-details-body">
         <table class="help-table">
           <tr><td><kbd>Ctrl+Shift+.</kbd></td><td data-i18n="help_quickSync">Quick sync bookmarks</td></tr>
           <tr><td><kbd>Ctrl+Shift+,</kbd></td><td data-i18n="help_openOptions">Open extension settings</td></tr>
         </table>
         <p class="help-note" data-i18n="help_shortcutsNote">You can customize shortcuts in the browser's extension settings.</p>
-      </section>
+        </div>
+      </details>
 
-      <section class="card">
-        <h2 data-i18n="help_whySlowTitle">Why does sync sometimes take long?</h2>
-        <p data-i18n="help_whySlowIntro">GitSyncMarks uses GitHub's Git Data API for atomic commits. Each changed or new bookmark file requires an API call. With many changes, this adds up.</p>
-        <p data-i18n="help_whyAtomic">All changes are written in a single atomic commit: either everything succeeds or nothing does. This prevents partial or corrupted state if the sync is interrupted. One commit instead of many also avoids hitting API rate limits and keeps the Git history clean.</p>
-      </section>
-
-      <section class="card">
-        <h2 data-i18n="help_links">Links</h2>
+      <details class="help-details card" open>
+        <summary>
+          <h2 data-i18n="help_links">Links</h2>
+        </summary>
+        <div class="help-details-body">
         <ul class="help-links">
           <li><a href="https://github.com/d0dg3r/GitSyncMarks/tree/main/docs" target="_blank" rel="noopener" data-i18n="options_documentation">Documentation</a></li>
           <li><a href="https://github.com/d0dg3r/GitSyncMarks/discussions" target="_blank" rel="noopener" data-i18n="help_discussions">Discussions</a></li>
           <li><a href="https://github.com/d0dg3r/GitSyncMarks/issues" target="_blank" rel="noopener" data-i18n="options_reportBug">Report a Bug / Feature Request</a></li>
         </ul>
-      </section>
+        </div>
+      </details>
 
     </div>
 

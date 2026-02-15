@@ -858,16 +858,73 @@ input[type="checkbox"]:checked + .toggle-slider::after {
 }
 
 /* Help tab */
+#tab-help .help-details.card {
+  padding: 12px 16px;
+  margin-bottom: 6px;
+}
+
+#tab-help .help-details:last-child {
+  margin-bottom: 0;
+}
+
+.help-details summary {
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.help-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.help-details summary::before {
+  content: '›';
+  display: inline-block;
+  margin-right: 6px;
+  transition: transform 0.2s;
+  color: var(--color-text-secondary);
+}
+
+.help-details[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.help-details summary h2 {
+  display: inline;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.help-details-body {
+  padding-top: 8px;
+  margin-top: 0;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.help-details-body > :first-child {
+  margin-top: 0;
+}
+
+.help-details-body p {
+  margin: 0 0 8px 0;
+}
+
+.help-details-body p:last-child {
+  margin-bottom: 0;
+}
+
 .help-table {
   width: 100%;
   border-collapse: collapse;
-  margin: 8px 0 16px;
+  margin: 6px 0 10px;
 }
 
 .help-table td {
-  padding: 8px 12px;
+  padding: 4px 8px;
   border-bottom: 1px solid var(--color-border-secondary);
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .help-table td:first-child {
@@ -879,27 +936,27 @@ input[type="checkbox"]:checked + .toggle-slider::after {
   display: inline-block;
   background: var(--color-bg-tertiary);
   border: 1px solid var(--color-border-secondary);
-  border-radius: 4px;
-  padding: 2px 8px;
+  border-radius: 3px;
+  padding: 2px 6px;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .help-note {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--color-text-secondary);
-  margin: 4px 0 0;
+  margin: 2px 0 0;
 }
 
 .help-links {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 4px;
 }
 
 .help-links a {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-primary);
   text-decoration: none;
 }
@@ -914,7 +971,8 @@ input[type="checkbox"]:checked + .toggle-slider::after {
 
 .help-dl dt {
   font-weight: 600;
-  margin-top: 12px;
+  margin-top: 8px;
+  font-size: 13px;
   color: var(--color-text);
 }
 
@@ -923,10 +981,11 @@ input[type="checkbox"]:checked + .toggle-slider::after {
 }
 
 .help-dl dd {
-  margin: 4px 0 0;
+  margin: 2px 0 0;
   padding-left: 0;
+  font-size: 13px;
   color: var(--color-text-secondary);
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 /* Mobile / small screens (Firefox Android, narrow viewports) */
