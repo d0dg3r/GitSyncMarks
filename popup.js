@@ -319,12 +319,14 @@ profileSelect.addEventListener('change', async (e) => {
 forcePushBtn.addEventListener('click', () => handleAction('push'));
 forcePullBtn.addEventListener('click', () => handleAction('pull'));
 
-// Settings links
+// Settings links (close popup after opening options)
 openSettingsBtn.addEventListener('click', () => {
   chrome.runtime.openOptionsPage();
+  window.close();
 });
 
 settingsLink.addEventListener('click', (e) => {
   e.preventDefault();
   chrome.runtime.openOptionsPage();
+  window.close();
 });
