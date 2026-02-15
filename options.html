@@ -276,7 +276,9 @@
         <pre class="code-block">gh workflow run add-bookmark.yml \
   -f url="https://example.com" \
   -f title="Example Website" \
-  -f folder="toolbar"</pre>
+  -f folder="toolbar" \
+  -f path="dev-tools"</pre>
+        <p class="help-note" data-i18n="options_automationGithubActionParams">folder = root (toolbar/other/menu/mobile); path = optional subfolder. Use base-path if your File Path setting differs from "bookmarks".</p>
 
         <h3 data-i18n="options_automationGithubActionWeb">Usage via GitHub Web UI</h3>
         <p data-i18n="options_automationGithubActionWebDesc">Go to your repository → Actions → "Add Bookmark" → Run workflow. Fill in the URL, title, and target folder.</p>

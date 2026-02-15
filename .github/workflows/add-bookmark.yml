@@ -12,13 +12,18 @@ on:
         required: false
         type: string
         default: ''
+      base-path:
+        description: 'Base folder in repo (must match extension File Path setting)'
+        required: false
+        type: string
+        default: 'bookmarks'
       folder:
-        description: 'Target folder (toolbar, other, menu, mobile)'
+        description: 'Root folder (toolbar, other, menu, or mobile)'
         required: false
         type: string
         default: 'toolbar'
       path:
-        description: 'Subfolder path within the target folder (e.g. "dev-tools")'
+        description: 'Optional subfolder within root (e.g. dev-tools for bookmarks/toolbar/dev-tools/)'
         required: false
         type: string
         default: ''
@@ -36,11 +41,13 @@ jobs:
         env:
           INPUT_URL: ${{ inputs.url }}
           INPUT_TITLE: ${{ inputs.title }}
+          INPUT_BASE_PATH: ${{ inputs.base-path }}
           INPUT_FOLDER: ${{ inputs.folder }}
           INPUT_PATH: ${{ inputs.path }}
         run: |
           URL="$INPUT_URL"
           TITLE="$INPUT_TITLE"
+          BASE_PATH="$INPUT_BASE_PATH"
           FOLDER="$INPUT_FOLDER"
           SUBFOLDER="$INPUT_PATH"
 
@@ -50,7 +57,7 @@ jobs:
           fi
 
           # Build target directory
-          TARGET_DIR="bookmarks/${FOLDER}"
+          TARGET_DIR="${BASE_PATH}/${FOLDER}"
           if [ -n "$SUBFOLDER" ]; then
             TARGET_DIR="${TARGET_DIR}/${SUBFOLDER}"
           fi

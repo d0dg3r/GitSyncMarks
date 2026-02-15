@@ -555,6 +555,9 @@
   "options_automationGithubActionUsage": {
     "message": "Nutzung über GitHub CLI"
   },
+  "options_automationGithubActionParams": {
+    "message": "folder = Root (toolbar/other/menu/mobile); path = optionaler Unterordner. base-path nutzen, wenn dein Dateipfad vom Standard \"bookmarks\" abweicht."
+  },
   "options_automationGithubActionWeb": {
     "message": "Nutzung über die GitHub-Weboberfläche"
   },

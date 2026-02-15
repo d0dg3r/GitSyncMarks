@@ -112,8 +112,13 @@ A **GitHub Action** workflow (`.github/workflows/add-bookmark.yml`) is included 
 gh workflow run add-bookmark.yml \
   -f url="https://example.com" \
   -f title="Example" \
-  -f folder="toolbar"
+  -f folder="toolbar" \
+  -f path="dev-tools"
 ```
+
+- `folder`: Root folder (`toolbar`, `other`, `menu`, or `mobile`)
+- `path`: Optional subfolder within root (e.g. `dev-tools` for `bookmarks/toolbar/dev-tools/`)
+- `base-path`: Base folder in repo (default `bookmarks`; must match the extension's File Path setting)
 
 See the **Automation** tab in the extension settings for details.
 
