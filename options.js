@@ -4,6 +4,7 @@
  * and bookmark/settings import/export.
  */
 
+import { DISPLAY_VERSION } from './lib/display-version.js';
 import { GitHubAPI } from './lib/github-api.js';
 import { checkPathSetup, initializeRemoteFolder } from './lib/onboarding.js';
 import { initI18n, applyI18n, getMessage, reloadI18n, getLanguage, SUPPORTED_LANGUAGES } from './lib/i18n.js';
@@ -130,10 +131,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.title = `GitSyncMarks – ${getMessage('options_subtitle')}`;
   await loadSettings();
 
-  // Show version from manifest
+  // Show version: pre-release display or manifest
   const versionEl = document.getElementById('app-version');
   if (versionEl) {
-    versionEl.textContent = chrome.runtime.getManifest().version;
+    const version = DISPLAY_VERSION ?? chrome.runtime.getManifest().version;
+    versionEl.textContent = version;
   }
 });
 

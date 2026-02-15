@@ -24,6 +24,13 @@ jobs:
       - name: Install Playwright Chromium
         run: npx playwright install chromium --with-deps
 
+      - name: Start virtual display (xvfb)
+        run: |
+          sudo apt-get update && sudo apt-get install -y xvfb
+          echo 'DISPLAY=:99' >> $GITHUB_ENV
+          Xvfb :99 -screen 0 1280x1024x24 &
+          sleep 2
+
       - name: Set git user for resetTestRepo
         run: |
           git config --global user.name "GitSyncMarks CI"
@@ -31,6 +38,7 @@ jobs:
 
       - name: Run E2E tests
         env:
+          DISPLAY: ':99'
           # PAT must have repo scope (Classic) or Contents read/write (Fine-grained)
           GITSYNCMARKS_TEST_PAT: ${{ secrets.GITSYNCMARKS_TEST_PAT }}
           GITSYNCMARKS_TEST_REPO_OWNER: ${{ vars.GITSYNCMARKS_TEST_REPO_OWNER }}

@@ -18,16 +18,23 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 BUILD_DIR="$ROOT_DIR/build"
 
-# Read version from manifest.json
-VERSION=$(grep '"version"' "$ROOT_DIR/manifest.json" | head -1 | sed 's/.*: *"\(.*\)".*/\1/')
+# Manifest version: always from source, never modified
+MANIFEST_VERSION=$(grep '"version"' "$ROOT_DIR/manifest.json" | head -1 | sed 's/.*: *"\(.*\)".*/\1/')
 
-# Resolve display version: tag (v2.2.0-pre.8 → 2.2.0-pre.8), or manifest + -dev
+# ZIP name / display: tag version or manifest + suffix
 if [[ -n "${RELEASE:-}" ]]; then
-  : # VERSION stays from manifest
+  ZIP_VERSION="$MANIFEST_VERSION"
+  DISPLAY_VERSION=""
 elif TAG=$(cd "$ROOT_DIR" && git describe --tags --exact-match 2>/dev/null); then
-  VERSION="${TAG#v}"
+  ZIP_VERSION="${TAG#v}"
+  if [[ "$ZIP_VERSION" =~ -(pre|alpha|beta|rc)[.-][0-9]+$ ]]; then
+    DISPLAY_VERSION="$ZIP_VERSION"
+  else
+    DISPLAY_VERSION=""
+  fi
 else
-  VERSION="${VERSION}-dev"
+  ZIP_VERSION="${MANIFEST_VERSION}-dev"
+  DISPLAY_VERSION=""
 fi
 
 # Shared files to include in both packages
@@ -81,9 +88,9 @@ copy_shared() {
 
 build_chrome() {
   local chrome_dir="$BUILD_DIR/chrome"
-  local zip_name="GitSyncMarks-v${VERSION}-chrome.zip"
+  local zip_name="GitSyncMarks-v${ZIP_VERSION}-chrome.zip"
 
-  log "Building Chrome extension v${VERSION}..."
+  log "Building Chrome extension v${ZIP_VERSION}..."
 
   rm -rf "$chrome_dir"
   mkdir -p "$chrome_dir"
@@ -91,9 +98,15 @@ build_chrome() {
   # Copy shared files
   copy_shared "$chrome_dir"
 
-  # Chrome uses the standard manifest.json
+  # Manifest: copy as-is (no version modification)
   cp "$ROOT_DIR/manifest.json" "$chrome_dir/manifest.json"
-  sed -i 's/"version": "[^"]*"/"version": "'"$VERSION"'"/' "$chrome_dir/manifest.json"
+
+  # Display version for GUI: pre-release tag or null (use manifest)
+  if [[ -n "$DISPLAY_VERSION" ]]; then
+    echo 'export const DISPLAY_VERSION = "'"$DISPLAY_VERSION"'";' > "$chrome_dir/lib/display-version.js"
+  else
+    echo 'export const DISPLAY_VERSION = null;' > "$chrome_dir/lib/display-version.js"
+  fi
 
   # Create ZIP (unless --no-zip)
   if [[ -z "${NO_ZIP:-}" ]]; then
@@ -108,9 +121,9 @@ build_chrome() {
 
 build_firefox() {
   local firefox_dir="$BUILD_DIR/firefox"
-  local zip_name="GitSyncMarks-v${VERSION}-firefox.zip"
+  local zip_name="GitSyncMarks-v${ZIP_VERSION}-firefox.zip"
 
-  log "Building Firefox extension v${VERSION}..."
+  log "Building Firefox extension v${ZIP_VERSION}..."
 
   rm -rf "$firefox_dir"
   mkdir -p "$firefox_dir"
@@ -118,9 +131,15 @@ build_firefox() {
   # Copy shared files
   copy_shared "$firefox_dir"
 
-  # Firefox uses the Firefox-specific manifest
+  # Manifest: copy as-is (no version modification)
   cp "$ROOT_DIR/manifest.firefox.json" "$firefox_dir/manifest.json"
-  sed -i 's/"version": "[^"]*"/"version": "'"$VERSION"'"/' "$firefox_dir/manifest.json"
+
+  # Display version for GUI: pre-release tag or null (use manifest)
+  if [[ -n "$DISPLAY_VERSION" ]]; then
+    echo 'export const DISPLAY_VERSION = "'"$DISPLAY_VERSION"'";' > "$firefox_dir/lib/display-version.js"
+  else
+    echo 'export const DISPLAY_VERSION = null;' > "$firefox_dir/lib/display-version.js"
+  fi
 
   # Create ZIP (unless --no-zip)
   if [[ -z "${NO_ZIP:-}" ]]; then

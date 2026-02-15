@@ -2,7 +2,7 @@
 
 Automated end-to-end tests for the GitSyncMarks browser extension. Runs on **Chrome only** (Playwright does not support Firefox extension loading).
 
-## Quick Start
+**Note:** The extension fixture uses headed Chromium (no headless) because the service worker does not start reliably in headless mode. On machines without a display (e.g. SSH), use `xvfb-run -a npm run test:e2e:smoke`.
 
 ```bash
 npm run test:e2e:smoke   # Smoke tests (no credentials)

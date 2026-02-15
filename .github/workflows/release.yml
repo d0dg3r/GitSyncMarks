@@ -44,6 +44,13 @@ jobs:
       - name: Install Playwright Chromium
         run: npx playwright install chromium --with-deps
 
+      - name: Start virtual display (xvfb)
+        run: |
+          sudo apt-get update && sudo apt-get install -y xvfb
+          echo 'DISPLAY=:99' >> $GITHUB_ENV
+          Xvfb :99 -screen 0 1280x1024x24 &
+          sleep 2
+
       - name: Build Chrome for E2E
         run: bash scripts/build.sh chrome --no-zip
 
@@ -55,11 +62,14 @@ jobs:
 
       - name: Run E2E tests (smoke only)
         if: steps.prerelease.outputs.prerelease == 'true'
+        env:
+          DISPLAY: ':99'
         run: npx playwright test e2e/smoke.spec.js
 
       - name: Run E2E tests (full suite)
         if: steps.prerelease.outputs.prerelease != 'true'
         env:
+          DISPLAY: ':99'
           GITSYNCMARKS_TEST_PAT: ${{ secrets.GITSYNCMARKS_TEST_PAT }}
           GITSYNCMARKS_TEST_REPO_OWNER: ${{ vars.GITSYNCMARKS_TEST_REPO_OWNER }}
           GITSYNCMARKS_TEST_REPO: ${{ vars.GITSYNCMARKS_TEST_REPO }}

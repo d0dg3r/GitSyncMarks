@@ -37,9 +37,10 @@ const test = base.extend({
     if (process.env.CI) {
       args.push('--no-sandbox', '--disable-dev-shm-usage');
     }
+    // Headed mode needed: service worker doesn't start in headless on many systems (CI, CachyOS)
     const context = await chromium.launchPersistentContext(userDataDir, {
       channel: 'chromium',
-      headless: true,
+      headless: false,
       args,
     });
     await use(context);
@@ -48,6 +49,9 @@ const test = base.extend({
   extensionId: async ({ context }, use) => {
     let serviceWorker = context.serviceWorkers()[0];
     if (!serviceWorker) {
+      const triggerPage = await context.newPage();
+      await triggerPage.goto('about:blank', { waitUntil: 'domcontentloaded' });
+      await triggerPage.close();
       serviceWorker = await context.waitForEvent('serviceworker', { timeout: 60000 });
     }
     const extensionId = serviceWorker.url().split('/')[2];
