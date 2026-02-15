@@ -185,11 +185,11 @@ Uses **role-based mapping** for cross-browser compatibility:
 
 1. Get local bookmark tree via `chrome.bookmarks.getTree()`
 2. Detect each root folder's role via `detectRootFolderRole()` (uses browser-specific IDs with title fallback)
-3. For each role in the remote data (toolbar, other, menu, mobile):
-   a. Find the matching local root folder
+3. For each local root folder, get its role and the corresponding remote data:
+   a. Merge fallback roles: roles not present locally (e.g. `menu` in Chrome) are added as subfolders to their fallback parent (e.g. `menu` → `other` as "Bookmarks Menu")
    b. Remove all existing children (reverse order)
-   c. Recursively recreate from remote data
-4. Roles not present locally are skipped (e.g., Chrome has no "menu")
+   c. Recursively recreate from merged remote data
+4. Result: All bookmarks appear in both browsers; Chrome gets `menu` content under Other Bookmarks
 
 ## Optimized Remote Fetching
 

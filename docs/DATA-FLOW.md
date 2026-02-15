@@ -161,6 +161,8 @@ Root folders are mapped by role:
 | `menu` | — | Bookmarks Menu (`menu________`) |
 | `mobile` | Mobile Bookmarks (ID: `3`) | Mobile Bookmarks (`mobile______`) |
 
+When loading into Chrome (which has no `menu` root), `bookmarks/menu/` content is merged under Other Bookmarks as a subfolder "Bookmarks Menu" — so all bookmarks appear in both browsers.
+
 ## Local Storage
 
 ### `chrome.storage.sync` — User Settings
