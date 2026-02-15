@@ -10,8 +10,6 @@ Contributions and ideas welcome — open an issue or pull request.
 
 - **Browser notifications** - Notifications on sync success/failure.
 
-- **Multiple sync profiles** - Work/personal repos, switch between different GitHub targets.
-
 ---
 
 ## Planned for v3.0 (Larger milestones)
@@ -22,15 +20,21 @@ Contributions and ideas welcome — open an issue or pull request.
 
 ---
 
+## Recently completed
+
+- **Keyboard shortcuts** (v2.2.0) — Quick sync (Ctrl+Shift+.), open options (Ctrl+Shift+,); customizable in extension settings
+- **Multiple sync profiles** (v2.2.0) — Work/personal bookmark sets with separate GitHub repos; switch replaces local bookmarks; onboarding (create folder / pull on first config)
+- **French and Spanish** (v2.2.0) — New languages: Français, Español
+
 ## Backlog / ideas (No timeline)
 
 | Idea | Description | Effort |
 |------|-------------|--------|
-| Multiple sync profiles | Work/personal repos, switch between different GitHub/GitLab targets | Medium |
+| **Folder browse/select** | Select or browse the sync folder in the Git repo instead of typing the path manually | Small |
+| **Browser import files** | Automatically generate import files for common browsers (e.g. Netscape HTML) alongside README.md. Enables importing directly from the repo without the extension. | Medium |
+| **Open tabs sync** | Save open tabs to Git; full history in repo for restore/jump-back; default tabs per profile. | Large |
 | Additional sync sources (read-only) | Add extra folders from centrally maintained repos (e.g. team bookmarks). Your personal bookmarks stay in your repo; the shared folder is merged in read-only. Assemble bookmarks from multiple sources in one place | Medium |
 | Selective folder sync | Sync only specific bookmark folders instead of all | Medium |
 | Sync history / rollback | Restore previous sync states (requires storing commit history) | Medium |
 | Conflict resolution UI | Diff view for merge conflicts instead of force push/pull only | Medium |
-| Keyboard shortcuts | Quick sync, open options from popup | Small |
-| More languages | Extend i18n (e.g. French, Spanish) | Small |
 | Self-hosted Git (Gitea, Forgejo) | Broader provider support beyond GitHub/GitLab | Large |

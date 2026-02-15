@@ -6,6 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/d0dg3r/GitSyncMarks/releases"><img src="https://img.shields.io/github/v/release/d0dg3r/GitSyncMarks" alt="Release"></a>
+  <a href="https://github.com/d0dg3r/GitSyncMarks/releases?q=pre"><img src="https://img.shields.io/github/v/release/d0dg3r/GitSyncMarks?include_prereleases&label=pre-release&logo=github&style=flat-square" alt="Pre-release"></a>
   <a href="https://chromewebstore.google.com/detail/kogijidhfkoibgihpiaiippajhgdgmif"><img src="https://img.shields.io/badge/Chrome_Web_Store-4285F4?style=flat-square&logo=googlechrome&logoColor=white" alt="Chrome Web Store"></a>
   <a href="https://addons.mozilla.org/en-US/firefox/addon/gitsyncmarks/"><img src="https://img.shields.io/badge/Firefox_Add-on-FF7139?style=flat-square&logo=firefoxbrowser&logoColor=white" alt="Firefox Add-on"></a>
 </p>
@@ -23,6 +24,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 - **Three-way merge**: Automatic conflict-free sync when changes happen on both sides simultaneously
 - **Cross-browser**: Works with Chrome, Chromium, Brave, Edge, and Firefox
 - **Auto-sync**: Automatically syncs on every bookmark change (configurable debounce)
+- **Multiple profiles**: Work and personal bookmark sets with separate GitHub repos; switch between profiles; each profile has its own sync state
 - **Sync profiles**: Real-time, frequent, normal, or power-save presets; optional sync on browser start or focus
 - **Theme**: Light, dark, or auto (follow system) in options and popup
 - **Periodic sync**: Checks for remote changes at configurable intervals (1–120 minutes)
@@ -31,7 +33,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 - **Readable overview**: A `README.md` with all bookmarks is generated in the repo for easy browsing on GitHub
 - **Automation**: Add bookmarks via Git, CLI, or GitHub Actions — the extension picks them up automatically
 - **Import/Export**: Export and import bookmarks or extension settings as JSON files
-- **Multilanguage**: English and German, with manual language selection
+- **Multilanguage**: English, German, French, and Spanish, with manual language selection
 - **No server needed**: Communicates directly with the GitHub API using your Personal Access Token
 
 ## Installation
@@ -61,9 +63,10 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 
 1. Click the extension icon in the toolbar
 2. Go to **Settings** (GitHub tab)
-3. Enter your **Personal Access Token**, **Repository Owner**, and **Repository Name**
-4. Click **Test Connection** to verify
-5. Save the settings
+3. Select a **Profile** (or add one with + Add)
+4. Enter your **Personal Access Token**, **Repository Owner**, and **Repository Name**
+5. Click **Test Connection** to verify. If the folder does not exist yet, you can create it; if bookmarks are already in the repo, you can pull them
+6. Save the settings
 
 ### First sync
 
@@ -118,6 +121,7 @@ See the **Automation** tab in the extension settings for details.
 
 | Setting | Default | Description |
 |---------|---------|-------------|
+| Profile | Default | Active bookmark profile (each has its own GitHub repo config) |
 | Personal Access Token | – | GitHub PAT with `repo` scope |
 | Repository Owner | – | Your GitHub username or organization |
 | Repository Name | – | Name of the target repository |
@@ -128,6 +132,7 @@ See the **Automation** tab in the extension settings for details.
 | Sync Interval | 15 min | How often to check for remote changes (custom profile) |
 | Sync on Start | Off | Sync when the browser starts |
 | Sync on Focus | Off | Sync when the browser gains focus |
+| Switch without confirmation | Off | Skip confirmation when changing profiles |
 
 ## Conflict Resolution
 
