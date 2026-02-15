@@ -4,6 +4,36 @@ This document describes how to test the extension on Chrome and Firefox (desktop
 
 ---
 
+## Automated E2E Tests (Chrome)
+
+GitSyncMarks uses Playwright for automated end-to-end tests. **Chrome only** — Firefox extension loading is not supported by Playwright.
+
+```bash
+npm run test:e2e           # All tests (smoke + connection + sync)
+npm run test:e2e:smoke    # Smoke tests only (no GitHub config)
+npm run test:e2e:sync     # Connection and sync tests
+npm run test:e2e:report   # Open HTML report after a run
+```
+
+**Prerequisites:** `npm run build:chrome` (run automatically by test scripts).
+
+**Sync tests** require a private test repo and credentials — see [e2e/README.md](../e2e/README.md) if present, or `.env.example`.
+
+---
+
+## Firefox — Manual Testing
+
+Automated E2E tests run only on Chrome. **Test Firefox manually** before each release:
+
+1. Build: `npm run build:firefox`
+2. Load: `about:debugging` → Load Temporary Add-on → select `build/GitSyncMarks-vX.X.X-firefox.zip`
+3. Run the same flows as Chrome: configure GitHub, Test Connection, Push, Pull, Sync
+4. Verify: popup, options tabs, sync status, conflict handling
+
+The extension code is shared; Chrome E2E validates core logic. Firefox-specific checks: manifest differences, storage, background script (non–service-worker).
+
+---
+
 ## Store Screenshots
 
 Screenshots for Chrome Web Store and Firefox AMO are generated automatically. Run after building the Chrome extension:
