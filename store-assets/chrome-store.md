@@ -309,34 +309,37 @@ All regions
 - [ ] `store-assets/promo-small.png` — 440x280px small promo tile
 
 ### English (EN)
-- [x] `en/chrome-github.png` — GitHub tab: Personal Access Token, repository owner/name, branch, file path, test connection
-- [ ] `en/chrome-about.png` — About tab (optional: shows Mobile App block)
-- [x] `en/chrome-settings.png` — Synchronization tab
-- [x] `en/chrome-import-export.png` — Backup tab
-- [x] `en/chrome-automation.png` — Automation tab
-- [x] `en/chrome-help.png` — Help tab
-- [x] `en/chrome-dialog.png` — Popup
+- [x] `en/chrome-1-github.png` — GitHub tab
+- [x] `en/chrome-2-synchronization.png` — Synchronization tab
+- [x] `en/chrome-3-backup.png` — Backup tab
+- [x] `en/chrome-4-automation.png` — Automation tab
+- [x] `en/chrome-5-help.png` — Help tab
+- [x] `en/chrome-6-about.png` — About tab
+- [x] `en/chrome-7-popup.png` — Popup (centered)
 
 ### Deutsch (DE)
-- [x] `de/chrome-github.png` — GitHub-Tab
-- [x] `de/chrome-settings.png` — Synchronisierung-Tab
-- [x] `de/chrome-import-export.png` — Backup-Tab
-- [x] `de/chrome-automation.png` — Automatisierung-Tab
-- [x] `de/chrome-help.png` — Hilfe-Tab
-- [x] `de/chrome-dialog.png` — Popup
+- [x] `de/chrome-1-github.png` — GitHub-Tab
+- [x] `de/chrome-2-synchronization.png` — Synchronisierung-Tab
+- [x] `de/chrome-3-backup.png` — Backup-Tab
+- [x] `de/chrome-4-automation.png` — Automatisierung-Tab
+- [x] `de/chrome-5-help.png` — Hilfe-Tab
+- [x] `de/chrome-6-about.png` — Über-Tab
+- [x] `de/chrome-7-popup.png` — Popup
 
 ### Français (FR)
-- [x] `fr/chrome-github.png` — Onglet GitHub
-- [x] `fr/chrome-settings.png` — Onglet Synchronisation
-- [x] `fr/chrome-import-export.png` — Onglet Sauvegarde
-- [x] `fr/chrome-automation.png` — Onglet Automatisation
-- [x] `fr/chrome-help.png` — Onglet Aide
-- [x] `fr/chrome-dialog.png` — Popup
+- [x] `fr/chrome-1-github.png` — Onglet GitHub
+- [x] `fr/chrome-2-synchronization.png` — Onglet Synchronisation
+- [x] `fr/chrome-3-backup.png` — Onglet Sauvegarde
+- [x] `fr/chrome-4-automation.png` — Onglet Automatisation
+- [x] `fr/chrome-5-help.png` — Onglet Aide
+- [x] `fr/chrome-6-about.png` — Onglet À propos
+- [x] `fr/chrome-7-popup.png` — Popup
 
 ### Español (ES)
-- [x] `es/chrome-github.png` — Pestaña GitHub
-- [x] `es/chrome-settings.png` — Pestaña Sincronización
-- [x] `es/chrome-import-export.png` — Pestaña Copia de seguridad
-- [x] `es/chrome-automation.png` — Pestaña Automatización
-- [x] `es/chrome-help.png` — Pestaña Ayuda
-- [x] `es/chrome-dialog.png` — Popup
+- [x] `es/chrome-1-github.png` — Pestaña GitHub
+- [x] `es/chrome-2-synchronization.png` — Pestaña Sincronización
+- [x] `es/chrome-3-backup.png` — Pestaña Copia de seguridad
+- [x] `es/chrome-4-automation.png` — Pestaña Automatización
+- [x] `es/chrome-5-help.png` — Pestaña Ayuda
+- [x] `es/chrome-6-about.png` — Pestaña Acerca de
+- [x] `es/chrome-7-popup.png` — Popup
