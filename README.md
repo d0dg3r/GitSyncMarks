@@ -123,6 +123,8 @@ Each profile has its own bookmark set and GitHub repo configuration. Use profile
 
 Use **Switch without confirmation** in the profile options to skip the confirmation dialog when switching.
 
+> **Note:** Profiles work reliably. With multiple profiles, sync conflicts can occasionally occur — trying Push or Pull 2–3 times usually resolves them. This feature is still evolving. If you encounter reproducible bugs, please [open an issue](https://github.com/d0dg3r/GitSyncMarks/issues) on GitHub.
+
 ---
 
 ## Popup
