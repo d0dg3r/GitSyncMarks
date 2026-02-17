@@ -14,6 +14,10 @@ import { replaceLocalBookmarks, SYNC_PRESETS } from './lib/sync-engine.js';
 import { updateGitHubReposFolder } from './lib/github-repos.js';
 import { encryptToken, decryptToken, migrateTokenIfNeeded } from './lib/crypto.js';
 import {
+  isDebugLogEnabled,
+  setDebugLogEnabled,
+} from './lib/debug-log.js';
+import {
   getProfiles,
   getActiveProfileId,
   getProfileSettings,
@@ -56,6 +60,19 @@ const profileSwitchWithoutConfirmInput = document.getElementById('profile-switch
 const profileSwitchConfirm = document.getElementById('profile-switch-confirm');
 const profileSwitchConfirmText = document.getElementById('profile-switch-confirm-text');
 const profileSwitchConfirmBtn = document.getElementById('profile-switch-confirm-btn');
+const profileDeleteConfirm = document.getElementById('profile-delete-confirm');
+const profileDeleteConfirmText = document.getElementById('profile-delete-confirm-text');
+const profileDeleteConfirmBtn = document.getElementById('profile-delete-confirm-btn');
+const profileDeleteCancelBtn = document.getElementById('profile-delete-cancel-btn');
+const profileAddDialog = document.getElementById('profile-add-dialog');
+const profileAddNameInput = document.getElementById('profile-add-name-input');
+const profileAddConfirmBtn = document.getElementById('profile-add-confirm-btn');
+const profileAddCancelBtn = document.getElementById('profile-add-cancel-btn');
+const profileRenameDialog = document.getElementById('profile-rename-dialog');
+const profileRenameInput = document.getElementById('profile-rename-input');
+const profileRenameConfirmBtn = document.getElementById('profile-rename-confirm-btn');
+const profileRenameCancelBtn = document.getElementById('profile-rename-cancel-btn');
+const profileMessage = document.getElementById('profile-message');
 const profileSwitchCancelBtn = document.getElementById('profile-switch-cancel-btn');
 const validationSpinner = document.getElementById('validation-spinner');
 const tokenInput = document.getElementById('token');
@@ -74,6 +91,10 @@ const syncOnFocusInput = document.getElementById('sync-on-focus');
 const notificationsModeSelect = document.getElementById('notifications-mode');
 const validateBtn = document.getElementById('validate-btn');
 const validationResult = document.getElementById('validation-result');
+const onboardingConfirm = document.getElementById('onboarding-confirm');
+const onboardingConfirmText = document.getElementById('onboarding-confirm-text');
+const onboardingConfirmYesBtn = document.getElementById('onboarding-confirm-yes-btn');
+const onboardingConfirmNoBtn = document.getElementById('onboarding-confirm-no-btn');
 const saveGitHubBtn = document.getElementById('save-github-btn');
 const saveSyncBtn = document.getElementById('save-sync-btn');
 const saveGitHubResult = document.getElementById('save-github-result');
@@ -87,6 +108,9 @@ const githubReposSpinner = document.getElementById('github-repos-spinner');
 const githubReposResult = document.getElementById('github-repos-result');
 const languageSelect = document.getElementById('language-select');
 const themeButtons = document.querySelectorAll('.theme-icon-btn');
+const debugLogEnabledInput = document.getElementById('debug-log-enabled');
+const debugLogExportBtn = document.getElementById('debug-log-export-btn');
+const debugLogResult = document.getElementById('debug-log-result');
 
 // ---- DOM elements: Import/Export Tab ----
 const exportBookmarksBtn = document.getElementById('export-bookmarks-btn');
@@ -241,6 +265,7 @@ async function loadSettings() {
     language: 'auto',
     theme: 'auto',
     profileSwitchWithoutConfirm: false,
+    debugLogEnabled: false,
   };
   const globals = { ...syncDefaults, ...(await chrome.storage.sync.get(syncDefaults)) };
 
@@ -269,6 +294,13 @@ async function loadSettings() {
   });
   profileSwitchWithoutConfirmInput.checked = globals.profileSwitchWithoutConfirm === true;
   profileSwitchConfirm.style.display = 'none';
+  profileDeleteConfirm.style.display = 'none';
+  profileAddDialog.style.display = 'none';
+  profileRenameDialog.style.display = 'none';
+  profileMessage.style.display = 'none';
+  onboardingConfirm.style.display = 'none';
+
+  debugLogEnabledInput.checked = globals.debugLogEnabled === true;
 }
 
 // Profile selector: switching profiles replaces bookmarks
@@ -291,7 +323,7 @@ async function doProfileSwitch(targetId) {
     await switchProfile(targetId);
     await loadSettings();
   } catch (err) {
-    alert(getMessage('options_error', [err.message]));
+    showProfileMessage(getMessage('options_error', [err.message]));
     profileSelect.value = activeId;
   } finally {
     profileSelect.disabled = false;
@@ -335,6 +367,25 @@ profileSwitchCancelBtn.addEventListener('click', async () => {
   pendingProfileSwitchId = null;
 });
 
+function showProfileMessage(message, isError = true) {
+  profileMessage.textContent = message;
+  profileMessage.style.display = '';
+  profileMessage.className = 'profile-message' + (isError ? ' error' : '');
+  setTimeout(() => {
+    profileMessage.style.display = 'none';
+  }, 5000);
+}
+
+async function hideProfileDialogs() {
+  profileSwitchConfirm.style.display = 'none';
+  profileDeleteConfirm.style.display = 'none';
+  profileAddDialog.style.display = 'none';
+  profileRenameDialog.style.display = 'none';
+  pendingProfileSwitchId = null;
+  const activeId = await getActiveProfileId();
+  profileSelect.value = activeId;
+}
+
 profileSwitchWithoutConfirmInput.addEventListener('change', async () => {
   if (profileSwitchWithoutConfirmInput.checked) {
     profileSwitchConfirm.style.display = 'none';
@@ -346,10 +397,26 @@ profileSwitchWithoutConfirmInput.addEventListener('change', async () => {
 });
 
 profileAddBtn.addEventListener('click', async () => {
+  await hideProfileDialogs();
+  profileAddNameInput.value = '';
+  profileAddDialog.style.display = 'flex';
+  profileAddNameInput.focus();
+});
+
+profileAddNameInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') profileAddConfirmBtn.click();
+});
+
+profileRenameInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') profileRenameConfirmBtn.click();
+});
+
+profileAddConfirmBtn.addEventListener('click', async () => {
+  const name = profileAddNameInput.value?.trim();
+  if (!name) return;
+  profileAddDialog.style.display = 'none';
   try {
-    const name = prompt(getMessage('options_profile') + ' name:', 'New Profile');
-    if (!name || !name.trim()) return;
-    const newId = await addProfile(name.trim());
+    const newId = await addProfile(name);
     profileSelect.disabled = true;
     profileAddBtn.disabled = true;
     profileRenameBtn.disabled = true;
@@ -375,8 +442,12 @@ profileAddBtn.addEventListener('click', async () => {
     profileDeleteBtn.disabled = false;
     profileSpinner.style.display = 'none';
     profileSwitchingMsg.style.display = 'none';
-    alert(getMessage('options_error', [err.message]));
+    showProfileMessage(getMessage('options_error', [err.message]));
   }
+});
+
+profileAddCancelBtn.addEventListener('click', () => {
+  profileAddDialog.style.display = 'none';
 });
 
 profileDeleteBtn.addEventListener('click', async () => {
@@ -385,15 +456,29 @@ profileDeleteBtn.addEventListener('click', async () => {
   const profile = profiles[selectedId];
   if (!profile || Object.keys(profiles).length <= 1) return;
 
-  const confirmed = confirm(getMessage('options_profileDeleteConfirm', [profile.name || selectedId]));
-  if (!confirmed) return;
+  await hideProfileDialogs();
+  profileDeleteConfirmText.textContent = getMessage('options_profileDeleteConfirm', [profile.name || selectedId]);
+  profileDeleteConfirm.style.display = 'flex';
+  profileDeleteConfirm.dataset.pendingId = selectedId;
+});
+
+profileDeleteConfirmBtn.addEventListener('click', async () => {
+  const selectedId = profileDeleteConfirm.dataset.pendingId;
+  profileDeleteConfirm.style.display = 'none';
+  delete profileDeleteConfirm.dataset.pendingId;
+  if (!selectedId) return;
 
   try {
     await deleteProfile(selectedId);
     await loadSettings();
   } catch (err) {
-    alert(getMessage('options_error', [err.message]));
+    showProfileMessage(getMessage('options_error', [err.message]));
   }
+});
+
+profileDeleteCancelBtn.addEventListener('click', () => {
+  profileDeleteConfirm.style.display = 'none';
+  delete profileDeleteConfirm.dataset.pendingId;
 });
 
 profileRenameBtn.addEventListener('click', async () => {
@@ -402,17 +487,32 @@ profileRenameBtn.addEventListener('click', async () => {
   const profile = profiles[selectedId];
   if (!profile) return;
 
-  const currentName = profile.name || selectedId;
-  const newName = prompt(getMessage('options_profileRenamePrompt', [currentName]), currentName);
-  if (!newName || !newName.trim()) return;
+  await hideProfileDialogs();
+  profileRenameInput.value = profile.name || selectedId;
+  profileRenameDialog.style.display = 'flex';
+  profileRenameInput.focus();
+  profileRenameDialog.dataset.pendingId = selectedId;
+});
+
+profileRenameConfirmBtn.addEventListener('click', async () => {
+  const selectedId = profileRenameDialog.dataset.pendingId;
+  const newName = profileRenameInput.value?.trim();
+  profileRenameDialog.style.display = 'none';
+  delete profileRenameDialog.dataset.pendingId;
+  if (!selectedId || !newName) return;
 
   try {
-    await saveProfile(selectedId, { name: newName.trim() });
+    await saveProfile(selectedId, { name: newName });
     await loadSettings();
     showSaveResult(getMessage('options_settingsSaved'), 'success');
   } catch (err) {
-    alert(getMessage('options_error', [err.message]));
+    showProfileMessage(getMessage('options_error', [err.message]));
   }
+});
+
+profileRenameCancelBtn.addEventListener('click', () => {
+  profileRenameDialog.style.display = 'none';
+  delete profileRenameDialog.dataset.pendingId;
 });
 
 syncProfileSelect.addEventListener('change', () => {
@@ -492,6 +592,32 @@ githubReposRefreshBtn.addEventListener('click', async () => {
   }
 });
 
+function showOnboardingConfirm(message, yesButtonLabel) {
+  return new Promise((resolve) => {
+    onboardingConfirmText.textContent = message;
+    onboardingConfirmYesBtn.textContent = yesButtonLabel;
+    onboardingConfirm.style.display = 'flex';
+    validationSpinner.style.display = 'none';
+
+    const handleYes = () => {
+      onboardingConfirmYesBtn.removeEventListener('click', handleYes);
+      onboardingConfirmNoBtn.removeEventListener('click', handleNo);
+      resolve(true);
+    };
+    const handleNo = () => {
+      onboardingConfirmYesBtn.removeEventListener('click', handleYes);
+      onboardingConfirmNoBtn.removeEventListener('click', handleNo);
+      resolve(false);
+    };
+    onboardingConfirmYesBtn.addEventListener('click', handleYes);
+    onboardingConfirmNoBtn.addEventListener('click', handleNo);
+  });
+}
+
+function hideOnboardingConfirm() {
+  onboardingConfirm.style.display = 'none';
+}
+
 validateBtn.addEventListener('click', async () => {
   await saveSettings();
   const token = tokenInput.value.trim();
@@ -529,8 +655,12 @@ validateBtn.addEventListener('click', async () => {
       const basePath = filepathInput.value.trim() || 'bookmarks';
       const pathCheck = await checkPathSetup(api, basePath);
       if (pathCheck.status === 'unreachable' || pathCheck.status === 'empty') {
-        const createFolder = confirm(getMessage('options_onboardingCreateFolder', [basePath]));
-        if (createFolder) {
+        const confirmed = await showOnboardingConfirm(
+          getMessage('options_onboardingCreateFolder', [basePath]),
+          getMessage('options_onboardingCreateBtn')
+        );
+        hideOnboardingConfirm();
+        if (confirmed) {
           try {
             await initializeRemoteFolder(api, basePath);
             showValidation(getMessage('options_onboardingCreateSuccess'), 'success');
@@ -543,8 +673,12 @@ validateBtn.addEventListener('click', async () => {
         return;
       }
       if (pathCheck.status === 'hasBookmarks') {
-        const pullNow = confirm(getMessage('options_onboardingPullNow'));
-        if (pullNow) {
+        const confirmed = await showOnboardingConfirm(
+          getMessage('options_onboardingPullNow'),
+          getMessage('options_onboardingPullBtn')
+        );
+        hideOnboardingConfirm();
+        if (confirmed) {
           try {
             await saveSettings();
             await chrome.runtime.sendMessage({ action: 'pull' });
@@ -579,6 +713,11 @@ function showValidation(message, type) {
 async function saveSettings() {
   try {
     const activeId = await getActiveProfileId();
+    const profiles = await getProfiles();
+    const currentProfile = profiles[activeId];
+    const oldPath = (currentProfile?.filePath || 'bookmarks').replace(/\/+$/, '');
+    const newPath = (filepathInput.value.trim() || 'bookmarks').replace(/\/+$/, '');
+    const pathChanged = newPath !== oldPath;
 
     // Save profile-specific GitHub settings
     await saveProfile(activeId, {
@@ -611,11 +750,14 @@ async function saveSettings() {
       // alarm will update when background runs again (next sync, popup open).
     }
 
-    showSaveResult(getMessage('options_settingsSaved'), 'success');
+    const successMsg = pathChanged
+      ? `${getMessage('options_settingsSaved')} ${getMessage('options_filePathChangeHint')}`
+      : getMessage('options_settingsSaved');
+    showSaveResult(successMsg, 'success');
     setTimeout(() => {
       saveGitHubResult.textContent = '';
       saveSyncResult.textContent = '';
-    }, 3000);
+    }, pathChanged ? 8000 : 3000);
   } catch (err) {
     showSaveResult(getMessage('options_errorSaving', [err.message]), 'error');
   }
@@ -630,6 +772,31 @@ function showSaveResult(message, type) {
 
 saveGitHubBtn.addEventListener('click', saveSettings);
 saveSyncBtn.addEventListener('click', saveSettings);
+
+// Debug log: toggle saves immediately; export downloads log file
+debugLogEnabledInput.addEventListener('change', async () => {
+  await setDebugLogEnabled(debugLogEnabledInput.checked);
+});
+debugLogExportBtn.addEventListener('click', async () => {
+  let content = '';
+  try {
+    const res = await chrome.runtime.sendMessage({ action: 'getDebugLog' });
+    content = res?.content ?? '';
+  } catch {
+    content = '';
+  }
+  if (!content) {
+    debugLogResult.textContent = getMessage('options_debugLogExportEmpty');
+    debugLogResult.className = 'validation-result';
+    setTimeout(() => { debugLogResult.textContent = ''; }, 3000);
+    return;
+  }
+  const date = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+  downloadFile(`gitsyncmarks-debug-${date}.txt`, content, 'text/plain;charset=utf-8');
+  debugLogResult.textContent = getMessage('options_exportSuccess');
+  debugLogResult.className = 'validation-result success';
+  setTimeout(() => { debugLogResult.textContent = ''; }, 3000);
+});
 
 // Switches: auto-save on change (user often forgets to click Save)
 autoSyncInput.addEventListener('change', saveSettings);

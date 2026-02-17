@@ -46,9 +46,6 @@ test.describe('Connection', () => {
     page,
     extensionId,
   }) => {
-    // Dismiss "Create folder?" or "Pull now?" dialogs if they appear
-    page.on('dialog', (dialog) => dialog.dismiss());
-
     await page.goto(`chrome-extension://${extensionId}/options.html`);
     await page.waitForLoadState('networkidle');
 
@@ -57,6 +54,14 @@ test.describe('Connection', () => {
     await page.locator('#repo').fill(process.env.GITSYNCMARKS_TEST_REPO);
 
     await page.locator('#validate-btn').click();
+
+    // If onboarding dialog appears (empty folder or pull), click Yes
+    try {
+      await page.locator('#onboarding-confirm-yes-btn').waitFor({ state: 'visible', timeout: 8000 });
+      await page.locator('#onboarding-confirm-yes-btn').click();
+    } catch {
+      // No dialog - folder may already exist with content
+    }
 
     // Expect success: "Connection OK!" or "Folder created"
     const validationResult = page.locator('#validation-result');

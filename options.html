@@ -67,6 +67,34 @@
             <button type="button" id="profile-switch-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
           </div>
         </div>
+        <div id="profile-delete-confirm" class="profile-inline-dialog" style="display: none;">
+          <span id="profile-delete-confirm-text" class="profile-inline-dialog-text"></span>
+          <div class="profile-inline-dialog-actions">
+            <button type="button" id="profile-delete-confirm-btn" class="btn btn-danger btn-sm" data-i18n="options_profileDelete">Delete</button>
+            <button type="button" id="profile-delete-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+          </div>
+        </div>
+        <div id="profile-add-dialog" class="profile-inline-dialog" style="display: none;">
+          <div class="profile-inline-dialog-body">
+            <label for="profile-add-name-input" class="profile-inline-dialog-label" data-i18n="options_profileAddNameLabel">Profile name</label>
+            <input type="text" id="profile-add-name-input" class="profile-inline-dialog-input" data-i18n-placeholder="options_profileAddPlaceholder" placeholder="New Profile">
+          </div>
+          <div class="profile-inline-dialog-actions">
+            <button type="button" id="profile-add-confirm-btn" class="btn btn-primary btn-sm" data-i18n="options_profileAddConfirmBtn">Add</button>
+            <button type="button" id="profile-add-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+          </div>
+        </div>
+        <div id="profile-rename-dialog" class="profile-inline-dialog" style="display: none;">
+          <div class="profile-inline-dialog-body">
+            <label for="profile-rename-input" class="profile-inline-dialog-label" data-i18n="options_profileRenameLabel">New name</label>
+            <input type="text" id="profile-rename-input" class="profile-inline-dialog-input">
+          </div>
+          <div class="profile-inline-dialog-actions">
+            <button type="button" id="profile-rename-confirm-btn" class="btn btn-primary btn-sm" data-i18n="options_profileRename">Rename</button>
+            <button type="button" id="profile-rename-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+          </div>
+        </div>
+        <div id="profile-message" class="profile-message" style="display: none;"></div>
       </section>
 
       <section class="card">
@@ -108,6 +136,13 @@
           <button id="validate-btn" class="btn btn-secondary" data-i18n="options_testConnection">Test Connection</button>
           <span id="validation-spinner" class="spinner" style="display: none;"></span>
           <span id="validation-result" class="validation-result"></span>
+          <div id="onboarding-confirm" class="onboarding-confirm" style="display: none; margin-top: 0.75rem;">
+            <span id="onboarding-confirm-text" class="onboarding-confirm-text"></span>
+            <div class="onboarding-confirm-actions">
+              <button type="button" id="onboarding-confirm-yes-btn" class="btn btn-primary btn-sm"></button>
+              <button type="button" id="onboarding-confirm-no-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -129,7 +164,6 @@
             <select id="github-repos-parent">
               <option value="toolbar" data-i18n="options_githubReposParentToolbar">Bookmarks Bar</option>
               <option value="other" data-i18n="options_githubReposParentOther">Other Bookmarks</option>
-              <option value="menu" data-i18n="options_githubReposParentMenu">Bookmarks Menu</option>
             </select>
           </div>
 
@@ -288,7 +322,7 @@
           <pre class="code-block code-block-sm">{ "title": "Example", "url": "https://example.com" }</pre>
           <p class="automation-folders">
             <span data-i18n="options_automationFoldersLabel">Folders:</span>
-            <code>toolbar</code> <code>other</code> <code>menu</code> <code>mobile</code>
+            <code>toolbar</code> <code>other</code>
           </p>
         </div>
 
@@ -318,7 +352,27 @@
         </summary>
         <div class="help-details-body">
           <p data-i18n-html="help_gettingStartedIntro">Create a GitHub repository for your bookmarks, then create a Personal Access Token (PAT) with the <code>repo</code> scope. In the GitHub tab, enter token, repository owner, name, branch (usually <code>main</code>), and the folder path (default: <code>bookmarks</code>). Click <strong>Test Connection</strong> to verify.</p>
-          <p data-i18n="help_onboarding">If the folder is empty, you can create the base structure (toolbar, other, menu, mobile). If bookmarks already exist in the repo, you can pull them into this browser.</p>
+          <p data-i18n="help_onboarding">If the folder is empty, you can create the base structure (toolbar, other). If bookmarks already exist in the repo, you can pull them into this browser.</p>
+        </div>
+      </details>
+
+      <details class="help-details card" open>
+        <summary>
+          <h2 data-i18n="options_debugLogTitle">Debug Log</h2>
+        </summary>
+        <div class="help-details-body">
+          <p data-i18n="options_debugLogDesc">Enable to record sync diagnostics (diffs, merge decisions, conflicts). Use when troubleshooting sync issues. Export and share the log for support.</p>
+          <div class="form-group toggle-group" style="margin-top: 0.5rem;">
+            <label for="debug-log-enabled" class="toggle-label">
+              <span data-i18n="options_debugLogEnabled">Enable debug log</span>
+              <input type="checkbox" id="debug-log-enabled">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="debug-log-actions" style="margin-top: 0.5rem; display: flex; gap: 0.5rem; align-items: center;">
+            <button type="button" id="debug-log-export-btn" class="btn btn-secondary btn-sm" data-i18n="options_debugLogExport">Export log</button>
+            <span id="debug-log-result" class="validation-result" style="margin-left: 0;"></span>
+          </div>
         </div>
       </details>
 
@@ -352,7 +406,7 @@
           <h2 data-i18n="help_githubReposTitle">GitHub Repos Folder</h2>
         </summary>
         <div class="help-details-body">
-        <p data-i18n-html="help_githubReposDesc">Optional: Create a folder with bookmarks to all your GitHub repositories (public and private). Choose the position (toolbar, other, menu). The folder is synced like normal bookmarks; use <strong>Update GitHub Repos</strong> to refresh the list.</p>
+        <p data-i18n-html="help_githubReposDesc">Optional: Create a folder with bookmarks to all your GitHub repositories (public and private). Choose the position (toolbar, other). The folder is synced like normal bookmarks; use <strong>Update GitHub Repos</strong> to refresh the list.</p>
         </div>
       </details>
 

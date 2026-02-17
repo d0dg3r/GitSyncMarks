@@ -128,7 +128,7 @@ Converts between browser bookmark trees and the per-file format:
 | `fileMapToBookmarkTree(files, basePath)` | File map → bookmark tree (role → children) |
 | `fileMapToMarkdown(files, basePath)` | File map → human-readable Markdown |
 | `generateFilename(title, url)` | Deterministic filename: `{slug}_{hash}.json` |
-| `detectRootFolderRole(node)` | Detect toolbar/other/menu/mobile from browser IDs |
+| `detectRootFolderRole(node)` | Detect toolbar/other from browser IDs |
 | `gitTreeToShaMap(entries, basePath)` | Git tree → SHA map for remote change detection |
 | `serializeToJson()` / `deserializeFromJson()` | Legacy format (for import/export) |
 

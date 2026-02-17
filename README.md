@@ -59,7 +59,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 - **Conflict detection**: Notifies you when automatic merge is not possible
 - **Readable overview**: A `README.md` with all bookmarks is generated in the repo for easy browsing on GitHub
 - **Automation**: Add bookmarks via Git, CLI, or GitHub Actions — the extension picks them up automatically
-- **GitHub Repos folder**: Optional folder with bookmarks to all your GitHub repositories (public and private); configurable position (toolbar/other/menu); manual refresh; preserved on pull when not in Git
+- **GitHub Repos folder**: Optional folder with bookmarks to all your GitHub repositories (public and private); configurable position (toolbar/other); manual refresh; preserved on pull when not in Git
 - **Auto-save**: Switches and action buttons (Update GitHub Repos, Test Connection) save settings automatically
 - **Import/Export**: Export and import bookmarks or extension settings as JSON files
 - **Multilanguage**: English, German, French, and Spanish, with manual language selection
@@ -98,7 +98,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 3. Enter your **Personal Access Token**, **Repository Owner**, and **Repository Name**
 4. Set **Branch** (usually `main`) and **File Path** (default `bookmarks` — the folder in your repo where bookmark files will live)
 5. Click **Test Connection** to verify (settings are saved automatically before the test):
-   - If the folder is **empty**: You can create the base structure (toolbar, other, menu, mobile)
+   - If the folder is **empty**: You can create the base structure (toolbar, other)
    - If **bookmarks already exist** in the repo: You can pull them into this browser
 6. Click **Save** (switches save automatically; Save is needed for text fields)
 
@@ -159,11 +159,9 @@ bookmarks/
     dev-tools/
       _order.json
       mdn-web-docs_e5f6.json
-  other/                          # Other Bookmarks
+  other/                          # Other Bookmarks (Chrome) / Bookmarks Menu (Firefox)
     _order.json
     ...
-  menu/                           # Bookmarks Menu (Firefox)
-  mobile/                         # Mobile bookmarks
 ```
 
 Each bookmark is a simple JSON file:
@@ -192,7 +190,7 @@ gh workflow run add-bookmark.yml \
   -f path="dev-tools"
 ```
 
-- `folder`: Root folder (`toolbar`, `other`, `menu`, or `mobile`)
+- `folder`: Root folder (`toolbar` or `other`)
 - `path`: Optional subfolder (e.g. `dev-tools` → `bookmarks/toolbar/dev-tools/`)
 - `base-path`: Base folder in repo (default `bookmarks`; must match the extension's **File Path** setting)
 
@@ -215,7 +213,7 @@ See the **Automation** tab in the extension settings for more examples and param
 | Sync on Focus | Off | Sync when the browser gains focus |
 | Switch without confirmation | Off | Skip confirmation when changing profiles |
 | GitHub Repos folder | Off | Create folder with bookmarks to all your GitHub repos |
-| GitHub Repos position | Other Bookmarks | Where to place the folder (toolbar/other/menu) |
+| GitHub Repos position | Other Bookmarks | Where to place the folder (toolbar/other) |
 | Notifications | All | When to show sync notifications: All, Errors only, or Off |
 | Theme | Auto | Light, Dark, or Auto (follow system) — options page and popup |
 | Language | Auto | Auto (browser), English, German, French, or Spanish |
@@ -239,7 +237,7 @@ There is no automatic merge for conflicts — you must pick one side. Choose bas
 - **Per-file bookmark storage**: One JSON file per bookmark; directory structure mirrors folder hierarchy
 - **GitHub Git Data API** for atomic multi-file commits (blobs, trees, commits, refs)
 - **Three-way merge**: Base vs Local vs Remote comparison with per-file diff; automatic when no overlap
-- **Role-based folder mapping**: Cross-browser root folder detection (toolbar, other, menu, mobile)
+- **Role-based folder mapping**: Cross-browser root folder detection (toolbar, other; Chrome Other = Firefox Bookmarks Menu)
 - **Debounced auto-sync**: Rapid changes are bundled into one sync (2–10 s delay by profile)
 - **Token encryption**: AES-256-GCM at rest in `chrome.storage.local`
 - **Custom i18n**: Runtime language switching without page reload

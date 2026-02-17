@@ -18,7 +18,7 @@ on:
         type: string
         default: 'bookmarks'
       folder:
-        description: 'Root folder (toolbar, other, menu, or mobile)'
+        description: 'Root folder (toolbar or other)'
         required: false
         type: string
         default: 'toolbar'

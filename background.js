@@ -18,6 +18,7 @@ import {
   migrateFromLegacyFormat,
   STORAGE_KEYS,
 } from './lib/sync-engine.js';
+import { log as debugLog, getLogAsString } from './lib/debug-log.js';
 import { GitHubAPI } from './lib/github-api.js';
 import { migrateTokenIfNeeded } from './lib/crypto.js';
 import { migrateToProfiles, getActiveProfileId, getActiveProfile, getProfiles, switchProfile, getSyncState } from './lib/profile-manager.js';
@@ -75,6 +76,7 @@ async function triggerAutoSync() {
 
   const settings = await getSettings();
   if (settings[STORAGE_KEYS.AUTO_SYNC] && isConfigured(settings)) {
+    await debugLog('background: auto-sync triggered (bookmark event)');
     const delayMs = settings[STORAGE_KEYS.DEBOUNCE_DELAY] ?? 5000;
     debouncedSync(delayMs, showNotificationIfEnabled);
   }
@@ -84,6 +86,7 @@ async function triggerAutoSync() {
 
 chrome.alarms.onAlarm.addListener(async (alarm) => {
   if (alarm.name === ALARM_NAME) {
+    await debugLog('background: periodic sync alarm triggered');
     console.log('[GitSyncMarks] Periodic sync triggered');
     const settings = await getSettings();
     if (isConfigured(settings) && settings[STORAGE_KEYS.AUTO_SYNC]) {
@@ -121,6 +124,7 @@ chrome.windows.onFocusChanged.addListener(async (windowId) => {
 
   if (isSyncInProgress()) return;
 
+  await debugLog('background: sync on focus triggered');
   console.log('[GitSyncMarks] Sync on focus triggered');
   const result = await sync();
   if (!result.success) {
@@ -233,6 +237,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'settingsChanged') {
     setupAlarm().then(() => sendResponse({ ok: true }));
     return true;
+  }
+  if (message.action === 'getDebugLog') {
+    Promise.resolve(getLogAsString()).then((content) => sendResponse({ content }));
+    return true; // keep channel open for async response
   }
 });
 

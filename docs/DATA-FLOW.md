@@ -145,27 +145,19 @@ bookmarks/
   other/
     _order.json
     ...
-  menu/                          (Firefox only)
-    _order.json
-    ...
-  mobile/
-    _order.json
-    ...
 ```
 
 Root folders are mapped by role:
 | Role | Chrome | Firefox |
 |---|---|---|
 | `toolbar` | Bookmarks Bar (ID: `1`) | Bookmarks Toolbar (`toolbar_____`) |
-| `other` | Other Bookmarks (ID: `2`) | Unfiled Bookmarks (`unfiled_____`) |
-| `menu` | — | Bookmarks Menu (`menu________`) |
-| `mobile` | Mobile Bookmarks (ID: `3`) | Mobile Bookmarks (`mobile______`) |
+| `other` | Other Bookmarks (ID: `2`) | Bookmarks Menu (`menu________`) |
 
-When loading into Chrome (which has no `menu` root), `bookmarks/menu/` content is merged under Other Bookmarks as a subfolder "Bookmarks Menu" — so all bookmarks appear in both browsers.
+On Firefox, the `other` role uses the Bookmarks Menu root (`menu________`); on Chrome it uses Other Bookmarks. Only toolbar and other are synced; menu and mobile are no longer used.
 
 ### GitHub Repos Folder (Optional)
 
-When enabled (`githubReposEnabled`), a folder "GitHubRepos (username)" is created under the configured root (toolbar/other/menu). It contains bookmarks to all user repos (public and private). Updated manually via "Update GitHub Repos"; changes are synced through the normal bookmark sync. On pull, if the folder is not in Git, it is preserved locally.
+When enabled (`githubReposEnabled`), a folder "GitHubRepos (username)" is created under the configured root (toolbar or other). It contains bookmarks to all user repos (public and private). Updated manually via "Update GitHub Repos"; changes are synced through the normal bookmark sync. On pull, if the folder is not in Git, it is preserved locally.
 
 ## Local Storage
 
@@ -180,7 +172,7 @@ Per-profile keys (repo config, githubRepos) live in `profiles[id]`; others are g
 | `branch` | `string` | `"main"` | Git branch |
 | `filePath` | `string` | `"bookmarks"` | Base path in repo |
 | `githubReposEnabled` | `boolean` | `false` | Show GitHub Repos folder |
-| `githubReposParent` | `string` | `"other"` | Folder position: `toolbar`, `other`, or `menu` |
+| `githubReposParent` | `string` | `"other"` | Folder position: `toolbar` or `other` |
 | `githubReposUsername` | `string` | `""` | GitHub username (set on first refresh, for folder name) |
 | `autoSync` | `boolean` | `true` | Auto-sync enabled |
 | `syncInterval` | `number` | `15` | Sync interval (minutes) |

@@ -20,7 +20,7 @@ function createMinimalStructure(dir) {
     path.join(bookmarksDir, '_index.json'),
     JSON.stringify({ version: 2 }, null, 2)
   );
-  for (const role of ['toolbar', 'other', 'menu', 'mobile']) {
+  for (const role of ['toolbar', 'other']) {
     const roleDir = path.join(bookmarksDir, role);
     fs.mkdirSync(roleDir, { recursive: true });
     fs.writeFileSync(

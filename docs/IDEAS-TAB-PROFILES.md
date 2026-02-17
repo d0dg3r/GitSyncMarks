@@ -108,7 +108,7 @@ File in bookmark root, e.g. `bookmarks/tab-profiles.json` (depends on `filePath`
 
 - `chrome.bookmarks.getTree()` → recursive tree.
 - UI: Indented list (ul/li). Each folder clickable, shows children.
-- Root folders (toolbar, other, menu, mobile) per `lib/bookmark-serializer.js`.
+- Root folders (toolbar, other) per `lib/bookmark-serializer.js`.
 
 ---
 

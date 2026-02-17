@@ -396,7 +396,9 @@ body {
 .profile-option-toggle input:checked + .toggle-slider-sm::after {
   transform: translateX(16px);
 }
-.profile-switch-confirm {
+.profile-switch-confirm,
+.onboarding-confirm,
+.profile-inline-dialog {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -405,6 +407,58 @@ body {
   background: var(--color-bg-tertiary);
   border-radius: var(--radius-sm);
   border-left: 3px solid var(--color-primary);
+  margin-top: 0.5rem;
+}
+.profile-inline-dialog {
+  flex-direction: column;
+  align-items: stretch;
+}
+.profile-inline-dialog-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.profile-inline-dialog-label {
+  font-size: 0.875rem;
+  color: var(--color-text);
+}
+.profile-inline-dialog-input {
+  padding: 6px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+.profile-inline-dialog-text {
+  flex: 1;
+  font-size: 0.875rem;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+.profile-inline-dialog-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.profile-message {
+  margin-top: 0.5rem;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-error-bg, #fde8e8);
+  color: var(--color-error, #c53030);
+}
+.onboarding-confirm-text {
+  flex: 1;
+  min-width: 180px;
+  font-size: 0.875rem;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+.onboarding-confirm-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
 }
 .profile-switch-confirm-text {
   flex: 1;

@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Auto-save on switches**: Toggles (GitHub Repos, auto-sync, sync on startup/focus, profile switch without confirm) save automatically on change; no need to click Save for switch changes
 - **Auto-save before actions**: "Update GitHub Repos" and "Test Connection" save current settings before running, so state is never lost
-- **GitHub Repos folder**: Auto-generated folder with all user repos as bookmarks (public/private); toggle, configurable position (toolbar/other/menu), manual refresh; folder preserved on pull when not in Git; changes synced via normal bookmark sync
+- **GitHub Repos folder**: Auto-generated folder with all user repos as bookmarks (public/private); toggle, configurable position (toolbar/other), manual refresh; folder preserved on pull when not in Git; changes synced via normal bookmark sync
 - **Multiple profiles**: Work and personal bookmark sets with separate GitHub repos; up to 10 profiles; switching replaces local bookmarks with the selected profile's data
 - **Onboarding**: Test Connection checks the target path; offers to create the folder structure when empty, or to pull existing bookmarks when found
 - **Profile Add**: When adding a new profile, automatically switch to it for immediate configuration

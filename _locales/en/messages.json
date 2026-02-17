@@ -97,6 +97,18 @@
   "options_profileAdd": {
     "message": "+ Add"
   },
+  "options_profileAddNameLabel": {
+    "message": "Profile name"
+  },
+  "options_profileAddConfirmBtn": {
+    "message": "Add"
+  },
+  "options_profileRenameLabel": {
+    "message": "New name"
+  },
+  "options_profileAddPlaceholder": {
+    "message": "New Profile"
+  },
   "options_profileRename": {
     "message": "Rename"
   },
@@ -156,6 +168,9 @@
   },
   "options_filePathHint": {
     "message": "Folder where bookmark files will be stored."
+  },
+  "options_filePathChangeHint": {
+    "message": "On the next sync a conflict may occur. Use \"GitHub → Local\" to adopt the remote state."
   },
   "options_testConnection": {
     "message": "Test Connection"
@@ -295,8 +310,14 @@
   "options_error": {
     "message": "Error: $1"
   },
+  "options_onboardingCreateBtn": {
+    "message": "Create"
+  },
+  "options_onboardingPullBtn": {
+    "message": "Load"
+  },
   "options_onboardingCreateFolder": {
-    "message": "The folder $1 does not exist yet. Create it with the base structure (toolbar, other, menu, mobile)?"
+    "message": "The folder $1 does not exist yet. Create it with the base structure (toolbar, other)?"
   },
   "options_onboardingPullNow": {
     "message": "Bookmarks found in the repository. Pull them to this browser now?"
@@ -426,6 +447,21 @@
   "options_license": {
     "message": "License (MIT)"
   },
+  "options_debugLogTitle": {
+    "message": "Debug Log"
+  },
+  "options_debugLogDesc": {
+    "message": "Enable to record sync diagnostics (diffs, merge decisions, conflicts). Use when troubleshooting sync issues. Export and share the log for support."
+  },
+  "options_debugLogEnabled": {
+    "message": "Enable debug log"
+  },
+  "options_debugLogExport": {
+    "message": "Export log"
+  },
+  "options_debugLogExportEmpty": {
+    "message": "Log is empty. Enable debug log and run a sync first."
+  },
 
   "options_tabGitHub": {
     "message": "GitHub"
@@ -449,7 +485,7 @@
     "message": "Create a GitHub repository for your bookmarks, then create a Personal Access Token (PAT) with the <code>repo</code> scope. In the GitHub tab, enter token, repository owner, name, branch (usually <code>main</code>), and the folder path (default: <code>bookmarks</code>). Click <strong>Test Connection</strong> to verify."
   },
   "help_onboarding": {
-    "message": "If the folder is empty, you can create the base structure (toolbar, other, menu, mobile). If bookmarks already exist in the repo, you can pull them into this browser."
+    "message": "If the folder is empty, you can create the base structure (toolbar, other). If bookmarks already exist in the repo, you can pull them into this browser."
   },
   "help_profilesTitle": {
     "message": "Profiles"
@@ -473,7 +509,7 @@
     "message": "GitHub Repos Folder"
   },
   "help_githubReposDesc": {
-    "message": "Optional: Create a folder with bookmarks to all your GitHub repositories (public and private). Choose the position (toolbar, other, menu). The folder is synced like normal bookmarks; use <strong>Update GitHub Repos</strong> to refresh the list."
+    "message": "Optional: Create a folder with bookmarks to all your GitHub repositories (public and private). Choose the position (toolbar, other). The folder is synced like normal bookmarks; use <strong>Update GitHub Repos</strong> to refresh the list."
   },
   "help_popupTitle": {
     "message": "Popup (extension icon)"

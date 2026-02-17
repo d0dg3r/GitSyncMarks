@@ -97,6 +97,18 @@
   "options_profileAdd": {
     "message": "+ Hinzufügen"
   },
+  "options_profileAddNameLabel": {
+    "message": "Profilname"
+  },
+  "options_profileAddConfirmBtn": {
+    "message": "Hinzufügen"
+  },
+  "options_profileRenameLabel": {
+    "message": "Neuer Name"
+  },
+  "options_profileAddPlaceholder": {
+    "message": "Neues Profil"
+  },
   "options_profileRename": {
     "message": "Umbenennen"
   },
@@ -156,6 +168,9 @@
   },
   "options_filePathHint": {
     "message": "Ordner, in dem die Lesezeichen-Dateien gespeichert werden."
+  },
+  "options_filePathChangeHint": {
+    "message": "Beim nächsten Sync kann ein Konflikt entstehen. Nutze „GitHub → Lokal“, um den Remote-Stand zu übernehmen."
   },
   "options_testConnection": {
     "message": "Verbindung testen"
@@ -296,7 +311,13 @@
     "message": "Fehler: $1"
   },
   "options_onboardingCreateFolder": {
-    "message": "Der Ordner $1 existiert noch nicht. Mit Basisstruktur (toolbar, other, menu, mobile) anlegen?"
+    "message": "Der Ordner $1 existiert noch nicht. Mit Basisstruktur (toolbar, other) anlegen?"
+  },
+  "options_onboardingCreateBtn": {
+    "message": "Anlegen"
+  },
+  "options_onboardingPullBtn": {
+    "message": "Laden"
   },
   "options_onboardingPullNow": {
     "message": "Lesezeichen im Repository gefunden. Jetzt in diesen Browser laden?"
@@ -426,6 +447,21 @@
   "options_license": {
     "message": "Lizenz (MIT)"
   },
+  "options_debugLogTitle": {
+    "message": "Debug-Log"
+  },
+  "options_debugLogDesc": {
+    "message": "Aktivieren, um Sync-Diagnosen zu speichern (Diffs, Merge-Entscheidungen, Konflikte). Hilfreich bei Sync-Problemen. Log exportieren und teilen für Support."
+  },
+  "options_debugLogEnabled": {
+    "message": "Debug-Log aktivieren"
+  },
+  "options_debugLogExport": {
+    "message": "Log exportieren"
+  },
+  "options_debugLogExportEmpty": {
+    "message": "Log ist leer. Debug-Log aktivieren und Sync ausführen."
+  },
 
   "options_tabGitHub": {
     "message": "GitHub"
@@ -449,7 +485,7 @@
     "message": "Erstelle ein GitHub-Repository für deine Lesezeichen und einen Personal Access Token (PAT) mit dem <code>repo</code>-Scope. Im GitHub-Tab gibst du Token, Repository-Inhaber, Name, Branch (meist <code>main</code>) und den Ordnergpfad (Standard: <code>bookmarks</code>) ein. Klicke auf <strong>Verbindung testen</strong> zur Prüfung."
   },
   "help_onboarding": {
-    "message": "Ist der Ordner leer, kannst du die Basisstruktur (toolbar, other, menu, mobile) anlegen. Existieren schon Lesezeichen im Repo, kannst du sie in diesen Browser holen."
+    "message": "Ist der Ordner leer, kannst du die Basisstruktur (toolbar, other) anlegen. Existieren schon Lesezeichen im Repo, kannst du sie in diesen Browser holen."
   },
   "help_profilesTitle": {
     "message": "Profile"
@@ -473,7 +509,7 @@
     "message": "GitHub-Repos-Ordner"
   },
   "help_githubReposDesc": {
-    "message": "Optional: Ordner mit Lesezeichen zu allen deinen GitHub-Repositories (öffentlich und privat). Position wählbar (toolbar, other, menu). Der Ordner wird wie normale Lesezeichen synchronisiert; <strong>GitHub Repos aktualisieren</strong> lädt die Liste neu."
+    "message": "Optional: Ordner mit Lesezeichen zu allen deinen GitHub-Repositories (öffentlich und privat). Position wählbar (toolbar, other). Der Ordner wird wie normale Lesezeichen synchronisiert; <strong>GitHub Repos aktualisieren</strong> lädt die Liste neu."
   },
   "help_popupTitle": {
     "message": "Popup (Erweiterungssymbol)"
