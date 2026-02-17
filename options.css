@@ -914,6 +914,49 @@ input[type="checkbox"]:checked + .toggle-slider::after {
   text-decoration: underline;
 }
 
+.about-mobile-block {
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.about-mobile-block h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: 8px;
+}
+
+.about-mobile-desc {
+  font-size: 13px;
+  color: var(--color-text);
+  margin: 0 0 10px;
+  line-height: 1.45;
+}
+
+.about-mobile-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 0 8px;
+}
+
+.about-mobile-links a {
+  font-size: 14px;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.about-mobile-links a:hover {
+  text-decoration: underline;
+}
+
+.about-mobile-note {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
 .about-links-block {
   padding-top: 16px;
   border-top: 1px solid var(--color-border);

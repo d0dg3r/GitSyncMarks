@@ -429,6 +429,18 @@
   "options_specialThanks": {
     "message": "Special Thanks"
   },
+  "options_mobileAppTitle": {
+    "message": "Mobile App"
+  },
+  "options_mobileAppDesc": {
+    "message": "View your bookmarks on the go. GitSyncMarks-Mobile (iOS + Android) syncs from your GitHub repo — read-only companion."
+  },
+  "options_mobileAppLink": {
+    "message": "GitSyncMarks-Mobile on GitHub"
+  },
+  "options_mobileAppStores": {
+    "message": "F-Droid and Google Play coming soon."
+  },
   "options_links": {
     "message": "Links"
   },

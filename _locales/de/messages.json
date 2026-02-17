@@ -429,6 +429,18 @@
   "options_specialThanks": {
     "message": "Besonderen Dank"
   },
+  "options_mobileAppTitle": {
+    "message": "Mobile-App"
+  },
+  "options_mobileAppDesc": {
+    "message": "Lesezeichen unterwegs ansehen. GitSyncMarks-Mobile (iOS + Android) synchronisiert aus deinem GitHub-Repo — nur Lese-Zugriff."
+  },
+  "options_mobileAppLink": {
+    "message": "GitSyncMarks-Mobile auf GitHub"
+  },
+  "options_mobileAppStores": {
+    "message": "F-Droid und Google Play bald verfügbar."
+  },
   "options_links": {
     "message": "Links"
   },
