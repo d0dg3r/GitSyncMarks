@@ -17,7 +17,7 @@ Features:
 • Per-file storage: each bookmark is an individual JSON file — human-readable and diff-friendly
 • Three-way merge: automatic conflict-free sync when changes happen on both sides
 • Full Firefox support including the Bookmarks Menu folder
-• Multiple bookmark profiles: work and personal sets with separate GitHub repos; switch replaces local bookmarks
+• Multiple bookmark profiles: up to 10 profiles with separate GitHub repos; switch replaces local bookmarks
 • GitHub Repos folder: optional folder with bookmarks to all your GitHub repositories (public and private)
 • Onboarding: create folder or pull bookmarks when configuring a new profile
 • Sync profiles: real-time, frequent, normal, or power-save
@@ -30,6 +30,9 @@ Features:
 • Import/Export: back up and restore bookmarks or settings as JSON files (clear UI with file picker)
 • Theme: light, dark, or auto (system) for options and popup
 • Multilanguage: English, German, French, and Spanish with manual language selection
+• Keyboard shortcuts: quick sync (Ctrl+Shift+.), open settings (Ctrl+Shift+,) — customizable
+• Debug log: Help tab — enable for sync diagnostics, export for troubleshooting
+• Mobile companion: GitSyncMarks-Mobile (iOS + Android) — view bookmarks on the go, read-only sync from your repo
 • No external server — communicates directly with the GitHub API using your Personal Access Token
 
 How it works:
@@ -48,6 +51,8 @@ You can add bookmarks without even opening Firefox. GitSyncMarks includes a GitH
 You can also create bookmark files directly in the repository — just add a JSON file with "title" and "url" to any bookmark folder. The extension detects new files automatically on the next sync.
 
 GitSyncMarks is fully open source: https://github.com/d0dg3r/GitSyncMarks
+
+Mobile app: GitSyncMarks-Mobile (iOS + Android) — view your bookmarks on the go. Read-only companion; F-Droid and Google Play coming soon. https://github.com/d0dg3r/GitSyncMarks-Mobile
 
 ### Categories
 Bookmarks
@@ -72,9 +77,10 @@ Funktionen:
 • Einzeldatei-Speicherung: Jedes Lesezeichen ist eine eigene JSON-Datei
 • Drei-Wege-Merge: automatische konfliktfreie Synchronisierung
 • Volle Firefox-Unterstützung inkl. Lesezeichen-Menü
-• Mehrere Profile, GitHub Repos-Ordner, Onboarding, Sync-Profile
+• Bis zu 10 Profile, GitHub Repos-Ordner, Onboarding, Sync-Profile
 • Auto-Sync, periodischer Sync, manuelles Push/Pull
-• Import/Export, Design Hell/Dunkel, Mehrsprachig
+• Import/Export, Design Hell/Dunkel, Mehrsprachig, Tastenkürzel, Debug-Log
+• Mobile-Begleiter: GitSyncMarks-Mobile (iOS + Android)
 
 So funktioniert es:
 1. GitHub-Repository erstellen
@@ -83,6 +89,8 @@ So funktioniert es:
 4. „Jetzt synchronisieren" klicken — fertig!
 
 GitSyncMarks ist vollständig Open Source: https://github.com/d0dg3r/GitSyncMarks
+
+Mobile-App: GitSyncMarks-Mobile (iOS + Android) — Lesezeichen unterwegs. https://github.com/d0dg3r/GitSyncMarks-Mobile
 
 ### Categories
 Lesezeichen
@@ -105,9 +113,10 @@ GitSyncMarks synchronise vos favoris Firefox avec un dépôt GitHub — bidirect
 
 Fonctionnalités :
 • Stockage par fichier, fusion triple, support complet Firefox (y compris le Menu favoris)
-• Plusieurs profils, dossier Repos GitHub, intégration, profils de sync
+• Jusqu'à 10 profils, dossier Repos GitHub, intégration, profils de sync
 • Auto-sync, sync périodique, Push/Pull manuel
-• Import/Export, thème clair/sombre, multilingue
+• Import/Export, thème clair/sombre, multilingue, raccourcis clavier, journal de débogage
+• Application mobile : GitSyncMarks-Mobile (iOS + Android)
 
 Comment ça marche :
 1. Créer un dépôt GitHub
@@ -116,6 +125,8 @@ Comment ça marche :
 4. Cliquer sur « Synchroniser maintenant » — terminé !
 
 GitSyncMarks est entièrement open source : https://github.com/d0dg3r/GitSyncMarks
+
+Application mobile : GitSyncMarks-Mobile (iOS + Android). https://github.com/d0dg3r/GitSyncMarks-Mobile
 
 ### Categories
 Favoris
@@ -138,9 +149,10 @@ GitSyncMarks sincroniza tus marcadores de Firefox con un repositorio GitHub — 
 
 Características:
 • Almacenamiento por archivo, fusión triple, soporte completo Firefox (incl. menú de marcadores)
-• Múltiples perfiles, carpeta Repos GitHub, integración, perfiles de sync
+• Hasta 10 perfiles, carpeta Repos GitHub, integración, perfiles de sync
 • Auto-sync, sync periódico, Push/Pull manual
-• Importar/Exportar, tema claro/oscuro, multilingüe
+• Importar/Exportar, tema claro/oscuro, multilingüe, atajos de teclado, registro de depuración
+• App móvil: GitSyncMarks-Mobile (iOS + Android)
 
 Cómo funciona:
 1. Crear un repositorio GitHub
@@ -149,6 +161,8 @@ Cómo funciona:
 4. Clic en « Sincronizar ahora » — ¡listo!
 
 GitSyncMarks es totalmente open source: https://github.com/d0dg3r/GitSyncMarks
+
+App móvil: GitSyncMarks-Mobile (iOS + Android). https://github.com/d0dg3r/GitSyncMarks-Mobile
 
 ### Categories
 Marcadores
@@ -225,4 +239,4 @@ All regions
 - [x] `en/firefox-import-export.png` — Backup tab
 - [x] `en/firefox-automation.png` — Automation tab
 - [x] `en/firefox-help.png` — Help tab
-- [x] `en/firefox-about.png` — About tab
+- [x] `en/firefox-about.png` — About tab (includes Mobile App block; regenerate after changes)

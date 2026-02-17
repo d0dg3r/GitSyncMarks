@@ -17,7 +17,7 @@ Features:
 • Per-file storage: each bookmark is an individual JSON file — human-readable and diff-friendly
 • Three-way merge: automatic conflict-free sync when changes happen on both sides
 • Cross-browser: works with Chrome, Chromium, Brave, Edge, and Firefox
-• Multiple bookmark profiles: work and personal sets with separate GitHub repos; switch replaces local bookmarks
+• Multiple bookmark profiles: up to 10 profiles with separate GitHub repos; switch replaces local bookmarks
 • GitHub Repos folder: optional folder with bookmarks to all your GitHub repositories (public and private)
 • Onboarding: create folder or pull bookmarks when configuring a new profile
 • Sync profiles: real-time, frequent, normal, or power-save (preset intervals and debounce)
@@ -30,6 +30,9 @@ Features:
 • Import/Export: back up and restore bookmarks or settings as JSON files (clear UI with file picker)
 • Theme: light, dark, or auto (system) for options and popup
 • Multilanguage: English, German, French, and Spanish with manual language selection
+• Keyboard shortcuts: quick sync (Ctrl+Shift+.), open settings (Ctrl+Shift+,) — customizable
+• Debug log: Help tab — enable for sync diagnostics, export for troubleshooting
+• Mobile companion: GitSyncMarks-Mobile (iOS + Android) — view bookmarks on the go, read-only sync from your repo
 • No external server — communicates directly with the GitHub API using your Personal Access Token
 
 How it works:
@@ -48,6 +51,8 @@ You can add bookmarks without even opening the browser. GitSyncMarks includes a 
 You can also create bookmark files directly in the repository — just add a JSON file with "title" and "url" to any bookmark folder. The extension detects new files automatically on the next sync and normalizes them into its canonical format.
 
 GitSyncMarks is fully open source: https://github.com/d0dg3r/GitSyncMarks
+
+Mobile app: GitSyncMarks-Mobile (iOS + Android) — view your bookmarks on the go. Read-only companion; F-Droid and Google Play coming soon. https://github.com/d0dg3r/GitSyncMarks-Mobile
 
 ### Category
 Productivity
@@ -72,7 +77,7 @@ Funktionen:
 • Einzeldatei-Speicherung: Jedes Lesezeichen ist eine eigene JSON-Datei — lesbar und diff-freundlich
 • Drei-Wege-Merge: automatische konfliktfreie Synchronisierung bei Änderungen auf beiden Seiten
 • Cross-Browser: funktioniert mit Chrome, Chromium, Brave, Edge und Firefox
-• Mehrere Lesezeichen-Profile: Arbeit und Privat mit getrennten GitHub-Repos; Wechsel ersetzt lokale Lesezeichen
+• Mehrere Lesezeichen-Profile: bis zu 10 Profile mit getrennten GitHub-Repos; Wechsel ersetzt lokale Lesezeichen
 • GitHub-Repos-Ordner: optionaler Ordner mit Lesezeichen zu allen deinen GitHub-Repositories (öffentlich und privat)
 • Onboarding: Ordner anlegen oder Lesezeichen laden beim Konfigurieren eines neuen Profils
 • Sync-Profile: Echtzeit, häufig, normal oder Stromsparen (vorkonfigurierte Intervalle)
@@ -85,6 +90,9 @@ Funktionen:
 • Import/Export: Lesezeichen oder Einstellungen als JSON-Dateien sichern und wiederherstellen (klare UI mit Dateiauswahl)
 • Design: Hell, Dunkel oder Auto (System) für Einstellungen und Popup
 • Mehrsprachig: Englisch, Deutsch, Französisch und Spanisch mit manueller Sprachauswahl
+• Tastenkürzel: Schnell-Sync (Strg+Umschalt+.), Einstellungen öffnen (Strg+Umschalt+,) — anpassbar
+• Debug-Log: Hilfe-Tab — für Sync-Diagnostik aktivierbar, exportierbar
+• Mobile-Begleiter: GitSyncMarks-Mobile (iOS + Android) — Lesezeichen unterwegs ansehen
 • Kein externer Server — kommuniziert direkt mit der GitHub API über deinen Personal Access Token
 
 So funktioniert es:
@@ -103,6 +111,8 @@ Du kannst Lesezeichen hinzufügen, ohne den Browser zu öffnen. GitSyncMarks ent
 Du kannst auch Lesezeichen-Dateien direkt im Repository erstellen — füge einfach eine JSON-Datei mit „title" und „url" in einen Lesezeichen-Ordner ein. Die Extension erkennt neue Dateien beim nächsten Sync automatisch und normalisiert sie in das kanonische Format.
 
 GitSyncMarks ist vollständig Open Source: https://github.com/d0dg3r/GitSyncMarks
+
+Mobile-App: GitSyncMarks-Mobile (iOS + Android) — Lesezeichen unterwegs. Nur Lese-Zugriff; F-Droid und Google Play bald. https://github.com/d0dg3r/GitSyncMarks-Mobile
 
 ### Category
 Produktivität
@@ -127,7 +137,7 @@ Fonctionnalités :
 • Stockage par fichier : chaque favori est un fichier JSON individuel — lisible et adapté au diff
 • Fusion triple : synchronisation automatique sans conflit lorsque des changements surviennent des deux côtés
 • Multi-navigateur : fonctionne avec Chrome, Chromium, Brave, Edge et Firefox
-• Plusieurs profils de favoris : travail et personnel avec des dépôts GitHub séparés ; le changement remplace les favoris locaux
+• Plusieurs profils de favoris : jusqu'à 10 profils avec des dépôts GitHub séparés ; le changement remplace les favoris locaux
 • Dossier Repos GitHub : dossier optionnel avec des favoris vers tous vos dépôts GitHub (publics et privés)
 • Intégration : créer le dossier ou récupérer les favoris lors de la configuration d'un nouveau profil
 • Profils de sync : temps réel, fréquent, normal ou économie d'énergie (intervalles prédéfinis)
@@ -140,6 +150,9 @@ Fonctionnalités :
 • Import/Export : sauvegarder et restaurer les favoris ou les paramètres en JSON (interface claire avec sélection de fichier)
 • Thème : clair, sombre ou auto (système) pour les options et le popup
 • Multilingue : anglais, allemand, français et espagnol avec sélection manuelle de la langue
+• Raccourcis clavier : sync rapide, paramètres — personnalisables
+• Journal de débogage : onglet Aide — pour le dépannage de sync
+• Application mobile : GitSyncMarks-Mobile (iOS + Android) — consultez vos favoris en déplacement
 • Pas de serveur externe — communique directement avec l'API GitHub via votre Personal Access Token
 
 Comment ça marche :
@@ -158,6 +171,8 @@ Vous pouvez ajouter des favoris sans ouvrir le navigateur. GitSyncMarks inclut u
 Vous pouvez aussi créer des fichiers de favoris directement dans le dépôt — ajoutez simplement un fichier JSON avec « title » et « url » dans un dossier de favoris. L'extension détecte les nouveaux fichiers au prochain sync et les normalise.
 
 GitSyncMarks est entièrement open source : https://github.com/d0dg3r/GitSyncMarks
+
+Application mobile : GitSyncMarks-Mobile (iOS + Android) — favoris en déplacement. Lecture seule ; F-Droid et Google Play bientôt. https://github.com/d0dg3r/GitSyncMarks-Mobile
 
 ### Category
 Productivité
@@ -182,7 +197,7 @@ Características:
 • Almacenamiento por archivo: cada marcador es un archivo JSON individual — legible y apto para diff
 • Fusión triple: sincronización automática sin conflictos cuando hay cambios en ambos lados
 • Multi-navegador: funciona con Chrome, Chromium, Brave, Edge y Firefox
-• Múltiples perfiles de marcadores: trabajo y personal con repos GitHub separados; el cambio reemplaza los marcadores locales
+• Múltiples perfiles de marcadores: hasta 10 perfiles con repos GitHub separados; el cambio reemplaza los marcadores locales
 • Carpeta Repos GitHub: carpeta opcional con marcadores a todos tus repositorios GitHub (públicos y privados)
 • Integración: crear carpeta o importar marcadores al configurar un nuevo perfil
 • Perfiles de sync: tiempo real, frecuente, normal o ahorro de energía (intervalos predefinidos)
@@ -195,6 +210,9 @@ Características:
 • Importar/Exportar: respaldar y restaurar marcadores o ajustes en JSON (interfaz clara con selector de archivo)
 • Tema: claro, oscuro o auto (sistema) para opciones y popup
 • Multilingüe: inglés, alemán, francés y español con selección manual del idioma
+• Atajos de teclado: sync rápido, configuración — personalizables
+• Registro de depuración: pestaña Ayuda — para diagnosticar la sincronización
+• App móvil: GitSyncMarks-Mobile (iOS + Android) — consulta tus marcadores en movimiento
 • Sin servidor externo — se comunica directamente con la API de GitHub usando tu Personal Access Token
 
 Cómo funciona:
@@ -213,6 +231,8 @@ Puedes añadir marcadores sin abrir el navegador. GitSyncMarks incluye un workfl
 También puedes crear archivos de marcadores directamente en el repositorio — solo añade un archivo JSON con « title » y « url » en una carpeta de marcadores. La extensión detecta los nuevos archivos en la próxima sincronización y los normaliza.
 
 GitSyncMarks es totalmente open source: https://github.com/d0dg3r/GitSyncMarks
+
+App móvil: GitSyncMarks-Mobile (iOS + Android) — marcadores en movimiento. Solo lectura; F-Droid y Google Play próximamente. https://github.com/d0dg3r/GitSyncMarks-Mobile
 
 ### Category
 Productividad
@@ -290,6 +310,7 @@ All regions
 
 ### English (EN)
 - [x] `en/chrome-github.png` — GitHub tab: Personal Access Token, repository owner/name, branch, file path, test connection
+- [ ] `en/chrome-about.png` — About tab (optional: shows Mobile App block)
 - [x] `en/chrome-settings.png` — Synchronization tab
 - [x] `en/chrome-import-export.png` — Backup tab
 - [x] `en/chrome-automation.png` — Automation tab
