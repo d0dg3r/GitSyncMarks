@@ -233,10 +233,40 @@ All regions
 
 ## Store Assets Checklist
 
-**Screenshots** are copied from Chrome EN (UI is identical). Run `npm run screenshots`.
+**Screenshots** are copied from Chrome (UI is identical; Playwright cannot load Firefox extension). Run `npm run screenshots`.
 
-- [x] `en/firefox-settings.png` — GitHub tab
-- [x] `en/firefox-import-export.png` — Backup tab
-- [x] `en/firefox-automation.png` — Automation tab
-- [x] `en/firefox-help.png` — Help tab
-- [x] `en/firefox-about.png` — About tab (includes Mobile App block; regenerate after changes)
+### English (EN)
+- [x] `en/firefox-1-github.png` — GitHub tab
+- [x] `en/firefox-2-synchronization.png` — Synchronization tab
+- [x] `en/firefox-3-backup.png` — Backup tab
+- [x] `en/firefox-4-automation.png` — Automation tab
+- [x] `en/firefox-5-help.png` — Help tab
+- [x] `en/firefox-6-about.png` — About tab
+- [x] `en/firefox-7-popup.png` — Popup
+
+### Deutsch (DE)
+- [x] `de/firefox-1-github.png` — GitHub-Tab
+- [x] `de/firefox-2-synchronization.png` — Synchronisierung-Tab
+- [x] `de/firefox-3-backup.png` — Backup-Tab
+- [x] `de/firefox-4-automation.png` — Automatisierung-Tab
+- [x] `de/firefox-5-help.png` — Hilfe-Tab
+- [x] `de/firefox-6-about.png` — Über-Tab
+- [x] `de/firefox-7-popup.png` — Popup
+
+### Français (FR)
+- [x] `fr/firefox-1-github.png` — Onglet GitHub
+- [x] `fr/firefox-2-synchronization.png` — Onglet Synchronisation
+- [x] `fr/firefox-3-backup.png` — Onglet Sauvegarde
+- [x] `fr/firefox-4-automation.png` — Onglet Automatisation
+- [x] `fr/firefox-5-help.png` — Onglet Aide
+- [x] `fr/firefox-6-about.png` — Onglet À propos
+- [x] `fr/firefox-7-popup.png` — Popup
+
+### Español (ES)
+- [x] `es/firefox-1-github.png` — Pestaña GitHub
+- [x] `es/firefox-2-synchronization.png` — Pestaña Sincronización
+- [x] `es/firefox-3-backup.png` — Pestaña Copia de seguridad
+- [x] `es/firefox-4-automation.png` — Pestaña Automatización
+- [x] `es/firefox-5-help.png` — Pestaña Ayuda
+- [x] `es/firefox-6-about.png` — Pestaña Acerca de
+- [x] `es/firefox-7-popup.png` — Popup

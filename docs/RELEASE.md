@@ -211,7 +211,7 @@ All Chrome Web Store assets are in `store-assets/`:
 | `de/chrome-*.png` | Options tabs and popup (DE) | 1280 x 800 |
 | `fr/chrome-*.png` | Options tabs and popup (FR) | 1280 x 800 |
 | `es/chrome-*.png` | Options tabs and popup (ES) | 1280 x 800 |
-| `en/firefox-*.png` | Firefox (copied from Chrome EN) | 1280 x 800 |
+| `{en,de,fr,es}/firefox-*.png` | Firefox (copied from Chrome) | 1280 x 800 |
 | `promo-small.png` | Small promo tile | 440 x 280 |
 | `promo-marquee.png` | Marquee promo tile | 1400 x 560 |
 | `chrome-store.md` | Chrome listing texts (EN, DE, FR, ES) | — |

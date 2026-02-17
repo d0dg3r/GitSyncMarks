@@ -4,7 +4,7 @@
  * Requires: npm run build:chrome first (build/chrome/ must exist).
  * Uses Playwright to launch Chromium with the extension loaded.
  *
- * Output: store-assets/{en,de,fr,es}/chrome-*.png and en/firefox-*.png
+ * Output: store-assets/{en,de,fr,es}/chrome-*.png and firefox-*.png (Firefox copied from Chrome)
  *
  * Usage: node scripts/generate-screenshots.js
  */
@@ -22,21 +22,15 @@ const VIEWPORT = { width: 1280, height: 800 };
 const LANGUAGES = [{ code: 'en' }, { code: 'de' }, { code: 'fr' }, { code: 'es' }];
 
 const OPTIONS_TABS = [
-  { id: 'github', file: 'github' },
-  { id: 'sync', file: 'settings' },
-  { id: 'backup', file: 'import-export' },
-  { id: 'automation', file: 'automation' },
-  { id: 'help', file: 'help' },
-  { id: 'about', file: 'about' },
+  { id: 'github', file: '1-github' },
+  { id: 'sync', file: '2-synchronization' },
+  { id: 'backup', file: '3-backup' },
+  { id: 'automation', file: '4-automation' },
+  { id: 'help', file: '5-help' },
+  { id: 'about', file: '6-about' },
 ];
 
-const FIREFOX_MAPPING = [
-  { src: 'github', dst: 'settings' },
-  { src: 'import-export', dst: 'import-export' },
-  { src: 'automation', dst: 'automation' },
-  { src: 'help', dst: 'help' },
-  { src: 'about', dst: 'about' },
-];
+const FIREFOX_FILES = ['1-github', '2-synchronization', '3-backup', '4-automation', '5-help', '6-about', '7-popup'];
 
 async function ensureDir(dir) {
   await fs.promises.mkdir(dir, { recursive: true });
@@ -51,6 +45,20 @@ async function main() {
   }
 
   await ensureDir(STORE_ASSETS);
+
+  // Remove old unnumbered screenshot files
+  const OLD_FILES = ['github', 'synchronization', 'backup', 'automation', 'help', 'about', 'popup'];
+  for (const code of LANGUAGES.map((l) => l.code)) {
+    const langDir = path.join(STORE_ASSETS, code);
+    if (fs.existsSync(langDir)) {
+      for (const name of OLD_FILES) {
+        const p = path.join(langDir, `chrome-${name}.png`);
+        if (fs.existsSync(p)) fs.unlinkSync(p);
+        const fp = path.join(langDir, `firefox-${name}.png`);
+        if (fs.existsSync(fp)) fs.unlinkSync(fp);
+      }
+    }
+  }
 
   const userDataDir = path.join(os.tmpdir(), 'gitsyncmarks-screenshots-' + Date.now());
   const launchArgs = [
@@ -102,25 +110,30 @@ async function main() {
 
     console.log(`\nChrome (${code.toUpperCase()}) popup:`);
     const popupPage = await context.newPage();
+    await popupPage.addInitScript(() => {
+      document.body.style.cssText = 'display:flex;justify-content:center;align-items:center;min-height:100vh;background:#f5f5f7;';
+    });
     await popupPage.goto(popupUrl);
     await popupPage.setViewportSize(VIEWPORT);
     await popupPage.waitForLoadState('networkidle');
     await popupPage.waitForTimeout(code === 'en' ? 300 : 500);
-    const dialogPath = path.join(langDir, 'chrome-dialog.png');
-    await popupPage.screenshot({ path: dialogPath });
-    console.log('  ', `${code}/chrome-dialog.png`);
+    const popupPath = path.join(langDir, 'chrome-7-popup.png');
+    await popupPage.screenshot({ path: popupPath });
+    console.log('  ', `${code}/chrome-7-popup.png`);
     await popupPage.close();
   }
 
-  // ---- Firefox: copy from Chrome EN (UI is identical) ----
-  const enDir = path.join(STORE_ASSETS, 'en');
-  console.log('\nFirefox (copy from Chrome EN):');
-  for (const { src, dst } of FIREFOX_MAPPING) {
-    const srcPath = path.join(enDir, `chrome-${src}.png`);
-    const dstPath = path.join(enDir, `firefox-${dst}.png`);
-    if (fs.existsSync(srcPath)) {
-      fs.copyFileSync(srcPath, dstPath);
-      console.log('  ', `en/firefox-${dst}.png`);
+  // ---- Firefox: copy from Chrome (UI is identical, Playwright cannot load Firefox extension) ----
+  console.log('\nFirefox (copy from Chrome):');
+  for (const { code } of LANGUAGES) {
+    const langDir = path.join(STORE_ASSETS, code);
+    for (const file of FIREFOX_FILES) {
+      const srcPath = path.join(langDir, `chrome-${file}.png`);
+      const dstPath = path.join(langDir, `firefox-${file}.png`);
+      if (fs.existsSync(srcPath)) {
+        fs.copyFileSync(srcPath, dstPath);
+        console.log('  ', `${code}/firefox-${file}.png`);
+      }
     }
   }
 
