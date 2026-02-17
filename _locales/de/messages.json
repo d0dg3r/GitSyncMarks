@@ -505,6 +505,9 @@
   "help_profilesSwitchDesc": {
     "message": "Wähle ein anderes Profil zum Wechsel. Aktuelle Lesezeichen werden gespeichert und zum Repo des aktuellen Profils gepusht. Die Lesezeichen des Zielfprofils ersetzen die lokalen. „Ohne Nachfrage wechseln“ überspringt den Bestätigungsdialog."
   },
+  "help_profilesNote": {
+    "message": "Profile funktionieren zuverlässig. Bei mehreren Profilen können gelegentlich Sync-Konflikte auftreten — meist helfen 2–3 Versuche mit Push oder Pull. Die Funktion wird weiter verbessert. Bei reproduzierbaren Fehlern bitte ein Issue auf GitHub erstellen."
+  },
   "help_githubReposTitle": {
     "message": "GitHub-Repos-Ordner"
   },
