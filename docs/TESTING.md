@@ -196,7 +196,7 @@ web-ext run --target=firefox-android --firefox-apk org.mozilla.firefox_beta
 web-ext run --target=firefox-android --adb-device <device-id>
 ```
 
-### Debugging
+### Debugging (Firefox Android)
 
 - Use `about:debugging` on your desktop Firefox, connect to the Android device, then inspect processes
 - For popup HTML/CSS: temporarily open the popup in a tab to use the Inspector (see [Extension Workshop](https://extensionworkshop.com/documentation/develop/developing-extensions-for-firefox-for-android/))
@@ -213,6 +213,12 @@ If you do not have an Android phone:
 3. Start the emulator
 4. Install Firefox from the Play Store (or sideload an APK)
 5. `adb` will connect to the emulator; use the same `web-ext run` commands as above
+
+---
+
+## Sync Troubleshooting
+
+- **Debug Log**: Options → Help tab — enable the debug log, reproduce the sync issue, then export and share the log for support or analysis
 
 ---
 

@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Debug Log**: Persistent sync diagnostics in Options → Help; enable, export, and share the log for troubleshooting sync issues
+
+### Changed
+
+- **Profile dialogs**: Add, Rename, and Delete use inline dialogs instead of native `prompt()` / `confirm()`
+- **Onboarding**: Create folder and Pull now use inline dialogs instead of native `confirm()`
+- **Error messages**: Inline message area instead of `alert()` for validation and other errors
+
+### Fixed
+
+- **Sync race condition**: Lock held during push/pull from sync; prevents parallel syncs when first sync delegates to push or pull
+- **Path change hint**: When saving a changed File Path, a hint is shown: "On next sync a conflict may occur. Use GitHub → Local to adopt the remote state."
+
 ## [2.2.0] - 2025-02-15
 
 ### Added
