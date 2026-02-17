@@ -1,5 +1,8 @@
 name: E2E Tests
 
+permissions:
+  contents: read
+
 # Disabled: run only manually. See ROADMAP.md backlog "CI E2E Tests".
 on:
   workflow_dispatch:
