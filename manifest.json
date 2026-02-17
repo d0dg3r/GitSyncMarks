@@ -2,14 +2,15 @@
   "manifest_version": 3,
   "name": "__MSG_extName__",
   "short_name": "GitSyncMarks",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "__MSG_extDescription__",
   "default_locale": "en",
   "homepage_url": "https://github.com/d0dg3r/GitSyncMarks",
   "permissions": [
     "bookmarks",
     "storage",
-    "alarms"
+    "alarms",
+    "notifications"
   ],
   "host_permissions": [
     "https://api.github.com/*"
@@ -34,5 +35,21 @@
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
+  },
+  "commands": {
+    "quick-sync": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Period",
+        "mac": "Command+Shift+Period"
+      },
+      "description": "__MSG_commands_quickSync__"
+    },
+    "open-options": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Comma",
+        "mac": "Command+Shift+Comma"
+      },
+      "description": "__MSG_commands_openOptions__"
+    }
   }
 }

@@ -9,6 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Debug Log**: Persistent sync diagnostics in Options → Help; enable, export, and share the log for troubleshooting sync issues
+
+### Changed
+
+- **Profile dialogs**: Add, Rename, and Delete use inline dialogs instead of native `prompt()` / `confirm()`
+- **Onboarding**: Create folder and Pull now use inline dialogs instead of native `confirm()`
+- **Error messages**: Inline message area instead of `alert()` for validation and other errors
+
+### Fixed
+
+- **Sync race condition**: Lock held during push/pull from sync; prevents parallel syncs when first sync delegates to push or pull
+- **Path change hint**: When saving a changed File Path, a hint is shown: "On next sync a conflict may occur. Use GitHub → Local to adopt the remote state."
+
+## [2.2.0] - 2025-02-15
+
+### Added
+
+- **Auto-save on switches**: Toggles (GitHub Repos, auto-sync, sync on startup/focus, profile switch without confirm) save automatically on change; no need to click Save for switch changes
+- **Auto-save before actions**: "Update GitHub Repos" and "Test Connection" save current settings before running, so state is never lost
+- **GitHub Repos folder**: Auto-generated folder with all user repos as bookmarks (public/private); toggle, configurable position (toolbar/other), manual refresh; folder preserved on pull when not in Git; changes synced via normal bookmark sync
 - **Multiple profiles**: Work and personal bookmark sets with separate GitHub repos; up to 10 profiles; switching replaces local bookmarks with the selected profile's data
 - **Onboarding**: Test Connection checks the target path; offers to create the folder structure when empty, or to pull existing bookmarks when found
 - **Profile Add**: When adding a new profile, automatically switch to it for immediate configuration
@@ -16,9 +36,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Keyboard shortcuts**: Quick sync (Ctrl+Shift+.), open options (Ctrl+Shift+,); customizable in browser extension settings
 - **Help tab**: New tab in options with keyboard shortcuts and main features overview (popup, profiles, auto-sync, conflicts)
 - **French and Spanish**: New languages (Français, Español) in the language selector
+- **Profile limit display**: Shows current/max profiles (e.g. 3/10) in the Profile card; Add button disabled when limit reached
+
+### Fixed
+
+- **Settings import**: Restores `profileSwitchWithoutConfirm` and per-profile GitHub Repos fields (`githubReposEnabled`, `githubReposParent`, `githubReposUsername`) on round-trip
 
 ### Changed
 
+- **Backup tab**: Compact design matching Automation (single card, automation-block style); shorter i18n texts (EN/DE/FR/ES); equal spacing for Import/Export buttons
+- **Help tab**: Collapsible accordion sections; "Why does sync sometimes take long?" moved to position 2; only Getting Started and Links open by default; compact styling
+- **Options tabs**: All tabs (GitHub, Sync, Backup, Automation, Help, About) use consistent compact styling — reduced padding, margins, font sizes
+- **Contributors**: Updated Special Thanks to Patrick W., Gernot B.
 - **Profile switch**: Inline confirmation instead of `confirm()`; optional toggle "Switch without confirmation"
 - **Profile layout**: Redesigned Profile card (label, dropdown, actions, toggle, inline confirmation)
 - **Popup**: Restructured layout — profile dropdown in header; simplified status area (status line + meta); theme-aware spinner; compact footer; auto-sync and countdown on one line
@@ -128,7 +157,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release: bookmark sync with GitHub
 
-[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.1.2...HEAD
+[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.1.2...v2.2.0
 [2.1.1]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.0.0...v2.0.1

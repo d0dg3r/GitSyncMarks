@@ -30,9 +30,13 @@ Contributions and ideas welcome — open an issue or pull request.
 
 | Idea | Description | Effort |
 |------|-------------|--------|
+| **CI E2E Tests** | E2E-Workflow in GitHub Actions reaktivieren (xvfb/headed, Service-Worker-Start). Aktuell lokal mit `npm run test:e2e`. | Medium |
+| **CI Screenshots** | Screenshot-Generierung und Push im Release-Workflow. Aktuell lokal mit `npm run screenshots`. | Small |
 | **Folder browse/select** | Select or browse the sync folder in the Git repo instead of typing the path manually | Small |
 | **Browser import files** | Automatically generate import files for common browsers (e.g. Netscape HTML) alongside README.md. Enables importing directly from the repo without the extension. | Medium |
 | **Open tabs sync** | Save open tabs to Git; full history in repo for restore/jump-back; default tabs per profile. | Large |
+| **Tab-Profile** | Named sets of URLs (from bookmark folder, current tabs, or manual). Open in current window (replace/append) or new window. Stored in repo (`tab-profiles.json`). See [docs/IDEAS-TAB-PROFILES.md](docs/IDEAS-TAB-PROFILES.md). | Large |
+| **Flutter Bookmark App** | Mobile app (iOS + Android) that syncs bookmarks from the GitHub repo (read-only), displays them in a tree view, and opens URLs in the user-selected browser. See [docs/IDEAS-FLUTTER-BOOKMARK-APP.md](docs/IDEAS-FLUTTER-BOOKMARK-APP.md). | Large |
 | Additional sync sources (read-only) | Add extra folders from centrally maintained repos (e.g. team bookmarks). Your personal bookmarks stay in your repo; the shared folder is merged in read-only. Assemble bookmarks from multiple sources in one place | Medium |
 | Selective folder sync | Sync only specific bookmark folders instead of all | Medium |
 | Sync history / rollback | Restore previous sync states (requires storing commit history) | Medium |

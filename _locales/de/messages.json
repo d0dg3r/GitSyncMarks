@@ -5,6 +5,12 @@
   "extDescription": {
     "message": "Deine Lesezeichen, sicher auf GitHub — Einzeldatei-Speicherung, Drei-Wege-Merge, funktioniert mit Chrome & Firefox. Kein Server nötig."
   },
+  "commands_quickSync": {
+    "message": "Lesezeichen sofort synchronisieren"
+  },
+  "commands_openOptions": {
+    "message": "Einstellungen öffnen"
+  },
 
   "popup_configureFirst": {
     "message": "Bitte konfiguriere zuerst die Erweiterung."
@@ -66,6 +72,9 @@
   "popup_syncing": {
     "message": "Synchronisiere..."
   },
+  "popup_profileSwitching": {
+    "message": "Profil wird gewechselt..."
+  },
   "popup_error": {
     "message": "Fehler: $1"
   },
@@ -81,6 +90,54 @@
 
   "options_subtitle": {
     "message": "Einstellungen"
+  },
+  "options_profile": {
+    "message": "Profil"
+  },
+  "options_profileAdd": {
+    "message": "+ Hinzufügen"
+  },
+  "options_profileAddNameLabel": {
+    "message": "Profilname"
+  },
+  "options_profileAddConfirmBtn": {
+    "message": "Hinzufügen"
+  },
+  "options_profileRenameLabel": {
+    "message": "Neuer Name"
+  },
+  "options_profileAddPlaceholder": {
+    "message": "Neues Profil"
+  },
+  "options_profileRename": {
+    "message": "Umbenennen"
+  },
+  "options_profileRenamePrompt": {
+    "message": "Neuer Name für \"$1\":"
+  },
+  "options_profileDelete": {
+    "message": "Löschen"
+  },
+  "options_profileSwitchConfirm": {
+    "message": "Zu \"$1\" wechseln? Deine Lesezeichen werden durch die Lesezeichen dieses Profils ersetzt."
+  },
+  "options_profileDeleteConfirm": {
+    "message": "Profil \"$1\" löschen? Dies kann nicht rückgängig gemacht werden."
+  },
+  "options_profileSwitching": {
+    "message": "Profil wird gewechselt..."
+  },
+  "options_profileSwitchWithoutConfirm": {
+    "message": "Ohne Nachfrage wechseln"
+  },
+  "options_profileSwitchConfirmBtn": {
+    "message": "Wechseln"
+  },
+  "options_profileSwitchCancelBtn": {
+    "message": "Abbrechen"
+  },
+  "options_profilesLimit": {
+    "message": "$1/$2 Profile"
   },
   "options_githubConnection": {
     "message": "GitHub-Verbindung"
@@ -112,8 +169,38 @@
   "options_filePathHint": {
     "message": "Ordner, in dem die Lesezeichen-Dateien gespeichert werden."
   },
+  "options_filePathChangeHint": {
+    "message": "Beim nächsten Sync kann ein Konflikt entstehen. Nutze „GitHub → Lokal“, um den Remote-Stand zu übernehmen."
+  },
   "options_testConnection": {
     "message": "Verbindung testen"
+  },
+  "options_githubReposTitle": {
+    "message": "GitHub-Repos-Ordner"
+  },
+  "options_githubReposDesc": {
+    "message": "Ordner mit Lesezeichen zu allen deinen GitHub-Repositories (öffentlich und privat) anlegen."
+  },
+  "options_githubReposEnabled": {
+    "message": "GitHub-Repos-Ordner"
+  },
+  "options_githubReposParentLabel": {
+    "message": "Position"
+  },
+  "options_githubReposParentToolbar": {
+    "message": "Lesezeichen-Symbolleiste"
+  },
+  "options_githubReposParentOther": {
+    "message": "Weitere Lesezeichen"
+  },
+  "options_githubReposParentMenu": {
+    "message": "Lesezeichen-Menü"
+  },
+  "options_githubReposRefresh": {
+    "message": "GitHub-Repos aktualisieren"
+  },
+  "options_githubReposRefreshSuccess": {
+    "message": "$1 Repos für $2 hinzugefügt"
   },
   "options_synchronization": {
     "message": "Synchronisierung"
@@ -156,6 +243,27 @@
   },
   "options_syncOnFocus": {
     "message": "Sync bei Browser-Fokus"
+  },
+  "options_notifications": {
+    "message": "Sync-Benachrichtigungen"
+  },
+  "options_notificationsOff": {
+    "message": "Aus"
+  },
+  "options_notificationsAll": {
+    "message": "Alle (Erfolg und Fehler)"
+  },
+  "options_notificationsErrorsOnly": {
+    "message": "Nur Fehler"
+  },
+  "options_notificationsHint": {
+    "message": "Wähle, wann Benachrichtigungen angezeigt werden."
+  },
+  "notification_titleSuccess": {
+    "message": "Sync erfolgreich"
+  },
+  "notification_titleFailure": {
+    "message": "Sync fehlgeschlagen"
   },
   "options_saveSettings": {
     "message": "Einstellungen speichern"
@@ -201,6 +309,24 @@
   },
   "options_error": {
     "message": "Fehler: $1"
+  },
+  "options_onboardingCreateFolder": {
+    "message": "Der Ordner $1 existiert noch nicht. Mit Basisstruktur (toolbar, other) anlegen?"
+  },
+  "options_onboardingCreateBtn": {
+    "message": "Anlegen"
+  },
+  "options_onboardingPullBtn": {
+    "message": "Laden"
+  },
+  "options_onboardingPullNow": {
+    "message": "Lesezeichen im Repository gefunden. Jetzt in diesen Browser laden?"
+  },
+  "options_onboardingCreateSuccess": {
+    "message": "Ordner erfolgreich erstellt."
+  },
+  "options_onboardingPullSuccess": {
+    "message": "Lesezeichen erfolgreich geladen."
   },
   "options_settingsSaved": {
     "message": "Einstellungen gespeichert!"
@@ -259,7 +385,7 @@
     "message": "Lesezeichen sind bereits aktuell."
   },
   "sync_pullSuccess": {
-    "message": "Lesezeichen erfolgreich von GitHub geladen."
+    "message": "Von GitHub geladen."
   },
   "sync_pullFailed": {
     "message": "Pull fehlgeschlagen: $1"
@@ -297,6 +423,27 @@
   "options_version": {
     "message": "Version"
   },
+  "options_by": {
+    "message": "Von"
+  },
+  "options_specialThanks": {
+    "message": "Besonderen Dank"
+  },
+  "options_mobileAppTitle": {
+    "message": "Mobile-App"
+  },
+  "options_mobileAppDesc": {
+    "message": "Lesezeichen unterwegs ansehen. GitSyncMarks-Mobile (iOS + Android) synchronisiert aus deinem GitHub-Repo — nur Lese-Zugriff."
+  },
+  "options_mobileAppLink": {
+    "message": "GitSyncMarks-Mobile auf GitHub"
+  },
+  "options_mobileAppStores": {
+    "message": "F-Droid und Google Play bald verfügbar."
+  },
+  "options_links": {
+    "message": "Links"
+  },
   "options_githubRepo": {
     "message": "GitHub-Repository"
   },
@@ -312,6 +459,21 @@
   "options_license": {
     "message": "Lizenz (MIT)"
   },
+  "options_debugLogTitle": {
+    "message": "Debug-Log"
+  },
+  "options_debugLogDesc": {
+    "message": "Aktivieren, um Sync-Diagnosen zu speichern (Diffs, Merge-Entscheidungen, Konflikte). Hilfreich bei Sync-Problemen. Log exportieren und teilen für Support."
+  },
+  "options_debugLogEnabled": {
+    "message": "Debug-Log aktivieren"
+  },
+  "options_debugLogExport": {
+    "message": "Log exportieren"
+  },
+  "options_debugLogExportEmpty": {
+    "message": "Log ist leer. Debug-Log aktivieren und Sync ausführen."
+  },
 
   "options_tabGitHub": {
     "message": "GitHub"
@@ -325,6 +487,154 @@
   "options_tabAbout": {
     "message": "Über"
   },
+  "options_tabHelp": {
+    "message": "Hilfe"
+  },
+  "help_gettingStartedTitle": {
+    "message": "Erste Schritte"
+  },
+  "help_gettingStartedIntro": {
+    "message": "Erstelle ein GitHub-Repository für deine Lesezeichen und einen Personal Access Token (PAT) mit dem <code>repo</code>-Scope. Im GitHub-Tab gibst du Token, Repository-Inhaber, Name, Branch (meist <code>main</code>) und den Ordnergpfad (Standard: <code>bookmarks</code>) ein. Klicke auf <strong>Verbindung testen</strong> zur Prüfung."
+  },
+  "help_onboarding": {
+    "message": "Ist der Ordner leer, kannst du die Basisstruktur (toolbar, other) anlegen. Existieren schon Lesezeichen im Repo, kannst du sie in diesen Browser holen."
+  },
+  "help_profilesTitle": {
+    "message": "Profile"
+  },
+  "help_profilesIntro": {
+    "message": "Jedes Profil hat sein eigenes Lesezeichen-Set und eigene GitHub-Repo-Konfiguration. Nützlich für Arbeit/Privat oder verschiedene Geräte."
+  },
+  "help_profilesAdd": {
+    "message": "Hinzufügen, Umbenennen, Löschen"
+  },
+  "help_profilesAddDesc": {
+    "message": "Wähle ein Profil im Dropdown, dann Hinzufügen (neues Profil), Umbenennen oder Löschen. Maximal 10 Profile. Beim Löschen wird das ausgewählte Profil entfernt."
+  },
+  "help_profilesSwitch": {
+    "message": "Profilwechsel"
+  },
+  "help_profilesSwitchDesc": {
+    "message": "Wähle ein anderes Profil zum Wechsel. Aktuelle Lesezeichen werden gespeichert und zum Repo des aktuellen Profils gepusht. Die Lesezeichen des Zielfprofils ersetzen die lokalen. „Ohne Nachfrage wechseln“ überspringt den Bestätigungsdialog."
+  },
+  "help_profilesNote": {
+    "message": "Profile funktionieren zuverlässig. Bei mehreren Profilen können gelegentlich Sync-Konflikte auftreten — meist helfen 2–3 Versuche mit Push oder Pull. Die Funktion wird weiter verbessert. Bei reproduzierbaren Fehlern bitte ein Issue auf GitHub erstellen."
+  },
+  "help_githubReposTitle": {
+    "message": "GitHub-Repos-Ordner"
+  },
+  "help_githubReposDesc": {
+    "message": "Optional: Ordner mit Lesezeichen zu allen deinen GitHub-Repositories (öffentlich und privat). Position wählbar (toolbar, other). Der Ordner wird wie normale Lesezeichen synchronisiert; <strong>GitHub Repos aktualisieren</strong> lädt die Liste neu."
+  },
+  "help_popupTitle": {
+    "message": "Popup (Erweiterungssymbol)"
+  },
+  "help_popupProfile": {
+    "message": "Profilauswahl"
+  },
+  "help_popupProfileDesc": {
+    "message": "Profile direkt im Popup-Header wechseln."
+  },
+  "help_popupSyncNow": {
+    "message": "Jetzt synchronisieren"
+  },
+  "help_popupSyncNowDesc": {
+    "message": "Vollständiger 3-Wege-Merge-Sync: lokale und remote Änderungen werden automatisch zusammengeführt, wenn möglich."
+  },
+  "help_popupPush": {
+    "message": "Push ↑"
+  },
+  "help_popupPushDesc": {
+    "message": "Lokale Lesezeichen zu GitHub hochladen (überschreibt remote Änderungen)."
+  },
+  "help_popupPull": {
+    "message": "Pull ↓"
+  },
+  "help_popupPullDesc": {
+    "message": "Von GitHub herunterladen (überschreibt lokale Änderungen)."
+  },
+  "help_syncTitle": {
+    "message": "Synchronisation"
+  },
+  "help_autoSyncTitle": {
+    "message": "Auto-Sync"
+  },
+  "help_autoSyncDesc": {
+    "message": "Bei Aktivierung synchronisiert die Erweiterung automatisch bei Hinzufügen, Ändern oder Löschen. Eine Verzögerung wartet auf schnell aufeinanderfolgende Änderungen, bevor synchronisiert wird."
+  },
+  "help_syncProfiles": {
+    "message": "Sync-Profile"
+  },
+  "help_syncProfilesDesc": {
+    "message": "Echtzeit (1 Min.), Häufig (5 Min.), Normal (15 Min.) oder Stromsparen (60 Min.). Bei Benutzerdefiniert Interval und Verzögerung manuell einstellbar."
+  },
+  "help_syncStartup": {
+    "message": "Sync beim Start / Fokus"
+  },
+  "help_syncStartupDesc": {
+    "message": "Optional: Sync beim Browserstart oder beim Zurückkehren ins Browserfenster (mit Pause)."
+  },
+  "help_notificationsTitle": {
+    "message": "Benachrichtigungen"
+  },
+  "help_notificationsDesc": {
+    "message": "Festlegen, wann Sync-Benachrichtigungen angezeigt werden: Alle (Erfolg und Fehler), Nur Fehler oder Aus."
+  },
+  "help_backupTitle": {
+    "message": "Sicherung"
+  },
+  "help_backupBookmarks": {
+    "message": "Lesezeichen exportieren / importieren"
+  },
+  "help_backupBookmarksDesc": {
+    "message": "Alle Browser-Lesezeichen als JSON exportieren. Import ersetzt alle lokalen Lesezeichen durch den Dateiinhalt."
+  },
+  "help_backupSettings": {
+    "message": "Einstellungen exportieren / importieren"
+  },
+  "help_backupSettingsDesc": {
+    "message": "GitHub-Verbindung und Sync-Einstellungen exportieren (Profile mit entschlüsselten Tokens). Import ersetzt alle Einstellungen; die Seite wird danach neu geladen."
+  },
+  "help_conflictTitle": {
+    "message": "Konflikte"
+  },
+  "help_conflictDesc": {
+    "message": "Wenn lokal und remote geändert wurden, erscheint im Popup ein Konflikt. Wähle <strong>Push</strong> (lokal gewinnt) oder <strong>Pull</strong> (remote gewinnt). Es gibt keine automatische Konfliktlösung."
+  },
+  "help_shortcuts": {
+    "message": "Tastaturkürzel"
+  },
+  "help_quickSync": {
+    "message": "Lesezeichen sofort synchronisieren"
+  },
+  "help_openOptions": {
+    "message": "Einstellungen öffnen"
+  },
+  "help_shortcutsNote": {
+    "message": "Die Kürzel können in den Erweiterungseinstellungen des Browsers angepasst werden."
+  },
+  "help_whySlowTitle": {
+    "message": "Warum dauert der Sync manchmal lange?"
+  },
+  "help_whySlowIntro": {
+    "message": "GitSyncMarks nutzt die GitHub Git Data API für atomare Commits. Jede geänderte oder neue Lesezeichen-Datei erfordert einen API-Aufruf. Bei vielen Änderungen summiert sich das."
+  },
+  "help_whyAtomic": {
+    "message": "Alle Änderungen werden in einem atomaren Commit geschrieben: Entweder alles gelingt oder nichts. So wird ein teilweiser oder beschädigter Zustand bei Unterbrechung vermieden. Ein Commit statt vieler vermeidet außerdem API-Ratelimits und hält die Git-Historie überschaubar."
+  },
+  "help_links": {
+    "message": "Links"
+  },
+  "help_discussions": {
+    "message": "Diskussionen"
+  },
+
+  "options_backupTitle": {
+    "message": "Backup"
+  },
+  "options_backupIntro": {
+    "message": "Lesezeichen und Einstellungen als JSON exportieren oder importieren."
+  },
   "options_bookmarksCard": {
     "message": "Lesezeichen"
   },
@@ -335,7 +645,7 @@
     "message": "Lesezeichen exportieren"
   },
   "options_exportBookmarksDesc": {
-    "message": "Lesezeichen als JSON-Datei sichern."
+    "message": "Alle Lesezeichen als JSON."
   },
   "options_exportBtn": {
     "message": "Export"
@@ -353,16 +663,16 @@
     "message": "Einstellungen exportieren"
   },
   "options_exportSettingsDesc": {
-    "message": "GitHub-Verbindung und Sync-Einstellungen sichern."
+    "message": "GitHub-Verbindung und Sync (inkl. Profile)."
   },
   "options_importSettings": {
     "message": "Einstellungen importieren"
   },
   "options_importBookmarksWarning": {
-    "message": "Der Import ersetzt alle aktuellen Lesezeichen. Dies kann nicht rückgängig gemacht werden."
+    "message": "Ersetzt alle Lesezeichen. Unwiderruflich."
   },
   "options_importSettingsWarning": {
-    "message": "Der Import ersetzt alle aktuellen Einstellungen. Die Seite wird danach neu geladen."
+    "message": "Ersetzt alle Einstellungen. Seite lädt neu."
   },
   "options_selectFile": {
     "message": "Datei auswählen..."
@@ -384,45 +694,21 @@
     "message": "Lesezeichen über Git hinzufügen"
   },
   "options_automationIntro": {
-    "message": "Du kannst Lesezeichen direkt im Git-Repository anlegen. Die Extension erkennt sie beim nächsten Sync und normalisiert sie automatisch."
+    "message": "Lesezeichen direkt im Repository anlegen. Die Extension erkennt sie beim nächsten Sync und normalisiert Dateinamen automatisch."
   },
   "options_automationFormatTitle": {
     "message": "Dateiformat"
   },
-  "options_automationFormatDesc": {
-    "message": "Erstelle eine JSON-Datei mit beliebigem Namen in einem der Lesezeichen-Ordner:"
-  },
-  "options_automationFolders": {
-    "message": "Verfügbare Stammordner im Repository:"
-  },
-  "options_automationFolderToolbar": {
-    "message": "Lesezeichen-Symbolleiste"
-  },
-  "options_automationFolderOther": {
-    "message": "Weitere Lesezeichen"
-  },
-  "options_automationFolderMenu": {
-    "message": "Lesezeichen-Menü (Firefox)"
-  },
-  "options_automationFolderMobile": {
-    "message": "Mobile Lesezeichen"
-  },
-  "options_automationNormalize": {
-    "message": "Beim nächsten Sync wird die Extension die Datei in das kanonische Format umbenennen und in die Ordner-Reihenfolge einfügen."
+  "options_automationFoldersLabel": {
+    "message": "Ordner:"
   },
   "options_automationGithubActionTitle": {
     "message": "GitHub Action"
   },
-  "options_automationGithubActionDesc": {
-    "message": "Ein GitHub Action Workflow ist enthalten, um Lesezeichen über die GitHub-Oberfläche oder CLI hinzuzufügen. Kopiere <code>.github/workflows/add-bookmark.yml</code> in dein Lesezeichen-Repository."
+  "options_automationWorkflowLink": {
+    "message": "add-bookmark.yml in dein Repo kopieren"
   },
-  "options_automationGithubActionUsage": {
-    "message": "Nutzung über GitHub CLI"
-  },
-  "options_automationGithubActionWeb": {
-    "message": "Nutzung über die GitHub-Weboberfläche"
-  },
-  "options_automationGithubActionWebDesc": {
-    "message": "Gehe zu deinem Repository → Actions → \"Add Bookmark\" → Workflow ausführen. Fülle URL, Titel und Zielordner aus."
+  "options_automationGithubActionParams": {
+    "message": "folder = Root; path = optionaler Unterordner; base-path bei abweichendem Dateipfad"
   }
 }

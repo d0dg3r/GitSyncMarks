@@ -5,6 +5,12 @@
   "extDescription": {
     "message": "Your bookmarks, safe on GitHub — per-file storage, three-way merge sync, works on Chrome & Firefox. No server needed."
   },
+  "commands_quickSync": {
+    "message": "Quick sync bookmarks"
+  },
+  "commands_openOptions": {
+    "message": "Open extension settings"
+  },
 
   "popup_configureFirst": {
     "message": "Please configure the extension first."
@@ -66,6 +72,9 @@
   "popup_syncing": {
     "message": "Syncing..."
   },
+  "popup_profileSwitching": {
+    "message": "Switching profile..."
+  },
   "popup_error": {
     "message": "Error: $1"
   },
@@ -81,6 +90,54 @@
 
   "options_subtitle": {
     "message": "Settings"
+  },
+  "options_profile": {
+    "message": "Profile"
+  },
+  "options_profileAdd": {
+    "message": "+ Add"
+  },
+  "options_profileAddNameLabel": {
+    "message": "Profile name"
+  },
+  "options_profileAddConfirmBtn": {
+    "message": "Add"
+  },
+  "options_profileRenameLabel": {
+    "message": "New name"
+  },
+  "options_profileAddPlaceholder": {
+    "message": "New Profile"
+  },
+  "options_profileRename": {
+    "message": "Rename"
+  },
+  "options_profileRenamePrompt": {
+    "message": "New name for \"$1\":"
+  },
+  "options_profileDelete": {
+    "message": "Delete"
+  },
+  "options_profileSwitchConfirm": {
+    "message": "Switch to \"$1\"? Your bookmarks will be replaced with that profile's bookmarks."
+  },
+  "options_profileDeleteConfirm": {
+    "message": "Delete profile \"$1\"? This cannot be undone."
+  },
+  "options_profileSwitching": {
+    "message": "Switching profile..."
+  },
+  "options_profileSwitchWithoutConfirm": {
+    "message": "Switch without confirmation"
+  },
+  "options_profileSwitchConfirmBtn": {
+    "message": "Switch"
+  },
+  "options_profileSwitchCancelBtn": {
+    "message": "Cancel"
+  },
+  "options_profilesLimit": {
+    "message": "$1/$2 profiles"
   },
   "options_githubConnection": {
     "message": "GitHub Connection"
@@ -112,8 +169,38 @@
   "options_filePathHint": {
     "message": "Folder where bookmark files will be stored."
   },
+  "options_filePathChangeHint": {
+    "message": "On the next sync a conflict may occur. Use \"GitHub → Local\" to adopt the remote state."
+  },
   "options_testConnection": {
     "message": "Test Connection"
+  },
+  "options_githubReposTitle": {
+    "message": "GitHub Repos Folder"
+  },
+  "options_githubReposDesc": {
+    "message": "Create a folder with bookmarks to all your GitHub repositories (public and private)."
+  },
+  "options_githubReposEnabled": {
+    "message": "GitHub Repos folder"
+  },
+  "options_githubReposParentLabel": {
+    "message": "Position"
+  },
+  "options_githubReposParentToolbar": {
+    "message": "Bookmarks Bar"
+  },
+  "options_githubReposParentOther": {
+    "message": "Other Bookmarks"
+  },
+  "options_githubReposParentMenu": {
+    "message": "Bookmarks Menu"
+  },
+  "options_githubReposRefresh": {
+    "message": "Update GitHub Repos"
+  },
+  "options_githubReposRefreshSuccess": {
+    "message": "Added $1 repos for $2"
   },
   "options_synchronization": {
     "message": "Synchronization"
@@ -156,6 +243,27 @@
   },
   "options_syncOnFocus": {
     "message": "Sync when browser gains focus"
+  },
+  "options_notifications": {
+    "message": "Sync notifications"
+  },
+  "options_notificationsOff": {
+    "message": "Off"
+  },
+  "options_notificationsAll": {
+    "message": "All (success and failure)"
+  },
+  "options_notificationsErrorsOnly": {
+    "message": "Errors only"
+  },
+  "options_notificationsHint": {
+    "message": "Choose when to show notifications."
+  },
+  "notification_titleSuccess": {
+    "message": "Sync successful"
+  },
+  "notification_titleFailure": {
+    "message": "Sync failed"
   },
   "options_saveSettings": {
     "message": "Save Settings"
@@ -201,6 +309,24 @@
   },
   "options_error": {
     "message": "Error: $1"
+  },
+  "options_onboardingCreateBtn": {
+    "message": "Create"
+  },
+  "options_onboardingPullBtn": {
+    "message": "Load"
+  },
+  "options_onboardingCreateFolder": {
+    "message": "The folder $1 does not exist yet. Create it with the base structure (toolbar, other)?"
+  },
+  "options_onboardingPullNow": {
+    "message": "Bookmarks found in the repository. Pull them to this browser now?"
+  },
+  "options_onboardingCreateSuccess": {
+    "message": "Folder created successfully."
+  },
+  "options_onboardingPullSuccess": {
+    "message": "Bookmarks pulled successfully."
   },
   "options_settingsSaved": {
     "message": "Settings saved!"
@@ -259,7 +385,7 @@
     "message": "Bookmarks are already up to date."
   },
   "sync_pullSuccess": {
-    "message": "Bookmarks successfully loaded from GitHub."
+    "message": "Loaded from GitHub."
   },
   "sync_pullFailed": {
     "message": "Pull failed: $1"
@@ -297,6 +423,27 @@
   "options_version": {
     "message": "Version"
   },
+  "options_by": {
+    "message": "By"
+  },
+  "options_specialThanks": {
+    "message": "Special Thanks"
+  },
+  "options_mobileAppTitle": {
+    "message": "Mobile App"
+  },
+  "options_mobileAppDesc": {
+    "message": "View your bookmarks on the go. GitSyncMarks-Mobile (iOS + Android) syncs from your GitHub repo — read-only companion."
+  },
+  "options_mobileAppLink": {
+    "message": "GitSyncMarks-Mobile on GitHub"
+  },
+  "options_mobileAppStores": {
+    "message": "F-Droid and Google Play coming soon."
+  },
+  "options_links": {
+    "message": "Links"
+  },
   "options_githubRepo": {
     "message": "GitHub Repository"
   },
@@ -312,6 +459,21 @@
   "options_license": {
     "message": "License (MIT)"
   },
+  "options_debugLogTitle": {
+    "message": "Debug Log"
+  },
+  "options_debugLogDesc": {
+    "message": "Enable to record sync diagnostics (diffs, merge decisions, conflicts). Use when troubleshooting sync issues. Export and share the log for support."
+  },
+  "options_debugLogEnabled": {
+    "message": "Enable debug log"
+  },
+  "options_debugLogExport": {
+    "message": "Export log"
+  },
+  "options_debugLogExportEmpty": {
+    "message": "Log is empty. Enable debug log and run a sync first."
+  },
 
   "options_tabGitHub": {
     "message": "GitHub"
@@ -325,6 +487,154 @@
   "options_tabAbout": {
     "message": "About"
   },
+  "options_tabHelp": {
+    "message": "Help"
+  },
+  "help_gettingStartedTitle": {
+    "message": "Getting Started"
+  },
+  "help_gettingStartedIntro": {
+    "message": "Create a GitHub repository for your bookmarks, then create a Personal Access Token (PAT) with the <code>repo</code> scope. In the GitHub tab, enter token, repository owner, name, branch (usually <code>main</code>), and the folder path (default: <code>bookmarks</code>). Click <strong>Test Connection</strong> to verify."
+  },
+  "help_onboarding": {
+    "message": "If the folder is empty, you can create the base structure (toolbar, other). If bookmarks already exist in the repo, you can pull them into this browser."
+  },
+  "help_profilesTitle": {
+    "message": "Profiles"
+  },
+  "help_profilesIntro": {
+    "message": "Each profile has its own bookmark set and GitHub repo config. Use profiles for work/personal or different devices."
+  },
+  "help_profilesAdd": {
+    "message": "Add, Rename, Delete"
+  },
+  "help_profilesAddDesc": {
+    "message": "Select a profile in the dropdown, then Add (new profile), Rename, or Delete. Up to 10 profiles. Deleting removes the selected profile."
+  },
+  "help_profilesSwitch": {
+    "message": "Profile switch"
+  },
+  "help_profilesSwitchDesc": {
+    "message": "Select another profile to switch. Your current bookmarks are saved and pushed to the current profile's repo before switching. The target profile's bookmarks replace the local ones. Use Switch without confirmation to skip the confirm dialog."
+  },
+  "help_profilesNote": {
+    "message": "Profiles work reliably. With multiple profiles, sync conflicts can occasionally occur — trying Push or Pull 2–3 times usually resolves them. This feature is still evolving. If you encounter reproducible bugs, please open an issue on GitHub."
+  },
+  "help_githubReposTitle": {
+    "message": "GitHub Repos Folder"
+  },
+  "help_githubReposDesc": {
+    "message": "Optional: Create a folder with bookmarks to all your GitHub repositories (public and private). Choose the position (toolbar, other). The folder is synced like normal bookmarks; use <strong>Update GitHub Repos</strong> to refresh the list."
+  },
+  "help_popupTitle": {
+    "message": "Popup (extension icon)"
+  },
+  "help_popupProfile": {
+    "message": "Profile selector"
+  },
+  "help_popupProfileDesc": {
+    "message": "Switch profiles directly from the popup header."
+  },
+  "help_popupSyncNow": {
+    "message": "Sync Now"
+  },
+  "help_popupSyncNowDesc": {
+    "message": "Full three-way merge sync: local and remote changes are merged automatically when possible."
+  },
+  "help_popupPush": {
+    "message": "Push ↑"
+  },
+  "help_popupPushDesc": {
+    "message": "Upload local bookmarks to GitHub (overwrites remote changes)."
+  },
+  "help_popupPull": {
+    "message": "Pull ↓"
+  },
+  "help_popupPullDesc": {
+    "message": "Download from GitHub (overwrites local changes)."
+  },
+  "help_syncTitle": {
+    "message": "Synchronization"
+  },
+  "help_autoSyncTitle": {
+    "message": "Auto-sync"
+  },
+  "help_autoSyncDesc": {
+    "message": "When enabled, syncs automatically when you add, edit, or remove bookmarks. A debounce delay waits for rapid changes to finish before syncing."
+  },
+  "help_syncProfiles": {
+    "message": "Sync profiles"
+  },
+  "help_syncProfilesDesc": {
+    "message": "Real-time (1 min), Frequent (5 min), Normal (15 min), or Power save (60 min). Custom lets you set interval and debounce manually."
+  },
+  "help_syncStartup": {
+    "message": "Sync on startup / focus"
+  },
+  "help_syncStartupDesc": {
+    "message": "Optional: sync when the browser starts or when you return to the browser window (with cooldown)."
+  },
+  "help_notificationsTitle": {
+    "message": "Notifications"
+  },
+  "help_notificationsDesc": {
+    "message": "Choose when to show sync notifications: All (success and failure), Errors only, or Off."
+  },
+  "help_backupTitle": {
+    "message": "Backup"
+  },
+  "help_backupBookmarks": {
+    "message": "Export / Import Bookmarks"
+  },
+  "help_backupBookmarksDesc": {
+    "message": "Export all browser bookmarks as JSON. Import replaces all local bookmarks with the file contents."
+  },
+  "help_backupSettings": {
+    "message": "Export / Import Settings"
+  },
+  "help_backupSettingsDesc": {
+    "message": "Export GitHub connection and sync settings (profiles with decrypted tokens). Import replaces all settings; the page reloads afterwards."
+  },
+  "help_conflictTitle": {
+    "message": "Conflicts"
+  },
+  "help_conflictDesc": {
+    "message": "When both local and remote bookmarks changed, the popup shows a conflict. Choose <strong>Push</strong> (local wins, overwrite remote) or <strong>Pull</strong> (remote wins, overwrite local). There is no automatic merge for conflicts."
+  },
+  "help_shortcuts": {
+    "message": "Keyboard Shortcuts"
+  },
+  "help_quickSync": {
+    "message": "Quick sync bookmarks"
+  },
+  "help_openOptions": {
+    "message": "Open extension settings"
+  },
+  "help_shortcutsNote": {
+    "message": "You can customize shortcuts in the browser's extension settings."
+  },
+  "help_whySlowTitle": {
+    "message": "Why does sync sometimes take long?"
+  },
+  "help_whySlowIntro": {
+    "message": "GitSyncMarks uses GitHub's Git Data API for atomic commits. Each changed or new bookmark file requires an API call. With many changes, this adds up."
+  },
+  "help_whyAtomic": {
+    "message": "All changes are written in a single atomic commit: either everything succeeds or nothing does. This prevents partial or corrupted state if the sync is interrupted. One commit instead of many also avoids hitting API rate limits and keeps the Git history clean."
+  },
+  "help_links": {
+    "message": "Links"
+  },
+  "help_discussions": {
+    "message": "Discussions"
+  },
+
+  "options_backupTitle": {
+    "message": "Backup"
+  },
+  "options_backupIntro": {
+    "message": "Export or import bookmarks and extension settings as JSON."
+  },
   "options_bookmarksCard": {
     "message": "Bookmarks"
   },
@@ -335,7 +645,7 @@
     "message": "Export Bookmarks"
   },
   "options_exportBookmarksDesc": {
-    "message": "Save your bookmarks as a JSON file."
+    "message": "Save all bookmarks as JSON."
   },
   "options_exportBtn": {
     "message": "Export"
@@ -353,16 +663,16 @@
     "message": "Export Settings"
   },
   "options_exportSettingsDesc": {
-    "message": "Backup GitHub connection and sync settings."
+    "message": "GitHub connection and sync settings (incl. profiles)."
   },
   "options_importSettings": {
     "message": "Import Settings"
   },
   "options_importBookmarksWarning": {
-    "message": "Importing will replace all your current bookmarks. This cannot be undone."
+    "message": "Replaces all current bookmarks. Cannot be undone."
   },
   "options_importSettingsWarning": {
-    "message": "Importing will replace all current settings. The page will reload afterwards."
+    "message": "Replaces all settings. Page reloads afterwards."
   },
   "options_selectFile": {
     "message": "Select file..."
@@ -384,45 +694,21 @@
     "message": "Add Bookmarks via Git"
   },
   "options_automationIntro": {
-    "message": "You can add bookmarks directly in your Git repository. The extension will pick them up on the next sync and normalize them automatically."
+    "message": "Add bookmarks directly in your repository. The extension picks them up on the next sync and normalizes filenames automatically."
   },
   "options_automationFormatTitle": {
-    "message": "File Format"
+    "message": "File format"
   },
-  "options_automationFormatDesc": {
-    "message": "Create a JSON file with any name in one of the bookmark folders:"
-  },
-  "options_automationFolders": {
-    "message": "Available root folders in the repository:"
-  },
-  "options_automationFolderToolbar": {
-    "message": "Bookmarks Bar"
-  },
-  "options_automationFolderOther": {
-    "message": "Other Bookmarks"
-  },
-  "options_automationFolderMenu": {
-    "message": "Bookmarks Menu (Firefox)"
-  },
-  "options_automationFolderMobile": {
-    "message": "Mobile Bookmarks"
-  },
-  "options_automationNormalize": {
-    "message": "On the next sync, the extension will rename the file to its canonical format and add it to the folder's ordering."
+  "options_automationFoldersLabel": {
+    "message": "Folders:"
   },
   "options_automationGithubActionTitle": {
     "message": "GitHub Action"
   },
-  "options_automationGithubActionDesc": {
-    "message": "A GitHub Action workflow is included to add bookmarks via the GitHub UI or CLI. Copy <code>.github/workflows/add-bookmark.yml</code> to your bookmark repository."
+  "options_automationWorkflowLink": {
+    "message": "Copy add-bookmark.yml to your repo"
   },
-  "options_automationGithubActionUsage": {
-    "message": "Usage via GitHub CLI"
-  },
-  "options_automationGithubActionWeb": {
-    "message": "Usage via GitHub Web UI"
-  },
-  "options_automationGithubActionWebDesc": {
-    "message": "Go to your repository → Actions → \"Add Bookmark\" → Run workflow. Fill in the URL, title, and target folder."
+  "options_automationGithubActionParams": {
+    "message": "folder = root; path = optional subfolder; base-path if File Path ≠ bookmarks"
   }
 }

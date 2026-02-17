@@ -19,7 +19,11 @@ flowchart TB
         subgraph Lib["lib/"]
             SE["sync-engine.js"]
             GH["github-api.js"]
+            GR["github-repos.js"]
             BS["bookmark-serializer.js"]
+            PM["profile-manager.js"]
+            OB["onboarding.js"]
+            RF["remote-fetch.js"]
             I18N["i18n.js"]
             Theme["theme.js"]
             Crypto["crypto.js"]
@@ -69,21 +73,18 @@ The central coordinator:
 
 ### `popup.html` / `popup.js` — Popup UI
 
-Toolbar popup showing:
-- Sync status, last sync time, conflict warnings
-- Manual action buttons: Sync Now, Push, Pull
-- Conflict resolution (force push / force pull)
-- Auto-sync status indicator
+Toolbar popup with header (icon, title, profile dropdown when 2+ profiles), status area (status line, last change, commit link), conflict box, action buttons (Sync Now, Push, Pull), and compact footer (Settings, GitHub, Report Issue).
 
 ### `options.html` / `options.js` — Settings Page
 
-Full-page settings (opens in tab) with five tabs. Header: language selector and theme (light/dark/auto).
+Full-page settings (opens in tab) with six tabs. Header: language dropdown, theme (light/dark/auto).
 
-1. **GitHub** — Token, repository, connection test
+1. **GitHub** — Profile selector (multiple profiles with separate repos), token, repository, connection test, onboarding (create folder or pull when path empty/has bookmarks)
 2. **Synchronization** — Sync profile, auto-sync, sync on start/focus, debounce
 3. **Backup** — Export/import bookmarks and settings as JSON (file picker with chosen filename)
 4. **Automation** — Guide for adding bookmarks via Git, CLI, or GitHub Actions
-5. **About** — Version, links, license
+5. **Help** — Keyboard shortcuts, main features (popup, profiles, auto-sync, conflicts)
+6. **About** — Version, links, license
 
 ### `lib/sync-engine.js` — Sync Engine
 
@@ -127,7 +128,7 @@ Converts between browser bookmark trees and the per-file format:
 | `fileMapToBookmarkTree(files, basePath)` | File map → bookmark tree (role → children) |
 | `fileMapToMarkdown(files, basePath)` | File map → human-readable Markdown |
 | `generateFilename(title, url)` | Deterministic filename: `{slug}_{hash}.json` |
-| `detectRootFolderRole(node)` | Detect toolbar/other/menu/mobile from browser IDs |
+| `detectRootFolderRole(node)` | Detect toolbar/other from browser IDs |
 | `gitTreeToShaMap(entries, basePath)` | Git tree → SHA map for remote change detection |
 | `serializeToJson()` / `deserializeFromJson()` | Legacy format (for import/export) |
 
@@ -142,6 +143,45 @@ Custom runtime i18n with manual language selection. Loads `_locales/{lang}/messa
 ### `lib/theme.js` — Theme
 
 Light, dark, or auto (system) theme. Stores preference in `chrome.storage.sync`, applies `html.dark` class when dark mode is active. Used by options page and popup.
+
+### `lib/profile-manager.js` — Profile Manager
+
+Multiple bookmark profiles (Work/Personal) with separate GitHub repo config:
+
+| Function | Description |
+|---|---|
+| `getProfiles()` / `getActiveProfileId()` | List profiles, get current active profile |
+| `addProfile()` / `deleteProfile()` / `saveProfile()` | CRUD for profiles |
+| `switchProfile(targetId)` | Save current bookmarks, push to current repo, pull target profile, replace local bookmarks |
+| `migrateToProfiles()` | Migrate legacy single-config to profiles format |
+
+State stored in `chrome.storage.sync` (profiles, activeProfileId) and `chrome.storage.local` (per-profile tokens, sync state).
+
+### `lib/onboarding.js` — Onboarding
+
+First-time and new-profile setup when configuring GitHub:
+
+| Function | Description |
+|---|---|
+| `checkPathSetup(api, basePath)` | Check if path exists and has bookmarks (unreachable / empty / hasBookmarks) |
+| `createMinimalBookmarkStructure(basePath)` | Build `_index.json` and role folders with `_order.json` |
+| `initializeRemoteFolder(api, basePath)` | Create minimal structure via `atomicCommit` |
+
+### `lib/github-repos.js` — GitHub Repos Folder
+
+Fetches the authenticated user's repos via GitHub REST API and maintains a "GitHubRepos (username)" folder:
+
+| Function | Description |
+|---|---|
+| `fetchCurrentUser(token)` | GET /user → `{ login }` for folder name |
+| `fetchUserRepos(token)` | GET /user/repos (paginated) → `{ full_name, html_url, private }` |
+| `updateGitHubReposFolder(token, parentRole, username?, onUsername?)` | Find/create folder, diff existing bookmarks with API list, add/remove/update; optional callback to persist username on first run |
+
+### `lib/remote-fetch.js` — Remote File Map
+
+| Function | Description |
+|---|---|
+| `fetchRemoteFileMap(api, basePath, baseFiles)` | Fetch bookmark files from GitHub via Git Data API; returns `{ shaMap, fileMap, commitSha }` or `null` for empty repo |
 
 ### `lib/browser-polyfill.js` — Browser Detection
 
@@ -160,10 +200,15 @@ GitSyncMarks/
 │   ├── sync-engine.js            # Three-way merge sync
 │   ├── github-api.js             # GitHub REST + Git Data API
 │   ├── bookmark-serializer.js    # Per-file bookmark conversion
+│   ├── bookmark-replace.js       # Replace local bookmarks (used by sync + profile switch)
+│   ├── github-repos.js          # GitHub Repos folder (user repos as bookmarks)
+│   ├── profile-manager.js       # Multiple profiles, switchProfile, migration
+│   ├── onboarding.js            # checkPathSetup, initializeRemoteFolder
+│   ├── remote-fetch.js           # fetchRemoteFileMap
 │   ├── crypto.js                 # Token encryption (AES-256-GCM)
 │   ├── i18n.js                   # Internationalization
 │   ├── theme.js                  # Light/dark/auto theme
-│   └── browser-polyfill.js       # Browser detection
+│   └── browser-polyfill.js      # Browser detection
 ├── _locales/
 │   ├── en/messages.json
 │   └── de/messages.json
@@ -172,7 +217,8 @@ GitSyncMarks/
 │   └── build.sh                  # Build Chrome + Firefox packages
 ├── package.json                  # npm scripts for building
 ├── .github/workflows/
-│   ├── release.yml               # CI: build + release on tag
+│   ├── test-e2e.yml              # E2E tests (manual trigger only; CI disabled)
+│   ├── release.yml               # Build ZIPs, create release on tag
 │   └── add-bookmark.yml          # Automation: add bookmark via dispatch
 ├── docs/                         # Architecture documentation
 ├── store-assets/                 # Chrome Web Store assets

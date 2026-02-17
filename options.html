@@ -14,7 +14,6 @@
         GitSyncMarks
       </h1>
       <div class="header-actions">
-        <label for="language-select" class="header-language-label" data-i18n="options_language">Language</label>
         <select id="language-select">
           <!-- Populated dynamically -->
         </select>
@@ -31,11 +30,72 @@
       <button class="tab-btn" data-tab="sync" data-i18n="options_tabSynchronization">Synchronization</button>
       <button class="tab-btn" data-tab="backup" data-i18n="options_tabBackup">Backup</button>
       <button class="tab-btn" data-tab="automation" data-i18n="options_tabAutomation">Automation</button>
+      <button class="tab-btn" data-tab="help" data-i18n="options_tabHelp">Help</button>
       <button class="tab-btn" data-tab="about" data-i18n="options_tabAbout">About</button>
     </nav>
 
     <!-- ==================== GitHub Tab ==================== -->
     <div class="tab-content active" id="tab-github">
+
+      <section class="card profile-selector-card">
+        <h2 data-i18n="options_profile">Profile</h2>
+        <div class="profile-main-row">
+          <div class="profile-select-wrap">
+            <label for="profile-select" class="form-label-inline" data-i18n="options_profile">Profile</label>
+            <select id="profile-select" class="profile-select"></select>
+          </div>
+          <div class="profile-actions">
+            <span id="profile-limit" class="profile-limit"></span>
+            <span id="profile-spinner" class="spinner" style="display: none;"></span>
+            <span id="profile-switching-msg" class="profile-switching-msg" style="display: none;"></span>
+            <button type="button" id="profile-add-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileAdd">+ Add</button>
+            <button type="button" id="profile-rename-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileRename" style="display: none;">Rename</button>
+            <button type="button" id="profile-delete-btn" class="btn btn-secondary btn-sm btn-danger" data-i18n="options_profileDelete" title="" style="display: none;">Delete</button>
+          </div>
+        </div>
+        <div class="profile-options">
+          <label for="profile-switch-without-confirm" class="profile-option-toggle">
+            <input type="checkbox" id="profile-switch-without-confirm">
+            <span class="toggle-slider toggle-slider-sm"></span>
+            <span data-i18n="options_profileSwitchWithoutConfirm">Switch without confirmation</span>
+          </label>
+        </div>
+        <div id="profile-switch-confirm" class="profile-switch-confirm" style="display: none;">
+          <span id="profile-switch-confirm-text" class="profile-switch-confirm-text"></span>
+          <div class="profile-switch-confirm-actions">
+            <button type="button" id="profile-switch-confirm-btn" class="btn btn-primary btn-sm" data-i18n="options_profileSwitchConfirmBtn">Switch</button>
+            <button type="button" id="profile-switch-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+          </div>
+        </div>
+        <div id="profile-delete-confirm" class="profile-inline-dialog" style="display: none;">
+          <span id="profile-delete-confirm-text" class="profile-inline-dialog-text"></span>
+          <div class="profile-inline-dialog-actions">
+            <button type="button" id="profile-delete-confirm-btn" class="btn btn-danger btn-sm" data-i18n="options_profileDelete">Delete</button>
+            <button type="button" id="profile-delete-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+          </div>
+        </div>
+        <div id="profile-add-dialog" class="profile-inline-dialog" style="display: none;">
+          <div class="profile-inline-dialog-body">
+            <label for="profile-add-name-input" class="profile-inline-dialog-label" data-i18n="options_profileAddNameLabel">Profile name</label>
+            <input type="text" id="profile-add-name-input" class="profile-inline-dialog-input" data-i18n-placeholder="options_profileAddPlaceholder" placeholder="New Profile">
+          </div>
+          <div class="profile-inline-dialog-actions">
+            <button type="button" id="profile-add-confirm-btn" class="btn btn-primary btn-sm" data-i18n="options_profileAddConfirmBtn">Add</button>
+            <button type="button" id="profile-add-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+          </div>
+        </div>
+        <div id="profile-rename-dialog" class="profile-inline-dialog" style="display: none;">
+          <div class="profile-inline-dialog-body">
+            <label for="profile-rename-input" class="profile-inline-dialog-label" data-i18n="options_profileRenameLabel">New name</label>
+            <input type="text" id="profile-rename-input" class="profile-inline-dialog-input">
+          </div>
+          <div class="profile-inline-dialog-actions">
+            <button type="button" id="profile-rename-confirm-btn" class="btn btn-primary btn-sm" data-i18n="options_profileRename">Rename</button>
+            <button type="button" id="profile-rename-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+          </div>
+        </div>
+        <div id="profile-message" class="profile-message" style="display: none;"></div>
+      </section>
 
       <section class="card">
         <h2 data-i18n="options_githubConnection">GitHub Connection</h2>
@@ -74,7 +134,44 @@
 
         <div class="form-group">
           <button id="validate-btn" class="btn btn-secondary" data-i18n="options_testConnection">Test Connection</button>
+          <span id="validation-spinner" class="spinner" style="display: none;"></span>
           <span id="validation-result" class="validation-result"></span>
+          <div id="onboarding-confirm" class="onboarding-confirm" style="display: none; margin-top: 0.75rem;">
+            <span id="onboarding-confirm-text" class="onboarding-confirm-text"></span>
+            <div class="onboarding-confirm-actions">
+              <button type="button" id="onboarding-confirm-yes-btn" class="btn btn-primary btn-sm"></button>
+              <button type="button" id="onboarding-confirm-no-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="github-repos-card" style="display: none;">
+        <h2 data-i18n="options_githubReposTitle">GitHub Repos Folder</h2>
+        <p class="card-desc" data-i18n="options_githubReposDesc">Create a folder with bookmarks to all your GitHub repositories (public and private).</p>
+
+        <div class="form-group toggle-group">
+          <label for="github-repos-enabled" class="toggle-label">
+            <span data-i18n="options_githubReposEnabled">GitHub Repos folder</span>
+            <input type="checkbox" id="github-repos-enabled">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div id="github-repos-options" style="display: none;">
+          <div class="form-group">
+            <label for="github-repos-parent" data-i18n="options_githubReposParentLabel">Position</label>
+            <select id="github-repos-parent">
+              <option value="toolbar" data-i18n="options_githubReposParentToolbar">Bookmarks Bar</option>
+              <option value="other" data-i18n="options_githubReposParentOther">Other Bookmarks</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <button id="github-repos-refresh-btn" class="btn btn-secondary" data-i18n="options_githubReposRefresh">Update GitHub Repos</button>
+            <span id="github-repos-spinner" class="spinner" style="display: none;"></span>
+            <span id="github-repos-result" class="validation-result"></span>
+          </div>
         </div>
       </section>
 
@@ -138,6 +235,16 @@
             <span class="toggle-slider"></span>
           </label>
         </div>
+
+        <div class="form-group">
+          <label for="notifications-mode" data-i18n="options_notifications">Sync notifications</label>
+          <select id="notifications-mode">
+            <option value="off" data-i18n="options_notificationsOff">Off</option>
+            <option value="all" data-i18n="options_notificationsAll">All (success and failure)</option>
+            <option value="errorsOnly" data-i18n="options_notificationsErrorsOnly">Errors only</option>
+          </select>
+          <small data-i18n="options_notificationsHint">Choose when to show notifications.</small>
+        </div>
       </section>
 
       <div class="actions">
@@ -150,53 +257,54 @@
     <!-- ==================== Backup Tab ==================== -->
     <div class="tab-content" id="tab-backup">
 
-      <section class="card">
-        <h2 data-i18n="options_bookmarksCard">Bookmarks</h2>
+      <section class="card backup-card">
+        <h2 data-i18n="options_backupTitle">Backup</h2>
+        <p class="card-desc" data-i18n="options_backupIntro">Export or import bookmarks and extension settings as JSON.</p>
 
-        <div class="backup-block">
-          <h3 class="backup-block-title" data-i18n="options_exportBookmarks">Export Bookmarks</h3>
-          <p class="backup-block-desc" data-i18n="options_exportBookmarksDesc">Save your bookmarks as a JSON file.</p>
+        <div class="backup-block automation-block">
+          <h3 class="automation-block-title" data-i18n="options_exportBookmarks">Export Bookmarks</h3>
+          <p class="backup-block-desc" data-i18n="options_exportBookmarksDesc">Save all bookmarks as JSON.</p>
           <div class="backup-actions">
             <button id="export-bookmarks-btn" class="btn btn-secondary" data-i18n="options_exportBtn">Export</button>
             <span id="export-bookmarks-result" class="ie-result"></span>
           </div>
         </div>
 
-        <div class="backup-block backup-block-import">
-          <h3 class="backup-block-title" data-i18n="options_importBookmarks">Import Bookmarks</h3>
-          <div class="ie-warning" data-i18n="options_importBookmarksWarning">Importing will replace all your current bookmarks. This cannot be undone.</div>
+        <div class="backup-block backup-block-import automation-block">
+          <h3 class="automation-block-title" data-i18n="options_importBookmarks">Import Bookmarks</h3>
+          <p class="backup-warning" data-i18n="options_importBookmarksWarning">Replaces all current bookmarks. Cannot be undone.</p>
           <div class="backup-file-picker">
             <input type="file" id="import-bookmarks-file" accept=".json" class="backup-file-input">
             <button type="button" class="btn btn-secondary backup-file-trigger" id="import-bookmarks-trigger" data-i18n="options_chooseFile">Choose file</button>
             <span class="backup-file-name" id="import-bookmarks-filename"></span>
           </div>
-          <button id="import-bookmarks-btn" class="btn btn-primary" data-i18n="options_importBtn" disabled>Import</button>
-          <span id="import-bookmarks-result" class="ie-result"></span>
+          <div class="backup-actions">
+            <button id="import-bookmarks-btn" class="btn btn-primary" data-i18n="options_importBtn" disabled>Import</button>
+            <span id="import-bookmarks-result" class="ie-result"></span>
+          </div>
         </div>
-      </section>
 
-      <section class="card">
-        <h2 data-i18n="options_settingsCard">Settings</h2>
-
-        <div class="backup-block">
-          <h3 class="backup-block-title" data-i18n="options_exportSettings">Export Settings</h3>
-          <p class="backup-block-desc" data-i18n="options_exportSettingsDesc">Backup GitHub connection and sync settings.</p>
+        <div class="backup-block automation-block">
+          <h3 class="automation-block-title" data-i18n="options_exportSettings">Export Settings</h3>
+          <p class="backup-block-desc" data-i18n="options_exportSettingsDesc">GitHub connection and sync settings (incl. profiles).</p>
           <div class="backup-actions">
             <button id="export-settings-btn" class="btn btn-secondary" data-i18n="options_exportBtn">Export</button>
             <span id="export-settings-result" class="ie-result"></span>
           </div>
         </div>
 
-        <div class="backup-block backup-block-import">
-          <h3 class="backup-block-title" data-i18n="options_importSettings">Import Settings</h3>
-          <div class="ie-warning" data-i18n="options_importSettingsWarning">Importing will replace all current settings. The page will reload afterwards.</div>
+        <div class="backup-block backup-block-import automation-block">
+          <h3 class="automation-block-title" data-i18n="options_importSettings">Import Settings</h3>
+          <p class="backup-warning" data-i18n="options_importSettingsWarning">Replaces all settings. Page reloads afterwards.</p>
           <div class="backup-file-picker">
             <input type="file" id="import-settings-file" accept=".json" class="backup-file-input">
             <button type="button" class="btn btn-secondary backup-file-trigger" id="import-settings-trigger" data-i18n="options_chooseFile">Choose file</button>
             <span class="backup-file-name" id="import-settings-filename"></span>
           </div>
-          <button id="import-settings-btn" class="btn btn-primary" data-i18n="options_importBtn" disabled>Import</button>
-          <span id="import-settings-result" class="ie-result"></span>
+          <div class="backup-actions">
+            <button id="import-settings-btn" class="btn btn-primary" data-i18n="options_importBtn" disabled>Import</button>
+            <span id="import-settings-result" class="ie-result"></span>
+          </div>
         </div>
       </section>
 
@@ -205,57 +313,236 @@
     <!-- ==================== Automation Tab ==================== -->
     <div class="tab-content" id="tab-automation">
 
-      <section class="card">
+      <section class="card automation-card">
         <h2 data-i18n="options_automationTitle">Add Bookmarks via Git</h2>
-        <p data-i18n="options_automationIntro">You can add bookmarks directly in your Git repository. The extension will pick them up on the next sync and normalize them automatically.</p>
-      </section>
+        <p class="card-desc" data-i18n="options_automationIntro">Add bookmarks directly in your repository. The extension picks them up on the next sync and normalizes filenames automatically.</p>
 
-      <section class="card">
-        <h2 data-i18n="options_automationFormatTitle">File Format</h2>
-        <p data-i18n="options_automationFormatDesc">Create a JSON file with any name in one of the bookmark folders:</p>
-        <pre class="code-block">{
-  "title": "Example Website",
-  "url": "https://example.com"
-}</pre>
-        <p data-i18n="options_automationFolders">Available root folders in the repository:</p>
-        <table class="info-table">
-          <tr><td><code>bookmarks/toolbar/</code></td><td data-i18n="options_automationFolderToolbar">Bookmarks Bar</td></tr>
-          <tr><td><code>bookmarks/other/</code></td><td data-i18n="options_automationFolderOther">Other Bookmarks</td></tr>
-          <tr><td><code>bookmarks/menu/</code></td><td data-i18n="options_automationFolderMenu">Bookmarks Menu (Firefox)</td></tr>
-          <tr><td><code>bookmarks/mobile/</code></td><td data-i18n="options_automationFolderMobile">Mobile Bookmarks</td></tr>
-        </table>
-        <p data-i18n="options_automationNormalize">On the next sync, the extension will rename the file to its canonical format and add it to the folder's ordering.</p>
-      </section>
+        <div class="automation-block">
+          <h3 class="automation-block-title" data-i18n="options_automationFormatTitle">File format</h3>
+          <pre class="code-block code-block-sm">{ "title": "Example", "url": "https://example.com" }</pre>
+          <p class="automation-folders">
+            <span data-i18n="options_automationFoldersLabel">Folders:</span>
+            <code>toolbar</code> <code>other</code>
+          </p>
+        </div>
 
-      <section class="card">
-        <h2 data-i18n="options_automationGithubActionTitle">GitHub Action</h2>
-        <p data-i18n-html="options_automationGithubActionDesc">A GitHub Action workflow is included to add bookmarks via the GitHub UI or CLI. Copy <code>.github/workflows/add-bookmark.yml</code> to your bookmark repository.</p>
-
-        <h3 data-i18n="options_automationGithubActionUsage">Usage via GitHub CLI</h3>
-        <pre class="code-block">gh workflow run add-bookmark.yml \
+        <div class="automation-block">
+          <h3 class="automation-block-title" data-i18n="options_automationGithubActionTitle">GitHub Action</h3>
+          <p class="automation-workflow-link">
+            <a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/.github/workflows/add-bookmark.yml" target="_blank" rel="noopener" data-i18n="options_automationWorkflowLink">
+              Copy add-bookmark.yml to your repo
+            </a>
+          </p>
+          <pre class="code-block code-block-sm">gh workflow run add-bookmark.yml \
   -f url="https://example.com" \
-  -f title="Example Website" \
+  -f title="Example" \
   -f folder="toolbar"</pre>
-
-        <h3 data-i18n="options_automationGithubActionWeb">Usage via GitHub Web UI</h3>
-        <p data-i18n="options_automationGithubActionWebDesc">Go to your repository → Actions → "Add Bookmark" → Run workflow. Fill in the URL, title, and target folder.</p>
+          <p class="help-note" data-i18n="options_automationGithubActionParams">folder = root; path = optional subfolder; base-path if File Path ≠ bookmarks</p>
+        </div>
       </section>
+
+    </div>
+
+    <!-- ==================== Help Tab ==================== -->
+    <div class="tab-content" id="tab-help">
+
+      <details class="help-details card" open>
+        <summary>
+          <h2 data-i18n="help_gettingStartedTitle">Getting Started</h2>
+        </summary>
+        <div class="help-details-body">
+          <p data-i18n-html="help_gettingStartedIntro">Create a GitHub repository for your bookmarks, then create a Personal Access Token (PAT) with the <code>repo</code> scope. In the GitHub tab, enter token, repository owner, name, branch (usually <code>main</code>), and the folder path (default: <code>bookmarks</code>). Click <strong>Test Connection</strong> to verify.</p>
+          <p data-i18n="help_onboarding">If the folder is empty, you can create the base structure (toolbar, other). If bookmarks already exist in the repo, you can pull them into this browser.</p>
+        </div>
+      </details>
+
+      <details class="help-details card" open>
+        <summary>
+          <h2 data-i18n="options_debugLogTitle">Debug Log</h2>
+        </summary>
+        <div class="help-details-body">
+          <p data-i18n="options_debugLogDesc">Enable to record sync diagnostics (diffs, merge decisions, conflicts). Use when troubleshooting sync issues. Export and share the log for support.</p>
+          <div class="form-group toggle-group" style="margin-top: 0.5rem;">
+            <label for="debug-log-enabled" class="toggle-label">
+              <span data-i18n="options_debugLogEnabled">Enable debug log</span>
+              <input type="checkbox" id="debug-log-enabled">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="debug-log-actions" style="margin-top: 0.5rem; display: flex; gap: 0.5rem; align-items: center;">
+            <button type="button" id="debug-log-export-btn" class="btn btn-secondary btn-sm" data-i18n="options_debugLogExport">Export log</button>
+            <span id="debug-log-result" class="validation-result" style="margin-left: 0;"></span>
+          </div>
+        </div>
+      </details>
+
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_whySlowTitle">Why does sync sometimes take long?</h2>
+        </summary>
+        <div class="help-details-body">
+          <p data-i18n="help_whySlowIntro">GitSyncMarks uses GitHub's Git Data API for atomic commits. Each changed or new bookmark file requires an API call. With many changes, this adds up.</p>
+          <p data-i18n="help_whyAtomic">All changes are written in a single atomic commit: either everything succeeds or nothing does. This prevents partial or corrupted state if the sync is interrupted. One commit instead of many also avoids hitting API rate limits and keeps the Git history clean.</p>
+        </div>
+      </details>
+
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_profilesTitle">Profiles</h2>
+        </summary>
+        <div class="help-details-body">
+        <p data-i18n="help_profilesIntro">Each profile has its own bookmark set and GitHub repo config. Use profiles for work/personal or different devices.</p>
+        <dl class="help-dl">
+          <dt data-i18n="help_profilesAdd">Add, Rename, Delete</dt>
+          <dd data-i18n="help_profilesAddDesc">Select a profile in the dropdown, then Add (new profile), Rename, or Delete. Up to 10 profiles. Deleting removes the selected profile.</dd>
+          <dt data-i18n="help_profilesSwitch">Profile switch</dt>
+          <dd data-i18n="help_profilesSwitchDesc">Select another profile to switch. Your current bookmarks are saved and pushed to the current profile's repo before switching. The target profile's bookmarks replace the local ones. Use “Switch without confirmation” to skip the confirm dialog.</dd>
+        </dl>
+        <p class="help-note" data-i18n="help_profilesNote">Profiles work reliably. With multiple profiles, sync conflicts can occasionally occur — trying Push or Pull 2–3 times usually resolves them. This feature is still evolving. If you encounter reproducible bugs, please open an issue on GitHub.</p>
+        </div>
+      </details>
+
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_githubReposTitle">GitHub Repos Folder</h2>
+        </summary>
+        <div class="help-details-body">
+        <p data-i18n-html="help_githubReposDesc">Optional: Create a folder with bookmarks to all your GitHub repositories (public and private). Choose the position (toolbar, other). The folder is synced like normal bookmarks; use <strong>Update GitHub Repos</strong> to refresh the list.</p>
+        </div>
+      </details>
+
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_popupTitle">Popup (extension icon)</h2>
+        </summary>
+        <div class="help-details-body">
+        <dl class="help-dl">
+          <dt data-i18n="help_popupProfile">Profile selector</dt>
+          <dd data-i18n="help_popupProfileDesc">Switch profiles directly from the popup header.</dd>
+          <dt data-i18n="help_popupSyncNow">Sync Now</dt>
+          <dd data-i18n="help_popupSyncNowDesc">Full three-way merge sync: local and remote changes are merged automatically when possible.</dd>
+          <dt data-i18n="help_popupPush">Push ↑</dt>
+          <dd data-i18n="help_popupPushDesc">Upload local bookmarks to GitHub (overwrites remote changes).</dd>
+          <dt data-i18n="help_popupPull">Pull ↓</dt>
+          <dd data-i18n="help_popupPullDesc">Download from GitHub (overwrites local changes).</dd>
+        </dl>
+        </div>
+      </details>
+
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_syncTitle">Synchronization</h2>
+        </summary>
+        <div class="help-details-body">
+        <dl class="help-dl">
+          <dt data-i18n="help_autoSyncTitle">Auto-sync</dt>
+          <dd data-i18n="help_autoSyncDesc">When enabled, syncs automatically when you add, edit, or remove bookmarks. A debounce delay waits for rapid changes to finish before syncing.</dd>
+          <dt data-i18n="help_syncProfiles">Sync profiles</dt>
+          <dd data-i18n="help_syncProfilesDesc">Real-time (1 min), Frequent (5 min), Normal (15 min), or Power save (60 min). Custom lets you set interval and debounce manually.</dd>
+          <dt data-i18n="help_syncStartup">Sync on startup / focus</dt>
+          <dd data-i18n="help_syncStartupDesc">Optional: sync when the browser starts or when you return to the browser window (with cooldown).</dd>
+        </dl>
+        </div>
+      </details>
+
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_notificationsTitle">Notifications</h2>
+        </summary>
+        <div class="help-details-body">
+        <p data-i18n="help_notificationsDesc">Choose when to show sync notifications: All (success and failure), Errors only, or Off.</p>
+        </div>
+      </details>
+
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_backupTitle">Backup</h2>
+        </summary>
+        <div class="help-details-body">
+        <dl class="help-dl">
+          <dt data-i18n="help_backupBookmarks">Export / Import Bookmarks</dt>
+          <dd data-i18n="help_backupBookmarksDesc">Export all browser bookmarks as JSON. Import replaces all local bookmarks with the file contents.</dd>
+          <dt data-i18n="help_backupSettings">Export / Import Settings</dt>
+          <dd data-i18n="help_backupSettingsDesc">Export GitHub connection and sync settings (profiles with decrypted tokens). Import replaces all settings; the page reloads afterwards.</dd>
+        </dl>
+        </div>
+      </details>
+
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_conflictTitle">Conflicts</h2>
+        </summary>
+        <div class="help-details-body">
+        <p data-i18n-html="help_conflictDesc">When both local and remote bookmarks changed, the popup shows a conflict. Choose <strong>Push</strong> (local wins, overwrite remote) or <strong>Pull</strong> (remote wins, overwrite local). There is no automatic merge for conflicts.</p>
+        </div>
+      </details>
+
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_shortcuts">Keyboard Shortcuts</h2>
+        </summary>
+        <div class="help-details-body">
+        <table class="help-table">
+          <tr><td><kbd>Ctrl+Shift+.</kbd></td><td data-i18n="help_quickSync">Quick sync bookmarks</td></tr>
+          <tr><td><kbd>Ctrl+Shift+,</kbd></td><td data-i18n="help_openOptions">Open extension settings</td></tr>
+        </table>
+        <p class="help-note" data-i18n="help_shortcutsNote">You can customize shortcuts in the browser's extension settings.</p>
+        </div>
+      </details>
+
+      <details class="help-details card" open>
+        <summary>
+          <h2 data-i18n="help_links">Links</h2>
+        </summary>
+        <div class="help-details-body">
+        <ul class="help-links">
+          <li><a href="https://github.com/d0dg3r/GitSyncMarks/tree/main/docs" target="_blank" rel="noopener" data-i18n="options_documentation">Documentation</a></li>
+          <li><a href="https://github.com/d0dg3r/GitSyncMarks/discussions" target="_blank" rel="noopener" data-i18n="help_discussions">Discussions</a></li>
+          <li><a href="https://github.com/d0dg3r/GitSyncMarks/issues" target="_blank" rel="noopener" data-i18n="options_reportBug">Report a Bug / Feature Request</a></li>
+        </ul>
+        </div>
+      </details>
 
     </div>
 
     <!-- ==================== About Tab ==================== -->
     <div class="tab-content" id="tab-about">
 
-      <section class="card">
-        <h2 data-i18n="options_about">About</h2>
-        <p class="about-version"><span data-i18n="options_version">Version</span> <span id="app-version"></span></p>
-        <ul class="about-links">
-          <li><a href="https://github.com/d0dg3r/GitSyncMarks" target="_blank" rel="noopener" data-i18n="options_githubRepo">GitHub Repository</a></li>
-          <li><a href="https://github.com/d0dg3r/GitSyncMarks/tree/main/docs" target="_blank" rel="noopener" data-i18n="options_documentation">Documentation</a></li>
-          <li><a href="https://github.com/d0dg3r/GitSyncMarks/issues" target="_blank" rel="noopener" data-i18n="options_reportBug">Report a Bug / Feature Request</a></li>
-          <li><a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/PRIVACY.md" target="_blank" rel="noopener" data-i18n="options_privacyPolicy">Privacy Policy</a></li>
-          <li><a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/LICENSE" target="_blank" rel="noopener" data-i18n="options_license">License (MIT)</a></li>
-        </ul>
+      <section class="card about-card">
+        <div class="about-header">
+          <img src="icons/icon48.png" alt="" class="about-logo">
+          <div class="about-brand">
+            <h2>GitSyncMarks</h2>
+            <p class="about-version"><span data-i18n="options_version">Version</span> <span id="app-version"></span></p>
+          </div>
+        </div>
+        <div class="about-meta">
+          <p class="about-author"><span data-i18n="options_by">By</span> <a href="https://github.com/d0dg3r" target="_blank" rel="noopener">Joe Mild (d0dg3r)</a></p>
+          <div class="about-contributors-block">
+            <h3 data-i18n="options_specialThanks">Special Thanks</h3>
+            <ul class="about-contributors">
+              <li><a href="https://github.com/G3Rn0t" target="_blank" rel="noopener" class="contributor-name">Gernot B. (G3Rn0t)</a></li>
+              <li><a href="https://github.com/Mr-Whitening" target="_blank" rel="noopener" class="contributor-name">Patrick W. (Mr-Whitening)</a></li>
+              
+            </ul>
+          </div>
+        </div>
+        <div class="about-mobile-block">
+          <h3 data-i18n="options_mobileAppTitle">Mobile App</h3>
+          <p class="about-mobile-desc" data-i18n="options_mobileAppDesc">View your bookmarks on the go. GitSyncMarks-Mobile (iOS + Android) syncs from your GitHub repo — read-only companion.</p>
+          <ul class="about-mobile-links">
+            <li><a href="https://github.com/d0dg3r/GitSyncMarks-Mobile" target="_blank" rel="noopener" data-i18n="options_mobileAppLink">GitSyncMarks-Mobile on GitHub</a></li>
+          </ul>
+          <p class="about-mobile-note" data-i18n="options_mobileAppStores">F-Droid and Google Play coming soon.</p>
+        </div>
+        <div class="about-links-block">
+          <h3 data-i18n="options_links">Links</h3>
+          <ul class="about-links">
+            <li><a href="https://github.com/d0dg3r/GitSyncMarks" target="_blank" rel="noopener" data-i18n="options_githubRepo">GitHub Repository</a></li>
+            <li><a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/PRIVACY.md" target="_blank" rel="noopener" data-i18n="options_privacyPolicy">Privacy Policy</a></li>
+            <li><a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/LICENSE" target="_blank" rel="noopener" data-i18n="options_license">License (MIT)</a></li>
+          </ul>
+        </div>
       </section>
 
     </div>

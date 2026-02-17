@@ -1,0 +1,57 @@
+name: E2E Tests
+
+permissions:
+  contents: read
+
+# Disabled: run only manually. See ROADMAP.md backlog "CI E2E Tests".
+on:
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Start virtual display (xvfb)
+        run: |
+          sudo apt-get update && sudo apt-get install -y xvfb
+          echo 'DISPLAY=:99' >> $GITHUB_ENV
+          Xvfb :99 -screen 0 1280x1024x24 &
+          sleep 2
+
+      - name: Set git user for resetTestRepo
+        run: |
+          git config --global user.name "GitSyncMarks CI"
+          git config --global user.email "ci@gitsyncmarks.local"
+
+      - name: Run E2E tests
+        env:
+          DISPLAY: ':99'
+          # PAT must have repo scope (Classic) or Contents read/write (Fine-grained)
+          GITSYNCMARKS_TEST_PAT: ${{ secrets.GITSYNCMARKS_TEST_PAT }}
+          GITSYNCMARKS_TEST_REPO_OWNER: ${{ vars.GITSYNCMARKS_TEST_REPO_OWNER }}
+          GITSYNCMARKS_TEST_REPO: ${{ vars.GITSYNCMARKS_TEST_REPO }}
+        run: npm run test:e2e
+
+      - name: Upload report and results on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

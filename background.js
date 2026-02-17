@@ -4,7 +4,7 @@
  * handles messages from popup/options pages, and triggers migration on first run.
  */
 
-import { initI18n } from './lib/i18n.js';
+import { initI18n, getMessage } from './lib/i18n.js';
 import {
   debouncedSync,
   sync,
@@ -18,10 +18,31 @@ import {
   migrateFromLegacyFormat,
   STORAGE_KEYS,
 } from './lib/sync-engine.js';
+import { log as debugLog, getLogAsString } from './lib/debug-log.js';
 import { GitHubAPI } from './lib/github-api.js';
 import { migrateTokenIfNeeded } from './lib/crypto.js';
+import { migrateToProfiles, getActiveProfileId, getActiveProfile, getProfiles, switchProfile, getSyncState } from './lib/profile-manager.js';
 
 const ALARM_NAME = 'bookmarkSyncPull';
+const NOTIFICATION_ID = 'gitsyncmarks-sync';
+
+async function showNotificationIfEnabled(result) {
+  try {
+    const settings = await getSettings();
+    const mode = settings[STORAGE_KEYS.NOTIFICATIONS_MODE] ?? 'all';
+    if (mode === 'off') return;
+    if (mode === 'errorsOnly' && result.success) return;
+    const title = result.success ? getMessage('notification_titleSuccess') : getMessage('notification_titleFailure');
+    await chrome.notifications.create(NOTIFICATION_ID, {
+      type: 'basic',
+      iconUrl: chrome.runtime.getURL('icons/icon128.png'),
+      title,
+      message: result.message || '',
+    });
+  } catch (err) {
+    console.warn('[GitSyncMarks] Failed to show notification:', err);
+  }
+}
 
 // ---- Bookmark event listeners ----
 
@@ -55,8 +76,9 @@ async function triggerAutoSync() {
 
   const settings = await getSettings();
   if (settings[STORAGE_KEYS.AUTO_SYNC] && isConfigured(settings)) {
+    await debugLog('background: auto-sync triggered (bookmark event)');
     const delayMs = settings[STORAGE_KEYS.DEBOUNCE_DELAY] ?? 5000;
-    debouncedSync(delayMs);
+    debouncedSync(delayMs, showNotificationIfEnabled);
   }
 }
 
@@ -64,6 +86,7 @@ async function triggerAutoSync() {
 
 chrome.alarms.onAlarm.addListener(async (alarm) => {
   if (alarm.name === ALARM_NAME) {
+    await debugLog('background: periodic sync alarm triggered');
     console.log('[GitSyncMarks] Periodic sync triggered');
     const settings = await getSettings();
     if (isConfigured(settings) && settings[STORAGE_KEYS.AUTO_SYNC]) {
@@ -76,6 +99,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
       } else {
         chrome.action.setBadgeText({ text: '' });
       }
+      await showNotificationIfEnabled(result);
     }
   }
 });
@@ -90,8 +114,9 @@ chrome.windows.onFocusChanged.addListener(async (windowId) => {
   const settings = await getSettings();
   if (!settings[STORAGE_KEYS.SYNC_ON_FOCUS] || !isConfigured(settings)) return;
 
-  const stored = await chrome.storage.local.get(STORAGE_KEYS.LAST_SYNC_TIME);
-  const lastSync = stored[STORAGE_KEYS.LAST_SYNC_TIME];
+  const profileId = settings.profileId || await getActiveProfileId();
+  const syncState = await getSyncState(profileId);
+  const lastSync = syncState.lastSyncTime;
   if (lastSync) {
     const elapsed = Date.now() - new Date(lastSync).getTime();
     if (elapsed < FOCUS_SYNC_COOLDOWN_MS) return;
@@ -99,6 +124,7 @@ chrome.windows.onFocusChanged.addListener(async (windowId) => {
 
   if (isSyncInProgress()) return;
 
+  await debugLog('background: sync on focus triggered');
   console.log('[GitSyncMarks] Sync on focus triggered');
   const result = await sync();
   if (!result.success) {
@@ -107,6 +133,7 @@ chrome.windows.onFocusChanged.addListener(async (windowId) => {
   } else {
     chrome.action.setBadgeText({ text: '' });
   }
+  await showNotificationIfEnabled(result);
 });
 
 async function setupAlarm() {
@@ -128,9 +155,12 @@ async function checkAndMigrate() {
     const settings = await getSettings();
     if (!isConfigured(settings)) return;
 
-    // Check if we already have the new format state
-    const stored = await chrome.storage.local.get(STORAGE_KEYS.LAST_SYNC_FILES);
-    if (stored[STORAGE_KEYS.LAST_SYNC_FILES]) return; // Already migrated
+    // Check if we already have the new format state (per-profile after migrateToProfiles)
+    const profileId = settings.profileId || await getActiveProfileId();
+    const syncState = await getSyncState(profileId);
+    const hasNewFormat = syncState?.lastSyncFiles && typeof syncState.lastSyncFiles === 'object'
+      && Object.keys(syncState.lastSyncFiles).length > 0;
+    if (hasNewFormat) return; // Already migrated
 
     const api = new GitHubAPI(
       settings[STORAGE_KEYS.GITHUB_TOKEN],
@@ -153,24 +183,84 @@ async function checkAndMigrate() {
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'sync') {
-    sync().then(sendResponse);
+    sync().then(async (result) => {
+      await showNotificationIfEnabled(result);
+      sendResponse(result);
+    });
     return true;
   }
   if (message.action === 'push') {
-    push().then(sendResponse);
+    push().then(async (result) => {
+      await showNotificationIfEnabled(result);
+      sendResponse(result);
+    });
     return true;
   }
   if (message.action === 'pull') {
-    pull().then(sendResponse);
+    pull().then(async (result) => {
+      await showNotificationIfEnabled(result);
+      sendResponse(result);
+    });
     return true;
   }
   if (message.action === 'getStatus') {
-    getSyncStatus().then(sendResponse);
+    Promise.all([getSyncStatus(), getActiveProfile(), getProfiles(), getActiveProfileId()])
+      .then(([status, profile, profiles, activeProfileId]) => {
+        const profileList = Object.entries(profiles || {}).map(([id, p]) => ({ id, name: p.name || id }));
+        sendResponse({
+          ...status,
+          profileName: profile?.name || null,
+          profiles: profileList,
+          activeProfileId: activeProfileId || null,
+        });
+      })
+      .catch((err) => {
+        console.error('[GitSyncMarks] getStatus failed:', err);
+        sendResponse({ configured: false, hasConflict: false, profileName: null, profiles: [], activeProfileId: null });
+      });
+    return true;
+  }
+  if (message.action === 'switchProfile') {
+    const { targetId } = message;
+    if (!targetId) {
+      sendResponse({ success: false, message: 'Missing targetId' });
+      return false;
+    }
+    switchProfile(targetId)
+      .then(() => sendResponse({ success: true, message: getMessage('sync_pullSuccess') }))
+      .catch((err) => {
+        console.error('[GitSyncMarks] switchProfile failed:', err);
+        sendResponse({ success: false, message: err.message || 'Switch failed' });
+      });
     return true;
   }
   if (message.action === 'settingsChanged') {
     setupAlarm().then(() => sendResponse({ ok: true }));
     return true;
+  }
+  if (message.action === 'getDebugLog') {
+    Promise.resolve(getLogAsString()).then((content) => sendResponse({ content }));
+    return true; // keep channel open for async response
+  }
+});
+
+// ---- Keyboard shortcuts ----
+
+chrome.commands?.onCommand?.addListener?.((command) => {
+  if (command === 'quick-sync') {
+    if (!isSyncInProgress()) {
+      sync().then(async (result) => {
+        if (!result.success) {
+          chrome.action.setBadgeText({ text: '!' });
+          chrome.action.setBadgeBackgroundColor({ color: '#F44336' });
+        } else {
+          chrome.action.setBadgeText({ text: '' });
+        }
+        await showNotificationIfEnabled(result);
+      });
+    }
+  } else if (command === 'open-options') {
+    chrome.runtime.openOptionsPage();
   }
 });
 
@@ -179,6 +269,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 chrome.runtime.onInstalled.addListener(async (details) => {
   console.log('[GitSyncMarks] Extension installed/updated:', details.reason);
   await migrateTokenIfNeeded();
+  await migrateToProfiles();
   await initI18n();
   await setupAlarm();
   await checkAndMigrate();
@@ -187,6 +278,7 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 chrome.runtime.onStartup.addListener(async () => {
   console.log('[GitSyncMarks] Browser started');
   await migrateTokenIfNeeded();
+  await migrateToProfiles();
   await initI18n();
   await setupAlarm();
   await checkAndMigrate();
@@ -194,18 +286,22 @@ chrome.runtime.onStartup.addListener(async () => {
   const settings = await getSettings();
   if (settings[STORAGE_KEYS.SYNC_ON_STARTUP] && isConfigured(settings)) {
     setTimeout(() => {
-      sync().then((result) => {
+      sync().then(async (result) => {
         if (!result.success) {
           chrome.action.setBadgeText({ text: '!' });
           chrome.action.setBadgeBackgroundColor({ color: '#F44336' });
         }
+        await showNotificationIfEnabled(result);
       });
     }, 2000);
   }
 });
 
 // Initial setup
-migrateTokenIfNeeded();
-initI18n();
-setupAlarm();
-checkAndMigrate();
+migrateTokenIfNeeded().then(() =>
+  migrateToProfiles().then(() => {
+    initI18n();
+    setupAlarm();
+    checkAndMigrate();
+  })
+);

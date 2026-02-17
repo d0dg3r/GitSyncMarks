@@ -9,8 +9,8 @@ import { initTheme } from './lib/theme.js';
 // DOM elements
 const notConfiguredEl = document.getElementById('not-configured');
 const configuredEl = document.getElementById('configured');
-const statusBox = document.getElementById('status-box');
-const statusIcon = document.getElementById('status-icon');
+const statusArea = document.getElementById('status-area');
+const profileSelect = document.getElementById('profile-select');
 const statusMessage = document.getElementById('status-message');
 const lastDataChangeEl = document.getElementById('last-data-change');
 const lastCommitWrap = document.getElementById('last-commit-wrap');
@@ -35,11 +35,20 @@ let countdownInterval = null;
 
 let isSyncing = false;
 
+// Demo mode: show configured UI for screenshots without real storage (?demo=1)
+const isDemoMode = () =>
+  typeof location !== 'undefined' &&
+  new URLSearchParams(location.search || '').get('demo') === '1';
+
 // Initialize on load
 document.addEventListener('DOMContentLoaded', async () => {
   await initTheme();
   await initI18n();
   applyI18n();
+  if (isDemoMode()) {
+    showDemoUI();
+    return;
+  }
   await loadStatus();
 });
 
@@ -61,6 +70,24 @@ function updateUI(status) {
 
   notConfiguredEl.style.display = 'none';
   configuredEl.style.display = 'block';
+
+  // Profile selector (only when 2+ profiles)
+  const profiles = status.profiles || [];
+  const activeProfileId = status.activeProfileId;
+  if (profiles.length >= 2) {
+    profileSelect.innerHTML = '';
+    for (const p of profiles) {
+      const opt = document.createElement('option');
+      opt.value = p.id;
+      opt.textContent = p.name || p.id;
+      if (p.id === activeProfileId) opt.selected = true;
+      profileSelect.appendChild(opt);
+    }
+    profileSelect.style.display = '';
+  } else {
+    profileSelect.style.display = 'none';
+    profileSelect.innerHTML = '';
+  }
 
   // Status message
   if (status.hasConflict) {
@@ -110,6 +137,7 @@ function updateUI(status) {
   } else {
     autoSyncDot.className = 'dot dot-inactive';
     autoSyncText.textContent = getMessage('popup_autoSyncDisabled');
+    autoSyncText.style.display = '';
     stopCountdown();
     nextSyncCountdownEl.style.display = 'none';
   }
@@ -126,16 +154,17 @@ async function updateCountdown() {
   const alarm = await chrome.alarms.get(ALARM_NAME);
   if (!alarm || !alarm.scheduledTime) {
     nextSyncCountdownEl.style.display = 'none';
+    autoSyncText.style.display = '';
     return;
   }
   const remaining = alarm.scheduledTime - Date.now();
   if (remaining <= 0) {
     nextSyncCountdownEl.textContent = getMessage('popup_nextSyncIn', [formatCountdown(0)]);
-    nextSyncCountdownEl.style.display = 'block';
-    return;
+  } else {
+    nextSyncCountdownEl.textContent = getMessage('popup_nextSyncIn', [formatCountdown(remaining)]);
   }
-  nextSyncCountdownEl.textContent = getMessage('popup_nextSyncIn', [formatCountdown(remaining)]);
-  nextSyncCountdownEl.style.display = 'block';
+  nextSyncCountdownEl.style.display = '';
+  autoSyncText.style.display = 'none';
 }
 
 function startCountdown() {
@@ -144,11 +173,17 @@ function startCountdown() {
   countdownInterval = setInterval(updateCountdown, 1000);
 }
 
+function stopCountdownUi() {
+  nextSyncCountdownEl.style.display = 'none';
+  autoSyncText.style.display = '';
+}
+
 function stopCountdown() {
   if (countdownInterval) {
     clearInterval(countdownInterval);
     countdownInterval = null;
   }
+  stopCountdownUi();
 }
 
 function showNotConfigured() {
@@ -156,10 +191,34 @@ function showNotConfigured() {
   configuredEl.style.display = 'none';
 }
 
-function setStatus(icon, message, boxClass) {
-  statusIcon.textContent = icon;
+function showDemoUI() {
+  notConfiguredEl.style.display = 'none';
+  configuredEl.style.display = 'block';
+  profileSelect.style.display = 'none';
+  setStatus('✅', getMessage('popup_synced'), 'status-ok');
+  conflictBox.style.display = 'none';
+  lastDataChangeEl.textContent = getMessage('popup_lastDataChange', [
+    getMessage('popup_minAgo', [5]),
+  ]);
+  lastDataChangeEl.style.display = '';
+  lastCommitWrap.innerHTML = '';
+  lastCommitWrap.appendChild(document.createTextNode(getMessage('popup_lastCommit') + ' '));
+  const a = document.createElement('a');
+  a.href = 'https://github.com/example/repo/commit/abc1234';
+  a.target = '_blank';
+  a.rel = 'noopener';
+  a.className = 'commit-link';
+  a.textContent = 'abc1234';
+  lastCommitWrap.appendChild(a);
+  lastCommitWrap.style.display = '';
+  autoSyncDot.className = 'dot dot-active';
+  autoSyncText.textContent = getMessage('popup_autoSyncActive');
+  nextSyncCountdownEl.style.display = 'none';
+}
+
+function setStatus(_icon, message, boxClass) {
   statusMessage.textContent = message;
-  statusBox.className = `status-box ${boxClass}`;
+  statusArea.className = 'status-area' + (boxClass === 'status-error' ? ' status-error' : '');
 }
 
 function formatRelativeTime(date) {
@@ -187,8 +246,15 @@ function setLoading(loading) {
   syncBtn.disabled = loading;
   pushBtn.disabled = loading;
   pullBtn.disabled = loading;
+  profileSelect.disabled = loading;
   syncSpinner.style.display = loading ? 'inline-block' : 'none';
   syncText.textContent = loading ? getMessage('popup_syncing') : getMessage('popup_syncNow');
+  if (loading) {
+    statusMessage.textContent = getMessage('popup_syncing');
+    statusArea.classList.add('status-loading');
+  } else {
+    statusArea.classList.remove('status-loading');
+  }
 }
 
 async function handleAction(action) {
@@ -220,15 +286,47 @@ async function handleAction(action) {
 syncBtn.addEventListener('click', () => handleAction('sync'));
 pushBtn.addEventListener('click', () => handleAction('push'));
 pullBtn.addEventListener('click', () => handleAction('pull'));
+
+// Profile switch
+profileSelect.addEventListener('change', async (e) => {
+  const targetId = e.target.value;
+  const status = await chrome.runtime.sendMessage({ action: 'getStatus' }).catch(() => null);
+  const activeId = status?.activeProfileId;
+  if (!activeId || targetId === activeId) return;
+  if (isSyncing) {
+    profileSelect.value = activeId;
+    return;
+  }
+  setLoading(true);
+  syncText.textContent = getMessage('popup_profileSwitching');
+  try {
+    const result = await chrome.runtime.sendMessage({ action: 'switchProfile', targetId });
+    if (result?.success) {
+      await loadStatus();
+      setStatus('✅', result.message, 'status-ok');
+      conflictBox.style.display = 'none';
+    } else {
+      setStatus('❌', result?.message || getMessage('popup_error', ['Switch failed']), 'status-error');
+      profileSelect.value = activeId;
+    }
+  } catch (err) {
+    setStatus('❌', getMessage('popup_error', [err.message]), 'status-error');
+    profileSelect.value = activeId;
+  } finally {
+    setLoading(false);
+  }
+});
 forcePushBtn.addEventListener('click', () => handleAction('push'));
 forcePullBtn.addEventListener('click', () => handleAction('pull'));
 
-// Settings links
+// Settings links (close popup after opening options)
 openSettingsBtn.addEventListener('click', () => {
   chrome.runtime.openOptionsPage();
+  window.close();
 });
 
 settingsLink.addEventListener('click', (e) => {
   e.preventDefault();
   chrome.runtime.openOptionsPage();
+  window.close();
 });

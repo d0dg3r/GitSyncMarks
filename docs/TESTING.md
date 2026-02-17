@@ -4,6 +4,58 @@ This document describes how to test the extension on Chrome and Firefox (desktop
 
 ---
 
+## Automated E2E Tests (Chrome)
+
+GitSyncMarks uses Playwright for automated end-to-end tests. **Chrome only** — Firefox extension loading is not supported by Playwright.
+
+```bash
+npm run test:e2e           # All tests (smoke + connection + sync)
+npm run test:e2e:smoke    # Smoke tests only (no GitHub config)
+npm run test:e2e:sync     # Connection and sync tests
+npm run test:e2e:report   # Open HTML report after a run
+```
+
+**Prerequisites:** `npm run build:chrome` (run automatically by test scripts).
+
+**Sync tests** require a private test repo and credentials — see [e2e/README.md](../e2e/README.md) if present, or `.env.example`.
+
+**CI (GitHub Actions):** E2E in CI is currently disabled (see [ROADMAP.md](../ROADMAP.md) backlog). Run tests locally with `npm run test:e2e`. The E2E workflow can be triggered manually via Actions → E2E Tests → Run workflow.
+
+---
+
+## Firefox — Manual Testing
+
+Automated E2E tests run only on Chrome. **Test Firefox manually** before each release:
+
+1. Build: `npm run build:firefox`
+2. Load: `about:debugging` → Load Temporary Add-on → select `build/GitSyncMarks-vX.X.X-firefox.zip`
+3. Run the same flows as Chrome: configure GitHub, Test Connection, Push, Pull, Sync
+4. Verify: popup, options tabs, sync status, conflict handling
+
+The extension code is shared; Chrome E2E validates core logic. Firefox-specific checks: manifest differences, storage, background script (non–service-worker).
+
+---
+
+## Store Screenshots
+
+Screenshots for Chrome Web Store and Firefox AMO are generated automatically. Run after building the Chrome extension:
+
+```bash
+npm run build:chrome && npm run generate-screenshots
+```
+
+Or use the combined command:
+
+```bash
+npm run screenshots
+```
+
+Output: `store-assets/en/`, `store-assets/de/`, `store-assets/fr/`, `store-assets/es/` — each with `chrome-*.png`; `en/` also has `firefox-*.png` (copied from Chrome EN; UI is identical).
+
+**Prerequisites:** Playwright with Chromium (`npx playwright install chromium` — run once).
+
+---
+
 ## Chrome (Desktop)
 
 ### Build
@@ -144,7 +196,7 @@ web-ext run --target=firefox-android --firefox-apk org.mozilla.firefox_beta
 web-ext run --target=firefox-android --adb-device <device-id>
 ```
 
-### Debugging
+### Debugging (Firefox Android)
 
 - Use `about:debugging` on your desktop Firefox, connect to the Android device, then inspect processes
 - For popup HTML/CSS: temporarily open the popup in a tab to use the Inspector (see [Extension Workshop](https://extensionworkshop.com/documentation/develop/developing-extensions-for-firefox-for-android/))
@@ -161,6 +213,12 @@ If you do not have an Android phone:
 3. Start the emulator
 4. Install Firefox from the Play Store (or sideload an APK)
 5. `adb` will connect to the emulator; use the same `web-ext run` commands as above
+
+---
+
+## Sync Troubleshooting
+
+- **Debug Log**: Options → Help tab — enable the debug log, reproduce the sync issue, then export and share the log for support or analysis
 
 ---
 

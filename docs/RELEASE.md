@@ -31,6 +31,7 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 | `2.0.0` | Per-file bookmark storage, three-way merge sync, Firefox support, automation (GitHub Actions), cross-browser build system |
 | `2.0.1` | Fix: false merge conflicts when two devices edit the same folder concurrently (`_order.json` content-level merge); harden GitHub Action inputs; update Firefox manifest and i18n; update store screenshots |
 | `2.1.2` | Store buttons in README, responsive mobile layout for Firefox Android, testing guide (docs/TESTING.md) |
+| `2.2.0` | GitHub Repos folder, multiple profiles, onboarding, profile add auto-switch, profile limit display, spinner, profile switch UX, popup redesign, shorter pull message, keyboard shortcuts, Help tab (collapsible accordion), options header (language dropdown only), French and Spanish; settings import round-trip fix; auto-save on switches and before actions; compact Options UI (all tabs); Backup tab redesign; contributors Patrick W., Gernot B. |
 | `2.1.1` | New icon (blue bookmark + green sync arrow) for extension, store assets, and favicons |
 | `2.1.0` | Sync profiles, sync on startup/focus, theme (light/dark/auto), redesigned Backup tab, tabbed options (GitHub/Sync/Backup), commit link in popup, pre-release workflow — see [CHANGELOG.md](../CHANGELOG.md) |
 
@@ -95,9 +96,11 @@ This triggers the **GitHub Actions workflow** automatically.
 ### 4. Wait for the workflow
 
 The GitHub Actions workflow will:
-1. Check out the code
-2. Create a ZIP file (`GitSyncMarks-v1.4.0.zip`) containing all extension files
-3. Create a GitHub Release with the ZIP as a download asset
+1. Check out the code and detect prerelease (Pre-tags: `-pre.N`, `-alpha.N`, etc.)
+2. Build both ZIPs (`GitSyncMarks-vX.X.X-chrome.zip`, `GitSyncMarks-vX.X.X-firefox.zip`)
+3. Create the GitHub Release
+
+E2E tests and screenshot generation in CI are currently disabled (see [ROADMAP.md](../ROADMAP.md) backlog). Run them locally before tagging.
 
 You can monitor progress at: `https://github.com/d0dg3r/GitSyncMarks/actions`
 
@@ -138,16 +141,18 @@ It runs **only** when a tag matching `v*` (e.g., `v1.3.0`) is pushed.
 
 ### What it does
 
-The build script (`scripts/build.sh`) generates **separate packages** for Chrome and Firefox:
+1. **Setup:** Checkout, detect prerelease, install Node
+2. **Build:** `build.sh` creates both ZIP packages (Chrome and Firefox)
+3. **Release:** Create GitHub Release with both ZIPs attached
+
+E2E tests and screenshot generation are disabled in CI (see [ROADMAP.md](../ROADMAP.md) backlog).
 
 ```mermaid
-flowchart LR
-    Tag["Push tag v*"] --> Checkout["Checkout code"]
-    Checkout --> Build["Run build.sh"]
-    Build --> ChromeZIP["GitSyncMarks-vX.Y.Z-chrome.zip"]
-    Build --> FirefoxZIP["GitSyncMarks-vX.Y.Z-firefox.zip"]
-    ChromeZIP --> Release["Create GitHub Release\nwith both ZIPs"]
-    FirefoxZIP --> Release
+flowchart TD
+    Tag["Push tag v*"] --> Checkout["Checkout, detect prerelease"]
+    Checkout --> Setup["Setup Node"]
+    Setup --> Build["Build both ZIPs"]
+    Build --> Release["Create GitHub Release"]
 ```
 
 The Chrome package uses `manifest.json`, the Firefox package uses `manifest.firefox.json` (renamed to `manifest.json` during build).
@@ -171,14 +176,7 @@ README.md
 
 ### Required permissions
 
-The workflow needs `contents: write` permission to create releases:
-
-```yaml
-permissions:
-  contents: write
-```
-
-This is already configured in the workflow file.
+The workflow needs `contents: write` permission to create releases (already configured).
 
 ## Chrome Web Store Update Process
 
@@ -189,7 +187,7 @@ When publishing or updating the extension on the Chrome Web Store:
 1. Register as a Chrome Web Store developer ($5 one-time fee)
 2. Go to [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole)
 3. Create a new item and upload the ZIP
-4. Fill in listing details (see `store-assets/listing.md` for prepared texts)
+4. Fill in listing details (see `store-assets/chrome-store.md` for prepared texts)
 5. Upload screenshots and promo images from `store-assets/`
 6. Submit for review
 
@@ -209,11 +207,16 @@ All Chrome Web Store assets are in `store-assets/`:
 | File | Purpose | Dimensions |
 |---|---|---|
 | `icon128-store.png` | Store listing icon | 128 x 128 |
-| `screenshot-1.png` | Popup screenshot | 1280 x 800 |
-| `screenshot-2.png` | Settings screenshot | 1280 x 800 |
+| `en/chrome-*.png` | Options tabs and popup (EN) | 1280 x 800 |
+| `de/chrome-*.png` | Options tabs and popup (DE) | 1280 x 800 |
+| `fr/chrome-*.png` | Options tabs and popup (FR) | 1280 x 800 |
+| `es/chrome-*.png` | Options tabs and popup (ES) | 1280 x 800 |
+| `en/firefox-*.png` | Firefox (copied from Chrome EN) | 1280 x 800 |
 | `promo-small.png` | Small promo tile | 440 x 280 |
 | `promo-marquee.png` | Marquee promo tile | 1400 x 560 |
-| `listing.md` | All listing texts | — |
+| `chrome-store.md` | Chrome listing texts (EN, DE, FR, ES) | — |
+| `firefox-store.md` | Firefox listing texts (EN, DE, FR, ES) | — |
+| `listing.md` | Index with links to both | — |
 
 ## Troubleshooting
 
@@ -236,4 +239,4 @@ Check the Actions tab on GitHub for error logs. Common issues:
 
 ### ZIP doesn't include new files
 
-If you added new top-level files or directories, update the `zip` command in `.github/workflows/release.yml` to include them.
+The ZIPs are created by `scripts/build.sh`. If you added new top-level files or directories, add them to the `SHARED_FILES` or `SHARED_DIRS` arrays in `scripts/build.sh`.

@@ -185,11 +185,12 @@ Uses **role-based mapping** for cross-browser compatibility:
 
 1. Get local bookmark tree via `chrome.bookmarks.getTree()`
 2. Detect each root folder's role via `detectRootFolderRole()` (uses browser-specific IDs with title fallback)
-3. For each role in the remote data (toolbar, other, menu, mobile):
-   a. Find the matching local root folder
-   b. Remove all existing children (reverse order)
-   c. Recursively recreate from remote data
-4. Roles not present locally are skipped (e.g., Chrome has no "menu")
+3. For each local root folder, get its role and the corresponding remote data:
+   a. Only roles in `SYNC_ROLES` (toolbar, other) are processed; menu and mobile are ignored.
+   b. **GitHub Repos preservation**: When `githubReposEnabled` is on and the target role matches `githubReposParent`, and Git data does not contain a folder titled `GitHubRepos (username)` (or any `GitHubRepos (` prefix when username is unknown), the local GitHubRepos folder is preserved and merged into the data before replacement
+   c. Remove all existing children (reverse order)
+   d. Recursively recreate from merged remote data
+4. Result: All bookmarks appear in both browsers; GitHubRepos folder is kept on pull when not in Git
 
 ## Optimized Remote Fetching
 
