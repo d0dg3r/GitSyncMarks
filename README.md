@@ -23,24 +23,16 @@
 
 <table align="center">
 <tr>
-<td align="center">
-  <img src="store-assets/en/chrome-7-popup.png" width="380" alt="Popup" />
-  <br><sub>Popup — Sync Now, Push, Pull</sub>
-</td>
-<td align="center">
-  <img src="store-assets/en/chrome-1-github.png" width="380" alt="Options — GitHub" />
-  <br><sub>Options — GitHub connection & profiles</sub>
-</td>
+<td align="center"><img src="store-assets/en/chrome-7-popup.png" width="220" alt="Popup" /><br><sub>1. Popup</sub></td>
+<td align="center"><img src="store-assets/en/chrome-1-github.png" width="220" alt="GitHub" /><br><sub>2. GitHub</sub></td>
+<td align="center"><img src="store-assets/en/chrome-2-synchronization.png" width="220" alt="Synchronization" /><br><sub>3. Synchronization</sub></td>
+<td align="center"><img src="store-assets/en/chrome-3-backup.png" width="220" alt="Backup" /><br><sub>4. Backup</sub></td>
 </tr>
 <tr>
-<td align="center">
-  <img src="store-assets/en/chrome-2-synchronization.png" width="380" alt="Options — Sync" />
-  <br><sub>Options — Synchronization</sub>
-</td>
-<td align="center">
-  <img src="store-assets/en/chrome-3-backup.png" width="380" alt="Options — Backup" />
-  <br><sub>Options — Backup & import/export</sub>
-</td>
+<td align="center"><img src="store-assets/en/chrome-4-automation.png" width="220" alt="Automation" /><br><sub>5. Automation</sub></td>
+<td align="center"><img src="store-assets/en/chrome-5-help.png" width="220" alt="Help" /><br><sub>6. Help</sub></td>
+<td align="center"><img src="store-assets/en/chrome-6-about.png" width="220" alt="About" /><br><sub>7. About</sub></td>
+<td align="center"></td>
 </tr>
 </table>
 
