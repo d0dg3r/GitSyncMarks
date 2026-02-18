@@ -98,7 +98,12 @@ sequenceDiagram
     else Only local changes
         SE->>GH: atomicCommit(localChanges)
     else Only remote changes
-        SE->>BM: replaceLocalBookmarks()
+        SE->>GH: getLatestCommitSha() (verify fetch not stale)
+        alt remote.commitSha != verifySha
+            SE-->>UI: "All in sync" (skip pull — stale fetch)
+        else Match
+            SE->>BM: replaceLocalBookmarks()
+        end
     else Both changed
         SE->>SE: mergeDiffs(localDiff, remoteDiff)
         alt No conflicts
@@ -191,6 +196,12 @@ Uses **role-based mapping** for cross-browser compatibility:
    c. Remove all existing children (reverse order)
    d. Recursively recreate from merged remote data
 4. Result: All bookmarks appear in both browsers; GitHubRepos folder is kept on pull when not in Git
+
+## Stale-Fetch Guard (Path 8)
+
+When only remote changes exist (path 8), the API response may be cached or eventually consistent. To avoid overwriting local state with stale data (e.g. right after our own push), we re-fetch `getLatestCommitSha()` before applying. If it differs from the commit we fetched, we skip the pull and treat as "all in sync".
+
+GitHub API requests use `cache: no-store` to reduce cache-related staleness.
 
 ## Optimized Remote Fetching
 
