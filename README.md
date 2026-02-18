@@ -1,8 +1,6 @@
 <p align="center">
-  <img src="icons/icon128.png" alt="GitSyncMarks Logo" width="128" height="128">
+  <img src="store-assets/marquee_promo_tile.jpg" width="960" alt="GitSyncMarks — Effortless Bookmark Sync via GitHub">
 </p>
-
-<h1 align="center">GitSyncMarks</h1>
 
 <p align="center">
   <a href="https://github.com/d0dg3r/GitSyncMarks/releases"><img src="https://img.shields.io/github/v/release/d0dg3r/GitSyncMarks" alt="Release"></a>
@@ -10,10 +8,6 @@
   <a href="https://chromewebstore.google.com/detail/kogijidhfkoibgihpiaiippajhgdgmif"><img src="https://img.shields.io/badge/Chrome_Web_Store-4285F4?style=flat-square&logo=googlechrome&logoColor=white" alt="Chrome Web Store"></a>
   <a href="https://addons.mozilla.org/en-US/firefox/addon/gitsyncmarks/"><img src="https://img.shields.io/badge/Firefox_Add-on-FF7139?style=flat-square&logo=firefoxbrowser&logoColor=white" alt="Firefox Add-on"></a>
   <a href="https://github.com/d0dg3r/GitSyncMarks-Mobile"><img src="https://img.shields.io/badge/Mobile_App-iOS%20%2B%20Android-6c5ce7?style=flat-square" alt="GitSyncMarks-Mobile"></a>
-</p>
-
-<p align="center">
-  <img src="store-assets/marquee_promo_tile.jpg" width="960" alt="GitSyncMarks — Effortless Bookmark Sync via GitHub">
 </p>
 
 <p align="center">
