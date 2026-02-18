@@ -13,6 +13,10 @@
 </p>
 
 <p align="center">
+  <img src="store-assets/marquee_promo_tile.jpg" width="960" alt="GitSyncMarks — Effortless Bookmark Sync via GitHub">
+</p>
+
+<p align="center">
   A browser extension that bidirectionally syncs your bookmarks with a GitHub repository.<br>
   Supports Chrome and Firefox. No server needed — syncs directly via the GitHub API.
 </p>
