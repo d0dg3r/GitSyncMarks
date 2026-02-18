@@ -59,7 +59,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 - **Import/Export**: Export and import bookmarks or extension settings as JSON files
 - **Multilanguage**: English, German, French, and Spanish, with manual language selection
 - **Keyboard shortcuts**: Quick sync (`Ctrl+Shift+.`), Open settings (`Ctrl+Shift+,`) — customizable in browser extension settings
-- **Debug Log**: Options → Help — enable to record sync diagnostics (diffs, merge decisions); export and share for troubleshooting
+- **Debug Log**: Options → Help — enable to record sync diagnostics (diffs, merge decisions, commit hashes); export and share for troubleshooting
 - **No server needed**: Communicates directly with the GitHub API using your Personal Access Token
 
 ## Installation
@@ -247,7 +247,7 @@ There is no automatic merge for conflicts — you must pick one side. Choose bas
 | Token invalid | Ensure the PAT has the `repo` scope; token may have been revoked |
 | Repo not found | Verify Repository Owner and Name; check repo exists and you have access |
 | Sync takes long | Many changed bookmarks = many API calls; see *Why does sync take long?* in Options → Help |
-| Sync issues / debugging | Enable Debug Log in Options → Help, reproduce the issue, export the log and share for support |
+| Sync issues / debugging | Enable Debug Log in Options → Help, reproduce the issue, export the log (includes commit hashes at key points) and share for support |
 | Conflict not resolving | You must choose Push or Pull in the popup; there is no automatic merge for conflicts |
 | Profile switch slow | When switching to a new (empty) profile, sync is fast; when the current profile has many bookmarks, it pushes to GitHub first |
 

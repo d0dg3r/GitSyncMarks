@@ -7,10 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
-
-- **Debug Log**: Persistent sync diagnostics in Options → Help; enable, export, and share the log for troubleshooting sync issues
-
 ### Changed
 
 - **Profile dialogs**: Add, Rename, and Delete use inline dialogs instead of native `prompt()` / `confirm()`
@@ -21,6 +17,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Sync race condition**: Lock held during push/pull from sync; prevents parallel syncs when first sync delegates to push or pull
 - **Path change hint**: When saving a changed File Path, a hint is shown: "On next sync a conflict may occur. Use GitHub → Local to adopt the remote state."
+
+## [2.2.1] - 2026-02-19
+
+### Added
+
+- **Debug Log commit hashes**: Sync diagnostics now include 7-char commit SHAs (base, remote, saved) at key points for easier troubleshooting of state-regression and stale-fetch issues
+
+### Fixed
+
+- **Sync feedback message**: After a merge with push or pull, the popup now shows "Push success" or "Pull success" instead of "All in sync"
+- **State regression**: Prevented overwriting local state with stale cached remote data; added verification before path-8 pull and `cache: no-store` for GitHub API requests
 
 ## [2.2.0] - 2025-02-15
 
@@ -157,7 +164,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release: bookmark sync with GitHub
 
-[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.2.0...HEAD
+[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.2.1...HEAD
+[2.2.1]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.1.2...v2.2.0
 [2.1.1]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.0.1...v2.1.0
