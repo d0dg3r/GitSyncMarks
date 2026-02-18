@@ -6,9 +6,10 @@ Contributions and ideas welcome — open an issue or pull request.
 
 ---
 
-## Planned for v2.2 / v2.3 (Near term)
+## Planned for v2.3.0
 
-- **Browser notifications** - Notifications on sync success/failure.
+- **Encrypted settings export** — Password-protected export for secure backup; currently plain JSON
+- *(Weitere Ideen aus dem Backlog oder neue Vorschläge)*
 
 ---
 
@@ -22,8 +23,14 @@ Contributions and ideas welcome — open an issue or pull request.
 
 ## Recently completed
 
-- **Keyboard shortcuts** (v2.2.0) — Quick sync (Ctrl+Shift+.), open options (Ctrl+Shift+,); customizable in extension settings
-- **Multiple sync profiles** (v2.2.0) — Work/personal bookmark sets with separate GitHub repos; switch replaces local bookmarks; onboarding (create folder / pull on first config)
+- **v2.2.1** — Sync feedback message fix; state regression fix (stale fetch guard, cache-busting); debug log with commit hashes
+- **Profile dialogs inline** — Add, Rename, Delete use inline dialogs (no prompt/confirm)
+- **Onboarding inline** — Create folder and Pull use inline dialogs (no confirm)
+- **Error messages inline** — validation-result area instead of alert()
+- **Path change hint** — Hint shown when File Path changes on save
+- **Browser notifications** (v2.2.0) — Sync success/failure; configurable (All / Errors only / Off)
+- **Keyboard shortcuts** (v2.2.0) — Quick sync (Ctrl+Shift+.), open options (Ctrl+Shift+,)
+- **Multiple sync profiles** (v2.2.0) — Work/personal bookmark sets; onboarding (create folder / pull)
 - **French and Spanish** (v2.2.0) — New languages: Français, Español
 
 ## Backlog / ideas (No timeline)
@@ -41,4 +48,5 @@ Contributions and ideas welcome — open an issue or pull request.
 | Selective folder sync | Sync only specific bookmark folders instead of all | Medium |
 | Sync history / rollback | Restore previous sync states (requires storing commit history) | Medium |
 | Conflict resolution UI | Diff view for merge conflicts instead of force push/pull only | Medium |
+| **Encrypted settings export** | Export settings (including tokens) as an encrypted file; password-protected import for secure backup and migration. See v2.3.0. | Medium |
 | Self-hosted Git (Gitea, Forgejo) | Broader provider support beyond GitHub/GitLab | Large |
