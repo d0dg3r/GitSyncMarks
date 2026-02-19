@@ -6,10 +6,9 @@ Contributions and ideas welcome — open an issue or pull request.
 
 ---
 
-## Planned for v2.3.0
+## Planned for v2.4.0
 
-- **Encrypted settings export** — Password-protected export for secure backup; currently plain JSON
-- **Browser import files** | Automatically generate import files for common browsers (e.g. Netscape HTML) alongside README.md. Enables importing directly from the repo without the extension.
+- **Browser import files** — Automatically generate import files for common browsers (e.g. Netscape HTML) alongside README.md. Enables importing directly from the repo without the extension.
 
 
 ---
@@ -23,6 +22,7 @@ Contributions and ideas welcome — open an issue or pull request.
 
 ## Recently completed
 
+- **v2.3.0** — Encrypted settings export (password-protected .enc); plain JSON and encrypted supported; import with password prompt
 - **v2.2.1** — Sync feedback message fix; state regression fix (stale fetch guard, cache-busting); debug log with commit hashes
 - **Profile dialogs inline** — Add, Rename, Delete use inline dialogs (no prompt/confirm)
 - **Onboarding inline** — Create folder and Pull use inline dialogs (no confirm)

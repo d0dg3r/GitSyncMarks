@@ -56,7 +56,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 - **Automation**: Add bookmarks via Git, CLI, or GitHub Actions — the extension picks them up automatically
 - **GitHub Repos folder**: Optional folder with bookmarks to all your GitHub repositories (public and private); configurable position (toolbar/other); manual refresh; preserved on pull when not in Git
 - **Auto-save**: Switches and action buttons (Update GitHub Repos, Test Connection) save settings automatically
-- **Import/Export**: Export and import bookmarks or extension settings as JSON files
+- **Import/Export**: Export and import bookmarks or extension settings as JSON; settings can also be exported as password-encrypted .enc for secure backup
 - **Multilanguage**: English, German, French, and Spanish, with manual language selection
 - **Keyboard shortcuts**: Quick sync (`Ctrl+Shift+.`), Open settings (`Ctrl+Shift+,`) — customizable in browser extension settings
 - **Debug Log**: Options → Help — enable to record sync diagnostics (diffs, merge decisions, commit hashes); export and share for troubleshooting
@@ -140,7 +140,7 @@ Status line shows last sync time and next scheduled sync. When a conflict occurs
 In the **Backup** tab of the options page:
 
 - **Export / Import Bookmarks**: Export all browser bookmarks as JSON; import replaces all local bookmarks (use with caution)
-- **Export / Import Settings**: Export GitHub connection and sync settings, including all profiles with decrypted tokens. Import replaces all settings and reloads the page. Useful for migrating to another browser or device
+- **Export / Import Settings**: Export as plain JSON or password-encrypted .enc for secure backup. Import replaces all settings and reloads the page. Useful for migrating to another browser or device
 
 ## Files in the GitHub Repository
 

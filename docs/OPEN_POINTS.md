@@ -4,8 +4,9 @@ Open items and next steps for further development. Updated each session.
 
 ---
 
-## Current Status (v2.2.1)
+## Current Status (v2.3.0)
 
+- **v2.3.0** – Encrypted settings export (password-protected .enc); plain JSON and encrypted supported; import with password prompt
 - **v2.2.1** – Sync feedback message fix; state regression fix (stale fetch guard, cache-busting); debug log extended with commit hashes
 - **GitHub Repos folder** – Implemented (toggle, position, refresh; synced via normal bookmark sync)
 - **Multiple Sync Profiles** – Implemented (profile manager, migration, CRUD, switchProfile, options UI, loading indicator, profile limit display)
@@ -26,7 +27,6 @@ Open items and next steps for further development. Updated each session.
 
 ### Backup (Import/Export)
 
-- **Encrypted settings export:** Export settings (including tokens) as an encrypted, password-protected file for secure backup and migration. Currently export is plain JSON.
 - **Settings export/import:** Round-trip fixed – import now restores `profileSwitchWithoutConfirm` and per-profile GitHub Repos fields. Legacy format migration supported.
 - **Bookmark export/import:** Exports all browser bookmarks; import replaces local bookmarks. Clarify whether per-profile export (e.g. "export current profile only") is needed, and how import interacts with multiple profiles.
 - **UI:** Consider indicating which profile's data is affected when importing bookmarks.
@@ -36,8 +36,8 @@ Open items and next steps for further development. Updated each session.
 ## Next Steps
 
 1. [ ] Test on Chrome, Firefox Desktop, Firefox Android
-2. [ ] Tag v2.2.1, publish release (manifest, CHANGELOG, docs updated)
-3. [ ] Tag v2.2.1; work on v2.3.0 (encrypted settings export) or backlog
+2. [ ] Tag v2.3.0, publish release (manifest, CHANGELOG, docs updated)
+3. [ ] Work on v2.4.0 (browser import files) or backlog
 
 ---
 

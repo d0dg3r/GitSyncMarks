@@ -287,9 +287,22 @@
         <div class="backup-block automation-block">
           <h3 class="automation-block-title" data-i18n="options_exportSettings">Export Settings</h3>
           <p class="backup-block-desc" data-i18n="options_exportSettingsDesc">GitHub connection and sync settings (incl. profiles).</p>
-          <div class="backup-actions">
-            <button id="export-settings-btn" class="btn btn-secondary" data-i18n="options_exportBtn">Export</button>
+          <div class="backup-actions backup-actions-multi">
+            <button id="export-settings-btn" class="btn btn-secondary" data-i18n="options_exportSettingsPlain">Export (plain)</button>
+            <button id="export-settings-encrypted-btn" class="btn btn-secondary" data-i18n="options_exportSettingsEncrypted">Export encrypted</button>
             <span id="export-settings-result" class="ie-result"></span>
+          </div>
+        </div>
+
+        <div id="password-dialog" class="profile-inline-dialog" style="display: none;">
+          <div class="profile-inline-dialog-body">
+            <p id="password-dialog-prompt" class="profile-inline-dialog-text"></p>
+            <label for="password-dialog-input" class="profile-inline-dialog-label" data-i18n="options_passwordPlaceholder">Password</label>
+            <input type="password" id="password-dialog-input" class="profile-inline-dialog-input" autocomplete="off">
+          </div>
+          <div class="profile-inline-dialog-actions">
+            <button type="button" id="password-dialog-confirm-btn" class="btn btn-primary btn-sm" data-i18n="options_exportBtn">Export</button>
+            <button type="button" id="password-dialog-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
           </div>
         </div>
 
@@ -297,7 +310,7 @@
           <h3 class="automation-block-title" data-i18n="options_importSettings">Import Settings</h3>
           <p class="backup-warning" data-i18n="options_importSettingsWarning">Replaces all settings. Page reloads afterwards.</p>
           <div class="backup-file-picker">
-            <input type="file" id="import-settings-file" accept=".json" class="backup-file-input">
+            <input type="file" id="import-settings-file" accept=".json,.enc" class="backup-file-input">
             <button type="button" class="btn btn-secondary backup-file-trigger" id="import-settings-trigger" data-i18n="options_chooseFile">Choose file</button>
             <span class="backup-file-name" id="import-settings-filename"></span>
           </div>

@@ -12,7 +12,7 @@ import { initTheme, applyTheme } from './lib/theme.js';
 import { serializeToJson, deserializeFromJson } from './lib/bookmark-serializer.js';
 import { replaceLocalBookmarks, SYNC_PRESETS } from './lib/sync-engine.js';
 import { updateGitHubReposFolder } from './lib/github-repos.js';
-import { encryptToken, decryptToken, migrateTokenIfNeeded } from './lib/crypto.js';
+import { encryptToken, decryptToken, migrateTokenIfNeeded, encryptWithPassword, decryptWithPassword, PASSWORD_ENC_PREFIX } from './lib/crypto.js';
 import {
   isDebugLogEnabled,
   setDebugLogEnabled,
@@ -122,12 +122,18 @@ const exportBookmarksResult = document.getElementById('export-bookmarks-result')
 const importBookmarksResult = document.getElementById('import-bookmarks-result');
 
 const exportSettingsBtn = document.getElementById('export-settings-btn');
+const exportSettingsEncryptedBtn = document.getElementById('export-settings-encrypted-btn');
 const importSettingsFile = document.getElementById('import-settings-file');
 const importSettingsTrigger = document.getElementById('import-settings-trigger');
 const importSettingsFilename = document.getElementById('import-settings-filename');
 const importSettingsBtn = document.getElementById('import-settings-btn');
 const exportSettingsResult = document.getElementById('export-settings-result');
 const importSettingsResult = document.getElementById('import-settings-result');
+const passwordDialog = document.getElementById('password-dialog');
+const passwordDialogPrompt = document.getElementById('password-dialog-prompt');
+const passwordDialogInput = document.getElementById('password-dialog-input');
+const passwordDialogConfirmBtn = document.getElementById('password-dialog-confirm-btn');
+const passwordDialogCancelBtn = document.getElementById('password-dialog-cancel-btn');
 
 // ==============================
 // Tab Navigation
@@ -881,35 +887,76 @@ importBookmarksBtn.addEventListener('click', async () => {
 // ==============================
 
 /**
- * Export current settings as a JSON file download.
- * Includes profiles with decrypted tokens so the export is complete and portable.
+ * Build export data with decrypted tokens per profile.
+ * @returns {Promise<object>} Export data
+ */
+async function buildSettingsExportData() {
+  const syncSettings = await chrome.storage.sync.get(null);
+  const localData = await chrome.storage.local.get({ profileTokens: {}, syncState: {} });
+  const profiles = syncSettings.profiles || {};
+  const profileTokens = localData.profileTokens || {};
+  const exportedProfiles = {};
+  for (const [id, p] of Object.entries(profiles)) {
+    let token = '';
+    try {
+      token = profileTokens[id] ? await decryptToken(profileTokens[id]) : '';
+    } catch { /* ignore */ }
+    exportedProfiles[id] = { ...p, token };
+  }
+  return { ...syncSettings, profiles: exportedProfiles };
+}
+
+/**
+ * Show password dialog and resolve with password on confirm, or null on cancel.
+ * @param {string} promptKey - i18n key for prompt
+ * @param {string} confirmKey - i18n key for confirm button
+ * @returns {Promise<string|null>}
+ */
+function showPasswordDialog(promptKey, confirmKey) {
+  return new Promise((resolve) => {
+    passwordDialogPrompt.textContent = getMessage(promptKey);
+    passwordDialogConfirmBtn.textContent = getMessage(confirmKey);
+    passwordDialogInput.value = '';
+    passwordDialog.style.display = '';
+    passwordDialogInput.focus();
+
+    const finish = (password) => {
+      passwordDialog.style.display = 'none';
+      passwordDialogInput.value = '';
+      passwordDialogConfirmBtn.removeEventListener('click', onConfirm);
+      passwordDialogCancelBtn.removeEventListener('click', onCancel);
+      passwordDialogInput.removeEventListener('keydown', onKeyDown);
+      resolve(password);
+    };
+
+    const onConfirm = () => {
+      const pwd = passwordDialogInput.value;
+      if (!pwd.trim()) return;
+      finish(pwd);
+    };
+
+    const onCancel = () => finish(null);
+
+    const onKeyDown = (e) => {
+      if (e.key === 'Enter') onConfirm();
+      if (e.key === 'Escape') onCancel();
+    };
+
+    passwordDialogConfirmBtn.addEventListener('click', onConfirm);
+    passwordDialogCancelBtn.addEventListener('click', onCancel);
+    passwordDialogInput.addEventListener('keydown', onKeyDown);
+  });
+}
+
+/**
+ * Export current settings as a plain JSON file.
  */
 exportSettingsBtn.addEventListener('click', async () => {
   try {
-    const syncSettings = await chrome.storage.sync.get(null);
-    const localData = await chrome.storage.local.get({ profileTokens: {}, syncState: {} });
-
-    // Build export with decrypted tokens per profile
-    const profiles = syncSettings.profiles || {};
-    const profileTokens = localData.profileTokens || {};
-    const exportedProfiles = {};
-    for (const [id, p] of Object.entries(profiles)) {
-      let token = '';
-      try {
-        token = profileTokens[id] ? await decryptToken(profileTokens[id]) : '';
-      } catch { /* ignore */ }
-      exportedProfiles[id] = { ...p, token };
-    }
-    const exportData = {
-      ...syncSettings,
-      profiles: exportedProfiles,
-    };
-
+    const exportData = await buildSettingsExportData();
     const json = JSON.stringify(exportData, null, 2);
-
     const date = new Date().toISOString().slice(0, 10);
     downloadFile(`gitsyncmarks-settings-${date}.json`, json, 'application/json');
-
     showResult(exportSettingsResult, getMessage('options_exportSuccess'), 'success');
   } catch (err) {
     showResult(exportSettingsResult, getMessage('options_importError', [err.message]), 'error');
@@ -917,23 +964,30 @@ exportSettingsBtn.addEventListener('click', async () => {
 });
 
 /**
- * Import settings from a JSON file, replacing all current settings.
- * Supports both legacy (flat) format and profile format.
+ * Export current settings as a password-encrypted .enc file.
  */
-importSettingsBtn.addEventListener('click', async () => {
-  const file = importSettingsFile.files[0];
-  if (!file) return;
-
+exportSettingsEncryptedBtn.addEventListener('click', async () => {
+  const password = await showPasswordDialog('options_exportPasswordPrompt', 'options_exportBtn');
+  if (!password) return;
   try {
-    const text = await file.text();
-    const settings = JSON.parse(text);
+    const exportData = await buildSettingsExportData();
+    const json = JSON.stringify(exportData, null, 2);
+    const encrypted = await encryptWithPassword(json, password);
+    const date = new Date().toISOString().slice(0, 10);
+    downloadFile(`gitsyncmarks-settings-${date}.enc`, encrypted, 'application/octet-stream');
+    showResult(exportSettingsResult, getMessage('options_exportEncryptedSuccess'), 'success');
+  } catch (err) {
+    showResult(exportSettingsResult, getMessage('options_importError', [err.message]), 'error');
+  }
+});
 
-    if (typeof settings !== 'object' || Array.isArray(settings)) {
-      throw new Error('Invalid settings format.');
-    }
-
-    // New format: profiles with embedded token
-    if (settings.profiles && Object.keys(settings.profiles).length > 0) {
+/**
+ * Apply imported settings to storage (profile or legacy format).
+ * @param {object} settings - Parsed settings object
+ */
+async function applyImportedSettings(settings) {
+  // New format: profiles with embedded token
+  if (settings.profiles && Object.keys(settings.profiles).length > 0) {
       const profileTokens = {};
       const profilesToSave = {};
       for (const [id, p] of Object.entries(settings.profiles)) {
@@ -996,18 +1050,38 @@ importSettingsBtn.addEventListener('click', async () => {
         profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
       });
       await chrome.storage.local.set({ profileTokens });
+  }
+  await chrome.runtime.sendMessage({ action: 'settingsChanged' });
+}
+
+/**
+ * Import settings from a JSON or encrypted file, replacing all current settings.
+ * Supports plain JSON, encrypted .enc, legacy (flat) format, and profile format.
+ */
+importSettingsBtn.addEventListener('click', async () => {
+  const file = importSettingsFile.files[0];
+  if (!file) return;
+
+  try {
+    let text = await file.text();
+    if (text.trim().startsWith(PASSWORD_ENC_PREFIX)) {
+      const password = await showPasswordDialog('options_importPasswordPrompt', 'options_importBtn');
+      if (!password) return;
+      text = await decryptWithPassword(text, password);
     }
-
-    await chrome.runtime.sendMessage({ action: 'settingsChanged' });
-
+    const settings = JSON.parse(text);
+    if (typeof settings !== 'object' || Array.isArray(settings)) {
+      throw new Error('Invalid settings format.');
+    }
+    await applyImportedSettings(settings);
     showResult(importSettingsResult, getMessage('options_importSuccess'), 'success');
     importSettingsFile.value = '';
     importSettingsBtn.disabled = true;
     importSettingsFilename.textContent = '';
-
     setTimeout(() => { location.reload(); }, 1000);
   } catch (err) {
-    showResult(importSettingsResult, getMessage('options_importError', [err.message]), 'error');
+    const msg = err.message && err.message.includes('Wrong password') ? getMessage('options_decryptError') : getMessage('options_importError', [err.message]);
+    showResult(importSettingsResult, msg, 'error');
   }
 });
 

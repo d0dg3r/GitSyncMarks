@@ -686,6 +686,27 @@
   "options_importError": {
     "message": "Import failed: $1"
   },
+  "options_exportSettingsPlain": {
+    "message": "Export (plain)"
+  },
+  "options_exportSettingsEncrypted": {
+    "message": "Export encrypted"
+  },
+  "options_exportPasswordPrompt": {
+    "message": "Enter a password to encrypt the settings file."
+  },
+  "options_importPasswordPrompt": {
+    "message": "Enter the password to decrypt the settings file."
+  },
+  "options_passwordPlaceholder": {
+    "message": "Password"
+  },
+  "options_decryptError": {
+    "message": "Decryption failed. Wrong password?"
+  },
+  "options_exportEncryptedSuccess": {
+    "message": "Encrypted export successful!"
+  },
 
   "options_tabAutomation": {
     "message": "Automation"

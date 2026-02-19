@@ -686,6 +686,27 @@
   "options_importError": {
     "message": "Import fehlgeschlagen: $1"
   },
+  "options_exportSettingsPlain": {
+    "message": "Export (Klartext)"
+  },
+  "options_exportSettingsEncrypted": {
+    "message": "Export verschlüsselt"
+  },
+  "options_exportPasswordPrompt": {
+    "message": "Passwort zum Verschlüsseln der Einstellungsdatei eingeben."
+  },
+  "options_importPasswordPrompt": {
+    "message": "Passwort zum Entschlüsseln der Einstellungsdatei eingeben."
+  },
+  "options_passwordPlaceholder": {
+    "message": "Passwort"
+  },
+  "options_decryptError": {
+    "message": "Entschlüsselung fehlgeschlagen. Falsches Passwort?"
+  },
+  "options_exportEncryptedSuccess": {
+    "message": "Verschlüsselter Export erfolgreich!"
+  },
 
   "options_tabAutomation": {
     "message": "Automatisierung"

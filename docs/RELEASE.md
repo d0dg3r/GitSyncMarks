@@ -22,6 +22,7 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 
 | Version | Description |
 |---|---|
+| `2.3.0` | Encrypted settings export (password-protected .enc); plain JSON and encrypted formats supported; import with password prompt for .enc files |
 | `2.2.1` | Sync feedback message fix (merge shows push/pull success); state regression fix (stale fetch guard, cache-busting); debug log extended with commit hashes |
 | `2.2.0` | GitHub Repos folder, multiple profiles, onboarding, profile add auto-switch, profile limit display, spinner, profile switch UX, popup redesign, shorter pull message, keyboard shortcuts, Help tab (collapsible accordion), options header (language dropdown only), French and Spanish; settings import round-trip fix; auto-save on switches and before actions; compact Options UI (all tabs); Backup tab redesign; contributors Patrick W., Gernot B. |
 | `2.1.2` | Store buttons in README, responsive mobile layout for Firefox Android, testing guide (docs/TESTING.md) |
