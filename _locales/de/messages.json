@@ -593,7 +593,7 @@
     "message": "Einstellungen exportieren / importieren"
   },
   "help_backupSettingsDesc": {
-    "message": "GitHub-Verbindung und Sync-Einstellungen exportieren (Profile mit entschlüsselten Tokens). Import ersetzt alle Einstellungen; die Seite wird danach neu geladen."
+    "message": "Export als .json (Klartext) oder .enc (verschlüsselt). Import akzeptiert beide Formate; die Seite lädt danach neu."
   },
   "help_conflictTitle": {
     "message": "Konflikte"
@@ -673,6 +673,9 @@
   },
   "options_importSettingsWarning": {
     "message": "Ersetzt alle Einstellungen. Seite lädt neu."
+  },
+  "options_importSettingsFormats": {
+    "message": "Akzeptiert .json (Klartext) oder .enc (verschlüsselt)."
   },
   "options_selectFile": {
     "message": "Datei auswählen..."

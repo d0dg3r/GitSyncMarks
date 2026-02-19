@@ -593,7 +593,7 @@
     "message": "Export / Import Settings"
   },
   "help_backupSettingsDesc": {
-    "message": "Export GitHub connection and sync settings (profiles with decrypted tokens). Import replaces all settings; the page reloads afterwards."
+    "message": "Export as plain .json or password-encrypted .enc. Import accepts both formats; the page reloads afterwards."
   },
   "help_conflictTitle": {
     "message": "Conflicts"
@@ -673,6 +673,9 @@
   },
   "options_importSettingsWarning": {
     "message": "Replaces all settings. Page reloads afterwards."
+  },
+  "options_importSettingsFormats": {
+    "message": "Accepts .json (plain) or .enc (encrypted) files."
   },
   "options_selectFile": {
     "message": "Select file..."
