@@ -9,7 +9,7 @@ Contributions and ideas welcome — open an issue or pull request.
 ## Planned for v2.3.0
 
 - **Encrypted settings export** — Password-protected export for secure backup; currently plain JSON
-| **Browser import files** | Automatically generate import files for common browsers (e.g. Netscape HTML) alongside README.md. Enables importing directly from the repo without the extension. | Medium |
+- **Browser import files** | Automatically generate import files for common browsers (e.g. Netscape HTML) alongside README.md. Enables importing directly from the repo without the extension.
 
 
 ---
