@@ -23,7 +23,7 @@
 <tr>
 <td align="center"><img src="store-assets/en/chrome-7-popup.png" width="220" alt="Popup" /><br><sub>1. Popup</sub></td>
 <td align="center"><img src="store-assets/en/chrome-1-github.png" width="220" alt="GitHub" /><br><sub>2. GitHub</sub></td>
-<td align="center"><img src="store-assets/en/chrome-2-synchronization.png" width="220" alt="Synchronization" /><br><sub>3. Synchronization</sub></td>
+<td align="center"><img src="store-assets/en/chrome-2-synchronization.png" width="220" alt="Sync" /><br><sub>3. Sync</sub></td>
 <td align="center"><img src="store-assets/en/chrome-3-backup.png" width="220" alt="Backup" /><br><sub>4. Backup</sub></td>
 </tr>
 <tr>
@@ -171,7 +171,7 @@ Each bookmark is a simple JSON file:
 }
 ```
 
-The `README.md` in the repo is regenerated on each sync — it lists all bookmarks with links, so you can browse your bookmarks directly on GitHub. The `bookmarks.html` file uses the Netscape format and can be imported in any browser (Chrome: Bookmarks → Import; Firefox: Import and Backup → Import Bookmarks from file). Both files can be turned off in Settings → Synchronization → Generated files.
+The `README.md` in the repo is regenerated on each sync — it lists all bookmarks with links, so you can browse your bookmarks directly on GitHub. The `bookmarks.html` file uses the Netscape format and can be imported in any browser (Chrome: Bookmarks → Import; Firefox: Import and Backup → Import Bookmarks from file). Both files can be turned off in Settings → Sync → Generated files.
 
 ## Automation
 

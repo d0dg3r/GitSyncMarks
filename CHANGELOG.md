@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Encrypted settings export**: Password-protected export for secure backup; PBKDF2 + AES-256-GCM; two buttons (plain JSON / encrypted .enc); import supports both formats and prompts for password when needed
 
+### Changed
+
+- **Options tab label**: "Synchronization" tab shortened to "Sync" in all languages (en, de, fr, es)
+
 ## [2.2.1] - 2026-02-19
 
 ### Added

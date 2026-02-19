@@ -816,7 +816,7 @@ debugLogExportBtn.addEventListener('click', async () => {
 
 // Generate files: debounced sync when toggling ON to avoid conflicts when enabling both quickly
 let generateFilesSyncTimer = null;
-const GENERATE_FILES_DEBOUNCE_MS = 800;
+const GENERATE_FILES_DEBOUNCE_MS = 2000;
 const GENERATE_FILES_RETRY_DELAY_MS = 2500;
 
 function scheduleGenerateFilesSync(isRetry = false) {

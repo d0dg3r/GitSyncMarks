@@ -27,7 +27,7 @@ Features:
 • Conflict detection when automatic merge is not possible
 • A README.md with all bookmarks is generated in the repo for easy browsing
 • Automation: add bookmarks via Git, CLI, or GitHub Actions — no browser needed
-• Import/Export: back up and restore bookmarks or settings as JSON files (clear UI with file picker)
+• Import/Export: back up and restore bookmarks or settings as JSON files; settings can be exported as password-encrypted .enc for secure backup (clear UI with file picker)
 • Theme: light, dark, or auto (system) for options and popup
 • Multilanguage: English, German, French, and Spanish with manual language selection
 • Keyboard shortcuts: quick sync (Ctrl+Shift+.), open settings (Ctrl+Shift+,) — customizable
@@ -87,7 +87,7 @@ Funktionen:
 • Konflikterkennung, wenn automatisches Mergen nicht möglich ist
 • Eine README.md mit allen Lesezeichen wird im Repository generiert
 • Automatisierung: Lesezeichen über Git, CLI oder GitHub Actions hinzufügen — ohne Browser
-• Import/Export: Lesezeichen oder Einstellungen als JSON-Dateien sichern und wiederherstellen (klare UI mit Dateiauswahl)
+• Import/Export: Lesezeichen oder Einstellungen als JSON-Dateien sichern; Einstellungen auch als passwortverschlüsselte .enc exportierbar (klare UI mit Dateiauswahl)
 • Design: Hell, Dunkel oder Auto (System) für Einstellungen und Popup
 • Mehrsprachig: Englisch, Deutsch, Französisch und Spanisch mit manueller Sprachauswahl
 • Tastenkürzel: Schnell-Sync (Strg+Umschalt+.), Einstellungen öffnen (Strg+Umschalt+,) — anpassbar
@@ -147,7 +147,7 @@ Fonctionnalités :
 • Détection des conflits lorsque la fusion automatique est impossible
 • Un README.md avec tous les favoris est généré dans le dépôt pour une navigation facile
 • Automatisation : ajouter des favoris via Git, CLI ou GitHub Actions — sans ouvrir le navigateur
-• Import/Export : sauvegarder et restaurer les favoris ou les paramètres en JSON (interface claire avec sélection de fichier)
+• Import/Export : sauvegarder et restaurer les favoris ou les paramètres en JSON ; paramètres exportables en .enc chiffré par mot de passe (interface claire avec sélection de fichier)
 • Thème : clair, sombre ou auto (système) pour les options et le popup
 • Multilingue : anglais, allemand, français et espagnol avec sélection manuelle de la langue
 • Raccourcis clavier : sync rapide, paramètres — personnalisables
@@ -207,7 +207,7 @@ Características:
 • Detección de conflictos cuando la fusión automática no es posible
 • Un README.md con todos los marcadores se genera en el repositorio para navegar fácilmente
 • Automatización: añadir marcadores vía Git, CLI o GitHub Actions — sin abrir el navegador
-• Importar/Exportar: respaldar y restaurar marcadores o ajustes en JSON (interfaz clara con selector de archivo)
+• Importar/Exportar: respaldar y restaurar marcadores o ajustes en JSON; ajustes exportables como .enc cifrado con contraseña (interfaz clara con selector de archivo)
 • Tema: claro, oscuro o auto (sistema) para opciones y popup
 • Multilingüe: inglés, alemán, francés y español con selección manual del idioma
 • Atajos de teclado: sync rápido, configuración — personalizables
@@ -310,7 +310,7 @@ All regions
 
 ### English (EN)
 - [x] `en/chrome-1-github.png` — GitHub tab
-- [x] `en/chrome-2-synchronization.png` — Synchronization tab
+- [x] `en/chrome-2-synchronization.png` — Sync tab
 - [x] `en/chrome-3-backup.png` — Backup tab
 - [x] `en/chrome-4-automation.png` — Automation tab
 - [x] `en/chrome-5-help.png` — Help tab
@@ -319,7 +319,7 @@ All regions
 
 ### Deutsch (DE)
 - [x] `de/chrome-1-github.png` — GitHub-Tab
-- [x] `de/chrome-2-synchronization.png` — Synchronisierung-Tab
+- [x] `de/chrome-2-synchronization.png` — Sync-Tab
 - [x] `de/chrome-3-backup.png` — Backup-Tab
 - [x] `de/chrome-4-automation.png` — Automatisierung-Tab
 - [x] `de/chrome-5-help.png` — Hilfe-Tab
@@ -328,7 +328,7 @@ All regions
 
 ### Français (FR)
 - [x] `fr/chrome-1-github.png` — Onglet GitHub
-- [x] `fr/chrome-2-synchronization.png` — Onglet Synchronisation
+- [x] `fr/chrome-2-synchronization.png` — Onglet Sync
 - [x] `fr/chrome-3-backup.png` — Onglet Sauvegarde
 - [x] `fr/chrome-4-automation.png` — Onglet Automatisation
 - [x] `fr/chrome-5-help.png` — Onglet Aide
@@ -337,7 +337,7 @@ All regions
 
 ### Español (ES)
 - [x] `es/chrome-1-github.png` — Pestaña GitHub
-- [x] `es/chrome-2-synchronization.png` — Pestaña Sincronización
+- [x] `es/chrome-2-synchronization.png` — Pestaña Sync
 - [x] `es/chrome-3-backup.png` — Pestaña Copia de seguridad
 - [x] `es/chrome-4-automation.png` — Pestaña Automatización
 - [x] `es/chrome-5-help.png` — Pestaña Ayuda

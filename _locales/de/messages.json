@@ -481,7 +481,7 @@
     "message": "Debug-Log"
   },
   "options_debugLogDesc": {
-    "message": "Aktivieren, um Sync-Diagnosen zu speichern (Diffs, Merge-Entscheidungen, Konflikte). Hilfreich bei Sync-Problemen. Log exportieren und teilen für Support."
+    "message": "Aktivieren, um Sync-Diagnosen zu speichern (Diffs, Merge-Entscheidungen, Konflikte, Commit-Hashes an wichtigen Stellen). Hilfreich bei Sync-Problemen. Log exportieren und teilen für Support."
   },
   "options_debugLogEnabled": {
     "message": "Debug-Log aktivieren"
@@ -572,7 +572,7 @@
     "message": "Von GitHub herunterladen (überschreibt lokale Änderungen)."
   },
   "help_syncTitle": {
-    "message": "Synchronisation"
+    "message": "Sync"
   },
   "help_autoSyncTitle": {
     "message": "Auto-Sync"
@@ -591,6 +591,12 @@
   },
   "help_syncStartupDesc": {
     "message": "Optional: Sync beim Browserstart oder beim Zurückkehren ins Browserfenster (mit Pause)."
+  },
+  "help_generatedFilesTitle": {
+    "message": "Generierte Dateien"
+  },
+  "help_generatedFilesDesc": {
+    "message": "README.md (Übersicht) und bookmarks.html (Netscape-Format für Browser-Import) werden beim Sync erzeugt. Im Sync-Tab abschalten, um keine Updates mehr zu schreiben."
   },
   "help_notificationsTitle": {
     "message": "Benachrichtigungen"
@@ -651,7 +657,7 @@
     "message": "Backup"
   },
   "options_backupIntro": {
-    "message": "Lesezeichen und Einstellungen als JSON exportieren oder importieren."
+    "message": "Lesezeichen als JSON; Einstellungen als JSON oder verschlüsseltes .enc exportieren oder importieren."
   },
   "options_bookmarksCard": {
     "message": "Lesezeichen"

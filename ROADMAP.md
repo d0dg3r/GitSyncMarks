@@ -22,7 +22,7 @@ Contributions and ideas welcome — open an issue or pull request.
 
 ## Recently completed
 
-- **v2.3.0** — Encrypted settings export (password-protected .enc); plain JSON and encrypted supported; import with password prompt
+- **v2.3.0** — Encrypted settings export (password-protected .enc); plain JSON and encrypted supported; import with password prompt; Sync tab shortened to "Sync" in all languages
 - **v2.2.1** — Sync feedback message fix; state regression fix (stale fetch guard, cache-busting); debug log with commit hashes
 - **Profile dialogs inline** — Add, Rename, Delete use inline dialogs (no prompt/confirm)
 - **Onboarding inline** — Create folder and Pull use inline dialogs (no confirm)

@@ -50,7 +50,7 @@ Or use the combined command:
 npm run screenshots
 ```
 
-Output: `store-assets/{en,de,fr,es}/` — each with `chrome-*.png` (GitHub, Synchronization, Backup, Automation, Help, About, Popup) and `firefox-*.png` (copied from Chrome; UI is identical).
+Output: `store-assets/{en,de,fr,es}/` — each with `chrome-*.png` (GitHub, Sync, Backup, Automation, Help, About, Popup) and `firefox-*.png` (copied from Chrome; UI is identical).
 
 **Prerequisites:** Playwright with Chromium (`npx playwright install chromium` — run once).
 

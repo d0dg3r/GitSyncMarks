@@ -481,7 +481,7 @@
     "message": "Debug Log"
   },
   "options_debugLogDesc": {
-    "message": "Enable to record sync diagnostics (diffs, merge decisions, conflicts). Use when troubleshooting sync issues. Export and share the log for support."
+    "message": "Enable to record sync diagnostics (diffs, merge decisions, conflicts, commit hashes at key points). Use when troubleshooting sync issues. Export and share the log for support."
   },
   "options_debugLogEnabled": {
     "message": "Enable debug log"
@@ -572,7 +572,7 @@
     "message": "Download from GitHub (overwrites local changes)."
   },
   "help_syncTitle": {
-    "message": "Synchronization"
+    "message": "Sync"
   },
   "help_autoSyncTitle": {
     "message": "Auto-sync"
@@ -591,6 +591,12 @@
   },
   "help_syncStartupDesc": {
     "message": "Optional: sync when the browser starts or when you return to the browser window (with cooldown)."
+  },
+  "help_generatedFilesTitle": {
+    "message": "Generated files"
+  },
+  "help_generatedFilesDesc": {
+    "message": "README.md (overview) and bookmarks.html (Netscape format for browser import) are created during sync. Toggle off in the Sync tab to stop updating."
   },
   "help_notificationsTitle": {
     "message": "Notifications"
@@ -651,7 +657,7 @@
     "message": "Backup"
   },
   "options_backupIntro": {
-    "message": "Export or import bookmarks and extension settings as JSON."
+    "message": "Export or import bookmarks as JSON; settings as JSON or password-encrypted .enc."
   },
   "options_bookmarksCard": {
     "message": "Bookmarks"
