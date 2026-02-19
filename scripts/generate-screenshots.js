@@ -4,6 +4,7 @@
  * Requires: npm run build:chrome first (build/chrome/ must exist).
  * Uses Playwright to launch Chromium with the extension loaded.
  *
+ * Each screenshot shows light and dark mode side by side (1280x800 total).
  * Output: store-assets/{en,de,fr,es}/chrome-*.png and firefox-*.png (Firefox copied from Chrome)
  *
  * Usage: node scripts/generate-screenshots.js
@@ -13,6 +14,7 @@ const path = require('path');
 const fs = require('fs');
 const os = require('os');
 const { chromium } = require('playwright');
+const sharp = require('sharp');
 
 const ROOT = path.resolve(__dirname, '..');
 const EXTENSION_PATH = path.join(ROOT, 'build', 'chrome');
@@ -36,6 +38,67 @@ async function ensureDir(dir) {
   await fs.promises.mkdir(dir, { recursive: true });
 }
 
+/** Composite light and dark screenshots side by side (640x800 each -> 1280x800). Default resize for full-width content. */
+async function compositeLightDark(lightBuffer, darkBuffer, outPath) {
+  const halfWidth = VIEWPORT.width / 2;
+  const [lightResized, darkResized] = await Promise.all([
+    sharp(lightBuffer).resize(halfWidth, VIEWPORT.height).toBuffer(),
+    sharp(darkBuffer).resize(halfWidth, VIEWPORT.height).toBuffer(),
+  ]);
+  await sharp({
+    create: { width: VIEWPORT.width, height: VIEWPORT.height, channels: 3, background: { r: 255, g: 255, b: 255 } },
+  })
+    .composite([
+      { input: lightResized, left: 0, top: 0 },
+      { input: darkResized, left: halfWidth, top: 0 },
+    ])
+    .png()
+    .toFile(outPath);
+}
+
+/** Popup composite (crop): rechte Hälfte wegschneiden (leer), linke Hälften light|dark zusammensetzen. */
+async function compositePopupLightDarkCrop(lightBuffer, darkBuffer, outPath) {
+  const halfWidth = VIEWPORT.width / 2;
+  const [lightLeft, darkLeft] = await Promise.all([
+    sharp(lightBuffer).extract({ left: 0, top: 0, width: halfWidth, height: VIEWPORT.height }).toBuffer(),
+    sharp(darkBuffer).extract({ left: 0, top: 0, width: halfWidth, height: VIEWPORT.height }).toBuffer(),
+  ]);
+  await sharp({
+    create: { width: VIEWPORT.width, height: VIEWPORT.height, channels: 3, background: { r: 255, g: 255, b: 255 } },
+  })
+    .composite([
+      { input: lightLeft, left: 0, top: 0 },
+      { input: darkLeft, left: halfWidth, top: 0 },
+    ])
+    .png()
+    .toFile(outPath);
+}
+
+/** Popup composite (pad): fit inside + padding, zum Vergleich. */
+async function compositePopupLightDarkPad(lightBuffer, darkBuffer, outPath) {
+  const halfWidth = VIEWPORT.width / 2;
+  const padY = VIEWPORT.height / 4;
+  const [lightPadded, darkPadded] = await Promise.all([
+    sharp(lightBuffer)
+      .resize(halfWidth, VIEWPORT.height, { fit: 'inside' })
+      .extend({ top: padY, bottom: padY, left: 0, right: 0, background: { r: 245, g: 245, b: 247 } })
+      .toBuffer(),
+    sharp(darkBuffer)
+      .resize(halfWidth, VIEWPORT.height, { fit: 'inside' })
+      .extend({ top: padY, bottom: padY, left: 0, right: 0, background: { r: 29, g: 29, b: 31 } })
+      .toBuffer(),
+  ]);
+  await sharp({
+    create: { width: VIEWPORT.width, height: VIEWPORT.height, channels: 3, background: { r: 255, g: 255, b: 255 } },
+  })
+    .composite([
+      { input: lightPadded, left: 0, top: 0 },
+      { input: darkPadded, left: halfWidth, top: 0 },
+    ])
+    .png()
+    .toFile(outPath);
+}
+
 async function main() {
   if (!fs.existsSync(EXTENSION_PATH)) {
     console.error(
@@ -47,7 +110,7 @@ async function main() {
   await ensureDir(STORE_ASSETS);
 
   // Remove old unnumbered screenshot files
-  const OLD_FILES = ['github', 'synchronization', 'backup', 'automation', 'help', 'about', 'popup'];
+  const OLD_FILES = ['github', 'synchronization', 'backup', 'automation', 'help', 'about', 'popup', '7-popup-pad'];
   for (const code of LANGUAGES.map((l) => l.code)) {
     const langDir = path.join(STORE_ASSETS, code);
     if (fs.existsSync(langDir)) {
@@ -102,9 +165,18 @@ async function main() {
       const tabBtn = page.locator(`.tab-btn[data-tab="${id}"]`);
       await tabBtn.click();
       await page.waitForTimeout(300);
+
+      await page.locator('#theme-light').click();
+      await page.waitForTimeout(200);
+      const lightBuf = await page.screenshot();
+
+      await page.locator('#theme-dark').click();
+      await page.waitForTimeout(200);
+      const darkBuf = await page.screenshot();
+
       const outPath = path.join(langDir, `chrome-${file}.png`);
-      await page.screenshot({ path: outPath });
-      console.log('  ', `${code}/chrome-${file}.png`);
+      await compositeLightDark(lightBuf, darkBuf, outPath);
+      console.log('  ', `${code}/chrome-${file}.png (light | dark)`);
     }
     await page.close();
 
@@ -117,9 +189,20 @@ async function main() {
     await popupPage.setViewportSize(VIEWPORT);
     await popupPage.waitForLoadState('networkidle');
     await popupPage.waitForTimeout(code === 'en' ? 300 : 500);
+
+    await popupPage.evaluate(() => document.documentElement.classList.remove('dark'));
+    await popupPage.waitForTimeout(150);
+    const popupLightBuf = await popupPage.screenshot();
+
+    await popupPage.evaluate(() => document.documentElement.classList.add('dark'));
+    await popupPage.waitForTimeout(150);
+    const popupDarkBuf = await popupPage.screenshot();
+
     const popupPath = path.join(langDir, 'chrome-7-popup.png');
-    await popupPage.screenshot({ path: popupPath });
-    console.log('  ', `${code}/chrome-7-popup.png`);
+    const popupPadPath = path.join(langDir, 'chrome-7-popup-pad.png');
+    await compositePopupLightDarkCrop(popupLightBuf, popupDarkBuf, popupPath);
+    await compositePopupLightDarkPad(popupLightBuf, popupDarkBuf, popupPadPath);
+    console.log('  ', `${code}/chrome-7-popup.png (crop)  ${code}/chrome-7-popup-pad.png (pad)`);
     await popupPage.close();
   }
 

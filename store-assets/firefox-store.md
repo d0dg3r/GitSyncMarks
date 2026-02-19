@@ -233,7 +233,7 @@ All regions
 
 ## Store Assets Checklist
 
-**Screenshots** are copied from Chrome (UI is identical; Playwright cannot load Firefox extension). Run `npm run screenshots`.
+**Screenshots** are copied from Chrome (UI is identical; Playwright cannot load Firefox extension). Run `npm run screenshots`. Each image shows light and dark mode side by side.
 
 ### English (EN)
 - [x] `en/firefox-1-github.png` — GitHub tab

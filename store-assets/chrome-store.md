@@ -303,7 +303,7 @@ All regions
 
 ## Store Assets Checklist
 
-**Screenshots** are auto-generated. Run `npm run screenshots` (see [docs/TESTING.md](../docs/TESTING.md#store-screenshots)).
+**Screenshots** are auto-generated. Run `npm run screenshots` (see [docs/TESTING.md](../docs/TESTING.md#store-screenshots)). Each image shows light and dark mode side by side.
 
 - [ ] `store-assets/icon128-store.png` — 128x128px store icon
 - [ ] `store-assets/promo-small.png` — 440x280px small promo tile
