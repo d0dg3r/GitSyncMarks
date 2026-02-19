@@ -244,6 +244,24 @@
   "options_syncOnFocus": {
     "message": "Sync when browser gains focus"
   },
+  "options_generatedFilesTitle": {
+    "message": "Generated files"
+  },
+  "options_generatedFilesDesc": {
+    "message": "Files created in the repo during sync. Toggle off to stop updating."
+  },
+  "options_generateReadmeMd": {
+    "message": "Generate README.md"
+  },
+  "options_generateReadmeMdDesc": {
+    "message": "Markdown overview in the repo."
+  },
+  "options_generateBookmarksHtml": {
+    "message": "Generate bookmarks.html"
+  },
+  "options_generateBookmarksHtmlDesc": {
+    "message": "Netscape format for browser import (Chrome, Firefox)."
+  },
   "options_notifications": {
     "message": "Sync notifications"
   },
@@ -479,7 +497,7 @@
     "message": "GitHub"
   },
   "options_tabSynchronization": {
-    "message": "Synchronization"
+    "message": "Sync"
   },
   "options_tabBackup": {
     "message": "Backup"

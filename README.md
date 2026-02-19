@@ -150,6 +150,7 @@ After the first sync, your repository will contain:
 bookmarks/
   _index.json                     # Metadata (format version, device info)
   README.md                       # Auto-generated overview — browse all bookmarks on GitHub
+  bookmarks.html                  # Netscape format — import directly in Chrome, Firefox, Edge
   toolbar/                        # Bookmarks Bar
     _order.json                   # Defines order of items and subfolders in this folder
     github_a1b2.json              # One file per bookmark
@@ -170,7 +171,7 @@ Each bookmark is a simple JSON file:
 }
 ```
 
-The `README.md` in the repo is regenerated on each sync — it lists all bookmarks with links, so you can browse your bookmarks directly on GitHub.
+The `README.md` in the repo is regenerated on each sync — it lists all bookmarks with links, so you can browse your bookmarks directly on GitHub. The `bookmarks.html` file uses the Netscape format and can be imported in any browser (Chrome: Bookmarks → Import; Firefox: Import and Backup → Import Bookmarks from file). Both files can be turned off in Settings → Synchronization → Generated files.
 
 ## Automation
 

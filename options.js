@@ -46,6 +46,8 @@ const STORAGE_KEYS = {
   LANGUAGE: 'language',
   THEME: 'theme',
   PROFILE_SWITCH_WITHOUT_CONFIRM: 'profileSwitchWithoutConfirm',
+  GENERATE_README_MD: 'generateReadmeMd',
+  GENERATE_BOOKMARKS_HTML: 'generateBookmarksHtml',
 };
 
 // ---- DOM elements: Settings Tab ----
@@ -88,6 +90,8 @@ const syncIntervalInput = document.getElementById('sync-interval');
 const debounceDelayInput = document.getElementById('debounce-delay');
 const syncOnStartupInput = document.getElementById('sync-on-startup');
 const syncOnFocusInput = document.getElementById('sync-on-focus');
+const generateReadmeMdInput = document.getElementById('generate-readme-md');
+const generateBookmarksHtmlInput = document.getElementById('generate-bookmarks-html');
 const notificationsModeSelect = document.getElementById('notifications-mode');
 const validateBtn = document.getElementById('validate-btn');
 const validationResult = document.getElementById('validation-result');
@@ -269,6 +273,8 @@ async function loadSettings() {
     notificationsMode: 'all',
     notificationsEnabled: undefined,
     language: 'auto',
+    generateReadmeMd: true,
+    generateBookmarksHtml: true,
     theme: 'auto',
     profileSwitchWithoutConfirm: false,
     debugLogEnabled: false,
@@ -283,6 +289,8 @@ async function loadSettings() {
   syncCustomFields.style.display = profile === 'custom' ? 'block' : 'none';
   syncOnStartupInput.checked = globals.syncOnStartup === true;
   syncOnFocusInput.checked = globals.syncOnFocus === true;
+  generateReadmeMdInput.checked = globals.generateReadmeMd !== false;
+  generateBookmarksHtmlInput.checked = globals.generateBookmarksHtml !== false;
   const mode = globals.notificationsMode;
   const oldEnabled = globals.notificationsEnabled;
   const displayMode = (mode && ['off', 'all', 'errorsOnly'].includes(mode))
@@ -745,6 +753,8 @@ async function saveSettings() {
       [STORAGE_KEYS.SYNC_ON_STARTUP]: syncOnStartupInput.checked,
       [STORAGE_KEYS.SYNC_ON_FOCUS]: syncOnFocusInput.checked,
       [STORAGE_KEYS.NOTIFICATIONS_MODE]: notificationsModeSelect.value,
+      [STORAGE_KEYS.GENERATE_README_MD]: generateReadmeMdInput.checked,
+      [STORAGE_KEYS.GENERATE_BOOKMARKS_HTML]: generateBookmarksHtmlInput.checked,
       [STORAGE_KEYS.LANGUAGE]: languageSelect.value,
       [STORAGE_KEYS.PROFILE_SWITCH_WITHOUT_CONFIRM]: profileSwitchWithoutConfirmInput.checked,
     });
@@ -804,10 +814,38 @@ debugLogExportBtn.addEventListener('click', async () => {
   setTimeout(() => { debugLogResult.textContent = ''; }, 3000);
 });
 
+// Generate files: debounced sync when toggling ON to avoid conflicts when enabling both quickly
+let generateFilesSyncTimer = null;
+const GENERATE_FILES_DEBOUNCE_MS = 800;
+const GENERATE_FILES_RETRY_DELAY_MS = 2500;
+
+function scheduleGenerateFilesSync(isRetry = false) {
+  if (generateFilesSyncTimer) clearTimeout(generateFilesSyncTimer);
+  const delayMs = isRetry ? GENERATE_FILES_RETRY_DELAY_MS : GENERATE_FILES_DEBOUNCE_MS;
+  generateFilesSyncTimer = setTimeout(async () => {
+    generateFilesSyncTimer = null;
+    try {
+      const result = await chrome.runtime.sendMessage({ action: 'push' });
+      if (result?.alreadyInProgress === true && !isRetry) {
+        scheduleGenerateFilesSync(true);
+      }
+    } catch (e) { /* Background may be terminated (e.g. Firefox) */ }
+  }, delayMs);
+}
+
+async function onGenerateFilesToggleChange() {
+  await saveSettings();
+  if (generateReadmeMdInput.checked || generateBookmarksHtmlInput.checked) {
+    scheduleGenerateFilesSync();
+  }
+}
+
 // Switches: auto-save on change (user often forgets to click Save)
 autoSyncInput.addEventListener('change', saveSettings);
 syncOnStartupInput.addEventListener('change', saveSettings);
 syncOnFocusInput.addEventListener('change', saveSettings);
+generateReadmeMdInput.addEventListener('change', onGenerateFilesToggleChange);
+generateBookmarksHtmlInput.addEventListener('change', onGenerateFilesToggleChange);
 
 // ==============================
 // Import/Export: Bookmarks
@@ -1019,6 +1057,8 @@ async function applyImportedSettings(settings) {
         language: settings.language || 'auto',
         theme: settings.theme || 'auto',
         profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
+        generateReadmeMd: settings.generateReadmeMd !== false,
+        generateBookmarksHtml: settings.generateBookmarksHtml !== false,
       });
       await chrome.storage.local.set({ profileTokens });
     } else {
@@ -1048,6 +1088,8 @@ async function applyImportedSettings(settings) {
         language: settings.language || 'auto',
         theme: settings.theme || 'auto',
         profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
+        generateReadmeMd: settings.generateReadmeMd !== false,
+        generateBookmarksHtml: settings.generateBookmarksHtml !== false,
       });
       await chrome.storage.local.set({ profileTokens });
   }

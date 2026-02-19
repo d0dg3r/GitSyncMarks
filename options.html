@@ -27,7 +27,7 @@
 
     <nav class="tab-bar">
       <button class="tab-btn active" data-tab="github" data-i18n="options_tabGitHub">GitHub</button>
-      <button class="tab-btn" data-tab="sync" data-i18n="options_tabSynchronization">Synchronization</button>
+      <button class="tab-btn" data-tab="sync" data-i18n="options_tabSynchronization">Sync</button>
       <button class="tab-btn" data-tab="backup" data-i18n="options_tabBackup">Backup</button>
       <button class="tab-btn" data-tab="automation" data-i18n="options_tabAutomation">Automation</button>
       <button class="tab-btn" data-tab="help" data-i18n="options_tabHelp">Help</button>
@@ -244,6 +244,27 @@
             <option value="errorsOnly" data-i18n="options_notificationsErrorsOnly">Errors only</option>
           </select>
           <small data-i18n="options_notificationsHint">Choose when to show notifications.</small>
+        </div>
+
+        <div class="form-group" style="margin-top: 1rem;">
+          <h3 class="automation-block-title" data-i18n="options_generatedFilesTitle">Generated files</h3>
+          <p class="backup-block-desc" data-i18n="options_generatedFilesDesc">Files created in the repo during sync. Toggle off to stop updating.</p>
+          <div class="form-group toggle-group">
+            <label for="generate-readme-md" class="toggle-label">
+              <span data-i18n="options_generateReadmeMd">Generate README.md</span>
+              <input type="checkbox" id="generate-readme-md" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <small data-i18n="options_generateReadmeMdDesc" style="display:block;margin-left:1.5rem;margin-top:0.25rem;">Markdown overview in the repo.</small>
+          <div class="form-group toggle-group">
+            <label for="generate-bookmarks-html" class="toggle-label">
+              <span data-i18n="options_generateBookmarksHtml">Generate bookmarks.html</span>
+              <input type="checkbox" id="generate-bookmarks-html" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <small data-i18n="options_generateBookmarksHtmlDesc" style="display:block;margin-left:1.5rem;margin-top:0.25rem;">Netscape format for browser import (Chrome, Firefox).</small>
         </div>
       </section>
 
