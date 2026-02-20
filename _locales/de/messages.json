@@ -611,13 +611,13 @@
     "message": "Lesezeichen exportieren / importieren"
   },
   "help_backupBookmarksDesc": {
-    "message": "Alle Browser-Lesezeichen als JSON exportieren. Import ersetzt alle lokalen Lesezeichen durch den Dateiinhalt."
+    "message": "Alle Browser-Lesezeichen als JSON exportieren. Import ersetzt alle Lesezeichen im aktiven Profil durch den Dateiinhalt."
   },
   "help_backupSettings": {
     "message": "Einstellungen exportieren / importieren"
   },
   "help_backupSettingsDesc": {
-    "message": "Export als .json (Klartext) oder .enc (verschlüsselt). Import akzeptiert beide Formate; die Seite lädt danach neu."
+    "message": "Export als .json (Klartext) oder .enc (verschlüsselt). Import ersetzt alle Einstellungen (alle Profile); die Seite lädt danach neu."
   },
   "help_conflictTitle": {
     "message": "Konflikte"
@@ -645,6 +645,9 @@
   },
   "help_whyAtomic": {
     "message": "Alle Änderungen werden in einem atomaren Commit geschrieben: Entweder alles gelingt oder nichts. So wird ein teilweiser oder beschädigter Zustand bei Unterbrechung vermieden. Ein Commit statt vieler vermeidet außerdem API-Ratelimits und hält die Git-Historie überschaubar."
+  },
+  "help_reportIssue": {
+    "message": "Problem melden"
   },
   "help_links": {
     "message": "Links"
@@ -693,10 +696,10 @@
     "message": "Einstellungen importieren"
   },
   "options_importBookmarksWarning": {
-    "message": "Ersetzt alle Lesezeichen. Unwiderruflich."
+    "message": "Ersetzt alle Lesezeichen im aktiven Profil. Unwiderruflich."
   },
   "options_importSettingsWarning": {
-    "message": "Ersetzt alle Einstellungen. Seite lädt neu."
+    "message": "Ersetzt alle Einstellungen (alle Profile). Seite lädt neu."
   },
   "options_importSettingsFormats": {
     "message": "Akzeptiert .json (Klartext) oder .enc (verschlüsselt)."
@@ -748,7 +751,7 @@
     "message": "Dateiformat"
   },
   "options_automationFoldersLabel": {
-    "message": "Ordner:"
+    "message": "Sections:"
   },
   "options_automationGithubActionTitle": {
     "message": "GitHub Action"
@@ -758,5 +761,35 @@
   },
   "options_automationGithubActionParams": {
     "message": "folder = Root; path = optionaler Unterordner; base-path bei abweichendem Dateipfad"
+  },
+  "options_automationCreateFileTitle": {
+    "message": "Datei im Repo anlegen"
+  },
+  "options_automationCreateFileDesc": {
+    "message": "Neue JSON-Datei in <code>bookmarks/toolbar/</code> oder <code>bookmarks/other/</code> (oder Unterordner) anlegen. Bei abweichendem Dateipfad den Pfad der Extension verwenden."
+  },
+  "options_automationCopy": {
+    "message": "Kopieren"
+  },
+  "options_automationWorkflowRaw": {
+    "message": "Raw"
+  },
+  "options_automationSubfolderExample": {
+    "message": "Beispiel: path=\"dev-tools\" → bookmarks/toolbar/dev-tools/"
+  },
+  "options_automationParamUrl": {
+    "message": "Lesezeichen-URL (erforderlich)"
+  },
+  "options_automationParamTitle": {
+    "message": "Titel (optional; URL falls leer)"
+  },
+  "options_automationParamSection": {
+    "message": "Section: toolbar oder other"
+  },
+  "options_automationParamFolder": {
+    "message": "Ordner innerhalb der Section (z. B. dev-tools)"
+  },
+  "options_automationParamBasePath": {
+    "message": "Basisordner im Repo (Standard bookmarks; muss File Path entsprechen)"
   }
 }

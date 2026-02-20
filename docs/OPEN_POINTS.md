@@ -6,7 +6,7 @@ Open items and next steps for further development. Updated each session.
 
 ## Current Status (v2.3.0)
 
-- **v2.3.0** – Encrypted settings export (password-protected .enc); plain JSON and encrypted supported; import with password prompt; Sync tab shortened to "Sync" in all languages
+- **v2.3.0** – Encrypted settings export (password-protected .enc); plain JSON and encrypted supported; import with password prompt; Sync tab shortened to "Sync"; store screenshots improved; import hints (bookmarks = active profile, settings = all profiles); theme cycle button; full auto-save (no Save buttons); GitHub Repos moved to Sync tab
 - **v2.2.1** – Sync feedback message fix; state regression fix (stale fetch guard, cache-busting); debug log extended with commit hashes
 - **GitHub Repos folder** – Implemented (toggle, position, refresh; synced via normal bookmark sync)
 - **Multiple Sync Profiles** – Implemented (profile manager, migration, CRUD, switchProfile, options UI, loading indicator, profile limit display)
@@ -29,7 +29,6 @@ Open items and next steps for further development. Updated each session.
 
 - **Settings export/import:** Round-trip fixed – import now restores `profileSwitchWithoutConfirm` and per-profile GitHub Repos fields. Legacy format migration supported.
 - **Bookmark export/import:** Exports all browser bookmarks; import replaces local bookmarks. Clarify whether per-profile export (e.g. "export current profile only") is needed, and how import interacts with multiple profiles.
-- **UI:** Consider indicating which profile's data is affected when importing bookmarks.
 
 ---
 

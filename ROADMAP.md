@@ -46,3 +46,5 @@ Contributions and ideas welcome — open an issue or pull request.
 | Selective folder sync | Sync only specific bookmark folders instead of all | Medium |
 | Sync history / rollback | Restore previous sync states (requires storing commit history) | Medium |
 | Conflict resolution UI | Diff view for merge conflicts instead of force push/pull only | Medium |
+| **Automation: Bulk add from URLs** | Paste list of URLs → generate multiple JSON files or script for batch add | Medium |
+| **Context menu "Add to GitSyncMarks"** | Right-click on page → add current page as bookmark to repo; requires new permission and flow | Medium |

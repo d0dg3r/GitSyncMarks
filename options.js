@@ -99,8 +99,6 @@ const onboardingConfirm = document.getElementById('onboarding-confirm');
 const onboardingConfirmText = document.getElementById('onboarding-confirm-text');
 const onboardingConfirmYesBtn = document.getElementById('onboarding-confirm-yes-btn');
 const onboardingConfirmNoBtn = document.getElementById('onboarding-confirm-no-btn');
-const saveGitHubBtn = document.getElementById('save-github-btn');
-const saveSyncBtn = document.getElementById('save-sync-btn');
 const saveGitHubResult = document.getElementById('save-github-result');
 const saveSyncResult = document.getElementById('save-sync-result');
 const githubReposCard = document.getElementById('github-repos-card');
@@ -111,7 +109,10 @@ const githubReposRefreshBtn = document.getElementById('github-repos-refresh-btn'
 const githubReposSpinner = document.getElementById('github-repos-spinner');
 const githubReposResult = document.getElementById('github-repos-result');
 const languageSelect = document.getElementById('language-select');
-const themeButtons = document.querySelectorAll('.theme-icon-btn');
+const themeCycleBtn = document.getElementById('theme-cycle-btn');
+const THEME_CYCLE = ['auto', 'dark', 'light'];
+const THEME_ICONS = { auto: 'A', dark: '☽', light: '☀' };
+const THEME_TITLES = { auto: 'options_themeAuto', dark: 'options_themeDark', light: 'options_themeLight' };
 const debugLogEnabledInput = document.getElementById('debug-log-enabled');
 const debugLogExportBtn = document.getElementById('debug-log-export-btn');
 const debugLogResult = document.getElementById('debug-log-result');
@@ -303,9 +304,10 @@ async function loadSettings() {
   }
   languageSelect.value = globals.language || 'auto';
   const theme = globals.theme || 'auto';
-  themeButtons.forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.theme === theme);
-  });
+  if (themeCycleBtn) {
+    themeCycleBtn.textContent = THEME_ICONS[theme] ?? 'A';
+    themeCycleBtn.title = getMessage(THEME_TITLES[theme] ?? 'options_themeAuto');
+  }
   profileSwitchWithoutConfirmInput.checked = globals.profileSwitchWithoutConfirm === true;
   profileSwitchConfirm.style.display = 'none';
   profileDeleteConfirm.style.display = 'none';
@@ -320,6 +322,13 @@ async function loadSettings() {
 // Profile selector: switching profiles replaces bookmarks
 let pendingProfileSwitchId = null;
 
+function setProfileButtonsEnabled(enabled) {
+  profileSelect.disabled = !enabled;
+  profileAddBtn.disabled = !enabled;
+  profileRenameBtn.disabled = !enabled;
+  profileDeleteBtn.disabled = !enabled;
+}
+
 async function doProfileSwitch(targetId) {
   const activeId = await getActiveProfileId();
   if (targetId === activeId) return;
@@ -327,10 +336,7 @@ async function doProfileSwitch(targetId) {
   pendingProfileSwitchId = null;
 
   try {
-    profileSelect.disabled = true;
-    profileAddBtn.disabled = true;
-    profileRenameBtn.disabled = true;
-    profileDeleteBtn.disabled = true;
+    setProfileButtonsEnabled(false);
     profileSpinner.style.display = 'inline-block';
     profileSwitchingMsg.textContent = getMessage('options_profileSwitching');
     profileSwitchingMsg.style.display = '';
@@ -340,10 +346,7 @@ async function doProfileSwitch(targetId) {
     showProfileMessage(getMessage('options_error', [err.message]));
     profileSelect.value = activeId;
   } finally {
-    profileSelect.disabled = false;
-    profileAddBtn.disabled = false;
-    profileRenameBtn.disabled = false;
-    profileDeleteBtn.disabled = false;
+    setProfileButtonsEnabled(true);
     profileSpinner.style.display = 'none';
     profileSwitchingMsg.style.display = 'none';
   }
@@ -431,10 +434,7 @@ profileAddConfirmBtn.addEventListener('click', async () => {
   profileAddDialog.style.display = 'none';
   try {
     const newId = await addProfile(name);
-    profileSelect.disabled = true;
-    profileAddBtn.disabled = true;
-    profileRenameBtn.disabled = true;
-    profileDeleteBtn.disabled = true;
+    setProfileButtonsEnabled(false);
     profileSpinner.style.display = 'inline-block';
     profileSwitchingMsg.textContent = getMessage('options_profileSwitching');
     profileSwitchingMsg.style.display = '';
@@ -442,18 +442,12 @@ profileAddConfirmBtn.addEventListener('click', async () => {
       await switchProfile(newId, { skipConfirm: true });
       await loadSettings();
     } finally {
-      profileSelect.disabled = false;
-      profileAddBtn.disabled = false;
-      profileRenameBtn.disabled = false;
-      profileDeleteBtn.disabled = false;
+      setProfileButtonsEnabled(true);
       profileSpinner.style.display = 'none';
       profileSwitchingMsg.style.display = 'none';
     }
   } catch (err) {
-    profileSelect.disabled = false;
-    profileAddBtn.disabled = false;
-    profileRenameBtn.disabled = false;
-    profileDeleteBtn.disabled = false;
+    setProfileButtonsEnabled(true);
     profileSpinner.style.display = 'none';
     profileSwitchingMsg.style.display = 'none';
     showProfileMessage(getMessage('options_error', [err.message]));
@@ -539,16 +533,20 @@ syncProfileSelect.addEventListener('change', () => {
       debounceDelayInput.value = Math.round(preset.debounceMs / 1000);
     }
   }
+  saveSettings();
 });
 
-themeButtons.forEach(btn => {
-  btn.addEventListener('click', async () => {
-    const newTheme = btn.dataset.theme;
-    await chrome.storage.sync.set({ [STORAGE_KEYS.THEME]: newTheme });
-    applyTheme(newTheme);
-    themeButtons.forEach(b => b.classList.toggle('active', b.dataset.theme === newTheme));
+if (themeCycleBtn) {
+  themeCycleBtn.addEventListener('click', async () => {
+    const current = await chrome.storage.sync.get({ [STORAGE_KEYS.THEME]: 'auto' }).then(r => r[STORAGE_KEYS.THEME] || 'auto');
+    const idx = THEME_CYCLE.indexOf(current);
+    const nextTheme = THEME_CYCLE[(idx + 1) % THEME_CYCLE.length];
+    await chrome.storage.sync.set({ [STORAGE_KEYS.THEME]: nextTheme });
+    applyTheme(nextTheme);
+    themeCycleBtn.textContent = THEME_ICONS[nextTheme];
+    themeCycleBtn.title = getMessage(THEME_TITLES[nextTheme]);
   });
-});
+}
 
 languageSelect.addEventListener('change', async () => {
   const newLang = languageSelect.value;
@@ -573,6 +571,7 @@ githubReposEnabledInput.addEventListener('change', () => {
   githubReposOptions.style.display = githubReposEnabledInput.checked ? 'block' : 'none';
   saveSettings();
 });
+githubReposParentSelect.addEventListener('change', saveSettings);
 
 // GitHub Repos: refresh button (saves first so current form state is persisted)
 githubReposRefreshBtn.addEventListener('click', async () => {
@@ -770,6 +769,10 @@ async function saveSettings() {
       ? `${getMessage('options_settingsSaved')} ${getMessage('options_filePathChangeHint')}`
       : getMessage('options_settingsSaved');
     showSaveResult(successMsg, 'success');
+
+    const isConfigured = !!(tokenInput.value.trim() && ownerInput.value.trim() && repoInput.value.trim());
+    githubReposCard.style.display = isConfigured ? 'block' : 'none';
+
     setTimeout(() => {
       saveGitHubResult.textContent = '';
       saveSyncResult.textContent = '';
@@ -786,8 +789,13 @@ function showSaveResult(message, type) {
   saveSyncResult.className = `save-result ${type}`;
 }
 
-saveGitHubBtn.addEventListener('click', saveSettings);
-saveSyncBtn.addEventListener('click', saveSettings);
+// GitHub tab: auto-save on change (no Save button)
+tokenInput.addEventListener('change', saveSettings);
+ownerInput.addEventListener('change', saveSettings);
+repoInput.addEventListener('change', saveSettings);
+branchInput.addEventListener('change', saveSettings);
+filepathInput.addEventListener('change', saveSettings);
+profileSwitchWithoutConfirmInput.addEventListener('change', saveSettings);
 
 // Debug log: toggle saves immediately; export downloads log file
 debugLogEnabledInput.addEventListener('change', async () => {
@@ -813,6 +821,32 @@ debugLogExportBtn.addEventListener('click', async () => {
   debugLogResult.className = 'validation-result success';
   setTimeout(() => { debugLogResult.textContent = ''; }, 3000);
 });
+
+// Automation tab: copy JSON or gh command to clipboard
+const automationCopyJsonBtn = document.getElementById('automation-copy-json-btn');
+const automationCopyGhBtn = document.getElementById('automation-copy-gh-btn');
+const automationJsonBlock = document.getElementById('automation-json-block');
+const automationGhBlock = document.getElementById('automation-gh-block');
+
+async function copyAutomationToClipboard(preEl, btn) {
+  const text = preEl?.textContent?.trim() ?? '';
+  if (!text) return;
+  try {
+    await navigator.clipboard.writeText(text);
+    const orig = btn.textContent;
+    btn.textContent = '✓';
+    setTimeout(() => { btn.textContent = orig; }, 1200);
+  } catch (err) {
+    console.warn('Clipboard copy failed:', err);
+  }
+}
+
+if (automationCopyJsonBtn) {
+  automationCopyJsonBtn.addEventListener('click', () => copyAutomationToClipboard(automationJsonBlock, automationCopyJsonBtn));
+}
+if (automationCopyGhBtn) {
+  automationCopyGhBtn.addEventListener('click', () => copyAutomationToClipboard(automationGhBlock, automationCopyGhBtn));
+}
 
 // Generate files: debounced sync when toggling ON to avoid conflicts when enabling both quickly
 let generateFilesSyncTimer = null;
@@ -840,10 +874,13 @@ async function onGenerateFilesToggleChange() {
   }
 }
 
-// Switches: auto-save on change (user often forgets to click Save)
+// Sync tab: auto-save on change (no Save button)
 autoSyncInput.addEventListener('change', saveSettings);
 syncOnStartupInput.addEventListener('change', saveSettings);
 syncOnFocusInput.addEventListener('change', saveSettings);
+notificationsModeSelect.addEventListener('change', saveSettings);
+syncIntervalInput.addEventListener('change', saveSettings);
+debounceDelayInput.addEventListener('change', saveSettings);
 generateReadmeMdInput.addEventListener('change', onGenerateFilesToggleChange);
 generateBookmarksHtmlInput.addEventListener('change', onGenerateFilesToggleChange);
 

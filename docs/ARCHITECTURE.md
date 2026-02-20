@@ -77,10 +77,10 @@ Toolbar popup with header (icon, title, profile dropdown when 2+ profiles), stat
 
 ### `options.html` / `options.js` — Settings Page
 
-Full-page settings (opens in tab) with six tabs. Header: language dropdown, theme (light/dark/auto).
+Full-page settings (opens in tab) with six tabs. Header: language dropdown, theme cycle button (A → Dark → Light → A). All settings auto-save on change; no Save buttons.
 
 1. **GitHub** — Profile selector (multiple profiles with separate repos), token, repository, connection test, onboarding (create folder or pull when path empty/has bookmarks)
-2. **Sync** — Sync profile, auto-sync, sync on start/focus, debounce
+2. **Sync** — Sync profile, auto-sync, sync on start/focus, notifications; GitHub Repos folder (optional); generated files (README.md, bookmarks.html)
 3. **Backup** — Export/import bookmarks and settings as JSON or password-encrypted .enc (file picker with chosen filename)
 4. **Automation** — Guide for adding bookmarks via Git, CLI, or GitHub Actions
 5. **Help** — Keyboard shortcuts, main features (popup, profiles, auto-sync, conflicts)
@@ -142,7 +142,7 @@ Custom runtime i18n with manual language selection. Loads `_locales/{lang}/messa
 
 ### `lib/theme.js` — Theme
 
-Light, dark, or auto (system) theme. Stores preference in `chrome.storage.sync`, applies `html.dark` class when dark mode is active. Used by options page and popup.
+Light, dark, or auto (system) theme. Single cycle button in options header switches A → Dark → Light → A. Stores preference in `chrome.storage.sync`, applies `html.dark` class when dark mode is active. Used by options page and popup.
 
 ### `lib/profile-manager.js` — Profile Manager
 
@@ -206,12 +206,15 @@ GitSyncMarks/
 │   ├── onboarding.js            # checkPathSetup, initializeRemoteFolder
 │   ├── remote-fetch.js           # fetchRemoteFileMap
 │   ├── crypto.js                 # Token encryption (AES-256-GCM)
+│   ├── debug-log.js              # Debug log for sync diagnostics
 │   ├── i18n.js                   # Internationalization
-│   ├── theme.js                  # Light/dark/auto theme
+│   ├── theme.js                  # Light/dark/auto theme (cycle button)
 │   └── browser-polyfill.js      # Browser detection
 ├── _locales/
 │   ├── en/messages.json
-│   └── de/messages.json
+│   ├── de/messages.json
+│   ├── fr/messages.json
+│   └── es/messages.json
 ├── icons/
 ├── scripts/
 │   └── build.sh                  # Build Chrome + Firefox packages

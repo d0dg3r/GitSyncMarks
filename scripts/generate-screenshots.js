@@ -74,31 +74,6 @@ async function compositePopupLightDarkCrop(lightBuffer, darkBuffer, outPath) {
     .toFile(outPath);
 }
 
-/** Popup composite (pad): fit inside + padding, zum Vergleich. */
-async function compositePopupLightDarkPad(lightBuffer, darkBuffer, outPath) {
-  const halfWidth = VIEWPORT.width / 2;
-  const padY = VIEWPORT.height / 4;
-  const [lightPadded, darkPadded] = await Promise.all([
-    sharp(lightBuffer)
-      .resize(halfWidth, VIEWPORT.height, { fit: 'inside' })
-      .extend({ top: padY, bottom: padY, left: 0, right: 0, background: { r: 245, g: 245, b: 247 } })
-      .toBuffer(),
-    sharp(darkBuffer)
-      .resize(halfWidth, VIEWPORT.height, { fit: 'inside' })
-      .extend({ top: padY, bottom: padY, left: 0, right: 0, background: { r: 29, g: 29, b: 31 } })
-      .toBuffer(),
-  ]);
-  await sharp({
-    create: { width: VIEWPORT.width, height: VIEWPORT.height, channels: 3, background: { r: 255, g: 255, b: 255 } },
-  })
-    .composite([
-      { input: lightPadded, left: 0, top: 0 },
-      { input: darkPadded, left: halfWidth, top: 0 },
-    ])
-    .png()
-    .toFile(outPath);
-}
-
 async function main() {
   if (!fs.existsSync(EXTENSION_PATH)) {
     console.error(
@@ -110,7 +85,7 @@ async function main() {
   await ensureDir(STORE_ASSETS);
 
   // Remove old unnumbered screenshot files
-  const OLD_FILES = ['github', 'synchronization', 'backup', 'automation', 'help', 'about', 'popup', '7-popup-pad'];
+  const OLD_FILES = ['github', 'synchronization', 'backup', 'automation', 'help', 'about', 'popup'];
   for (const code of LANGUAGES.map((l) => l.code)) {
     const langDir = path.join(STORE_ASSETS, code);
     if (fs.existsSync(langDir)) {
@@ -166,11 +141,17 @@ async function main() {
       await tabBtn.click();
       await page.waitForTimeout(300);
 
-      await page.locator('#theme-light').click();
+      await page.evaluate(async (theme) => {
+        await chrome.storage.sync.set({ theme });
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+      }, 'light');
       await page.waitForTimeout(200);
       const lightBuf = await page.screenshot();
 
-      await page.locator('#theme-dark').click();
+      await page.evaluate(async (theme) => {
+        await chrome.storage.sync.set({ theme });
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+      }, 'dark');
       await page.waitForTimeout(200);
       const darkBuf = await page.screenshot();
 
@@ -199,10 +180,8 @@ async function main() {
     const popupDarkBuf = await popupPage.screenshot();
 
     const popupPath = path.join(langDir, 'chrome-7-popup.png');
-    const popupPadPath = path.join(langDir, 'chrome-7-popup-pad.png');
     await compositePopupLightDarkCrop(popupLightBuf, popupDarkBuf, popupPath);
-    await compositePopupLightDarkPad(popupLightBuf, popupDarkBuf, popupPadPath);
-    console.log('  ', `${code}/chrome-7-popup.png (crop)  ${code}/chrome-7-popup-pad.png (pad)`);
+    console.log('  ', `${code}/chrome-7-popup.png (light | dark)`);
     await popupPage.close();
   }
 

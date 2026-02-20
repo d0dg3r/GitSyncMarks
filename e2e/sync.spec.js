@@ -27,7 +27,7 @@ async function configureExtension(page, extensionId) {
   await page.locator('#token').fill(process.env.GITSYNCMARKS_TEST_PAT);
   await page.locator('#owner').fill(process.env.GITSYNCMARKS_TEST_REPO_OWNER);
   await page.locator('#repo').fill(process.env.GITSYNCMARKS_TEST_REPO);
-  await page.locator('#save-github-btn').click();
+  await page.locator('#repo').dispatchEvent('change');
   await test.expect(page.locator('#save-github-result')).toHaveClass(/success/, { timeout: 5000 });
 }
 

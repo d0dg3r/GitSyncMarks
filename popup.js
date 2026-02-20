@@ -246,6 +246,8 @@ function setLoading(loading) {
   syncBtn.disabled = loading;
   pushBtn.disabled = loading;
   pullBtn.disabled = loading;
+  forcePushBtn.disabled = loading;
+  forcePullBtn.disabled = loading;
   profileSelect.disabled = loading;
   syncSpinner.style.display = loading ? 'inline-block' : 'none';
   syncText.textContent = loading ? getMessage('popup_syncing') : getMessage('popup_syncNow');
@@ -269,7 +271,7 @@ async function handleAction(action) {
       setStatus('✅', result.message, 'status-ok');
       conflictBox.style.display = 'none';
     } else {
-      if (result.message.includes('Conflict') || result.message.includes('Konflikt')) {
+      if (result.conflict) {
         setStatus('⚠️', result.message, 'status-warning');
         conflictBox.style.display = 'block';
       } else {
