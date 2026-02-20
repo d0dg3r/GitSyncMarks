@@ -18,6 +18,21 @@ MAJOR.MINOR.PATCH
 
 The version is declared in `manifest.json` → `"version"`. It must match `manifest.firefox.json` and `package.json`.
 
+### Release Codenames (Cult Nerd Figures)
+
+| Version | Codename | Rationale |
+|---------|----------|-----------|
+| 2.3.0 | **Data** | Star Trek — logical, reliable, all about data; fits auto-save and efficient sync |
+| 2.4.0 | **R2-D2** | Star Wars — the helper droid that does everything; fits context menu, favicon, handy tools |
+| 3.0 | **GLaDOS** | Portal — AI, cult, iconic; fits AI features; the irony of "murderous" AI as bookmark keeper is fun |
+
+**Naming logic:**
+- One codename per MINOR release (2.x.0); PATCH releases (2.3.1) keep the same codename
+- Each from a different franchise (Trek → Wars → Gaming) for variety
+- Name should fit the release theme: Data = data/sync, R2 = helper/tools, GLaDOS = AI
+- Format: **R2-D2** with hyphen (not R2D2)
+- Future candidates: Spock, Neo, Bender, Morpheus, TARS, HAL
+
 ### Version History
 
 | Version | Description |

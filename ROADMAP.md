@@ -9,6 +9,10 @@ Contributions and ideas welcome — open an issue or pull request.
 ## Planned for v2.4.0
 
 - **Browser import files** — Automatically generate import files for common browsers (e.g. Netscape HTML) alongside README.md. Enables importing directly from the repo without the extension.
+- **Context menu** — Right-click on link or page:
+  - **Add to GitSyncMarks** — add as bookmark to repo
+  - **Favicon**: copy favicon URL to clipboard; download locally; save to Git repo
+  - New permissions: `contextMenus`; optionally `downloads` for local save
 
 
 ---
@@ -47,4 +51,4 @@ Contributions and ideas welcome — open an issue or pull request.
 | Sync history / rollback | Restore previous sync states (requires storing commit history) | Medium |
 | Conflict resolution UI | Diff view for merge conflicts instead of force push/pull only | Medium |
 | **Automation: Bulk add from URLs** | Paste list of URLs → generate multiple JSON files or script for batch add | Medium |
-| **Context menu "Add to GitSyncMarks"** | Right-click on page → add current page as bookmark to repo; requires new permission and flow | Medium |
+| **AI + Bookmarks** | User enters API token (OpenAI, Anthropic, Gemini, Groq, Qwen). Ideas: auto-categorize, semantic search, summaries, duplicate detection, title improvement, virtual folders, smart cleanup. Privacy/cost disclaimer; optional AI tab in options. | Large |
