@@ -28,6 +28,7 @@ Features:
 • A README.md with all bookmarks is generated in the repo for easy browsing
 • Automation: add bookmarks via Git, CLI, or GitHub Actions — no browser needed
 • Import/Export: back up and restore bookmarks or settings as JSON files; settings can be exported as password-encrypted .enc for secure backup (clear UI with file picker)
+• Auto-save: all settings save automatically when changed — no Save buttons
 • Theme: light, dark, or auto (system) for options and popup
 • Multilanguage: English, German, French, and Spanish with manual language selection
 • Keyboard shortcuts: quick sync (Ctrl+Shift+.), open settings (Ctrl+Shift+,) — customizable
@@ -79,6 +80,7 @@ Funktionen:
 • Volle Firefox-Unterstützung inkl. Lesezeichen-Menü
 • Bis zu 10 Profile, GitHub Repos-Ordner, Onboarding, Sync-Profile
 • Auto-Sync, periodischer Sync, manuelles Push/Pull
+• Auto-Save: alle Einstellungen speichern sich automatisch — keine Speichern-Buttons
 • Import/Export (JSON oder verschlüsselt .enc), Design Hell/Dunkel, Mehrsprachig, Tastenkürzel, Debug-Log
 • Mobile-Begleiter: GitSyncMarks-Mobile (iOS + Android)
 
@@ -115,6 +117,7 @@ Fonctionnalités :
 • Stockage par fichier, fusion triple, support complet Firefox (y compris le Menu favoris)
 • Jusqu'à 10 profils, dossier Repos GitHub, intégration, profils de sync
 • Auto-sync, sync périodique, Push/Pull manuel
+• Enregistrement auto : tous les paramètres se sauvegardent à la modification — pas de bouton Enregistrer
 • Import/Export (JSON ou .enc chiffré), thème clair/sombre, multilingue, raccourcis clavier, journal de débogage
 • Application mobile : GitSyncMarks-Mobile (iOS + Android)
 
@@ -151,6 +154,7 @@ Características:
 • Almacenamiento por archivo, fusión triple, soporte completo Firefox (incl. menú de marcadores)
 • Hasta 10 perfiles, carpeta Repos GitHub, integración, perfiles de sync
 • Auto-sync, sync periódico, Push/Pull manual
+• Guardado automático: todos los ajustes se guardan al cambiar — sin botones Guardar
 • Importar/Exportar (JSON o .enc cifrado), tema claro/oscuro, multilingüe, atajos de teclado, registro de depuración
 • App móvil: GitSyncMarks-Mobile (iOS + Android)
 

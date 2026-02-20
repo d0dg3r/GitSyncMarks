@@ -28,6 +28,7 @@ Features:
 • A README.md with all bookmarks is generated in the repo for easy browsing
 • Automation: add bookmarks via Git, CLI, or GitHub Actions — no browser needed
 • Import/Export: back up and restore bookmarks or settings as JSON files; settings can be exported as password-encrypted .enc for secure backup (clear UI with file picker)
+• Auto-save: all settings save automatically when changed — no Save buttons
 • Theme: light, dark, or auto (system) for options and popup
 • Multilanguage: English, German, French, and Spanish with manual language selection
 • Keyboard shortcuts: quick sync (Ctrl+Shift+.), open settings (Ctrl+Shift+,) — customizable
@@ -88,6 +89,7 @@ Funktionen:
 • Eine README.md mit allen Lesezeichen wird im Repository generiert
 • Automatisierung: Lesezeichen über Git, CLI oder GitHub Actions hinzufügen — ohne Browser
 • Import/Export: Lesezeichen oder Einstellungen als JSON-Dateien sichern; Einstellungen auch als passwortverschlüsselte .enc exportierbar (klare UI mit Dateiauswahl)
+• Auto-Save: alle Einstellungen speichern sich automatisch bei Änderung — keine Speichern-Buttons
 • Design: Hell, Dunkel oder Auto (System) für Einstellungen und Popup
 • Mehrsprachig: Englisch, Deutsch, Französisch und Spanisch mit manueller Sprachauswahl
 • Tastenkürzel: Schnell-Sync (Strg+Umschalt+.), Einstellungen öffnen (Strg+Umschalt+,) — anpassbar
@@ -148,6 +150,7 @@ Fonctionnalités :
 • Un README.md avec tous les favoris est généré dans le dépôt pour une navigation facile
 • Automatisation : ajouter des favoris via Git, CLI ou GitHub Actions — sans ouvrir le navigateur
 • Import/Export : sauvegarder et restaurer les favoris ou les paramètres en JSON ; paramètres exportables en .enc chiffré par mot de passe (interface claire avec sélection de fichier)
+• Enregistrement automatique : tous les paramètres se sauvegardent à la modification — pas de bouton Enregistrer
 • Thème : clair, sombre ou auto (système) pour les options et le popup
 • Multilingue : anglais, allemand, français et espagnol avec sélection manuelle de la langue
 • Raccourcis clavier : sync rapide, paramètres — personnalisables
@@ -208,6 +211,7 @@ Características:
 • Un README.md con todos los marcadores se genera en el repositorio para navegar fácilmente
 • Automatización: añadir marcadores vía Git, CLI o GitHub Actions — sin abrir el navegador
 • Importar/Exportar: respaldar y restaurar marcadores o ajustes en JSON; ajustes exportables como .enc cifrado con contraseña (interfaz clara con selector de archivo)
+• Guardado automático: todos los ajustes se guardan al cambiar — sin botones Guardar
 • Tema: claro, oscuro o auto (sistema) para opciones y popup
 • Multilingüe: inglés, alemán, francés y español con selección manual del idioma
 • Atajos de teclado: sync rápido, configuración — personalizables
