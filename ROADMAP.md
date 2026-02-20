@@ -9,6 +9,7 @@ Contributions and ideas welcome — open an issue or pull request.
 ## Planned for v2.4.0 (*R2-D2*)
 
 - **Browser import files** — Automatically generate import files for common browsers (e.g. Netscape HTML) alongside README.md. Enables importing directly from the repo without the extension.
+- **Settings sync to Git** — Optional: store extension settings in the repo so they sync across clients. **Encrypted only** — never plain JSON (would expose tokens). Uses existing .enc format; user sets password once per device.
 - **Context menu** — Right-click on link or page:
   - **Add to GitSyncMarks** — add as bookmark to repo
   - **Favicon**: copy favicon URL to clipboard; download locally; save to Git repo

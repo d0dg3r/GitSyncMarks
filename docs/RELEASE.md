@@ -23,7 +23,7 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 | Version | Codename | Rationale |
 |---------|----------|-----------|
 | 2.3.0 | **Data** | Star Trek — logical, reliable, all about data; fits auto-save and efficient sync |
-| 2.4.0 | **R2-D2** | Star Wars — the helper droid that does everything; fits context menu, favicon, handy tools |
+| 2.4.0 | **R2-D2** | Star Wars — the helper droid that does everything; fits context menu, favicon, settings sync to Git (encrypted only) |
 | 3.0 | **GLaDOS** | Portal — AI, cult, iconic; fits AI features; the irony of "murderous" AI as bookmark keeper is fun |
 
 **Naming logic:**

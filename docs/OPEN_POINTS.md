@@ -37,7 +37,7 @@ Open items and next steps for further development. Updated each session.
 1. [ ] Test on Chrome, Firefox Desktop, Firefox Android
 2. [ ] Tag v2.3.0, publish release (manifest, CHANGELOG, docs updated)
 3. [ ] Submit to Chrome Web Store and Firefox Add-ons with updated store descriptions
-4. [ ] Work on v2.4.0 (browser import files) or backlog
+4. [ ] Work on v2.4.0: browser import files; context menu; settings sync to Git (encrypted only); or backlog
 
 ---
 
