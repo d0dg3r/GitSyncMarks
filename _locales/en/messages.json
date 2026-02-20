@@ -244,6 +244,24 @@
   "options_syncOnFocus": {
     "message": "Sync when browser gains focus"
   },
+  "options_generatedFilesTitle": {
+    "message": "Generated files"
+  },
+  "options_generatedFilesDesc": {
+    "message": "Files created in the repo during sync. Toggle off to stop updating."
+  },
+  "options_generateReadmeMd": {
+    "message": "Generate README.md"
+  },
+  "options_generateReadmeMdDesc": {
+    "message": "Markdown overview in the repo."
+  },
+  "options_generateBookmarksHtml": {
+    "message": "Generate bookmarks.html"
+  },
+  "options_generateBookmarksHtmlDesc": {
+    "message": "Netscape format for browser import (Chrome, Firefox)."
+  },
   "options_notifications": {
     "message": "Sync notifications"
   },
@@ -463,7 +481,7 @@
     "message": "Debug Log"
   },
   "options_debugLogDesc": {
-    "message": "Enable to record sync diagnostics (diffs, merge decisions, conflicts). Use when troubleshooting sync issues. Export and share the log for support."
+    "message": "Enable to record sync diagnostics (diffs, merge decisions, conflicts, commit hashes at key points). Use when troubleshooting sync issues. Export and share the log for support."
   },
   "options_debugLogEnabled": {
     "message": "Enable debug log"
@@ -479,7 +497,7 @@
     "message": "GitHub"
   },
   "options_tabSynchronization": {
-    "message": "Synchronization"
+    "message": "Sync"
   },
   "options_tabBackup": {
     "message": "Backup"
@@ -554,7 +572,7 @@
     "message": "Download from GitHub (overwrites local changes)."
   },
   "help_syncTitle": {
-    "message": "Synchronization"
+    "message": "Sync"
   },
   "help_autoSyncTitle": {
     "message": "Auto-sync"
@@ -574,6 +592,12 @@
   "help_syncStartupDesc": {
     "message": "Optional: sync when the browser starts or when you return to the browser window (with cooldown)."
   },
+  "help_generatedFilesTitle": {
+    "message": "Generated files"
+  },
+  "help_generatedFilesDesc": {
+    "message": "README.md (overview) and bookmarks.html (Netscape format for browser import) are created during sync. Toggle off in the Sync tab to stop updating."
+  },
   "help_notificationsTitle": {
     "message": "Notifications"
   },
@@ -587,13 +611,13 @@
     "message": "Export / Import Bookmarks"
   },
   "help_backupBookmarksDesc": {
-    "message": "Export all browser bookmarks as JSON. Import replaces all local bookmarks with the file contents."
+    "message": "Export all browser bookmarks as JSON. Import replaces all bookmarks in the active profile with the file contents."
   },
   "help_backupSettings": {
     "message": "Export / Import Settings"
   },
   "help_backupSettingsDesc": {
-    "message": "Export GitHub connection and sync settings (profiles with decrypted tokens). Import replaces all settings; the page reloads afterwards."
+    "message": "Export as plain .json or password-encrypted .enc. Import replaces all settings (all profiles); the page reloads afterwards."
   },
   "help_conflictTitle": {
     "message": "Conflicts"
@@ -622,6 +646,9 @@
   "help_whyAtomic": {
     "message": "All changes are written in a single atomic commit: either everything succeeds or nothing does. This prevents partial or corrupted state if the sync is interrupted. One commit instead of many also avoids hitting API rate limits and keeps the Git history clean."
   },
+  "help_reportIssue": {
+    "message": "Report Issue"
+  },
   "help_links": {
     "message": "Links"
   },
@@ -633,7 +660,7 @@
     "message": "Backup"
   },
   "options_backupIntro": {
-    "message": "Export or import bookmarks and extension settings as JSON."
+    "message": "Export or import bookmarks as JSON; settings as JSON or password-encrypted .enc."
   },
   "options_bookmarksCard": {
     "message": "Bookmarks"
@@ -669,10 +696,13 @@
     "message": "Import Settings"
   },
   "options_importBookmarksWarning": {
-    "message": "Replaces all current bookmarks. Cannot be undone."
+    "message": "Replaces all bookmarks in the active profile. Cannot be undone."
   },
   "options_importSettingsWarning": {
-    "message": "Replaces all settings. Page reloads afterwards."
+    "message": "Replaces all settings (all profiles). Page reloads afterwards."
+  },
+  "options_importSettingsFormats": {
+    "message": "Accepts .json (plain) or .enc (encrypted) files."
   },
   "options_selectFile": {
     "message": "Select file..."
@@ -685,6 +715,27 @@
   },
   "options_importError": {
     "message": "Import failed: $1"
+  },
+  "options_exportSettingsPlain": {
+    "message": "Export (plain)"
+  },
+  "options_exportSettingsEncrypted": {
+    "message": "Export encrypted"
+  },
+  "options_exportPasswordPrompt": {
+    "message": "Enter a password to encrypt the settings file."
+  },
+  "options_importPasswordPrompt": {
+    "message": "Enter the password to decrypt the settings file."
+  },
+  "options_passwordPlaceholder": {
+    "message": "Password"
+  },
+  "options_decryptError": {
+    "message": "Decryption failed. Wrong password?"
+  },
+  "options_exportEncryptedSuccess": {
+    "message": "Encrypted export successful!"
   },
 
   "options_tabAutomation": {
@@ -700,7 +751,7 @@
     "message": "File format"
   },
   "options_automationFoldersLabel": {
-    "message": "Folders:"
+    "message": "Sections:"
   },
   "options_automationGithubActionTitle": {
     "message": "GitHub Action"
@@ -710,5 +761,35 @@
   },
   "options_automationGithubActionParams": {
     "message": "folder = root; path = optional subfolder; base-path if File Path ≠ bookmarks"
+  },
+  "options_automationCreateFileTitle": {
+    "message": "Create file in repo"
+  },
+  "options_automationCreateFileDesc": {
+    "message": "Add a new JSON file in <code>bookmarks/toolbar/</code> or <code>bookmarks/other/</code> (or a subfolder). Use your extension's File Path if different."
+  },
+  "options_automationCopy": {
+    "message": "Copy"
+  },
+  "options_automationWorkflowRaw": {
+    "message": "Raw"
+  },
+  "options_automationSubfolderExample": {
+    "message": "Example: path=\"dev-tools\" → bookmarks/toolbar/dev-tools/"
+  },
+  "options_automationParamUrl": {
+    "message": "Bookmark URL (required)"
+  },
+  "options_automationParamTitle": {
+    "message": "Title (optional; URL used if empty)"
+  },
+  "options_automationParamSection": {
+    "message": "Section: toolbar or other"
+  },
+  "options_automationParamFolder": {
+    "message": "Folder within section (e.g. dev-tools)"
+  },
+  "options_automationParamBasePath": {
+    "message": "Base folder in repo (default bookmarks; must match File Path setting)"
   }
 }

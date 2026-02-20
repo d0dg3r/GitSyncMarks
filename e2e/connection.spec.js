@@ -13,7 +13,7 @@ async function configureExtension(page, extensionId) {
   await page.locator('#token').fill(process.env.GITSYNCMARKS_TEST_PAT);
   await page.locator('#owner').fill(process.env.GITSYNCMARKS_TEST_REPO_OWNER);
   await page.locator('#repo').fill(process.env.GITSYNCMARKS_TEST_REPO);
-  await page.locator('#save-github-btn').click();
+  await page.locator('#repo').dispatchEvent('change');
   await test.expect(page.locator('#save-github-result')).toHaveClass(/success/, { timeout: 5000 });
 }
 
@@ -72,15 +72,15 @@ test.describe('Connection', () => {
   });
 
     test.skip(!hasTestCredentials(), 'Missing test credentials');
-    test('Save Settings in Sync tab succeeds', async ({ page, extensionId }) => {
+    test('Sync tab auto-saves on change', async ({ page, extensionId }) => {
       await configureExtension(page, extensionId);
 
       await page.locator('.tab-btn[data-tab="sync"]').click();
       await test.expect(page.locator('#tab-sync')).toHaveClass(/active/);
 
-      await page.locator('#save-sync-btn').click();
+      await page.locator('#notifications-mode').selectOption('errorsOnly');
 
-      const result = page.locator('#save-sync-result, #save-github-result').first();
+      const result = page.locator('#save-sync-result').first();
       await test.expect(result).toHaveClass(/success/, { timeout: 5000 });
       await test.expect(result).toContainText(/saved|Settings saved/i);
     });

@@ -17,17 +17,13 @@
         <select id="language-select">
           <!-- Populated dynamically -->
         </select>
-        <div class="theme-icons" role="group" aria-label="Theme">
-          <button type="button" class="theme-icon-btn" id="theme-auto" data-theme="auto" data-i18n-title="options_themeAuto">A</button>
-          <button type="button" class="theme-icon-btn" id="theme-light" data-theme="light" data-i18n-title="options_themeLight">☀</button>
-          <button type="button" class="theme-icon-btn" id="theme-dark" data-theme="dark" data-i18n-title="options_themeDark">☽</button>
-        </div>
+        <button type="button" id="theme-cycle-btn" class="theme-cycle-btn" role="button" aria-label="Theme">A</button>
       </div>
     </header>
 
     <nav class="tab-bar">
       <button class="tab-btn active" data-tab="github" data-i18n="options_tabGitHub">GitHub</button>
-      <button class="tab-btn" data-tab="sync" data-i18n="options_tabSynchronization">Synchronization</button>
+      <button class="tab-btn" data-tab="sync" data-i18n="options_tabSynchronization">Sync</button>
       <button class="tab-btn" data-tab="backup" data-i18n="options_tabBackup">Backup</button>
       <button class="tab-btn" data-tab="automation" data-i18n="options_tabAutomation">Automation</button>
       <button class="tab-btn" data-tab="help" data-i18n="options_tabHelp">Help</button>
@@ -144,41 +140,11 @@
             </div>
           </div>
         </div>
-      </section>
 
-      <section class="card" id="github-repos-card" style="display: none;">
-        <h2 data-i18n="options_githubReposTitle">GitHub Repos Folder</h2>
-        <p class="card-desc" data-i18n="options_githubReposDesc">Create a folder with bookmarks to all your GitHub repositories (public and private).</p>
-
-        <div class="form-group toggle-group">
-          <label for="github-repos-enabled" class="toggle-label">
-            <span data-i18n="options_githubReposEnabled">GitHub Repos folder</span>
-            <input type="checkbox" id="github-repos-enabled">
-            <span class="toggle-slider"></span>
-          </label>
-        </div>
-
-        <div id="github-repos-options" style="display: none;">
-          <div class="form-group">
-            <label for="github-repos-parent" data-i18n="options_githubReposParentLabel">Position</label>
-            <select id="github-repos-parent">
-              <option value="toolbar" data-i18n="options_githubReposParentToolbar">Bookmarks Bar</option>
-              <option value="other" data-i18n="options_githubReposParentOther">Other Bookmarks</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <button id="github-repos-refresh-btn" class="btn btn-secondary" data-i18n="options_githubReposRefresh">Update GitHub Repos</button>
-            <span id="github-repos-spinner" class="spinner" style="display: none;"></span>
-            <span id="github-repos-result" class="validation-result"></span>
-          </div>
+        <div class="actions actions-in-card actions-github-feedback">
+          <span id="save-github-result" class="save-result"></span>
         </div>
       </section>
-
-      <div class="actions">
-        <button id="save-github-btn" class="btn btn-primary" data-i18n="options_saveSettings">Save Settings</button>
-        <span id="save-github-result" class="save-result"></span>
-      </div>
 
     </div>
 
@@ -247,10 +213,60 @@
         </div>
       </section>
 
-      <div class="actions">
-        <button id="save-sync-btn" class="btn btn-primary" data-i18n="options_saveSettings">Save Settings</button>
-        <span id="save-sync-result" class="save-result"></span>
-      </div>
+      <section class="card" id="github-repos-card" style="display: none;">
+        <h2 data-i18n="options_githubReposTitle">GitHub Repos Folder</h2>
+        <p class="card-desc" data-i18n="options_githubReposDesc">Create a folder with bookmarks to all your GitHub repositories (public and private).</p>
+
+        <div class="form-group toggle-group">
+          <label for="github-repos-enabled" class="toggle-label">
+            <span data-i18n="options_githubReposEnabled">GitHub Repos folder</span>
+            <input type="checkbox" id="github-repos-enabled">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div id="github-repos-options" style="display: none;">
+          <div class="form-group">
+            <label for="github-repos-parent" data-i18n="options_githubReposParentLabel">Position</label>
+            <select id="github-repos-parent">
+              <option value="toolbar" data-i18n="options_githubReposParentToolbar">Bookmarks Bar</option>
+              <option value="other" data-i18n="options_githubReposParentOther">Other Bookmarks</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <button id="github-repos-refresh-btn" class="btn btn-secondary" data-i18n="options_githubReposRefresh">Update GitHub Repos</button>
+            <span id="github-repos-spinner" class="spinner" style="display: none;"></span>
+            <span id="github-repos-result" class="validation-result"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 data-i18n="options_generatedFilesTitle">Generated files</h2>
+        <p class="card-desc" data-i18n="options_generatedFilesDesc">Files created in the repo during sync. Toggle off to stop updating.</p>
+
+        <div class="form-group toggle-group">
+            <label for="generate-readme-md" class="toggle-label">
+              <span data-i18n="options_generateReadmeMd">Generate README.md</span>
+              <input type="checkbox" id="generate-readme-md" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <small data-i18n="options_generateReadmeMdDesc" style="display:block;margin-left:1.5rem;margin-top:0.25rem;">Markdown overview in the repo.</small>
+          <div class="form-group toggle-group">
+            <label for="generate-bookmarks-html" class="toggle-label">
+              <span data-i18n="options_generateBookmarksHtml">Generate bookmarks.html</span>
+              <input type="checkbox" id="generate-bookmarks-html" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <small data-i18n="options_generateBookmarksHtmlDesc" style="display:block;margin-left:1.5rem;margin-top:0.25rem;">Netscape format for browser import (Chrome, Firefox).</small>
+
+        <div class="actions actions-in-card actions-sync-feedback">
+          <span id="save-sync-result" class="save-result"></span>
+        </div>
+      </section>
 
     </div>
 
@@ -287,17 +303,31 @@
         <div class="backup-block automation-block">
           <h3 class="automation-block-title" data-i18n="options_exportSettings">Export Settings</h3>
           <p class="backup-block-desc" data-i18n="options_exportSettingsDesc">GitHub connection and sync settings (incl. profiles).</p>
-          <div class="backup-actions">
-            <button id="export-settings-btn" class="btn btn-secondary" data-i18n="options_exportBtn">Export</button>
+          <div class="backup-actions backup-actions-multi">
+            <button id="export-settings-btn" class="btn btn-secondary" data-i18n="options_exportSettingsPlain">Export (plain)</button>
+            <button id="export-settings-encrypted-btn" class="btn btn-secondary" data-i18n="options_exportSettingsEncrypted">Export encrypted</button>
             <span id="export-settings-result" class="ie-result"></span>
+          </div>
+        </div>
+
+        <div id="password-dialog" class="profile-inline-dialog" style="display: none;">
+          <div class="profile-inline-dialog-body">
+            <p id="password-dialog-prompt" class="profile-inline-dialog-text"></p>
+            <label for="password-dialog-input" class="profile-inline-dialog-label" data-i18n="options_passwordPlaceholder">Password</label>
+            <input type="password" id="password-dialog-input" class="profile-inline-dialog-input" autocomplete="off">
+          </div>
+          <div class="profile-inline-dialog-actions">
+            <button type="button" id="password-dialog-confirm-btn" class="btn btn-primary btn-sm" data-i18n="options_exportBtn">Export</button>
+            <button type="button" id="password-dialog-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
           </div>
         </div>
 
         <div class="backup-block backup-block-import automation-block">
           <h3 class="automation-block-title" data-i18n="options_importSettings">Import Settings</h3>
           <p class="backup-warning" data-i18n="options_importSettingsWarning">Replaces all settings. Page reloads afterwards.</p>
+          <p class="backup-block-desc" data-i18n="options_importSettingsFormats">Accepts .json (plain) or .enc (encrypted) files.</p>
           <div class="backup-file-picker">
-            <input type="file" id="import-settings-file" accept=".json" class="backup-file-input">
+            <input type="file" id="import-settings-file" accept=".json,.enc" class="backup-file-input">
             <button type="button" class="btn btn-secondary backup-file-trigger" id="import-settings-trigger" data-i18n="options_chooseFile">Choose file</button>
             <span class="backup-file-name" id="import-settings-filename"></span>
           </div>
@@ -318,8 +348,12 @@
         <p class="card-desc" data-i18n="options_automationIntro">Add bookmarks directly in your repository. The extension picks them up on the next sync and normalizes filenames automatically.</p>
 
         <div class="automation-block">
-          <h3 class="automation-block-title" data-i18n="options_automationFormatTitle">File format</h3>
-          <pre class="code-block code-block-sm">{ "title": "Example", "url": "https://example.com" }</pre>
+          <h3 class="automation-block-title" data-i18n="options_automationCreateFileTitle">Create file in repo</h3>
+          <p class="automation-block-desc" data-i18n-html="options_automationCreateFileDesc"></p>
+          <div class="automation-copy-wrap">
+            <pre id="automation-json-block" class="code-block code-block-sm">{ "title": "Example", "url": "https://example.com" }</pre>
+            <button type="button" class="btn btn-secondary btn-sm automation-copy-btn" id="automation-copy-json-btn" data-i18n="options_automationCopy">Copy</button>
+          </div>
           <p class="automation-folders">
             <span data-i18n="options_automationFoldersLabel">Folders:</span>
             <code>toolbar</code> <code>other</code>
@@ -332,12 +366,28 @@
             <a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/.github/workflows/add-bookmark.yml" target="_blank" rel="noopener" data-i18n="options_automationWorkflowLink">
               Copy add-bookmark.yml to your repo
             </a>
+            ·
+            <a href="https://raw.githubusercontent.com/d0dg3r/GitSyncMarks/main/.github/workflows/add-bookmark.yml" target="_blank" rel="noopener" data-i18n="options_automationWorkflowRaw">Raw</a>
           </p>
-          <pre class="code-block code-block-sm">gh workflow run add-bookmark.yml \
+          <div class="automation-copy-wrap">
+            <pre id="automation-gh-block" class="code-block code-block-sm">gh workflow run add-bookmark.yml \
   -f url="https://example.com" \
   -f title="Example" \
-  -f folder="toolbar"</pre>
-          <p class="help-note" data-i18n="options_automationGithubActionParams">folder = root; path = optional subfolder; base-path if File Path ≠ bookmarks</p>
+  -f folder="toolbar" \
+  -f path="dev-tools" \
+  -f base-path="bookmarks"</pre>
+            <button type="button" class="btn btn-secondary btn-sm automation-copy-btn" id="automation-copy-gh-btn" data-i18n="options_automationCopy">Copy</button>
+          </div>
+          <p class="automation-subfolder-example" data-i18n="options_automationSubfolderExample">Example: <code>path="dev-tools"</code> → <code>bookmarks/toolbar/dev-tools/</code></p>
+          <table class="help-table automation-params-table">
+            <tbody>
+              <tr><td><code>url</code></td><td data-i18n="options_automationParamUrl">Bookmark URL (required)</td></tr>
+              <tr><td><code>title</code></td><td data-i18n="options_automationParamTitle">Title (optional; URL used if empty)</td></tr>
+              <tr><td><code>folder</code></td><td data-i18n="options_automationParamSection">Section: toolbar or other</td></tr>
+              <tr><td><code>path</code></td><td data-i18n="options_automationParamFolder">Folder within section (e.g. dev-tools)</td></tr>
+              <tr><td><code>base-path</code></td><td data-i18n="options_automationParamBasePath">Base folder in repo (default bookmarks; must match File Path setting)</td></tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
@@ -345,6 +395,14 @@
 
     <!-- ==================== Help Tab ==================== -->
     <div class="tab-content" id="tab-help">
+
+      <section class="card help-quick-links-card">
+        <div class="help-quick-links">
+          <a href="https://github.com/d0dg3r/GitSyncMarks/tree/main/docs" target="_blank" rel="noopener" class="btn btn-secondary help-link-btn" data-i18n="options_documentation">Documentation</a>
+          <a href="https://github.com/d0dg3r/GitSyncMarks/discussions" target="_blank" rel="noopener" class="btn btn-secondary help-link-btn" data-i18n="help_discussions">Discussions</a>
+          <a href="https://github.com/d0dg3r/GitSyncMarks/issues" target="_blank" rel="noopener" class="btn btn-secondary help-link-btn" data-i18n="help_reportIssue">Report Issue</a>
+        </div>
+      </section>
 
       <details class="help-details card" open>
         <summary>
@@ -431,7 +489,7 @@
 
       <details class="help-details card">
         <summary>
-          <h2 data-i18n="help_syncTitle">Synchronization</h2>
+          <h2 data-i18n="help_syncTitle">Sync</h2>
         </summary>
         <div class="help-details-body">
         <dl class="help-dl">
@@ -441,6 +499,8 @@
           <dd data-i18n="help_syncProfilesDesc">Real-time (1 min), Frequent (5 min), Normal (15 min), or Power save (60 min). Custom lets you set interval and debounce manually.</dd>
           <dt data-i18n="help_syncStartup">Sync on startup / focus</dt>
           <dd data-i18n="help_syncStartupDesc">Optional: sync when the browser starts or when you return to the browser window (with cooldown).</dd>
+          <dt data-i18n="help_generatedFilesTitle">Generated files</dt>
+          <dd data-i18n="help_generatedFilesDesc">README.md (overview) and bookmarks.html (Netscape format for browser import) are created during sync. Toggle off in the Sync tab to stop updating.</dd>
         </dl>
         </div>
       </details>
@@ -487,19 +547,6 @@
           <tr><td><kbd>Ctrl+Shift+,</kbd></td><td data-i18n="help_openOptions">Open extension settings</td></tr>
         </table>
         <p class="help-note" data-i18n="help_shortcutsNote">You can customize shortcuts in the browser's extension settings.</p>
-        </div>
-      </details>
-
-      <details class="help-details card" open>
-        <summary>
-          <h2 data-i18n="help_links">Links</h2>
-        </summary>
-        <div class="help-details-body">
-        <ul class="help-links">
-          <li><a href="https://github.com/d0dg3r/GitSyncMarks/tree/main/docs" target="_blank" rel="noopener" data-i18n="options_documentation">Documentation</a></li>
-          <li><a href="https://github.com/d0dg3r/GitSyncMarks/discussions" target="_blank" rel="noopener" data-i18n="help_discussions">Discussions</a></li>
-          <li><a href="https://github.com/d0dg3r/GitSyncMarks/issues" target="_blank" rel="noopener" data-i18n="options_reportBug">Report a Bug / Feature Request</a></li>
-        </ul>
         </div>
       </details>
 

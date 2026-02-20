@@ -9,7 +9,7 @@
 #   ./scripts/build.sh firefox      # Build Firefox only
 #   ./scripts/build.sh chrome --no-zip  # Build Chrome dir only, no ZIP (for E2E)
 #
-#   VERSION_FOR_DISPLAY=2.2.0-pre.10 ./scripts/build.sh  # Local pre-release GUI display
+#   VERSION_FOR_DISPLAY=2.3.0-pre.1 ./scripts/build.sh  # Local pre-release GUI display
 #
 
 set -euo pipefail
@@ -24,7 +24,7 @@ BUILD_DIR="$ROOT_DIR/build"
 MANIFEST_VERSION=$(grep '"version"' "$ROOT_DIR/manifest.json" | head -1 | sed 's/.*: *"\(.*\)".*/\1/')
 
 # ZIP name / display: tag version or manifest + suffix
-# Fallbacks: GITHUB_REF_NAME in CI; VERSION_FOR_DISPLAY for local pre-release (e.g. VERSION_FOR_DISPLAY=2.2.0-pre.10)
+# Fallbacks: GITHUB_REF_NAME in CI; VERSION_FOR_DISPLAY for local pre-release (e.g. VERSION_FOR_DISPLAY=2.3.0-pre.1)
 if [[ -n "${RELEASE:-}" ]]; then
   ZIP_VERSION="$MANIFEST_VERSION"
   DISPLAY_VERSION=""

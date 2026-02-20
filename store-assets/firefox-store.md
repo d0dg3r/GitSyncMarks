@@ -27,7 +27,7 @@ Features:
 • Conflict detection when automatic merge is not possible
 • A README.md with all bookmarks is generated in the repo for easy browsing
 • Automation: add bookmarks via Git, CLI, or GitHub Actions — no browser needed
-• Import/Export: back up and restore bookmarks or settings as JSON files (clear UI with file picker)
+• Import/Export: back up and restore bookmarks or settings as JSON files; settings can be exported as password-encrypted .enc for secure backup (clear UI with file picker)
 • Theme: light, dark, or auto (system) for options and popup
 • Multilanguage: English, German, French, and Spanish with manual language selection
 • Keyboard shortcuts: quick sync (Ctrl+Shift+.), open settings (Ctrl+Shift+,) — customizable
@@ -79,7 +79,7 @@ Funktionen:
 • Volle Firefox-Unterstützung inkl. Lesezeichen-Menü
 • Bis zu 10 Profile, GitHub Repos-Ordner, Onboarding, Sync-Profile
 • Auto-Sync, periodischer Sync, manuelles Push/Pull
-• Import/Export, Design Hell/Dunkel, Mehrsprachig, Tastenkürzel, Debug-Log
+• Import/Export (JSON oder verschlüsselt .enc), Design Hell/Dunkel, Mehrsprachig, Tastenkürzel, Debug-Log
 • Mobile-Begleiter: GitSyncMarks-Mobile (iOS + Android)
 
 So funktioniert es:
@@ -115,7 +115,7 @@ Fonctionnalités :
 • Stockage par fichier, fusion triple, support complet Firefox (y compris le Menu favoris)
 • Jusqu'à 10 profils, dossier Repos GitHub, intégration, profils de sync
 • Auto-sync, sync périodique, Push/Pull manuel
-• Import/Export, thème clair/sombre, multilingue, raccourcis clavier, journal de débogage
+• Import/Export (JSON ou .enc chiffré), thème clair/sombre, multilingue, raccourcis clavier, journal de débogage
 • Application mobile : GitSyncMarks-Mobile (iOS + Android)
 
 Comment ça marche :
@@ -151,7 +151,7 @@ Características:
 • Almacenamiento por archivo, fusión triple, soporte completo Firefox (incl. menú de marcadores)
 • Hasta 10 perfiles, carpeta Repos GitHub, integración, perfiles de sync
 • Auto-sync, sync periódico, Push/Pull manual
-• Importar/Exportar, tema claro/oscuro, multilingüe, atajos de teclado, registro de depuración
+• Importar/Exportar (JSON o .enc cifrado), tema claro/oscuro, multilingüe, atajos de teclado, registro de depuración
 • App móvil: GitSyncMarks-Mobile (iOS + Android)
 
 Cómo funciona:
@@ -233,11 +233,11 @@ All regions
 
 ## Store Assets Checklist
 
-**Screenshots** are copied from Chrome (UI is identical; Playwright cannot load Firefox extension). Run `npm run screenshots`.
+**Screenshots** are copied from Chrome (UI is identical; Playwright cannot load Firefox extension). Run `npm run screenshots`. Each image shows light and dark mode side by side.
 
 ### English (EN)
 - [x] `en/firefox-1-github.png` — GitHub tab
-- [x] `en/firefox-2-synchronization.png` — Synchronization tab
+- [x] `en/firefox-2-synchronization.png` — Sync tab
 - [x] `en/firefox-3-backup.png` — Backup tab
 - [x] `en/firefox-4-automation.png` — Automation tab
 - [x] `en/firefox-5-help.png` — Help tab
@@ -246,7 +246,7 @@ All regions
 
 ### Deutsch (DE)
 - [x] `de/firefox-1-github.png` — GitHub-Tab
-- [x] `de/firefox-2-synchronization.png` — Synchronisierung-Tab
+- [x] `de/firefox-2-synchronization.png` — Sync-Tab
 - [x] `de/firefox-3-backup.png` — Backup-Tab
 - [x] `de/firefox-4-automation.png` — Automatisierung-Tab
 - [x] `de/firefox-5-help.png` — Hilfe-Tab
@@ -255,7 +255,7 @@ All regions
 
 ### Français (FR)
 - [x] `fr/firefox-1-github.png` — Onglet GitHub
-- [x] `fr/firefox-2-synchronization.png` — Onglet Synchronisation
+- [x] `fr/firefox-2-synchronization.png` — Onglet Sync
 - [x] `fr/firefox-3-backup.png` — Onglet Sauvegarde
 - [x] `fr/firefox-4-automation.png` — Onglet Automatisation
 - [x] `fr/firefox-5-help.png` — Onglet Aide
@@ -264,7 +264,7 @@ All regions
 
 ### Español (ES)
 - [x] `es/firefox-1-github.png` — Pestaña GitHub
-- [x] `es/firefox-2-synchronization.png` — Pestaña Sincronización
+- [x] `es/firefox-2-synchronization.png` — Pestaña Sync
 - [x] `es/firefox-3-backup.png` — Pestaña Copia de seguridad
 - [x] `es/firefox-4-automation.png` — Pestaña Automatización
 - [x] `es/firefox-5-help.png` — Pestaña Ayuda

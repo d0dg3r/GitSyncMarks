@@ -12,7 +12,7 @@ import { initTheme, applyTheme } from './lib/theme.js';
 import { serializeToJson, deserializeFromJson } from './lib/bookmark-serializer.js';
 import { replaceLocalBookmarks, SYNC_PRESETS } from './lib/sync-engine.js';
 import { updateGitHubReposFolder } from './lib/github-repos.js';
-import { encryptToken, decryptToken, migrateTokenIfNeeded } from './lib/crypto.js';
+import { encryptToken, decryptToken, migrateTokenIfNeeded, encryptWithPassword, decryptWithPassword, PASSWORD_ENC_PREFIX } from './lib/crypto.js';
 import {
   isDebugLogEnabled,
   setDebugLogEnabled,
@@ -46,6 +46,8 @@ const STORAGE_KEYS = {
   LANGUAGE: 'language',
   THEME: 'theme',
   PROFILE_SWITCH_WITHOUT_CONFIRM: 'profileSwitchWithoutConfirm',
+  GENERATE_README_MD: 'generateReadmeMd',
+  GENERATE_BOOKMARKS_HTML: 'generateBookmarksHtml',
 };
 
 // ---- DOM elements: Settings Tab ----
@@ -88,6 +90,8 @@ const syncIntervalInput = document.getElementById('sync-interval');
 const debounceDelayInput = document.getElementById('debounce-delay');
 const syncOnStartupInput = document.getElementById('sync-on-startup');
 const syncOnFocusInput = document.getElementById('sync-on-focus');
+const generateReadmeMdInput = document.getElementById('generate-readme-md');
+const generateBookmarksHtmlInput = document.getElementById('generate-bookmarks-html');
 const notificationsModeSelect = document.getElementById('notifications-mode');
 const validateBtn = document.getElementById('validate-btn');
 const validationResult = document.getElementById('validation-result');
@@ -95,8 +99,6 @@ const onboardingConfirm = document.getElementById('onboarding-confirm');
 const onboardingConfirmText = document.getElementById('onboarding-confirm-text');
 const onboardingConfirmYesBtn = document.getElementById('onboarding-confirm-yes-btn');
 const onboardingConfirmNoBtn = document.getElementById('onboarding-confirm-no-btn');
-const saveGitHubBtn = document.getElementById('save-github-btn');
-const saveSyncBtn = document.getElementById('save-sync-btn');
 const saveGitHubResult = document.getElementById('save-github-result');
 const saveSyncResult = document.getElementById('save-sync-result');
 const githubReposCard = document.getElementById('github-repos-card');
@@ -107,7 +109,10 @@ const githubReposRefreshBtn = document.getElementById('github-repos-refresh-btn'
 const githubReposSpinner = document.getElementById('github-repos-spinner');
 const githubReposResult = document.getElementById('github-repos-result');
 const languageSelect = document.getElementById('language-select');
-const themeButtons = document.querySelectorAll('.theme-icon-btn');
+const themeCycleBtn = document.getElementById('theme-cycle-btn');
+const THEME_CYCLE = ['auto', 'dark', 'light'];
+const THEME_ICONS = { auto: 'A', dark: '☽', light: '☀' };
+const THEME_TITLES = { auto: 'options_themeAuto', dark: 'options_themeDark', light: 'options_themeLight' };
 const debugLogEnabledInput = document.getElementById('debug-log-enabled');
 const debugLogExportBtn = document.getElementById('debug-log-export-btn');
 const debugLogResult = document.getElementById('debug-log-result');
@@ -122,12 +127,18 @@ const exportBookmarksResult = document.getElementById('export-bookmarks-result')
 const importBookmarksResult = document.getElementById('import-bookmarks-result');
 
 const exportSettingsBtn = document.getElementById('export-settings-btn');
+const exportSettingsEncryptedBtn = document.getElementById('export-settings-encrypted-btn');
 const importSettingsFile = document.getElementById('import-settings-file');
 const importSettingsTrigger = document.getElementById('import-settings-trigger');
 const importSettingsFilename = document.getElementById('import-settings-filename');
 const importSettingsBtn = document.getElementById('import-settings-btn');
 const exportSettingsResult = document.getElementById('export-settings-result');
 const importSettingsResult = document.getElementById('import-settings-result');
+const passwordDialog = document.getElementById('password-dialog');
+const passwordDialogPrompt = document.getElementById('password-dialog-prompt');
+const passwordDialogInput = document.getElementById('password-dialog-input');
+const passwordDialogConfirmBtn = document.getElementById('password-dialog-confirm-btn');
+const passwordDialogCancelBtn = document.getElementById('password-dialog-cancel-btn');
 
 // ==============================
 // Tab Navigation
@@ -263,6 +274,8 @@ async function loadSettings() {
     notificationsMode: 'all',
     notificationsEnabled: undefined,
     language: 'auto',
+    generateReadmeMd: true,
+    generateBookmarksHtml: true,
     theme: 'auto',
     profileSwitchWithoutConfirm: false,
     debugLogEnabled: false,
@@ -277,6 +290,8 @@ async function loadSettings() {
   syncCustomFields.style.display = profile === 'custom' ? 'block' : 'none';
   syncOnStartupInput.checked = globals.syncOnStartup === true;
   syncOnFocusInput.checked = globals.syncOnFocus === true;
+  generateReadmeMdInput.checked = globals.generateReadmeMd !== false;
+  generateBookmarksHtmlInput.checked = globals.generateBookmarksHtml !== false;
   const mode = globals.notificationsMode;
   const oldEnabled = globals.notificationsEnabled;
   const displayMode = (mode && ['off', 'all', 'errorsOnly'].includes(mode))
@@ -289,9 +304,10 @@ async function loadSettings() {
   }
   languageSelect.value = globals.language || 'auto';
   const theme = globals.theme || 'auto';
-  themeButtons.forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.theme === theme);
-  });
+  if (themeCycleBtn) {
+    themeCycleBtn.textContent = THEME_ICONS[theme] ?? 'A';
+    themeCycleBtn.title = getMessage(THEME_TITLES[theme] ?? 'options_themeAuto');
+  }
   profileSwitchWithoutConfirmInput.checked = globals.profileSwitchWithoutConfirm === true;
   profileSwitchConfirm.style.display = 'none';
   profileDeleteConfirm.style.display = 'none';
@@ -306,6 +322,13 @@ async function loadSettings() {
 // Profile selector: switching profiles replaces bookmarks
 let pendingProfileSwitchId = null;
 
+function setProfileButtonsEnabled(enabled) {
+  profileSelect.disabled = !enabled;
+  profileAddBtn.disabled = !enabled;
+  profileRenameBtn.disabled = !enabled;
+  profileDeleteBtn.disabled = !enabled;
+}
+
 async function doProfileSwitch(targetId) {
   const activeId = await getActiveProfileId();
   if (targetId === activeId) return;
@@ -313,10 +336,7 @@ async function doProfileSwitch(targetId) {
   pendingProfileSwitchId = null;
 
   try {
-    profileSelect.disabled = true;
-    profileAddBtn.disabled = true;
-    profileRenameBtn.disabled = true;
-    profileDeleteBtn.disabled = true;
+    setProfileButtonsEnabled(false);
     profileSpinner.style.display = 'inline-block';
     profileSwitchingMsg.textContent = getMessage('options_profileSwitching');
     profileSwitchingMsg.style.display = '';
@@ -326,10 +346,7 @@ async function doProfileSwitch(targetId) {
     showProfileMessage(getMessage('options_error', [err.message]));
     profileSelect.value = activeId;
   } finally {
-    profileSelect.disabled = false;
-    profileAddBtn.disabled = false;
-    profileRenameBtn.disabled = false;
-    profileDeleteBtn.disabled = false;
+    setProfileButtonsEnabled(true);
     profileSpinner.style.display = 'none';
     profileSwitchingMsg.style.display = 'none';
   }
@@ -417,10 +434,7 @@ profileAddConfirmBtn.addEventListener('click', async () => {
   profileAddDialog.style.display = 'none';
   try {
     const newId = await addProfile(name);
-    profileSelect.disabled = true;
-    profileAddBtn.disabled = true;
-    profileRenameBtn.disabled = true;
-    profileDeleteBtn.disabled = true;
+    setProfileButtonsEnabled(false);
     profileSpinner.style.display = 'inline-block';
     profileSwitchingMsg.textContent = getMessage('options_profileSwitching');
     profileSwitchingMsg.style.display = '';
@@ -428,18 +442,12 @@ profileAddConfirmBtn.addEventListener('click', async () => {
       await switchProfile(newId, { skipConfirm: true });
       await loadSettings();
     } finally {
-      profileSelect.disabled = false;
-      profileAddBtn.disabled = false;
-      profileRenameBtn.disabled = false;
-      profileDeleteBtn.disabled = false;
+      setProfileButtonsEnabled(true);
       profileSpinner.style.display = 'none';
       profileSwitchingMsg.style.display = 'none';
     }
   } catch (err) {
-    profileSelect.disabled = false;
-    profileAddBtn.disabled = false;
-    profileRenameBtn.disabled = false;
-    profileDeleteBtn.disabled = false;
+    setProfileButtonsEnabled(true);
     profileSpinner.style.display = 'none';
     profileSwitchingMsg.style.display = 'none';
     showProfileMessage(getMessage('options_error', [err.message]));
@@ -525,16 +533,20 @@ syncProfileSelect.addEventListener('change', () => {
       debounceDelayInput.value = Math.round(preset.debounceMs / 1000);
     }
   }
+  saveSettings();
 });
 
-themeButtons.forEach(btn => {
-  btn.addEventListener('click', async () => {
-    const newTheme = btn.dataset.theme;
-    await chrome.storage.sync.set({ [STORAGE_KEYS.THEME]: newTheme });
-    applyTheme(newTheme);
-    themeButtons.forEach(b => b.classList.toggle('active', b.dataset.theme === newTheme));
+if (themeCycleBtn) {
+  themeCycleBtn.addEventListener('click', async () => {
+    const current = await chrome.storage.sync.get({ [STORAGE_KEYS.THEME]: 'auto' }).then(r => r[STORAGE_KEYS.THEME] || 'auto');
+    const idx = THEME_CYCLE.indexOf(current);
+    const nextTheme = THEME_CYCLE[(idx + 1) % THEME_CYCLE.length];
+    await chrome.storage.sync.set({ [STORAGE_KEYS.THEME]: nextTheme });
+    applyTheme(nextTheme);
+    themeCycleBtn.textContent = THEME_ICONS[nextTheme];
+    themeCycleBtn.title = getMessage(THEME_TITLES[nextTheme]);
   });
-});
+}
 
 languageSelect.addEventListener('change', async () => {
   const newLang = languageSelect.value;
@@ -559,6 +571,7 @@ githubReposEnabledInput.addEventListener('change', () => {
   githubReposOptions.style.display = githubReposEnabledInput.checked ? 'block' : 'none';
   saveSettings();
 });
+githubReposParentSelect.addEventListener('change', saveSettings);
 
 // GitHub Repos: refresh button (saves first so current form state is persisted)
 githubReposRefreshBtn.addEventListener('click', async () => {
@@ -739,6 +752,8 @@ async function saveSettings() {
       [STORAGE_KEYS.SYNC_ON_STARTUP]: syncOnStartupInput.checked,
       [STORAGE_KEYS.SYNC_ON_FOCUS]: syncOnFocusInput.checked,
       [STORAGE_KEYS.NOTIFICATIONS_MODE]: notificationsModeSelect.value,
+      [STORAGE_KEYS.GENERATE_README_MD]: generateReadmeMdInput.checked,
+      [STORAGE_KEYS.GENERATE_BOOKMARKS_HTML]: generateBookmarksHtmlInput.checked,
       [STORAGE_KEYS.LANGUAGE]: languageSelect.value,
       [STORAGE_KEYS.PROFILE_SWITCH_WITHOUT_CONFIRM]: profileSwitchWithoutConfirmInput.checked,
     });
@@ -754,6 +769,10 @@ async function saveSettings() {
       ? `${getMessage('options_settingsSaved')} ${getMessage('options_filePathChangeHint')}`
       : getMessage('options_settingsSaved');
     showSaveResult(successMsg, 'success');
+
+    const isConfigured = !!(tokenInput.value.trim() && ownerInput.value.trim() && repoInput.value.trim());
+    githubReposCard.style.display = isConfigured ? 'block' : 'none';
+
     setTimeout(() => {
       saveGitHubResult.textContent = '';
       saveSyncResult.textContent = '';
@@ -770,8 +789,13 @@ function showSaveResult(message, type) {
   saveSyncResult.className = `save-result ${type}`;
 }
 
-saveGitHubBtn.addEventListener('click', saveSettings);
-saveSyncBtn.addEventListener('click', saveSettings);
+// GitHub tab: auto-save on change (no Save button)
+tokenInput.addEventListener('change', saveSettings);
+ownerInput.addEventListener('change', saveSettings);
+repoInput.addEventListener('change', saveSettings);
+branchInput.addEventListener('change', saveSettings);
+filepathInput.addEventListener('change', saveSettings);
+profileSwitchWithoutConfirmInput.addEventListener('change', saveSettings);
 
 // Debug log: toggle saves immediately; export downloads log file
 debugLogEnabledInput.addEventListener('change', async () => {
@@ -798,10 +822,67 @@ debugLogExportBtn.addEventListener('click', async () => {
   setTimeout(() => { debugLogResult.textContent = ''; }, 3000);
 });
 
-// Switches: auto-save on change (user often forgets to click Save)
+// Automation tab: copy JSON or gh command to clipboard
+const automationCopyJsonBtn = document.getElementById('automation-copy-json-btn');
+const automationCopyGhBtn = document.getElementById('automation-copy-gh-btn');
+const automationJsonBlock = document.getElementById('automation-json-block');
+const automationGhBlock = document.getElementById('automation-gh-block');
+
+async function copyAutomationToClipboard(preEl, btn) {
+  const text = preEl?.textContent?.trim() ?? '';
+  if (!text) return;
+  try {
+    await navigator.clipboard.writeText(text);
+    const orig = btn.textContent;
+    btn.textContent = '✓';
+    setTimeout(() => { btn.textContent = orig; }, 1200);
+  } catch (err) {
+    console.warn('Clipboard copy failed:', err);
+  }
+}
+
+if (automationCopyJsonBtn) {
+  automationCopyJsonBtn.addEventListener('click', () => copyAutomationToClipboard(automationJsonBlock, automationCopyJsonBtn));
+}
+if (automationCopyGhBtn) {
+  automationCopyGhBtn.addEventListener('click', () => copyAutomationToClipboard(automationGhBlock, automationCopyGhBtn));
+}
+
+// Generate files: debounced sync when toggling ON to avoid conflicts when enabling both quickly
+let generateFilesSyncTimer = null;
+const GENERATE_FILES_DEBOUNCE_MS = 2000;
+const GENERATE_FILES_RETRY_DELAY_MS = 2500;
+
+function scheduleGenerateFilesSync(isRetry = false) {
+  if (generateFilesSyncTimer) clearTimeout(generateFilesSyncTimer);
+  const delayMs = isRetry ? GENERATE_FILES_RETRY_DELAY_MS : GENERATE_FILES_DEBOUNCE_MS;
+  generateFilesSyncTimer = setTimeout(async () => {
+    generateFilesSyncTimer = null;
+    try {
+      const result = await chrome.runtime.sendMessage({ action: 'push' });
+      if (result?.alreadyInProgress === true && !isRetry) {
+        scheduleGenerateFilesSync(true);
+      }
+    } catch (e) { /* Background may be terminated (e.g. Firefox) */ }
+  }, delayMs);
+}
+
+async function onGenerateFilesToggleChange() {
+  await saveSettings();
+  if (generateReadmeMdInput.checked || generateBookmarksHtmlInput.checked) {
+    scheduleGenerateFilesSync();
+  }
+}
+
+// Sync tab: auto-save on change (no Save button)
 autoSyncInput.addEventListener('change', saveSettings);
 syncOnStartupInput.addEventListener('change', saveSettings);
 syncOnFocusInput.addEventListener('change', saveSettings);
+notificationsModeSelect.addEventListener('change', saveSettings);
+syncIntervalInput.addEventListener('change', saveSettings);
+debounceDelayInput.addEventListener('change', saveSettings);
+generateReadmeMdInput.addEventListener('change', onGenerateFilesToggleChange);
+generateBookmarksHtmlInput.addEventListener('change', onGenerateFilesToggleChange);
 
 // ==============================
 // Import/Export: Bookmarks
@@ -881,35 +962,76 @@ importBookmarksBtn.addEventListener('click', async () => {
 // ==============================
 
 /**
- * Export current settings as a JSON file download.
- * Includes profiles with decrypted tokens so the export is complete and portable.
+ * Build export data with decrypted tokens per profile.
+ * @returns {Promise<object>} Export data
+ */
+async function buildSettingsExportData() {
+  const syncSettings = await chrome.storage.sync.get(null);
+  const localData = await chrome.storage.local.get({ profileTokens: {}, syncState: {} });
+  const profiles = syncSettings.profiles || {};
+  const profileTokens = localData.profileTokens || {};
+  const exportedProfiles = {};
+  for (const [id, p] of Object.entries(profiles)) {
+    let token = '';
+    try {
+      token = profileTokens[id] ? await decryptToken(profileTokens[id]) : '';
+    } catch { /* ignore */ }
+    exportedProfiles[id] = { ...p, token };
+  }
+  return { ...syncSettings, profiles: exportedProfiles };
+}
+
+/**
+ * Show password dialog and resolve with password on confirm, or null on cancel.
+ * @param {string} promptKey - i18n key for prompt
+ * @param {string} confirmKey - i18n key for confirm button
+ * @returns {Promise<string|null>}
+ */
+function showPasswordDialog(promptKey, confirmKey) {
+  return new Promise((resolve) => {
+    passwordDialogPrompt.textContent = getMessage(promptKey);
+    passwordDialogConfirmBtn.textContent = getMessage(confirmKey);
+    passwordDialogInput.value = '';
+    passwordDialog.style.display = '';
+    passwordDialogInput.focus();
+
+    const finish = (password) => {
+      passwordDialog.style.display = 'none';
+      passwordDialogInput.value = '';
+      passwordDialogConfirmBtn.removeEventListener('click', onConfirm);
+      passwordDialogCancelBtn.removeEventListener('click', onCancel);
+      passwordDialogInput.removeEventListener('keydown', onKeyDown);
+      resolve(password);
+    };
+
+    const onConfirm = () => {
+      const pwd = passwordDialogInput.value;
+      if (!pwd.trim()) return;
+      finish(pwd);
+    };
+
+    const onCancel = () => finish(null);
+
+    const onKeyDown = (e) => {
+      if (e.key === 'Enter') onConfirm();
+      if (e.key === 'Escape') onCancel();
+    };
+
+    passwordDialogConfirmBtn.addEventListener('click', onConfirm);
+    passwordDialogCancelBtn.addEventListener('click', onCancel);
+    passwordDialogInput.addEventListener('keydown', onKeyDown);
+  });
+}
+
+/**
+ * Export current settings as a plain JSON file.
  */
 exportSettingsBtn.addEventListener('click', async () => {
   try {
-    const syncSettings = await chrome.storage.sync.get(null);
-    const localData = await chrome.storage.local.get({ profileTokens: {}, syncState: {} });
-
-    // Build export with decrypted tokens per profile
-    const profiles = syncSettings.profiles || {};
-    const profileTokens = localData.profileTokens || {};
-    const exportedProfiles = {};
-    for (const [id, p] of Object.entries(profiles)) {
-      let token = '';
-      try {
-        token = profileTokens[id] ? await decryptToken(profileTokens[id]) : '';
-      } catch { /* ignore */ }
-      exportedProfiles[id] = { ...p, token };
-    }
-    const exportData = {
-      ...syncSettings,
-      profiles: exportedProfiles,
-    };
-
+    const exportData = await buildSettingsExportData();
     const json = JSON.stringify(exportData, null, 2);
-
     const date = new Date().toISOString().slice(0, 10);
     downloadFile(`gitsyncmarks-settings-${date}.json`, json, 'application/json');
-
     showResult(exportSettingsResult, getMessage('options_exportSuccess'), 'success');
   } catch (err) {
     showResult(exportSettingsResult, getMessage('options_importError', [err.message]), 'error');
@@ -917,23 +1039,30 @@ exportSettingsBtn.addEventListener('click', async () => {
 });
 
 /**
- * Import settings from a JSON file, replacing all current settings.
- * Supports both legacy (flat) format and profile format.
+ * Export current settings as a password-encrypted .enc file.
  */
-importSettingsBtn.addEventListener('click', async () => {
-  const file = importSettingsFile.files[0];
-  if (!file) return;
-
+exportSettingsEncryptedBtn.addEventListener('click', async () => {
+  const password = await showPasswordDialog('options_exportPasswordPrompt', 'options_exportBtn');
+  if (!password) return;
   try {
-    const text = await file.text();
-    const settings = JSON.parse(text);
+    const exportData = await buildSettingsExportData();
+    const json = JSON.stringify(exportData, null, 2);
+    const encrypted = await encryptWithPassword(json, password);
+    const date = new Date().toISOString().slice(0, 10);
+    downloadFile(`gitsyncmarks-settings-${date}.enc`, encrypted, 'application/octet-stream');
+    showResult(exportSettingsResult, getMessage('options_exportEncryptedSuccess'), 'success');
+  } catch (err) {
+    showResult(exportSettingsResult, getMessage('options_importError', [err.message]), 'error');
+  }
+});
 
-    if (typeof settings !== 'object' || Array.isArray(settings)) {
-      throw new Error('Invalid settings format.');
-    }
-
-    // New format: profiles with embedded token
-    if (settings.profiles && Object.keys(settings.profiles).length > 0) {
+/**
+ * Apply imported settings to storage (profile or legacy format).
+ * @param {object} settings - Parsed settings object
+ */
+async function applyImportedSettings(settings) {
+  // New format: profiles with embedded token
+  if (settings.profiles && Object.keys(settings.profiles).length > 0) {
       const profileTokens = {};
       const profilesToSave = {};
       for (const [id, p] of Object.entries(settings.profiles)) {
@@ -965,6 +1094,8 @@ importSettingsBtn.addEventListener('click', async () => {
         language: settings.language || 'auto',
         theme: settings.theme || 'auto',
         profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
+        generateReadmeMd: settings.generateReadmeMd !== false,
+        generateBookmarksHtml: settings.generateBookmarksHtml !== false,
       });
       await chrome.storage.local.set({ profileTokens });
     } else {
@@ -994,20 +1125,42 @@ importSettingsBtn.addEventListener('click', async () => {
         language: settings.language || 'auto',
         theme: settings.theme || 'auto',
         profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
+        generateReadmeMd: settings.generateReadmeMd !== false,
+        generateBookmarksHtml: settings.generateBookmarksHtml !== false,
       });
       await chrome.storage.local.set({ profileTokens });
+  }
+  await chrome.runtime.sendMessage({ action: 'settingsChanged' });
+}
+
+/**
+ * Import settings from a JSON or encrypted file, replacing all current settings.
+ * Supports plain JSON, encrypted .enc, legacy (flat) format, and profile format.
+ */
+importSettingsBtn.addEventListener('click', async () => {
+  const file = importSettingsFile.files[0];
+  if (!file) return;
+
+  try {
+    let text = await file.text();
+    if (text.trim().startsWith(PASSWORD_ENC_PREFIX)) {
+      const password = await showPasswordDialog('options_importPasswordPrompt', 'options_importBtn');
+      if (!password) return;
+      text = await decryptWithPassword(text, password);
     }
-
-    await chrome.runtime.sendMessage({ action: 'settingsChanged' });
-
+    const settings = JSON.parse(text);
+    if (typeof settings !== 'object' || Array.isArray(settings)) {
+      throw new Error('Invalid settings format.');
+    }
+    await applyImportedSettings(settings);
     showResult(importSettingsResult, getMessage('options_importSuccess'), 'success');
     importSettingsFile.value = '';
     importSettingsBtn.disabled = true;
     importSettingsFilename.textContent = '';
-
     setTimeout(() => { location.reload(); }, 1000);
   } catch (err) {
-    showResult(importSettingsResult, getMessage('options_importError', [err.message]), 'error');
+    const msg = err.message && err.message.includes('Wrong password') ? getMessage('options_decryptError') : getMessage('options_importError', [err.message]);
+    showResult(importSettingsResult, msg, 'error');
   }
 });
 

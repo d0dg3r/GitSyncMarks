@@ -95,17 +95,16 @@ body {
   min-width: 140px;
 }
 
-.theme-icons {
-  display: flex;
-  gap: 2px;
-}
-
-.theme-icon-btn {
-  width: 32px;
-  height: 32px;
+.theme-cycle-btn {
+  width: 36px;
+  height: 36px;
   padding: 0;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
   background: var(--color-btn-secondary);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
@@ -113,14 +112,12 @@ body {
   transition: background 0.2s;
 }
 
-.theme-icon-btn:hover {
-  background: var(--color-btn-secondary-hover);
+html.dark .theme-cycle-btn {
+  color: #ffffff;
 }
 
-.theme-icon-btn.active {
-  background: var(--color-primary);
-  color: white;
-  border-color: var(--color-primary);
+.theme-cycle-btn:hover {
+  background: var(--color-btn-secondary-hover);
 }
 
 .header-icon {
@@ -242,16 +239,12 @@ body {
   gap: 10px;
 }
 
-#tab-github #github-repos-card .form-group.toggle-group {
+#tab-sync #github-repos-card .form-group.toggle-group {
   margin-bottom: 10px;
 }
 
-#tab-github #github-repos-options .form-group {
+#tab-sync #github-repos-options .form-group {
   margin-bottom: 10px;
-}
-
-#tab-github .actions {
-  margin-top: 4px;
 }
 
 /* ---- Sync Tab: compact to match GitHub ---- */
@@ -280,10 +273,6 @@ body {
 
 #tab-sync #sync-custom-fields .form-group {
   margin-bottom: 12px;
-}
-
-#tab-sync .actions {
-  margin-top: 4px;
 }
 
 /* ---- About Tab: compact ---- */
@@ -728,6 +717,13 @@ input[type="checkbox"]:checked + .toggle-slider::after {
   margin-top: 8px;
 }
 
+.actions-in-card {
+  margin-top: 20px;
+  margin-bottom: 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
 /* Backup Tab */
 
 .backup-card .card-desc {
@@ -1040,6 +1036,53 @@ input[type="checkbox"]:checked + .toggle-slider::after {
   text-decoration: underline;
 }
 
+.automation-block-desc {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-bottom: 8px;
+}
+
+.automation-block-desc code {
+  background: var(--color-code-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.automation-copy-wrap {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 6px 0 10px;
+}
+
+.automation-copy-wrap .code-block {
+  flex: 1;
+  margin: 0;
+}
+
+.automation-copy-btn {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.automation-subfolder-example {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin: 6px 0 10px;
+}
+
+.automation-subfolder-example code {
+  background: var(--color-code-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.automation-params-table {
+  margin-top: 8px;
+}
+
 .code-block-sm {
   padding: 8px 12px;
   margin: 6px 0 10px;
@@ -1084,9 +1127,40 @@ input[type="checkbox"]:checked + .toggle-slider::after {
 }
 
 /* Help tab */
+.help-quick-links-card {
+  margin-bottom: 16px;
+  padding: 16px 20px;
+}
+
+.help-quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.help-link-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.help-link-btn:hover {
+  text-decoration: none;
+}
+
 #tab-help .help-details.card {
-  padding: 12px 16px;
-  margin-bottom: 6px;
+  padding: 14px 18px;
+  margin-bottom: 8px;
+  border-top: 1px solid var(--color-border-secondary);
+}
+
+#tab-help .help-details.card:first-of-type {
+  border-top: none;
+}
+
+#tab-help .card {
+  padding: 16px 20px;
+  margin-bottom: 12px;
 }
 
 #tab-help .help-details:last-child {

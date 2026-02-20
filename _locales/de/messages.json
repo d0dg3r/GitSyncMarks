@@ -244,6 +244,24 @@
   "options_syncOnFocus": {
     "message": "Sync bei Browser-Fokus"
   },
+  "options_generatedFilesTitle": {
+    "message": "Generierte Dateien"
+  },
+  "options_generatedFilesDesc": {
+    "message": "Dateien, die beim Sync im Repo erstellt werden. Ausschalten, um Aktualisierung zu stoppen."
+  },
+  "options_generateReadmeMd": {
+    "message": "README.md erzeugen"
+  },
+  "options_generateReadmeMdDesc": {
+    "message": "Markdown-Übersicht im Repo."
+  },
+  "options_generateBookmarksHtml": {
+    "message": "bookmarks.html erzeugen"
+  },
+  "options_generateBookmarksHtmlDesc": {
+    "message": "Netscape-Format für Browser-Import (Chrome, Firefox)."
+  },
   "options_notifications": {
     "message": "Sync-Benachrichtigungen"
   },
@@ -463,7 +481,7 @@
     "message": "Debug-Log"
   },
   "options_debugLogDesc": {
-    "message": "Aktivieren, um Sync-Diagnosen zu speichern (Diffs, Merge-Entscheidungen, Konflikte). Hilfreich bei Sync-Problemen. Log exportieren und teilen für Support."
+    "message": "Aktivieren, um Sync-Diagnosen zu speichern (Diffs, Merge-Entscheidungen, Konflikte, Commit-Hashes an wichtigen Stellen). Hilfreich bei Sync-Problemen. Log exportieren und teilen für Support."
   },
   "options_debugLogEnabled": {
     "message": "Debug-Log aktivieren"
@@ -479,7 +497,7 @@
     "message": "GitHub"
   },
   "options_tabSynchronization": {
-    "message": "Synchronisierung"
+    "message": "Sync"
   },
   "options_tabBackup": {
     "message": "Backup"
@@ -554,7 +572,7 @@
     "message": "Von GitHub herunterladen (überschreibt lokale Änderungen)."
   },
   "help_syncTitle": {
-    "message": "Synchronisation"
+    "message": "Sync"
   },
   "help_autoSyncTitle": {
     "message": "Auto-Sync"
@@ -574,6 +592,12 @@
   "help_syncStartupDesc": {
     "message": "Optional: Sync beim Browserstart oder beim Zurückkehren ins Browserfenster (mit Pause)."
   },
+  "help_generatedFilesTitle": {
+    "message": "Generierte Dateien"
+  },
+  "help_generatedFilesDesc": {
+    "message": "README.md (Übersicht) und bookmarks.html (Netscape-Format für Browser-Import) werden beim Sync erzeugt. Im Sync-Tab abschalten, um keine Updates mehr zu schreiben."
+  },
   "help_notificationsTitle": {
     "message": "Benachrichtigungen"
   },
@@ -587,13 +611,13 @@
     "message": "Lesezeichen exportieren / importieren"
   },
   "help_backupBookmarksDesc": {
-    "message": "Alle Browser-Lesezeichen als JSON exportieren. Import ersetzt alle lokalen Lesezeichen durch den Dateiinhalt."
+    "message": "Alle Browser-Lesezeichen als JSON exportieren. Import ersetzt alle Lesezeichen im aktiven Profil durch den Dateiinhalt."
   },
   "help_backupSettings": {
     "message": "Einstellungen exportieren / importieren"
   },
   "help_backupSettingsDesc": {
-    "message": "GitHub-Verbindung und Sync-Einstellungen exportieren (Profile mit entschlüsselten Tokens). Import ersetzt alle Einstellungen; die Seite wird danach neu geladen."
+    "message": "Export als .json (Klartext) oder .enc (verschlüsselt). Import ersetzt alle Einstellungen (alle Profile); die Seite lädt danach neu."
   },
   "help_conflictTitle": {
     "message": "Konflikte"
@@ -622,6 +646,9 @@
   "help_whyAtomic": {
     "message": "Alle Änderungen werden in einem atomaren Commit geschrieben: Entweder alles gelingt oder nichts. So wird ein teilweiser oder beschädigter Zustand bei Unterbrechung vermieden. Ein Commit statt vieler vermeidet außerdem API-Ratelimits und hält die Git-Historie überschaubar."
   },
+  "help_reportIssue": {
+    "message": "Problem melden"
+  },
   "help_links": {
     "message": "Links"
   },
@@ -633,7 +660,7 @@
     "message": "Backup"
   },
   "options_backupIntro": {
-    "message": "Lesezeichen und Einstellungen als JSON exportieren oder importieren."
+    "message": "Lesezeichen als JSON; Einstellungen als JSON oder verschlüsseltes .enc exportieren oder importieren."
   },
   "options_bookmarksCard": {
     "message": "Lesezeichen"
@@ -669,10 +696,13 @@
     "message": "Einstellungen importieren"
   },
   "options_importBookmarksWarning": {
-    "message": "Ersetzt alle Lesezeichen. Unwiderruflich."
+    "message": "Ersetzt alle Lesezeichen im aktiven Profil. Unwiderruflich."
   },
   "options_importSettingsWarning": {
-    "message": "Ersetzt alle Einstellungen. Seite lädt neu."
+    "message": "Ersetzt alle Einstellungen (alle Profile). Seite lädt neu."
+  },
+  "options_importSettingsFormats": {
+    "message": "Akzeptiert .json (Klartext) oder .enc (verschlüsselt)."
   },
   "options_selectFile": {
     "message": "Datei auswählen..."
@@ -685,6 +715,27 @@
   },
   "options_importError": {
     "message": "Import fehlgeschlagen: $1"
+  },
+  "options_exportSettingsPlain": {
+    "message": "Export (Klartext)"
+  },
+  "options_exportSettingsEncrypted": {
+    "message": "Export verschlüsselt"
+  },
+  "options_exportPasswordPrompt": {
+    "message": "Passwort zum Verschlüsseln der Einstellungsdatei eingeben."
+  },
+  "options_importPasswordPrompt": {
+    "message": "Passwort zum Entschlüsseln der Einstellungsdatei eingeben."
+  },
+  "options_passwordPlaceholder": {
+    "message": "Passwort"
+  },
+  "options_decryptError": {
+    "message": "Entschlüsselung fehlgeschlagen. Falsches Passwort?"
+  },
+  "options_exportEncryptedSuccess": {
+    "message": "Verschlüsselter Export erfolgreich!"
   },
 
   "options_tabAutomation": {
@@ -700,7 +751,7 @@
     "message": "Dateiformat"
   },
   "options_automationFoldersLabel": {
-    "message": "Ordner:"
+    "message": "Sections:"
   },
   "options_automationGithubActionTitle": {
     "message": "GitHub Action"
@@ -710,5 +761,35 @@
   },
   "options_automationGithubActionParams": {
     "message": "folder = Root; path = optionaler Unterordner; base-path bei abweichendem Dateipfad"
+  },
+  "options_automationCreateFileTitle": {
+    "message": "Datei im Repo anlegen"
+  },
+  "options_automationCreateFileDesc": {
+    "message": "Neue JSON-Datei in <code>bookmarks/toolbar/</code> oder <code>bookmarks/other/</code> (oder Unterordner) anlegen. Bei abweichendem Dateipfad den Pfad der Extension verwenden."
+  },
+  "options_automationCopy": {
+    "message": "Kopieren"
+  },
+  "options_automationWorkflowRaw": {
+    "message": "Raw"
+  },
+  "options_automationSubfolderExample": {
+    "message": "Beispiel: path=\"dev-tools\" → bookmarks/toolbar/dev-tools/"
+  },
+  "options_automationParamUrl": {
+    "message": "Lesezeichen-URL (erforderlich)"
+  },
+  "options_automationParamTitle": {
+    "message": "Titel (optional; URL falls leer)"
+  },
+  "options_automationParamSection": {
+    "message": "Section: toolbar oder other"
+  },
+  "options_automationParamFolder": {
+    "message": "Ordner innerhalb der Section (z. B. dev-tools)"
+  },
+  "options_automationParamBasePath": {
+    "message": "Basisordner im Repo (Standard bookmarks; muss File Path entsprechen)"
   }
 }

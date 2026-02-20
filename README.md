@@ -23,7 +23,7 @@
 <tr>
 <td align="center"><img src="store-assets/en/chrome-7-popup.png" width="220" alt="Popup" /><br><sub>1. Popup</sub></td>
 <td align="center"><img src="store-assets/en/chrome-1-github.png" width="220" alt="GitHub" /><br><sub>2. GitHub</sub></td>
-<td align="center"><img src="store-assets/en/chrome-2-synchronization.png" width="220" alt="Synchronization" /><br><sub>3. Synchronization</sub></td>
+<td align="center"><img src="store-assets/en/chrome-2-synchronization.png" width="220" alt="Sync" /><br><sub>3. Sync</sub></td>
 <td align="center"><img src="store-assets/en/chrome-3-backup.png" width="220" alt="Backup" /><br><sub>4. Backup</sub></td>
 </tr>
 <tr>
@@ -55,8 +55,8 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 - **Readable overview**: A `README.md` with all bookmarks is generated in the repo for easy browsing on GitHub
 - **Automation**: Add bookmarks via Git, CLI, or GitHub Actions — the extension picks them up automatically
 - **GitHub Repos folder**: Optional folder with bookmarks to all your GitHub repositories (public and private); configurable position (toolbar/other); manual refresh; preserved on pull when not in Git
-- **Auto-save**: Switches and action buttons (Update GitHub Repos, Test Connection) save settings automatically
-- **Import/Export**: Export and import bookmarks or extension settings as JSON files
+- **Auto-save**: All settings save automatically when changed; no Save buttons
+- **Import/Export**: Export and import bookmarks or extension settings as JSON; settings can also be exported as password-encrypted .enc for secure backup
 - **Multilanguage**: English, German, French, and Spanish, with manual language selection
 - **Keyboard shortcuts**: Quick sync (`Ctrl+Shift+.`), Open settings (`Ctrl+Shift+,`) — customizable in browser extension settings
 - **Debug Log**: Options → Help — enable to record sync diagnostics (diffs, merge decisions, commit hashes); export and share for troubleshooting
@@ -96,7 +96,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 5. Click **Test Connection** to verify (settings are saved automatically before the test):
    - If the folder is **empty**: You can create the base structure (toolbar, other)
    - If **bookmarks already exist** in the repo: You can pull them into this browser
-6. Click **Save** (switches save automatically; Save is needed for text fields)
+6. All settings save automatically when you change them
 
 ### First sync
 
@@ -139,8 +139,8 @@ Status line shows last sync time and next scheduled sync. When a conflict occurs
 
 In the **Backup** tab of the options page:
 
-- **Export / Import Bookmarks**: Export all browser bookmarks as JSON; import replaces all local bookmarks (use with caution)
-- **Export / Import Settings**: Export GitHub connection and sync settings, including all profiles with decrypted tokens. Import replaces all settings and reloads the page. Useful for migrating to another browser or device
+- **Export / Import Bookmarks**: Export all browser bookmarks as JSON; import replaces all bookmarks in the active profile (use with caution)
+- **Export / Import Settings**: Export as plain JSON or password-encrypted .enc for secure backup. Import replaces all settings (all profiles) and reloads the page. Useful for migrating to another browser or device
 
 ## Files in the GitHub Repository
 
@@ -150,6 +150,7 @@ After the first sync, your repository will contain:
 bookmarks/
   _index.json                     # Metadata (format version, device info)
   README.md                       # Auto-generated overview — browse all bookmarks on GitHub
+  bookmarks.html                  # Netscape format — import directly in Chrome, Firefox, Edge
   toolbar/                        # Bookmarks Bar
     _order.json                   # Defines order of items and subfolders in this folder
     github_a1b2.json              # One file per bookmark
@@ -170,7 +171,7 @@ Each bookmark is a simple JSON file:
 }
 ```
 
-The `README.md` in the repo is regenerated on each sync — it lists all bookmarks with links, so you can browse your bookmarks directly on GitHub.
+The `README.md` in the repo is regenerated on each sync — it lists all bookmarks with links, so you can browse your bookmarks directly on GitHub. The `bookmarks.html` file uses the Netscape format and can be imported in any browser (Chrome: Bookmarks → Import; Firefox: Import and Backup → Import Bookmarks from file). Both files can be turned off in Settings → Sync → Generated files.
 
 ## Automation
 

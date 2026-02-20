@@ -25,7 +25,7 @@ flowchart LR
     end
 
     subgraph Repo["GitHub Repository"]
-        Files["bookmarks/toolbar/*.json\nbookmarks/other/*.json\nbookmarks/README.md"]
+        Files["bookmarks/toolbar/*.json\nbookmarks/other/*.json\nbookmarks/README.md\nbookmarks/bookmarks.html"]
     end
 
     BM --> FM
@@ -129,12 +129,17 @@ Auto-generated on every push. Shows all bookmarks as Markdown with folder headin
 ## Other Bookmarks
 ```
 
+### `bookmarks.html` — Netscape Format for Browser Import
+
+Auto-generated on every push when enabled (default: on). Uses the Netscape Bookmark File format (`<!DOCTYPE NETSCAPE-Bookmark-file-1>`) which Chrome, Firefox, Edge, and Safari can import directly. Not used for sync — purely for importing bookmarks without the extension.
+
 ### Complete Repository Structure
 
 ```
 bookmarks/
   _index.json
   README.md
+  bookmarks.html
   toolbar/
     _order.json
     github_a1b2.json
@@ -177,6 +182,8 @@ Per-profile keys (repo config, githubRepos) live in `profiles[id]`; others are g
 | `autoSync` | `boolean` | `true` | Auto-sync enabled |
 | `syncInterval` | `number` | `15` | Sync interval (minutes) |
 | `language` | `string` | `"auto"` | UI language |
+| `generateReadmeMd` | `boolean` | `true` | Generate README.md on sync |
+| `generateBookmarksHtml` | `boolean` | `true` | Generate bookmarks.html (Netscape format) on sync |
 
 ### `chrome.storage.local` — Sync State + Token
 

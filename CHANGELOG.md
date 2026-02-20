@@ -9,6 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *(Keine Einträge)*
 
+## [2.3.0] - 2026-02-19
+
+### Added
+
+- **Encrypted settings export**: Password-protected export for secure backup; PBKDF2 + AES-256-GCM; two buttons (plain JSON / encrypted .enc); import supports both formats and prompts for password when needed
+
+### Changed
+
+- **Options tab label**: "Synchronization" tab shortened to "Sync" in all languages (en, de, fr, es)
+- **Store screenshots**: Popup uses crop method (left-half only) to avoid stretching; Options tabs use default resize; light/dark mode displayed correctly side by side (1280×800)
+- **Import hints**: Bookmark import clarifies it affects the active profile; Settings import clarifies it affects all profiles
+- **Popup**: Force push/pull buttons disabled during sync; conflict detection uses `result.conflict` (language-independent)
+- **Options**: Profile buttons DRY helper `setProfileButtonsEnabled()`
+- **Automation tab**: Copy buttons (JSON, gh command); "Create file in repo" block; parameter table; subfolder example; Raw workflow link; section/folder terminology
+- **Help tab**: Quick Links (Documentation, Discussions, Report Issue) as button row at top; removed redundant Links accordion; aligned card styling with other tabs
+- **Theme selector**: Single cycle button (A → Dark → Light → A) replaces three separate buttons; icon and tooltip reflect current mode; A and moon icon in white for dark mode
+- **Auto-save**: GitHub tab (token, owner, repo, branch, filepath, profile switch) and Sync tab (all dropdowns, toggles, generated files) save automatically on change; Save buttons removed
+- **GitHub Repos Folder**: Moved from GitHub tab to Sync tab
+- **Save feedback layout**: Save result integrated into cards with top border instead of standalone area
+
 ## [2.2.1] - 2026-02-19
 
 ### Added
@@ -162,7 +182,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release: bookmark sync with GitHub
 
-[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.2.1...HEAD
+[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.3.0...HEAD
+[2.3.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.2.1...v2.3.0
 [2.2.1]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.1.2...v2.2.0
 [2.1.1]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.1.0...v2.1.1
