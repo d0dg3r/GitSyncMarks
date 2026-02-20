@@ -35,22 +35,22 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 
 ### Version History
 
-| Version | Description |
-|---|---|
-| `2.3.0` | Encrypted settings export (password-protected .enc); plain JSON and encrypted formats supported; import with password prompt for .enc files; Sync tab shortened to "Sync"; store screenshots (popup crop, options resize); import hints (active profile / all profiles); theme cycle button; full auto-save (GitHub + Sync tabs, no Save buttons); GitHub Repos moved to Sync tab; save feedback in cards |
-| `2.2.1` | Sync feedback message fix (merge shows push/pull success); state regression fix (stale fetch guard, cache-busting); debug log extended with commit hashes |
-| `2.2.0` | GitHub Repos folder, multiple profiles, onboarding, profile add auto-switch, profile limit display, spinner, profile switch UX, popup redesign, shorter pull message, keyboard shortcuts, Help tab (collapsible accordion), options header (language dropdown only), French and Spanish; settings import round-trip fix; auto-save on switches and before actions; compact Options UI (all tabs); Backup tab redesign; contributors Patrick W., Gernot B. |
-| `2.1.2` | Store buttons in README, responsive mobile layout for Firefox Android, testing guide (docs/TESTING.md) |
-| `2.1.1` | New icon (blue bookmark + green sync arrow) for extension, store assets, and favicons |
-| `2.1.0` | Sync profiles, sync on startup/focus, theme (light/dark/auto), redesigned Backup tab, tabbed options (GitHub/Sync/Backup), commit link in popup, pre-release workflow — see [CHANGELOG.md](../CHANGELOG.md) |
-| `2.0.1` | Fix: false merge conflicts when two devices edit the same folder concurrently (`_order.json` content-level merge); harden GitHub Action inputs; update Firefox manifest and i18n; update store screenshots |
-| `2.0.0` | Per-file bookmark storage, three-way merge sync, Firefox support, automation (GitHub Actions), cross-browser build system |
-| `1.5.0` | Token encryption at rest (AES-256-GCM), token moved to local storage |
-| `1.4.0` | Tabbed options page, import/export, GitHub project links, improved description |
-| `1.3.0` | Multilanguage support (i18n) with manual language selection |
-| `1.2.0` | Chrome Web Store preparation, privacy policy |
-| `1.1.0` | Open source (MIT license), English translation |
-| `1.0.0` | Initial release: bookmark sync with GitHub |
+| Version | Codename | Description |
+|---|---|---|
+| `2.3.0` | *Data* | Encrypted settings export (password-protected .enc); plain JSON and encrypted formats supported; import with password prompt for .enc files; Sync tab shortened to "Sync"; store screenshots (popup crop, options resize); import hints (active profile / all profiles); theme cycle button; full auto-save (GitHub + Sync tabs, no Save buttons); GitHub Repos moved to Sync tab; save feedback in cards |
+| `2.2.1` | — | Sync feedback message fix (merge shows push/pull success); state regression fix (stale fetch guard, cache-busting); debug log extended with commit hashes |
+| `2.2.0` | — | GitHub Repos folder, multiple profiles, onboarding, profile add auto-switch, profile limit display, spinner, profile switch UX, popup redesign, shorter pull message, keyboard shortcuts, Help tab (collapsible accordion), options header (language dropdown only), French and Spanish; settings import round-trip fix; auto-save on switches and before actions; compact Options UI (all tabs); Backup tab redesign; contributors Patrick W., Gernot B. |
+| `2.1.2` | — | Store buttons in README, responsive mobile layout for Firefox Android, testing guide (docs/TESTING.md) |
+| `2.1.1` | — | New icon (blue bookmark + green sync arrow) for extension, store assets, and favicons |
+| `2.1.0` | — | Sync profiles, sync on startup/focus, theme (light/dark/auto), redesigned Backup tab, tabbed options (GitHub/Sync/Backup), commit link in popup, pre-release workflow — see [CHANGELOG.md](../CHANGELOG.md) |
+| `2.0.1` | — | Fix: false merge conflicts when two devices edit the same folder concurrently (`_order.json` content-level merge); harden GitHub Action inputs; update Firefox manifest and i18n; update store screenshots |
+| `2.0.0` | — | Per-file bookmark storage, three-way merge sync, Firefox support, automation (GitHub Actions), cross-browser build system |
+| `1.5.0` | — | Token encryption at rest (AES-256-GCM), token moved to local storage |
+| `1.4.0` | — | Tabbed options page, import/export, GitHub project links, improved description |
+| `1.3.0` | — | Multilanguage support (i18n) with manual language selection |
+| `1.2.0` | — | Chrome Web Store preparation, privacy policy |
+| `1.1.0` | — | Open source (MIT license), English translation |
+| `1.0.0` | — | Initial release: bookmark sync with GitHub |
 
 ## Branch Workflow
 

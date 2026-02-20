@@ -4,7 +4,7 @@ Open items and next steps for further development. Updated each session.
 
 ---
 
-## Current Status (v2.3.0)
+## Current Status (v2.3.0 *Data*)
 
 - **v2.3.0** – Encrypted settings export (password-protected .enc); plain JSON and encrypted supported; import with password prompt; Sync tab shortened to "Sync"; store screenshots improved; import hints (bookmarks = active profile, settings = all profiles); theme cycle button; full auto-save (no Save buttons); GitHub Repos moved to Sync tab
 - **v2.2.1** – Sync feedback message fix; state regression fix (stale fetch guard, cache-busting); debug log extended with commit hashes

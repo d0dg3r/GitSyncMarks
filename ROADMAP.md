@@ -6,7 +6,7 @@ Contributions and ideas welcome — open an issue or pull request.
 
 ---
 
-## Planned for v2.4.0
+## Planned for v2.4.0 (*R2-D2*)
 
 - **Browser import files** — Automatically generate import files for common browsers (e.g. Netscape HTML) alongside README.md. Enables importing directly from the repo without the extension.
 - **Context menu** — Right-click on link or page:
@@ -17,7 +17,7 @@ Contributions and ideas welcome — open an issue or pull request.
 
 ---
 
-## Planned for v3.0 (Larger milestones)
+## Planned for v3.0 (*GLaDOS*) — Larger milestones
 
 - **GitLab support** — GitLab API wrapper (different endpoints than GitHub), provider abstraction (`lib/git-provider.js`), GitLab CI/CD automation equivalent. Current `lib/github-api.js` is tightly coupled to `api.github.com`.
 - **Gitea / Forgejo support** — Self-hosted Git with GitHub-compatible API; point extension to own server (e.g. `https://gitea.example.com/api/v1/`) instead of GitHub. Enables sync without GitHub, including private/air-gapped setups.
@@ -26,7 +26,7 @@ Contributions and ideas welcome — open an issue or pull request.
 
 ## Recently completed
 
-- **v2.3.0** — Encrypted settings export (password-protected .enc); plain JSON and encrypted supported; import with password prompt; Sync tab shortened to "Sync" in all languages
+- **v2.3.0** *Data* — Encrypted settings export (password-protected .enc); plain JSON and encrypted supported; import with password prompt; Sync tab shortened to "Sync" in all languages
 - **v2.2.1** — Sync feedback message fix; state regression fix (stale fetch guard, cache-busting); debug log with commit hashes
 - **Profile dialogs inline** — Add, Rename, Delete use inline dialogs (no prompt/confirm)
 - **Onboarding inline** — Create folder and Pull use inline dialogs (no confirm)

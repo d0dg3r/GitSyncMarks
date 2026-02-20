@@ -34,7 +34,7 @@
 </tr>
 </table>
 
-See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROADMAP.md](ROADMAP.md) for planned features.
+See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROADMAP.md](ROADMAP.md) for planned features. Release codenames (cult nerd figures): 2.3 *Data*, 2.4 *R2-D2*, 3.0 *GLaDOS* — see [docs/RELEASE.md](docs/RELEASE.md).
 
 ## Mobile App
 
