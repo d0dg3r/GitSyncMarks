@@ -184,6 +184,20 @@ html.dark .theme-cycle-btn {
   border-bottom: 1px solid var(--color-border);
 }
 
+.card h2:has(+ .card-desc) {
+  margin-bottom: 4px;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.card-desc {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
 .form-group {
   margin-bottom: 18px;
 }
@@ -202,6 +216,11 @@ html.dark .theme-cycle-btn {
   margin-bottom: 14px;
   padding-bottom: 8px;
   font-size: 16px;
+}
+
+#tab-github .card h2:has(+ .card-desc) {
+  margin-bottom: 4px;
+  padding-bottom: 0;
 }
 
 #tab-github .card-desc {
@@ -257,6 +276,11 @@ html.dark .theme-cycle-btn {
   margin-bottom: 14px;
   padding-bottom: 8px;
   font-size: 16px;
+}
+
+#tab-sync .card h2:has(+ .card-desc) {
+  margin-bottom: 4px;
+  padding-bottom: 0;
 }
 
 #tab-sync .form-group {
