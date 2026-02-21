@@ -68,6 +68,10 @@ Two phases: development and release.
 
 **Naming:** Single feature `feature/xyz`; multiple features for a version `develop/2.2.0`; bugfixes `fix/description`.
 
+### Before Release Planning
+
+Create a **Poll** in [Discussions → Polls](https://github.com/d0dg3r/GitSyncMarks/discussions/new?category=polls) (e.g. "Backlog — Was interessiert euch?") and let it run before locking in the next release scope. Evaluate results and use them to prioritize the [ROADMAP](../ROADMAP.md). See [GITHUB-DISCUSSIONS.md](GITHUB-DISCUSSIONS.md#polls) for the poll template.
+
 ### Phase 2: Release
 
 | Step | Action |
@@ -114,8 +118,10 @@ This triggers the **GitHub Actions workflow** automatically.
 
 The GitHub Actions workflow will:
 1. Check out the code and detect prerelease (Pre-tags: `-pre.N`, `-alpha.N`, etc.)
-2. Build both ZIPs (`GitSyncMarks-vX.X.X-chrome.zip`, `GitSyncMarks-vX.X.X-firefox.zip`)
-3. Create the GitHub Release
+2. Extract changelog from `CHANGELOG.md` for the released version
+3. Build both ZIPs (`GitSyncMarks-vX.X.X-chrome.zip`, `GitSyncMarks-vX.X.X-firefox.zip`)
+4. Create the GitHub Release (changelog + installation instructions in the body)
+5. Create a Discussion post in the **Announcements** category (requires Discussions enabled and Announcements category to exist)
 
 E2E tests and screenshot generation in CI are currently disabled (see [ROADMAP.md](../ROADMAP.md) backlog). Run them locally before tagging.
 

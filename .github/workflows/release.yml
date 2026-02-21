@@ -32,6 +32,12 @@ jobs:
             echo "prerelease=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Extract changelog
+        id: changelog
+        uses: ffurrer2/extract-release-notes@v2
+        with:
+          changelog_file: CHANGELOG.md
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -50,7 +56,11 @@ jobs:
           name: "GitSyncMarks ${{ steps.version.outputs.VERSION }}"
           prerelease: ${{ steps.prerelease.outputs.prerelease }}
           body: |
-            ## GitSyncMarks ${{ steps.version.outputs.VERSION }}
+            ${{ steps.changelog.outputs.release_notes }}
+
+            ---
+
+            ## Installation
 
             ### Chrome / Chromium / Edge / Brave
 
@@ -73,3 +83,15 @@ jobs:
             build/GitSyncMarks-${{ steps.version.outputs.VERSION }}-chrome.zip
             build/GitSyncMarks-${{ steps.version.outputs.VERSION }}-firefox.zip
           draft: false
+
+      - name: Create Release Discussion
+        if: success()
+        uses: abirismyname/create-discussion@v2.1.0
+        with:
+          title: "${{ steps.version.outputs.VERSION }} — Released"
+          body: |
+            ${{ steps.changelog.outputs.release_notes }}
+
+            [Release](https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}) · [Changelog](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)
+          category-name: Announcements
+          github-token: ${{ secrets.GITHUB_TOKEN }}

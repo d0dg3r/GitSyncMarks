@@ -305,8 +305,9 @@ In the **Help** tab of the options page:
 
 ## Documentation & Links
 
+- **[Discussions](https://github.com/d0dg3r/GitSyncMarks/discussions)** — Q&A, ideas, show and tell; see [docs/GITHUB-DISCUSSIONS.md](docs/GITHUB-DISCUSSIONS.md) for category overview
 - **[GitSyncMarks-Mobile](https://github.com/d0dg3r/GitSyncMarks-Mobile)** — iOS + Android companion app (read-only; F-Droid and Google Play coming soon)
-- **[docs/](docs/)** — Architecture, release process, testing guide
+- **[docs/](docs/)** — Architecture, release process, testing guide, GitHub Discussions setup
 - **[docs/TESTING.md](docs/TESTING.md)** — Local testing (Chrome, Firefox desktop, Firefox Android)
 - **[CHANGELOG.md](CHANGELOG.md)** — Version history
 - **[ROADMAP.md](ROADMAP.md)** — Planned features
