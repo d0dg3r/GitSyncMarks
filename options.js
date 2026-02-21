@@ -9,7 +9,7 @@ import { GitHubAPI } from './lib/github-api.js';
 import { checkPathSetup, initializeRemoteFolder } from './lib/onboarding.js';
 import { initI18n, applyI18n, getMessage, reloadI18n, getLanguage, SUPPORTED_LANGUAGES } from './lib/i18n.js';
 import { initTheme, applyTheme } from './lib/theme.js';
-import { serializeToJson, deserializeFromJson } from './lib/bookmark-serializer.js';
+import { serializeToJson, deserializeFromJson, bookmarkTreeToFileMap, fileMapToDashyYaml } from './lib/bookmark-serializer.js';
 import { replaceLocalBookmarks, SYNC_PRESETS } from './lib/sync-engine.js';
 import { updateGitHubReposFolder } from './lib/github-repos.js';
 import { encryptToken, decryptToken, migrateTokenIfNeeded, encryptWithPassword, decryptWithPassword, PASSWORD_ENC_PREFIX } from './lib/crypto.js';
@@ -49,6 +49,9 @@ const STORAGE_KEYS = {
   GENERATE_README_MD: 'generateReadmeMd',
   GENERATE_BOOKMARKS_HTML: 'generateBookmarksHtml',
   GENERATE_FEED_XML: 'generateFeedXml',
+  GENERATE_DASHY_YML: 'generateDashyYml',
+  SYNC_SETTINGS_TO_GIT: 'syncSettingsToGit',
+  SETTINGS_SYNC_MODE: 'settingsSyncMode',
 };
 
 function normalizeGenMode(val) {
@@ -101,7 +104,19 @@ const syncOnFocusInput = document.getElementById('sync-on-focus');
 const generateReadmeMdSelect = document.getElementById('generate-readme-md');
 const generateBookmarksHtmlSelect = document.getElementById('generate-bookmarks-html');
 const generateFeedXmlSelect = document.getElementById('generate-feed-xml');
+const generateDashyYmlSelect = document.getElementById('generate-dashy-yml');
 const generateFilesBtn = document.getElementById('generate-files-btn');
+const syncSettingsToGitInput = document.getElementById('sync-settings-to-git');
+const settingsSyncOptionsGroup = document.getElementById('settings-sync-options-group');
+const settingsSyncModeSelect = document.getElementById('settings-sync-mode');
+const settingsSyncPasswordInput = document.getElementById('settings-sync-password');
+const settingsSyncSavePwBtn = document.getElementById('settings-sync-save-pw-btn');
+const settingsSyncResult = document.getElementById('settings-sync-result');
+const settingsSyncImportGroup = document.getElementById('settings-sync-import-group');
+const settingsSyncLoadBtn = document.getElementById('settings-sync-load-btn');
+const settingsSyncDeviceList = document.getElementById('settings-sync-device-list');
+const settingsSyncImportBtn = document.getElementById('settings-sync-import-btn');
+const settingsSyncImportResult = document.getElementById('settings-sync-import-result');
 const notificationsModeSelect = document.getElementById('notifications-mode');
 const validateBtn = document.getElementById('validate-btn');
 const validationResult = document.getElementById('validation-result');
@@ -136,6 +151,8 @@ const importBookmarksBtn = document.getElementById('import-bookmarks-btn');
 const exportBookmarksResult = document.getElementById('export-bookmarks-result');
 const importBookmarksResult = document.getElementById('import-bookmarks-result');
 
+const exportDashyBtn = document.getElementById('export-dashy-btn');
+const exportDashyResult = document.getElementById('export-dashy-result');
 const exportSettingsBtn = document.getElementById('export-settings-btn');
 const exportSettingsEncryptedBtn = document.getElementById('export-settings-encrypted-btn');
 const importSettingsFile = document.getElementById('import-settings-file');
@@ -287,6 +304,9 @@ async function loadSettings() {
     generateReadmeMd: 'auto',
     generateBookmarksHtml: 'auto',
     generateFeedXml: 'auto',
+    generateDashyYml: 'off',
+    syncSettingsToGit: false,
+    settingsSyncMode: 'global',
     theme: 'auto',
     profileSwitchWithoutConfirm: false,
     debugLogEnabled: false,
@@ -304,6 +324,16 @@ async function loadSettings() {
   generateReadmeMdSelect.value = normalizeGenMode(globals.generateReadmeMd);
   generateBookmarksHtmlSelect.value = normalizeGenMode(globals.generateBookmarksHtml);
   generateFeedXmlSelect.value = normalizeGenMode(globals.generateFeedXml);
+  generateDashyYmlSelect.value = normalizeGenMode(globals.generateDashyYml);
+  syncSettingsToGitInput.checked = globals.syncSettingsToGit === true;
+  settingsSyncModeSelect.value = globals.settingsSyncMode || 'global';
+  settingsSyncOptionsGroup.style.display = syncSettingsToGitInput.checked ? '' : 'none';
+  settingsSyncImportGroup.style.display = settingsSyncModeSelect.value === 'individual' ? '' : 'none';
+  const localPwState = await chrome.storage.local.get({ settingsSyncPassword: '' });
+  if (localPwState.settingsSyncPassword) {
+    settingsSyncPasswordInput.value = '********';
+    settingsSyncPasswordInput.dataset.hasPassword = 'true';
+  }
   updateGenerateFilesBtn();
   const mode = globals.notificationsMode;
   const oldEnabled = globals.notificationsEnabled;
@@ -768,6 +798,9 @@ async function saveSettings() {
       [STORAGE_KEYS.GENERATE_README_MD]: generateReadmeMdSelect.value,
       [STORAGE_KEYS.GENERATE_BOOKMARKS_HTML]: generateBookmarksHtmlSelect.value,
       [STORAGE_KEYS.GENERATE_FEED_XML]: generateFeedXmlSelect.value,
+      [STORAGE_KEYS.GENERATE_DASHY_YML]: generateDashyYmlSelect.value,
+      [STORAGE_KEYS.SYNC_SETTINGS_TO_GIT]: syncSettingsToGitInput.checked,
+      [STORAGE_KEYS.SETTINGS_SYNC_MODE]: settingsSyncModeSelect.value,
       [STORAGE_KEYS.LANGUAGE]: languageSelect.value,
       [STORAGE_KEYS.PROFILE_SWITCH_WITHOUT_CONFIRM]: profileSwitchWithoutConfirmInput.checked,
     });
@@ -884,7 +917,8 @@ function scheduleGenerateFilesSync(isRetry = false) {
 function updateGenerateFilesBtn() {
   const anyEnabled = generateReadmeMdSelect.value !== 'off' ||
                      generateBookmarksHtmlSelect.value !== 'off' ||
-                     generateFeedXmlSelect.value !== 'off';
+                     generateFeedXmlSelect.value !== 'off' ||
+                     generateDashyYmlSelect.value !== 'off';
   generateFilesBtn.style.display = anyEnabled ? '' : 'none';
 }
 
@@ -893,7 +927,8 @@ async function onGenerateFilesToggleChange() {
   await saveSettings();
   if (generateReadmeMdSelect.value === 'auto' ||
       generateBookmarksHtmlSelect.value === 'auto' ||
-      generateFeedXmlSelect.value === 'auto') {
+      generateFeedXmlSelect.value === 'auto' ||
+      generateDashyYmlSelect.value === 'auto') {
     scheduleGenerateFilesSync();
   }
 }
@@ -916,6 +951,102 @@ debounceDelayInput.addEventListener('change', saveSettings);
 generateReadmeMdSelect.addEventListener('change', onGenerateFilesToggleChange);
 generateBookmarksHtmlSelect.addEventListener('change', onGenerateFilesToggleChange);
 generateFeedXmlSelect.addEventListener('change', onGenerateFilesToggleChange);
+generateDashyYmlSelect.addEventListener('change', onGenerateFilesToggleChange);
+
+// Settings sync to Git
+syncSettingsToGitInput.addEventListener('change', async () => {
+  settingsSyncOptionsGroup.style.display = syncSettingsToGitInput.checked ? '' : 'none';
+  await saveSettings();
+  if (!syncSettingsToGitInput.checked) {
+    try {
+      await chrome.runtime.sendMessage({ action: 'clearSettingsSyncPassword' });
+    } catch { /* ignored */ }
+    settingsSyncPasswordInput.value = '';
+    settingsSyncPasswordInput.dataset.hasPassword = '';
+    settingsSyncResult.textContent = '';
+  }
+});
+
+settingsSyncModeSelect.addEventListener('change', async () => {
+  settingsSyncImportGroup.style.display = settingsSyncModeSelect.value === 'individual' ? '' : 'none';
+  await saveSettings();
+});
+
+settingsSyncSavePwBtn.addEventListener('click', async () => {
+  const pw = settingsSyncPasswordInput.value.trim();
+  if (!pw || pw === '********') {
+    settingsSyncResult.textContent = getMessage('options_settingsSyncPasswordMissing');
+    settingsSyncResult.className = 'validation-result error';
+    return;
+  }
+  settingsSyncSavePwBtn.disabled = true;
+  try {
+    const result = await chrome.runtime.sendMessage({
+      action: 'setSettingsSyncPassword',
+      password: pw,
+      triggerPush: true,
+    });
+    settingsSyncPasswordInput.value = '********';
+    settingsSyncPasswordInput.dataset.hasPassword = 'true';
+    settingsSyncResult.textContent = getMessage('options_settingsSyncActive');
+    settingsSyncResult.className = 'validation-result success';
+  } catch (e) {
+    settingsSyncResult.textContent = e.message || 'Error';
+    settingsSyncResult.className = 'validation-result error';
+  }
+  settingsSyncSavePwBtn.disabled = false;
+});
+
+settingsSyncLoadBtn.addEventListener('click', async () => {
+  settingsSyncLoadBtn.disabled = true;
+  settingsSyncImportResult.textContent = '';
+  try {
+    const resp = await chrome.runtime.sendMessage({ action: 'listDeviceConfigs' });
+    settingsSyncDeviceList.innerHTML = '';
+    if (!resp.success || !resp.configs || resp.configs.length === 0) {
+      const opt = document.createElement('option');
+      opt.textContent = getMessage('options_settingsSyncImportEmpty');
+      settingsSyncDeviceList.appendChild(opt);
+      settingsSyncDeviceList.disabled = true;
+      settingsSyncImportBtn.disabled = true;
+    } else {
+      for (const cfg of resp.configs) {
+        const opt = document.createElement('option');
+        opt.value = cfg.filename;
+        opt.textContent = cfg.deviceId === 'global' ? 'Global (settings.enc)' : `Device ${cfg.deviceId} (${cfg.filename})`;
+        settingsSyncDeviceList.appendChild(opt);
+      }
+      settingsSyncDeviceList.disabled = false;
+      settingsSyncImportBtn.disabled = false;
+    }
+  } catch (e) {
+    settingsSyncImportResult.textContent = e.message || 'Error';
+    settingsSyncImportResult.className = 'validation-result error';
+  }
+  settingsSyncLoadBtn.disabled = false;
+});
+
+settingsSyncImportBtn.addEventListener('click', async () => {
+  const filename = settingsSyncDeviceList.value;
+  if (!filename) return;
+  settingsSyncImportBtn.disabled = true;
+  settingsSyncImportResult.textContent = '';
+  try {
+    const resp = await chrome.runtime.sendMessage({ action: 'importDeviceConfig', filename });
+    if (resp.success) {
+      settingsSyncImportResult.textContent = getMessage('options_settingsSyncImportSuccess');
+      settingsSyncImportResult.className = 'validation-result success';
+      await loadSettings();
+    } else {
+      settingsSyncImportResult.textContent = resp.message || 'Error';
+      settingsSyncImportResult.className = 'validation-result error';
+    }
+  } catch (e) {
+    settingsSyncImportResult.textContent = e.message || 'Error';
+    settingsSyncImportResult.className = 'validation-result error';
+  }
+  settingsSyncImportBtn.disabled = false;
+});
 
 // ==============================
 // Import/Export: Bookmarks
@@ -954,6 +1085,24 @@ exportBookmarksBtn.addEventListener('click', async () => {
     showResult(exportBookmarksResult, getMessage('options_exportSuccess'), 'success');
   } catch (err) {
     showResult(exportBookmarksResult, getMessage('options_importError', [err.message]), 'error');
+  }
+});
+
+/**
+ * Export current bookmarks as a Dashy-compatible YAML config download.
+ */
+exportDashyBtn.addEventListener('click', async () => {
+  try {
+    const tree = await chrome.bookmarks.getTree();
+    const fileMap = bookmarkTreeToFileMap(tree, 'bookmarks');
+    const yaml = fileMapToDashyYaml(fileMap, 'bookmarks');
+
+    const date = new Date().toISOString().slice(0, 10);
+    downloadFile(`dashy-conf-${date}.yml`, yaml, 'text/yaml');
+
+    showResult(exportDashyResult, getMessage('options_exportSuccess'), 'success');
+  } catch (err) {
+    showResult(exportDashyResult, getMessage('options_importError', [err.message]), 'error');
   }
 });
 

@@ -26,6 +26,7 @@ Features:
 • Manual Push, Pull, and full Sync via the popup
 • Conflict detection when automatic merge is not possible
 • Generated files: README.md (overview), bookmarks.html (browser import), and feed.xml (RSS 2.0 feed) — each configurable as Off, Manual, or Auto
+• Settings sync to Git: encrypted backup of extension settings in the repo — Global (shared) or Individual (per device) mode; import settings from other devices; same password on every device, auto-synced
 • Automation: add bookmarks via Git, CLI, or GitHub Actions — no browser needed
 • Import/Export: back up and restore bookmarks or settings as JSON files; settings can be exported as password-encrypted .enc for secure backup (clear UI with file picker)
 • Auto-save: all settings save automatically when changed — no Save buttons

@@ -26,6 +26,7 @@ Features:
 • Manual Push, Pull, and full Sync via the popup
 • Conflict detection when automatic merge is not possible
 • Generated files: README.md (overview), bookmarks.html (browser import), and feed.xml (RSS 2.0 feed) — each configurable as Off, Manual, or Auto
+• Settings sync to Git: encrypted backup of extension settings in the repo — Global (shared) or Individual (per device) mode; import settings from other devices; same password on every device, auto-synced
 • Automation: add bookmarks via Git, CLI, or GitHub Actions — no browser needed
 • Import/Export: back up and restore bookmarks or settings as JSON files; settings can be exported as password-encrypted .enc for secure backup (clear UI with file picker)
 • Auto-save: all settings save automatically when changed — no Save buttons
@@ -87,6 +88,7 @@ Funktionen:
 • Manuelles Push, Pull und Sync über das Popup
 • Konflikterkennung, wenn automatisches Mergen nicht möglich ist
 • Generierte Dateien: README.md (Übersicht), bookmarks.html (Browser-Import) und feed.xml (RSS-2.0-Feed) — einzeln als Aus, Manuell oder Auto konfigurierbar
+• Einstellungen-Sync mit Git: verschlüsseltes Backup der Erweiterungseinstellungen im Repo — Global (geteilt) oder Individuell (pro Gerät); Einstellungen von anderen Geräten importieren; gleiches Passwort auf jedem Gerät, automatisch synchronisiert
 • Automatisierung: Lesezeichen über Git, CLI oder GitHub Actions hinzufügen — ohne Browser
 • Import/Export: Lesezeichen oder Einstellungen als JSON-Dateien sichern; Einstellungen auch als passwortverschlüsselte .enc exportierbar (klare UI mit Dateiauswahl)
 • Auto-Save: alle Einstellungen speichern sich automatisch bei Änderung — keine Speichern-Buttons
@@ -148,6 +150,7 @@ Fonctionnalités :
 • Push, Pull et Sync complet manuels via le popup
 • Détection des conflits lorsque la fusion automatique est impossible
 • Fichiers générés : README.md (aperçu), bookmarks.html (import navigateur) et feed.xml (flux RSS 2.0) — chacun configurable comme Désactivé, Manuel ou Auto
+• Sync des paramètres avec Git : sauvegarde chiffrée des paramètres de l'extension dans le dépôt — mode Global (partagé) ou Individuel (par appareil) ; import depuis d'autres appareils ; même mot de passe, synchronisé automatiquement
 • Automatisation : ajouter des favoris via Git, CLI ou GitHub Actions — sans ouvrir le navigateur
 • Import/Export : sauvegarder et restaurer les favoris ou les paramètres en JSON ; paramètres exportables en .enc chiffré par mot de passe (interface claire avec sélection de fichier)
 • Enregistrement automatique : tous les paramètres se sauvegardent à la modification — pas de bouton Enregistrer
@@ -209,6 +212,7 @@ Características:
 • Push, Pull y Sync completo manuales desde el popup
 • Detección de conflictos cuando la fusión automática no es posible
 • Archivos generados: README.md (resumen), bookmarks.html (importación del navegador) y feed.xml (feed RSS 2.0) — cada uno configurable como Desactivado, Manual o Auto
+• Sync de ajustes con Git: copia cifrada de los ajustes de la extensión en el repositorio — modo Global (compartido) o Individual (por dispositivo); importar ajustes de otros dispositivos; misma contraseña, sincronizado automáticamente
 • Automatización: añadir marcadores vía Git, CLI o GitHub Actions — sin abrir el navegador
 • Importar/Exportar: respaldar y restaurar marcadores o ajustes en JSON; ajustes exportables como .enc cifrado con contraseña (interfaz clara con selector de archivo)
 • Guardado automático: todos los ajustes se guardan al cambiar — sin botones Guardar

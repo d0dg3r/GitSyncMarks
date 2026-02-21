@@ -6,7 +6,7 @@ Open items and next steps for further development. Updated each session.
 
 ## Current Status (v2.4.0 *R2-D2*)
 
-- **v2.4.0** *R2-D2* – RSS feed export (`feed.xml`); generated files mode selector (Off/Manual/Auto per file with "Generate now" button); backlog voting awareness in Help tab and README; Debug Log moved to Sync tab
+- **v2.4.0** *R2-D2* – Settings sync to Git (encrypted, Global or Individual mode with device config import); RSS feed export (`feed.xml`); generated files mode selector (Off/Manual/Auto per file with "Generate now" button); backlog voting awareness in Help tab and README; Debug Log moved to Sync tab
 - **v2.3.0** *Data* – Encrypted settings export (password-protected .enc); plain JSON and encrypted supported; import with password prompt; Sync tab shortened to "Sync"; store screenshots improved; import hints (bookmarks = active profile, settings = all profiles); theme cycle button; full auto-save (no Save buttons); GitHub Repos moved to Sync tab
 - **v2.2.1** – Sync feedback message fix; state regression fix (stale fetch guard, cache-busting); debug log extended with commit hashes
 - **GitHub Repos folder** – Implemented (toggle, position, refresh; synced via normal bookmark sync)
@@ -39,7 +39,8 @@ Open items and next steps for further development. Updated each session.
 2. [x] Generated files mode selector (Off/Manual/Auto) implemented
 3. [x] Backlog voting awareness (Help tab + README)
 4. [x] Debug Log moved to Sync tab
-5. [ ] Test on Chrome, Firefox Desktop, Firefox Android
+5. [x] Settings sync to Git (encrypted `settings.enc`)
+6. [ ] Test on Chrome, Firefox Desktop, Firefox Android
 6. [ ] Tag v2.4.0, publish release (manifest, CHANGELOG, docs updated)
 7. [ ] Submit to Chrome Web Store and Firefox Add-ons with updated store descriptions
 

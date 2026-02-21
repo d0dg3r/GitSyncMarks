@@ -6,14 +6,12 @@ Contributions and ideas welcome — open an issue or pull request.
 
 ---
 
-## Planned for v2.4.0 (*R2-D2*)
+## Planned for v2.5.0
 
-- **Settings sync to Git** — Optional: store extension settings in the repo so they sync across clients. **Encrypted only** — never plain JSON (would expose tokens). Uses existing .enc format; user sets password once per device.
 - **Context menu** — Right-click on link or page:
   - **Add to GitSyncMarks** — add as bookmark to repo
   - **Favicon**: copy favicon URL to clipboard; download locally; save to Git repo
   - New permissions: `contextMenus`; optionally `downloads` for local save
-
 
 ---
 
@@ -26,7 +24,7 @@ Contributions and ideas welcome — open an issue or pull request.
 
 ## Recently completed
 
-- **v2.4.0** *R2-D2* — RSS feed export (`feed.xml`); generated files mode selector (Off/Manual/Auto per file with "Generate now" button); backlog voting awareness; Debug Log moved to Sync tab
+- **v2.4.0** *R2-D2* — Settings sync to Git (encrypted `settings.enc`); RSS feed export (`feed.xml`); generated files mode selector (Off/Manual/Auto per file with "Generate now" button); backlog voting awareness; Debug Log moved to Sync tab
 - **v2.3.0** *Data* — Encrypted settings export (password-protected .enc); plain JSON and encrypted supported; import with password prompt; Sync tab shortened to "Sync" in all languages; browser import files (`bookmarks.html`)
 - **v2.2.1** — Sync feedback message fix; state regression fix (stale fetch guard, cache-busting); debug log with commit hashes
 - **Profile dialogs inline** — Add, Rename, Delete use inline dialogs (no prompt/confirm)

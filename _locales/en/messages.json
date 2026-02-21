@@ -280,6 +280,60 @@
   "options_generateFeedXmlDesc": {
     "message": "RSS 2.0 feed — subscribe in any RSS reader or use for automations."
   },
+  "options_generateDashyYml": {
+    "message": "Generate dashy-conf.yml"
+  },
+  "options_generateDashyYmlDesc": {
+    "message": "Dashy dashboard config — import as sections into your conf.yml."
+  },
+  "options_settingsSyncTitle": {
+    "message": "Settings sync"
+  },
+  "options_settingsSyncDesc": {
+    "message": "Encrypted backup of extension settings in the repo. Same password on every device."
+  },
+  "options_syncSettingsToGit": {
+    "message": "Sync settings to Git (encrypted)"
+  },
+  "options_settingsSyncPasswordLabel": {
+    "message": "Encryption password"
+  },
+  "options_settingsSyncPasswordHint": {
+    "message": "Set once per device. Must be the same on all devices."
+  },
+  "options_settingsSyncSaveBtn": {
+    "message": "Save password"
+  },
+  "options_settingsSyncActive": {
+    "message": "Settings sync active — settings will be pushed on next sync."
+  },
+  "options_settingsSyncPasswordMissing": {
+    "message": "Please enter a password."
+  },
+  "options_settingsSyncModeLabel": {
+    "message": "Sync mode"
+  },
+  "options_settingsSyncModeGlobal": {
+    "message": "Global — shared across all devices"
+  },
+  "options_settingsSyncModeIndividual": {
+    "message": "Individual — this device only"
+  },
+  "options_settingsSyncImportTitle": {
+    "message": "Import from other device"
+  },
+  "options_settingsSyncImportBtn": {
+    "message": "Load available configs"
+  },
+  "options_settingsSyncImportApply": {
+    "message": "Import"
+  },
+  "options_settingsSyncImportEmpty": {
+    "message": "No device configs found"
+  },
+  "options_settingsSyncImportSuccess": {
+    "message": "Settings imported successfully"
+  },
   "options_notifications": {
     "message": "Sync notifications"
   },
@@ -614,7 +668,13 @@
     "message": "Generated files"
   },
   "help_generatedFilesDesc": {
-    "message": "README.md (overview), bookmarks.html (Netscape format for browser import), and feed.xml (RSS 2.0 feed) can be created during sync. Set each to Off, Manual, or Auto in the Sync tab."
+    "message": "README.md (overview), bookmarks.html (Netscape format for browser import), feed.xml (RSS 2.0 feed), and dashy-conf.yml (Dashy dashboard sections) can be created during sync. Set each to Off, Manual, or Auto in the Sync tab."
+  },
+  "help_settingsSyncTitle": {
+    "message": "Settings sync to Git"
+  },
+  "help_settingsSyncDesc": {
+    "message": "When enabled, extension settings (profiles, tokens, preferences) are encrypted and stored in the repo. Choose Global (shared settings.enc for all devices) or Individual (device-specific settings-{id}.enc). In individual mode you can import settings from other devices. The password is stored locally per device and must be the same on all devices sharing the repo."
   },
   "help_notificationsTitle": {
     "message": "Notifications"
@@ -700,6 +760,12 @@
   },
   "options_exportBookmarksDesc": {
     "message": "Save all bookmarks as JSON."
+  },
+  "options_exportDashy": {
+    "message": "Export Dashy Config"
+  },
+  "options_exportDashyDesc": {
+    "message": "Export bookmarks as Dashy dashboard sections (YAML)."
   },
   "options_exportBtn": {
     "message": "Export"

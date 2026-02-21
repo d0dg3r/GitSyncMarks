@@ -280,6 +280,60 @@
   "options_generateFeedXmlDesc": {
     "message": "RSS-2.0-Feed — in jedem RSS-Reader abonnierbar oder für Automatisierungen nutzbar."
   },
+  "options_generateDashyYml": {
+    "message": "dashy-conf.yml erzeugen"
+  },
+  "options_generateDashyYmlDesc": {
+    "message": "Dashy-Dashboard-Konfig — als Sections in deine conf.yml importierbar."
+  },
+  "options_settingsSyncTitle": {
+    "message": "Einstellungen-Sync"
+  },
+  "options_settingsSyncDesc": {
+    "message": "Verschlüsseltes Backup der Erweiterungseinstellungen im Repo. Gleiches Passwort auf jedem Gerät."
+  },
+  "options_syncSettingsToGit": {
+    "message": "Einstellungen mit Git synchronisieren (verschlüsselt)"
+  },
+  "options_settingsSyncPasswordLabel": {
+    "message": "Verschlüsselungspasswort"
+  },
+  "options_settingsSyncPasswordHint": {
+    "message": "Einmal pro Gerät festlegen. Muss auf allen Geräten gleich sein."
+  },
+  "options_settingsSyncSaveBtn": {
+    "message": "Passwort speichern"
+  },
+  "options_settingsSyncActive": {
+    "message": "Einstellungen-Sync aktiv — Einstellungen werden beim nächsten Sync übertragen."
+  },
+  "options_settingsSyncPasswordMissing": {
+    "message": "Bitte ein Passwort eingeben."
+  },
+  "options_settingsSyncModeLabel": {
+    "message": "Sync-Modus"
+  },
+  "options_settingsSyncModeGlobal": {
+    "message": "Global — auf allen Geräten gleich"
+  },
+  "options_settingsSyncModeIndividual": {
+    "message": "Individuell — nur dieses Gerät"
+  },
+  "options_settingsSyncImportTitle": {
+    "message": "Von anderem Gerät importieren"
+  },
+  "options_settingsSyncImportBtn": {
+    "message": "Verfügbare Configs laden"
+  },
+  "options_settingsSyncImportApply": {
+    "message": "Importieren"
+  },
+  "options_settingsSyncImportEmpty": {
+    "message": "Keine Geräte-Configs gefunden"
+  },
+  "options_settingsSyncImportSuccess": {
+    "message": "Einstellungen erfolgreich importiert"
+  },
   "options_notifications": {
     "message": "Sync-Benachrichtigungen"
   },
@@ -614,7 +668,13 @@
     "message": "Generierte Dateien"
   },
   "help_generatedFilesDesc": {
-    "message": "README.md (Übersicht), bookmarks.html (Netscape-Format für Browser-Import) und feed.xml (RSS-2.0-Feed) können beim Sync erzeugt werden. Pro Datei Aus, Manuell oder Auto im Sync-Tab wählen."
+    "message": "README.md (Übersicht), bookmarks.html (Netscape-Format für Browser-Import), feed.xml (RSS-2.0-Feed) und dashy-conf.yml (Dashy-Dashboard-Sections) können beim Sync erzeugt werden. Pro Datei Aus, Manuell oder Auto im Sync-Tab wählen."
+  },
+  "help_settingsSyncTitle": {
+    "message": "Einstellungen-Sync mit Git"
+  },
+  "help_settingsSyncDesc": {
+    "message": "Wenn aktiviert, werden die Erweiterungseinstellungen (Profile, Tokens, Präferenzen) verschlüsselt im Repo gespeichert. Wähle Global (gemeinsame settings.enc für alle Geräte) oder Individuell (gerätespezifische settings-{id}.enc). Im individuellen Modus kannst du Einstellungen von anderen Geräten importieren. Das Passwort wird lokal pro Gerät gespeichert und muss auf allen Geräten gleich sein."
   },
   "help_notificationsTitle": {
     "message": "Benachrichtigungen"
@@ -700,6 +760,12 @@
   },
   "options_exportBookmarksDesc": {
     "message": "Alle Lesezeichen als JSON."
+  },
+  "options_exportDashy": {
+    "message": "Dashy-Konfig exportieren"
+  },
+  "options_exportDashyDesc": {
+    "message": "Lesezeichen als Dashy-Dashboard-Sections exportieren (YAML)."
   },
   "options_exportBtn": {
     "message": "Export"

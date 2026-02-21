@@ -25,7 +25,7 @@ flowchart LR
     end
 
     subgraph Repo["GitHub Repository"]
-        Files["bookmarks/toolbar/*.json\nbookmarks/other/*.json\nbookmarks/README.md\nbookmarks/bookmarks.html\nbookmarks/feed.xml"]
+        Files["bookmarks/toolbar/*.json\nbookmarks/other/*.json\nbookmarks/README.md\nbookmarks/bookmarks.html\nbookmarks/feed.xml\nbookmarks/settings.enc\nbookmarks/settings-{id}.enc"]
     end
 
     BM --> FM
@@ -137,6 +137,16 @@ Auto-generated on push when mode is Auto (default). Uses the Netscape Bookmark F
 
 Auto-generated on push when mode is Auto (default). Each bookmark becomes an `<item>` with title, link, and category (folder path). Subscribable via any RSS reader (Feedly, Thunderbird, etc.); useful for automations (Slack, IFTTT, n8n) or embedding on websites. Works as a live feed via `raw.githubusercontent.com` or GitHub Pages.
 
+### `settings.enc` / `settings-{id}.enc` — Encrypted Settings
+
+Optional. When "Sync settings to Git" is enabled, the extension writes an encrypted copy of all settings (profiles, tokens, sync preferences) to the repo. Uses the same `gitsyncmarks-enc:v1` format as the manual encrypted export (PBKDF2 + AES-256-GCM). The password is stored locally per device in `chrome.storage.local` and never synced.
+
+Two modes are available:
+- **Global** (default): All devices share a single `settings.enc`. On pull/sync, the remote file is decrypted and applied (last-write-wins).
+- **Individual**: Each device writes to `settings-{deviceId8}.enc`. Remote settings from `settings.enc` are not applied. Other devices can list and import individual device configs via the UI.
+
+Excluded from three-way merge (`DIFF_IGNORE_SUFFIXES` + `SETTINGS_ENC_PATTERN`).
+
 ### Complete Repository Structure
 
 ```
@@ -145,6 +155,8 @@ bookmarks/
   README.md
   bookmarks.html
   feed.xml
+  settings.enc              (global mode)
+  settings-a1b2c3d4.enc    (individual mode, per device)
   toolbar/
     _order.json
     github_a1b2.json
@@ -190,6 +202,8 @@ Per-profile keys (repo config, githubRepos) live in `profiles[id]`; others are g
 | `generateReadmeMd` | `string` | `"auto"` | Generate README.md: `"off"`, `"manual"`, or `"auto"` |
 | `generateBookmarksHtml` | `string` | `"auto"` | Generate bookmarks.html: `"off"`, `"manual"`, or `"auto"` |
 | `generateFeedXml` | `string` | `"auto"` | Generate feed.xml (RSS 2.0): `"off"`, `"manual"`, or `"auto"` |
+| `syncSettingsToGit` | `boolean` | `false` | Sync encrypted settings to Git repo |
+| `settingsSyncMode` | `string` | `"global"` | Settings sync mode: `"global"` (shared) or `"individual"` (per device) |
 
 ### `chrome.storage.local` — Sync State + Token
 
@@ -201,6 +215,7 @@ Per-profile keys (repo config, githubRepos) live in `profiles[id]`; others are g
 | `lastCommitSha` | `string` | Git commit SHA at last sync |
 | `lastSyncTime` | `string` | ISO 8601 timestamp of last sync |
 | `hasConflict` | `boolean` | Whether a conflict was detected |
+| `settingsSyncPassword` | `string` | Password for settings.enc encryption (device-local, never synced) |
 
 The `lastSyncFiles` object is the **base state** for three-way merge. It maps each file path to its blob SHA (for remote change detection) and content (for local change detection).
 

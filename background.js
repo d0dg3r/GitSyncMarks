@@ -17,6 +17,8 @@ import {
   isSyncInProgress,
   isAutoSyncSuppressed,
   migrateFromLegacyFormat,
+  listRemoteDeviceConfigs,
+  importDeviceConfig,
   STORAGE_KEYS,
 } from './lib/sync-engine.js';
 import { log as debugLog, getLogAsString } from './lib/debug-log.js';
@@ -240,6 +242,33 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         console.error('[GitSyncMarks] switchProfile failed:', err);
         sendResponse({ success: false, message: err.message || 'Switch failed' });
       });
+    return true;
+  }
+  if (message.action === 'setSettingsSyncPassword') {
+    chrome.storage.local.set({ settingsSyncPassword: message.password }).then(async () => {
+      if (message.triggerPush) {
+        const result = await push();
+        sendResponse(result);
+      } else {
+        sendResponse({ ok: true });
+      }
+    });
+    return true;
+  }
+  if (message.action === 'clearSettingsSyncPassword') {
+    chrome.storage.local.remove('settingsSyncPassword').then(() => sendResponse({ ok: true }));
+    return true;
+  }
+  if (message.action === 'listDeviceConfigs') {
+    listRemoteDeviceConfigs()
+      .then(configs => sendResponse({ success: true, configs }))
+      .catch(err => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'importDeviceConfig') {
+    importDeviceConfig(message.filename)
+      .then(result => sendResponse(result))
+      .catch(err => sendResponse({ success: false, message: err.message }));
     return true;
   }
   if (message.action === 'settingsChanged') {

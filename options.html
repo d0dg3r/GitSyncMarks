@@ -273,10 +273,60 @@
           </select>
           <small data-i18n="options_generateFeedXmlDesc" style="display:block;margin-top:0.25rem;">RSS 2.0 feed — subscribe in any RSS reader or use for automations.</small>
         </div>
+        <div class="form-group">
+          <label for="generate-dashy-yml" data-i18n="options_generateDashyYml">dashy-conf.yml</label>
+          <select id="generate-dashy-yml">
+            <option value="off" selected data-i18n="options_generateModeOff">Off</option>
+            <option value="manual" data-i18n="options_generateModeManual">Manual</option>
+            <option value="auto" data-i18n="options_generateModeAuto">Auto</option>
+          </select>
+          <small data-i18n="options_generateDashyYmlDesc" style="display:block;margin-top:0.25rem;">Dashy dashboard config — import as sections into your conf.yml.</small>
+        </div>
         <button id="generate-files-btn" class="btn btn-secondary" data-i18n="options_generateNowBtn" style="margin-top:0.5rem;">Generate now</button>
 
         <div class="actions actions-in-card actions-sync-feedback">
           <span id="save-sync-result" class="save-result"></span>
+        </div>
+      </section>
+
+      <section class="card" id="settings-sync-card">
+        <h2 data-i18n="options_settingsSyncTitle">Settings sync</h2>
+        <p class="card-desc" data-i18n="options_settingsSyncDesc">Encrypted backup of extension settings in the repo. Same password on every device.</p>
+
+        <div class="form-group toggle-group">
+          <label for="sync-settings-to-git" class="toggle-label">
+            <span data-i18n="options_syncSettingsToGit">Sync settings to Git (encrypted)</span>
+            <input type="checkbox" id="sync-settings-to-git">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div id="settings-sync-options-group" style="display: none;">
+          <div class="form-group">
+            <label for="settings-sync-mode" data-i18n="options_settingsSyncModeLabel">Sync mode</label>
+            <select id="settings-sync-mode">
+              <option value="global" data-i18n="options_settingsSyncModeGlobal">Global — shared across all devices</option>
+              <option value="individual" data-i18n="options_settingsSyncModeIndividual">Individual — this device only</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="settings-sync-password" data-i18n="options_settingsSyncPasswordLabel">Encryption password</label>
+            <input type="password" id="settings-sync-password" autocomplete="off">
+            <small data-i18n="options_settingsSyncPasswordHint">Set once per device. Must be the same on all devices.</small>
+          </div>
+          <button id="settings-sync-save-pw-btn" class="btn btn-secondary" data-i18n="options_settingsSyncSaveBtn">Save password</button>
+          <span id="settings-sync-result" class="validation-result"></span>
+
+          <div id="settings-sync-import-group" style="display: none; margin-top: 1rem;">
+            <label data-i18n="options_settingsSyncImportTitle">Import from other device</label>
+            <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.4rem;">
+              <button id="settings-sync-load-btn" class="btn btn-secondary" data-i18n="options_settingsSyncImportBtn">Load available configs</button>
+              <select id="settings-sync-device-list" style="flex: 1;" disabled></select>
+              <button id="settings-sync-import-btn" class="btn btn-secondary" data-i18n="options_settingsSyncImportApply" disabled>Import</button>
+            </div>
+            <span id="settings-sync-import-result" class="validation-result"></span>
+          </div>
         </div>
       </section>
 
@@ -315,6 +365,15 @@
           <div class="backup-actions">
             <button id="export-bookmarks-btn" class="btn btn-secondary" data-i18n="options_exportBtn">Export</button>
             <span id="export-bookmarks-result" class="ie-result"></span>
+          </div>
+        </div>
+
+        <div class="backup-block automation-block">
+          <h3 class="automation-block-title" data-i18n="options_exportDashy">Export Dashy Config</h3>
+          <p class="backup-block-desc" data-i18n="options_exportDashyDesc">Export bookmarks as Dashy dashboard sections (YAML).</p>
+          <div class="backup-actions">
+            <button id="export-dashy-btn" class="btn btn-secondary" data-i18n="options_exportBtn">Export</button>
+            <span id="export-dashy-result" class="ie-result"></span>
           </div>
         </div>
 
@@ -514,6 +573,8 @@
           <dd data-i18n="help_syncStartupDesc">Optional: sync when the browser starts or when you return to the browser window (with cooldown).</dd>
           <dt data-i18n="help_generatedFilesTitle">Generated files</dt>
           <dd data-i18n="help_generatedFilesDesc">README.md (overview) and bookmarks.html (Netscape format for browser import) are created during sync. Toggle off in the Sync tab to stop updating.</dd>
+          <dt data-i18n="help_settingsSyncTitle">Settings sync to Git</dt>
+          <dd data-i18n="help_settingsSyncDesc">When enabled, extension settings are encrypted and stored in the repo. Choose Global (shared settings.enc) or Individual (device-specific settings-{id}.enc). In individual mode you can import settings from other devices.</dd>
         </dl>
         </div>
       </details>
