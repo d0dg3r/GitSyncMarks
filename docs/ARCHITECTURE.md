@@ -77,14 +77,13 @@ Toolbar popup with header (icon, title, profile dropdown when 2+ profiles), stat
 
 ### `options.html` / `options.js` — Settings Page
 
-Full-page settings (opens in tab) with six tabs. Header: language dropdown, theme cycle button (A → Dark → Light → A). All settings auto-save on change; no Save buttons.
+Full-page settings (opens in tab) with five tabs. Header: language dropdown, theme cycle button (A → Dark → Light → A). All settings auto-save on change; no Save buttons.
 
-1. **GitHub** — Profile selector (multiple profiles with separate repos), token, repository, connection test, onboarding (create folder or pull when path empty/has bookmarks)
-2. **Sync** — Sync profile, auto-sync, sync on start/focus, notifications; GitHub Repos folder (optional); generated files (README.md, bookmarks.html, feed.xml) with Off/Manual/Auto mode; settings sync to Git (Global `settings.enc` or Individual `settings-{id}.enc`, with device config import); Debug Log
-3. **Backup** — Export/import bookmarks and settings as JSON or password-encrypted .enc (file picker with chosen filename)
-4. **Automation** — Guide for adding bookmarks via Git, CLI, or GitHub Actions
-5. **Help** — Keyboard shortcuts, main features (popup, profiles, auto-sync, conflicts)
-6. **About** — Version, links, license
+1. **GitHub** — Profile selector (multiple profiles with separate repos), token, repository, connection test, onboarding (create folder or pull when path empty/has bookmarks); GitHub Repos folder (optional)
+2. **Sync** — Sync profile, auto-sync, sync on start/focus, notifications; Debug Log
+3. **Files** — Generated files (README.md, bookmarks.html, feed.xml, dashy-conf.yml) with Off/Manual/Auto mode; settings sync to Git (Global `settings.enc` or Individual `settings-{id}.enc`, with device config import); compact export/import (bookmarks, Dashy, settings plain/encrypted via dropdown); automation guide for adding bookmarks via Git, CLI, or GitHub Actions
+4. **Help** — Keyboard shortcuts, main features (popup, profiles, auto-sync, conflicts, files)
+5. **About** — Version, links, license
 
 ### `lib/sync-engine.js` — Sync Engine
 

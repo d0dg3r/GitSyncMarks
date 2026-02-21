@@ -218,7 +218,7 @@ If you do not have an Android phone:
 
 ## Sync Troubleshooting
 
-- **Debug Log**: Options → Help tab — enable the debug log, reproduce the sync issue, then export and share the log for support or analysis
+- **Debug Log**: Options → Sync tab — enable the debug log, reproduce the sync issue, then export and share the log for support or analysis
 
 ---
 

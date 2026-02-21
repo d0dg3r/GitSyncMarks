@@ -19,8 +19,8 @@ Open items and next steps for further development. Updated each session.
 - **Help Tab** – Collapsible accordion, "Why slow?" second, Getting Started + Links open by default; compact styling
 - **Options Header** – Language label removed, dropdown only
 - **Auto-save** – Switches save on change; Update GitHub Repos and Test Connection save before running
-- **Compact Options UI** – All tabs (GitHub, Sync, Backup, Automation, Help, About) use consistent compact styling
-- **Backup tab** – Compact design (automation-block style), shorter i18n in all languages
+- **Compact Options UI** – All tabs (GitHub, Sync, Files, Help, About) use consistent compact styling
+- **Tab reorganization** – Reduced from 6 tabs to 5; Backup and Automation merged into new Files tab with compact dropdown export/import UI; GitHub Repos moved to GitHub tab
 
 ---
 

@@ -287,7 +287,7 @@
     "message": "Dashy-Dashboard-Konfig — als Sections in deine conf.yml importierbar."
   },
   "options_settingsSyncTitle": {
-    "message": "Einstellungen-Sync"
+    "message": "Einstellungsdatei"
   },
   "options_settingsSyncDesc": {
     "message": "Verschlüsseltes Backup der Erweiterungseinstellungen im Repo. Gleiches Passwort auf jedem Gerät."
@@ -571,14 +571,14 @@
   "options_tabSynchronization": {
     "message": "Sync"
   },
-  "options_tabBackup": {
-    "message": "Backup"
-  },
-  "options_tabAbout": {
-    "message": "Über"
+  "options_tabFiles": {
+    "message": "Dateien"
   },
   "options_tabHelp": {
     "message": "Hilfe"
+  },
+  "options_tabAbout": {
+    "message": "Über"
   },
   "help_gettingStartedTitle": {
     "message": "Erste Schritte"
@@ -668,10 +668,10 @@
     "message": "Generierte Dateien"
   },
   "help_generatedFilesDesc": {
-    "message": "README.md (Übersicht), bookmarks.html (Netscape-Format für Browser-Import), feed.xml (RSS-2.0-Feed) und dashy-conf.yml (Dashy-Dashboard-Sections) können beim Sync erzeugt werden. Pro Datei Aus, Manuell oder Auto im Sync-Tab wählen."
+    "message": "README.md, bookmarks.html, feed.xml und dashy-conf.yml können beim Sync erzeugt werden. Pro Datei Aus, Manuell oder Auto im Dateien-Tab wählen."
   },
   "help_settingsSyncTitle": {
-    "message": "Einstellungen-Sync mit Git"
+    "message": "Einstellungsdatei"
   },
   "help_settingsSyncDesc": {
     "message": "Wenn aktiviert, werden die Erweiterungseinstellungen (Profile, Tokens, Präferenzen) verschlüsselt im Repo gespeichert. Wähle Global (gemeinsame settings.enc für alle Geräte) oder Individuell (gerätespezifische settings-{id}.enc). Im individuellen Modus kannst du Einstellungen von anderen Geräten importieren. Das Passwort wird lokal pro Gerät gespeichert und muss auf allen Geräten gleich sein."
@@ -884,5 +884,39 @@
   },
   "options_automationParamBasePath": {
     "message": "Basisordner im Repo (Standard bookmarks; muss File Path entsprechen)"
+  },
+
+  "options_exportImportTitle": {
+    "message": "Export / Import"
+  },
+  "options_exportImportDesc": {
+    "message": "Lesezeichen und Einstellungen exportieren oder importieren."
+  },
+  "options_exportLabel": {
+    "message": "Export"
+  },
+  "options_importLabel": {
+    "message": "Import"
+  },
+  "options_exportTypeBookmarks": {
+    "message": "Lesezeichen (JSON)"
+  },
+  "options_exportTypeDashy": {
+    "message": "Dashy Config (YAML)"
+  },
+  "options_exportTypeSettingsPlain": {
+    "message": "Einstellungen (Klartext)"
+  },
+  "options_exportTypeSettingsEncrypted": {
+    "message": "Einstellungen (verschlüsselt)"
+  },
+  "options_importTypeBookmarks": {
+    "message": "Lesezeichen (JSON)"
+  },
+  "options_importTypeSettings": {
+    "message": "Einstellungen (JSON / ENC)"
+  },
+  "help_filesTitle": {
+    "message": "Dateien"
   }
 }

@@ -24,8 +24,7 @@
     <nav class="tab-bar">
       <button class="tab-btn active" data-tab="github" data-i18n="options_tabGitHub">GitHub</button>
       <button class="tab-btn" data-tab="sync" data-i18n="options_tabSynchronization">Sync</button>
-      <button class="tab-btn" data-tab="backup" data-i18n="options_tabBackup">Backup</button>
-      <button class="tab-btn" data-tab="automation" data-i18n="options_tabAutomation">Automation</button>
+      <button class="tab-btn" data-tab="files" data-i18n="options_tabFiles">Files</button>
       <button class="tab-btn" data-tab="help" data-i18n="options_tabHelp">Help</button>
       <button class="tab-btn" data-tab="about" data-i18n="options_tabAbout">About</button>
     </nav>
@@ -146,9 +145,38 @@
         </div>
       </section>
 
+      <section class="card" id="github-repos-card" style="display: none;">
+        <h2 data-i18n="options_githubReposTitle">GitHub Repos Folder</h2>
+        <p class="card-desc" data-i18n="options_githubReposDesc">Create a folder with bookmarks to all your GitHub repositories (public and private).</p>
+
+        <div class="form-group toggle-group">
+          <label for="github-repos-enabled" class="toggle-label">
+            <span data-i18n="options_githubReposEnabled">GitHub Repos folder</span>
+            <input type="checkbox" id="github-repos-enabled">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div id="github-repos-options" style="display: none;">
+          <div class="form-group">
+            <label for="github-repos-parent" data-i18n="options_githubReposParentLabel">Position</label>
+            <select id="github-repos-parent">
+              <option value="toolbar" data-i18n="options_githubReposParentToolbar">Bookmarks Bar</option>
+              <option value="other" data-i18n="options_githubReposParentOther">Other Bookmarks</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <button id="github-repos-refresh-btn" class="btn btn-secondary" data-i18n="options_githubReposRefresh">Update GitHub Repos</button>
+            <span id="github-repos-spinner" class="spinner" style="display: none;"></span>
+            <span id="github-repos-result" class="validation-result"></span>
+          </div>
+        </div>
+      </section>
+
     </div>
 
-    <!-- ==================== Synchronization Tab ==================== -->
+    <!-- ==================== Sync Tab ==================== -->
     <div class="tab-content" id="tab-sync">
 
       <section class="card">
@@ -211,36 +239,36 @@
           </select>
           <small data-i18n="options_notificationsHint">Choose when to show notifications.</small>
         </div>
-      </section>
 
-      <section class="card" id="github-repos-card" style="display: none;">
-        <h2 data-i18n="options_githubReposTitle">GitHub Repos Folder</h2>
-        <p class="card-desc" data-i18n="options_githubReposDesc">Create a folder with bookmarks to all your GitHub repositories (public and private).</p>
-
-        <div class="form-group toggle-group">
-          <label for="github-repos-enabled" class="toggle-label">
-            <span data-i18n="options_githubReposEnabled">GitHub Repos folder</span>
-            <input type="checkbox" id="github-repos-enabled">
-            <span class="toggle-slider"></span>
-          </label>
-        </div>
-
-        <div id="github-repos-options" style="display: none;">
-          <div class="form-group">
-            <label for="github-repos-parent" data-i18n="options_githubReposParentLabel">Position</label>
-            <select id="github-repos-parent">
-              <option value="toolbar" data-i18n="options_githubReposParentToolbar">Bookmarks Bar</option>
-              <option value="other" data-i18n="options_githubReposParentOther">Other Bookmarks</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <button id="github-repos-refresh-btn" class="btn btn-secondary" data-i18n="options_githubReposRefresh">Update GitHub Repos</button>
-            <span id="github-repos-spinner" class="spinner" style="display: none;"></span>
-            <span id="github-repos-result" class="validation-result"></span>
-          </div>
+        <div class="actions actions-in-card actions-sync-feedback">
+          <span id="save-sync-result" class="save-result"></span>
         </div>
       </section>
+
+      <details class="help-details card" open>
+        <summary>
+          <h2 data-i18n="options_debugLogTitle">Debug Log</h2>
+        </summary>
+        <div class="help-details-body">
+          <p data-i18n="options_debugLogDesc">Enable to record sync diagnostics (diffs, merge decisions, conflicts). Use when troubleshooting sync issues. Export and share the log for support.</p>
+          <div class="form-group toggle-group" style="margin-top: 0.5rem;">
+            <label for="debug-log-enabled" class="toggle-label">
+              <span data-i18n="options_debugLogEnabled">Enable debug log</span>
+              <input type="checkbox" id="debug-log-enabled">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="debug-log-actions" style="margin-top: 0.5rem; display: flex; gap: 0.5rem; align-items: center;">
+            <button type="button" id="debug-log-export-btn" class="btn btn-secondary btn-sm" data-i18n="options_debugLogExport">Export log</button>
+            <span id="debug-log-result" class="validation-result" style="margin-left: 0;"></span>
+          </div>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- ==================== Files Tab ==================== -->
+    <div class="tab-content" id="tab-files">
 
       <section class="card">
         <h2 data-i18n="options_generatedFilesTitle">Generated files</h2>
@@ -283,14 +311,10 @@
           <small data-i18n="options_generateDashyYmlDesc" style="display:block;margin-top:0.25rem;">Dashy dashboard config — import as sections into your conf.yml.</small>
         </div>
         <button id="generate-files-btn" class="btn btn-secondary" data-i18n="options_generateNowBtn" style="margin-top:0.5rem;">Generate now</button>
-
-        <div class="actions actions-in-card actions-sync-feedback">
-          <span id="save-sync-result" class="save-result"></span>
-        </div>
       </section>
 
       <section class="card" id="settings-sync-card">
-        <h2 data-i18n="options_settingsSyncTitle">Settings sync</h2>
+        <h2 data-i18n="options_settingsSyncTitle">Settings File</h2>
         <p class="card-desc" data-i18n="options_settingsSyncDesc">Encrypted backup of extension settings in the repo. Same password on every device.</p>
 
         <div class="form-group toggle-group">
@@ -330,74 +354,41 @@
         </div>
       </section>
 
-      <details class="help-details card" open>
-        <summary>
-          <h2 data-i18n="options_debugLogTitle">Debug Log</h2>
-        </summary>
-        <div class="help-details-body">
-          <p data-i18n="options_debugLogDesc">Enable to record sync diagnostics (diffs, merge decisions, conflicts). Use when troubleshooting sync issues. Export and share the log for support.</p>
-          <div class="form-group toggle-group" style="margin-top: 0.5rem;">
-            <label for="debug-log-enabled" class="toggle-label">
-              <span data-i18n="options_debugLogEnabled">Enable debug log</span>
-              <input type="checkbox" id="debug-log-enabled">
-              <span class="toggle-slider"></span>
-            </label>
+      <section class="card export-import-card">
+        <h2 data-i18n="options_exportImportTitle">Export / Import</h2>
+        <p class="card-desc" data-i18n="options_exportImportDesc">Export or import bookmarks and extension settings.</p>
+
+        <div class="export-import-block">
+          <h3 class="automation-block-title" data-i18n="options_exportLabel">Export</h3>
+          <div class="export-import-row">
+            <select id="export-type-select">
+              <option value="bookmarks" data-i18n="options_exportTypeBookmarks">Bookmarks (JSON)</option>
+              <option value="dashy" data-i18n="options_exportTypeDashy">Dashy Config (YAML)</option>
+              <option value="settings-plain" data-i18n="options_exportTypeSettingsPlain">Settings (plain JSON)</option>
+              <option value="settings-encrypted" data-i18n="options_exportTypeSettingsEncrypted">Settings (encrypted)</option>
+            </select>
+            <button id="export-btn" class="btn btn-secondary" data-i18n="options_exportBtn">Export</button>
           </div>
-          <div class="debug-log-actions" style="margin-top: 0.5rem; display: flex; gap: 0.5rem; align-items: center;">
-            <button type="button" id="debug-log-export-btn" class="btn btn-secondary btn-sm" data-i18n="options_debugLogExport">Export log</button>
-            <span id="debug-log-result" class="validation-result" style="margin-left: 0;"></span>
-          </div>
-        </div>
-      </details>
-
-    </div>
-
-    <!-- ==================== Backup Tab ==================== -->
-    <div class="tab-content" id="tab-backup">
-
-      <section class="card backup-card">
-        <h2 data-i18n="options_backupTitle">Backup</h2>
-        <p class="card-desc" data-i18n="options_backupIntro">Export or import bookmarks and extension settings as JSON.</p>
-
-        <div class="backup-block automation-block">
-          <h3 class="automation-block-title" data-i18n="options_exportBookmarks">Export Bookmarks</h3>
-          <p class="backup-block-desc" data-i18n="options_exportBookmarksDesc">Save all bookmarks as JSON.</p>
-          <div class="backup-actions">
-            <button id="export-bookmarks-btn" class="btn btn-secondary" data-i18n="options_exportBtn">Export</button>
-            <span id="export-bookmarks-result" class="ie-result"></span>
-          </div>
+          <span id="export-result" class="ie-result"></span>
         </div>
 
-        <div class="backup-block automation-block">
-          <h3 class="automation-block-title" data-i18n="options_exportDashy">Export Dashy Config</h3>
-          <p class="backup-block-desc" data-i18n="options_exportDashyDesc">Export bookmarks as Dashy dashboard sections (YAML).</p>
-          <div class="backup-actions">
-            <button id="export-dashy-btn" class="btn btn-secondary" data-i18n="options_exportBtn">Export</button>
-            <span id="export-dashy-result" class="ie-result"></span>
+        <div class="export-import-block">
+          <h3 class="automation-block-title" data-i18n="options_importLabel">Import</h3>
+          <p id="import-warning" class="backup-warning" data-i18n="options_importBookmarksWarning">Replaces all current bookmarks. Cannot be undone.</p>
+          <div class="export-import-row">
+            <select id="import-type-select">
+              <option value="bookmarks" data-i18n="options_importTypeBookmarks">Bookmarks (JSON)</option>
+              <option value="settings" data-i18n="options_importTypeSettings">Settings (JSON / ENC)</option>
+            </select>
           </div>
-        </div>
-
-        <div class="backup-block backup-block-import automation-block">
-          <h3 class="automation-block-title" data-i18n="options_importBookmarks">Import Bookmarks</h3>
-          <p class="backup-warning" data-i18n="options_importBookmarksWarning">Replaces all current bookmarks. Cannot be undone.</p>
           <div class="backup-file-picker">
-            <input type="file" id="import-bookmarks-file" accept=".json" class="backup-file-input">
-            <button type="button" class="btn btn-secondary backup-file-trigger" id="import-bookmarks-trigger" data-i18n="options_chooseFile">Choose file</button>
-            <span class="backup-file-name" id="import-bookmarks-filename"></span>
+            <input type="file" id="import-file" accept=".json" class="backup-file-input">
+            <button type="button" class="btn btn-secondary backup-file-trigger" id="import-file-trigger" data-i18n="options_chooseFile">Choose file</button>
+            <span class="backup-file-name" id="import-filename"></span>
           </div>
           <div class="backup-actions">
-            <button id="import-bookmarks-btn" class="btn btn-primary" data-i18n="options_importBtn" disabled>Import</button>
-            <span id="import-bookmarks-result" class="ie-result"></span>
-          </div>
-        </div>
-
-        <div class="backup-block automation-block">
-          <h3 class="automation-block-title" data-i18n="options_exportSettings">Export Settings</h3>
-          <p class="backup-block-desc" data-i18n="options_exportSettingsDesc">GitHub connection and sync settings (incl. profiles).</p>
-          <div class="backup-actions backup-actions-multi">
-            <button id="export-settings-btn" class="btn btn-secondary" data-i18n="options_exportSettingsPlain">Export (plain)</button>
-            <button id="export-settings-encrypted-btn" class="btn btn-secondary" data-i18n="options_exportSettingsEncrypted">Export encrypted</button>
-            <span id="export-settings-result" class="ie-result"></span>
+            <button id="import-btn" class="btn btn-primary" data-i18n="options_importBtn" disabled>Import</button>
+            <span id="import-result" class="ie-result"></span>
           </div>
         </div>
 
@@ -412,27 +403,7 @@
             <button type="button" id="password-dialog-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
           </div>
         </div>
-
-        <div class="backup-block backup-block-import automation-block">
-          <h3 class="automation-block-title" data-i18n="options_importSettings">Import Settings</h3>
-          <p class="backup-warning" data-i18n="options_importSettingsWarning">Replaces all settings. Page reloads afterwards.</p>
-          <p class="backup-block-desc" data-i18n="options_importSettingsFormats">Accepts .json (plain) or .enc (encrypted) files.</p>
-          <div class="backup-file-picker">
-            <input type="file" id="import-settings-file" accept=".json,.enc" class="backup-file-input">
-            <button type="button" class="btn btn-secondary backup-file-trigger" id="import-settings-trigger" data-i18n="options_chooseFile">Choose file</button>
-            <span class="backup-file-name" id="import-settings-filename"></span>
-          </div>
-          <div class="backup-actions">
-            <button id="import-settings-btn" class="btn btn-primary" data-i18n="options_importBtn" disabled>Import</button>
-            <span id="import-settings-result" class="ie-result"></span>
-          </div>
-        </div>
       </section>
-
-    </div>
-
-    <!-- ==================== Automation Tab ==================== -->
-    <div class="tab-content" id="tab-automation">
 
       <section class="card automation-card">
         <h2 data-i18n="options_automationTitle">Add Bookmarks via Git</h2>
@@ -526,7 +497,7 @@
           <dt data-i18n="help_profilesAdd">Add, Rename, Delete</dt>
           <dd data-i18n="help_profilesAddDesc">Select a profile in the dropdown, then Add (new profile), Rename, or Delete. Up to 10 profiles. Deleting removes the selected profile.</dd>
           <dt data-i18n="help_profilesSwitch">Profile switch</dt>
-          <dd data-i18n="help_profilesSwitchDesc">Select another profile to switch. Your current bookmarks are saved and pushed to the current profile's repo before switching. The target profile's bookmarks replace the local ones. Use “Switch without confirmation” to skip the confirm dialog.</dd>
+          <dd data-i18n="help_profilesSwitchDesc">Select another profile to switch. Your current bookmarks are saved and pushed to the current profile's repo before switching. The target profile's bookmarks replace the local ones. Use "Switch without confirmation" to skip the confirm dialog.</dd>
         </dl>
         <p class="help-note" data-i18n="help_profilesNote">Profiles work reliably. With multiple profiles, sync conflicts can occasionally occur — trying Push or Pull 2–3 times usually resolves them. This feature is still evolving. If you encounter reproducible bugs, please open an issue on GitHub.</p>
         </div>
@@ -571,10 +542,24 @@
           <dd data-i18n="help_syncProfilesDesc">Real-time (1 min), Frequent (5 min), Normal (15 min), or Power save (60 min). Custom lets you set interval and debounce manually.</dd>
           <dt data-i18n="help_syncStartup">Sync on startup / focus</dt>
           <dd data-i18n="help_syncStartupDesc">Optional: sync when the browser starts or when you return to the browser window (with cooldown).</dd>
+        </dl>
+        </div>
+      </details>
+
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_filesTitle">Files</h2>
+        </summary>
+        <div class="help-details-body">
+        <dl class="help-dl">
           <dt data-i18n="help_generatedFilesTitle">Generated files</dt>
-          <dd data-i18n="help_generatedFilesDesc">README.md (overview) and bookmarks.html (Netscape format for browser import) are created during sync. Toggle off in the Sync tab to stop updating.</dd>
+          <dd data-i18n="help_generatedFilesDesc">README.md, bookmarks.html, feed.xml, and dashy-conf.yml can be created during sync. Choose Off, Manual, or Auto per file in the Files tab.</dd>
           <dt data-i18n="help_settingsSyncTitle">Settings sync to Git</dt>
           <dd data-i18n="help_settingsSyncDesc">When enabled, extension settings are encrypted and stored in the repo. Choose Global (shared settings.enc) or Individual (device-specific settings-{id}.enc). In individual mode you can import settings from other devices.</dd>
+          <dt data-i18n="help_backupBookmarks">Export / Import</dt>
+          <dd data-i18n="help_backupBookmarksDesc">Export all browser bookmarks as JSON. Import replaces all local bookmarks with the file contents.</dd>
+          <dt data-i18n="help_backupSettings">Export / Import Settings</dt>
+          <dd data-i18n="help_backupSettingsDesc">Export GitHub connection and sync settings (profiles with decrypted tokens). Import replaces all settings; the page reloads afterwards.</dd>
         </dl>
         </div>
       </details>
@@ -585,20 +570,6 @@
         </summary>
         <div class="help-details-body">
         <p data-i18n="help_notificationsDesc">Choose when to show sync notifications: All (success and failure), Errors only, or Off.</p>
-        </div>
-      </details>
-
-      <details class="help-details card">
-        <summary>
-          <h2 data-i18n="help_backupTitle">Backup</h2>
-        </summary>
-        <div class="help-details-body">
-        <dl class="help-dl">
-          <dt data-i18n="help_backupBookmarks">Export / Import Bookmarks</dt>
-          <dd data-i18n="help_backupBookmarksDesc">Export all browser bookmarks as JSON. Import replaces all local bookmarks with the file contents.</dd>
-          <dt data-i18n="help_backupSettings">Export / Import Settings</dt>
-          <dd data-i18n="help_backupSettingsDesc">Export GitHub connection and sync settings (profiles with decrypted tokens). Import replaces all settings; the page reloads afterwards.</dd>
-        </dl>
         </div>
       </details>
 

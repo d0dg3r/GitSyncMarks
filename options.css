@@ -258,11 +258,11 @@ html.dark .theme-cycle-btn {
   gap: 10px;
 }
 
-#tab-sync #github-repos-card .form-group.toggle-group {
+#tab-github #github-repos-card .form-group.toggle-group {
   margin-bottom: 10px;
 }
 
-#tab-sync #github-repos-options .form-group {
+#tab-github #github-repos-options .form-group {
   margin-bottom: 10px;
 }
 
@@ -297,6 +297,69 @@ html.dark .theme-cycle-btn {
 
 #tab-sync #sync-custom-fields .form-group {
   margin-bottom: 12px;
+}
+
+/* ---- Files Tab: compact to match GitHub/Sync ---- */
+#tab-files .card {
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+
+#tab-files .card h2 {
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  font-size: 16px;
+}
+
+#tab-files .card h2:has(+ .card-desc) {
+  margin-bottom: 4px;
+  padding-bottom: 0;
+}
+
+#tab-files .card-desc {
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+#tab-files .form-group {
+  margin-bottom: 12px;
+}
+
+#tab-files .form-group small {
+  margin-top: 4px;
+}
+
+#tab-files .form-group label {
+  font-size: 13px;
+}
+
+.export-import-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.export-import-row select {
+  flex: 1;
+}
+
+.export-import-block {
+  margin-bottom: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border-secondary);
+}
+
+.export-import-block:first-of-type {
+  padding-top: 0;
+  border-top: none;
+}
+
+.export-import-card .backup-file-picker {
+  margin-top: 8px;
+}
+
+.export-import-card .backup-actions {
+  margin-top: 8px;
 }
 
 /* ---- About Tab: compact ---- */
