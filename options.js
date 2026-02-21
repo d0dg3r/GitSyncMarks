@@ -165,14 +165,23 @@ const passwordDialogCancelBtn = document.getElementById('password-dialog-cancel-
 
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    // Deactivate all tabs
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
 
-    // Activate clicked tab
     btn.classList.add('active');
     const tabId = `tab-${btn.dataset.tab}`;
     document.getElementById(tabId).classList.add('active');
+  });
+});
+
+document.querySelectorAll('.sub-tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const parent = btn.closest('.tab-content');
+    parent.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+    parent.querySelectorAll('.sub-tab-content').forEach(c => c.classList.remove('active'));
+
+    btn.classList.add('active');
+    document.getElementById(`subtab-${btn.dataset.subtab}`).classList.add('active');
   });
 });
 

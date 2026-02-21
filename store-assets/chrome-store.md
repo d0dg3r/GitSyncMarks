@@ -317,37 +317,33 @@ All regions
 - [ ] `store-assets/promo-small.png` — 440x280px small promo tile
 
 ### English (EN)
-- [x] `en/chrome-1-github.png` — GitHub tab
-- [x] `en/chrome-2-synchronization.png` — Sync tab
-- [x] `en/chrome-3-backup.png` — Backup tab
-- [x] `en/chrome-4-automation.png` — Automation tab
-- [x] `en/chrome-5-help.png` — Help tab
-- [x] `en/chrome-6-about.png` — About tab
-- [x] `en/chrome-7-popup.png` — Popup (centered)
+- [x] `en/chrome-1-github.png` — GitHub tab (Profile)
+- [x] `en/chrome-2-connection.png` — GitHub tab (Connection)
+- [x] `en/chrome-3-sync.png` — Sync tab
+- [x] `en/chrome-4-files.png` — Files tab (Generated)
+- [x] `en/chrome-5-export-import.png` — Files tab (Export / Import)
+- [x] `en/chrome-6-popup.png` — Popup (centered)
 
 ### Deutsch (DE)
-- [x] `de/chrome-1-github.png` — GitHub-Tab
-- [x] `de/chrome-2-synchronization.png` — Sync-Tab
-- [x] `de/chrome-3-backup.png` — Backup-Tab
-- [x] `de/chrome-4-automation.png` — Automatisierung-Tab
-- [x] `de/chrome-5-help.png` — Hilfe-Tab
-- [x] `de/chrome-6-about.png` — Über-Tab
-- [x] `de/chrome-7-popup.png` — Popup
+- [x] `de/chrome-1-github.png` — GitHub-Tab (Profil)
+- [x] `de/chrome-2-connection.png` — GitHub-Tab (Verbindung)
+- [x] `de/chrome-3-sync.png` — Sync-Tab
+- [x] `de/chrome-4-files.png` — Dateien-Tab (Generiert)
+- [x] `de/chrome-5-export-import.png` — Dateien-Tab (Export / Import)
+- [x] `de/chrome-6-popup.png` — Popup
 
 ### Français (FR)
-- [x] `fr/chrome-1-github.png` — Onglet GitHub
-- [x] `fr/chrome-2-synchronization.png` — Onglet Sync
-- [x] `fr/chrome-3-backup.png` — Onglet Sauvegarde
-- [x] `fr/chrome-4-automation.png` — Onglet Automatisation
-- [x] `fr/chrome-5-help.png` — Onglet Aide
-- [x] `fr/chrome-6-about.png` — Onglet À propos
-- [x] `fr/chrome-7-popup.png` — Popup
+- [x] `fr/chrome-1-github.png` — Onglet GitHub (Profil)
+- [x] `fr/chrome-2-connection.png` — Onglet GitHub (Connexion)
+- [x] `fr/chrome-3-sync.png` — Onglet Sync
+- [x] `fr/chrome-4-files.png` — Onglet Fichiers (Générés)
+- [x] `fr/chrome-5-export-import.png` — Onglet Fichiers (Export / Import)
+- [x] `fr/chrome-6-popup.png` — Popup
 
 ### Español (ES)
-- [x] `es/chrome-1-github.png` — Pestaña GitHub
-- [x] `es/chrome-2-synchronization.png` — Pestaña Sync
-- [x] `es/chrome-3-backup.png` — Pestaña Copia de seguridad
-- [x] `es/chrome-4-automation.png` — Pestaña Automatización
-- [x] `es/chrome-5-help.png` — Pestaña Ayuda
-- [x] `es/chrome-6-about.png` — Pestaña Acerca de
-- [x] `es/chrome-7-popup.png` — Popup
+- [x] `es/chrome-1-github.png` — Pestaña GitHub (Perfil)
+- [x] `es/chrome-2-connection.png` — Pestaña GitHub (Conexión)
+- [x] `es/chrome-3-sync.png` — Pestaña Sync
+- [x] `es/chrome-4-files.png` — Pestaña Archivos (Generados)
+- [x] `es/chrome-5-export-import.png` — Pestaña Archivos (Exportar / Importar)
+- [x] `es/chrome-6-popup.png` — Popup

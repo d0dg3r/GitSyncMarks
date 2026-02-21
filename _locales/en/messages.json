@@ -580,6 +580,27 @@
   "options_tabAbout": {
     "message": "About"
   },
+  "options_subTabProfile": {
+    "message": "Profile"
+  },
+  "options_subTabConnection": {
+    "message": "Connection"
+  },
+  "options_subTabRepos": {
+    "message": "Repos"
+  },
+  "options_subTabGenerated": {
+    "message": "Generated"
+  },
+  "options_subTabSettings": {
+    "message": "Settings"
+  },
+  "options_subTabExportImport": {
+    "message": "Export / Import"
+  },
+  "options_subTabGitAdd": {
+    "message": "Git Add"
+  },
   "help_gettingStartedTitle": {
     "message": "Getting Started"
   },
