@@ -13,6 +13,7 @@ import {
   getSyncStatus,
   getSettings,
   isConfigured,
+  generateFilesNow,
   isSyncInProgress,
   isAutoSyncSuppressed,
   migrateFromLegacyFormat,
@@ -191,6 +192,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
   if (message.action === 'push') {
     push().then(async (result) => {
+      await showNotificationIfEnabled(result);
+      sendResponse(result);
+    });
+    return true;
+  }
+  if (message.action === 'generateFilesNow') {
+    generateFilesNow().then(async (result) => {
       await showNotificationIfEnabled(result);
       sendResponse(result);
     });

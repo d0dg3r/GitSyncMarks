@@ -113,10 +113,10 @@ The extension settings open in a new tab with six sections. Header: language dro
 | Tab | Contents |
 |-----|----------|
 | **GitHub** | Profile selector, token, repository config, Test Connection, onboarding |
-| **Sync** | Auto-sync, sync profile, sync on start/focus, notifications; GitHub Repos folder; generated files (README.md, bookmarks.html) |
+| **Sync** | Auto-sync, sync profile, sync on start/focus, notifications; GitHub Repos folder; generated files (README.md, bookmarks.html, feed.xml) with Off/Manual/Auto mode; Debug Log |
 | **Backup** | Export/import bookmarks and settings (JSON or encrypted .enc) |
 | **Automation** | Add bookmarks via Git or GitHub Actions — JSON template, gh command, parameter table, copy buttons |
-| **Help** | Backlog poll (vote on next features), Quick links (Docs, Discussions, Report Issue), Debug Log, feature overview, keyboard shortcuts |
+| **Help** | Backlog poll (vote on next features), Quick links (Docs, Discussions, Report Issue), feature overview, keyboard shortcuts |
 | **About** | Version, links, license, contributors, mobile app |
 
 ---
@@ -146,7 +146,8 @@ In the **Sync** tab:
 - **Sync on start / Sync on focus**: Optional sync when the browser starts or gains focus (with cooldown)
 - **Notifications**: All, Errors only, or Off
 - **GitHub Repos folder**: Optional folder with bookmarks to all your GitHub repositories; position (toolbar/other); use **Update GitHub Repos** to refresh (Settings → Sync)
-- **Generated files**: Toggle **Generate README.md** (Markdown overview in repo) and **Generate bookmarks.html** (Netscape format for browser import) on/off
+- **Generated files**: Each file — **README.md** (Markdown overview), **bookmarks.html** (Netscape format for browser import), and **feed.xml** (RSS 2.0 feed) — can be set to **Off**, **Manual**, or **Auto**. Use "Generate now" to manually trigger generation and push
+- **Debug Log**: Enable to record sync diagnostics (diffs, merge decisions, commit hashes); export for troubleshooting
 
 ---
 
@@ -199,7 +200,7 @@ Each bookmark is a simple JSON file:
 }
 ```
 
-The `README.md` in the repo is regenerated on each sync — it lists all bookmarks with links, so you can browse your bookmarks directly on GitHub. The `bookmarks.html` file uses the Netscape format and can be imported in any browser (Chrome: Bookmarks → Import; Firefox: Import and Backup → Import Bookmarks from file). Both files can be turned off in Settings → Sync → Generated files.
+The `README.md` in the repo is regenerated on each sync — it lists all bookmarks with links, so you can browse your bookmarks directly on GitHub. The `bookmarks.html` file uses the Netscape format and can be imported in any browser (Chrome: Bookmarks → Import; Firefox: Import and Backup → Import Bookmarks from file). The `feed.xml` file is an RSS 2.0 feed that can be subscribed to in any RSS reader (Feedly, Thunderbird, etc.) or used for automations (Slack, IFTTT, n8n). Each file can be set to Off, Manual (generate via button), or Auto (on every sync) in Settings → Sync → Generated files.
 
 ## Automation Tab
 
@@ -255,8 +256,9 @@ gh workflow run add-bookmark.yml \
 | Notifications | Sync | All | When to show sync notifications: All, Errors only, or Off |
 | GitHub Repos folder | Sync | Off | Create folder with bookmarks to all your GitHub repos |
 | GitHub Repos position | Sync | Other Bookmarks | Where to place the folder (toolbar/other) |
-| Generate README.md | Sync | On | Generate Markdown overview in the repo on each sync |
-| Generate bookmarks.html | Sync | On | Generate Netscape-format file for browser import |
+| Generate README.md | Sync | Auto | Off / Manual / Auto — Markdown overview in the repo |
+| Generate bookmarks.html | Sync | Auto | Off / Manual / Auto — Netscape-format file for browser import |
+| Generate feed.xml | Sync | Auto | Off / Manual / Auto — RSS 2.0 feed for readers and automations |
 | Theme | Header | Auto | Light, Dark, or Auto (cycle button: A → Dark → Light → A) |
 | Language | Header | Auto | Auto (browser), English, German, French, or Spanish |
 | Debounce delay | Sync | 5 s | Wait time before syncing after bookmark changes (varies by sync profile) |
@@ -299,8 +301,8 @@ There is no automatic merge for conflicts — you must pick one side. Choose bas
 
 In the **Help** tab of the options page:
 
+- **Vote on backlog**: Quick access to the community poll for feature prioritization
 - **Quick links**: Documentation, Discussions, Report Issue
-- **Debug Log**: Enable to record sync diagnostics (diffs, merge decisions, commit hashes); export for troubleshooting
 - **Collapsible sections**: Getting Started, Profiles, Popup, Sync, Backup, Conflicts, Keyboard Shortcuts, and more
 
 ## Documentation & Links

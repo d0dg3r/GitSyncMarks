@@ -25,7 +25,7 @@ flowchart LR
     end
 
     subgraph Repo["GitHub Repository"]
-        Files["bookmarks/toolbar/*.json\nbookmarks/other/*.json\nbookmarks/README.md\nbookmarks/bookmarks.html"]
+        Files["bookmarks/toolbar/*.json\nbookmarks/other/*.json\nbookmarks/README.md\nbookmarks/bookmarks.html\nbookmarks/feed.xml"]
     end
 
     BM --> FM
@@ -131,7 +131,11 @@ Auto-generated on every push. Shows all bookmarks as Markdown with folder headin
 
 ### `bookmarks.html` — Netscape Format for Browser Import
 
-Auto-generated on every push when enabled (default: on). Uses the Netscape Bookmark File format (`<!DOCTYPE NETSCAPE-Bookmark-file-1>`) which Chrome, Firefox, Edge, and Safari can import directly. Not used for sync — purely for importing bookmarks without the extension.
+Auto-generated on push when mode is Auto (default). Uses the Netscape Bookmark File format (`<!DOCTYPE NETSCAPE-Bookmark-file-1>`) which Chrome, Firefox, Edge, and Safari can import directly. Not used for sync — purely for importing bookmarks without the extension.
+
+### `feed.xml` — RSS 2.0 Feed
+
+Auto-generated on push when mode is Auto (default). Each bookmark becomes an `<item>` with title, link, and category (folder path). Subscribable via any RSS reader (Feedly, Thunderbird, etc.); useful for automations (Slack, IFTTT, n8n) or embedding on websites. Works as a live feed via `raw.githubusercontent.com` or GitHub Pages.
 
 ### Complete Repository Structure
 
@@ -140,6 +144,7 @@ bookmarks/
   _index.json
   README.md
   bookmarks.html
+  feed.xml
   toolbar/
     _order.json
     github_a1b2.json
@@ -182,8 +187,9 @@ Per-profile keys (repo config, githubRepos) live in `profiles[id]`; others are g
 | `autoSync` | `boolean` | `true` | Auto-sync enabled |
 | `syncInterval` | `number` | `15` | Sync interval (minutes) |
 | `language` | `string` | `"auto"` | UI language |
-| `generateReadmeMd` | `boolean` | `true` | Generate README.md on sync |
-| `generateBookmarksHtml` | `boolean` | `true` | Generate bookmarks.html (Netscape format) on sync |
+| `generateReadmeMd` | `string` | `"auto"` | Generate README.md: `"off"`, `"manual"`, or `"auto"` |
+| `generateBookmarksHtml` | `string` | `"auto"` | Generate bookmarks.html: `"off"`, `"manual"`, or `"auto"` |
+| `generateFeedXml` | `string` | `"auto"` | Generate feed.xml (RSS 2.0): `"off"`, `"manual"`, or `"auto"` |
 
 ### `chrome.storage.local` — Sync State + Token
 

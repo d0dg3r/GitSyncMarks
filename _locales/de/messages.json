@@ -248,10 +248,22 @@
     "message": "Generierte Dateien"
   },
   "options_generatedFilesDesc": {
-    "message": "Dateien, die beim Sync im Repo erstellt werden. Ausschalten, um Aktualisierung zu stoppen."
+    "message": "Dateien, die beim Sync im Repo erstellt werden. Pro Datei Aus, Manuell oder Auto wählen."
+  },
+  "options_generateModeOff": {
+    "message": "Aus"
+  },
+  "options_generateModeManual": {
+    "message": "Manuell"
+  },
+  "options_generateModeAuto": {
+    "message": "Auto"
+  },
+  "options_generateNowBtn": {
+    "message": "Jetzt erzeugen"
   },
   "options_generateReadmeMd": {
-    "message": "README.md erzeugen"
+    "message": "README.md"
   },
   "options_generateReadmeMdDesc": {
     "message": "Markdown-Übersicht im Repo."
@@ -261,6 +273,12 @@
   },
   "options_generateBookmarksHtmlDesc": {
     "message": "Netscape-Format für Browser-Import (Chrome, Firefox)."
+  },
+  "options_generateFeedXml": {
+    "message": "feed.xml erzeugen"
+  },
+  "options_generateFeedXmlDesc": {
+    "message": "RSS-2.0-Feed — in jedem RSS-Reader abonnierbar oder für Automatisierungen nutzbar."
   },
   "options_notifications": {
     "message": "Sync-Benachrichtigungen"
@@ -596,7 +614,7 @@
     "message": "Generierte Dateien"
   },
   "help_generatedFilesDesc": {
-    "message": "README.md (Übersicht) und bookmarks.html (Netscape-Format für Browser-Import) werden beim Sync erzeugt. Im Sync-Tab abschalten, um keine Updates mehr zu schreiben."
+    "message": "README.md (Übersicht), bookmarks.html (Netscape-Format für Browser-Import) und feed.xml (RSS-2.0-Feed) können beim Sync erzeugt werden. Pro Datei Aus, Manuell oder Auto im Sync-Tab wählen."
   },
   "help_notificationsTitle": {
     "message": "Benachrichtigungen"

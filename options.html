@@ -246,22 +246,34 @@
         <h2 data-i18n="options_generatedFilesTitle">Generated files</h2>
         <p class="card-desc" data-i18n="options_generatedFilesDesc">Files created in the repo during sync. Toggle off to stop updating.</p>
 
-        <div class="form-group toggle-group">
-            <label for="generate-readme-md" class="toggle-label">
-              <span data-i18n="options_generateReadmeMd">Generate README.md</span>
-              <input type="checkbox" id="generate-readme-md" checked>
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-          <small data-i18n="options_generateReadmeMdDesc" style="display:block;margin-left:1.5rem;margin-top:0.25rem;">Markdown overview in the repo.</small>
-          <div class="form-group toggle-group">
-            <label for="generate-bookmarks-html" class="toggle-label">
-              <span data-i18n="options_generateBookmarksHtml">Generate bookmarks.html</span>
-              <input type="checkbox" id="generate-bookmarks-html" checked>
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-          <small data-i18n="options_generateBookmarksHtmlDesc" style="display:block;margin-left:1.5rem;margin-top:0.25rem;">Netscape format for browser import (Chrome, Firefox).</small>
+        <div class="form-group">
+          <label for="generate-readme-md" data-i18n="options_generateReadmeMd">README.md</label>
+          <select id="generate-readme-md">
+            <option value="off" data-i18n="options_generateModeOff">Off</option>
+            <option value="manual" data-i18n="options_generateModeManual">Manual</option>
+            <option value="auto" selected data-i18n="options_generateModeAuto">Auto</option>
+          </select>
+          <small data-i18n="options_generateReadmeMdDesc" style="display:block;margin-top:0.25rem;">Markdown overview in the repo.</small>
+        </div>
+        <div class="form-group">
+          <label for="generate-bookmarks-html" data-i18n="options_generateBookmarksHtml">bookmarks.html</label>
+          <select id="generate-bookmarks-html">
+            <option value="off" data-i18n="options_generateModeOff">Off</option>
+            <option value="manual" data-i18n="options_generateModeManual">Manual</option>
+            <option value="auto" selected data-i18n="options_generateModeAuto">Auto</option>
+          </select>
+          <small data-i18n="options_generateBookmarksHtmlDesc" style="display:block;margin-top:0.25rem;">Netscape format for browser import (Chrome, Firefox).</small>
+        </div>
+        <div class="form-group">
+          <label for="generate-feed-xml" data-i18n="options_generateFeedXml">feed.xml</label>
+          <select id="generate-feed-xml">
+            <option value="off" data-i18n="options_generateModeOff">Off</option>
+            <option value="manual" data-i18n="options_generateModeManual">Manual</option>
+            <option value="auto" selected data-i18n="options_generateModeAuto">Auto</option>
+          </select>
+          <small data-i18n="options_generateFeedXmlDesc" style="display:block;margin-top:0.25rem;">RSS 2.0 feed — subscribe in any RSS reader or use for automations.</small>
+        </div>
+        <button id="generate-files-btn" class="btn btn-secondary" data-i18n="options_generateNowBtn" style="margin-top:0.5rem;">Generate now</button>
 
         <div class="actions actions-in-card actions-sync-feedback">
           <span id="save-sync-result" class="save-result"></span>

@@ -48,7 +48,15 @@ const STORAGE_KEYS = {
   PROFILE_SWITCH_WITHOUT_CONFIRM: 'profileSwitchWithoutConfirm',
   GENERATE_README_MD: 'generateReadmeMd',
   GENERATE_BOOKMARKS_HTML: 'generateBookmarksHtml',
+  GENERATE_FEED_XML: 'generateFeedXml',
 };
+
+function normalizeGenMode(val) {
+  if (val === true) return 'auto';
+  if (val === false) return 'off';
+  if (val === 'off' || val === 'manual' || val === 'auto') return val;
+  return 'auto';
+}
 
 // ---- DOM elements: Settings Tab ----
 const profileSelect = document.getElementById('profile-select');
@@ -90,8 +98,10 @@ const syncIntervalInput = document.getElementById('sync-interval');
 const debounceDelayInput = document.getElementById('debounce-delay');
 const syncOnStartupInput = document.getElementById('sync-on-startup');
 const syncOnFocusInput = document.getElementById('sync-on-focus');
-const generateReadmeMdInput = document.getElementById('generate-readme-md');
-const generateBookmarksHtmlInput = document.getElementById('generate-bookmarks-html');
+const generateReadmeMdSelect = document.getElementById('generate-readme-md');
+const generateBookmarksHtmlSelect = document.getElementById('generate-bookmarks-html');
+const generateFeedXmlSelect = document.getElementById('generate-feed-xml');
+const generateFilesBtn = document.getElementById('generate-files-btn');
 const notificationsModeSelect = document.getElementById('notifications-mode');
 const validateBtn = document.getElementById('validate-btn');
 const validationResult = document.getElementById('validation-result');
@@ -274,8 +284,9 @@ async function loadSettings() {
     notificationsMode: 'all',
     notificationsEnabled: undefined,
     language: 'auto',
-    generateReadmeMd: true,
-    generateBookmarksHtml: true,
+    generateReadmeMd: 'auto',
+    generateBookmarksHtml: 'auto',
+    generateFeedXml: 'auto',
     theme: 'auto',
     profileSwitchWithoutConfirm: false,
     debugLogEnabled: false,
@@ -290,8 +301,10 @@ async function loadSettings() {
   syncCustomFields.style.display = profile === 'custom' ? 'block' : 'none';
   syncOnStartupInput.checked = globals.syncOnStartup === true;
   syncOnFocusInput.checked = globals.syncOnFocus === true;
-  generateReadmeMdInput.checked = globals.generateReadmeMd !== false;
-  generateBookmarksHtmlInput.checked = globals.generateBookmarksHtml !== false;
+  generateReadmeMdSelect.value = normalizeGenMode(globals.generateReadmeMd);
+  generateBookmarksHtmlSelect.value = normalizeGenMode(globals.generateBookmarksHtml);
+  generateFeedXmlSelect.value = normalizeGenMode(globals.generateFeedXml);
+  updateGenerateFilesBtn();
   const mode = globals.notificationsMode;
   const oldEnabled = globals.notificationsEnabled;
   const displayMode = (mode && ['off', 'all', 'errorsOnly'].includes(mode))
@@ -752,8 +765,9 @@ async function saveSettings() {
       [STORAGE_KEYS.SYNC_ON_STARTUP]: syncOnStartupInput.checked,
       [STORAGE_KEYS.SYNC_ON_FOCUS]: syncOnFocusInput.checked,
       [STORAGE_KEYS.NOTIFICATIONS_MODE]: notificationsModeSelect.value,
-      [STORAGE_KEYS.GENERATE_README_MD]: generateReadmeMdInput.checked,
-      [STORAGE_KEYS.GENERATE_BOOKMARKS_HTML]: generateBookmarksHtmlInput.checked,
+      [STORAGE_KEYS.GENERATE_README_MD]: generateReadmeMdSelect.value,
+      [STORAGE_KEYS.GENERATE_BOOKMARKS_HTML]: generateBookmarksHtmlSelect.value,
+      [STORAGE_KEYS.GENERATE_FEED_XML]: generateFeedXmlSelect.value,
       [STORAGE_KEYS.LANGUAGE]: languageSelect.value,
       [STORAGE_KEYS.PROFILE_SWITCH_WITHOUT_CONFIRM]: profileSwitchWithoutConfirmInput.checked,
     });
@@ -867,12 +881,30 @@ function scheduleGenerateFilesSync(isRetry = false) {
   }, delayMs);
 }
 
+function updateGenerateFilesBtn() {
+  const anyEnabled = generateReadmeMdSelect.value !== 'off' ||
+                     generateBookmarksHtmlSelect.value !== 'off' ||
+                     generateFeedXmlSelect.value !== 'off';
+  generateFilesBtn.style.display = anyEnabled ? '' : 'none';
+}
+
 async function onGenerateFilesToggleChange() {
+  updateGenerateFilesBtn();
   await saveSettings();
-  if (generateReadmeMdInput.checked || generateBookmarksHtmlInput.checked) {
+  if (generateReadmeMdSelect.value === 'auto' ||
+      generateBookmarksHtmlSelect.value === 'auto' ||
+      generateFeedXmlSelect.value === 'auto') {
     scheduleGenerateFilesSync();
   }
 }
+
+generateFilesBtn.addEventListener('click', async () => {
+  generateFilesBtn.disabled = true;
+  try {
+    await chrome.runtime.sendMessage({ action: 'generateFilesNow' });
+  } catch (e) { /* Background may be terminated */ }
+  generateFilesBtn.disabled = false;
+});
 
 // Sync tab: auto-save on change (no Save button)
 autoSyncInput.addEventListener('change', saveSettings);
@@ -881,8 +913,9 @@ syncOnFocusInput.addEventListener('change', saveSettings);
 notificationsModeSelect.addEventListener('change', saveSettings);
 syncIntervalInput.addEventListener('change', saveSettings);
 debounceDelayInput.addEventListener('change', saveSettings);
-generateReadmeMdInput.addEventListener('change', onGenerateFilesToggleChange);
-generateBookmarksHtmlInput.addEventListener('change', onGenerateFilesToggleChange);
+generateReadmeMdSelect.addEventListener('change', onGenerateFilesToggleChange);
+generateBookmarksHtmlSelect.addEventListener('change', onGenerateFilesToggleChange);
+generateFeedXmlSelect.addEventListener('change', onGenerateFilesToggleChange);
 
 // ==============================
 // Import/Export: Bookmarks

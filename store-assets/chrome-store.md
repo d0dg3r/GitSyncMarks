@@ -25,7 +25,7 @@ Features:
 • Periodic sync to detect remote changes (1–120 minutes, configurable)
 • Manual Push, Pull, and full Sync via the popup
 • Conflict detection when automatic merge is not possible
-• A README.md with all bookmarks is generated in the repo for easy browsing
+• Generated files: README.md (overview), bookmarks.html (browser import), and feed.xml (RSS 2.0 feed) — each configurable as Off, Manual, or Auto
 • Automation: add bookmarks via Git, CLI, or GitHub Actions — no browser needed
 • Import/Export: back up and restore bookmarks or settings as JSON files; settings can be exported as password-encrypted .enc for secure backup (clear UI with file picker)
 • Auto-save: all settings save automatically when changed — no Save buttons
@@ -42,7 +42,7 @@ How it works:
 3. Configure GitSyncMarks with your token and repository
 4. Click "Sync Now" — done!
 
-Each bookmark is stored as an individual JSON file in your repository, organized into folders that mirror your bookmark hierarchy. A README.md gives you a clean overview directly on GitHub.
+Each bookmark is stored as an individual JSON file in your repository, organized into folders that mirror your bookmark hierarchy. A README.md gives you a clean overview directly on GitHub; a bookmarks.html lets you import into any browser; a feed.xml RSS feed lets you subscribe or use for automations.
 
 Automation:
 You can add bookmarks without even opening the browser. GitSyncMarks includes a GitHub Actions workflow (add-bookmark.yml) that lets you add bookmarks via the GitHub web UI or the command line:
@@ -86,7 +86,7 @@ Funktionen:
 • Periodischer Sync zur Erkennung von Remote-Änderungen (1–120 Min., konfigurierbar)
 • Manuelles Push, Pull und Sync über das Popup
 • Konflikterkennung, wenn automatisches Mergen nicht möglich ist
-• Eine README.md mit allen Lesezeichen wird im Repository generiert
+• Generierte Dateien: README.md (Übersicht), bookmarks.html (Browser-Import) und feed.xml (RSS-2.0-Feed) — einzeln als Aus, Manuell oder Auto konfigurierbar
 • Automatisierung: Lesezeichen über Git, CLI oder GitHub Actions hinzufügen — ohne Browser
 • Import/Export: Lesezeichen oder Einstellungen als JSON-Dateien sichern; Einstellungen auch als passwortverschlüsselte .enc exportierbar (klare UI mit Dateiauswahl)
 • Auto-Save: alle Einstellungen speichern sich automatisch bei Änderung — keine Speichern-Buttons
@@ -103,7 +103,7 @@ So funktioniert es:
 3. Konfiguriere GitSyncMarks mit deinem Token und Repository
 4. Klicke auf „Jetzt synchronisieren" — fertig!
 
-Jedes Lesezeichen wird als einzelne JSON-Datei in deinem Repository gespeichert, organisiert in Ordnern, die deine Lesezeichen-Hierarchie widerspiegeln. Eine README.md bietet dir eine übersichtliche Darstellung direkt auf GitHub.
+Jedes Lesezeichen wird als einzelne JSON-Datei in deinem Repository gespeichert, organisiert in Ordnern, die deine Lesezeichen-Hierarchie widerspiegeln. Eine README.md bietet dir eine übersichtliche Darstellung direkt auf GitHub; eine bookmarks.html ermöglicht den Import in jeden Browser; ein feed.xml RSS-Feed kann in Readern abonniert oder für Automatisierungen genutzt werden.
 
 Automatisierung:
 Du kannst Lesezeichen hinzufügen, ohne den Browser zu öffnen. GitSyncMarks enthält einen GitHub Actions Workflow (add-bookmark.yml), mit dem du Lesezeichen über die GitHub-Oberfläche oder die Kommandozeile hinzufügen kannst:
@@ -147,7 +147,7 @@ Fonctionnalités :
 • Sync périodique pour détecter les changements distants (1–120 minutes, configurable)
 • Push, Pull et Sync complet manuels via le popup
 • Détection des conflits lorsque la fusion automatique est impossible
-• Un README.md avec tous les favoris est généré dans le dépôt pour une navigation facile
+• Fichiers générés : README.md (aperçu), bookmarks.html (import navigateur) et feed.xml (flux RSS 2.0) — chacun configurable comme Désactivé, Manuel ou Auto
 • Automatisation : ajouter des favoris via Git, CLI ou GitHub Actions — sans ouvrir le navigateur
 • Import/Export : sauvegarder et restaurer les favoris ou les paramètres en JSON ; paramètres exportables en .enc chiffré par mot de passe (interface claire avec sélection de fichier)
 • Enregistrement automatique : tous les paramètres se sauvegardent à la modification — pas de bouton Enregistrer
@@ -164,7 +164,7 @@ Comment ça marche :
 3. Configurez GitSyncMarks avec votre token et le dépôt
 4. Cliquez sur « Synchroniser maintenant » — terminé !
 
-Chaque favori est stocké comme un fichier JSON individuel dans votre dépôt, organisé en dossiers qui reflètent la hiérarchie de vos favoris. Un README.md vous donne une vue d'ensemble directement sur GitHub.
+Chaque favori est stocké comme un fichier JSON individuel dans votre dépôt, organisé en dossiers qui reflètent la hiérarchie de vos favoris. Un README.md vous donne une vue d'ensemble directement sur GitHub ; un bookmarks.html permet l'import dans n'importe quel navigateur ; un feed.xml RSS permet de s'abonner ou d'automatiser.
 
 Automatisation :
 Vous pouvez ajouter des favoris sans ouvrir le navigateur. GitSyncMarks inclut un workflow GitHub Actions (add-bookmark.yml) pour ajouter des favoris via l'interface web GitHub ou la ligne de commande :
@@ -208,7 +208,7 @@ Características:
 • Sync periódico para detectar cambios remotos (1–120 minutos, configurable)
 • Push, Pull y Sync completo manuales desde el popup
 • Detección de conflictos cuando la fusión automática no es posible
-• Un README.md con todos los marcadores se genera en el repositorio para navegar fácilmente
+• Archivos generados: README.md (resumen), bookmarks.html (importación del navegador) y feed.xml (feed RSS 2.0) — cada uno configurable como Desactivado, Manual o Auto
 • Automatización: añadir marcadores vía Git, CLI o GitHub Actions — sin abrir el navegador
 • Importar/Exportar: respaldar y restaurar marcadores o ajustes en JSON; ajustes exportables como .enc cifrado con contraseña (interfaz clara con selector de archivo)
 • Guardado automático: todos los ajustes se guardan al cambiar — sin botones Guardar
@@ -225,7 +225,7 @@ Cómo funciona:
 3. Configura GitSyncMarks con tu token y el repositorio
 4. Haz clic en « Sincronizar ahora » — ¡listo!
 
-Cada marcador se almacena como un archivo JSON individual en tu repositorio, organizado en carpetas que reflejan la jerarquía de tus marcadores. Un README.md te ofrece una visión general directamente en GitHub.
+Cada marcador se almacena como un archivo JSON individual en tu repositorio, organizado en carpetas que reflejan la jerarquía de tus marcadores. Un README.md te ofrece una visión general directamente en GitHub; un bookmarks.html permite importar en cualquier navegador; un feed.xml RSS permite suscribirse o automatizar.
 
 Automatización:
 Puedes añadir marcadores sin abrir el navegador. GitSyncMarks incluye un workflow de GitHub Actions (add-bookmark.yml) para añadir marcadores vía la interfaz web de GitHub o la línea de comandos:

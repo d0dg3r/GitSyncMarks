@@ -13,7 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- *(coming soon)*
+- **RSS feed export**: New generated file `feed.xml` (RSS 2.0) — each bookmark becomes an `<item>` with title, URL, and folder as category; subscribable in any RSS reader; enables automations (Slack, IFTTT, n8n); works as live feed via GitHub Pages or raw URL
+- **Generated files mode selector**: Each generated file (README.md, bookmarks.html, feed.xml) can be set to **Off**, **Manual**, or **Auto** individually; "Generate now" button triggers manual generation and push; backward-compatible with existing boolean settings
+- **Backlog voting awareness**: "Vote on backlog" button in Help tab quick links; poll link in README
+
+### Changed
+
+- **Debug Log moved**: Debug Log section moved from Help tab to Sync tab (where sync diagnostics belong)
+- **Generated files UI**: Checkbox toggles replaced by dropdown selectors (Off / Manual / Auto) with per-file control
 
 ## [2.3.0] - 2026-02-19 (*Data*)
 

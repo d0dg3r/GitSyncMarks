@@ -248,10 +248,22 @@
     "message": "Generated files"
   },
   "options_generatedFilesDesc": {
-    "message": "Files created in the repo during sync. Toggle off to stop updating."
+    "message": "Files created in the repo during sync. Choose Off, Manual, or Auto per file."
+  },
+  "options_generateModeOff": {
+    "message": "Off"
+  },
+  "options_generateModeManual": {
+    "message": "Manual"
+  },
+  "options_generateModeAuto": {
+    "message": "Auto"
+  },
+  "options_generateNowBtn": {
+    "message": "Generate now"
   },
   "options_generateReadmeMd": {
-    "message": "Generate README.md"
+    "message": "README.md"
   },
   "options_generateReadmeMdDesc": {
     "message": "Markdown overview in the repo."
@@ -261,6 +273,12 @@
   },
   "options_generateBookmarksHtmlDesc": {
     "message": "Netscape format for browser import (Chrome, Firefox)."
+  },
+  "options_generateFeedXml": {
+    "message": "Generate feed.xml"
+  },
+  "options_generateFeedXmlDesc": {
+    "message": "RSS 2.0 feed — subscribe in any RSS reader or use for automations."
   },
   "options_notifications": {
     "message": "Sync notifications"
@@ -596,7 +614,7 @@
     "message": "Generated files"
   },
   "help_generatedFilesDesc": {
-    "message": "README.md (overview) and bookmarks.html (Netscape format for browser import) are created during sync. Toggle off in the Sync tab to stop updating."
+    "message": "README.md (overview), bookmarks.html (Netscape format for browser import), and feed.xml (RSS 2.0 feed) can be created during sync. Set each to Off, Manual, or Auto in the Sync tab."
   },
   "help_notificationsTitle": {
     "message": "Notifications"

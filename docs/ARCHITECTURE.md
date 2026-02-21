@@ -80,7 +80,7 @@ Toolbar popup with header (icon, title, profile dropdown when 2+ profiles), stat
 Full-page settings (opens in tab) with six tabs. Header: language dropdown, theme cycle button (A → Dark → Light → A). All settings auto-save on change; no Save buttons.
 
 1. **GitHub** — Profile selector (multiple profiles with separate repos), token, repository, connection test, onboarding (create folder or pull when path empty/has bookmarks)
-2. **Sync** — Sync profile, auto-sync, sync on start/focus, notifications; GitHub Repos folder (optional); generated files (README.md, bookmarks.html)
+2. **Sync** — Sync profile, auto-sync, sync on start/focus, notifications; GitHub Repos folder (optional); generated files (README.md, bookmarks.html, feed.xml) with Off/Manual/Auto mode; Debug Log
 3. **Backup** — Export/import bookmarks and settings as JSON or password-encrypted .enc (file picker with chosen filename)
 4. **Automation** — Guide for adding bookmarks via Git, CLI, or GitHub Actions
 5. **Help** — Keyboard shortcuts, main features (popup, profiles, auto-sync, conflicts)

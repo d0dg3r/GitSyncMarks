@@ -25,7 +25,7 @@ Features:
 • Periodic sync to detect remote changes (1–120 minutes, configurable)
 • Manual Push, Pull, and full Sync via the popup
 • Conflict detection when automatic merge is not possible
-• A README.md with all bookmarks is generated in the repo for easy browsing
+• Generated files: README.md (overview), bookmarks.html (browser import), and feed.xml (RSS 2.0 feed) — each configurable as Off, Manual, or Auto
 • Automation: add bookmarks via Git, CLI, or GitHub Actions — no browser needed
 • Import/Export: back up and restore bookmarks or settings as JSON files; settings can be exported as password-encrypted .enc for secure backup (clear UI with file picker)
 • Auto-save: all settings save automatically when changed — no Save buttons
@@ -42,7 +42,7 @@ How it works:
 3. Configure GitSyncMarks with your token and repository
 4. Click "Sync Now" — done!
 
-Each bookmark is stored as an individual JSON file in your repository, organized into folders that mirror your Firefox bookmark hierarchy (Bookmarks Toolbar, Bookmarks Menu, Other Bookmarks, Mobile Bookmarks). A README.md gives you a clean overview directly on GitHub.
+Each bookmark is stored as an individual JSON file in your repository, organized into folders that mirror your Firefox bookmark hierarchy (Bookmarks Toolbar, Bookmarks Menu, Other Bookmarks, Mobile Bookmarks). A README.md gives you a clean overview directly on GitHub; a bookmarks.html lets you import into any browser; a feed.xml RSS feed lets you subscribe or use for automations.
 
 Automation:
 You can add bookmarks without even opening Firefox. GitSyncMarks includes a GitHub Actions workflow (add-bookmark.yml) that lets you add bookmarks via the GitHub web UI or the command line:
