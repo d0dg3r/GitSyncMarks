@@ -126,7 +126,7 @@ sequenceDiagram
 | **removed** | Files in `base` but not in `current` |
 | **modified** | Files in both but with different content |
 
-Generated/meta files (`README.md`, `_index.json`) are excluded from diff via `filterForDiff()`.
+Generated/meta files (`README.md`, `_index.json`, `bookmarks.html`, `feed.xml`, `dashy-conf.yml`, `settings.enc`) are excluded from diff via `DIFF_IGNORE_SUFFIXES`. Individual settings files (`settings-{id}.enc`) are excluded via `SETTINGS_ENC_PATTERN`.
 
 ## Merge Rules
 

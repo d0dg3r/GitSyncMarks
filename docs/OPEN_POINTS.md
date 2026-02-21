@@ -7,7 +7,7 @@ Open items and next steps for further development. Updated each session.
 ## Current Status (v2.4.0 *R2-D2*)
 
 - **v2.4.0** *R2-D2* – Settings sync to Git (encrypted, Global or Individual mode with device config import); RSS feed export (`feed.xml`); generated files mode selector (Off/Manual/Auto per file with "Generate now" button); backlog voting awareness in Help tab and README; Debug Log moved to Sync tab
-- **v2.3.0** *Data* – Encrypted settings export (password-protected .enc); plain JSON and encrypted supported; import with password prompt; Sync tab shortened to "Sync"; store screenshots improved; import hints (bookmarks = active profile, settings = all profiles); theme cycle button; full auto-save (no Save buttons); GitHub Repos moved to Sync tab
+- **v2.3.0** *Data* – Encrypted settings export (password-protected .enc); plain JSON and encrypted supported; import with password prompt; Sync tab shortened to "Sync"; store screenshots improved; import hints (bookmarks = active profile, settings = all profiles); theme cycle button; full auto-save (no Save buttons)
 - **v2.2.1** – Sync feedback message fix; state regression fix (stale fetch guard, cache-busting); debug log extended with commit hashes
 - **GitHub Repos folder** – Implemented (toggle, position, refresh; synced via normal bookmark sync)
 - **Multiple Sync Profiles** – Implemented (profile manager, migration, CRUD, switchProfile, options UI, loading indicator, profile limit display)
@@ -20,7 +20,7 @@ Open items and next steps for further development. Updated each session.
 - **Options Header** – Language label removed, dropdown only
 - **Auto-save** – Switches save on change; Update GitHub Repos and Test Connection save before running
 - **Compact Options UI** – All tabs (GitHub, Sync, Files, Help, About) use consistent compact styling
-- **Tab reorganization** – Reduced from 6 tabs to 5; Backup and Automation merged into new Files tab with compact dropdown export/import UI; GitHub Repos moved to GitHub tab
+- **Tab reorganization** – Reduced from 6 tabs to 5; Backup and Automation merged into new Files tab with compact dropdown export/import UI; sub-tab navigation for GitHub (Profile, Connection, Repos) and Files (Generated, Settings, Export/Import, Git Add); Help quick links restyled as pill buttons; GitHub Repos in GitHub → Repos sub-tab
 
 ---
 
@@ -40,9 +40,11 @@ Open items and next steps for further development. Updated each session.
 3. [x] Backlog voting awareness (Help tab + README)
 4. [x] Debug Log moved to Sync tab
 5. [x] Settings sync to Git (encrypted `settings.enc`)
-6. [ ] Test on Chrome, Firefox Desktop, Firefox Android
-6. [ ] Tag v2.4.0, publish release (manifest, CHANGELOG, docs updated)
-7. [ ] Submit to Chrome Web Store and Firefox Add-ons with updated store descriptions
+6. [x] Tab reorganization (5 tabs, sub-tabs for GitHub and Files)
+7. [x] Store screenshots updated (6 per language: GitHub, Connection, Sync, Files, Export/Import, Popup)
+8. [ ] Test on Chrome, Firefox Desktop, Firefox Android
+9. [ ] Tag v2.4.0, publish release (manifest, CHANGELOG, docs updated)
+10. [ ] Submit to Chrome Web Store and Firefox Add-ons with updated store descriptions
 
 ---
 

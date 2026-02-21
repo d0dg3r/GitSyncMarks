@@ -25,7 +25,7 @@ Features:
 • Periodic sync to detect remote changes (1–120 minutes, configurable)
 • Manual Push, Pull, and full Sync via the popup
 • Conflict detection when automatic merge is not possible
-• Generated files: README.md (overview), bookmarks.html (browser import), and feed.xml (RSS 2.0 feed) — each configurable as Off, Manual, or Auto
+• Generated files: README.md (overview), bookmarks.html (browser import), feed.xml (RSS 2.0 feed), and dashy-conf.yml (Dashy dashboard) — each configurable as Off, Manual, or Auto
 • Settings sync to Git: encrypted backup of extension settings in the repo — Global (shared) or Individual (per device) mode; import settings from other devices; same password on every device, auto-synced
 • Automation: add bookmarks via Git, CLI, or GitHub Actions — no browser needed
 • Import/Export: back up and restore bookmarks or settings as JSON files; settings can be exported as password-encrypted .enc for secure backup (clear UI with file picker)
@@ -33,7 +33,7 @@ Features:
 • Theme: light, dark, or auto (system) for options and popup
 • Multilanguage: English, German, French, and Spanish with manual language selection
 • Keyboard shortcuts: quick sync (Ctrl+Shift+.), open settings (Ctrl+Shift+,) — customizable
-• Debug log: Help tab — enable for sync diagnostics, export for troubleshooting
+• Debug log: Sync tab — enable for sync diagnostics, export for troubleshooting
 • Mobile companion: GitSyncMarks-Mobile (iOS + Android) — view bookmarks on the go, read-only sync from your repo
 • No external server — communicates directly with the GitHub API using your Personal Access Token
 
@@ -43,7 +43,7 @@ How it works:
 3. Configure GitSyncMarks with your token and repository
 4. Click "Sync Now" — done!
 
-Each bookmark is stored as an individual JSON file in your repository, organized into folders that mirror your bookmark hierarchy. A README.md gives you a clean overview directly on GitHub; a bookmarks.html lets you import into any browser; a feed.xml RSS feed lets you subscribe or use for automations.
+Each bookmark is stored as an individual JSON file in your repository, organized into folders that mirror your bookmark hierarchy. A README.md gives you a clean overview directly on GitHub; a bookmarks.html lets you import into any browser; a feed.xml RSS feed lets you subscribe or use for automations; a dashy-conf.yml provides sections for the Dashy dashboard.
 
 Automation:
 You can add bookmarks without even opening the browser. GitSyncMarks includes a GitHub Actions workflow (add-bookmark.yml) that lets you add bookmarks via the GitHub web UI or the command line:
@@ -87,7 +87,7 @@ Funktionen:
 • Periodischer Sync zur Erkennung von Remote-Änderungen (1–120 Min., konfigurierbar)
 • Manuelles Push, Pull und Sync über das Popup
 • Konflikterkennung, wenn automatisches Mergen nicht möglich ist
-• Generierte Dateien: README.md (Übersicht), bookmarks.html (Browser-Import) und feed.xml (RSS-2.0-Feed) — einzeln als Aus, Manuell oder Auto konfigurierbar
+• Generierte Dateien: README.md (Übersicht), bookmarks.html (Browser-Import), feed.xml (RSS-2.0-Feed) und dashy-conf.yml (Dashy-Dashboard) — einzeln als Aus, Manuell oder Auto konfigurierbar
 • Einstellungen-Sync mit Git: verschlüsseltes Backup der Erweiterungseinstellungen im Repo — Global (geteilt) oder Individuell (pro Gerät); Einstellungen von anderen Geräten importieren; gleiches Passwort auf jedem Gerät, automatisch synchronisiert
 • Automatisierung: Lesezeichen über Git, CLI oder GitHub Actions hinzufügen — ohne Browser
 • Import/Export: Lesezeichen oder Einstellungen als JSON-Dateien sichern; Einstellungen auch als passwortverschlüsselte .enc exportierbar (klare UI mit Dateiauswahl)
@@ -95,7 +95,7 @@ Funktionen:
 • Design: Hell, Dunkel oder Auto (System) für Einstellungen und Popup
 • Mehrsprachig: Englisch, Deutsch, Französisch und Spanisch mit manueller Sprachauswahl
 • Tastenkürzel: Schnell-Sync (Strg+Umschalt+.), Einstellungen öffnen (Strg+Umschalt+,) — anpassbar
-• Debug-Log: Hilfe-Tab — für Sync-Diagnostik aktivierbar, exportierbar
+• Debug-Log: Sync-Tab — für Sync-Diagnostik aktivierbar, exportierbar
 • Mobile-Begleiter: GitSyncMarks-Mobile (iOS + Android) — Lesezeichen unterwegs ansehen
 • Kein externer Server — kommuniziert direkt mit der GitHub API über deinen Personal Access Token
 
@@ -105,7 +105,7 @@ So funktioniert es:
 3. Konfiguriere GitSyncMarks mit deinem Token und Repository
 4. Klicke auf „Jetzt synchronisieren" — fertig!
 
-Jedes Lesezeichen wird als einzelne JSON-Datei in deinem Repository gespeichert, organisiert in Ordnern, die deine Lesezeichen-Hierarchie widerspiegeln. Eine README.md bietet dir eine übersichtliche Darstellung direkt auf GitHub; eine bookmarks.html ermöglicht den Import in jeden Browser; ein feed.xml RSS-Feed kann in Readern abonniert oder für Automatisierungen genutzt werden.
+Jedes Lesezeichen wird als einzelne JSON-Datei in deinem Repository gespeichert, organisiert in Ordnern, die deine Lesezeichen-Hierarchie widerspiegeln. Eine README.md bietet dir eine übersichtliche Darstellung direkt auf GitHub; eine bookmarks.html ermöglicht den Import in jeden Browser; ein feed.xml RSS-Feed kann in Readern abonniert oder für Automatisierungen genutzt werden; eine dashy-conf.yml liefert Sektionen für das Dashy-Dashboard.
 
 Automatisierung:
 Du kannst Lesezeichen hinzufügen, ohne den Browser zu öffnen. GitSyncMarks enthält einen GitHub Actions Workflow (add-bookmark.yml), mit dem du Lesezeichen über die GitHub-Oberfläche oder die Kommandozeile hinzufügen kannst:
@@ -149,7 +149,7 @@ Fonctionnalités :
 • Sync périodique pour détecter les changements distants (1–120 minutes, configurable)
 • Push, Pull et Sync complet manuels via le popup
 • Détection des conflits lorsque la fusion automatique est impossible
-• Fichiers générés : README.md (aperçu), bookmarks.html (import navigateur) et feed.xml (flux RSS 2.0) — chacun configurable comme Désactivé, Manuel ou Auto
+• Fichiers générés : README.md (aperçu), bookmarks.html (import navigateur), feed.xml (flux RSS 2.0) et dashy-conf.yml (tableau de bord Dashy) — chacun configurable comme Désactivé, Manuel ou Auto
 • Sync des paramètres avec Git : sauvegarde chiffrée des paramètres de l'extension dans le dépôt — mode Global (partagé) ou Individuel (par appareil) ; import depuis d'autres appareils ; même mot de passe, synchronisé automatiquement
 • Automatisation : ajouter des favoris via Git, CLI ou GitHub Actions — sans ouvrir le navigateur
 • Import/Export : sauvegarder et restaurer les favoris ou les paramètres en JSON ; paramètres exportables en .enc chiffré par mot de passe (interface claire avec sélection de fichier)
@@ -157,7 +157,7 @@ Fonctionnalités :
 • Thème : clair, sombre ou auto (système) pour les options et le popup
 • Multilingue : anglais, allemand, français et espagnol avec sélection manuelle de la langue
 • Raccourcis clavier : sync rapide, paramètres — personnalisables
-• Journal de débogage : onglet Aide — pour le dépannage de sync
+• Journal de débogage : onglet Sync — pour le dépannage de sync
 • Application mobile : GitSyncMarks-Mobile (iOS + Android) — consultez vos favoris en déplacement
 • Pas de serveur externe — communique directement avec l'API GitHub via votre Personal Access Token
 
@@ -167,7 +167,7 @@ Comment ça marche :
 3. Configurez GitSyncMarks avec votre token et le dépôt
 4. Cliquez sur « Synchroniser maintenant » — terminé !
 
-Chaque favori est stocké comme un fichier JSON individuel dans votre dépôt, organisé en dossiers qui reflètent la hiérarchie de vos favoris. Un README.md vous donne une vue d'ensemble directement sur GitHub ; un bookmarks.html permet l'import dans n'importe quel navigateur ; un feed.xml RSS permet de s'abonner ou d'automatiser.
+Chaque favori est stocké comme un fichier JSON individuel dans votre dépôt, organisé en dossiers qui reflètent la hiérarchie de vos favoris. Un README.md vous donne une vue d'ensemble directement sur GitHub ; un bookmarks.html permet l'import dans n'importe quel navigateur ; un feed.xml RSS permet de s'abonner ou d'automatiser ; un dashy-conf.yml fournit des sections pour le tableau de bord Dashy.
 
 Automatisation :
 Vous pouvez ajouter des favoris sans ouvrir le navigateur. GitSyncMarks inclut un workflow GitHub Actions (add-bookmark.yml) pour ajouter des favoris via l'interface web GitHub ou la ligne de commande :
@@ -211,7 +211,7 @@ Características:
 • Sync periódico para detectar cambios remotos (1–120 minutos, configurable)
 • Push, Pull y Sync completo manuales desde el popup
 • Detección de conflictos cuando la fusión automática no es posible
-• Archivos generados: README.md (resumen), bookmarks.html (importación del navegador) y feed.xml (feed RSS 2.0) — cada uno configurable como Desactivado, Manual o Auto
+• Archivos generados: README.md (resumen), bookmarks.html (importación del navegador), feed.xml (feed RSS 2.0) y dashy-conf.yml (panel Dashy) — cada uno configurable como Desactivado, Manual o Auto
 • Sync de ajustes con Git: copia cifrada de los ajustes de la extensión en el repositorio — modo Global (compartido) o Individual (por dispositivo); importar ajustes de otros dispositivos; misma contraseña, sincronizado automáticamente
 • Automatización: añadir marcadores vía Git, CLI o GitHub Actions — sin abrir el navegador
 • Importar/Exportar: respaldar y restaurar marcadores o ajustes en JSON; ajustes exportables como .enc cifrado con contraseña (interfaz clara con selector de archivo)
@@ -219,7 +219,7 @@ Características:
 • Tema: claro, oscuro o auto (sistema) para opciones y popup
 • Multilingüe: inglés, alemán, francés y español con selección manual del idioma
 • Atajos de teclado: sync rápido, configuración — personalizables
-• Registro de depuración: pestaña Ayuda — para diagnosticar la sincronización
+• Registro de depuración: pestaña Sync — para diagnosticar la sincronización
 • App móvil: GitSyncMarks-Mobile (iOS + Android) — consulta tus marcadores en movimiento
 • Sin servidor externo — se comunica directamente con la API de GitHub usando tu Personal Access Token
 
@@ -229,7 +229,7 @@ Cómo funciona:
 3. Configura GitSyncMarks con tu token y el repositorio
 4. Haz clic en « Sincronizar ahora » — ¡listo!
 
-Cada marcador se almacena como un archivo JSON individual en tu repositorio, organizado en carpetas que reflejan la jerarquía de tus marcadores. Un README.md te ofrece una visión general directamente en GitHub; un bookmarks.html permite importar en cualquier navegador; un feed.xml RSS permite suscribirse o automatizar.
+Cada marcador se almacena como un archivo JSON individual en tu repositorio, organizado en carpetas que reflejan la jerarquía de tus marcadores. Un README.md te ofrece una visión general directamente en GitHub; un bookmarks.html permite importar en cualquier navegador; un feed.xml RSS permite suscribirse o automatizar; un dashy-conf.yml proporciona secciones para el panel Dashy.
 
 Automatización:
 Puedes añadir marcadores sin abrir el navegador. GitSyncMarks incluye un workflow de GitHub Actions (add-bookmark.yml) para añadir marcadores vía la interfaz web de GitHub o la línea de comandos:

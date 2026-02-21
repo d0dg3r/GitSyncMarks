@@ -71,7 +71,9 @@ Create categories in the repo: **Settings → General → Discussions** (enable 
 > - RSS feed export (`feed.xml`) — subscribe in any RSS reader
 > - Generated files mode selector (Off / Manual / Auto per file)
 > - Backlog voting awareness in Help tab
-> - Context menu and settings sync to Git still planned
+> - Settings sync to Git (encrypted, Global/Individual mode)
+> - Options reorganized to 5 tabs with sub-tabs (GitHub, Sync, Files, Help, About)
+> - Context menu planned for v2.5
 >
 > What would you like to see next? Vote in the [Backlog Poll](https://github.com/d0dg3r/GitSyncMarks/discussions/37).
 

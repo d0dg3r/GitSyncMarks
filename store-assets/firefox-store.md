@@ -25,15 +25,16 @@ Features:
 • Periodic sync to detect remote changes (1–120 minutes, configurable)
 • Manual Push, Pull, and full Sync via the popup
 • Conflict detection when automatic merge is not possible
-• Generated files: README.md (overview), bookmarks.html (browser import), and feed.xml (RSS 2.0 feed) — each configurable as Off, Manual, or Auto
+• Generated files: README.md (overview), bookmarks.html (browser import), feed.xml (RSS 2.0 feed), and dashy-conf.yml (Dashy dashboard) — each configurable as Off, Manual, or Auto
 • Settings sync to Git: encrypted backup of extension settings in the repo — Global (shared) or Individual (per device) mode; import settings from other devices; same password on every device, auto-synced
+• Options: 5 tabs (GitHub, Sync, Files, Help, About) with sub-tabs for GitHub and Files — clean, organized settings UI
 • Automation: add bookmarks via Git, CLI, or GitHub Actions — no browser needed
 • Import/Export: back up and restore bookmarks or settings as JSON files; settings can be exported as password-encrypted .enc for secure backup (clear UI with file picker)
 • Auto-save: all settings save automatically when changed — no Save buttons
 • Theme: light, dark, or auto (system) for options and popup
 • Multilanguage: English, German, French, and Spanish with manual language selection
 • Keyboard shortcuts: quick sync (Ctrl+Shift+.), open settings (Ctrl+Shift+,) — customizable
-• Debug log: Help tab — enable for sync diagnostics, export for troubleshooting
+• Debug log: Sync tab — enable for sync diagnostics, export for troubleshooting
 • Mobile companion: GitSyncMarks-Mobile (iOS + Android) — view bookmarks on the go, read-only sync from your repo
 • No external server — communicates directly with the GitHub API using your Personal Access Token
 
@@ -43,7 +44,7 @@ How it works:
 3. Configure GitSyncMarks with your token and repository
 4. Click "Sync Now" — done!
 
-Each bookmark is stored as an individual JSON file in your repository, organized into folders that mirror your Firefox bookmark hierarchy (Bookmarks Toolbar, Bookmarks Menu, Other Bookmarks, Mobile Bookmarks). A README.md gives you a clean overview directly on GitHub; a bookmarks.html lets you import into any browser; a feed.xml RSS feed lets you subscribe or use for automations.
+Each bookmark is stored as an individual JSON file in your repository, organized into folders that mirror your Firefox bookmark hierarchy (Bookmarks Toolbar, Bookmarks Menu, Other Bookmarks). A README.md gives you a clean overview directly on GitHub; a bookmarks.html lets you import into any browser; a feed.xml RSS feed lets you subscribe or use for automations; a dashy-conf.yml provides sections for the Dashy dashboard.
 
 Automation:
 You can add bookmarks without even opening Firefox. GitSyncMarks includes a GitHub Actions workflow (add-bookmark.yml) that lets you add bookmarks via the GitHub web UI or the command line:
@@ -241,37 +242,33 @@ All regions
 **Screenshots** are copied from Chrome (UI is identical; Playwright cannot load Firefox extension). Run `npm run screenshots`. Each image shows light and dark mode side by side.
 
 ### English (EN)
-- [x] `en/firefox-1-github.png` — GitHub tab
-- [x] `en/firefox-2-synchronization.png` — Sync tab
-- [x] `en/firefox-3-backup.png` — Backup tab
-- [x] `en/firefox-4-automation.png` — Automation tab
-- [x] `en/firefox-5-help.png` — Help tab
-- [x] `en/firefox-6-about.png` — About tab
-- [x] `en/firefox-7-popup.png` — Popup
+- [x] `en/firefox-1-github.png` — GitHub tab (Profile)
+- [x] `en/firefox-2-connection.png` — GitHub tab (Connection)
+- [x] `en/firefox-3-sync.png` — Sync tab
+- [x] `en/firefox-4-files.png` — Files tab (Generated)
+- [x] `en/firefox-5-export-import.png` — Files tab (Export / Import)
+- [x] `en/firefox-6-popup.png` — Popup (centered)
 
 ### Deutsch (DE)
-- [x] `de/firefox-1-github.png` — GitHub-Tab
-- [x] `de/firefox-2-synchronization.png` — Sync-Tab
-- [x] `de/firefox-3-backup.png` — Backup-Tab
-- [x] `de/firefox-4-automation.png` — Automatisierung-Tab
-- [x] `de/firefox-5-help.png` — Hilfe-Tab
-- [x] `de/firefox-6-about.png` — Über-Tab
-- [x] `de/firefox-7-popup.png` — Popup
+- [x] `de/firefox-1-github.png` — GitHub-Tab (Profil)
+- [x] `de/firefox-2-connection.png` — GitHub-Tab (Verbindung)
+- [x] `de/firefox-3-sync.png` — Sync-Tab
+- [x] `de/firefox-4-files.png` — Dateien-Tab (Generiert)
+- [x] `de/firefox-5-export-import.png` — Dateien-Tab (Export / Import)
+- [x] `de/firefox-6-popup.png` — Popup (zentriert)
 
 ### Français (FR)
-- [x] `fr/firefox-1-github.png` — Onglet GitHub
-- [x] `fr/firefox-2-synchronization.png` — Onglet Sync
-- [x] `fr/firefox-3-backup.png` — Onglet Sauvegarde
-- [x] `fr/firefox-4-automation.png` — Onglet Automatisation
-- [x] `fr/firefox-5-help.png` — Onglet Aide
-- [x] `fr/firefox-6-about.png` — Onglet À propos
-- [x] `fr/firefox-7-popup.png` — Popup
+- [x] `fr/firefox-1-github.png` — Onglet GitHub (Profil)
+- [x] `fr/firefox-2-connection.png` — Onglet GitHub (Connexion)
+- [x] `fr/firefox-3-sync.png` — Onglet Sync
+- [x] `fr/firefox-4-files.png` — Onglet Fichiers (Généré)
+- [x] `fr/firefox-5-export-import.png` — Onglet Fichiers (Export / Import)
+- [x] `fr/firefox-6-popup.png` — Popup (centré)
 
 ### Español (ES)
-- [x] `es/firefox-1-github.png` — Pestaña GitHub
-- [x] `es/firefox-2-synchronization.png` — Pestaña Sync
-- [x] `es/firefox-3-backup.png` — Pestaña Copia de seguridad
-- [x] `es/firefox-4-automation.png` — Pestaña Automatización
-- [x] `es/firefox-5-help.png` — Pestaña Ayuda
-- [x] `es/firefox-6-about.png` — Pestaña Acerca de
-- [x] `es/firefox-7-popup.png` — Popup
+- [x] `es/firefox-1-github.png` — Pestaña GitHub (Perfil)
+- [x] `es/firefox-2-connection.png` — Pestaña GitHub (Conexión)
+- [x] `es/firefox-3-sync.png` — Pestaña Sync
+- [x] `es/firefox-4-files.png` — Pestaña Archivos (Generados)
+- [x] `es/firefox-5-export-import.png` — Pestaña Archivos (Export / Import)
+- [x] `es/firefox-6-popup.png` — Popup (centrado)

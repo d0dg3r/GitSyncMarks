@@ -57,7 +57,9 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 - **Import/Export**: Export and import bookmarks or extension settings as JSON; settings can also be exported as password-encrypted .enc for secure backup
 - **Multilanguage**: English, German, French, and Spanish, with manual language selection
 - **Keyboard shortcuts**: Quick sync (`Ctrl+Shift+.`), Open settings (`Ctrl+Shift+,`) — customizable in browser extension settings
-- **Debug Log**: Options → Help — enable to record sync diagnostics (diffs, merge decisions, commit hashes); export and share for troubleshooting
+- **Generated files**: README.md (Markdown overview), bookmarks.html (Netscape import), feed.xml (RSS 2.0), dashy-conf.yml (Dashy dashboard) — each configurable as Off, Manual, or Auto
+- **Settings sync to Git**: Encrypted backup of extension settings in the repo — Global (shared) or Individual (per device) mode; import settings from other devices; same password on every device, auto-synced
+- **Debug Log**: Options → Sync — enable to record sync diagnostics (diffs, merge decisions, commit hashes); export and share for troubleshooting
 - **No server needed**: Communicates directly with the GitHub API using your Personal Access Token
 
 ## Installation
@@ -106,16 +108,15 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 
 ## Options Tabs
 
-The extension settings open in a new tab with six sections. Header: language dropdown, theme cycle button (A → Dark → Light → A). All settings auto-save.
+The extension settings open in a new tab with five main tabs. Header: language dropdown, theme cycle button (A → Dark → Light → A). All settings auto-save.
 
-| Tab | Contents |
-|-----|----------|
-| **GitHub** | Profile selector, token, repository config, Test Connection, onboarding |
-| **Sync** | Auto-sync, sync profile, sync on start/focus, notifications; GitHub Repos folder; generated files (README.md, bookmarks.html, feed.xml) with Off/Manual/Auto mode; Debug Log |
-| **Backup** | Export/import bookmarks and settings (JSON or encrypted .enc) |
-| **Automation** | Add bookmarks via Git or GitHub Actions — JSON template, gh command, parameter table, copy buttons |
-| **Help** | Backlog poll (vote on next features), Quick links (Docs, Discussions, Report Issue), feature overview, keyboard shortcuts |
-| **About** | Version, links, license, contributors, mobile app |
+| Tab | Sub-tabs | Contents |
+|-----|----------|----------|
+| **GitHub** | Profile, Connection, Repos | Profile selector (add/rename/delete); token, repo, branch, file path, Test Connection, onboarding; GitHub Repos folder toggle |
+| **Sync** | — | Auto-sync, sync profile, sync on start/focus, notifications; Debug Log |
+| **Files** | Generated, Settings, Export/Import, Git Add | Generated files (README.md, bookmarks.html, feed.xml, dashy-conf.yml) with Off/Manual/Auto; Settings sync to Git (encrypted, global/individual); Export/import bookmarks and settings (JSON or encrypted .enc); Add bookmarks via Git or GitHub Actions |
+| **Help** | — | Backlog poll, quick links (Docs, Discussions, Report Issue), feature overview, keyboard shortcuts |
+| **About** | — | Version, links, license, contributors, mobile app |
 
 ---
 
@@ -143,8 +144,6 @@ In the **Sync** tab:
 - **Sync profile**: Real-time (1 min), Frequent (5 min), Normal (15 min), Power save (60 min), or Custom (manual interval/debounce)
 - **Sync on start / Sync on focus**: Optional sync when the browser starts or gains focus (with cooldown)
 - **Notifications**: All, Errors only, or Off
-- **GitHub Repos folder**: Optional folder with bookmarks to all your GitHub repositories; position (toolbar/other); use **Update GitHub Repos** to refresh (Settings → Sync)
-- **Generated files**: Each file — **README.md** (Markdown overview), **bookmarks.html** (Netscape format for browser import), and **feed.xml** (RSS 2.0 feed) — can be set to **Off**, **Manual**, or **Auto**. Use "Generate now" to manually trigger generation and push
 - **Debug Log**: Enable to record sync diagnostics (diffs, merge decisions, commit hashes); export for troubleshooting
 
 ---
@@ -162,12 +161,14 @@ Status line shows last sync time and next scheduled sync. When a conflict occurs
 
 ---
 
-## Backup Tab
+## Files Tab
 
-In the **Backup** tab:
+In the **Files** tab (four sub-tabs):
 
-- **Export / Import Bookmarks**: Export all browser bookmarks as JSON; import replaces all bookmarks in the **active profile** (use with caution)
-- **Export / Import Settings**: Export as plain JSON or password-encrypted .enc for secure backup. Import replaces **all settings (all profiles)** and reloads the page. Useful for migrating to another browser or device
+- **Generated**: Each file — **README.md** (Markdown overview), **bookmarks.html** (Netscape format for browser import), **feed.xml** (RSS 2.0 feed), and **dashy-conf.yml** (Dashy dashboard config) — can be set to **Off**, **Manual**, or **Auto**. Use "Generate now" to manually trigger generation and push
+- **Settings**: Sync extension settings to Git (encrypted). Choose **Global** (shared `settings.enc`) or **Individual** (per-device `settings-{id}.enc`). Set one password per device; import configs from other devices
+- **Export / Import**: Export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc). Import bookmarks or settings — encrypted files are decrypted with your password
+- **Git Add**: Add bookmarks without opening the browser — create a JSON file in the repo or use the GitHub Actions workflow (`add-bookmark.yml`)
 
 ## Files in the GitHub Repository
 
@@ -178,6 +179,9 @@ bookmarks/
   _index.json                     # Metadata (format version, device info)
   README.md                       # Auto-generated overview — browse all bookmarks on GitHub
   bookmarks.html                  # Netscape format — import directly in Chrome, Firefox, Edge
+  feed.xml                        # RSS 2.0 feed — subscribe in any reader or use for automations
+  dashy-conf.yml                  # Dashy dashboard config — sections with bookmark links
+  settings.enc                    # Encrypted settings backup (if settings sync enabled)
   toolbar/                        # Bookmarks Bar
     _order.json                   # Defines order of items and subfolders in this folder
     github_a1b2.json              # One file per bookmark
@@ -198,11 +202,11 @@ Each bookmark is a simple JSON file:
 }
 ```
 
-The `README.md` in the repo is regenerated on each sync — it lists all bookmarks with links, so you can browse your bookmarks directly on GitHub. The `bookmarks.html` file uses the Netscape format and can be imported in any browser (Chrome: Bookmarks → Import; Firefox: Import and Backup → Import Bookmarks from file). The `feed.xml` file is an RSS 2.0 feed that can be subscribed to in any RSS reader (Feedly, Thunderbird, etc.) or used for automations (Slack, IFTTT, n8n). Each file can be set to Off, Manual (generate via button), or Auto (on every sync) in Settings → Sync → Generated files.
+The `README.md` in the repo is regenerated on each sync — it lists all bookmarks with links, so you can browse your bookmarks directly on GitHub. The `bookmarks.html` file uses the Netscape format and can be imported in any browser (Chrome: Bookmarks → Import; Firefox: Import and Backup → Import Bookmarks from file). The `feed.xml` file is an RSS 2.0 feed that can be subscribed to in any RSS reader (Feedly, Thunderbird, etc.) or used for automations (Slack, IFTTT, n8n). The `dashy-conf.yml` provides bookmark sections for the [Dashy](https://github.com/Lissy93/dashy) dashboard. Each file can be set to Off, Manual (generate via button), or Auto (on every sync) in Settings → Files → Generated.
 
-## Automation Tab
+## Automation (Git Add)
 
-Add bookmarks without opening the browser. The **Automation** tab provides copy buttons for JSON and the `gh` command, plus a parameter table.
+Add bookmarks without opening the browser. The **Files → Git Add** sub-tab provides copy buttons for JSON and the `gh` command, plus a parameter table.
 
 ### 1. Create file in repo
 
@@ -252,11 +256,13 @@ gh workflow run add-bookmark.yml \
 | Sync on Start | Sync | Off | Sync when the browser starts |
 | Sync on Focus | Sync | Off | Sync when the browser gains focus |
 | Notifications | Sync | All | When to show sync notifications: All, Errors only, or Off |
-| GitHub Repos folder | Sync | Off | Create folder with bookmarks to all your GitHub repos |
-| GitHub Repos position | Sync | Other Bookmarks | Where to place the folder (toolbar/other) |
-| Generate README.md | Sync | Auto | Off / Manual / Auto — Markdown overview in the repo |
-| Generate bookmarks.html | Sync | Auto | Off / Manual / Auto — Netscape-format file for browser import |
-| Generate feed.xml | Sync | Auto | Off / Manual / Auto — RSS 2.0 feed for readers and automations |
+| GitHub Repos folder | GitHub → Repos | Off | Create folder with bookmarks to all your GitHub repos |
+| GitHub Repos position | GitHub → Repos | Other Bookmarks | Where to place the folder (toolbar/other) |
+| Generate README.md | Files → Generated | Auto | Off / Manual / Auto — Markdown overview in the repo |
+| Generate bookmarks.html | Files → Generated | Auto | Off / Manual / Auto — Netscape-format file for browser import |
+| Generate feed.xml | Files → Generated | Auto | Off / Manual / Auto — RSS 2.0 feed for readers and automations |
+| Generate dashy-conf.yml | Files → Generated | Off | Off / Manual / Auto — Dashy dashboard config |
+| Sync settings to Git | Files → Settings | Off | Encrypted backup of settings in the repo (global/individual) |
 | Theme | Header | Auto | Light, Dark, or Auto (cycle button: A → Dark → Light → A) |
 | Language | Header | Auto | Auto (browser), English, German, French, or Spanish |
 | Debounce delay | Sync | 5 s | Wait time before syncing after bookmark changes (varies by sync profile) |
@@ -291,7 +297,7 @@ There is no automatic merge for conflicts — you must pick one side. Choose bas
 | Token invalid | Ensure the PAT has the `repo` scope; token may have been revoked |
 | Repo not found | Verify Repository Owner and Name; check repo exists and you have access |
 | Sync takes long | Many changed bookmarks = many API calls; see *Why does sync take long?* in Options → Help |
-| Sync issues / debugging | Enable Debug Log in Options → Help, reproduce the issue, export the log (includes commit hashes at key points) and share for support |
+| Sync issues / debugging | Enable Debug Log in Options → Sync, reproduce the issue, export the log (includes commit hashes at key points) and share for support |
 | Conflict not resolving | You must choose Push or Pull in the popup; there is no automatic merge for conflicts |
 | Profile switch slow | When switching to a new (empty) profile, sync is fast; when the current profile has many bookmarks, it pushes to GitHub first |
 
@@ -301,7 +307,7 @@ In the **Help** tab of the options page:
 
 - **Vote on backlog**: Quick access to the community poll for feature prioritization
 - **Quick links**: Documentation, Discussions, Report Issue
-- **Collapsible sections**: Getting Started, Profiles, Popup, Sync, Backup, Conflicts, Keyboard Shortcuts, and more
+- **Collapsible sections**: Getting Started, Profiles, GitHub Repos Folder, Popup, Sync, Files, Notifications, Conflicts, Keyboard Shortcuts
 
 ## Documentation & Links
 

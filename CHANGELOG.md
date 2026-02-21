@@ -20,8 +20,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Options reorganized**: Reduced from 6 tabs to 5 — Backup and Automation merged into new **Files** tab; sub-tab navigation for GitHub (Profile, Connection, Repos) and Files (Generated, Settings, Export/Import, Git Add); Help quick links restyled as pill buttons
 - **Debug Log moved**: Debug Log section moved from Help tab to Sync tab (where sync diagnostics belong)
-- **Generated files UI**: Checkbox toggles replaced by dropdown selectors (Off / Manual / Auto) with per-file control
+- **Generated files UI**: Checkbox toggles replaced by dropdown selectors (Off / Manual / Auto) with per-file control; dashy-conf.yml added as fourth generated file
+- **GitHub Repos Folder**: Moved to GitHub tab → Repos sub-tab
 
 ## [2.3.0] - 2026-02-19 (*Data*)
 
@@ -40,7 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Help tab**: Quick Links (Documentation, Discussions, Report Issue) as button row at top; removed redundant Links accordion; aligned card styling with other tabs
 - **Theme selector**: Single cycle button (A → Dark → Light → A) replaces three separate buttons; icon and tooltip reflect current mode; A and moon icon in white for dark mode
 - **Auto-save**: GitHub tab (token, owner, repo, branch, filepath, profile switch) and Sync tab (all dropdowns, toggles, generated files) save automatically on change; Save buttons removed
-- **GitHub Repos Folder**: Moved from GitHub tab to Sync tab
+- **GitHub Repos Folder**: Moved from GitHub tab to Sync tab (later moved to GitHub → Repos sub-tab in v2.4.0)
 - **Save feedback layout**: Save result integrated into cards with top border instead of standalone area
 
 ## [2.2.1] - 2026-02-19
