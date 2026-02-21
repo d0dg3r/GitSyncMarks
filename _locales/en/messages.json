@@ -655,6 +655,15 @@
   "help_discussions": {
     "message": "Discussions"
   },
+  "help_voteBacklogTitle": {
+    "message": "What's next?"
+  },
+  "help_voteBacklogDesc": {
+    "message": "Vote on which backlog feature we tackle next. Your voice shapes the roadmap."
+  },
+  "help_voteBacklogBtn": {
+    "message": "Vote on backlog"
+  },
 
   "options_backupTitle": {
     "message": "Backup"

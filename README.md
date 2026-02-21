@@ -34,7 +34,7 @@
 </tr>
 </table>
 
-See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROADMAP.md](ROADMAP.md) for planned features. Release codenames (cult nerd figures): 2.3 *Data*, 2.4 *R2-D2*, 3.0 *GLaDOS* — see [docs/RELEASE.md](docs/RELEASE.md).
+See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROADMAP.md](ROADMAP.md) for planned features. Vote on the [backlog poll](https://github.com/d0dg3r/GitSyncMarks/discussions/37) to influence what we build next. Release codenames (cult nerd figures): 2.3 *Data*, 2.4 *R2-D2*, 3.0 *GLaDOS* — see [docs/RELEASE.md](docs/RELEASE.md).
 
 ## Mobile App
 
@@ -116,7 +116,7 @@ The extension settings open in a new tab with six sections. Header: language dro
 | **Sync** | Auto-sync, sync profile, sync on start/focus, notifications; GitHub Repos folder; generated files (README.md, bookmarks.html) |
 | **Backup** | Export/import bookmarks and settings (JSON or encrypted .enc) |
 | **Automation** | Add bookmarks via Git or GitHub Actions — JSON template, gh command, parameter table, copy buttons |
-| **Help** | Quick links (Docs, Discussions, Report Issue), Debug Log, feature overview, keyboard shortcuts |
+| **Help** | Backlog poll (vote on next features), Quick links (Docs, Discussions, Report Issue), Debug Log, feature overview, keyboard shortcuts |
 | **About** | Version, links, license, contributors, mobile app |
 
 ---
@@ -305,6 +305,7 @@ In the **Help** tab of the options page:
 
 ## Documentation & Links
 
+- **[Backlog Poll](https://github.com/d0dg3r/GitSyncMarks/discussions/37)** — Vote on which features to prioritize next
 - **[Discussions](https://github.com/d0dg3r/GitSyncMarks/discussions)** — Q&A, ideas, show and tell; see [docs/GITHUB-DISCUSSIONS.md](docs/GITHUB-DISCUSSIONS.md) for category overview
 - **[GitSyncMarks-Mobile](https://github.com/d0dg3r/GitSyncMarks-Mobile)** — iOS + Android companion app (read-only; F-Droid and Google Play coming soon)
 - **[docs/](docs/)** — Architecture, release process, testing guide, GitHub Discussions setup

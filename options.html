@@ -268,6 +268,26 @@
         </div>
       </section>
 
+      <details class="help-details card" open>
+        <summary>
+          <h2 data-i18n="options_debugLogTitle">Debug Log</h2>
+        </summary>
+        <div class="help-details-body">
+          <p data-i18n="options_debugLogDesc">Enable to record sync diagnostics (diffs, merge decisions, conflicts). Use when troubleshooting sync issues. Export and share the log for support.</p>
+          <div class="form-group toggle-group" style="margin-top: 0.5rem;">
+            <label for="debug-log-enabled" class="toggle-label">
+              <span data-i18n="options_debugLogEnabled">Enable debug log</span>
+              <input type="checkbox" id="debug-log-enabled">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="debug-log-actions" style="margin-top: 0.5rem; display: flex; gap: 0.5rem; align-items: center;">
+            <button type="button" id="debug-log-export-btn" class="btn btn-secondary btn-sm" data-i18n="options_debugLogExport">Export log</button>
+            <span id="debug-log-result" class="validation-result" style="margin-left: 0;"></span>
+          </div>
+        </div>
+      </details>
+
     </div>
 
     <!-- ==================== Backup Tab ==================== -->
@@ -398,6 +418,7 @@
 
       <section class="card help-quick-links-card">
         <div class="help-quick-links">
+          <a href="https://github.com/d0dg3r/GitSyncMarks/discussions/37" target="_blank" rel="noopener" class="btn btn-primary help-link-btn" data-i18n="help_voteBacklogBtn">Vote on backlog</a>
           <a href="https://github.com/d0dg3r/GitSyncMarks/tree/main/docs" target="_blank" rel="noopener" class="btn btn-secondary help-link-btn" data-i18n="options_documentation">Documentation</a>
           <a href="https://github.com/d0dg3r/GitSyncMarks/discussions" target="_blank" rel="noopener" class="btn btn-secondary help-link-btn" data-i18n="help_discussions">Discussions</a>
           <a href="https://github.com/d0dg3r/GitSyncMarks/issues" target="_blank" rel="noopener" class="btn btn-secondary help-link-btn" data-i18n="help_reportIssue">Report Issue</a>
@@ -411,26 +432,6 @@
         <div class="help-details-body">
           <p data-i18n-html="help_gettingStartedIntro">Create a GitHub repository for your bookmarks, then create a Personal Access Token (PAT) with the <code>repo</code> scope. In the GitHub tab, enter token, repository owner, name, branch (usually <code>main</code>), and the folder path (default: <code>bookmarks</code>). Click <strong>Test Connection</strong> to verify.</p>
           <p data-i18n="help_onboarding">If the folder is empty, you can create the base structure (toolbar, other). If bookmarks already exist in the repo, you can pull them into this browser.</p>
-        </div>
-      </details>
-
-      <details class="help-details card" open>
-        <summary>
-          <h2 data-i18n="options_debugLogTitle">Debug Log</h2>
-        </summary>
-        <div class="help-details-body">
-          <p data-i18n="options_debugLogDesc">Enable to record sync diagnostics (diffs, merge decisions, conflicts). Use when troubleshooting sync issues. Export and share the log for support.</p>
-          <div class="form-group toggle-group" style="margin-top: 0.5rem;">
-            <label for="debug-log-enabled" class="toggle-label">
-              <span data-i18n="options_debugLogEnabled">Enable debug log</span>
-              <input type="checkbox" id="debug-log-enabled">
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-          <div class="debug-log-actions" style="margin-top: 0.5rem; display: flex; gap: 0.5rem; align-items: center;">
-            <button type="button" id="debug-log-export-btn" class="btn btn-secondary btn-sm" data-i18n="options_debugLogExport">Export log</button>
-            <span id="debug-log-result" class="validation-result" style="margin-left: 0;"></span>
-          </div>
         </div>
       </details>
 
