@@ -287,7 +287,7 @@
     "message": "Dashy dashboard config — import as sections into your conf.yml."
   },
   "options_settingsSyncTitle": {
-    "message": "Settings sync"
+    "message": "Settings File"
   },
   "options_settingsSyncDesc": {
     "message": "Encrypted backup of extension settings in the repo. Same password on every device."
@@ -571,14 +571,35 @@
   "options_tabSynchronization": {
     "message": "Sync"
   },
-  "options_tabBackup": {
-    "message": "Backup"
+  "options_tabFiles": {
+    "message": "Files"
+  },
+  "options_tabHelp": {
+    "message": "Help"
   },
   "options_tabAbout": {
     "message": "About"
   },
-  "options_tabHelp": {
-    "message": "Help"
+  "options_subTabProfile": {
+    "message": "Profile"
+  },
+  "options_subTabConnection": {
+    "message": "Connection"
+  },
+  "options_subTabRepos": {
+    "message": "Repos"
+  },
+  "options_subTabGenerated": {
+    "message": "Generated"
+  },
+  "options_subTabSettings": {
+    "message": "Settings"
+  },
+  "options_subTabExportImport": {
+    "message": "Export / Import"
+  },
+  "options_subTabGitAdd": {
+    "message": "Git Add"
   },
   "help_gettingStartedTitle": {
     "message": "Getting Started"
@@ -668,10 +689,10 @@
     "message": "Generated files"
   },
   "help_generatedFilesDesc": {
-    "message": "README.md (overview), bookmarks.html (Netscape format for browser import), feed.xml (RSS 2.0 feed), and dashy-conf.yml (Dashy dashboard sections) can be created during sync. Set each to Off, Manual, or Auto in the Sync tab."
+    "message": "README.md, bookmarks.html, feed.xml, and dashy-conf.yml can be created during sync. Choose Off, Manual, or Auto per file in the Files tab."
   },
   "help_settingsSyncTitle": {
-    "message": "Settings sync to Git"
+    "message": "Settings File"
   },
   "help_settingsSyncDesc": {
     "message": "When enabled, extension settings (profiles, tokens, preferences) are encrypted and stored in the repo. Choose Global (shared settings.enc for all devices) or Individual (device-specific settings-{id}.enc). In individual mode you can import settings from other devices. The password is stored locally per device and must be the same on all devices sharing the repo."
@@ -884,5 +905,39 @@
   },
   "options_automationParamBasePath": {
     "message": "Base folder in repo (default bookmarks; must match File Path setting)"
+  },
+
+  "options_exportImportTitle": {
+    "message": "Export / Import"
+  },
+  "options_exportImportDesc": {
+    "message": "Export or import bookmarks and extension settings."
+  },
+  "options_exportLabel": {
+    "message": "Export"
+  },
+  "options_importLabel": {
+    "message": "Import"
+  },
+  "options_exportTypeBookmarks": {
+    "message": "Bookmarks (JSON)"
+  },
+  "options_exportTypeDashy": {
+    "message": "Dashy Config (YAML)"
+  },
+  "options_exportTypeSettingsPlain": {
+    "message": "Settings (plain JSON)"
+  },
+  "options_exportTypeSettingsEncrypted": {
+    "message": "Settings (encrypted)"
+  },
+  "options_importTypeBookmarks": {
+    "message": "Bookmarks (JSON)"
+  },
+  "options_importTypeSettings": {
+    "message": "Settings (JSON / ENC)"
+  },
+  "help_filesTitle": {
+    "message": "Files"
   }
 }

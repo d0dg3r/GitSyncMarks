@@ -116,7 +116,7 @@ File in bookmark root, e.g. `bookmarks/tab-profiles.json` (depends on `filePath`
 
 ### Options Page
 
-- New tab "Tab-Profiles" next to GitHub, Sync, Backup, …
+- New tab "Tab-Profiles" next to GitHub, Sync, Files, …
 - Profile list: name, URL count, actions (Edit, Delete, Open).
 - "+ Add tab profile": Name, source (3 options), for bookmark folder: tree picker.
 - Per profile: "Open in current window" (Replace/Append) / "Open in new window".

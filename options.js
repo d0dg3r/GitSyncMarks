@@ -142,25 +142,17 @@ const debugLogEnabledInput = document.getElementById('debug-log-enabled');
 const debugLogExportBtn = document.getElementById('debug-log-export-btn');
 const debugLogResult = document.getElementById('debug-log-result');
 
-// ---- DOM elements: Import/Export Tab ----
-const exportBookmarksBtn = document.getElementById('export-bookmarks-btn');
-const importBookmarksFile = document.getElementById('import-bookmarks-file');
-const importBookmarksTrigger = document.getElementById('import-bookmarks-trigger');
-const importBookmarksFilename = document.getElementById('import-bookmarks-filename');
-const importBookmarksBtn = document.getElementById('import-bookmarks-btn');
-const exportBookmarksResult = document.getElementById('export-bookmarks-result');
-const importBookmarksResult = document.getElementById('import-bookmarks-result');
-
-const exportDashyBtn = document.getElementById('export-dashy-btn');
-const exportDashyResult = document.getElementById('export-dashy-result');
-const exportSettingsBtn = document.getElementById('export-settings-btn');
-const exportSettingsEncryptedBtn = document.getElementById('export-settings-encrypted-btn');
-const importSettingsFile = document.getElementById('import-settings-file');
-const importSettingsTrigger = document.getElementById('import-settings-trigger');
-const importSettingsFilename = document.getElementById('import-settings-filename');
-const importSettingsBtn = document.getElementById('import-settings-btn');
-const exportSettingsResult = document.getElementById('export-settings-result');
-const importSettingsResult = document.getElementById('import-settings-result');
+// ---- DOM elements: Export/Import (compact dropdown UI) ----
+const exportTypeSelect = document.getElementById('export-type-select');
+const exportBtn = document.getElementById('export-btn');
+const exportResult = document.getElementById('export-result');
+const importTypeSelect = document.getElementById('import-type-select');
+const importWarning = document.getElementById('import-warning');
+const importFile = document.getElementById('import-file');
+const importFileTrigger = document.getElementById('import-file-trigger');
+const importFilename = document.getElementById('import-filename');
+const importBtn = document.getElementById('import-btn');
+const importResult = document.getElementById('import-result');
 const passwordDialog = document.getElementById('password-dialog');
 const passwordDialogPrompt = document.getElementById('password-dialog-prompt');
 const passwordDialogInput = document.getElementById('password-dialog-input');
@@ -173,14 +165,23 @@ const passwordDialogCancelBtn = document.getElementById('password-dialog-cancel-
 
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    // Deactivate all tabs
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
 
-    // Activate clicked tab
     btn.classList.add('active');
     const tabId = `tab-${btn.dataset.tab}`;
     document.getElementById(tabId).classList.add('active');
+  });
+});
+
+document.querySelectorAll('.sub-tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const parent = btn.closest('.tab-content');
+    parent.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+    parent.querySelectorAll('.sub-tab-content').forEach(c => c.classList.remove('active'));
+
+    btn.classList.add('active');
+    document.getElementById(`subtab-${btn.dataset.subtab}`).classList.add('active');
   });
 });
 
@@ -1049,104 +1050,27 @@ settingsSyncImportBtn.addEventListener('click', async () => {
 });
 
 // ==============================
-// Import/Export: Bookmarks
+// Export / Import (compact dropdown UI)
 // ==============================
 
-// File picker triggers: click hidden input
-importBookmarksTrigger.addEventListener('click', () => importBookmarksFile.click());
-importSettingsTrigger.addEventListener('click', () => importSettingsFile.click());
+importFileTrigger.addEventListener('click', () => importFile.click());
 
-// Enable import button and show filename when file is selected
-importBookmarksFile.addEventListener('change', () => {
-  const hasFile = !!importBookmarksFile.files.length;
-  importBookmarksBtn.disabled = !hasFile;
-  importBookmarksFilename.textContent = hasFile ? importBookmarksFile.files[0].name : '';
+importFile.addEventListener('change', () => {
+  const hasFile = !!importFile.files.length;
+  importBtn.disabled = !hasFile;
+  importFilename.textContent = hasFile ? importFile.files[0].name : '';
 });
 
-importSettingsFile.addEventListener('change', () => {
-  const hasFile = !!importSettingsFile.files.length;
-  importSettingsBtn.disabled = !hasFile;
-  importSettingsFilename.textContent = hasFile ? importSettingsFile.files[0].name : '';
+importTypeSelect.addEventListener('change', () => {
+  importFile.value = '';
+  importBtn.disabled = true;
+  importFilename.textContent = '';
+  const isSettings = importTypeSelect.value === 'settings';
+  importFile.accept = isSettings ? '.json,.enc' : '.json';
+  importWarning.setAttribute('data-i18n', isSettings ? 'options_importSettingsWarning' : 'options_importBookmarksWarning');
+  importWarning.textContent = getMessage(isSettings ? 'options_importSettingsWarning' : 'options_importBookmarksWarning');
 });
 
-/**
- * Export current bookmarks as a JSON file download.
- */
-exportBookmarksBtn.addEventListener('click', async () => {
-  try {
-    const tree = await chrome.bookmarks.getTree();
-    const deviceId = crypto.randomUUID();
-    const data = serializeToJson(tree, deviceId);
-    const json = JSON.stringify(data, null, 2);
-
-    const date = new Date().toISOString().slice(0, 10);
-    downloadFile(`bookmarks-export-${date}.json`, json, 'application/json');
-
-    showResult(exportBookmarksResult, getMessage('options_exportSuccess'), 'success');
-  } catch (err) {
-    showResult(exportBookmarksResult, getMessage('options_importError', [err.message]), 'error');
-  }
-});
-
-/**
- * Export current bookmarks as a Dashy-compatible YAML config download.
- */
-exportDashyBtn.addEventListener('click', async () => {
-  try {
-    const tree = await chrome.bookmarks.getTree();
-    const fileMap = bookmarkTreeToFileMap(tree, 'bookmarks');
-    const yaml = fileMapToDashyYaml(fileMap, 'bookmarks');
-
-    const date = new Date().toISOString().slice(0, 10);
-    downloadFile(`dashy-conf-${date}.yml`, yaml, 'text/yaml');
-
-    showResult(exportDashyResult, getMessage('options_exportSuccess'), 'success');
-  } catch (err) {
-    showResult(exportDashyResult, getMessage('options_importError', [err.message]), 'error');
-  }
-});
-
-/**
- * Import bookmarks from a JSON file, replacing all local bookmarks.
- */
-importBookmarksBtn.addEventListener('click', async () => {
-  const file = importBookmarksFile.files[0];
-  if (!file) return;
-
-  try {
-    const text = await file.text();
-    const data = JSON.parse(text);
-    const bookmarks = deserializeFromJson(data);
-
-    // Convert legacy format (array with role fields) to roleMap for replaceLocalBookmarks
-    const roleMap = {};
-    for (const node of bookmarks) {
-      const role = node.role || 'other';
-      roleMap[role] = {
-        title: role,
-        children: node.children || [],
-      };
-    }
-
-    await replaceLocalBookmarks(roleMap);
-
-    showResult(importBookmarksResult, getMessage('options_importSuccess'), 'success');
-    importBookmarksFile.value = '';
-    importBookmarksBtn.disabled = true;
-    importBookmarksFilename.textContent = '';
-  } catch (err) {
-    showResult(importBookmarksResult, getMessage('options_importError', [err.message]), 'error');
-  }
-});
-
-// ==============================
-// Import/Export: Settings
-// ==============================
-
-/**
- * Build export data with decrypted tokens per profile.
- * @returns {Promise<object>} Export data
- */
 async function buildSettingsExportData() {
   const syncSettings = await chrome.storage.sync.get(null);
   const localData = await chrome.storage.local.get({ profileTokens: {}, syncState: {} });
@@ -1163,12 +1087,6 @@ async function buildSettingsExportData() {
   return { ...syncSettings, profiles: exportedProfiles };
 }
 
-/**
- * Show password dialog and resolve with password on confirm, or null on cancel.
- * @param {string} promptKey - i18n key for prompt
- * @param {string} confirmKey - i18n key for confirm button
- * @returns {Promise<string|null>}
- */
 function showPasswordDialog(promptKey, confirmKey) {
   return new Promise((resolve) => {
     passwordDialogPrompt.textContent = getMessage(promptKey);
@@ -1205,45 +1123,41 @@ function showPasswordDialog(promptKey, confirmKey) {
   });
 }
 
-/**
- * Export current settings as a plain JSON file.
- */
-exportSettingsBtn.addEventListener('click', async () => {
+exportBtn.addEventListener('click', async () => {
+  const type = exportTypeSelect.value;
+  const date = new Date().toISOString().slice(0, 10);
   try {
-    const exportData = await buildSettingsExportData();
-    const json = JSON.stringify(exportData, null, 2);
-    const date = new Date().toISOString().slice(0, 10);
-    downloadFile(`gitsyncmarks-settings-${date}.json`, json, 'application/json');
-    showResult(exportSettingsResult, getMessage('options_exportSuccess'), 'success');
+    if (type === 'bookmarks') {
+      const tree = await chrome.bookmarks.getTree();
+      const deviceId = crypto.randomUUID();
+      const data = serializeToJson(tree, deviceId);
+      downloadFile(`bookmarks-export-${date}.json`, JSON.stringify(data, null, 2), 'application/json');
+      showResult(exportResult, getMessage('options_exportSuccess'), 'success');
+    } else if (type === 'dashy') {
+      const tree = await chrome.bookmarks.getTree();
+      const fileMap = bookmarkTreeToFileMap(tree, 'bookmarks');
+      const yaml = fileMapToDashyYaml(fileMap, 'bookmarks');
+      downloadFile(`dashy-conf-${date}.yml`, yaml, 'text/yaml');
+      showResult(exportResult, getMessage('options_exportSuccess'), 'success');
+    } else if (type === 'settings-plain') {
+      const exportData = await buildSettingsExportData();
+      downloadFile(`gitsyncmarks-settings-${date}.json`, JSON.stringify(exportData, null, 2), 'application/json');
+      showResult(exportResult, getMessage('options_exportSuccess'), 'success');
+    } else if (type === 'settings-encrypted') {
+      const password = await showPasswordDialog('options_exportPasswordPrompt', 'options_exportBtn');
+      if (!password) return;
+      const exportData = await buildSettingsExportData();
+      const json = JSON.stringify(exportData, null, 2);
+      const encrypted = await encryptWithPassword(json, password);
+      downloadFile(`gitsyncmarks-settings-${date}.enc`, encrypted, 'application/octet-stream');
+      showResult(exportResult, getMessage('options_exportEncryptedSuccess'), 'success');
+    }
   } catch (err) {
-    showResult(exportSettingsResult, getMessage('options_importError', [err.message]), 'error');
+    showResult(exportResult, getMessage('options_importError', [err.message]), 'error');
   }
 });
 
-/**
- * Export current settings as a password-encrypted .enc file.
- */
-exportSettingsEncryptedBtn.addEventListener('click', async () => {
-  const password = await showPasswordDialog('options_exportPasswordPrompt', 'options_exportBtn');
-  if (!password) return;
-  try {
-    const exportData = await buildSettingsExportData();
-    const json = JSON.stringify(exportData, null, 2);
-    const encrypted = await encryptWithPassword(json, password);
-    const date = new Date().toISOString().slice(0, 10);
-    downloadFile(`gitsyncmarks-settings-${date}.enc`, encrypted, 'application/octet-stream');
-    showResult(exportSettingsResult, getMessage('options_exportEncryptedSuccess'), 'success');
-  } catch (err) {
-    showResult(exportSettingsResult, getMessage('options_importError', [err.message]), 'error');
-  }
-});
-
-/**
- * Apply imported settings to storage (profile or legacy format).
- * @param {object} settings - Parsed settings object
- */
 async function applyImportedSettings(settings) {
-  // New format: profiles with embedded token
   if (settings.profiles && Object.keys(settings.profiles).length > 0) {
       const profileTokens = {};
       const profilesToSave = {};
@@ -1281,7 +1195,6 @@ async function applyImportedSettings(settings) {
       });
       await chrome.storage.local.set({ profileTokens });
     } else {
-      // Legacy format: flat repoOwner, repoName, githubToken
       const defaultProfile = {
         id: 'default',
         name: 'Default',
@@ -1315,34 +1228,49 @@ async function applyImportedSettings(settings) {
   await chrome.runtime.sendMessage({ action: 'settingsChanged' });
 }
 
-/**
- * Import settings from a JSON or encrypted file, replacing all current settings.
- * Supports plain JSON, encrypted .enc, legacy (flat) format, and profile format.
- */
-importSettingsBtn.addEventListener('click', async () => {
-  const file = importSettingsFile.files[0];
+importBtn.addEventListener('click', async () => {
+  const file = importFile.files[0];
   if (!file) return;
+  const isSettings = importTypeSelect.value === 'settings';
 
   try {
     let text = await file.text();
-    if (text.trim().startsWith(PASSWORD_ENC_PREFIX)) {
-      const password = await showPasswordDialog('options_importPasswordPrompt', 'options_importBtn');
-      if (!password) return;
-      text = await decryptWithPassword(text, password);
+
+    if (isSettings) {
+      if (text.trim().startsWith(PASSWORD_ENC_PREFIX)) {
+        const password = await showPasswordDialog('options_importPasswordPrompt', 'options_importBtn');
+        if (!password) return;
+        text = await decryptWithPassword(text, password);
+      }
+      const settings = JSON.parse(text);
+      if (typeof settings !== 'object' || Array.isArray(settings)) {
+        throw new Error('Invalid settings format.');
+      }
+      await applyImportedSettings(settings);
+      showResult(importResult, getMessage('options_importSuccess'), 'success');
+      importFile.value = '';
+      importBtn.disabled = true;
+      importFilename.textContent = '';
+      setTimeout(() => { location.reload(); }, 1000);
+    } else {
+      const data = JSON.parse(text);
+      const bookmarks = deserializeFromJson(data);
+      const roleMap = {};
+      for (const node of bookmarks) {
+        const role = node.role || 'other';
+        roleMap[role] = { title: role, children: node.children || [] };
+      }
+      await replaceLocalBookmarks(roleMap);
+      showResult(importResult, getMessage('options_importSuccess'), 'success');
+      importFile.value = '';
+      importBtn.disabled = true;
+      importFilename.textContent = '';
     }
-    const settings = JSON.parse(text);
-    if (typeof settings !== 'object' || Array.isArray(settings)) {
-      throw new Error('Invalid settings format.');
-    }
-    await applyImportedSettings(settings);
-    showResult(importSettingsResult, getMessage('options_importSuccess'), 'success');
-    importSettingsFile.value = '';
-    importSettingsBtn.disabled = true;
-    importSettingsFilename.textContent = '';
-    setTimeout(() => { location.reload(); }, 1000);
   } catch (err) {
-    const msg = err.message && err.message.includes('Wrong password') ? getMessage('options_decryptError') : getMessage('options_importError', [err.message]);
-    showResult(importSettingsResult, msg, 'error');
+    const msg = (isSettings && err.message?.includes('Wrong password'))
+      ? getMessage('options_decryptError')
+      : getMessage('options_importError', [err.message]);
+    showResult(importResult, msg, 'error');
   }
 });
 

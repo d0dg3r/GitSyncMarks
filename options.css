@@ -166,6 +166,48 @@ html.dark .theme-cycle-btn {
   display: block;
 }
 
+/* Sub-Tab Bar (pill / segment style) */
+
+.sub-tab-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  padding: 4px;
+  background: var(--color-btn-secondary);
+  border-radius: var(--radius-sm);
+}
+
+.sub-tab-btn {
+  flex: 1;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.sub-tab-btn:hover {
+  color: var(--color-text);
+}
+
+.sub-tab-btn.active {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+.sub-tab-content {
+  display: none;
+}
+
+.sub-tab-content.active {
+  display: block;
+}
+
 /* Cards */
 
 .card {
@@ -258,11 +300,11 @@ html.dark .theme-cycle-btn {
   gap: 10px;
 }
 
-#tab-sync #github-repos-card .form-group.toggle-group {
+#tab-github #github-repos-card .form-group.toggle-group {
   margin-bottom: 10px;
 }
 
-#tab-sync #github-repos-options .form-group {
+#tab-github #github-repos-options .form-group {
   margin-bottom: 10px;
 }
 
@@ -297,6 +339,69 @@ html.dark .theme-cycle-btn {
 
 #tab-sync #sync-custom-fields .form-group {
   margin-bottom: 12px;
+}
+
+/* ---- Files Tab: compact to match GitHub/Sync ---- */
+#tab-files .card {
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+
+#tab-files .card h2 {
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  font-size: 16px;
+}
+
+#tab-files .card h2:has(+ .card-desc) {
+  margin-bottom: 4px;
+  padding-bottom: 0;
+}
+
+#tab-files .card-desc {
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+#tab-files .form-group {
+  margin-bottom: 12px;
+}
+
+#tab-files .form-group small {
+  margin-top: 4px;
+}
+
+#tab-files .form-group label {
+  font-size: 13px;
+}
+
+.export-import-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.export-import-row select {
+  flex: 1;
+}
+
+.export-import-block {
+  margin-bottom: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border-secondary);
+}
+
+.export-import-block:first-of-type {
+  padding-top: 0;
+  border-top: none;
+}
+
+.export-import-card .backup-file-picker {
+  margin-top: 8px;
+}
+
+.export-import-card .backup-actions {
+  margin-top: 8px;
 }
 
 /* ---- About Tab: compact ---- */
@@ -1151,25 +1256,32 @@ input[type="checkbox"]:checked + .toggle-slider::after {
 }
 
 /* Help tab */
-.help-quick-links-card {
-  margin-bottom: 16px;
-  padding: 16px 20px;
-}
-
 .help-quick-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  margin-bottom: 16px;
 }
 
-.help-link-btn {
+a.help-link-btn {
   text-decoration: none;
-  display: inline-flex;
-  align-items: center;
+  text-align: center;
+  color: var(--color-text);
 }
 
-.help-link-btn:hover {
+a.help-link-btn:hover {
   text-decoration: none;
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+a.help-link-btn:active,
+a.help-link-btn:focus,
+a.help-link-btn:visited {
+  background: none;
+  color: var(--color-text);
+}
+
+a.help-link-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 #tab-help .help-details.card {
@@ -1342,6 +1454,19 @@ input[type="checkbox"]:checked + .toggle-slider::after {
     padding: 10px 14px;
     font-size: 13px;
     flex-shrink: 0;
+  }
+
+  .sub-tab-bar {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sub-tab-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+    flex-shrink: 0;
+    flex: 0 0 auto;
   }
 
   .card {

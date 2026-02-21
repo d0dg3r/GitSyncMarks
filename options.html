@@ -24,8 +24,7 @@
     <nav class="tab-bar">
       <button class="tab-btn active" data-tab="github" data-i18n="options_tabGitHub">GitHub</button>
       <button class="tab-btn" data-tab="sync" data-i18n="options_tabSynchronization">Sync</button>
-      <button class="tab-btn" data-tab="backup" data-i18n="options_tabBackup">Backup</button>
-      <button class="tab-btn" data-tab="automation" data-i18n="options_tabAutomation">Automation</button>
+      <button class="tab-btn" data-tab="files" data-i18n="options_tabFiles">Files</button>
       <button class="tab-btn" data-tab="help" data-i18n="options_tabHelp">Help</button>
       <button class="tab-btn" data-tab="about" data-i18n="options_tabAbout">About</button>
     </nav>
@@ -33,122 +32,163 @@
     <!-- ==================== GitHub Tab ==================== -->
     <div class="tab-content active" id="tab-github">
 
-      <section class="card profile-selector-card">
-        <h2 data-i18n="options_profile">Profile</h2>
-        <div class="profile-main-row">
-          <div class="profile-select-wrap">
-            <label for="profile-select" class="form-label-inline" data-i18n="options_profile">Profile</label>
-            <select id="profile-select" class="profile-select"></select>
-          </div>
-          <div class="profile-actions">
-            <span id="profile-limit" class="profile-limit"></span>
-            <span id="profile-spinner" class="spinner" style="display: none;"></span>
-            <span id="profile-switching-msg" class="profile-switching-msg" style="display: none;"></span>
-            <button type="button" id="profile-add-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileAdd">+ Add</button>
-            <button type="button" id="profile-rename-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileRename" style="display: none;">Rename</button>
-            <button type="button" id="profile-delete-btn" class="btn btn-secondary btn-sm btn-danger" data-i18n="options_profileDelete" title="" style="display: none;">Delete</button>
-          </div>
-        </div>
-        <div class="profile-options">
-          <label for="profile-switch-without-confirm" class="profile-option-toggle">
-            <input type="checkbox" id="profile-switch-without-confirm">
-            <span class="toggle-slider toggle-slider-sm"></span>
-            <span data-i18n="options_profileSwitchWithoutConfirm">Switch without confirmation</span>
-          </label>
-        </div>
-        <div id="profile-switch-confirm" class="profile-switch-confirm" style="display: none;">
-          <span id="profile-switch-confirm-text" class="profile-switch-confirm-text"></span>
-          <div class="profile-switch-confirm-actions">
-            <button type="button" id="profile-switch-confirm-btn" class="btn btn-primary btn-sm" data-i18n="options_profileSwitchConfirmBtn">Switch</button>
-            <button type="button" id="profile-switch-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
-          </div>
-        </div>
-        <div id="profile-delete-confirm" class="profile-inline-dialog" style="display: none;">
-          <span id="profile-delete-confirm-text" class="profile-inline-dialog-text"></span>
-          <div class="profile-inline-dialog-actions">
-            <button type="button" id="profile-delete-confirm-btn" class="btn btn-danger btn-sm" data-i18n="options_profileDelete">Delete</button>
-            <button type="button" id="profile-delete-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
-          </div>
-        </div>
-        <div id="profile-add-dialog" class="profile-inline-dialog" style="display: none;">
-          <div class="profile-inline-dialog-body">
-            <label for="profile-add-name-input" class="profile-inline-dialog-label" data-i18n="options_profileAddNameLabel">Profile name</label>
-            <input type="text" id="profile-add-name-input" class="profile-inline-dialog-input" data-i18n-placeholder="options_profileAddPlaceholder" placeholder="New Profile">
-          </div>
-          <div class="profile-inline-dialog-actions">
-            <button type="button" id="profile-add-confirm-btn" class="btn btn-primary btn-sm" data-i18n="options_profileAddConfirmBtn">Add</button>
-            <button type="button" id="profile-add-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
-          </div>
-        </div>
-        <div id="profile-rename-dialog" class="profile-inline-dialog" style="display: none;">
-          <div class="profile-inline-dialog-body">
-            <label for="profile-rename-input" class="profile-inline-dialog-label" data-i18n="options_profileRenameLabel">New name</label>
-            <input type="text" id="profile-rename-input" class="profile-inline-dialog-input">
-          </div>
-          <div class="profile-inline-dialog-actions">
-            <button type="button" id="profile-rename-confirm-btn" class="btn btn-primary btn-sm" data-i18n="options_profileRename">Rename</button>
-            <button type="button" id="profile-rename-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
-          </div>
-        </div>
-        <div id="profile-message" class="profile-message" style="display: none;"></div>
-      </section>
+      <div class="sub-tab-bar">
+        <button class="sub-tab-btn active" data-subtab="github-profile" data-i18n="options_subTabProfile">Profile</button>
+        <button class="sub-tab-btn" data-subtab="github-connection" data-i18n="options_subTabConnection">Connection</button>
+        <button class="sub-tab-btn" data-subtab="github-repos" data-i18n="options_subTabRepos">Repos</button>
+      </div>
 
-      <section class="card">
-        <h2 data-i18n="options_githubConnection">GitHub Connection</h2>
-
-        <div class="form-group">
-          <label for="token" data-i18n="options_patLabel">Personal Access Token (PAT)</label>
-          <div class="input-row">
-            <input type="password" id="token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
-            <button id="toggle-token" class="btn-icon" data-i18n-title="options_toggleToken" title="Show/hide token">
-              <span class="icon-eye">👁</span>
-            </button>
-          </div>
-          <small data-i18n-html="options_tokenHint">Requires the <code>repo</code> scope. <a href="https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks" target="_blank" rel="noopener">Create token</a></small>
-        </div>
-
-        <div class="form-group">
-          <label for="owner" data-i18n="options_repoOwner">Repository Owner</label>
-          <input type="text" id="owner" data-i18n-placeholder="options_ownerPlaceholder" placeholder="your-github-username">
-        </div>
-
-        <div class="form-group">
-          <label for="repo" data-i18n="options_repoName">Repository Name</label>
-          <input type="text" id="repo" placeholder="my-bookmarks">
-        </div>
-
-        <div class="form-group">
-          <label for="branch" data-i18n="options_branch">Branch</label>
-          <input type="text" id="branch" placeholder="main" value="main">
-        </div>
-
-        <div class="form-group">
-          <label for="filepath" data-i18n="options_filePath">File Path in Repository</label>
-          <input type="text" id="filepath" placeholder="bookmarks" value="bookmarks">
-          <small data-i18n="options_filePathHint">Folder where bookmark files will be stored.</small>
-        </div>
-
-        <div class="form-group">
-          <button id="validate-btn" class="btn btn-secondary" data-i18n="options_testConnection">Test Connection</button>
-          <span id="validation-spinner" class="spinner" style="display: none;"></span>
-          <span id="validation-result" class="validation-result"></span>
-          <div id="onboarding-confirm" class="onboarding-confirm" style="display: none; margin-top: 0.75rem;">
-            <span id="onboarding-confirm-text" class="onboarding-confirm-text"></span>
-            <div class="onboarding-confirm-actions">
-              <button type="button" id="onboarding-confirm-yes-btn" class="btn btn-primary btn-sm"></button>
-              <button type="button" id="onboarding-confirm-no-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+      <div class="sub-tab-content active" id="subtab-github-profile">
+        <section class="card profile-selector-card">
+          <h2 data-i18n="options_profile">Profile</h2>
+          <div class="profile-main-row">
+            <div class="profile-select-wrap">
+              <label for="profile-select" class="form-label-inline" data-i18n="options_profile">Profile</label>
+              <select id="profile-select" class="profile-select"></select>
+            </div>
+            <div class="profile-actions">
+              <span id="profile-limit" class="profile-limit"></span>
+              <span id="profile-spinner" class="spinner" style="display: none;"></span>
+              <span id="profile-switching-msg" class="profile-switching-msg" style="display: none;"></span>
+              <button type="button" id="profile-add-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileAdd">+ Add</button>
+              <button type="button" id="profile-rename-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileRename" style="display: none;">Rename</button>
+              <button type="button" id="profile-delete-btn" class="btn btn-secondary btn-sm btn-danger" data-i18n="options_profileDelete" title="" style="display: none;">Delete</button>
             </div>
           </div>
-        </div>
+          <div class="profile-options">
+            <label for="profile-switch-without-confirm" class="profile-option-toggle">
+              <input type="checkbox" id="profile-switch-without-confirm">
+              <span class="toggle-slider toggle-slider-sm"></span>
+              <span data-i18n="options_profileSwitchWithoutConfirm">Switch without confirmation</span>
+            </label>
+          </div>
+          <div id="profile-switch-confirm" class="profile-switch-confirm" style="display: none;">
+            <span id="profile-switch-confirm-text" class="profile-switch-confirm-text"></span>
+            <div class="profile-switch-confirm-actions">
+              <button type="button" id="profile-switch-confirm-btn" class="btn btn-primary btn-sm" data-i18n="options_profileSwitchConfirmBtn">Switch</button>
+              <button type="button" id="profile-switch-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+            </div>
+          </div>
+          <div id="profile-delete-confirm" class="profile-inline-dialog" style="display: none;">
+            <span id="profile-delete-confirm-text" class="profile-inline-dialog-text"></span>
+            <div class="profile-inline-dialog-actions">
+              <button type="button" id="profile-delete-confirm-btn" class="btn btn-danger btn-sm" data-i18n="options_profileDelete">Delete</button>
+              <button type="button" id="profile-delete-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+            </div>
+          </div>
+          <div id="profile-add-dialog" class="profile-inline-dialog" style="display: none;">
+            <div class="profile-inline-dialog-body">
+              <label for="profile-add-name-input" class="profile-inline-dialog-label" data-i18n="options_profileAddNameLabel">Profile name</label>
+              <input type="text" id="profile-add-name-input" class="profile-inline-dialog-input" data-i18n-placeholder="options_profileAddPlaceholder" placeholder="New Profile">
+            </div>
+            <div class="profile-inline-dialog-actions">
+              <button type="button" id="profile-add-confirm-btn" class="btn btn-primary btn-sm" data-i18n="options_profileAddConfirmBtn">Add</button>
+              <button type="button" id="profile-add-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+            </div>
+          </div>
+          <div id="profile-rename-dialog" class="profile-inline-dialog" style="display: none;">
+            <div class="profile-inline-dialog-body">
+              <label for="profile-rename-input" class="profile-inline-dialog-label" data-i18n="options_profileRenameLabel">New name</label>
+              <input type="text" id="profile-rename-input" class="profile-inline-dialog-input">
+            </div>
+            <div class="profile-inline-dialog-actions">
+              <button type="button" id="profile-rename-confirm-btn" class="btn btn-primary btn-sm" data-i18n="options_profileRename">Rename</button>
+              <button type="button" id="profile-rename-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+            </div>
+          </div>
+          <div id="profile-message" class="profile-message" style="display: none;"></div>
+        </section>
+      </div>
 
-        <div class="actions actions-in-card actions-github-feedback">
-          <span id="save-github-result" class="save-result"></span>
-        </div>
-      </section>
+      <div class="sub-tab-content" id="subtab-github-connection">
+        <section class="card">
+          <h2 data-i18n="options_githubConnection">GitHub Connection</h2>
+
+          <div class="form-group">
+            <label for="token" data-i18n="options_patLabel">Personal Access Token (PAT)</label>
+            <div class="input-row">
+              <input type="password" id="token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+              <button id="toggle-token" class="btn-icon" data-i18n-title="options_toggleToken" title="Show/hide token">
+                <span class="icon-eye">👁</span>
+              </button>
+            </div>
+            <small data-i18n-html="options_tokenHint">Requires the <code>repo</code> scope. <a href="https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks" target="_blank" rel="noopener">Create token</a></small>
+          </div>
+
+          <div class="form-group">
+            <label for="owner" data-i18n="options_repoOwner">Repository Owner</label>
+            <input type="text" id="owner" data-i18n-placeholder="options_ownerPlaceholder" placeholder="your-github-username">
+          </div>
+
+          <div class="form-group">
+            <label for="repo" data-i18n="options_repoName">Repository Name</label>
+            <input type="text" id="repo" placeholder="my-bookmarks">
+          </div>
+
+          <div class="form-group">
+            <label for="branch" data-i18n="options_branch">Branch</label>
+            <input type="text" id="branch" placeholder="main" value="main">
+          </div>
+
+          <div class="form-group">
+            <label for="filepath" data-i18n="options_filePath">File Path in Repository</label>
+            <input type="text" id="filepath" placeholder="bookmarks" value="bookmarks">
+            <small data-i18n="options_filePathHint">Folder where bookmark files will be stored.</small>
+          </div>
+
+          <div class="form-group">
+            <button id="validate-btn" class="btn btn-secondary" data-i18n="options_testConnection">Test Connection</button>
+            <span id="validation-spinner" class="spinner" style="display: none;"></span>
+            <span id="validation-result" class="validation-result"></span>
+            <div id="onboarding-confirm" class="onboarding-confirm" style="display: none; margin-top: 0.75rem;">
+              <span id="onboarding-confirm-text" class="onboarding-confirm-text"></span>
+              <div class="onboarding-confirm-actions">
+                <button type="button" id="onboarding-confirm-yes-btn" class="btn btn-primary btn-sm"></button>
+                <button type="button" id="onboarding-confirm-no-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="actions actions-in-card actions-github-feedback">
+            <span id="save-github-result" class="save-result"></span>
+          </div>
+        </section>
+      </div>
+
+      <div class="sub-tab-content" id="subtab-github-repos">
+        <section class="card" id="github-repos-card" style="display: none;">
+          <h2 data-i18n="options_githubReposTitle">GitHub Repos Folder</h2>
+          <p class="card-desc" data-i18n="options_githubReposDesc">Create a folder with bookmarks to all your GitHub repositories (public and private).</p>
+
+          <div class="form-group toggle-group">
+            <label for="github-repos-enabled" class="toggle-label">
+              <span data-i18n="options_githubReposEnabled">GitHub Repos folder</span>
+              <input type="checkbox" id="github-repos-enabled">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div id="github-repos-options" style="display: none;">
+            <div class="form-group">
+              <label for="github-repos-parent" data-i18n="options_githubReposParentLabel">Position</label>
+              <select id="github-repos-parent">
+                <option value="toolbar" data-i18n="options_githubReposParentToolbar">Bookmarks Bar</option>
+                <option value="other" data-i18n="options_githubReposParentOther">Other Bookmarks</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <button id="github-repos-refresh-btn" class="btn btn-secondary" data-i18n="options_githubReposRefresh">Update GitHub Repos</button>
+              <span id="github-repos-spinner" class="spinner" style="display: none;"></span>
+              <span id="github-repos-result" class="validation-result"></span>
+            </div>
+          </div>
+        </section>
+      </div>
 
     </div>
 
-    <!-- ==================== Synchronization Tab ==================== -->
+    <!-- ==================== Sync Tab ==================== -->
     <div class="tab-content" id="tab-sync">
 
       <section class="card">
@@ -211,122 +251,9 @@
           </select>
           <small data-i18n="options_notificationsHint">Choose when to show notifications.</small>
         </div>
-      </section>
-
-      <section class="card" id="github-repos-card" style="display: none;">
-        <h2 data-i18n="options_githubReposTitle">GitHub Repos Folder</h2>
-        <p class="card-desc" data-i18n="options_githubReposDesc">Create a folder with bookmarks to all your GitHub repositories (public and private).</p>
-
-        <div class="form-group toggle-group">
-          <label for="github-repos-enabled" class="toggle-label">
-            <span data-i18n="options_githubReposEnabled">GitHub Repos folder</span>
-            <input type="checkbox" id="github-repos-enabled">
-            <span class="toggle-slider"></span>
-          </label>
-        </div>
-
-        <div id="github-repos-options" style="display: none;">
-          <div class="form-group">
-            <label for="github-repos-parent" data-i18n="options_githubReposParentLabel">Position</label>
-            <select id="github-repos-parent">
-              <option value="toolbar" data-i18n="options_githubReposParentToolbar">Bookmarks Bar</option>
-              <option value="other" data-i18n="options_githubReposParentOther">Other Bookmarks</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <button id="github-repos-refresh-btn" class="btn btn-secondary" data-i18n="options_githubReposRefresh">Update GitHub Repos</button>
-            <span id="github-repos-spinner" class="spinner" style="display: none;"></span>
-            <span id="github-repos-result" class="validation-result"></span>
-          </div>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2 data-i18n="options_generatedFilesTitle">Generated files</h2>
-        <p class="card-desc" data-i18n="options_generatedFilesDesc">Files created in the repo during sync. Choose Off, Manual, or Auto per file.</p>
-
-        <div class="form-group">
-          <label for="generate-readme-md" data-i18n="options_generateReadmeMd">README.md</label>
-          <select id="generate-readme-md">
-            <option value="off" data-i18n="options_generateModeOff">Off</option>
-            <option value="manual" data-i18n="options_generateModeManual">Manual</option>
-            <option value="auto" selected data-i18n="options_generateModeAuto">Auto</option>
-          </select>
-          <small data-i18n="options_generateReadmeMdDesc" style="display:block;margin-top:0.25rem;">Markdown overview in the repo.</small>
-        </div>
-        <div class="form-group">
-          <label for="generate-bookmarks-html" data-i18n="options_generateBookmarksHtml">bookmarks.html</label>
-          <select id="generate-bookmarks-html">
-            <option value="off" data-i18n="options_generateModeOff">Off</option>
-            <option value="manual" data-i18n="options_generateModeManual">Manual</option>
-            <option value="auto" selected data-i18n="options_generateModeAuto">Auto</option>
-          </select>
-          <small data-i18n="options_generateBookmarksHtmlDesc" style="display:block;margin-top:0.25rem;">Netscape format for browser import (Chrome, Firefox).</small>
-        </div>
-        <div class="form-group">
-          <label for="generate-feed-xml" data-i18n="options_generateFeedXml">feed.xml</label>
-          <select id="generate-feed-xml">
-            <option value="off" data-i18n="options_generateModeOff">Off</option>
-            <option value="manual" data-i18n="options_generateModeManual">Manual</option>
-            <option value="auto" selected data-i18n="options_generateModeAuto">Auto</option>
-          </select>
-          <small data-i18n="options_generateFeedXmlDesc" style="display:block;margin-top:0.25rem;">RSS 2.0 feed — subscribe in any RSS reader or use for automations.</small>
-        </div>
-        <div class="form-group">
-          <label for="generate-dashy-yml" data-i18n="options_generateDashyYml">dashy-conf.yml</label>
-          <select id="generate-dashy-yml">
-            <option value="off" selected data-i18n="options_generateModeOff">Off</option>
-            <option value="manual" data-i18n="options_generateModeManual">Manual</option>
-            <option value="auto" data-i18n="options_generateModeAuto">Auto</option>
-          </select>
-          <small data-i18n="options_generateDashyYmlDesc" style="display:block;margin-top:0.25rem;">Dashy dashboard config — import as sections into your conf.yml.</small>
-        </div>
-        <button id="generate-files-btn" class="btn btn-secondary" data-i18n="options_generateNowBtn" style="margin-top:0.5rem;">Generate now</button>
 
         <div class="actions actions-in-card actions-sync-feedback">
           <span id="save-sync-result" class="save-result"></span>
-        </div>
-      </section>
-
-      <section class="card" id="settings-sync-card">
-        <h2 data-i18n="options_settingsSyncTitle">Settings sync</h2>
-        <p class="card-desc" data-i18n="options_settingsSyncDesc">Encrypted backup of extension settings in the repo. Same password on every device.</p>
-
-        <div class="form-group toggle-group">
-          <label for="sync-settings-to-git" class="toggle-label">
-            <span data-i18n="options_syncSettingsToGit">Sync settings to Git (encrypted)</span>
-            <input type="checkbox" id="sync-settings-to-git">
-            <span class="toggle-slider"></span>
-          </label>
-        </div>
-
-        <div id="settings-sync-options-group" style="display: none;">
-          <div class="form-group">
-            <label for="settings-sync-mode" data-i18n="options_settingsSyncModeLabel">Sync mode</label>
-            <select id="settings-sync-mode">
-              <option value="global" data-i18n="options_settingsSyncModeGlobal">Global — shared across all devices</option>
-              <option value="individual" data-i18n="options_settingsSyncModeIndividual">Individual — this device only</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="settings-sync-password" data-i18n="options_settingsSyncPasswordLabel">Encryption password</label>
-            <input type="password" id="settings-sync-password" autocomplete="off">
-            <small data-i18n="options_settingsSyncPasswordHint">Set once per device. Must be the same on all devices.</small>
-          </div>
-          <button id="settings-sync-save-pw-btn" class="btn btn-secondary" data-i18n="options_settingsSyncSaveBtn">Save password</button>
-          <span id="settings-sync-result" class="validation-result"></span>
-
-          <div id="settings-sync-import-group" style="display: none; margin-top: 1rem;">
-            <label data-i18n="options_settingsSyncImportTitle">Import from other device</label>
-            <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.4rem;">
-              <button id="settings-sync-load-btn" class="btn btn-secondary" data-i18n="options_settingsSyncImportBtn">Load available configs</button>
-              <select id="settings-sync-device-list" style="flex: 1;" disabled></select>
-              <button id="settings-sync-import-btn" class="btn btn-secondary" data-i18n="options_settingsSyncImportApply" disabled>Import</button>
-            </div>
-            <span id="settings-sync-import-result" class="validation-result"></span>
-          </div>
         </div>
       </section>
 
@@ -352,149 +279,218 @@
 
     </div>
 
-    <!-- ==================== Backup Tab ==================== -->
-    <div class="tab-content" id="tab-backup">
+    <!-- ==================== Files Tab ==================== -->
+    <div class="tab-content" id="tab-files">
 
-      <section class="card backup-card">
-        <h2 data-i18n="options_backupTitle">Backup</h2>
-        <p class="card-desc" data-i18n="options_backupIntro">Export or import bookmarks and extension settings as JSON.</p>
+      <div class="sub-tab-bar">
+        <button class="sub-tab-btn active" data-subtab="files-generated" data-i18n="options_subTabGenerated">Generated</button>
+        <button class="sub-tab-btn" data-subtab="files-settings" data-i18n="options_subTabSettings">Settings</button>
+        <button class="sub-tab-btn" data-subtab="files-export-import" data-i18n="options_subTabExportImport">Export / Import</button>
+        <button class="sub-tab-btn" data-subtab="files-git-add" data-i18n="options_subTabGitAdd">Git Add</button>
+      </div>
 
-        <div class="backup-block automation-block">
-          <h3 class="automation-block-title" data-i18n="options_exportBookmarks">Export Bookmarks</h3>
-          <p class="backup-block-desc" data-i18n="options_exportBookmarksDesc">Save all bookmarks as JSON.</p>
-          <div class="backup-actions">
-            <button id="export-bookmarks-btn" class="btn btn-secondary" data-i18n="options_exportBtn">Export</button>
-            <span id="export-bookmarks-result" class="ie-result"></span>
+      <div class="sub-tab-content active" id="subtab-files-generated">
+        <section class="card">
+          <h2 data-i18n="options_generatedFilesTitle">Generated files</h2>
+          <p class="card-desc" data-i18n="options_generatedFilesDesc">Files created in the repo during sync. Choose Off, Manual, or Auto per file.</p>
+
+          <div class="form-group">
+            <label for="generate-readme-md" data-i18n="options_generateReadmeMd">README.md</label>
+            <select id="generate-readme-md">
+              <option value="off" data-i18n="options_generateModeOff">Off</option>
+              <option value="manual" data-i18n="options_generateModeManual">Manual</option>
+              <option value="auto" selected data-i18n="options_generateModeAuto">Auto</option>
+            </select>
+            <small data-i18n="options_generateReadmeMdDesc" style="display:block;margin-top:0.25rem;">Markdown overview in the repo.</small>
           </div>
-        </div>
-
-        <div class="backup-block automation-block">
-          <h3 class="automation-block-title" data-i18n="options_exportDashy">Export Dashy Config</h3>
-          <p class="backup-block-desc" data-i18n="options_exportDashyDesc">Export bookmarks as Dashy dashboard sections (YAML).</p>
-          <div class="backup-actions">
-            <button id="export-dashy-btn" class="btn btn-secondary" data-i18n="options_exportBtn">Export</button>
-            <span id="export-dashy-result" class="ie-result"></span>
+          <div class="form-group">
+            <label for="generate-bookmarks-html" data-i18n="options_generateBookmarksHtml">bookmarks.html</label>
+            <select id="generate-bookmarks-html">
+              <option value="off" data-i18n="options_generateModeOff">Off</option>
+              <option value="manual" data-i18n="options_generateModeManual">Manual</option>
+              <option value="auto" selected data-i18n="options_generateModeAuto">Auto</option>
+            </select>
+            <small data-i18n="options_generateBookmarksHtmlDesc" style="display:block;margin-top:0.25rem;">Netscape format for browser import (Chrome, Firefox).</small>
           </div>
-        </div>
-
-        <div class="backup-block backup-block-import automation-block">
-          <h3 class="automation-block-title" data-i18n="options_importBookmarks">Import Bookmarks</h3>
-          <p class="backup-warning" data-i18n="options_importBookmarksWarning">Replaces all current bookmarks. Cannot be undone.</p>
-          <div class="backup-file-picker">
-            <input type="file" id="import-bookmarks-file" accept=".json" class="backup-file-input">
-            <button type="button" class="btn btn-secondary backup-file-trigger" id="import-bookmarks-trigger" data-i18n="options_chooseFile">Choose file</button>
-            <span class="backup-file-name" id="import-bookmarks-filename"></span>
+          <div class="form-group">
+            <label for="generate-feed-xml" data-i18n="options_generateFeedXml">feed.xml</label>
+            <select id="generate-feed-xml">
+              <option value="off" data-i18n="options_generateModeOff">Off</option>
+              <option value="manual" data-i18n="options_generateModeManual">Manual</option>
+              <option value="auto" selected data-i18n="options_generateModeAuto">Auto</option>
+            </select>
+            <small data-i18n="options_generateFeedXmlDesc" style="display:block;margin-top:0.25rem;">RSS 2.0 feed — subscribe in any RSS reader or use for automations.</small>
           </div>
-          <div class="backup-actions">
-            <button id="import-bookmarks-btn" class="btn btn-primary" data-i18n="options_importBtn" disabled>Import</button>
-            <span id="import-bookmarks-result" class="ie-result"></span>
+          <div class="form-group">
+            <label for="generate-dashy-yml" data-i18n="options_generateDashyYml">dashy-conf.yml</label>
+            <select id="generate-dashy-yml">
+              <option value="off" selected data-i18n="options_generateModeOff">Off</option>
+              <option value="manual" data-i18n="options_generateModeManual">Manual</option>
+              <option value="auto" data-i18n="options_generateModeAuto">Auto</option>
+            </select>
+            <small data-i18n="options_generateDashyYmlDesc" style="display:block;margin-top:0.25rem;">Dashy dashboard config — import as sections into your conf.yml.</small>
           </div>
-        </div>
+          <button id="generate-files-btn" class="btn btn-secondary" data-i18n="options_generateNowBtn" style="margin-top:0.5rem;">Generate now</button>
+        </section>
+      </div>
 
-        <div class="backup-block automation-block">
-          <h3 class="automation-block-title" data-i18n="options_exportSettings">Export Settings</h3>
-          <p class="backup-block-desc" data-i18n="options_exportSettingsDesc">GitHub connection and sync settings (incl. profiles).</p>
-          <div class="backup-actions backup-actions-multi">
-            <button id="export-settings-btn" class="btn btn-secondary" data-i18n="options_exportSettingsPlain">Export (plain)</button>
-            <button id="export-settings-encrypted-btn" class="btn btn-secondary" data-i18n="options_exportSettingsEncrypted">Export encrypted</button>
-            <span id="export-settings-result" class="ie-result"></span>
+      <div class="sub-tab-content" id="subtab-files-settings">
+        <section class="card" id="settings-sync-card">
+          <h2 data-i18n="options_settingsSyncTitle">Settings File</h2>
+          <p class="card-desc" data-i18n="options_settingsSyncDesc">Encrypted backup of extension settings in the repo. Same password on every device.</p>
+
+          <div class="form-group toggle-group">
+            <label for="sync-settings-to-git" class="toggle-label">
+              <span data-i18n="options_syncSettingsToGit">Sync settings to Git (encrypted)</span>
+              <input type="checkbox" id="sync-settings-to-git">
+              <span class="toggle-slider"></span>
+            </label>
           </div>
-        </div>
 
-        <div id="password-dialog" class="profile-inline-dialog" style="display: none;">
-          <div class="profile-inline-dialog-body">
-            <p id="password-dialog-prompt" class="profile-inline-dialog-text"></p>
-            <label for="password-dialog-input" class="profile-inline-dialog-label" data-i18n="options_passwordPlaceholder">Password</label>
-            <input type="password" id="password-dialog-input" class="profile-inline-dialog-input" autocomplete="off">
+          <div id="settings-sync-options-group" style="display: none;">
+            <div class="form-group">
+              <label for="settings-sync-mode" data-i18n="options_settingsSyncModeLabel">Sync mode</label>
+              <select id="settings-sync-mode">
+                <option value="global" data-i18n="options_settingsSyncModeGlobal">Global — shared across all devices</option>
+                <option value="individual" data-i18n="options_settingsSyncModeIndividual">Individual — this device only</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="settings-sync-password" data-i18n="options_settingsSyncPasswordLabel">Encryption password</label>
+              <input type="password" id="settings-sync-password" autocomplete="off">
+              <small data-i18n="options_settingsSyncPasswordHint">Set once per device. Must be the same on all devices.</small>
+            </div>
+            <button id="settings-sync-save-pw-btn" class="btn btn-secondary" data-i18n="options_settingsSyncSaveBtn">Save password</button>
+            <span id="settings-sync-result" class="validation-result"></span>
+
+            <div id="settings-sync-import-group" style="display: none; margin-top: 1rem;">
+              <label data-i18n="options_settingsSyncImportTitle">Import from other device</label>
+              <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.4rem;">
+                <button id="settings-sync-load-btn" class="btn btn-secondary" data-i18n="options_settingsSyncImportBtn">Load available configs</button>
+                <select id="settings-sync-device-list" style="flex: 1;" disabled></select>
+                <button id="settings-sync-import-btn" class="btn btn-secondary" data-i18n="options_settingsSyncImportApply" disabled>Import</button>
+              </div>
+              <span id="settings-sync-import-result" class="validation-result"></span>
+            </div>
           </div>
-          <div class="profile-inline-dialog-actions">
-            <button type="button" id="password-dialog-confirm-btn" class="btn btn-primary btn-sm" data-i18n="options_exportBtn">Export</button>
-            <button type="button" id="password-dialog-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+        </section>
+      </div>
+
+      <div class="sub-tab-content" id="subtab-files-export-import">
+        <section class="card export-import-card">
+          <h2 data-i18n="options_exportImportTitle">Export / Import</h2>
+          <p class="card-desc" data-i18n="options_exportImportDesc">Export or import bookmarks and extension settings.</p>
+
+          <div class="export-import-block">
+            <h3 class="automation-block-title" data-i18n="options_exportLabel">Export</h3>
+            <div class="export-import-row">
+              <select id="export-type-select">
+                <option value="bookmarks" data-i18n="options_exportTypeBookmarks">Bookmarks (JSON)</option>
+                <option value="dashy" data-i18n="options_exportTypeDashy">Dashy Config (YAML)</option>
+                <option value="settings-plain" data-i18n="options_exportTypeSettingsPlain">Settings (plain JSON)</option>
+                <option value="settings-encrypted" data-i18n="options_exportTypeSettingsEncrypted">Settings (encrypted)</option>
+              </select>
+              <button id="export-btn" class="btn btn-secondary" data-i18n="options_exportBtn">Export</button>
+            </div>
+            <span id="export-result" class="ie-result"></span>
           </div>
-        </div>
 
-        <div class="backup-block backup-block-import automation-block">
-          <h3 class="automation-block-title" data-i18n="options_importSettings">Import Settings</h3>
-          <p class="backup-warning" data-i18n="options_importSettingsWarning">Replaces all settings. Page reloads afterwards.</p>
-          <p class="backup-block-desc" data-i18n="options_importSettingsFormats">Accepts .json (plain) or .enc (encrypted) files.</p>
-          <div class="backup-file-picker">
-            <input type="file" id="import-settings-file" accept=".json,.enc" class="backup-file-input">
-            <button type="button" class="btn btn-secondary backup-file-trigger" id="import-settings-trigger" data-i18n="options_chooseFile">Choose file</button>
-            <span class="backup-file-name" id="import-settings-filename"></span>
+          <div class="export-import-block">
+            <h3 class="automation-block-title" data-i18n="options_importLabel">Import</h3>
+            <p id="import-warning" class="backup-warning" data-i18n="options_importBookmarksWarning">Replaces all current bookmarks. Cannot be undone.</p>
+            <div class="export-import-row">
+              <select id="import-type-select">
+                <option value="bookmarks" data-i18n="options_importTypeBookmarks">Bookmarks (JSON)</option>
+                <option value="settings" data-i18n="options_importTypeSettings">Settings (JSON / ENC)</option>
+              </select>
+            </div>
+            <div class="backup-file-picker">
+              <input type="file" id="import-file" accept=".json" class="backup-file-input">
+              <button type="button" class="btn btn-secondary backup-file-trigger" id="import-file-trigger" data-i18n="options_chooseFile">Choose file</button>
+              <span class="backup-file-name" id="import-filename"></span>
+            </div>
+            <div class="backup-actions">
+              <button id="import-btn" class="btn btn-primary" data-i18n="options_importBtn" disabled>Import</button>
+              <span id="import-result" class="ie-result"></span>
+            </div>
           </div>
-          <div class="backup-actions">
-            <button id="import-settings-btn" class="btn btn-primary" data-i18n="options_importBtn" disabled>Import</button>
-            <span id="import-settings-result" class="ie-result"></span>
+
+          <div id="password-dialog" class="profile-inline-dialog" style="display: none;">
+            <div class="profile-inline-dialog-body">
+              <p id="password-dialog-prompt" class="profile-inline-dialog-text"></p>
+              <label for="password-dialog-input" class="profile-inline-dialog-label" data-i18n="options_passwordPlaceholder">Password</label>
+              <input type="password" id="password-dialog-input" class="profile-inline-dialog-input" autocomplete="off">
+            </div>
+            <div class="profile-inline-dialog-actions">
+              <button type="button" id="password-dialog-confirm-btn" class="btn btn-primary btn-sm" data-i18n="options_exportBtn">Export</button>
+              <button type="button" id="password-dialog-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
-    </div>
+      <div class="sub-tab-content" id="subtab-files-git-add">
+        <section class="card automation-card">
+          <h2 data-i18n="options_automationTitle">Add Bookmarks via Git</h2>
+          <p class="card-desc" data-i18n="options_automationIntro">Add bookmarks directly in your repository. The extension picks them up on the next sync and normalizes filenames automatically.</p>
 
-    <!-- ==================== Automation Tab ==================== -->
-    <div class="tab-content" id="tab-automation">
-
-      <section class="card automation-card">
-        <h2 data-i18n="options_automationTitle">Add Bookmarks via Git</h2>
-        <p class="card-desc" data-i18n="options_automationIntro">Add bookmarks directly in your repository. The extension picks them up on the next sync and normalizes filenames automatically.</p>
-
-        <div class="automation-block">
-          <h3 class="automation-block-title" data-i18n="options_automationCreateFileTitle">Create file in repo</h3>
-          <p class="automation-block-desc" data-i18n-html="options_automationCreateFileDesc"></p>
-          <div class="automation-copy-wrap">
-            <pre id="automation-json-block" class="code-block code-block-sm">{ "title": "Example", "url": "https://example.com" }</pre>
-            <button type="button" class="btn btn-secondary btn-sm automation-copy-btn" id="automation-copy-json-btn" data-i18n="options_automationCopy">Copy</button>
+          <div class="automation-block">
+            <h3 class="automation-block-title" data-i18n="options_automationCreateFileTitle">Create file in repo</h3>
+            <p class="automation-block-desc" data-i18n-html="options_automationCreateFileDesc"></p>
+            <div class="automation-copy-wrap">
+              <pre id="automation-json-block" class="code-block code-block-sm">{ "title": "Example", "url": "https://example.com" }</pre>
+              <button type="button" class="btn btn-secondary btn-sm automation-copy-btn" id="automation-copy-json-btn" data-i18n="options_automationCopy">Copy</button>
+            </div>
+            <p class="automation-folders">
+              <span data-i18n="options_automationFoldersLabel">Folders:</span>
+              <code>toolbar</code> <code>other</code>
+            </p>
           </div>
-          <p class="automation-folders">
-            <span data-i18n="options_automationFoldersLabel">Folders:</span>
-            <code>toolbar</code> <code>other</code>
-          </p>
-        </div>
 
-        <div class="automation-block">
-          <h3 class="automation-block-title" data-i18n="options_automationGithubActionTitle">GitHub Action</h3>
-          <p class="automation-workflow-link">
-            <a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/.github/workflows/add-bookmark.yml" target="_blank" rel="noopener" data-i18n="options_automationWorkflowLink">
-              Copy add-bookmark.yml to your repo
-            </a>
-            ·
-            <a href="https://raw.githubusercontent.com/d0dg3r/GitSyncMarks/main/.github/workflows/add-bookmark.yml" target="_blank" rel="noopener" data-i18n="options_automationWorkflowRaw">Raw</a>
-          </p>
-          <div class="automation-copy-wrap">
-            <pre id="automation-gh-block" class="code-block code-block-sm">gh workflow run add-bookmark.yml \
+          <div class="automation-block">
+            <h3 class="automation-block-title" data-i18n="options_automationGithubActionTitle">GitHub Action</h3>
+            <p class="automation-workflow-link">
+              <a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/.github/workflows/add-bookmark.yml" target="_blank" rel="noopener" data-i18n="options_automationWorkflowLink">
+                Copy add-bookmark.yml to your repo
+              </a>
+              ·
+              <a href="https://raw.githubusercontent.com/d0dg3r/GitSyncMarks/main/.github/workflows/add-bookmark.yml" target="_blank" rel="noopener" data-i18n="options_automationWorkflowRaw">Raw</a>
+            </p>
+            <div class="automation-copy-wrap">
+              <pre id="automation-gh-block" class="code-block code-block-sm">gh workflow run add-bookmark.yml \
   -f url="https://example.com" \
   -f title="Example" \
   -f folder="toolbar" \
   -f path="dev-tools" \
   -f base-path="bookmarks"</pre>
-            <button type="button" class="btn btn-secondary btn-sm automation-copy-btn" id="automation-copy-gh-btn" data-i18n="options_automationCopy">Copy</button>
+              <button type="button" class="btn btn-secondary btn-sm automation-copy-btn" id="automation-copy-gh-btn" data-i18n="options_automationCopy">Copy</button>
+            </div>
+            <p class="automation-subfolder-example" data-i18n="options_automationSubfolderExample">Example: <code>path="dev-tools"</code> → <code>bookmarks/toolbar/dev-tools/</code></p>
+            <table class="help-table automation-params-table">
+              <tbody>
+                <tr><td><code>url</code></td><td data-i18n="options_automationParamUrl">Bookmark URL (required)</td></tr>
+                <tr><td><code>title</code></td><td data-i18n="options_automationParamTitle">Title (optional; URL used if empty)</td></tr>
+                <tr><td><code>folder</code></td><td data-i18n="options_automationParamSection">Section: toolbar or other</td></tr>
+                <tr><td><code>path</code></td><td data-i18n="options_automationParamFolder">Folder within section (e.g. dev-tools)</td></tr>
+                <tr><td><code>base-path</code></td><td data-i18n="options_automationParamBasePath">Base folder in repo (default bookmarks; must match File Path setting)</td></tr>
+              </tbody>
+            </table>
           </div>
-          <p class="automation-subfolder-example" data-i18n="options_automationSubfolderExample">Example: <code>path="dev-tools"</code> → <code>bookmarks/toolbar/dev-tools/</code></p>
-          <table class="help-table automation-params-table">
-            <tbody>
-              <tr><td><code>url</code></td><td data-i18n="options_automationParamUrl">Bookmark URL (required)</td></tr>
-              <tr><td><code>title</code></td><td data-i18n="options_automationParamTitle">Title (optional; URL used if empty)</td></tr>
-              <tr><td><code>folder</code></td><td data-i18n="options_automationParamSection">Section: toolbar or other</td></tr>
-              <tr><td><code>path</code></td><td data-i18n="options_automationParamFolder">Folder within section (e.g. dev-tools)</td></tr>
-              <tr><td><code>base-path</code></td><td data-i18n="options_automationParamBasePath">Base folder in repo (default bookmarks; must match File Path setting)</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+        </section>
+      </div>
 
     </div>
 
     <!-- ==================== Help Tab ==================== -->
     <div class="tab-content" id="tab-help">
 
-      <section class="card help-quick-links-card">
-        <div class="help-quick-links">
-          <a href="https://github.com/d0dg3r/GitSyncMarks/discussions/37" target="_blank" rel="noopener" class="btn btn-primary help-link-btn" data-i18n="help_voteBacklogBtn">Vote on backlog</a>
-          <a href="https://github.com/d0dg3r/GitSyncMarks/tree/main/docs" target="_blank" rel="noopener" class="btn btn-secondary help-link-btn" data-i18n="options_documentation">Documentation</a>
-          <a href="https://github.com/d0dg3r/GitSyncMarks/discussions" target="_blank" rel="noopener" class="btn btn-secondary help-link-btn" data-i18n="help_discussions">Discussions</a>
-          <a href="https://github.com/d0dg3r/GitSyncMarks/issues" target="_blank" rel="noopener" class="btn btn-secondary help-link-btn" data-i18n="help_reportIssue">Report Issue</a>
-        </div>
-      </section>
+      <div class="sub-tab-bar help-quick-links">
+        <a href="https://github.com/d0dg3r/GitSyncMarks/discussions/37" target="_blank" rel="noopener" class="sub-tab-btn help-link-btn" data-i18n="help_voteBacklogBtn">Vote on backlog</a>
+        <a href="https://github.com/d0dg3r/GitSyncMarks/tree/main/docs" target="_blank" rel="noopener" class="sub-tab-btn help-link-btn" data-i18n="options_documentation">Documentation</a>
+        <a href="https://github.com/d0dg3r/GitSyncMarks/discussions" target="_blank" rel="noopener" class="sub-tab-btn help-link-btn" data-i18n="help_discussions">Discussions</a>
+        <a href="https://github.com/d0dg3r/GitSyncMarks/issues" target="_blank" rel="noopener" class="sub-tab-btn help-link-btn" data-i18n="help_reportIssue">Report Issue</a>
+      </div>
 
       <details class="help-details card" open>
         <summary>
@@ -526,7 +522,7 @@
           <dt data-i18n="help_profilesAdd">Add, Rename, Delete</dt>
           <dd data-i18n="help_profilesAddDesc">Select a profile in the dropdown, then Add (new profile), Rename, or Delete. Up to 10 profiles. Deleting removes the selected profile.</dd>
           <dt data-i18n="help_profilesSwitch">Profile switch</dt>
-          <dd data-i18n="help_profilesSwitchDesc">Select another profile to switch. Your current bookmarks are saved and pushed to the current profile's repo before switching. The target profile's bookmarks replace the local ones. Use “Switch without confirmation” to skip the confirm dialog.</dd>
+          <dd data-i18n="help_profilesSwitchDesc">Select another profile to switch. Your current bookmarks are saved and pushed to the current profile's repo before switching. The target profile's bookmarks replace the local ones. Use "Switch without confirmation" to skip the confirm dialog.</dd>
         </dl>
         <p class="help-note" data-i18n="help_profilesNote">Profiles work reliably. With multiple profiles, sync conflicts can occasionally occur — trying Push or Pull 2–3 times usually resolves them. This feature is still evolving. If you encounter reproducible bugs, please open an issue on GitHub.</p>
         </div>
@@ -571,10 +567,24 @@
           <dd data-i18n="help_syncProfilesDesc">Real-time (1 min), Frequent (5 min), Normal (15 min), or Power save (60 min). Custom lets you set interval and debounce manually.</dd>
           <dt data-i18n="help_syncStartup">Sync on startup / focus</dt>
           <dd data-i18n="help_syncStartupDesc">Optional: sync when the browser starts or when you return to the browser window (with cooldown).</dd>
+        </dl>
+        </div>
+      </details>
+
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_filesTitle">Files</h2>
+        </summary>
+        <div class="help-details-body">
+        <dl class="help-dl">
           <dt data-i18n="help_generatedFilesTitle">Generated files</dt>
-          <dd data-i18n="help_generatedFilesDesc">README.md (overview) and bookmarks.html (Netscape format for browser import) are created during sync. Toggle off in the Sync tab to stop updating.</dd>
+          <dd data-i18n="help_generatedFilesDesc">README.md, bookmarks.html, feed.xml, and dashy-conf.yml can be created during sync. Choose Off, Manual, or Auto per file in the Files tab.</dd>
           <dt data-i18n="help_settingsSyncTitle">Settings sync to Git</dt>
           <dd data-i18n="help_settingsSyncDesc">When enabled, extension settings are encrypted and stored in the repo. Choose Global (shared settings.enc) or Individual (device-specific settings-{id}.enc). In individual mode you can import settings from other devices.</dd>
+          <dt data-i18n="help_backupBookmarks">Export / Import</dt>
+          <dd data-i18n="help_backupBookmarksDesc">Export all browser bookmarks as JSON. Import replaces all local bookmarks with the file contents.</dd>
+          <dt data-i18n="help_backupSettings">Export / Import Settings</dt>
+          <dd data-i18n="help_backupSettingsDesc">Export GitHub connection and sync settings (profiles with decrypted tokens). Import replaces all settings; the page reloads afterwards.</dd>
         </dl>
         </div>
       </details>
@@ -585,20 +595,6 @@
         </summary>
         <div class="help-details-body">
         <p data-i18n="help_notificationsDesc">Choose when to show sync notifications: All (success and failure), Errors only, or Off.</p>
-        </div>
-      </details>
-
-      <details class="help-details card">
-        <summary>
-          <h2 data-i18n="help_backupTitle">Backup</h2>
-        </summary>
-        <div class="help-details-body">
-        <dl class="help-dl">
-          <dt data-i18n="help_backupBookmarks">Export / Import Bookmarks</dt>
-          <dd data-i18n="help_backupBookmarksDesc">Export all browser bookmarks as JSON. Import replaces all local bookmarks with the file contents.</dd>
-          <dt data-i18n="help_backupSettings">Export / Import Settings</dt>
-          <dd data-i18n="help_backupSettingsDesc">Export GitHub connection and sync settings (profiles with decrypted tokens). Import replaces all settings; the page reloads afterwards.</dd>
-        </dl>
         </div>
       </details>
 
