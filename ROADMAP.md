@@ -10,6 +10,7 @@ Contributions and ideas welcome — open an issue or pull request.
 
 - **Browser import files** — Automatically generate import files for common browsers (e.g. Netscape HTML) alongside README.md. Enables importing directly from the repo without the extension.
 - **Settings sync to Git** — Optional: store extension settings in the repo so they sync across clients. **Encrypted only** — never plain JSON (would expose tokens). Uses existing .enc format; user sets password once per device.
+- **RSS feed export** — Generate `feed.xml` (RSS 2.0) alongside other generated files. Each bookmark becomes an `<item>` with title, URL, folder as category. Subscribable via RSS readers; enables automations (Slack, IFTTT, n8n); works as live feed via GitHub Pages / raw URL. Toggle in Sync options.
 - **Context menu** — Right-click on link or page:
   - **Add to GitSyncMarks** — add as bookmark to repo
   - **Favicon**: copy favicon URL to clipboard; download locally; save to Git repo
