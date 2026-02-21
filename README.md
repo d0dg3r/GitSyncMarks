@@ -21,16 +21,14 @@
 
 <table align="center">
 <tr>
-<td align="center"><img src="store-assets/en/chrome-7-popup.png" width="220" alt="Popup" /><br><sub>1. Popup</sub></td>
-<td align="center"><img src="store-assets/en/chrome-1-github.png" width="220" alt="GitHub" /><br><sub>2. GitHub</sub></td>
-<td align="center"><img src="store-assets/en/chrome-2-synchronization.png" width="220" alt="Sync" /><br><sub>3. Sync</sub></td>
-<td align="center"><img src="store-assets/en/chrome-3-backup.png" width="220" alt="Backup" /><br><sub>4. Backup</sub></td>
+<td align="center"><img src="store-assets/en/chrome-1-github.png" width="220" alt="GitHub (Profile)" /><br><sub>1. GitHub</sub></td>
+<td align="center"><img src="store-assets/en/chrome-2-connection.png" width="220" alt="GitHub (Connection)" /><br><sub>2. Connection</sub></td>
+<td align="center"><img src="store-assets/en/chrome-3-sync.png" width="220" alt="Sync" /><br><sub>3. Sync</sub></td>
 </tr>
 <tr>
-<td align="center"><img src="store-assets/en/chrome-4-automation.png" width="220" alt="Automation" /><br><sub>5. Automation</sub></td>
-<td align="center"><img src="store-assets/en/chrome-5-help.png" width="220" alt="Help" /><br><sub>6. Help</sub></td>
-<td align="center"><img src="store-assets/en/chrome-6-about.png" width="220" alt="About" /><br><sub>7. About</sub></td>
-<td align="center"></td>
+<td align="center"><img src="store-assets/en/chrome-4-files.png" width="220" alt="Files (Generated)" /><br><sub>4. Files</sub></td>
+<td align="center"><img src="store-assets/en/chrome-5-export-import.png" width="220" alt="Files (Export / Import)" /><br><sub>5. Export / Import</sub></td>
+<td align="center"><img src="store-assets/en/chrome-6-popup.png" width="220" alt="Popup" /><br><sub>6. Popup</sub></td>
 </tr>
 </table>
 
