@@ -1,0 +1,967 @@
+{
+  "extName": {
+    "message": "GitSyncMarks"
+  },
+  "extDescription": {
+    "message": "Ваши закладки в безопасности на GitHub — хранение по файлам, трёхсторонняя синхронизация с объединением, работает в Chrome и Firefox. Сервер не нужен."
+  },
+  "commands_quickSync": {
+    "message": "Быстрая синхронизация закладок"
+  },
+  "commands_openOptions": {
+    "message": "Открыть настройки расширения"
+  },
+
+  "popup_configureFirst": {
+    "message": "Сначала настройте расширение."
+  },
+  "popup_openSettings": {
+    "message": "Открыть настройки"
+  },
+  "popup_ready": {
+    "message": "Готово"
+  },
+  "popup_conflictDetected": {
+    "message": "Обнаружен конфликт"
+  },
+  "popup_conflictDescription": {
+    "message": "Локальные и удалённые закладки были изменены. Выберите способ разрешения:"
+  },
+  "popup_localToGithub": {
+    "message": "Локальные → GitHub"
+  },
+  "popup_githubToLocal": {
+    "message": "GitHub → Локальные"
+  },
+  "popup_syncNow": {
+    "message": "Синхронизировать"
+  },
+  "popup_pushUp": {
+    "message": "Push ↑"
+  },
+  "popup_pullDown": {
+    "message": "Pull ↓"
+  },
+  "popup_autoSyncActive": {
+    "message": "Автосинхронизация активна"
+  },
+  "popup_autoSyncDisabled": {
+    "message": "Автосинхронизация отключена"
+  },
+  "popup_settings": {
+    "message": "Настройки"
+  },
+  "popup_synced": {
+    "message": "Синхронизировано"
+  },
+  "popup_notSyncedYet": {
+    "message": "Ещё не синхронизировано"
+  },
+  "popup_lastSync": {
+    "message": "Последняя синхронизация: $1"
+  },
+  "popup_justNow": {
+    "message": "только что"
+  },
+  "popup_minAgo": {
+    "message": "$1 мин назад"
+  },
+  "popup_hoursAgo": {
+    "message": "$1ч назад"
+  },
+  "popup_syncing": {
+    "message": "Синхронизация..."
+  },
+  "popup_profileSwitching": {
+    "message": "Переключение профиля..."
+  },
+  "popup_error": {
+    "message": "Ошибка: $1"
+  },
+  "popup_nextSyncIn": {
+    "message": "Следующая синхронизация через $1"
+  },
+  "popup_lastDataChange": {
+    "message": "Последнее изменение данных: $1"
+  },
+  "popup_lastCommit": {
+    "message": "Последний коммит:"
+  },
+
+  "options_subtitle": {
+    "message": "Настройки"
+  },
+  "options_profile": {
+    "message": "Профиль"
+  },
+  "options_profileAdd": {
+    "message": "+ Добавить"
+  },
+  "options_profileAddNameLabel": {
+    "message": "Имя профиля"
+  },
+  "options_profileAddConfirmBtn": {
+    "message": "Добавить"
+  },
+  "options_profileRenameLabel": {
+    "message": "Новое имя"
+  },
+  "options_profileAddPlaceholder": {
+    "message": "Новый профиль"
+  },
+  "options_profileRename": {
+    "message": "Переименовать"
+  },
+  "options_profileRenamePrompt": {
+    "message": "Новое имя для «$1»:"
+  },
+  "options_profileDelete": {
+    "message": "Удалить"
+  },
+  "options_profileSwitchConfirm": {
+    "message": "Переключиться на «$1»? Ваши закладки будут заменены закладками этого профиля."
+  },
+  "options_profileDeleteConfirm": {
+    "message": "Удалить профиль «$1»? Это действие нельзя отменить."
+  },
+  "options_profileSwitching": {
+    "message": "Переключение профиля..."
+  },
+  "options_profileSwitchWithoutConfirm": {
+    "message": "Переключать без подтверждения"
+  },
+  "options_profileSwitchConfirmBtn": {
+    "message": "Переключить"
+  },
+  "options_profileSwitchCancelBtn": {
+    "message": "Отмена"
+  },
+  "options_profilesLimit": {
+    "message": "$1/$2 профилей"
+  },
+  "options_githubConnection": {
+    "message": "Подключение к GitHub"
+  },
+  "options_patLabel": {
+    "message": "Персональный токен доступа (PAT)"
+  },
+  "options_toggleToken": {
+    "message": "Показать/скрыть токен"
+  },
+  "options_tokenHint": {
+    "message": "Требуется область <code>repo</code>. <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Создать токен</a>"
+  },
+  "options_repoOwner": {
+    "message": "Владелец репозитория"
+  },
+  "options_ownerPlaceholder": {
+    "message": "ваше-имя-на-github"
+  },
+  "options_repoName": {
+    "message": "Имя репозитория"
+  },
+  "options_branch": {
+    "message": "Ветка"
+  },
+  "options_filePath": {
+    "message": "Путь к файлам в репозитории"
+  },
+  "options_filePathHint": {
+    "message": "Папка для хранения файлов закладок."
+  },
+  "options_filePathChangeHint": {
+    "message": "При следующей синхронизации может возникнуть конфликт. Используйте «GitHub → Локальные», чтобы принять удалённое состояние."
+  },
+  "options_testConnection": {
+    "message": "Проверить соединение"
+  },
+  "options_githubReposTitle": {
+    "message": "Папка GitHub Repos"
+  },
+  "options_githubReposDesc": {
+    "message": "Создать папку с закладками на все ваши GitHub-репозитории (публичные и приватные)."
+  },
+  "options_githubReposEnabled": {
+    "message": "Папка GitHub Repos"
+  },
+  "options_githubReposParentLabel": {
+    "message": "Расположение"
+  },
+  "options_githubReposParentToolbar": {
+    "message": "Панель закладок"
+  },
+  "options_githubReposParentOther": {
+    "message": "Другие закладки"
+  },
+  "options_githubReposParentMenu": {
+    "message": "Меню закладок"
+  },
+  "options_githubReposRefresh": {
+    "message": "Обновить GitHub Repos"
+  },
+  "options_githubReposRefreshSuccess": {
+    "message": "Добавлено $1 репозиториев для $2"
+  },
+  "options_synchronization": {
+    "message": "Синхронизация"
+  },
+  "options_autoSync": {
+    "message": "Автоматическая синхронизация"
+  },
+  "options_syncInterval": {
+    "message": "Интервал синхронизации (минуты)"
+  },
+  "options_syncIntervalHint": {
+    "message": "Как часто проверять удалённые изменения."
+  },
+  "options_syncProfile": {
+    "message": "Профиль синхронизации"
+  },
+  "options_syncProfileRealtime": {
+    "message": "Реальное время (1 мин, задержка 2с)"
+  },
+  "options_syncProfileFrequent": {
+    "message": "Частый (5 мин, задержка 3с)"
+  },
+  "options_syncProfileNormal": {
+    "message": "Обычный (15 мин, задержка 5с)"
+  },
+  "options_syncProfilePowersave": {
+    "message": "Энергосбережение (60 мин, задержка 10с)"
+  },
+  "options_syncProfileCustom": {
+    "message": "Пользовательский"
+  },
+  "options_debounceDelay": {
+    "message": "Задержка перед синхронизацией (секунды)"
+  },
+  "options_debounceDelayHint": {
+    "message": "Время ожидания перед синхронизацией после изменения закладок."
+  },
+  "options_syncOnStartup": {
+    "message": "Синхронизация при запуске браузера"
+  },
+  "options_syncOnFocus": {
+    "message": "Синхронизация при возврате в браузер"
+  },
+  "options_generatedFilesTitle": {
+    "message": "Генерируемые файлы"
+  },
+  "options_generatedFilesDesc": {
+    "message": "Файлы, создаваемые в репозитории при синхронизации. Выберите «Выкл.», «Вручную» или «Авто» для каждого файла."
+  },
+  "options_generateModeOff": {
+    "message": "Выкл."
+  },
+  "options_generateModeManual": {
+    "message": "Вручную"
+  },
+  "options_generateModeAuto": {
+    "message": "Авто"
+  },
+  "options_generateNowBtn": {
+    "message": "Сгенерировать сейчас"
+  },
+  "options_generateReadmeMd": {
+    "message": "README.md"
+  },
+  "options_generateReadmeMdDesc": {
+    "message": "Обзор в формате Markdown в репозитории."
+  },
+  "options_generateBookmarksHtml": {
+    "message": "Генерировать bookmarks.html"
+  },
+  "options_generateBookmarksHtmlDesc": {
+    "message": "Формат Netscape для импорта в браузер (Chrome, Firefox)."
+  },
+  "options_generateFeedXml": {
+    "message": "Генерировать feed.xml"
+  },
+  "options_generateFeedXmlDesc": {
+    "message": "RSS 2.0-лента — подпишитесь в любом RSS-ридере или используйте для автоматизации."
+  },
+  "options_generateDashyYml": {
+    "message": "Генерировать dashy-conf.yml"
+  },
+  "options_generateDashyYmlDesc": {
+    "message": "Конфигурация дашборда Dashy — импортируйте как секции в ваш conf.yml."
+  },
+  "options_settingsSyncTitle": {
+    "message": "Файл настроек"
+  },
+  "options_settingsSyncDesc": {
+    "message": "Зашифрованная резервная копия настроек расширения в репозитории. Используйте один пароль на всех устройствах."
+  },
+  "options_syncSettingsToGit": {
+    "message": "Синхронизировать настройки в Git (зашифрованно)"
+  },
+  "options_settingsSyncPasswordLabel": {
+    "message": "Пароль шифрования"
+  },
+  "options_settingsSyncPasswordHint": {
+    "message": "Устанавливается один раз на каждом устройстве. Должен совпадать на всех устройствах."
+  },
+  "options_settingsSyncSaveBtn": {
+    "message": "Сохранить пароль"
+  },
+  "options_settingsSyncActive": {
+    "message": "Синхронизация настроек активна — настройки будут отправлены при следующей синхронизации."
+  },
+  "options_settingsSyncPasswordMissing": {
+    "message": "Пожалуйста, введите пароль."
+  },
+  "options_settingsSyncModeLabel": {
+    "message": "Режим синхронизации"
+  },
+  "options_settingsSyncModeGlobal": {
+    "message": "Глобальный — общий для всех устройств"
+  },
+  "options_settingsSyncModeIndividual": {
+    "message": "Индивидуальный — только для этого устройства"
+  },
+  "options_settingsSyncImportTitle": {
+    "message": "Импорт с другого устройства"
+  },
+  "options_settingsSyncImportBtn": {
+    "message": "Загрузить доступные конфигурации"
+  },
+  "options_settingsSyncImportApply": {
+    "message": "Импортировать"
+  },
+  "options_settingsSyncImportEmpty": {
+    "message": "Конфигурации устройств не найдены"
+  },
+  "options_settingsSyncImportSuccess": {
+    "message": "Настройки успешно импортированы"
+  },
+  "options_notifications": {
+    "message": "Уведомления о синхронизации"
+  },
+  "options_notificationsOff": {
+    "message": "Выкл."
+  },
+  "options_notificationsAll": {
+    "message": "Все (успех и ошибки)"
+  },
+  "options_notificationsErrorsOnly": {
+    "message": "Только ошибки"
+  },
+  "options_notificationsHint": {
+    "message": "Выберите, когда показывать уведомления."
+  },
+  "notification_titleSuccess": {
+    "message": "Синхронизация выполнена"
+  },
+  "notification_titleFailure": {
+    "message": "Синхронизация не удалась"
+  },
+  "options_saveSettings": {
+    "message": "Сохранить настройки"
+  },
+  "options_theme": {
+    "message": "Тема"
+  },
+  "options_themeAuto": {
+    "message": "A Авто (системная)"
+  },
+  "options_themeLight": {
+    "message": "☀ Светлая"
+  },
+  "options_themeDark": {
+    "message": "☽ Тёмная"
+  },
+  "options_language": {
+    "message": "Язык"
+  },
+  "options_langAuto": {
+    "message": "Авто (браузер)"
+  },
+  "options_pleaseEnterToken": {
+    "message": "Пожалуйста, введите токен."
+  },
+  "options_checking": {
+    "message": "Проверка..."
+  },
+  "options_invalidToken": {
+    "message": "Недействительный токен."
+  },
+  "options_tokenValidMissingScope": {
+    "message": "Токен действителен ($1), но отсутствует область «repo»."
+  },
+  "options_tokenValidRepoNotFound": {
+    "message": "Токен действителен ($1), но репозиторий «$2» не найден."
+  },
+  "options_connectionOk": {
+    "message": "Соединение установлено! Пользователь: $1, Репозиторий: $2"
+  },
+  "options_tokenValidSpecifyRepo": {
+    "message": "Токен действителен! Пользователь: $1. Пожалуйста, укажите репозиторий."
+  },
+  "options_error": {
+    "message": "Ошибка: $1"
+  },
+  "options_onboardingCreateBtn": {
+    "message": "Создать"
+  },
+  "options_onboardingPullBtn": {
+    "message": "Загрузить"
+  },
+  "options_onboardingCreateFolder": {
+    "message": "Папка $1 ещё не существует. Создать её с базовой структурой (toolbar, other)?"
+  },
+  "options_onboardingPullNow": {
+    "message": "В репозитории найдены закладки. Загрузить их в этот браузер сейчас?"
+  },
+  "options_onboardingCreateSuccess": {
+    "message": "Папка успешно создана."
+  },
+  "options_onboardingPullSuccess": {
+    "message": "Закладки успешно загружены."
+  },
+  "options_settingsSaved": {
+    "message": "Настройки сохранены!"
+  },
+  "options_errorSaving": {
+    "message": "Ошибка сохранения настроек: $1"
+  },
+
+  "api_invalidToken": {
+    "message": "Недействительный токен. Проверьте ваш Personal Access Token."
+  },
+  "api_rateLimitExceeded": {
+    "message": "Превышен лимит запросов к GitHub API. Подождите немного."
+  },
+  "api_accessDenied": {
+    "message": "Доступ запрещён. Проверьте права токена."
+  },
+  "api_conflict": {
+    "message": "Конфликт: файл был изменён за это время."
+  },
+  "api_errorReading": {
+    "message": "Ошибка чтения файла: $1"
+  },
+  "api_errorWriting": {
+    "message": "Ошибка записи файла: $1"
+  },
+  "api_branchNotFound": {
+    "message": "Ветка «$1» не найдена."
+  },
+
+  "sync_alreadyInProgress": {
+    "message": "Синхронизация уже выполняется."
+  },
+  "sync_notConfigured": {
+    "message": "Расширение не настроено. Откройте настройки."
+  },
+  "sync_noChanges": {
+    "message": "Нет изменений с последней синхронизации."
+  },
+  "sync_conflictRemoteModified": {
+    "message": "Обнаружен конфликт: удалённая версия тоже была изменена."
+  },
+  "sync_pushSuccess": {
+    "message": "Закладки успешно отправлены на GitHub."
+  },
+  "sync_conflictFileModified": {
+    "message": "Конфликт: файл был изменён за это время."
+  },
+  "sync_pushFailed": {
+    "message": "Ошибка отправки: $1"
+  },
+  "sync_noBookmarksOnGithub": {
+    "message": "На GitHub закладки не найдены."
+  },
+  "sync_alreadyUpToDate": {
+    "message": "Закладки уже актуальны."
+  },
+  "sync_pullSuccess": {
+    "message": "Загружено с GitHub."
+  },
+  "sync_pullFailed": {
+    "message": "Ошибка загрузки: $1"
+  },
+  "sync_allInSync": {
+    "message": "Всё синхронизировано. Изменений нет."
+  },
+  "sync_conflictBothModified": {
+    "message": "Конфликт: локальные и удалённые закладки были изменены. Выберите Push или Pull."
+  },
+  "sync_syncFailed": {
+    "message": "Ошибка синхронизации: $1"
+  },
+
+  "serializer_invalidFormat": {
+    "message": "Неверный формат данных закладок."
+  },
+  "serializer_lastSynced": {
+    "message": "Последняя синхронизация: $1"
+  },
+  "serializer_device": {
+    "message": "Устройство: $1"
+  },
+  "serializer_untitled": {
+    "message": "(Без названия)"
+  },
+
+  "popup_reportIssue": {
+    "message": "Сообщить о проблеме"
+  },
+
+  "options_about": {
+    "message": "О расширении"
+  },
+  "options_version": {
+    "message": "Версия"
+  },
+  "options_by": {
+    "message": "Автор"
+  },
+  "options_specialThanks": {
+    "message": "Особая благодарность"
+  },
+  "options_mobileAppTitle": {
+    "message": "Мобильное приложение"
+  },
+  "options_mobileAppDesc": {
+    "message": "Просматривайте закладки на ходу. GitSyncMarks-Mobile (iOS + Android) синхронизируется с вашим GitHub-репозиторием — приложение-компаньон только для чтения."
+  },
+  "options_mobileAppLink": {
+    "message": "GitSyncMarks-Mobile на GitHub"
+  },
+  "options_mobileAppStores": {
+    "message": "F-Droid и Google Play скоро."
+  },
+  "options_links": {
+    "message": "Ссылки"
+  },
+  "options_githubRepo": {
+    "message": "GitHub-репозиторий"
+  },
+  "options_documentation": {
+    "message": "Документация"
+  },
+  "options_reportBug": {
+    "message": "Сообщить об ошибке / Запросить функцию"
+  },
+  "options_privacyPolicy": {
+    "message": "Политика конфиденциальности"
+  },
+  "options_license": {
+    "message": "Лицензия (MIT)"
+  },
+  "options_debugLogTitle": {
+    "message": "Журнал отладки"
+  },
+  "options_debugLogDesc": {
+    "message": "Включите для записи диагностики синхронизации (различия, решения при слиянии, конфликты, хеши коммитов в ключевых точках). Используйте при устранении проблем с синхронизацией. Экспортируйте журнал для поддержки."
+  },
+  "options_debugLogEnabled": {
+    "message": "Включить журнал отладки"
+  },
+  "options_debugLogExport": {
+    "message": "Экспортировать журнал"
+  },
+  "options_debugLogExportEmpty": {
+    "message": "Журнал пуст. Включите журнал отладки и выполните синхронизацию."
+  },
+
+  "options_tabGitHub": {
+    "message": "GitHub"
+  },
+  "options_tabSynchronization": {
+    "message": "Синхр."
+  },
+  "options_tabFiles": {
+    "message": "Файлы"
+  },
+  "options_tabHelp": {
+    "message": "Справка"
+  },
+  "options_tabAbout": {
+    "message": "О расширении"
+  },
+  "options_subTabProfile": {
+    "message": "Профиль"
+  },
+  "options_subTabConnection": {
+    "message": "Подключение"
+  },
+  "options_subTabRepos": {
+    "message": "Repos"
+  },
+  "options_subTabGenerated": {
+    "message": "Генерация"
+  },
+  "options_subTabSettings": {
+    "message": "Настройки"
+  },
+  "options_subTabExportImport": {
+    "message": "Экспорт / Импорт"
+  },
+  "options_subTabGitAdd": {
+    "message": "Git Add"
+  },
+  "help_gettingStartedTitle": {
+    "message": "Начало работы"
+  },
+  "help_gettingStartedIntro": {
+    "message": "Создайте GitHub-репозиторий для закладок, затем создайте Personal Access Token (PAT) с областью <code>repo</code>. Во вкладке GitHub введите токен, владельца репозитория, имя, ветку (обычно <code>main</code>) и путь к папке (по умолчанию: <code>bookmarks</code>). Нажмите <strong>Проверить соединение</strong> для проверки."
+  },
+  "help_onboarding": {
+    "message": "Если папка пуста, вы можете создать базовую структуру (toolbar, other). Если закладки уже есть в репозитории, вы можете загрузить их в этот браузер."
+  },
+  "help_profilesTitle": {
+    "message": "Профили"
+  },
+  "help_profilesIntro": {
+    "message": "Каждый профиль имеет свой набор закладок и настройки GitHub-репозитория. Используйте профили для работы/личных целей или разных устройств."
+  },
+  "help_profilesAdd": {
+    "message": "Добавить, Переименовать, Удалить"
+  },
+  "help_profilesAddDesc": {
+    "message": "Выберите профиль в раскрывающемся списке, затем «Добавить» (новый профиль), «Переименовать» или «Удалить». До 10 профилей. Удаление убирает выбранный профиль."
+  },
+  "help_profilesSwitch": {
+    "message": "Переключение профиля"
+  },
+  "help_profilesSwitchDesc": {
+    "message": "Выберите другой профиль для переключения. Ваши текущие закладки сохраняются и отправляются в репозиторий текущего профиля перед переключением. Закладки целевого профиля заменяют локальные. Используйте «Переключать без подтверждения», чтобы пропустить диалог подтверждения."
+  },
+  "help_profilesNote": {
+    "message": "Профили работают надёжно. При использовании нескольких профилей иногда могут возникать конфликты синхронизации — обычно 2–3 попытки Push или Pull решают проблему. Эта функция продолжает развиваться. Если вы обнаружите воспроизводимые ошибки, откройте issue на GitHub."
+  },
+  "help_githubReposTitle": {
+    "message": "Папка GitHub Repos"
+  },
+  "help_githubReposDesc": {
+    "message": "Необязательно: создайте папку с закладками на все ваши GitHub-репозитории (публичные и приватные). Выберите расположение (панель закладок, другие). Папка синхронизируется как обычные закладки; используйте <strong>Обновить GitHub Repos</strong> для обновления списка."
+  },
+  "help_popupTitle": {
+    "message": "Всплывающее окно (значок расширения)"
+  },
+  "help_popupProfile": {
+    "message": "Выбор профиля"
+  },
+  "help_popupProfileDesc": {
+    "message": "Переключайте профили прямо из заголовка всплывающего окна."
+  },
+  "help_popupSyncNow": {
+    "message": "Синхронизировать"
+  },
+  "help_popupSyncNowDesc": {
+    "message": "Полная трёхсторонняя синхронизация с объединением: локальные и удалённые изменения объединяются автоматически, когда это возможно."
+  },
+  "help_popupPush": {
+    "message": "Push ↑"
+  },
+  "help_popupPushDesc": {
+    "message": "Отправить локальные закладки на GitHub (перезаписывает удалённые изменения)."
+  },
+  "help_popupPull": {
+    "message": "Pull ↓"
+  },
+  "help_popupPullDesc": {
+    "message": "Загрузить с GitHub (перезаписывает локальные изменения)."
+  },
+  "help_syncTitle": {
+    "message": "Синхронизация"
+  },
+  "help_autoSyncTitle": {
+    "message": "Автосинхронизация"
+  },
+  "help_autoSyncDesc": {
+    "message": "Когда включена, синхронизация происходит автоматически при добавлении, изменении или удалении закладок. Задержка ожидает завершения быстрых изменений перед синхронизацией."
+  },
+  "help_syncProfiles": {
+    "message": "Профили синхронизации"
+  },
+  "help_syncProfilesDesc": {
+    "message": "Реальное время (1 мин), Частый (5 мин), Обычный (15 мин) или Энергосбережение (60 мин). Пользовательский позволяет задать интервал и задержку вручную."
+  },
+  "help_syncStartup": {
+    "message": "Синхронизация при запуске / фокусе"
+  },
+  "help_syncStartupDesc": {
+    "message": "Необязательно: синхронизация при запуске браузера или при возврате в окно браузера (с задержкой повтора)."
+  },
+  "help_generatedFilesTitle": {
+    "message": "Генерируемые файлы"
+  },
+  "help_generatedFilesDesc": {
+    "message": "README.md, bookmarks.html, feed.xml и dashy-conf.yml могут создаваться при синхронизации. Выберите «Выкл.», «Вручную» или «Авто» для каждого файла во вкладке «Файлы»."
+  },
+  "help_settingsSyncTitle": {
+    "message": "Файл настроек"
+  },
+  "help_settingsSyncDesc": {
+    "message": "Когда включено, настройки расширения (профили, токены, предпочтения) шифруются и сохраняются в репозитории. Выберите «Глобальный» (общий settings.enc для всех устройств) или «Индивидуальный» (settings-{id}.enc для конкретного устройства). В индивидуальном режиме можно импортировать настройки с других устройств. Пароль хранится локально на каждом устройстве и должен совпадать на всех устройствах, использующих репозиторий."
+  },
+  "help_notificationsTitle": {
+    "message": "Уведомления"
+  },
+  "help_notificationsDesc": {
+    "message": "Выберите, когда показывать уведомления о синхронизации: Все (успех и ошибки), Только ошибки или Выкл."
+  },
+  "help_backupTitle": {
+    "message": "Резервное копирование"
+  },
+  "help_backupBookmarks": {
+    "message": "Экспорт / Импорт закладок"
+  },
+  "help_backupBookmarksDesc": {
+    "message": "Экспортируйте все закладки браузера в JSON. Импорт заменяет все закладки активного профиля содержимым файла."
+  },
+  "help_backupSettings": {
+    "message": "Экспорт / Импорт настроек"
+  },
+  "help_backupSettingsDesc": {
+    "message": "Экспорт в виде обычного .json или зашифрованного .enc. Импорт заменяет все настройки (все профили); страница перезагружается после этого."
+  },
+  "help_conflictTitle": {
+    "message": "Конфликты"
+  },
+  "help_conflictDesc": {
+    "message": "Когда и локальные, и удалённые закладки были изменены, всплывающее окно показывает конфликт. Выберите <strong>Push</strong> (локальные побеждают, перезаписать удалённые) или <strong>Pull</strong> (удалённые побеждают, перезаписать локальные). Автоматическое слияние конфликтов не выполняется."
+  },
+  "help_shortcuts": {
+    "message": "Горячие клавиши"
+  },
+  "help_quickSync": {
+    "message": "Быстрая синхронизация закладок"
+  },
+  "help_openOptions": {
+    "message": "Открыть настройки расширения"
+  },
+  "help_shortcutsNote": {
+    "message": "Горячие клавиши можно настроить в настройках расширений браузера."
+  },
+  "help_debugLogTitle": {
+    "message": "Журнал отладки"
+  },
+  "help_debugLogDesc": {
+    "message": "Включите во вкладке «Синхр.» для записи подробной диагностики синхронизации — различия, решения при слиянии и хеши коммитов. Экспортируйте журнал для устранения неполадок."
+  },
+  "help_backupBookmarksDesc2": {
+    "message": "Экспорт закладок (JSON), конфигурации Dashy (YAML) или настроек (обычный JSON / зашифрованный .enc). Импорт закладок или настроек — зашифрованные файлы расшифровываются с вашим паролем. Импорт закладок заменяет все локальные закладки; импорт настроек заменяет все профили и перезагружает страницу."
+  },
+  "help_themeAutoSaveTitle": {
+    "message": "Тема и автосохранение"
+  },
+  "help_themeCycleTitle": {
+    "message": "Тема"
+  },
+  "help_themeCycleDesc": {
+    "message": "Нажмите кнопку в заголовке для переключения: Авто (системная) → Тёмная → Светлая → Авто. Значок показывает текущий режим. Работает в настройках и всплывающем окне."
+  },
+  "help_autoSaveTitle": {
+    "message": "Автосохранение"
+  },
+  "help_autoSaveDesc": {
+    "message": "Все настройки сохраняются автоматически при изменении — кнопок сохранения нет. Изменения вступают в силу немедленно."
+  },
+  "help_whySlowTitle": {
+    "message": "Почему синхронизация иногда длится долго?"
+  },
+  "help_whySlowIntro": {
+    "message": "GitSyncMarks использует GitHub Git Data API для атомарных коммитов. Каждый изменённый или новый файл закладок требует API-запрос. При большом количестве изменений это суммируется."
+  },
+  "help_whyAtomic": {
+    "message": "Все изменения записываются в один атомарный коммит: либо всё успешно, либо ничего. Это предотвращает частичное или повреждённое состояние при прерывании синхронизации. Один коммит вместо многих также помогает избежать лимитов API и сохраняет чистую историю Git."
+  },
+  "help_reportIssue": {
+    "message": "Сообщить о проблеме"
+  },
+  "help_links": {
+    "message": "Ссылки"
+  },
+  "help_discussions": {
+    "message": "Обсуждения"
+  },
+  "help_voteBacklogTitle": {
+    "message": "Что дальше?"
+  },
+  "help_voteBacklogDesc": {
+    "message": "Голосуйте за функцию из бэклога, которую мы реализуем следующей. Ваш голос определяет план развития."
+  },
+  "help_voteBacklogBtn": {
+    "message": "Голосовать за бэклог"
+  },
+
+  "options_backupTitle": {
+    "message": "Резервное копирование"
+  },
+  "options_backupIntro": {
+    "message": "Экспорт или импорт закладок в формате JSON; настроек в формате JSON или зашифрованном .enc."
+  },
+  "options_bookmarksCard": {
+    "message": "Закладки"
+  },
+  "options_settingsCard": {
+    "message": "Настройки"
+  },
+  "options_exportBookmarks": {
+    "message": "Экспорт закладок"
+  },
+  "options_exportBookmarksDesc": {
+    "message": "Сохранить все закладки в формате JSON."
+  },
+  "options_exportDashy": {
+    "message": "Экспорт конфигурации Dashy"
+  },
+  "options_exportDashyDesc": {
+    "message": "Экспорт закладок как секций дашборда Dashy (YAML)."
+  },
+  "options_exportBtn": {
+    "message": "Экспорт"
+  },
+  "options_importBtn": {
+    "message": "Импорт"
+  },
+  "options_chooseFile": {
+    "message": "Выбрать файл"
+  },
+  "options_importBookmarks": {
+    "message": "Импорт закладок"
+  },
+  "options_exportSettings": {
+    "message": "Экспорт настроек"
+  },
+  "options_exportSettingsDesc": {
+    "message": "Подключение к GitHub и настройки синхронизации (включая профили)."
+  },
+  "options_importSettings": {
+    "message": "Импорт настроек"
+  },
+  "options_importBookmarksWarning": {
+    "message": "Заменяет все закладки активного профиля. Отменить нельзя."
+  },
+  "options_importSettingsWarning": {
+    "message": "Заменяет все настройки (все профили). Страница перезагрузится."
+  },
+  "options_importSettingsFormats": {
+    "message": "Принимает файлы .json (обычные) или .enc (зашифрованные)."
+  },
+  "options_selectFile": {
+    "message": "Выберите файл..."
+  },
+  "options_importSuccess": {
+    "message": "Импорт выполнен!"
+  },
+  "options_exportSuccess": {
+    "message": "Экспорт выполнен!"
+  },
+  "options_importError": {
+    "message": "Ошибка импорта: $1"
+  },
+  "options_exportSettingsPlain": {
+    "message": "Экспорт (обычный)"
+  },
+  "options_exportSettingsEncrypted": {
+    "message": "Экспорт (зашифрованный)"
+  },
+  "options_exportPasswordPrompt": {
+    "message": "Введите пароль для шифрования файла настроек."
+  },
+  "options_importPasswordPrompt": {
+    "message": "Введите пароль для расшифровки файла настроек."
+  },
+  "options_passwordPlaceholder": {
+    "message": "Пароль"
+  },
+  "options_decryptError": {
+    "message": "Ошибка расшифровки. Неверный пароль?"
+  },
+  "options_exportEncryptedSuccess": {
+    "message": "Зашифрованный экспорт выполнен!"
+  },
+
+  "options_tabAutomation": {
+    "message": "Автоматизация"
+  },
+  "options_automationTitle": {
+    "message": "Добавление закладок через Git"
+  },
+  "options_automationIntro": {
+    "message": "Добавляйте закладки прямо в репозитории. Расширение подхватит их при следующей синхронизации и автоматически нормализует имена файлов."
+  },
+  "options_automationFormatTitle": {
+    "message": "Формат файла"
+  },
+  "options_automationFoldersLabel": {
+    "message": "Разделы:"
+  },
+  "options_automationGithubActionTitle": {
+    "message": "GitHub Action"
+  },
+  "options_automationWorkflowLink": {
+    "message": "Скопируйте add-bookmark.yml в ваш репозиторий"
+  },
+  "options_automationGithubActionParams": {
+    "message": "folder = корневой; path = необязательная подпапка; base-path, если путь к файлам ≠ bookmarks"
+  },
+  "options_automationCreateFileTitle": {
+    "message": "Создание файла в репозитории"
+  },
+  "options_automationCreateFileDesc": {
+    "message": "Добавьте новый JSON-файл в <code>bookmarks/toolbar/</code> или <code>bookmarks/other/</code> (или в подпапку). Используйте путь к файлам вашего расширения, если он отличается."
+  },
+  "options_automationCopy": {
+    "message": "Копировать"
+  },
+  "options_automationWorkflowRaw": {
+    "message": "Raw"
+  },
+  "options_automationSubfolderExample": {
+    "message": "Пример: path=\"dev-tools\" → bookmarks/toolbar/dev-tools/"
+  },
+  "options_automationParamUrl": {
+    "message": "URL закладки (обязательно)"
+  },
+  "options_automationParamTitle": {
+    "message": "Заголовок (необязательно; URL используется, если пусто)"
+  },
+  "options_automationParamSection": {
+    "message": "Раздел: toolbar или other"
+  },
+  "options_automationParamFolder": {
+    "message": "Папка в разделе (например, dev-tools)"
+  },
+  "options_automationParamBasePath": {
+    "message": "Базовая папка в репозитории (по умолчанию bookmarks; должна совпадать с настройкой пути к файлам)"
+  },
+
+  "options_exportImportTitle": {
+    "message": "Экспорт / Импорт"
+  },
+  "options_exportImportDesc": {
+    "message": "Экспорт или импорт закладок и настроек расширения."
+  },
+  "options_exportLabel": {
+    "message": "Экспорт"
+  },
+  "options_importLabel": {
+    "message": "Импорт"
+  },
+  "options_exportTypeBookmarks": {
+    "message": "Закладки (JSON)"
+  },
+  "options_exportTypeDashy": {
+    "message": "Конфигурация Dashy (YAML)"
+  },
+  "options_exportTypeSettingsPlain": {
+    "message": "Настройки (обычный JSON)"
+  },
+  "options_exportTypeSettingsEncrypted": {
+    "message": "Настройки (зашифрованные)"
+  },
+  "options_importTypeBookmarks": {
+    "message": "Закладки (JSON)"
+  },
+  "options_importTypeSettings": {
+    "message": "Настройки (JSON / ENC)"
+  },
+  "help_filesTitle": {
+    "message": "Файлы"
+  }
+}

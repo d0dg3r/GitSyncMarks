@@ -1,0 +1,967 @@
+{
+  "extName": {
+    "message": "GitSyncMarks"
+  },
+  "extDescription": {
+    "message": "Yer işaretleriniz GitHub'da güvende — dosya bazlı depolama, üç yönlü birleştirme senkronizasyonu, Chrome ve Firefox'ta çalışır. Sunucu gerekmez."
+  },
+  "commands_quickSync": {
+    "message": "Yer işaretlerini hızlı senkronize et"
+  },
+  "commands_openOptions": {
+    "message": "Uzantı ayarlarını aç"
+  },
+
+  "popup_configureFirst": {
+    "message": "Lütfen önce uzantıyı yapılandırın."
+  },
+  "popup_openSettings": {
+    "message": "Ayarları Aç"
+  },
+  "popup_ready": {
+    "message": "Hazır"
+  },
+  "popup_conflictDetected": {
+    "message": "Çakışma tespit edildi"
+  },
+  "popup_conflictDescription": {
+    "message": "Hem yerel hem de uzak yer işaretleri değiştirildi. Bir çözüm seçin:"
+  },
+  "popup_localToGithub": {
+    "message": "Yerel → GitHub"
+  },
+  "popup_githubToLocal": {
+    "message": "GitHub → Yerel"
+  },
+  "popup_syncNow": {
+    "message": "Şimdi Senkronize Et"
+  },
+  "popup_pushUp": {
+    "message": "Gönder ↑"
+  },
+  "popup_pullDown": {
+    "message": "Çek ↓"
+  },
+  "popup_autoSyncActive": {
+    "message": "Otomatik senkronizasyon etkin"
+  },
+  "popup_autoSyncDisabled": {
+    "message": "Otomatik senkronizasyon devre dışı"
+  },
+  "popup_settings": {
+    "message": "Ayarlar"
+  },
+  "popup_synced": {
+    "message": "Senkronize edildi"
+  },
+  "popup_notSyncedYet": {
+    "message": "Henüz senkronize edilmedi"
+  },
+  "popup_lastSync": {
+    "message": "Son senkronizasyon: $1"
+  },
+  "popup_justNow": {
+    "message": "az önce"
+  },
+  "popup_minAgo": {
+    "message": "$1 dk önce"
+  },
+  "popup_hoursAgo": {
+    "message": "$1sa önce"
+  },
+  "popup_syncing": {
+    "message": "Senkronize ediliyor..."
+  },
+  "popup_profileSwitching": {
+    "message": "Profil değiştiriliyor..."
+  },
+  "popup_error": {
+    "message": "Hata: $1"
+  },
+  "popup_nextSyncIn": {
+    "message": "Sonraki senkronizasyon: $1"
+  },
+  "popup_lastDataChange": {
+    "message": "Son veri değişikliği: $1"
+  },
+  "popup_lastCommit": {
+    "message": "Son commit:"
+  },
+
+  "options_subtitle": {
+    "message": "Ayarlar"
+  },
+  "options_profile": {
+    "message": "Profil"
+  },
+  "options_profileAdd": {
+    "message": "+ Ekle"
+  },
+  "options_profileAddNameLabel": {
+    "message": "Profil adı"
+  },
+  "options_profileAddConfirmBtn": {
+    "message": "Ekle"
+  },
+  "options_profileRenameLabel": {
+    "message": "Yeni ad"
+  },
+  "options_profileAddPlaceholder": {
+    "message": "Yeni Profil"
+  },
+  "options_profileRename": {
+    "message": "Yeniden Adlandır"
+  },
+  "options_profileRenamePrompt": {
+    "message": "\"$1\" için yeni ad:"
+  },
+  "options_profileDelete": {
+    "message": "Sil"
+  },
+  "options_profileSwitchConfirm": {
+    "message": "\"$1\" profiline geçilsin mi? Yer işaretleriniz o profilin yer işaretleriyle değiştirilecek."
+  },
+  "options_profileDeleteConfirm": {
+    "message": "\"$1\" profili silinsin mi? Bu işlem geri alınamaz."
+  },
+  "options_profileSwitching": {
+    "message": "Profil değiştiriliyor..."
+  },
+  "options_profileSwitchWithoutConfirm": {
+    "message": "Onay olmadan geçiş yap"
+  },
+  "options_profileSwitchConfirmBtn": {
+    "message": "Geçiş Yap"
+  },
+  "options_profileSwitchCancelBtn": {
+    "message": "İptal"
+  },
+  "options_profilesLimit": {
+    "message": "$1/$2 profil"
+  },
+  "options_githubConnection": {
+    "message": "GitHub Bağlantısı"
+  },
+  "options_patLabel": {
+    "message": "Kişisel Erişim Jetonu (PAT)"
+  },
+  "options_toggleToken": {
+    "message": "Jetonu göster/gizle"
+  },
+  "options_tokenHint": {
+    "message": "<code>repo</code> kapsamı gerektirir. <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Jeton oluştur</a>"
+  },
+  "options_repoOwner": {
+    "message": "Depo Sahibi"
+  },
+  "options_ownerPlaceholder": {
+    "message": "github-kullanıcı-adınız"
+  },
+  "options_repoName": {
+    "message": "Depo Adı"
+  },
+  "options_branch": {
+    "message": "Dal"
+  },
+  "options_filePath": {
+    "message": "Depodaki Dosya Yolu"
+  },
+  "options_filePathHint": {
+    "message": "Yer işareti dosyalarının saklanacağı klasör."
+  },
+  "options_filePathChangeHint": {
+    "message": "Bir sonraki senkronizasyonda çakışma oluşabilir. Uzak durumu almak için \"GitHub → Yerel\" seçeneğini kullanın."
+  },
+  "options_testConnection": {
+    "message": "Bağlantıyı Test Et"
+  },
+  "options_githubReposTitle": {
+    "message": "GitHub Depoları Klasörü"
+  },
+  "options_githubReposDesc": {
+    "message": "Tüm GitHub depolarınıza (açık ve özel) yer işaretleri içeren bir klasör oluşturun."
+  },
+  "options_githubReposEnabled": {
+    "message": "GitHub Depoları klasörü"
+  },
+  "options_githubReposParentLabel": {
+    "message": "Konum"
+  },
+  "options_githubReposParentToolbar": {
+    "message": "Yer İşareti Çubuğu"
+  },
+  "options_githubReposParentOther": {
+    "message": "Diğer Yer İşaretleri"
+  },
+  "options_githubReposParentMenu": {
+    "message": "Yer İşareti Menüsü"
+  },
+  "options_githubReposRefresh": {
+    "message": "GitHub Depolarını Güncelle"
+  },
+  "options_githubReposRefreshSuccess": {
+    "message": "$2 için $1 depo eklendi"
+  },
+  "options_synchronization": {
+    "message": "Senkronizasyon"
+  },
+  "options_autoSync": {
+    "message": "Otomatik Senkronizasyon"
+  },
+  "options_syncInterval": {
+    "message": "Senkronizasyon Aralığı (dakika)"
+  },
+  "options_syncIntervalHint": {
+    "message": "Uzak değişikliklerin ne sıklıkta kontrol edileceği."
+  },
+  "options_syncProfile": {
+    "message": "Senkronizasyon profili"
+  },
+  "options_syncProfileRealtime": {
+    "message": "Gerçek zamanlı (1 dk, 2sn gecikme)"
+  },
+  "options_syncProfileFrequent": {
+    "message": "Sık (5 dk, 3sn gecikme)"
+  },
+  "options_syncProfileNormal": {
+    "message": "Normal (15 dk, 5sn gecikme)"
+  },
+  "options_syncProfilePowersave": {
+    "message": "Güç tasarrufu (60 dk, 10sn gecikme)"
+  },
+  "options_syncProfileCustom": {
+    "message": "Özel"
+  },
+  "options_debounceDelay": {
+    "message": "Gecikme süresi (saniye)"
+  },
+  "options_debounceDelayHint": {
+    "message": "Yer işareti değişikliklerinden sonra senkronizasyon öncesi bekleme süresi."
+  },
+  "options_syncOnStartup": {
+    "message": "Tarayıcı başlatıldığında senkronize et"
+  },
+  "options_syncOnFocus": {
+    "message": "Tarayıcı odağa geldiğinde senkronize et"
+  },
+  "options_generatedFilesTitle": {
+    "message": "Oluşturulan dosyalar"
+  },
+  "options_generatedFilesDesc": {
+    "message": "Senkronizasyon sırasında depoda oluşturulan dosyalar. Her dosya için Kapalı, Manuel veya Otomatik seçin."
+  },
+  "options_generateModeOff": {
+    "message": "Kapalı"
+  },
+  "options_generateModeManual": {
+    "message": "Manuel"
+  },
+  "options_generateModeAuto": {
+    "message": "Otomatik"
+  },
+  "options_generateNowBtn": {
+    "message": "Şimdi oluştur"
+  },
+  "options_generateReadmeMd": {
+    "message": "README.md"
+  },
+  "options_generateReadmeMdDesc": {
+    "message": "Depodaki Markdown genel görünümü."
+  },
+  "options_generateBookmarksHtml": {
+    "message": "bookmarks.html oluştur"
+  },
+  "options_generateBookmarksHtmlDesc": {
+    "message": "Tarayıcı içe aktarımı için Netscape biçimi (Chrome, Firefox)."
+  },
+  "options_generateFeedXml": {
+    "message": "feed.xml oluştur"
+  },
+  "options_generateFeedXmlDesc": {
+    "message": "RSS 2.0 beslemesi — herhangi bir RSS okuyucuya abone olun veya otomasyonlar için kullanın."
+  },
+  "options_generateDashyYml": {
+    "message": "dashy-conf.yml oluştur"
+  },
+  "options_generateDashyYmlDesc": {
+    "message": "Dashy pano yapılandırması — conf.yml dosyanıza bölüm olarak aktarın."
+  },
+  "options_settingsSyncTitle": {
+    "message": "Ayar Dosyası"
+  },
+  "options_settingsSyncDesc": {
+    "message": "Depodaki şifreli uzantı ayarları yedeklemesi. Tüm cihazlarda aynı parola."
+  },
+  "options_syncSettingsToGit": {
+    "message": "Ayarları Git'e senkronize et (şifreli)"
+  },
+  "options_settingsSyncPasswordLabel": {
+    "message": "Şifreleme parolası"
+  },
+  "options_settingsSyncPasswordHint": {
+    "message": "Her cihazda bir kez ayarlanır. Tüm cihazlarda aynı olmalıdır."
+  },
+  "options_settingsSyncSaveBtn": {
+    "message": "Parolayı kaydet"
+  },
+  "options_settingsSyncActive": {
+    "message": "Ayar senkronizasyonu etkin — ayarlar bir sonraki senkronizasyonda gönderilecek."
+  },
+  "options_settingsSyncPasswordMissing": {
+    "message": "Lütfen bir parola girin."
+  },
+  "options_settingsSyncModeLabel": {
+    "message": "Senkronizasyon modu"
+  },
+  "options_settingsSyncModeGlobal": {
+    "message": "Global — tüm cihazlarda paylaşılan"
+  },
+  "options_settingsSyncModeIndividual": {
+    "message": "Bireysel — yalnızca bu cihaz"
+  },
+  "options_settingsSyncImportTitle": {
+    "message": "Başka bir cihazdan içe aktar"
+  },
+  "options_settingsSyncImportBtn": {
+    "message": "Mevcut yapılandırmaları yükle"
+  },
+  "options_settingsSyncImportApply": {
+    "message": "İçe Aktar"
+  },
+  "options_settingsSyncImportEmpty": {
+    "message": "Cihaz yapılandırması bulunamadı"
+  },
+  "options_settingsSyncImportSuccess": {
+    "message": "Ayarlar başarıyla içe aktarıldı"
+  },
+  "options_notifications": {
+    "message": "Senkronizasyon bildirimleri"
+  },
+  "options_notificationsOff": {
+    "message": "Kapalı"
+  },
+  "options_notificationsAll": {
+    "message": "Tümü (başarılı ve başarısız)"
+  },
+  "options_notificationsErrorsOnly": {
+    "message": "Yalnızca hatalar"
+  },
+  "options_notificationsHint": {
+    "message": "Bildirimlerin ne zaman gösterileceğini seçin."
+  },
+  "notification_titleSuccess": {
+    "message": "Senkronizasyon başarılı"
+  },
+  "notification_titleFailure": {
+    "message": "Senkronizasyon başarısız"
+  },
+  "options_saveSettings": {
+    "message": "Ayarları Kaydet"
+  },
+  "options_theme": {
+    "message": "Tema"
+  },
+  "options_themeAuto": {
+    "message": "A Otomatik (sistem)"
+  },
+  "options_themeLight": {
+    "message": "☀ Açık"
+  },
+  "options_themeDark": {
+    "message": "☽ Koyu"
+  },
+  "options_language": {
+    "message": "Dil"
+  },
+  "options_langAuto": {
+    "message": "Otomatik (Tarayıcı)"
+  },
+  "options_pleaseEnterToken": {
+    "message": "Lütfen bir jeton girin."
+  },
+  "options_checking": {
+    "message": "Kontrol ediliyor..."
+  },
+  "options_invalidToken": {
+    "message": "Geçersiz jeton."
+  },
+  "options_tokenValidMissingScope": {
+    "message": "Jeton geçerli ($1), ancak \"repo\" kapsamı eksik."
+  },
+  "options_tokenValidRepoNotFound": {
+    "message": "Jeton geçerli ($1), ancak \"$2\" deposu bulunamadı."
+  },
+  "options_connectionOk": {
+    "message": "Bağlantı başarılı! Kullanıcı: $1, Depo: $2"
+  },
+  "options_tokenValidSpecifyRepo": {
+    "message": "Jeton geçerli! Kullanıcı: $1. Lütfen bir depo belirtin."
+  },
+  "options_error": {
+    "message": "Hata: $1"
+  },
+  "options_onboardingCreateBtn": {
+    "message": "Oluştur"
+  },
+  "options_onboardingPullBtn": {
+    "message": "Yükle"
+  },
+  "options_onboardingCreateFolder": {
+    "message": "$1 klasörü henüz mevcut değil. Temel yapıyla (toolbar, other) oluşturulsun mu?"
+  },
+  "options_onboardingPullNow": {
+    "message": "Depoda yer işaretleri bulundu. Şimdi bu tarayıcıya çekilsin mi?"
+  },
+  "options_onboardingCreateSuccess": {
+    "message": "Klasör başarıyla oluşturuldu."
+  },
+  "options_onboardingPullSuccess": {
+    "message": "Yer işaretleri başarıyla çekildi."
+  },
+  "options_settingsSaved": {
+    "message": "Ayarlar kaydedildi!"
+  },
+  "options_errorSaving": {
+    "message": "Ayarlar kaydedilirken hata: $1"
+  },
+
+  "api_invalidToken": {
+    "message": "Geçersiz jeton. Lütfen Kişisel Erişim Jetonunuzu kontrol edin."
+  },
+  "api_rateLimitExceeded": {
+    "message": "GitHub API istek sınırı aşıldı. Lütfen biraz bekleyin."
+  },
+  "api_accessDenied": {
+    "message": "Erişim reddedildi. Lütfen jeton izinlerinizi kontrol edin."
+  },
+  "api_conflict": {
+    "message": "Çakışma: Dosya bu arada değiştirilmiş."
+  },
+  "api_errorReading": {
+    "message": "Dosya okunurken hata: $1"
+  },
+  "api_errorWriting": {
+    "message": "Dosya yazılırken hata: $1"
+  },
+  "api_branchNotFound": {
+    "message": "'$1' dalı bulunamadı."
+  },
+
+  "sync_alreadyInProgress": {
+    "message": "Senkronizasyon zaten devam ediyor."
+  },
+  "sync_notConfigured": {
+    "message": "Uzantı yapılandırılmamış. Lütfen ayarları açın."
+  },
+  "sync_noChanges": {
+    "message": "Son senkronizasyondan bu yana değişiklik yok."
+  },
+  "sync_conflictRemoteModified": {
+    "message": "Çakışma tespit edildi: Uzak taraf da değiştirilmiş."
+  },
+  "sync_pushSuccess": {
+    "message": "Yer işaretleri GitHub'a başarıyla gönderildi."
+  },
+  "sync_conflictFileModified": {
+    "message": "Çakışma: Dosya bu arada değiştirilmiş."
+  },
+  "sync_pushFailed": {
+    "message": "Gönderme başarısız: $1"
+  },
+  "sync_noBookmarksOnGithub": {
+    "message": "GitHub'da yer işareti bulunamadı."
+  },
+  "sync_alreadyUpToDate": {
+    "message": "Yer işaretleri zaten güncel."
+  },
+  "sync_pullSuccess": {
+    "message": "GitHub'dan yüklendi."
+  },
+  "sync_pullFailed": {
+    "message": "Çekme başarısız: $1"
+  },
+  "sync_allInSync": {
+    "message": "Her şey senkronize. Değişiklik yok."
+  },
+  "sync_conflictBothModified": {
+    "message": "Çakışma: Hem yerel hem de uzak yer işaretleri değiştirildi. Lütfen Gönder veya Çek seçin."
+  },
+  "sync_syncFailed": {
+    "message": "Senkronizasyon başarısız: $1"
+  },
+
+  "serializer_invalidFormat": {
+    "message": "Geçersiz yer işareti veri biçimi."
+  },
+  "serializer_lastSynced": {
+    "message": "Son senkronizasyon: $1"
+  },
+  "serializer_device": {
+    "message": "Cihaz: $1"
+  },
+  "serializer_untitled": {
+    "message": "(Başlıksız)"
+  },
+
+  "popup_reportIssue": {
+    "message": "Sorun Bildir"
+  },
+
+  "options_about": {
+    "message": "Hakkında"
+  },
+  "options_version": {
+    "message": "Sürüm"
+  },
+  "options_by": {
+    "message": "Geliştiren"
+  },
+  "options_specialThanks": {
+    "message": "Özel Teşekkürler"
+  },
+  "options_mobileAppTitle": {
+    "message": "Mobil Uygulama"
+  },
+  "options_mobileAppDesc": {
+    "message": "Yer işaretlerinizi hareket halinde görüntüleyin. GitSyncMarks-Mobile (iOS + Android) GitHub deponuzdan senkronize eder — salt okunur yardımcı uygulama."
+  },
+  "options_mobileAppLink": {
+    "message": "GitHub'da GitSyncMarks-Mobile"
+  },
+  "options_mobileAppStores": {
+    "message": "F-Droid ve Google Play yakında."
+  },
+  "options_links": {
+    "message": "Bağlantılar"
+  },
+  "options_githubRepo": {
+    "message": "GitHub Deposu"
+  },
+  "options_documentation": {
+    "message": "Belgeler"
+  },
+  "options_reportBug": {
+    "message": "Hata Bildir / Özellik İsteği"
+  },
+  "options_privacyPolicy": {
+    "message": "Gizlilik Politikası"
+  },
+  "options_license": {
+    "message": "Lisans (MIT)"
+  },
+  "options_debugLogTitle": {
+    "message": "Hata Ayıklama Günlüğü"
+  },
+  "options_debugLogDesc": {
+    "message": "Senkronizasyon tanılamalarını (farklar, birleştirme kararları, çakışmalar, kilit noktalardaki commit hash'leri) kaydetmek için etkinleştirin. Senkronizasyon sorunlarını giderirken kullanın. Destek için günlüğü dışa aktarın ve paylaşın."
+  },
+  "options_debugLogEnabled": {
+    "message": "Hata ayıklama günlüğünü etkinleştir"
+  },
+  "options_debugLogExport": {
+    "message": "Günlüğü dışa aktar"
+  },
+  "options_debugLogExportEmpty": {
+    "message": "Günlük boş. Hata ayıklama günlüğünü etkinleştirin ve önce bir senkronizasyon çalıştırın."
+  },
+
+  "options_tabGitHub": {
+    "message": "GitHub"
+  },
+  "options_tabSynchronization": {
+    "message": "Senkronizasyon"
+  },
+  "options_tabFiles": {
+    "message": "Dosyalar"
+  },
+  "options_tabHelp": {
+    "message": "Yardım"
+  },
+  "options_tabAbout": {
+    "message": "Hakkında"
+  },
+  "options_subTabProfile": {
+    "message": "Profil"
+  },
+  "options_subTabConnection": {
+    "message": "Bağlantı"
+  },
+  "options_subTabRepos": {
+    "message": "Depolar"
+  },
+  "options_subTabGenerated": {
+    "message": "Oluşturulan"
+  },
+  "options_subTabSettings": {
+    "message": "Ayarlar"
+  },
+  "options_subTabExportImport": {
+    "message": "Dışa / İçe Aktar"
+  },
+  "options_subTabGitAdd": {
+    "message": "Git Add"
+  },
+  "help_gettingStartedTitle": {
+    "message": "Başlarken"
+  },
+  "help_gettingStartedIntro": {
+    "message": "Yer işaretleriniz için bir GitHub deposu oluşturun, ardından <code>repo</code> kapsamıyla bir Kişisel Erişim Jetonu (PAT) oluşturun. GitHub sekmesinde jeton, depo sahibi, ad, dal (genellikle <code>main</code>) ve klasör yolunu (varsayılan: <code>bookmarks</code>) girin. Doğrulamak için <strong>Bağlantıyı Test Et</strong>'e tıklayın."
+  },
+  "help_onboarding": {
+    "message": "Klasör boşsa temel yapıyı (toolbar, other) oluşturabilirsiniz. Depoda zaten yer işaretleri varsa bunları bu tarayıcıya çekebilirsiniz."
+  },
+  "help_profilesTitle": {
+    "message": "Profiller"
+  },
+  "help_profilesIntro": {
+    "message": "Her profilin kendi yer işareti seti ve GitHub depo yapılandırması vardır. İş/kişisel veya farklı cihazlar için profilleri kullanın."
+  },
+  "help_profilesAdd": {
+    "message": "Ekle, Yeniden Adlandır, Sil"
+  },
+  "help_profilesAddDesc": {
+    "message": "Açılır menüden bir profil seçin, ardından Ekle (yeni profil), Yeniden Adlandır veya Sil. En fazla 10 profil. Silme, seçili profili kaldırır."
+  },
+  "help_profilesSwitch": {
+    "message": "Profil değiştirme"
+  },
+  "help_profilesSwitchDesc": {
+    "message": "Geçiş yapmak için başka bir profil seçin. Mevcut yer işaretleriniz kaydedilir ve geçiş öncesi mevcut profilin deposuna gönderilir. Hedef profilin yer işaretleri yerel olanların yerini alır. Onay diyaloğunu atlamak için Onay olmadan geçiş yap seçeneğini kullanın."
+  },
+  "help_profilesNote": {
+    "message": "Profiller güvenilir şekilde çalışır. Birden fazla profille zaman zaman senkronizasyon çakışmaları oluşabilir — Gönder veya Çek işlemini 2–3 kez denemek genellikle sorunu çözer. Bu özellik hâlâ geliştirilmektedir. Tekrarlanabilir hatalarla karşılaşırsanız lütfen GitHub'da bir sorun bildirin."
+  },
+  "help_githubReposTitle": {
+    "message": "GitHub Depoları Klasörü"
+  },
+  "help_githubReposDesc": {
+    "message": "İsteğe bağlı: Tüm GitHub depolarınıza (açık ve özel) yer işaretleri içeren bir klasör oluşturun. Konumu seçin (toolbar, other). Klasör normal yer işaretleri gibi senkronize edilir; listeyi yenilemek için <strong>GitHub Depolarını Güncelle</strong>'yi kullanın."
+  },
+  "help_popupTitle": {
+    "message": "Açılır pencere (uzantı simgesi)"
+  },
+  "help_popupProfile": {
+    "message": "Profil seçici"
+  },
+  "help_popupProfileDesc": {
+    "message": "Profilleri doğrudan açılır pencere başlığından değiştirin."
+  },
+  "help_popupSyncNow": {
+    "message": "Şimdi Senkronize Et"
+  },
+  "help_popupSyncNowDesc": {
+    "message": "Tam üç yönlü birleştirme senkronizasyonu: yerel ve uzak değişiklikler mümkün olduğunda otomatik olarak birleştirilir."
+  },
+  "help_popupPush": {
+    "message": "Gönder ↑"
+  },
+  "help_popupPushDesc": {
+    "message": "Yerel yer işaretlerini GitHub'a yükle (uzak değişikliklerin üzerine yazar)."
+  },
+  "help_popupPull": {
+    "message": "Çek ↓"
+  },
+  "help_popupPullDesc": {
+    "message": "GitHub'dan indir (yerel değişikliklerin üzerine yazar)."
+  },
+  "help_syncTitle": {
+    "message": "Senkronizasyon"
+  },
+  "help_autoSyncTitle": {
+    "message": "Otomatik senkronizasyon"
+  },
+  "help_autoSyncDesc": {
+    "message": "Etkinleştirildiğinde, yer işareti eklediğinizde, düzenlediğinizde veya sildiğinizde otomatik olarak senkronize eder. Gecikme süresi, hızlı değişikliklerin tamamlanmasını bekler."
+  },
+  "help_syncProfiles": {
+    "message": "Senkronizasyon profilleri"
+  },
+  "help_syncProfilesDesc": {
+    "message": "Gerçek zamanlı (1 dk), Sık (5 dk), Normal (15 dk) veya Güç tasarrufu (60 dk). Özel, aralık ve gecikmeyi manuel olarak ayarlamanıza olanak tanır."
+  },
+  "help_syncStartup": {
+    "message": "Başlangıçta / odakta senkronize et"
+  },
+  "help_syncStartupDesc": {
+    "message": "İsteğe bağlı: tarayıcı başlatıldığında veya tarayıcı penceresine döndüğünüzde senkronize et (bekleme süresiyle)."
+  },
+  "help_generatedFilesTitle": {
+    "message": "Oluşturulan dosyalar"
+  },
+  "help_generatedFilesDesc": {
+    "message": "README.md, bookmarks.html, feed.xml ve dashy-conf.yml senkronizasyon sırasında oluşturulabilir. Dosyalar sekmesinde her dosya için Kapalı, Manuel veya Otomatik seçin."
+  },
+  "help_settingsSyncTitle": {
+    "message": "Ayar Dosyası"
+  },
+  "help_settingsSyncDesc": {
+    "message": "Etkinleştirildiğinde, uzantı ayarları (profiller, jetonlar, tercihler) şifrelenir ve depoda saklanır. Global (tüm cihazlar için paylaşılan settings.enc) veya Bireysel (cihaza özel settings-{id}.enc) seçin. Bireysel modda diğer cihazlardan ayar içe aktarabilirsiniz. Parola her cihazda yerel olarak saklanır ve depoyu paylaşan tüm cihazlarda aynı olmalıdır."
+  },
+  "help_notificationsTitle": {
+    "message": "Bildirimler"
+  },
+  "help_notificationsDesc": {
+    "message": "Senkronizasyon bildirimlerinin ne zaman gösterileceğini seçin: Tümü (başarılı ve başarısız), Yalnızca hatalar veya Kapalı."
+  },
+  "help_backupTitle": {
+    "message": "Yedekleme"
+  },
+  "help_backupBookmarks": {
+    "message": "Yer İşaretlerini Dışa / İçe Aktar"
+  },
+  "help_backupBookmarksDesc": {
+    "message": "Tüm tarayıcı yer işaretlerini JSON olarak dışa aktarın. İçe aktarma, etkin profildeki tüm yer işaretlerini dosya içeriğiyle değiştirir."
+  },
+  "help_backupSettings": {
+    "message": "Ayarları Dışa / İçe Aktar"
+  },
+  "help_backupSettingsDesc": {
+    "message": "Düz .json veya parola ile şifrelenmiş .enc olarak dışa aktarın. İçe aktarma tüm ayarları (tüm profiller) değiştirir; sayfa sonrasında yeniden yüklenir."
+  },
+  "help_conflictTitle": {
+    "message": "Çakışmalar"
+  },
+  "help_conflictDesc": {
+    "message": "Hem yerel hem de uzak yer işaretleri değiştiğinde açılır pencerede çakışma gösterilir. <strong>Gönder</strong> (yerel kazanır, uzak üzerine yazılır) veya <strong>Çek</strong> (uzak kazanır, yerel üzerine yazılır) seçin. Çakışmalar için otomatik birleştirme yoktur."
+  },
+  "help_shortcuts": {
+    "message": "Klavye Kısayolları"
+  },
+  "help_quickSync": {
+    "message": "Yer işaretlerini hızlı senkronize et"
+  },
+  "help_openOptions": {
+    "message": "Uzantı ayarlarını aç"
+  },
+  "help_shortcutsNote": {
+    "message": "Kısayolları tarayıcının uzantı ayarlarından özelleştirebilirsiniz."
+  },
+  "help_debugLogTitle": {
+    "message": "Hata Ayıklama Günlüğü"
+  },
+  "help_debugLogDesc": {
+    "message": "Ayrıntılı senkronizasyon tanılamalarını — farklar, birleştirme kararları ve commit hash'leri — kaydetmek için Senkronizasyon sekmesinden etkinleştirin. Sorun giderme için günlüğü dışa aktararak paylaşın."
+  },
+  "help_backupBookmarksDesc2": {
+    "message": "Yer işaretlerini (JSON), Dashy yapılandırmasını (YAML) veya ayarları (düz JSON / şifreli .enc) dışa aktarın. Yer işaretlerini veya ayarları içe aktarın — şifreli dosyalar parolanızla çözülür. Yer işareti içe aktarımı tüm yerel yer işaretlerini değiştirir; ayar içe aktarımı tüm profilleri değiştirir ve sayfayı yeniden yükler."
+  },
+  "help_themeAutoSaveTitle": {
+    "message": "Tema ve Otomatik Kaydetme"
+  },
+  "help_themeCycleTitle": {
+    "message": "Tema"
+  },
+  "help_themeCycleDesc": {
+    "message": "Başlıktaki düğmeye tıklayarak geçiş yapın: Otomatik (sistem) → Koyu → Açık → Otomatik. Simge mevcut modu gösterir. Ayarlar ve açılır pencerede çalışır."
+  },
+  "help_autoSaveTitle": {
+    "message": "Otomatik kaydetme"
+  },
+  "help_autoSaveDesc": {
+    "message": "Tüm ayarlar değiştirdiğinizde otomatik olarak kaydedilir — Kaydet düğmesi yoktur. Değişiklikler anında geçerli olur."
+  },
+  "help_whySlowTitle": {
+    "message": "Senkronizasyon neden bazen uzun sürüyor?"
+  },
+  "help_whySlowIntro": {
+    "message": "GitSyncMarks, atomik commit'ler için GitHub'ın Git Data API'sini kullanır. Değiştirilen veya yeni eklenen her yer işareti dosyası için bir API çağrısı gerekir. Çok sayıda değişiklikle bu süre uzar."
+  },
+  "help_whyAtomic": {
+    "message": "Tüm değişiklikler tek bir atomik commit'te yazılır: ya her şey başarılı olur ya da hiçbir şey olmaz. Bu, senkronizasyon kesilirse kısmi veya bozuk durumu önler. Birçok yerine tek bir commit, API istek sınırlarına takılmayı da önler ve Git geçmişini temiz tutar."
+  },
+  "help_reportIssue": {
+    "message": "Sorun Bildir"
+  },
+  "help_links": {
+    "message": "Bağlantılar"
+  },
+  "help_discussions": {
+    "message": "Tartışmalar"
+  },
+  "help_voteBacklogTitle": {
+    "message": "Sırada ne var?"
+  },
+  "help_voteBacklogDesc": {
+    "message": "Sıradaki backlog özelliği için oy verin. Sesiniz yol haritasını şekillendirir."
+  },
+  "help_voteBacklogBtn": {
+    "message": "Backlog için oy ver"
+  },
+
+  "options_backupTitle": {
+    "message": "Yedekleme"
+  },
+  "options_backupIntro": {
+    "message": "Yer işaretlerini JSON olarak; ayarları JSON veya parola ile şifrelenmiş .enc olarak dışa/içe aktarın."
+  },
+  "options_bookmarksCard": {
+    "message": "Yer İşaretleri"
+  },
+  "options_settingsCard": {
+    "message": "Ayarlar"
+  },
+  "options_exportBookmarks": {
+    "message": "Yer İşaretlerini Dışa Aktar"
+  },
+  "options_exportBookmarksDesc": {
+    "message": "Tüm yer işaretlerini JSON olarak kaydedin."
+  },
+  "options_exportDashy": {
+    "message": "Dashy Yapılandırmasını Dışa Aktar"
+  },
+  "options_exportDashyDesc": {
+    "message": "Yer işaretlerini Dashy pano bölümleri olarak dışa aktarın (YAML)."
+  },
+  "options_exportBtn": {
+    "message": "Dışa Aktar"
+  },
+  "options_importBtn": {
+    "message": "İçe Aktar"
+  },
+  "options_chooseFile": {
+    "message": "Dosya seç"
+  },
+  "options_importBookmarks": {
+    "message": "Yer İşaretlerini İçe Aktar"
+  },
+  "options_exportSettings": {
+    "message": "Ayarları Dışa Aktar"
+  },
+  "options_exportSettingsDesc": {
+    "message": "GitHub bağlantısı ve senkronizasyon ayarları (profiller dahil)."
+  },
+  "options_importSettings": {
+    "message": "Ayarları İçe Aktar"
+  },
+  "options_importBookmarksWarning": {
+    "message": "Etkin profildeki tüm yer işaretlerini değiştirir. Geri alınamaz."
+  },
+  "options_importSettingsWarning": {
+    "message": "Tüm ayarları (tüm profiller) değiştirir. Sayfa sonrasında yeniden yüklenir."
+  },
+  "options_importSettingsFormats": {
+    "message": ".json (düz) veya .enc (şifreli) dosyaları kabul eder."
+  },
+  "options_selectFile": {
+    "message": "Dosya seçin..."
+  },
+  "options_importSuccess": {
+    "message": "İçe aktarma başarılı!"
+  },
+  "options_exportSuccess": {
+    "message": "Dışa aktarma başarılı!"
+  },
+  "options_importError": {
+    "message": "İçe aktarma başarısız: $1"
+  },
+  "options_exportSettingsPlain": {
+    "message": "Dışa aktar (düz)"
+  },
+  "options_exportSettingsEncrypted": {
+    "message": "Şifreli dışa aktar"
+  },
+  "options_exportPasswordPrompt": {
+    "message": "Ayar dosyasını şifrelemek için bir parola girin."
+  },
+  "options_importPasswordPrompt": {
+    "message": "Ayar dosyasının şifresini çözmek için parolayı girin."
+  },
+  "options_passwordPlaceholder": {
+    "message": "Parola"
+  },
+  "options_decryptError": {
+    "message": "Şifre çözme başarısız. Yanlış parola mı?"
+  },
+  "options_exportEncryptedSuccess": {
+    "message": "Şifreli dışa aktarma başarılı!"
+  },
+
+  "options_tabAutomation": {
+    "message": "Otomasyon"
+  },
+  "options_automationTitle": {
+    "message": "Git ile Yer İşareti Ekle"
+  },
+  "options_automationIntro": {
+    "message": "Yer işaretlerini doğrudan deponuza ekleyin. Uzantı bir sonraki senkronizasyonda bunları alır ve dosya adlarını otomatik olarak normalleştirir."
+  },
+  "options_automationFormatTitle": {
+    "message": "Dosya biçimi"
+  },
+  "options_automationFoldersLabel": {
+    "message": "Bölümler:"
+  },
+  "options_automationGithubActionTitle": {
+    "message": "GitHub Action"
+  },
+  "options_automationWorkflowLink": {
+    "message": "add-bookmark.yml dosyasını deponuza kopyalayın"
+  },
+  "options_automationGithubActionParams": {
+    "message": "folder = kök; path = isteğe bağlı alt klasör; Dosya Yolu ≠ bookmarks ise base-path"
+  },
+  "options_automationCreateFileTitle": {
+    "message": "Depoda dosya oluştur"
+  },
+  "options_automationCreateFileDesc": {
+    "message": "<code>bookmarks/toolbar/</code> veya <code>bookmarks/other/</code> (veya bir alt klasör) içine yeni bir JSON dosyası ekleyin. Farklıysa uzantınızın Dosya Yolunu kullanın."
+  },
+  "options_automationCopy": {
+    "message": "Kopyala"
+  },
+  "options_automationWorkflowRaw": {
+    "message": "Ham"
+  },
+  "options_automationSubfolderExample": {
+    "message": "Örnek: path=\"dev-tools\" → bookmarks/toolbar/dev-tools/"
+  },
+  "options_automationParamUrl": {
+    "message": "Yer işareti URL'si (gerekli)"
+  },
+  "options_automationParamTitle": {
+    "message": "Başlık (isteğe bağlı; boşsa URL kullanılır)"
+  },
+  "options_automationParamSection": {
+    "message": "Bölüm: toolbar veya other"
+  },
+  "options_automationParamFolder": {
+    "message": "Bölüm içindeki klasör (ör. dev-tools)"
+  },
+  "options_automationParamBasePath": {
+    "message": "Depodaki temel klasör (varsayılan bookmarks; Dosya Yolu ayarıyla eşleşmelidir)"
+  },
+
+  "options_exportImportTitle": {
+    "message": "Dışa / İçe Aktar"
+  },
+  "options_exportImportDesc": {
+    "message": "Yer işaretlerini ve uzantı ayarlarını dışa veya içe aktarın."
+  },
+  "options_exportLabel": {
+    "message": "Dışa Aktar"
+  },
+  "options_importLabel": {
+    "message": "İçe Aktar"
+  },
+  "options_exportTypeBookmarks": {
+    "message": "Yer İşaretleri (JSON)"
+  },
+  "options_exportTypeDashy": {
+    "message": "Dashy Yapılandırması (YAML)"
+  },
+  "options_exportTypeSettingsPlain": {
+    "message": "Ayarlar (düz JSON)"
+  },
+  "options_exportTypeSettingsEncrypted": {
+    "message": "Ayarlar (şifreli)"
+  },
+  "options_importTypeBookmarks": {
+    "message": "Yer İşaretleri (JSON)"
+  },
+  "options_importTypeSettings": {
+    "message": "Ayarlar (JSON / ENC)"
+  },
+  "help_filesTitle": {
+    "message": "Dosyalar"
+  }
+}

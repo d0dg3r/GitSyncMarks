@@ -1,0 +1,967 @@
+{
+  "extName": {
+    "message": "GitSyncMarks"
+  },
+  "extDescription": {
+    "message": "ブックマークをGitHubに安全に保存 — ファイル単位の保存、三方向マージ同期、Chrome・Firefox対応。サーバー不要。"
+  },
+  "commands_quickSync": {
+    "message": "ブックマークをクイック同期"
+  },
+  "commands_openOptions": {
+    "message": "拡張機能の設定を開く"
+  },
+
+  "popup_configureFirst": {
+    "message": "最初に拡張機能を設定してください。"
+  },
+  "popup_openSettings": {
+    "message": "設定を開く"
+  },
+  "popup_ready": {
+    "message": "準備完了"
+  },
+  "popup_conflictDetected": {
+    "message": "競合が検出されました"
+  },
+  "popup_conflictDescription": {
+    "message": "ローカルとリモートの両方のブックマークが変更されました。解決方法を選択してください："
+  },
+  "popup_localToGithub": {
+    "message": "ローカル → GitHub"
+  },
+  "popup_githubToLocal": {
+    "message": "GitHub → ローカル"
+  },
+  "popup_syncNow": {
+    "message": "今すぐ同期"
+  },
+  "popup_pushUp": {
+    "message": "Push ↑"
+  },
+  "popup_pullDown": {
+    "message": "Pull ↓"
+  },
+  "popup_autoSyncActive": {
+    "message": "自動同期が有効"
+  },
+  "popup_autoSyncDisabled": {
+    "message": "自動同期が無効"
+  },
+  "popup_settings": {
+    "message": "設定"
+  },
+  "popup_synced": {
+    "message": "同期済み"
+  },
+  "popup_notSyncedYet": {
+    "message": "未同期"
+  },
+  "popup_lastSync": {
+    "message": "最終同期: $1"
+  },
+  "popup_justNow": {
+    "message": "たった今"
+  },
+  "popup_minAgo": {
+    "message": "$1分前"
+  },
+  "popup_hoursAgo": {
+    "message": "$1時間前"
+  },
+  "popup_syncing": {
+    "message": "同期中..."
+  },
+  "popup_profileSwitching": {
+    "message": "プロファイルを切り替え中..."
+  },
+  "popup_error": {
+    "message": "エラー: $1"
+  },
+  "popup_nextSyncIn": {
+    "message": "次の同期まで $1"
+  },
+  "popup_lastDataChange": {
+    "message": "最終データ変更: $1"
+  },
+  "popup_lastCommit": {
+    "message": "最終コミット:"
+  },
+
+  "options_subtitle": {
+    "message": "設定"
+  },
+  "options_profile": {
+    "message": "プロファイル"
+  },
+  "options_profileAdd": {
+    "message": "+ 追加"
+  },
+  "options_profileAddNameLabel": {
+    "message": "プロファイル名"
+  },
+  "options_profileAddConfirmBtn": {
+    "message": "追加"
+  },
+  "options_profileRenameLabel": {
+    "message": "新しい名前"
+  },
+  "options_profileAddPlaceholder": {
+    "message": "新しいプロファイル"
+  },
+  "options_profileRename": {
+    "message": "名前変更"
+  },
+  "options_profileRenamePrompt": {
+    "message": "「$1」の新しい名前:"
+  },
+  "options_profileDelete": {
+    "message": "削除"
+  },
+  "options_profileSwitchConfirm": {
+    "message": "「$1」に切り替えますか？ブックマークはそのプロファイルのブックマークに置き換えられます。"
+  },
+  "options_profileDeleteConfirm": {
+    "message": "プロファイル「$1」を削除しますか？この操作は元に戻せません。"
+  },
+  "options_profileSwitching": {
+    "message": "プロファイルを切り替え中..."
+  },
+  "options_profileSwitchWithoutConfirm": {
+    "message": "確認なしで切り替え"
+  },
+  "options_profileSwitchConfirmBtn": {
+    "message": "切り替え"
+  },
+  "options_profileSwitchCancelBtn": {
+    "message": "キャンセル"
+  },
+  "options_profilesLimit": {
+    "message": "$1/$2 プロファイル"
+  },
+  "options_githubConnection": {
+    "message": "GitHub 接続"
+  },
+  "options_patLabel": {
+    "message": "Personal Access Token (PAT)"
+  },
+  "options_toggleToken": {
+    "message": "トークンの表示/非表示"
+  },
+  "options_tokenHint": {
+    "message": "<code>repo</code> スコープが必要です。<a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">トークンを作成</a>"
+  },
+  "options_repoOwner": {
+    "message": "リポジトリオーナー"
+  },
+  "options_ownerPlaceholder": {
+    "message": "your-github-username"
+  },
+  "options_repoName": {
+    "message": "リポジトリ名"
+  },
+  "options_branch": {
+    "message": "ブランチ"
+  },
+  "options_filePath": {
+    "message": "リポジトリ内のファイルパス"
+  },
+  "options_filePathHint": {
+    "message": "ブックマークファイルを保存するフォルダ。"
+  },
+  "options_filePathChangeHint": {
+    "message": "次の同期で競合が発生する場合があります。リモートの状態を採用するには「GitHub → ローカル」を使用してください。"
+  },
+  "options_testConnection": {
+    "message": "接続テスト"
+  },
+  "options_githubReposTitle": {
+    "message": "GitHub Repos フォルダ"
+  },
+  "options_githubReposDesc": {
+    "message": "すべてのGitHubリポジトリ（パブリックおよびプライベート）へのブックマークを含むフォルダを作成します。"
+  },
+  "options_githubReposEnabled": {
+    "message": "GitHub Repos フォルダ"
+  },
+  "options_githubReposParentLabel": {
+    "message": "配置場所"
+  },
+  "options_githubReposParentToolbar": {
+    "message": "ブックマークバー"
+  },
+  "options_githubReposParentOther": {
+    "message": "その他のブックマーク"
+  },
+  "options_githubReposParentMenu": {
+    "message": "ブックマークメニュー"
+  },
+  "options_githubReposRefresh": {
+    "message": "GitHub Repos を更新"
+  },
+  "options_githubReposRefreshSuccess": {
+    "message": "$2 の $1 リポジトリを追加しました"
+  },
+  "options_synchronization": {
+    "message": "同期"
+  },
+  "options_autoSync": {
+    "message": "自動同期"
+  },
+  "options_syncInterval": {
+    "message": "同期間隔（分）"
+  },
+  "options_syncIntervalHint": {
+    "message": "リモートの変更をチェックする頻度。"
+  },
+  "options_syncProfile": {
+    "message": "同期プロファイル"
+  },
+  "options_syncProfileRealtime": {
+    "message": "リアルタイム（1分、2秒デバウンス）"
+  },
+  "options_syncProfileFrequent": {
+    "message": "高頻度（5分、3秒デバウンス）"
+  },
+  "options_syncProfileNormal": {
+    "message": "標準（15分、5秒デバウンス）"
+  },
+  "options_syncProfilePowersave": {
+    "message": "省電力（60分、10秒デバウンス）"
+  },
+  "options_syncProfileCustom": {
+    "message": "カスタム"
+  },
+  "options_debounceDelay": {
+    "message": "デバウンス遅延（秒）"
+  },
+  "options_debounceDelayHint": {
+    "message": "ブックマーク変更後、同期するまでの待機時間。"
+  },
+  "options_syncOnStartup": {
+    "message": "ブラウザ起動時に同期"
+  },
+  "options_syncOnFocus": {
+    "message": "ブラウザにフォーカスが戻ったときに同期"
+  },
+  "options_generatedFilesTitle": {
+    "message": "生成ファイル"
+  },
+  "options_generatedFilesDesc": {
+    "message": "同期時にリポジトリに作成されるファイル。ファイルごとにオフ、手動、自動を選択できます。"
+  },
+  "options_generateModeOff": {
+    "message": "オフ"
+  },
+  "options_generateModeManual": {
+    "message": "手動"
+  },
+  "options_generateModeAuto": {
+    "message": "自動"
+  },
+  "options_generateNowBtn": {
+    "message": "今すぐ生成"
+  },
+  "options_generateReadmeMd": {
+    "message": "README.md"
+  },
+  "options_generateReadmeMdDesc": {
+    "message": "リポジトリ内のMarkdown概要。"
+  },
+  "options_generateBookmarksHtml": {
+    "message": "bookmarks.html を生成"
+  },
+  "options_generateBookmarksHtmlDesc": {
+    "message": "ブラウザインポート用のNetscape形式（Chrome、Firefox）。"
+  },
+  "options_generateFeedXml": {
+    "message": "feed.xml を生成"
+  },
+  "options_generateFeedXmlDesc": {
+    "message": "RSS 2.0 フィード — RSSリーダーで購読したり、自動化に利用できます。"
+  },
+  "options_generateDashyYml": {
+    "message": "dashy-conf.yml を生成"
+  },
+  "options_generateDashyYmlDesc": {
+    "message": "Dashy ダッシュボード設定 — conf.yml にセクションとしてインポートできます。"
+  },
+  "options_settingsSyncTitle": {
+    "message": "設定ファイル"
+  },
+  "options_settingsSyncDesc": {
+    "message": "リポジトリに暗号化された拡張機能設定のバックアップ。すべてのデバイスで同じパスワードを使用してください。"
+  },
+  "options_syncSettingsToGit": {
+    "message": "設定を Git に同期（暗号化）"
+  },
+  "options_settingsSyncPasswordLabel": {
+    "message": "暗号化パスワード"
+  },
+  "options_settingsSyncPasswordHint": {
+    "message": "デバイスごとに一度設定します。すべてのデバイスで同じパスワードを使用してください。"
+  },
+  "options_settingsSyncSaveBtn": {
+    "message": "パスワードを保存"
+  },
+  "options_settingsSyncActive": {
+    "message": "設定同期が有効 — 次の同期時に設定がプッシュされます。"
+  },
+  "options_settingsSyncPasswordMissing": {
+    "message": "パスワードを入力してください。"
+  },
+  "options_settingsSyncModeLabel": {
+    "message": "同期モード"
+  },
+  "options_settingsSyncModeGlobal": {
+    "message": "グローバル — すべてのデバイスで共有"
+  },
+  "options_settingsSyncModeIndividual": {
+    "message": "個別 — このデバイスのみ"
+  },
+  "options_settingsSyncImportTitle": {
+    "message": "他のデバイスからインポート"
+  },
+  "options_settingsSyncImportBtn": {
+    "message": "利用可能な設定を読み込み"
+  },
+  "options_settingsSyncImportApply": {
+    "message": "インポート"
+  },
+  "options_settingsSyncImportEmpty": {
+    "message": "デバイス設定が見つかりません"
+  },
+  "options_settingsSyncImportSuccess": {
+    "message": "設定のインポートに成功しました"
+  },
+  "options_notifications": {
+    "message": "同期通知"
+  },
+  "options_notificationsOff": {
+    "message": "オフ"
+  },
+  "options_notificationsAll": {
+    "message": "すべて（成功と失敗）"
+  },
+  "options_notificationsErrorsOnly": {
+    "message": "エラーのみ"
+  },
+  "options_notificationsHint": {
+    "message": "通知を表示するタイミングを選択してください。"
+  },
+  "notification_titleSuccess": {
+    "message": "同期成功"
+  },
+  "notification_titleFailure": {
+    "message": "同期失敗"
+  },
+  "options_saveSettings": {
+    "message": "設定を保存"
+  },
+  "options_theme": {
+    "message": "テーマ"
+  },
+  "options_themeAuto": {
+    "message": "A 自動（システム）"
+  },
+  "options_themeLight": {
+    "message": "☀ ライト"
+  },
+  "options_themeDark": {
+    "message": "☽ ダーク"
+  },
+  "options_language": {
+    "message": "言語"
+  },
+  "options_langAuto": {
+    "message": "自動（ブラウザ）"
+  },
+  "options_pleaseEnterToken": {
+    "message": "トークンを入力してください。"
+  },
+  "options_checking": {
+    "message": "確認中..."
+  },
+  "options_invalidToken": {
+    "message": "無効なトークンです。"
+  },
+  "options_tokenValidMissingScope": {
+    "message": "トークンは有効（$1）ですが、「repo」スコープがありません。"
+  },
+  "options_tokenValidRepoNotFound": {
+    "message": "トークンは有効（$1）ですが、リポジトリ「$2」が見つかりません。"
+  },
+  "options_connectionOk": {
+    "message": "接続OK！ユーザー: $1、リポジトリ: $2"
+  },
+  "options_tokenValidSpecifyRepo": {
+    "message": "トークンは有効です！ユーザー: $1。リポジトリを指定してください。"
+  },
+  "options_error": {
+    "message": "エラー: $1"
+  },
+  "options_onboardingCreateBtn": {
+    "message": "作成"
+  },
+  "options_onboardingPullBtn": {
+    "message": "読み込み"
+  },
+  "options_onboardingCreateFolder": {
+    "message": "フォルダ $1 はまだ存在しません。基本構造（toolbar、other）で作成しますか？"
+  },
+  "options_onboardingPullNow": {
+    "message": "リポジトリにブックマークが見つかりました。このブラウザに取り込みますか？"
+  },
+  "options_onboardingCreateSuccess": {
+    "message": "フォルダを作成しました。"
+  },
+  "options_onboardingPullSuccess": {
+    "message": "ブックマークの取り込みに成功しました。"
+  },
+  "options_settingsSaved": {
+    "message": "設定を保存しました！"
+  },
+  "options_errorSaving": {
+    "message": "設定の保存エラー: $1"
+  },
+
+  "api_invalidToken": {
+    "message": "無効なトークンです。Personal Access Token を確認してください。"
+  },
+  "api_rateLimitExceeded": {
+    "message": "GitHub API のレート制限を超えました。しばらくお待ちください。"
+  },
+  "api_accessDenied": {
+    "message": "アクセスが拒否されました。トークンの権限を確認してください。"
+  },
+  "api_conflict": {
+    "message": "競合: ファイルがその間に変更されました。"
+  },
+  "api_errorReading": {
+    "message": "ファイル読み取りエラー: $1"
+  },
+  "api_errorWriting": {
+    "message": "ファイル書き込みエラー: $1"
+  },
+  "api_branchNotFound": {
+    "message": "ブランチ '$1' が見つかりません。"
+  },
+
+  "sync_alreadyInProgress": {
+    "message": "同期がすでに進行中です。"
+  },
+  "sync_notConfigured": {
+    "message": "拡張機能が設定されていません。設定を開いてください。"
+  },
+  "sync_noChanges": {
+    "message": "前回の同期以降、変更はありません。"
+  },
+  "sync_conflictRemoteModified": {
+    "message": "競合が検出されました: リモートも変更されています。"
+  },
+  "sync_pushSuccess": {
+    "message": "ブックマークを GitHub にプッシュしました。"
+  },
+  "sync_conflictFileModified": {
+    "message": "競合: ファイルがその間に変更されました。"
+  },
+  "sync_pushFailed": {
+    "message": "プッシュ失敗: $1"
+  },
+  "sync_noBookmarksOnGithub": {
+    "message": "GitHub にブックマークが見つかりません。"
+  },
+  "sync_alreadyUpToDate": {
+    "message": "ブックマークはすでに最新です。"
+  },
+  "sync_pullSuccess": {
+    "message": "GitHub から読み込みました。"
+  },
+  "sync_pullFailed": {
+    "message": "プル失敗: $1"
+  },
+  "sync_allInSync": {
+    "message": "すべて同期済み。変更はありません。"
+  },
+  "sync_conflictBothModified": {
+    "message": "競合: ローカルとリモートの両方のブックマークが変更されました。Push または Pull を選択してください。"
+  },
+  "sync_syncFailed": {
+    "message": "同期失敗: $1"
+  },
+
+  "serializer_invalidFormat": {
+    "message": "無効なブックマークデータ形式です。"
+  },
+  "serializer_lastSynced": {
+    "message": "最終同期: $1"
+  },
+  "serializer_device": {
+    "message": "デバイス: $1"
+  },
+  "serializer_untitled": {
+    "message": "（無題）"
+  },
+
+  "popup_reportIssue": {
+    "message": "問題を報告"
+  },
+
+  "options_about": {
+    "message": "概要"
+  },
+  "options_version": {
+    "message": "バージョン"
+  },
+  "options_by": {
+    "message": "開発者"
+  },
+  "options_specialThanks": {
+    "message": "謝辞"
+  },
+  "options_mobileAppTitle": {
+    "message": "モバイルアプリ"
+  },
+  "options_mobileAppDesc": {
+    "message": "外出先でブックマークを閲覧できます。GitSyncMarks-Mobile（iOS + Android）はGitHubリポジトリから同期する読み取り専用コンパニオンです。"
+  },
+  "options_mobileAppLink": {
+    "message": "GitSyncMarks-Mobile（GitHub）"
+  },
+  "options_mobileAppStores": {
+    "message": "F-Droid および Google Play は近日公開予定です。"
+  },
+  "options_links": {
+    "message": "リンク"
+  },
+  "options_githubRepo": {
+    "message": "GitHub リポジトリ"
+  },
+  "options_documentation": {
+    "message": "ドキュメント"
+  },
+  "options_reportBug": {
+    "message": "バグ報告 / 機能リクエスト"
+  },
+  "options_privacyPolicy": {
+    "message": "プライバシーポリシー"
+  },
+  "options_license": {
+    "message": "ライセンス（MIT）"
+  },
+  "options_debugLogTitle": {
+    "message": "デバッグログ"
+  },
+  "options_debugLogDesc": {
+    "message": "有効にすると同期の診断情報（差分、マージ判断、競合、重要なポイントでのコミットハッシュ）を記録します。同期の問題をトラブルシューティングする際に使用してください。ログをエクスポートしてサポートに共有できます。"
+  },
+  "options_debugLogEnabled": {
+    "message": "デバッグログを有効にする"
+  },
+  "options_debugLogExport": {
+    "message": "ログをエクスポート"
+  },
+  "options_debugLogExportEmpty": {
+    "message": "ログが空です。デバッグログを有効にして、まず同期を実行してください。"
+  },
+
+  "options_tabGitHub": {
+    "message": "GitHub"
+  },
+  "options_tabSynchronization": {
+    "message": "同期"
+  },
+  "options_tabFiles": {
+    "message": "ファイル"
+  },
+  "options_tabHelp": {
+    "message": "ヘルプ"
+  },
+  "options_tabAbout": {
+    "message": "概要"
+  },
+  "options_subTabProfile": {
+    "message": "プロファイル"
+  },
+  "options_subTabConnection": {
+    "message": "接続"
+  },
+  "options_subTabRepos": {
+    "message": "Repos"
+  },
+  "options_subTabGenerated": {
+    "message": "生成"
+  },
+  "options_subTabSettings": {
+    "message": "設定"
+  },
+  "options_subTabExportImport": {
+    "message": "エクスポート / インポート"
+  },
+  "options_subTabGitAdd": {
+    "message": "Git Add"
+  },
+  "help_gettingStartedTitle": {
+    "message": "はじめに"
+  },
+  "help_gettingStartedIntro": {
+    "message": "ブックマーク用のGitHubリポジトリを作成し、<code>repo</code> スコープを持つ Personal Access Token (PAT) を作成します。GitHub タブでトークン、リポジトリオーナー、名前、ブランチ（通常は <code>main</code>）、フォルダパス（デフォルト: <code>bookmarks</code>）を入力します。<strong>接続テスト</strong>をクリックして確認してください。"
+  },
+  "help_onboarding": {
+    "message": "フォルダが空の場合、基本構造（toolbar、other）を作成できます。リポジトリにすでにブックマークがある場合は、このブラウザに取り込むことができます。"
+  },
+  "help_profilesTitle": {
+    "message": "プロファイル"
+  },
+  "help_profilesIntro": {
+    "message": "各プロファイルには独自のブックマークセットとGitHubリポジトリ設定があります。仕事用/個人用や異なるデバイス用にプロファイルを使い分けできます。"
+  },
+  "help_profilesAdd": {
+    "message": "追加、名前変更、削除"
+  },
+  "help_profilesAddDesc": {
+    "message": "ドロップダウンでプロファイルを選択し、追加（新規プロファイル）、名前変更、または削除します。最大10プロファイル。削除すると選択中のプロファイルが削除されます。"
+  },
+  "help_profilesSwitch": {
+    "message": "プロファイルの切り替え"
+  },
+  "help_profilesSwitchDesc": {
+    "message": "別のプロファイルを選択して切り替えます。現在のブックマークは保存され、切り替え前に現在のプロファイルのリポジトリにプッシュされます。切り替え先のプロファイルのブックマークがローカルのブックマークに置き換わります。「確認なしで切り替え」を使用すると確認ダイアログをスキップできます。"
+  },
+  "help_profilesNote": {
+    "message": "プロファイルは安定して動作します。複数のプロファイルを使用すると、まれに同期の競合が発生することがあります — Push または Pull を2〜3回試すと通常解決します。この機能はまだ発展途上です。再現可能なバグが見つかった場合は、GitHub で Issue を作成してください。"
+  },
+  "help_githubReposTitle": {
+    "message": "GitHub Repos フォルダ"
+  },
+  "help_githubReposDesc": {
+    "message": "オプション: すべてのGitHubリポジトリ（パブリックおよびプライベート）へのブックマークを含むフォルダを作成します。配置場所（toolbar、other）を選択してください。フォルダは通常のブックマークと同様に同期されます。<strong>GitHub Repos を更新</strong>でリストを更新できます。"
+  },
+  "help_popupTitle": {
+    "message": "ポップアップ（拡張機能アイコン）"
+  },
+  "help_popupProfile": {
+    "message": "プロファイルセレクター"
+  },
+  "help_popupProfileDesc": {
+    "message": "ポップアップのヘッダーからプロファイルを直接切り替えられます。"
+  },
+  "help_popupSyncNow": {
+    "message": "今すぐ同期"
+  },
+  "help_popupSyncNowDesc": {
+    "message": "完全な三方向マージ同期: ローカルとリモートの変更が可能な限り自動的にマージされます。"
+  },
+  "help_popupPush": {
+    "message": "Push ↑"
+  },
+  "help_popupPushDesc": {
+    "message": "ローカルのブックマークをGitHubにアップロード（リモートの変更を上書き）。"
+  },
+  "help_popupPull": {
+    "message": "Pull ↓"
+  },
+  "help_popupPullDesc": {
+    "message": "GitHubからダウンロード（ローカルの変更を上書き）。"
+  },
+  "help_syncTitle": {
+    "message": "同期"
+  },
+  "help_autoSyncTitle": {
+    "message": "自動同期"
+  },
+  "help_autoSyncDesc": {
+    "message": "有効にすると、ブックマークを追加、編集、削除したときに自動的に同期します。デバウンス遅延により、連続した変更が完了するまで待機してから同期します。"
+  },
+  "help_syncProfiles": {
+    "message": "同期プロファイル"
+  },
+  "help_syncProfilesDesc": {
+    "message": "リアルタイム（1分）、高頻度（5分）、標準（15分）、省電力（60分）。カスタムでは間隔とデバウンスを手動で設定できます。"
+  },
+  "help_syncStartup": {
+    "message": "起動時/フォーカス時に同期"
+  },
+  "help_syncStartupDesc": {
+    "message": "オプション: ブラウザ起動時またはブラウザウィンドウに戻ったときに同期（クールダウン付き）。"
+  },
+  "help_generatedFilesTitle": {
+    "message": "生成ファイル"
+  },
+  "help_generatedFilesDesc": {
+    "message": "README.md、bookmarks.html、feed.xml、dashy-conf.yml を同期時に作成できます。ファイルタブでファイルごとにオフ、手動、自動を選択してください。"
+  },
+  "help_settingsSyncTitle": {
+    "message": "設定ファイル"
+  },
+  "help_settingsSyncDesc": {
+    "message": "有効にすると、拡張機能の設定（プロファイル、トークン、環境設定）が暗号化されてリポジトリに保存されます。グローバル（すべてのデバイスで共有する settings.enc）または個別（デバイス固有の settings-{id}.enc）を選択できます。個別モードでは他のデバイスから設定をインポートできます。パスワードはデバイスごとにローカルに保存され、リポジトリを共有するすべてのデバイスで同じである必要があります。"
+  },
+  "help_notificationsTitle": {
+    "message": "通知"
+  },
+  "help_notificationsDesc": {
+    "message": "同期通知の表示タイミングを選択: すべて（成功と失敗）、エラーのみ、またはオフ。"
+  },
+  "help_backupTitle": {
+    "message": "バックアップ"
+  },
+  "help_backupBookmarks": {
+    "message": "ブックマークのエクスポート / インポート"
+  },
+  "help_backupBookmarksDesc": {
+    "message": "すべてのブラウザブックマークをJSONとしてエクスポートします。インポートすると、アクティブなプロファイルのすべてのブックマークがファイルの内容に置き換えられます。"
+  },
+  "help_backupSettings": {
+    "message": "設定のエクスポート / インポート"
+  },
+  "help_backupSettingsDesc": {
+    "message": "プレーンな .json またはパスワード暗号化された .enc としてエクスポートします。インポートするとすべての設定（全プロファイル）が置き換えられ、ページがリロードされます。"
+  },
+  "help_conflictTitle": {
+    "message": "競合"
+  },
+  "help_conflictDesc": {
+    "message": "ローカルとリモートの両方のブックマークが変更された場合、ポップアップに競合が表示されます。<strong>Push</strong>（ローカルが優先、リモートを上書き）または<strong>Pull</strong>（リモートが優先、ローカルを上書き）を選択してください。競合の自動マージはありません。"
+  },
+  "help_shortcuts": {
+    "message": "キーボードショートカット"
+  },
+  "help_quickSync": {
+    "message": "ブックマークをクイック同期"
+  },
+  "help_openOptions": {
+    "message": "拡張機能の設定を開く"
+  },
+  "help_shortcutsNote": {
+    "message": "ブラウザの拡張機能設定でショートカットをカスタマイズできます。"
+  },
+  "help_debugLogTitle": {
+    "message": "デバッグログ"
+  },
+  "help_debugLogDesc": {
+    "message": "同期タブで有効にすると、詳細な同期診断情報（差分、マージ判断、コミットハッシュ）を記録します。ログをエクスポートしてトラブルシューティングに共有できます。"
+  },
+  "help_backupBookmarksDesc2": {
+    "message": "ブックマーク（JSON）、Dashy 設定（YAML）、または設定（プレーン JSON / 暗号化 .enc）をエクスポートします。ブックマークまたは設定をインポート — 暗号化ファイルはパスワードで復号されます。ブックマークのインポートはすべてのローカルブックマークを置き換えます。設定のインポートはすべてのプロファイルを置き換え、ページをリロードします。"
+  },
+  "help_themeAutoSaveTitle": {
+    "message": "テーマと自動保存"
+  },
+  "help_themeCycleTitle": {
+    "message": "テーマ"
+  },
+  "help_themeCycleDesc": {
+    "message": "ヘッダーのボタンをクリックして切り替え: 自動（システム）→ ダーク → ライト → 自動。アイコンは現在のモードを表示します。オプションとポップアップの両方で動作します。"
+  },
+  "help_autoSaveTitle": {
+    "message": "自動保存"
+  },
+  "help_autoSaveDesc": {
+    "message": "すべての設定は変更時に自動的に保存されます — 保存ボタンはありません。変更はすぐに反映されます。"
+  },
+  "help_whySlowTitle": {
+    "message": "同期に時間がかかることがあるのはなぜですか？"
+  },
+  "help_whySlowIntro": {
+    "message": "GitSyncMarks はアトミックコミットのために GitHub の Git Data API を使用しています。変更または新規の各ブックマークファイルには API 呼び出しが必要です。変更が多い場合、これが積み重なります。"
+  },
+  "help_whyAtomic": {
+    "message": "すべての変更は単一のアトミックコミットで書き込まれます: すべてが成功するか、まったく変更されないかのどちらかです。これにより、同期が中断された場合の部分的または破損した状態を防ぎます。多数のコミットではなく1つのコミットにすることで、API レート制限への到達を回避し、Git 履歴をクリーンに保ちます。"
+  },
+  "help_reportIssue": {
+    "message": "問題を報告"
+  },
+  "help_links": {
+    "message": "リンク"
+  },
+  "help_discussions": {
+    "message": "ディスカッション"
+  },
+  "help_voteBacklogTitle": {
+    "message": "次の予定は？"
+  },
+  "help_voteBacklogDesc": {
+    "message": "次に取り組むバックログ機能に投票してください。あなたの声がロードマップを形作ります。"
+  },
+  "help_voteBacklogBtn": {
+    "message": "バックログに投票"
+  },
+
+  "options_backupTitle": {
+    "message": "バックアップ"
+  },
+  "options_backupIntro": {
+    "message": "ブックマークをJSONとして、設定をJSONまたはパスワード暗号化 .enc としてエクスポート/インポートします。"
+  },
+  "options_bookmarksCard": {
+    "message": "ブックマーク"
+  },
+  "options_settingsCard": {
+    "message": "設定"
+  },
+  "options_exportBookmarks": {
+    "message": "ブックマークをエクスポート"
+  },
+  "options_exportBookmarksDesc": {
+    "message": "すべてのブックマークをJSONとして保存します。"
+  },
+  "options_exportDashy": {
+    "message": "Dashy 設定をエクスポート"
+  },
+  "options_exportDashyDesc": {
+    "message": "ブックマークを Dashy ダッシュボードセクション（YAML）としてエクスポートします。"
+  },
+  "options_exportBtn": {
+    "message": "エクスポート"
+  },
+  "options_importBtn": {
+    "message": "インポート"
+  },
+  "options_chooseFile": {
+    "message": "ファイルを選択"
+  },
+  "options_importBookmarks": {
+    "message": "ブックマークをインポート"
+  },
+  "options_exportSettings": {
+    "message": "設定をエクスポート"
+  },
+  "options_exportSettingsDesc": {
+    "message": "GitHub接続と同期設定（プロファイルを含む）。"
+  },
+  "options_importSettings": {
+    "message": "設定をインポート"
+  },
+  "options_importBookmarksWarning": {
+    "message": "アクティブなプロファイルのすべてのブックマークが置き換えられます。元に戻せません。"
+  },
+  "options_importSettingsWarning": {
+    "message": "すべての設定（全プロファイル）が置き換えられます。ページはその後リロードされます。"
+  },
+  "options_importSettingsFormats": {
+    "message": ".json（プレーン）または .enc（暗号化）ファイルに対応しています。"
+  },
+  "options_selectFile": {
+    "message": "ファイルを選択..."
+  },
+  "options_importSuccess": {
+    "message": "インポート成功！"
+  },
+  "options_exportSuccess": {
+    "message": "エクスポート成功！"
+  },
+  "options_importError": {
+    "message": "インポート失敗: $1"
+  },
+  "options_exportSettingsPlain": {
+    "message": "エクスポート（プレーン）"
+  },
+  "options_exportSettingsEncrypted": {
+    "message": "暗号化エクスポート"
+  },
+  "options_exportPasswordPrompt": {
+    "message": "設定ファイルを暗号化するパスワードを入力してください。"
+  },
+  "options_importPasswordPrompt": {
+    "message": "設定ファイルを復号するパスワードを入力してください。"
+  },
+  "options_passwordPlaceholder": {
+    "message": "パスワード"
+  },
+  "options_decryptError": {
+    "message": "復号に失敗しました。パスワードが間違っていませんか？"
+  },
+  "options_exportEncryptedSuccess": {
+    "message": "暗号化エクスポート成功！"
+  },
+
+  "options_tabAutomation": {
+    "message": "自動化"
+  },
+  "options_automationTitle": {
+    "message": "Git 経由でブックマークを追加"
+  },
+  "options_automationIntro": {
+    "message": "リポジトリにブックマークを直接追加できます。拡張機能は次の同期時にそれらを取得し、ファイル名を自動的に正規化します。"
+  },
+  "options_automationFormatTitle": {
+    "message": "ファイル形式"
+  },
+  "options_automationFoldersLabel": {
+    "message": "セクション:"
+  },
+  "options_automationGithubActionTitle": {
+    "message": "GitHub Action"
+  },
+  "options_automationWorkflowLink": {
+    "message": "add-bookmark.yml をリポジトリにコピー"
+  },
+  "options_automationGithubActionParams": {
+    "message": "folder = ルート; path = オプションのサブフォルダ; base-path（ファイルパスが bookmarks でない場合）"
+  },
+  "options_automationCreateFileTitle": {
+    "message": "リポジトリにファイルを作成"
+  },
+  "options_automationCreateFileDesc": {
+    "message": "<code>bookmarks/toolbar/</code> または <code>bookmarks/other/</code>（またはサブフォルダ）に新しい JSON ファイルを追加します。異なる場合は拡張機能のファイルパスを使用してください。"
+  },
+  "options_automationCopy": {
+    "message": "コピー"
+  },
+  "options_automationWorkflowRaw": {
+    "message": "Raw"
+  },
+  "options_automationSubfolderExample": {
+    "message": "例: path=\"dev-tools\" → bookmarks/toolbar/dev-tools/"
+  },
+  "options_automationParamUrl": {
+    "message": "ブックマーク URL（必須）"
+  },
+  "options_automationParamTitle": {
+    "message": "タイトル（省略可; 空の場合はURLを使用）"
+  },
+  "options_automationParamSection": {
+    "message": "セクション: toolbar または other"
+  },
+  "options_automationParamFolder": {
+    "message": "セクション内のフォルダ（例: dev-tools）"
+  },
+  "options_automationParamBasePath": {
+    "message": "リポジトリ内のベースフォルダ（デフォルト bookmarks; ファイルパス設定と一致する必要があります）"
+  },
+
+  "options_exportImportTitle": {
+    "message": "エクスポート / インポート"
+  },
+  "options_exportImportDesc": {
+    "message": "ブックマークと拡張機能の設定をエクスポートまたはインポートします。"
+  },
+  "options_exportLabel": {
+    "message": "エクスポート"
+  },
+  "options_importLabel": {
+    "message": "インポート"
+  },
+  "options_exportTypeBookmarks": {
+    "message": "ブックマーク（JSON）"
+  },
+  "options_exportTypeDashy": {
+    "message": "Dashy 設定（YAML）"
+  },
+  "options_exportTypeSettingsPlain": {
+    "message": "設定（プレーン JSON）"
+  },
+  "options_exportTypeSettingsEncrypted": {
+    "message": "設定（暗号化）"
+  },
+  "options_importTypeBookmarks": {
+    "message": "ブックマーク（JSON）"
+  },
+  "options_importTypeSettings": {
+    "message": "設定（JSON / ENC）"
+  },
+  "help_filesTitle": {
+    "message": "ファイル"
+  }
+}

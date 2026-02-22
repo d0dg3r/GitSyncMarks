@@ -8,6 +8,7 @@ Contributions and ideas welcome — open an issue or pull request.
 
 ## Planned for v2.5.0
 
+- **8 new languages** — Portuguese (Brazil), Italian, Japanese, Chinese (Simplified), Korean, Russian, Turkish, Polish; 12 languages total; improved auto-detection for regional locales (pt_BR, zh_CN)
 - **Context menu** — Right-click on link or page:
   - **Add to GitSyncMarks** — add as bookmark to repo
   - **Favicon**: copy favicon URL to clipboard; download locally; save to Git repo

@@ -60,7 +60,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 - **Generated files**: README.md (Markdown overview), bookmarks.html (Netscape import), feed.xml (RSS 2.0), dashy-conf.yml (Dashy dashboard) — each configurable as Off, Manual, or Auto
 - **Settings sync to Git**: Encrypted backup of extension settings in the repo — Global (shared) or Individual (per device) mode; import settings from other devices; same password on every device, auto-synced
 - **Options UI**: 5 tabs (GitHub, Sync, Files, Help, About) with sub-tabs for GitHub and Files — clean, organized settings
-- **Multilanguage**: English, German, French, and Spanish, with manual language selection
+- **Multilanguage**: 12 languages — English, German, French, Spanish, Portuguese (Brazil), Italian, Japanese, Chinese (Simplified), Korean, Russian, Turkish, Polish; manual language selection or auto-detect from browser
 - **Keyboard shortcuts**: Quick sync (`Ctrl+Shift+.`), Open settings (`Ctrl+Shift+,`) — customizable in browser extension settings
 - **Debug Log**: Options → Sync — enable to record sync diagnostics (diffs, merge decisions, commit hashes); export and share for troubleshooting
 - **Vote on backlog**: Community poll in Help tab — vote on which features to prioritize next
@@ -268,7 +268,7 @@ gh workflow run add-bookmark.yml \
 | Generate dashy-conf.yml | Files → Generated | Off | Off / Manual / Auto — Dashy dashboard config |
 | Sync settings to Git | Files → Settings | Off | Encrypted backup of settings in the repo (global/individual) |
 | Theme | Header | Auto | Light, Dark, or Auto (cycle button: A → Dark → Light → A) |
-| Language | Header | Auto | Auto (browser), English, German, French, or Spanish |
+| Language | Header | Auto | Auto (browser) or manual — 12 languages (EN, DE, FR, ES, PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL) |
 | Debounce delay | Sync | 5 s | Wait time before syncing after bookmark changes (varies by sync profile) |
 
 ## Conflict Resolution
