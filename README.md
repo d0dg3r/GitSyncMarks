@@ -21,20 +21,18 @@
 
 <table align="center">
 <tr>
-<td align="center"><img src="store-assets/en/chrome-7-popup.png" width="220" alt="Popup" /><br><sub>1. Popup</sub></td>
-<td align="center"><img src="store-assets/en/chrome-1-github.png" width="220" alt="GitHub" /><br><sub>2. GitHub</sub></td>
-<td align="center"><img src="store-assets/en/chrome-2-synchronization.png" width="220" alt="Sync" /><br><sub>3. Sync</sub></td>
-<td align="center"><img src="store-assets/en/chrome-3-backup.png" width="220" alt="Backup" /><br><sub>4. Backup</sub></td>
+<td align="center"><img src="store-assets/en/chrome-1-github.png" width="220" alt="GitHub (Profile)" /><br><sub>1. GitHub</sub></td>
+<td align="center"><img src="store-assets/en/chrome-2-connection.png" width="220" alt="GitHub (Connection)" /><br><sub>2. Connection</sub></td>
+<td align="center"><img src="store-assets/en/chrome-3-sync.png" width="220" alt="Sync" /><br><sub>3. Sync</sub></td>
 </tr>
 <tr>
-<td align="center"><img src="store-assets/en/chrome-4-automation.png" width="220" alt="Automation" /><br><sub>5. Automation</sub></td>
-<td align="center"><img src="store-assets/en/chrome-5-help.png" width="220" alt="Help" /><br><sub>6. Help</sub></td>
-<td align="center"><img src="store-assets/en/chrome-6-about.png" width="220" alt="About" /><br><sub>7. About</sub></td>
-<td align="center"></td>
+<td align="center"><img src="store-assets/en/chrome-4-files.png" width="220" alt="Files (Generated)" /><br><sub>4. Files</sub></td>
+<td align="center"><img src="store-assets/en/chrome-5-export-import.png" width="220" alt="Files (Export / Import)" /><br><sub>5. Export / Import</sub></td>
+<td align="center"><img src="store-assets/en/chrome-6-popup.png" width="220" alt="Popup" /><br><sub>6. Popup</sub></td>
 </tr>
 </table>
 
-See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROADMAP.md](ROADMAP.md) for planned features. Release codenames (cult nerd figures): 2.3 *Data*, 2.4 *R2-D2*, 3.0 *GLaDOS* — see [docs/RELEASE.md](docs/RELEASE.md).
+See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROADMAP.md](ROADMAP.md) for planned features. Vote on the [backlog poll](https://github.com/d0dg3r/GitSyncMarks/discussions/37) to influence what we build next. Release codenames (cult nerd figures): 2.3 *Data*, 2.4 *R2-D2*, 3.0 *GLaDOS* — see [docs/RELEASE.md](docs/RELEASE.md).
 
 ## Mobile App
 
@@ -47,19 +45,25 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 - **Cross-browser**: Works with Chrome, Chromium, Brave, Edge, and Firefox
 - **Auto-sync**: Automatically syncs on every bookmark change (configurable debounce)
 - **Multiple profiles**: Up to 10 profiles (work, personal, etc.); each has its own GitHub repo config and bookmark set; Add, Rename, Delete; switching replaces local bookmarks with the target profile's data
+- **Onboarding**: Test Connection detects whether the repo folder is empty or has bookmarks — create base structure or pull existing data with one click
 - **Sync profiles**: Presets — Real-time (1 min), Frequent (5 min), Normal (15 min), Power save (60 min); Custom for manual interval and debounce
+- **Sync on startup / focus**: Optional sync when the browser starts or gains focus (with cooldown to avoid duplicates)
+- **Notifications**: Configurable sync notifications — All (success + failure), Errors only, or Off
 - **Theme**: Light, dark, or auto — single cycle button (A → Dark → Light → A) in options and popup
 - **Periodic sync**: Checks for remote changes at configurable intervals (1–120 minutes)
 - **Manual sync**: Push, Pull, and full Sync via popup buttons
 - **Conflict detection**: Notifies you when automatic merge is not possible
-- **Readable overview**: A `README.md` with all bookmarks is generated in the repo for easy browsing on GitHub
-- **Automation**: Add bookmarks via Git, CLI, or GitHub Actions — the extension picks them up automatically
-- **GitHub Repos folder**: Optional folder with bookmarks to all your GitHub repositories (public and private); configurable position (toolbar/other); manual refresh; preserved on pull when not in Git
-- **Auto-save**: All settings save automatically when changed; no Save buttons
-- **Import/Export**: Export and import bookmarks or extension settings as JSON; settings can also be exported as password-encrypted .enc for secure backup
+- **Automation**: Add bookmarks via Git, CLI, or GitHub Actions — the extension picks them up automatically (Files → Git Add)
+- **GitHub Repos folder**: Optional folder with bookmarks to all your GitHub repositories (public and private); configurable position (toolbar/other); manual refresh
+- **Auto-save**: All settings save automatically when changed — no Save buttons needed
+- **Import/Export**: Export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc); import bookmarks or settings with automatic format detection
+- **Generated files**: README.md (Markdown overview), bookmarks.html (Netscape import), feed.xml (RSS 2.0), dashy-conf.yml (Dashy dashboard) — each configurable as Off, Manual, or Auto
+- **Settings sync to Git**: Encrypted backup of extension settings in the repo — Global (shared) or Individual (per device) mode; import settings from other devices; same password on every device, auto-synced
+- **Options UI**: 5 tabs (GitHub, Sync, Files, Help, About) with sub-tabs for GitHub and Files — clean, organized settings
 - **Multilanguage**: English, German, French, and Spanish, with manual language selection
 - **Keyboard shortcuts**: Quick sync (`Ctrl+Shift+.`), Open settings (`Ctrl+Shift+,`) — customizable in browser extension settings
-- **Debug Log**: Options → Help — enable to record sync diagnostics (diffs, merge decisions, commit hashes); export and share for troubleshooting
+- **Debug Log**: Options → Sync — enable to record sync diagnostics (diffs, merge decisions, commit hashes); export and share for troubleshooting
+- **Vote on backlog**: Community poll in Help tab — vote on which features to prioritize next
 - **No server needed**: Communicates directly with the GitHub API using your Personal Access Token
 
 ## Installation
@@ -108,16 +112,15 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 
 ## Options Tabs
 
-The extension settings open in a new tab with six sections. Header: language dropdown, theme cycle button (A → Dark → Light → A). All settings auto-save.
+The extension settings open in a new tab with five main tabs. Header: language dropdown, theme cycle button (A → Dark → Light → A). All settings auto-save.
 
-| Tab | Contents |
-|-----|----------|
-| **GitHub** | Profile selector, token, repository config, Test Connection, onboarding |
-| **Sync** | Auto-sync, sync profile, sync on start/focus, notifications; GitHub Repos folder; generated files (README.md, bookmarks.html) |
-| **Backup** | Export/import bookmarks and settings (JSON or encrypted .enc) |
-| **Automation** | Add bookmarks via Git or GitHub Actions — JSON template, gh command, parameter table, copy buttons |
-| **Help** | Quick links (Docs, Discussions, Report Issue), Debug Log, feature overview, keyboard shortcuts |
-| **About** | Version, links, license, contributors, mobile app |
+| Tab | Sub-tabs | Contents |
+|-----|----------|----------|
+| **GitHub** | Profile, Connection, Repos | Profile selector (add/rename/delete); token, repo, branch, file path, Test Connection, onboarding; GitHub Repos folder toggle |
+| **Sync** | — | Auto-sync, sync profile, sync on start/focus, notifications; Debug Log |
+| **Files** | Generated, Settings, Export/Import, Git Add | Generated files (README.md, bookmarks.html, feed.xml, dashy-conf.yml) with Off/Manual/Auto; Settings sync to Git (encrypted, global/individual); Export/import bookmarks and settings (JSON or encrypted .enc); Add bookmarks via Git or GitHub Actions |
+| **Help** | — | Backlog poll, quick links (Docs, Discussions, Report Issue), feature overview, keyboard shortcuts |
+| **About** | — | Version, links, license, contributors, mobile app |
 
 ---
 
@@ -145,8 +148,7 @@ In the **Sync** tab:
 - **Sync profile**: Real-time (1 min), Frequent (5 min), Normal (15 min), Power save (60 min), or Custom (manual interval/debounce)
 - **Sync on start / Sync on focus**: Optional sync when the browser starts or gains focus (with cooldown)
 - **Notifications**: All, Errors only, or Off
-- **GitHub Repos folder**: Optional folder with bookmarks to all your GitHub repositories; position (toolbar/other); use **Update GitHub Repos** to refresh (Settings → Sync)
-- **Generated files**: Toggle **Generate README.md** (Markdown overview in repo) and **Generate bookmarks.html** (Netscape format for browser import) on/off
+- **Debug Log**: Enable to record sync diagnostics (diffs, merge decisions, commit hashes); export for troubleshooting
 
 ---
 
@@ -163,12 +165,14 @@ Status line shows last sync time and next scheduled sync. When a conflict occurs
 
 ---
 
-## Backup Tab
+## Files Tab
 
-In the **Backup** tab:
+In the **Files** tab (four sub-tabs):
 
-- **Export / Import Bookmarks**: Export all browser bookmarks as JSON; import replaces all bookmarks in the **active profile** (use with caution)
-- **Export / Import Settings**: Export as plain JSON or password-encrypted .enc for secure backup. Import replaces **all settings (all profiles)** and reloads the page. Useful for migrating to another browser or device
+- **Generated**: Each file — **README.md** (Markdown overview), **bookmarks.html** (Netscape format for browser import), **feed.xml** (RSS 2.0 feed), and **dashy-conf.yml** (Dashy dashboard config) — can be set to **Off**, **Manual**, or **Auto**. Use "Generate now" to manually trigger generation and push
+- **Settings**: Sync extension settings to Git (encrypted). Choose **Global** (shared `settings.enc`) or **Individual** (per-device `settings-{id}.enc`). Set one password per device; import configs from other devices
+- **Export / Import**: Export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc). Import bookmarks or settings — encrypted files are decrypted with your password
+- **Git Add**: Add bookmarks without opening the browser — create a JSON file in the repo or use the GitHub Actions workflow (`add-bookmark.yml`)
 
 ## Files in the GitHub Repository
 
@@ -179,6 +183,9 @@ bookmarks/
   _index.json                     # Metadata (format version, device info)
   README.md                       # Auto-generated overview — browse all bookmarks on GitHub
   bookmarks.html                  # Netscape format — import directly in Chrome, Firefox, Edge
+  feed.xml                        # RSS 2.0 feed — subscribe in any reader or use for automations
+  dashy-conf.yml                  # Dashy dashboard config — sections with bookmark links
+  settings.enc                    # Encrypted settings backup (if settings sync enabled)
   toolbar/                        # Bookmarks Bar
     _order.json                   # Defines order of items and subfolders in this folder
     github_a1b2.json              # One file per bookmark
@@ -199,11 +206,11 @@ Each bookmark is a simple JSON file:
 }
 ```
 
-The `README.md` in the repo is regenerated on each sync — it lists all bookmarks with links, so you can browse your bookmarks directly on GitHub. The `bookmarks.html` file uses the Netscape format and can be imported in any browser (Chrome: Bookmarks → Import; Firefox: Import and Backup → Import Bookmarks from file). Both files can be turned off in Settings → Sync → Generated files.
+The `README.md` in the repo is regenerated on each sync — it lists all bookmarks with links, so you can browse your bookmarks directly on GitHub. The `bookmarks.html` file uses the Netscape format and can be imported in any browser (Chrome: Bookmarks → Import; Firefox: Import and Backup → Import Bookmarks from file). The `feed.xml` file is an RSS 2.0 feed that can be subscribed to in any RSS reader (Feedly, Thunderbird, etc.) or used for automations (Slack, IFTTT, n8n). The `dashy-conf.yml` provides bookmark sections for the [Dashy](https://github.com/Lissy93/dashy) dashboard. Each file can be set to Off, Manual (generate via button), or Auto (on every sync) in Settings → Files → Generated.
 
-## Automation Tab
+## Automation (Git Add)
 
-Add bookmarks without opening the browser. The **Automation** tab provides copy buttons for JSON and the `gh` command, plus a parameter table.
+Add bookmarks without opening the browser. The **Files → Git Add** sub-tab provides copy buttons for JSON and the `gh` command, plus a parameter table.
 
 ### 1. Create file in repo
 
@@ -253,10 +260,13 @@ gh workflow run add-bookmark.yml \
 | Sync on Start | Sync | Off | Sync when the browser starts |
 | Sync on Focus | Sync | Off | Sync when the browser gains focus |
 | Notifications | Sync | All | When to show sync notifications: All, Errors only, or Off |
-| GitHub Repos folder | Sync | Off | Create folder with bookmarks to all your GitHub repos |
-| GitHub Repos position | Sync | Other Bookmarks | Where to place the folder (toolbar/other) |
-| Generate README.md | Sync | On | Generate Markdown overview in the repo on each sync |
-| Generate bookmarks.html | Sync | On | Generate Netscape-format file for browser import |
+| GitHub Repos folder | GitHub → Repos | Off | Create folder with bookmarks to all your GitHub repos |
+| GitHub Repos position | GitHub → Repos | Other Bookmarks | Where to place the folder (toolbar/other) |
+| Generate README.md | Files → Generated | Auto | Off / Manual / Auto — Markdown overview in the repo |
+| Generate bookmarks.html | Files → Generated | Auto | Off / Manual / Auto — Netscape-format file for browser import |
+| Generate feed.xml | Files → Generated | Auto | Off / Manual / Auto — RSS 2.0 feed for readers and automations |
+| Generate dashy-conf.yml | Files → Generated | Off | Off / Manual / Auto — Dashy dashboard config |
+| Sync settings to Git | Files → Settings | Off | Encrypted backup of settings in the repo (global/individual) |
 | Theme | Header | Auto | Light, Dark, or Auto (cycle button: A → Dark → Light → A) |
 | Language | Header | Auto | Auto (browser), English, German, French, or Spanish |
 | Debounce delay | Sync | 5 s | Wait time before syncing after bookmark changes (varies by sync profile) |
@@ -291,7 +301,7 @@ There is no automatic merge for conflicts — you must pick one side. Choose bas
 | Token invalid | Ensure the PAT has the `repo` scope; token may have been revoked |
 | Repo not found | Verify Repository Owner and Name; check repo exists and you have access |
 | Sync takes long | Many changed bookmarks = many API calls; see *Why does sync take long?* in Options → Help |
-| Sync issues / debugging | Enable Debug Log in Options → Help, reproduce the issue, export the log (includes commit hashes at key points) and share for support |
+| Sync issues / debugging | Enable Debug Log in Options → Sync, reproduce the issue, export the log (includes commit hashes at key points) and share for support |
 | Conflict not resolving | You must choose Push or Pull in the popup; there is no automatic merge for conflicts |
 | Profile switch slow | When switching to a new (empty) profile, sync is fast; when the current profile has many bookmarks, it pushes to GitHub first |
 
@@ -299,12 +309,13 @@ There is no automatic merge for conflicts — you must pick one side. Choose bas
 
 In the **Help** tab of the options page:
 
+- **Vote on backlog**: Quick access to the community poll for feature prioritization
 - **Quick links**: Documentation, Discussions, Report Issue
-- **Debug Log**: Enable to record sync diagnostics (diffs, merge decisions, commit hashes); export for troubleshooting
-- **Collapsible sections**: Getting Started, Profiles, Popup, Sync, Backup, Conflicts, Keyboard Shortcuts, and more
+- **Collapsible sections**: Getting Started, Why does sync take long?, Profiles, GitHub Repos Folder, Popup, Sync (incl. Debug Log), Files (incl. Settings sync, Export/Import), Notifications, Conflicts, Keyboard Shortcuts, Theme & Auto-save
 
 ## Documentation & Links
 
+- **[Backlog Poll](https://github.com/d0dg3r/GitSyncMarks/discussions/37)** — Vote on which features to prioritize next
 - **[Discussions](https://github.com/d0dg3r/GitSyncMarks/discussions)** — Q&A, ideas, show and tell; see [docs/GITHUB-DISCUSSIONS.md](docs/GITHUB-DISCUSSIONS.md) for category overview
 - **[GitSyncMarks-Mobile](https://github.com/d0dg3r/GitSyncMarks-Mobile)** — iOS + Android companion app (read-only; F-Droid and Google Play coming soon)
 - **[docs/](docs/)** — Architecture, release process, testing guide, GitHub Discussions setup

@@ -24,15 +24,14 @@ const VIEWPORT = { width: 1280, height: 800 };
 const LANGUAGES = [{ code: 'en' }, { code: 'de' }, { code: 'fr' }, { code: 'es' }];
 
 const OPTIONS_TABS = [
-  { id: 'github', file: '1-github' },
-  { id: 'sync', file: '2-synchronization' },
-  { id: 'backup', file: '3-backup' },
-  { id: 'automation', file: '4-automation' },
-  { id: 'help', file: '5-help' },
-  { id: 'about', file: '6-about' },
+  { id: 'github', subtab: null, file: '1-github' },
+  { id: 'github', subtab: 'github-connection', file: '2-connection' },
+  { id: 'sync', subtab: null, file: '3-sync' },
+  { id: 'files', subtab: null, file: '4-files' },
+  { id: 'files', subtab: 'files-export-import', file: '5-export-import' },
 ];
 
-const FIREFOX_FILES = ['1-github', '2-synchronization', '3-backup', '4-automation', '5-help', '6-about', '7-popup'];
+const FIREFOX_FILES = ['1-github', '2-connection', '3-sync', '4-files', '5-export-import', '6-popup'];
 
 async function ensureDir(dir) {
   await fs.promises.mkdir(dir, { recursive: true });
@@ -84,8 +83,11 @@ async function main() {
 
   await ensureDir(STORE_ASSETS);
 
-  // Remove old unnumbered screenshot files
-  const OLD_FILES = ['github', 'synchronization', 'backup', 'automation', 'help', 'about', 'popup'];
+  // Remove old screenshot files from previous layouts
+  const OLD_FILES = [
+    'github', 'synchronization', 'backup', 'automation', 'help', 'about', 'popup',
+    '1-github', '2-synchronization', '3-backup', '4-automation', '5-help', '6-about', '7-popup',
+  ];
   for (const code of LANGUAGES.map((l) => l.code)) {
     const langDir = path.join(STORE_ASSETS, code);
     if (fs.existsSync(langDir)) {
@@ -136,10 +138,16 @@ async function main() {
     await page.locator('#language-select').selectOption(code);
     await page.waitForTimeout(600);
 
-    for (const { id, file } of OPTIONS_TABS) {
+    for (const { id, subtab, file } of OPTIONS_TABS) {
       const tabBtn = page.locator(`.tab-btn[data-tab="${id}"]`);
       await tabBtn.click();
       await page.waitForTimeout(300);
+
+      if (subtab) {
+        const subTabBtn = page.locator(`.sub-tab-btn[data-subtab="${subtab}"]`);
+        await subTabBtn.click();
+        await page.waitForTimeout(300);
+      }
 
       await page.evaluate(async (theme) => {
         await chrome.storage.sync.set({ theme });
@@ -179,9 +187,9 @@ async function main() {
     await popupPage.waitForTimeout(150);
     const popupDarkBuf = await popupPage.screenshot();
 
-    const popupPath = path.join(langDir, 'chrome-7-popup.png');
+    const popupPath = path.join(langDir, 'chrome-6-popup.png');
     await compositePopupLightDarkCrop(popupLightBuf, popupDarkBuf, popupPath);
-    console.log('  ', `${code}/chrome-7-popup.png (light | dark)`);
+    console.log('  ', `${code}/chrome-6-popup.png (light | dark)`);
     await popupPage.close();
   }
 

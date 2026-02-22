@@ -25,7 +25,7 @@ flowchart LR
     end
 
     subgraph Repo["GitHub Repository"]
-        Files["bookmarks/toolbar/*.json\nbookmarks/other/*.json\nbookmarks/README.md\nbookmarks/bookmarks.html"]
+        Files["bookmarks/toolbar/*.json\nbookmarks/other/*.json\nbookmarks/README.md\nbookmarks/bookmarks.html\nbookmarks/feed.xml\nbookmarks/dashy-conf.yml\nbookmarks/settings.enc\nbookmarks/settings-{id}.enc"]
     end
 
     BM --> FM
@@ -131,7 +131,25 @@ Auto-generated on every push. Shows all bookmarks as Markdown with folder headin
 
 ### `bookmarks.html` — Netscape Format for Browser Import
 
-Auto-generated on every push when enabled (default: on). Uses the Netscape Bookmark File format (`<!DOCTYPE NETSCAPE-Bookmark-file-1>`) which Chrome, Firefox, Edge, and Safari can import directly. Not used for sync — purely for importing bookmarks without the extension.
+Auto-generated on push when mode is Auto (default). Uses the Netscape Bookmark File format (`<!DOCTYPE NETSCAPE-Bookmark-file-1>`) which Chrome, Firefox, Edge, and Safari can import directly. Not used for sync — purely for importing bookmarks without the extension.
+
+### `feed.xml` — RSS 2.0 Feed
+
+Auto-generated on push when mode is Auto (default). Each bookmark becomes an `<item>` with title, link, and category (folder path). Subscribable via any RSS reader (Feedly, Thunderbird, etc.); useful for automations (Slack, IFTTT, n8n) or embedding on websites. Works as a live feed via `raw.githubusercontent.com` or GitHub Pages.
+
+### `dashy-conf.yml` — Dashy Dashboard Config
+
+Auto-generated on push when mode is Auto. Produces YAML sections with bookmark links for the [Dashy](https://github.com/Lissy93/dashy) dashboard. Each bookmark folder becomes a section with items. Not used for sync — purely for Dashy integration.
+
+### `settings.enc` / `settings-{id}.enc` — Encrypted Settings
+
+Optional. When "Sync settings to Git" is enabled, the extension writes an encrypted copy of all settings (profiles, tokens, sync preferences) to the repo. Uses the same `gitsyncmarks-enc:v1` format as the manual encrypted export (PBKDF2 + AES-256-GCM). The password is stored locally per device in `chrome.storage.local` and never synced.
+
+Two modes are available:
+- **Global** (default): All devices share a single `settings.enc`. On pull/sync, the remote file is decrypted and applied (last-write-wins).
+- **Individual**: Each device writes to `settings-{deviceId8}.enc`. Remote settings from `settings.enc` are not applied. Other devices can list and import individual device configs via the UI.
+
+Excluded from three-way merge (`DIFF_IGNORE_SUFFIXES` + `SETTINGS_ENC_PATTERN`).
 
 ### Complete Repository Structure
 
@@ -140,6 +158,10 @@ bookmarks/
   _index.json
   README.md
   bookmarks.html
+  feed.xml
+  dashy-conf.yml
+  settings.enc              (global mode)
+  settings-a1b2c3d4.enc    (individual mode, per device)
   toolbar/
     _order.json
     github_a1b2.json
@@ -182,8 +204,12 @@ Per-profile keys (repo config, githubRepos) live in `profiles[id]`; others are g
 | `autoSync` | `boolean` | `true` | Auto-sync enabled |
 | `syncInterval` | `number` | `15` | Sync interval (minutes) |
 | `language` | `string` | `"auto"` | UI language |
-| `generateReadmeMd` | `boolean` | `true` | Generate README.md on sync |
-| `generateBookmarksHtml` | `boolean` | `true` | Generate bookmarks.html (Netscape format) on sync |
+| `generateReadmeMd` | `string` | `"auto"` | Generate README.md: `"off"`, `"manual"`, or `"auto"` |
+| `generateBookmarksHtml` | `string` | `"auto"` | Generate bookmarks.html: `"off"`, `"manual"`, or `"auto"` |
+| `generateFeedXml` | `string` | `"auto"` | Generate feed.xml (RSS 2.0): `"off"`, `"manual"`, or `"auto"` |
+| `generateDashyYml` | `string` | `"off"` | Generate dashy-conf.yml: `"off"`, `"manual"`, or `"auto"` |
+| `syncSettingsToGit` | `boolean` | `false` | Sync encrypted settings to Git repo |
+| `settingsSyncMode` | `string` | `"global"` | Settings sync mode: `"global"` (shared) or `"individual"` (per device) |
 
 ### `chrome.storage.local` — Sync State + Token
 
@@ -195,6 +221,7 @@ Per-profile keys (repo config, githubRepos) live in `profiles[id]`; others are g
 | `lastCommitSha` | `string` | Git commit SHA at last sync |
 | `lastSyncTime` | `string` | ISO 8601 timestamp of last sync |
 | `hasConflict` | `boolean` | Whether a conflict was detected |
+| `settingsSyncPassword` | `string` | Password for settings.enc encryption (device-local, never synced) |
 
 The `lastSyncFiles` object is the **base state** for three-way merge. It maps each file path to its blob SHA (for remote change detection) and content (for local change detection).
 

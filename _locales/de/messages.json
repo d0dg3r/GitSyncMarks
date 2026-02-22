@@ -248,10 +248,22 @@
     "message": "Generierte Dateien"
   },
   "options_generatedFilesDesc": {
-    "message": "Dateien, die beim Sync im Repo erstellt werden. Ausschalten, um Aktualisierung zu stoppen."
+    "message": "Dateien, die beim Sync im Repo erstellt werden. Pro Datei Aus, Manuell oder Auto wählen."
+  },
+  "options_generateModeOff": {
+    "message": "Aus"
+  },
+  "options_generateModeManual": {
+    "message": "Manuell"
+  },
+  "options_generateModeAuto": {
+    "message": "Auto"
+  },
+  "options_generateNowBtn": {
+    "message": "Jetzt erzeugen"
   },
   "options_generateReadmeMd": {
-    "message": "README.md erzeugen"
+    "message": "README.md"
   },
   "options_generateReadmeMdDesc": {
     "message": "Markdown-Übersicht im Repo."
@@ -261,6 +273,66 @@
   },
   "options_generateBookmarksHtmlDesc": {
     "message": "Netscape-Format für Browser-Import (Chrome, Firefox)."
+  },
+  "options_generateFeedXml": {
+    "message": "feed.xml erzeugen"
+  },
+  "options_generateFeedXmlDesc": {
+    "message": "RSS-2.0-Feed — in jedem RSS-Reader abonnierbar oder für Automatisierungen nutzbar."
+  },
+  "options_generateDashyYml": {
+    "message": "dashy-conf.yml erzeugen"
+  },
+  "options_generateDashyYmlDesc": {
+    "message": "Dashy-Dashboard-Konfig — als Sections in deine conf.yml importierbar."
+  },
+  "options_settingsSyncTitle": {
+    "message": "Einstellungsdatei"
+  },
+  "options_settingsSyncDesc": {
+    "message": "Verschlüsseltes Backup der Erweiterungseinstellungen im Repo. Gleiches Passwort auf jedem Gerät."
+  },
+  "options_syncSettingsToGit": {
+    "message": "Einstellungen mit Git synchronisieren (verschlüsselt)"
+  },
+  "options_settingsSyncPasswordLabel": {
+    "message": "Verschlüsselungspasswort"
+  },
+  "options_settingsSyncPasswordHint": {
+    "message": "Einmal pro Gerät festlegen. Muss auf allen Geräten gleich sein."
+  },
+  "options_settingsSyncSaveBtn": {
+    "message": "Passwort speichern"
+  },
+  "options_settingsSyncActive": {
+    "message": "Einstellungen-Sync aktiv — Einstellungen werden beim nächsten Sync übertragen."
+  },
+  "options_settingsSyncPasswordMissing": {
+    "message": "Bitte ein Passwort eingeben."
+  },
+  "options_settingsSyncModeLabel": {
+    "message": "Sync-Modus"
+  },
+  "options_settingsSyncModeGlobal": {
+    "message": "Global — auf allen Geräten gleich"
+  },
+  "options_settingsSyncModeIndividual": {
+    "message": "Individuell — nur dieses Gerät"
+  },
+  "options_settingsSyncImportTitle": {
+    "message": "Von anderem Gerät importieren"
+  },
+  "options_settingsSyncImportBtn": {
+    "message": "Verfügbare Configs laden"
+  },
+  "options_settingsSyncImportApply": {
+    "message": "Importieren"
+  },
+  "options_settingsSyncImportEmpty": {
+    "message": "Keine Geräte-Configs gefunden"
+  },
+  "options_settingsSyncImportSuccess": {
+    "message": "Einstellungen erfolgreich importiert"
   },
   "options_notifications": {
     "message": "Sync-Benachrichtigungen"
@@ -499,14 +571,35 @@
   "options_tabSynchronization": {
     "message": "Sync"
   },
-  "options_tabBackup": {
-    "message": "Backup"
+  "options_tabFiles": {
+    "message": "Dateien"
+  },
+  "options_tabHelp": {
+    "message": "Hilfe"
   },
   "options_tabAbout": {
     "message": "Über"
   },
-  "options_tabHelp": {
-    "message": "Hilfe"
+  "options_subTabProfile": {
+    "message": "Profil"
+  },
+  "options_subTabConnection": {
+    "message": "Verbindung"
+  },
+  "options_subTabRepos": {
+    "message": "Repos"
+  },
+  "options_subTabGenerated": {
+    "message": "Generiert"
+  },
+  "options_subTabSettings": {
+    "message": "Einstellungen"
+  },
+  "options_subTabExportImport": {
+    "message": "Export / Import"
+  },
+  "options_subTabGitAdd": {
+    "message": "Git Add"
   },
   "help_gettingStartedTitle": {
     "message": "Erste Schritte"
@@ -596,7 +689,13 @@
     "message": "Generierte Dateien"
   },
   "help_generatedFilesDesc": {
-    "message": "README.md (Übersicht) und bookmarks.html (Netscape-Format für Browser-Import) werden beim Sync erzeugt. Im Sync-Tab abschalten, um keine Updates mehr zu schreiben."
+    "message": "README.md, bookmarks.html, feed.xml und dashy-conf.yml können beim Sync erzeugt werden. Pro Datei Aus, Manuell oder Auto im Dateien-Tab wählen."
+  },
+  "help_settingsSyncTitle": {
+    "message": "Einstellungsdatei"
+  },
+  "help_settingsSyncDesc": {
+    "message": "Wenn aktiviert, werden die Erweiterungseinstellungen (Profile, Tokens, Präferenzen) verschlüsselt im Repo gespeichert. Wähle Global (gemeinsame settings.enc für alle Geräte) oder Individuell (gerätespezifische settings-{id}.enc). Im individuellen Modus kannst du Einstellungen von anderen Geräten importieren. Das Passwort wird lokal pro Gerät gespeichert und muss auf allen Geräten gleich sein."
   },
   "help_notificationsTitle": {
     "message": "Benachrichtigungen"
@@ -637,6 +736,30 @@
   "help_shortcutsNote": {
     "message": "Die Kürzel können in den Erweiterungseinstellungen des Browsers angepasst werden."
   },
+  "help_debugLogTitle": {
+    "message": "Debug-Log"
+  },
+  "help_debugLogDesc": {
+    "message": "Im Sync-Tab aktivierbar — zeichnet Sync-Diagnostik auf (Diffs, Merge-Entscheidungen, Commit-Hashes). Log exportieren und zur Fehlersuche teilen."
+  },
+  "help_backupBookmarksDesc2": {
+    "message": "Lesezeichen (JSON), Dashy-Konfiguration (YAML) oder Einstellungen (JSON / verschlüsselt .enc) exportieren. Import von Lesezeichen oder Einstellungen — verschlüsselte Dateien werden mit dem Passwort entschlüsselt. Lesezeichen-Import ersetzt alle lokalen Lesezeichen; Einstellungen-Import ersetzt alle Profile und lädt die Seite neu."
+  },
+  "help_themeAutoSaveTitle": {
+    "message": "Design & Auto-Save"
+  },
+  "help_themeCycleTitle": {
+    "message": "Design"
+  },
+  "help_themeCycleDesc": {
+    "message": "Klicke den Button im Header zum Wechseln: Auto (System) → Dunkel → Hell → Auto. Das Icon zeigt den aktuellen Modus. Funktioniert in Optionen und Popup."
+  },
+  "help_autoSaveTitle": {
+    "message": "Auto-Save"
+  },
+  "help_autoSaveDesc": {
+    "message": "Alle Einstellungen speichern sich automatisch bei Änderung — es gibt keine Speichern-Buttons. Änderungen wirken sofort."
+  },
   "help_whySlowTitle": {
     "message": "Warum dauert der Sync manchmal lange?"
   },
@@ -654,6 +777,15 @@
   },
   "help_discussions": {
     "message": "Diskussionen"
+  },
+  "help_voteBacklogTitle": {
+    "message": "Was kommt als Nächstes?"
+  },
+  "help_voteBacklogDesc": {
+    "message": "Stimm ab, welches Backlog-Feature wir als Nächstes angehen. Deine Stimme prägt die Roadmap."
+  },
+  "help_voteBacklogBtn": {
+    "message": "Backlog abstimmen"
   },
 
   "options_backupTitle": {
@@ -673,6 +805,12 @@
   },
   "options_exportBookmarksDesc": {
     "message": "Alle Lesezeichen als JSON."
+  },
+  "options_exportDashy": {
+    "message": "Dashy-Konfig exportieren"
+  },
+  "options_exportDashyDesc": {
+    "message": "Lesezeichen als Dashy-Dashboard-Sections exportieren (YAML)."
   },
   "options_exportBtn": {
     "message": "Export"
@@ -791,5 +929,39 @@
   },
   "options_automationParamBasePath": {
     "message": "Basisordner im Repo (Standard bookmarks; muss File Path entsprechen)"
+  },
+
+  "options_exportImportTitle": {
+    "message": "Export / Import"
+  },
+  "options_exportImportDesc": {
+    "message": "Lesezeichen und Einstellungen exportieren oder importieren."
+  },
+  "options_exportLabel": {
+    "message": "Export"
+  },
+  "options_importLabel": {
+    "message": "Import"
+  },
+  "options_exportTypeBookmarks": {
+    "message": "Lesezeichen (JSON)"
+  },
+  "options_exportTypeDashy": {
+    "message": "Dashy Config (YAML)"
+  },
+  "options_exportTypeSettingsPlain": {
+    "message": "Einstellungen (Klartext)"
+  },
+  "options_exportTypeSettingsEncrypted": {
+    "message": "Einstellungen (verschlüsselt)"
+  },
+  "options_importTypeBookmarks": {
+    "message": "Lesezeichen (JSON)"
+  },
+  "options_importTypeSettings": {
+    "message": "Einstellungen (JSON / ENC)"
+  },
+  "help_filesTitle": {
+    "message": "Dateien"
   }
 }

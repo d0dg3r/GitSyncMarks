@@ -68,7 +68,7 @@ The central coordinator:
 
 - **Bookmark event listeners** — `onCreated`, `onRemoved`, `onChanged`, `onMoved` trigger debounced auto-sync
 - **Periodic sync alarm** — `chrome.alarms` for periodic three-way merge sync
-- **Message handler** — Receives `sync`, `push`, `pull`, `getStatus`, `settingsChanged` from popup/options
+- **Message handler** — Receives `sync`, `push`, `pull`, `generateFilesNow`, `getStatus`, `switchProfile`, `settingsChanged`, `setSettingsSyncPassword`, `clearSettingsSyncPassword`, `listDeviceConfigs`, `importDeviceConfig`, `getDebugLog` from popup/options
 - **Migration** — Checks for and migrates legacy `bookmarks.json` format on startup
 
 ### `popup.html` / `popup.js` — Popup UI
@@ -77,14 +77,13 @@ Toolbar popup with header (icon, title, profile dropdown when 2+ profiles), stat
 
 ### `options.html` / `options.js` — Settings Page
 
-Full-page settings (opens in tab) with six tabs. Header: language dropdown, theme cycle button (A → Dark → Light → A). All settings auto-save on change; no Save buttons.
+Full-page settings (opens in tab) with five tabs. Header: language dropdown, theme cycle button (A → Dark → Light → A). All settings auto-save on change; no Save buttons.
 
-1. **GitHub** — Profile selector (multiple profiles with separate repos), token, repository, connection test, onboarding (create folder or pull when path empty/has bookmarks)
-2. **Sync** — Sync profile, auto-sync, sync on start/focus, notifications; GitHub Repos folder (optional); generated files (README.md, bookmarks.html)
-3. **Backup** — Export/import bookmarks and settings as JSON or password-encrypted .enc (file picker with chosen filename)
-4. **Automation** — Guide for adding bookmarks via Git, CLI, or GitHub Actions
-5. **Help** — Keyboard shortcuts, main features (popup, profiles, auto-sync, conflicts)
-6. **About** — Version, links, license
+1. **GitHub** (sub-tabs: Profile, Connection, Repos) — Profile selector (multiple profiles with separate repos); token, repository, connection test, onboarding (create folder or pull when path empty/has bookmarks); GitHub Repos folder (optional, position toolbar/other)
+2. **Sync** — Sync profile, auto-sync, sync on start/focus, notifications; Debug Log
+3. **Files** (sub-tabs: Generated, Settings, Export/Import, Git Add) — Generated files (README.md, bookmarks.html, feed.xml, dashy-conf.yml) with Off/Manual/Auto mode; settings sync to Git (Global `settings.enc` or Individual `settings-{id}.enc`, with device config import); compact export/import (bookmarks, Dashy, settings plain/encrypted via dropdown); automation guide for adding bookmarks via Git, CLI, or GitHub Actions
+4. **Help** — Quick links (Vote on backlog, Documentation, Discussions, Report Issue) as pill buttons; collapsible feature sections (Getting Started, Profiles, GitHub Repos, Popup, Sync, Files, Notifications, Conflicts, Keyboard Shortcuts)
+5. **About** — Version, links, license, mobile app
 
 ### `lib/sync-engine.js` — Sync Engine
 
@@ -127,14 +126,17 @@ Converts between browser bookmark trees and the per-file format:
 | `bookmarkTreeToFileMap(tree, basePath)` | Browser tree → file map (path → content) |
 | `fileMapToBookmarkTree(files, basePath)` | File map → bookmark tree (role → children) |
 | `fileMapToMarkdown(files, basePath)` | File map → human-readable Markdown |
+| `fileMapToNetscapeHtml(files, basePath)` | File map → Netscape bookmarks HTML (browser import) |
+| `fileMapToRssFeed(files, basePath)` | File map → RSS 2.0 XML feed |
+| `fileMapToDashyYaml(files, basePath)` | File map → Dashy dashboard YAML config |
 | `generateFilename(title, url)` | Deterministic filename: `{slug}_{hash}.json` |
 | `detectRootFolderRole(node)` | Detect toolbar/other from browser IDs |
 | `gitTreeToShaMap(entries, basePath)` | Git tree → SHA map for remote change detection |
 | `serializeToJson()` / `deserializeFromJson()` | Legacy format (for import/export) |
 
-### `lib/crypto.js` — Token Encryption
+### `lib/crypto.js` — Encryption
 
-AES-256-GCM encryption for the GitHub PAT at rest. Non-extractable CryptoKey in IndexedDB. Token stored only in `chrome.storage.local`.
+AES-256-GCM encryption for the GitHub PAT at rest (non-extractable CryptoKey in IndexedDB, token in `chrome.storage.local`). Also provides password-based encryption (`encryptWithPassword` / `decryptWithPassword` using PBKDF2 + AES-256-GCM) for settings export (.enc files) and settings sync to Git.
 
 ### `lib/i18n.js` — Internationalization
 
@@ -217,7 +219,8 @@ GitSyncMarks/
 │   └── es/messages.json
 ├── icons/
 ├── scripts/
-│   └── build.sh                  # Build Chrome + Firefox packages
+│   ├── build.sh                  # Build Chrome + Firefox packages
+│   └── generate-screenshots.js   # Auto-generate store screenshots (Playwright + Sharp)
 ├── package.json                  # npm scripts for building
 ├── .github/workflows/
 │   ├── test-e2e.yml              # E2E tests (manual trigger only; CI disabled)

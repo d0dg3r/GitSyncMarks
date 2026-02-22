@@ -9,6 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *(Keine Einträge)*
 
+## [2.4.0] - 2026-02-21 (*R2-D2*)
+
+### Added
+
+- **RSS feed export**: New generated file `feed.xml` (RSS 2.0) — each bookmark becomes an `<item>` with title, URL, and folder as category; subscribable in any RSS reader; enables automations (Slack, IFTTT, n8n); works as live feed via GitHub Pages or raw URL
+- **Generated files mode selector**: Each generated file (README.md, bookmarks.html, feed.xml) can be set to **Off**, **Manual**, or **Auto** individually; "Generate now" button triggers manual generation and push; backward-compatible with existing boolean settings
+- **Settings sync to Git**: Optional encrypted settings file in the repo — syncs extension settings (profiles, tokens, preferences) across devices; AES-256-GCM encrypted with user password; password stored locally per device; auto-push on every sync, auto-pull on pull/sync; supports **Global** mode (shared `settings.enc`) and **Individual** mode (device-specific `settings-{id}.enc`); import settings from other devices in individual mode
+- **Backlog voting awareness**: "Vote on backlog" button in Help tab quick links; poll link in README
+
+### Changed
+
+- **Options reorganized**: Reduced from 6 tabs to 5 — Backup and Automation merged into new **Files** tab; sub-tab navigation for GitHub (Profile, Connection, Repos) and Files (Generated, Settings, Export/Import, Git Add); Help quick links restyled as pill buttons
+- **Debug Log moved**: Debug Log section moved from Help tab to Sync tab (where sync diagnostics belong)
+- **Generated files UI**: Checkbox toggles replaced by dropdown selectors (Off / Manual / Auto) with per-file control; dashy-conf.yml added as fourth generated file
+- **GitHub Repos Folder**: Moved to GitHub tab → Repos sub-tab
+
 ## [2.3.0] - 2026-02-19 (*Data*)
 
 ### Added
@@ -26,7 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Help tab**: Quick Links (Documentation, Discussions, Report Issue) as button row at top; removed redundant Links accordion; aligned card styling with other tabs
 - **Theme selector**: Single cycle button (A → Dark → Light → A) replaces three separate buttons; icon and tooltip reflect current mode; A and moon icon in white for dark mode
 - **Auto-save**: GitHub tab (token, owner, repo, branch, filepath, profile switch) and Sync tab (all dropdowns, toggles, generated files) save automatically on change; Save buttons removed
-- **GitHub Repos Folder**: Moved from GitHub tab to Sync tab
+- **GitHub Repos Folder**: Moved from GitHub tab to Sync tab (later moved to GitHub → Repos sub-tab in v2.4.0)
 - **Save feedback layout**: Save result integrated into cards with top border instead of standalone area
 
 ## [2.2.1] - 2026-02-19
@@ -182,7 +198,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release: bookmark sync with GitHub
 
-[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.3.0...HEAD
+[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.4.0...HEAD
+[2.4.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.2.1...v2.3.0
 [2.2.1]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.1.2...v2.2.0

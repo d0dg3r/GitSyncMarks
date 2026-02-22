@@ -23,7 +23,7 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 | Version | Codename | Rationale |
 |---------|----------|-----------|
 | 2.3.0 | **Data** | Star Trek — logical, reliable, all about data; fits auto-save and efficient sync |
-| 2.4.0 | **R2-D2** | Star Wars — the helper droid that does everything; fits context menu, favicon, settings sync to Git (encrypted only) |
+| 2.4.0 | **R2-D2** | Star Wars — the helper droid that does everything; fits settings sync to Git, RSS feed, generated files, tab reorganization with sub-tabs |
 | 3.0 | **GLaDOS** | Portal — AI, cult, iconic; fits AI features; the irony of "murderous" AI as bookmark keeper is fun |
 
 **Naming logic:**
@@ -37,7 +37,8 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 
 | Version | Codename | Description |
 |---|---|---|
-| `2.3.0` | *Data* | Encrypted settings export (password-protected .enc); plain JSON and encrypted formats supported; import with password prompt for .enc files; Sync tab shortened to "Sync"; store screenshots (popup crop, options resize); import hints (active profile / all profiles); theme cycle button; full auto-save (GitHub + Sync tabs, no Save buttons); GitHub Repos moved to Sync tab; save feedback in cards |
+| `2.4.0` | *R2-D2* | Settings sync to Git (encrypted `settings.enc` in repo); RSS feed export (`feed.xml`); dashy-conf.yml; generated files mode selector (Off/Manual/Auto per file with "Generate now" button); backlog voting awareness; Debug Log moved to Sync tab; options reorganized to 5 tabs with sub-tabs (GitHub/Sync/Files/Help/About); 6 store screenshots per language |
+| `2.3.0` | *Data* | Encrypted settings export (password-protected .enc); plain JSON and encrypted formats supported; import with password prompt for .enc files; Sync tab shortened to "Sync"; store screenshots (popup crop, options resize); import hints (active profile / all profiles); theme cycle button; full auto-save (no Save buttons); save feedback in cards |
 | `2.2.1` | — | Sync feedback message fix (merge shows push/pull success); state regression fix (stale fetch guard, cache-busting); debug log extended with commit hashes |
 | `2.2.0` | — | GitHub Repos folder, multiple profiles, onboarding, profile add auto-switch, profile limit display, spinner, profile switch UX, popup redesign, shorter pull message, keyboard shortcuts, Help tab (collapsible accordion), options header (language dropdown only), French and Spanish; settings import round-trip fix; auto-save on switches and before actions; compact Options UI (all tabs); Backup tab redesign; contributors Patrick W., Gernot B. |
 | `2.1.2` | — | Store buttons in README, responsive mobile layout for Firefox Android, testing guide (docs/TESTING.md) |
@@ -230,10 +231,10 @@ All Chrome Web Store assets are in `store-assets/`:
 | File | Purpose | Dimensions |
 |---|---|---|
 | `icon128-store.png` | Store listing icon | 128 x 128 |
-| `en/chrome-*.png` | Options tabs and popup (EN) | 1280 x 800 |
-| `de/chrome-*.png` | Options tabs and popup (DE) | 1280 x 800 |
-| `fr/chrome-*.png` | Options tabs and popup (FR) | 1280 x 800 |
-| `es/chrome-*.png` | Options tabs and popup (ES) | 1280 x 800 |
+| `en/chrome-*.png` | 6 screenshots: GitHub, Connection, Sync, Files, Export/Import, Popup (EN) | 1280 x 800 |
+| `de/chrome-*.png` | 6 screenshots (DE) | 1280 x 800 |
+| `fr/chrome-*.png` | 6 screenshots (FR) | 1280 x 800 |
+| `es/chrome-*.png` | 6 screenshots (ES) | 1280 x 800 |
 | `{en,de,fr,es}/firefox-*.png` | Firefox (copied from Chrome) | 1280 x 800 |
 | `promo-small.png` | Small promo tile | 440 x 280 |
 | `promo-marquee.png` | Marquee promo tile | 1400 x 560 |

@@ -64,16 +64,18 @@ Create categories in the repo: **Settings → General → Discussions** (enable 
 > 2. Open a Discussion here to discuss the idea
 > 3. If there's support, we can create an issue for tracking
 >
-> See [ROADMAP.md](../ROADMAP.md) for planned features (v2.4.0 R2-D2: context menu, favicon, settings sync to Git; v3.0 GLaDOS: AI features).
+> See [ROADMAP.md](../ROADMAP.md) for planned features (v3.0 GLaDOS: AI features, GitLab/Gitea support).
 
-**Planned for v2.4.0 (R2-D2)**
+**What's new in v2.4.0 (R2-D2)**
 
-> Features planned for the next release:
-> - Context menu: Add to GitSyncMarks, favicon (copy URL, download, save to Git)
-> - Settings sync to Git (encrypted only)
-> - Browser import files (e.g. Netscape HTML)
+> - RSS feed export (`feed.xml`) — subscribe in any RSS reader
+> - Generated files mode selector (Off / Manual / Auto per file)
+> - Backlog voting awareness in Help tab
+> - Settings sync to Git (encrypted, Global/Individual mode)
+> - Options reorganized to 5 tabs with sub-tabs (GitHub, Sync, Files, Help, About)
+> - Context menu planned for v2.5
 >
-> What would you like to see first? Any feedback on these?
+> What would you like to see next? Vote in the [Backlog Poll](https://github.com/d0dg3r/GitSyncMarks/discussions/37).
 
 ---
 
@@ -104,7 +106,7 @@ Q&A entries use **two steps**: (1) create the discussion with the **question** i
 **Can I add bookmarks without the browser?**
 
 - **Question:** "I want to add or edit bookmarks without opening the browser. Is that possible?"
-- **Answer:** Yes. Use the [GitHub Action add-bookmark.yml](https://github.com/d0dg3r/GitSyncMarks/blob/main/.github/workflows/add-bookmark.yml) to add bookmarks via CLI or GitHub UI. You can also create/edit JSON files directly in the repo. See Options → Automation tab for details.
+- **Answer:** Yes. Use the [GitHub Action add-bookmark.yml](https://github.com/d0dg3r/GitSyncMarks/blob/main/.github/workflows/add-bookmark.yml) to add bookmarks via CLI or GitHub UI. You can also create/edit JSON files directly in the repo. See Options → Files tab for details.
 
 ---
 

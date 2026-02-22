@@ -50,7 +50,7 @@ Or use the combined command:
 npm run screenshots
 ```
 
-Output: `store-assets/{en,de,fr,es}/` — each with `chrome-*.png` (GitHub, Sync, Backup, Automation, Help, About, Popup) and `firefox-*.png` (copied from Chrome; UI is identical). Each screenshot shows light and dark mode side by side (1280x800 total).
+Output: `store-assets/{en,de,fr,es}/` — each with `chrome-*.png` (GitHub-Profile, Connection, Sync, Files-Generated, Export-Import, Popup) and `firefox-*.png` (copied from Chrome; UI is identical). Each screenshot shows light and dark mode side by side (1280x800 total).
 
 **Prerequisites:** Playwright with Chromium (`npx playwright install chromium` — run once).
 
@@ -218,7 +218,7 @@ If you do not have an Android phone:
 
 ## Sync Troubleshooting
 
-- **Debug Log**: Options → Help tab — enable the debug log, reproduce the sync issue, then export and share the log for support or analysis
+- **Debug Log**: Options → Sync tab — enable the debug log, reproduce the sync issue, then export and share the log for support or analysis
 
 ---
 
