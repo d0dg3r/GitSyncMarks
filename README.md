@@ -45,21 +45,25 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 - **Cross-browser**: Works with Chrome, Chromium, Brave, Edge, and Firefox
 - **Auto-sync**: Automatically syncs on every bookmark change (configurable debounce)
 - **Multiple profiles**: Up to 10 profiles (work, personal, etc.); each has its own GitHub repo config and bookmark set; Add, Rename, Delete; switching replaces local bookmarks with the target profile's data
+- **Onboarding**: Test Connection detects whether the repo folder is empty or has bookmarks — create base structure or pull existing data with one click
 - **Sync profiles**: Presets — Real-time (1 min), Frequent (5 min), Normal (15 min), Power save (60 min); Custom for manual interval and debounce
+- **Sync on startup / focus**: Optional sync when the browser starts or gains focus (with cooldown to avoid duplicates)
+- **Notifications**: Configurable sync notifications — All (success + failure), Errors only, or Off
 - **Theme**: Light, dark, or auto — single cycle button (A → Dark → Light → A) in options and popup
 - **Periodic sync**: Checks for remote changes at configurable intervals (1–120 minutes)
 - **Manual sync**: Push, Pull, and full Sync via popup buttons
 - **Conflict detection**: Notifies you when automatic merge is not possible
-- **Readable overview**: A `README.md` with all bookmarks is generated in the repo for easy browsing on GitHub
-- **Automation**: Add bookmarks via Git, CLI, or GitHub Actions — the extension picks them up automatically
-- **GitHub Repos folder**: Optional folder with bookmarks to all your GitHub repositories (public and private); configurable position (toolbar/other); manual refresh; preserved on pull when not in Git
-- **Auto-save**: All settings save automatically when changed; no Save buttons
-- **Import/Export**: Export and import bookmarks or extension settings as JSON; settings can also be exported as password-encrypted .enc for secure backup
-- **Multilanguage**: English, German, French, and Spanish, with manual language selection
-- **Keyboard shortcuts**: Quick sync (`Ctrl+Shift+.`), Open settings (`Ctrl+Shift+,`) — customizable in browser extension settings
+- **Automation**: Add bookmarks via Git, CLI, or GitHub Actions — the extension picks them up automatically (Files → Git Add)
+- **GitHub Repos folder**: Optional folder with bookmarks to all your GitHub repositories (public and private); configurable position (toolbar/other); manual refresh
+- **Auto-save**: All settings save automatically when changed — no Save buttons needed
+- **Import/Export**: Export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc); import bookmarks or settings with automatic format detection
 - **Generated files**: README.md (Markdown overview), bookmarks.html (Netscape import), feed.xml (RSS 2.0), dashy-conf.yml (Dashy dashboard) — each configurable as Off, Manual, or Auto
 - **Settings sync to Git**: Encrypted backup of extension settings in the repo — Global (shared) or Individual (per device) mode; import settings from other devices; same password on every device, auto-synced
+- **Options UI**: 5 tabs (GitHub, Sync, Files, Help, About) with sub-tabs for GitHub and Files — clean, organized settings
+- **Multilanguage**: English, German, French, and Spanish, with manual language selection
+- **Keyboard shortcuts**: Quick sync (`Ctrl+Shift+.`), Open settings (`Ctrl+Shift+,`) — customizable in browser extension settings
 - **Debug Log**: Options → Sync — enable to record sync diagnostics (diffs, merge decisions, commit hashes); export and share for troubleshooting
+- **Vote on backlog**: Community poll in Help tab — vote on which features to prioritize next
 - **No server needed**: Communicates directly with the GitHub API using your Personal Access Token
 
 ## Installation
@@ -307,7 +311,7 @@ In the **Help** tab of the options page:
 
 - **Vote on backlog**: Quick access to the community poll for feature prioritization
 - **Quick links**: Documentation, Discussions, Report Issue
-- **Collapsible sections**: Getting Started, Profiles, GitHub Repos Folder, Popup, Sync, Files, Notifications, Conflicts, Keyboard Shortcuts
+- **Collapsible sections**: Getting Started, Why does sync take long?, Profiles, GitHub Repos Folder, Popup, Sync (incl. Debug Log), Files (incl. Settings sync, Export/Import), Notifications, Conflicts, Keyboard Shortcuts, Theme & Auto-save
 
 ## Documentation & Links
 

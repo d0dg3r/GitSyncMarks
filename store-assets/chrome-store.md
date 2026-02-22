@@ -22,15 +22,19 @@ Features:
 • Onboarding: create folder or pull bookmarks when configuring a new profile
 • Sync profiles: real-time, frequent, normal, or power-save (preset intervals and debounce)
 • Auto-sync on every bookmark change (debounce configurable per profile)
+• Sync on startup / focus: optional sync when the browser starts or gains focus (with cooldown)
 • Periodic sync to detect remote changes (1–120 minutes, configurable)
+• Notifications: All (success + failure), Errors only, or Off
 • Manual Push, Pull, and full Sync via the popup
 • Conflict detection when automatic merge is not possible
 • Generated files: README.md (overview), bookmarks.html (browser import), feed.xml (RSS 2.0 feed), and dashy-conf.yml (Dashy dashboard) — each configurable as Off, Manual, or Auto
 • Settings sync to Git: encrypted backup of extension settings in the repo — Global (shared) or Individual (per device) mode; import settings from other devices; same password on every device, auto-synced
 • Automation: add bookmarks via Git, CLI, or GitHub Actions — no browser needed
-• Import/Export: back up and restore bookmarks or settings as JSON files; settings can be exported as password-encrypted .enc for secure backup (clear UI with file picker)
+• Import/Export: export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc); import with automatic format detection
 • Auto-save: all settings save automatically when changed — no Save buttons
-• Theme: light, dark, or auto (system) for options and popup
+• Options: 5 tabs (GitHub, Sync, Files, Help, About) with sub-tabs for GitHub and Files — clean, organized settings UI
+• Theme: light, dark, or auto — single cycle button (A → Dark → Light → A) in options and popup
+• Vote on backlog: community poll to influence which features come next
 • Multilanguage: English, German, French, and Spanish with manual language selection
 • Keyboard shortcuts: quick sync (Ctrl+Shift+.), open settings (Ctrl+Shift+,) — customizable
 • Debug log: Sync tab — enable for sync diagnostics, export for troubleshooting
@@ -84,15 +88,19 @@ Funktionen:
 • Onboarding: Ordner anlegen oder Lesezeichen laden beim Konfigurieren eines neuen Profils
 • Sync-Profile: Echtzeit, häufig, normal oder Stromsparen (vorkonfigurierte Intervalle)
 • Auto-Sync bei jeder Lesezeichen-Änderung (Verzögerung pro Profil konfigurierbar)
+• Sync bei Start / Fokus: optionaler Sync beim Browserstart oder Fensterfokus (mit Cooldown)
 • Periodischer Sync zur Erkennung von Remote-Änderungen (1–120 Min., konfigurierbar)
+• Benachrichtigungen: Alle (Erfolg + Fehler), Nur Fehler oder Aus
 • Manuelles Push, Pull und Sync über das Popup
 • Konflikterkennung, wenn automatisches Mergen nicht möglich ist
 • Generierte Dateien: README.md (Übersicht), bookmarks.html (Browser-Import), feed.xml (RSS-2.0-Feed) und dashy-conf.yml (Dashy-Dashboard) — einzeln als Aus, Manuell oder Auto konfigurierbar
 • Einstellungen-Sync mit Git: verschlüsseltes Backup der Erweiterungseinstellungen im Repo — Global (geteilt) oder Individuell (pro Gerät); Einstellungen von anderen Geräten importieren; gleiches Passwort auf jedem Gerät, automatisch synchronisiert
 • Automatisierung: Lesezeichen über Git, CLI oder GitHub Actions hinzufügen — ohne Browser
-• Import/Export: Lesezeichen oder Einstellungen als JSON-Dateien sichern; Einstellungen auch als passwortverschlüsselte .enc exportierbar (klare UI mit Dateiauswahl)
+• Import/Export: Lesezeichen (JSON), Dashy-Konfiguration (YAML) oder Einstellungen (JSON / verschlüsselt .enc) exportieren; Import mit automatischer Formaterkennung
 • Auto-Save: alle Einstellungen speichern sich automatisch bei Änderung — keine Speichern-Buttons
-• Design: Hell, Dunkel oder Auto (System) für Einstellungen und Popup
+• Optionen: 5 Tabs (GitHub, Sync, Dateien, Hilfe, Über) mit Sub-Tabs für GitHub und Dateien — übersichtliche Einstellungen
+• Design: Hell, Dunkel oder Auto — Wechsel-Button (A → Dunkel → Hell → A) in Optionen und Popup
+• Backlog-Voting: Community-Abstimmung für Feature-Priorisierung
 • Mehrsprachig: Englisch, Deutsch, Französisch und Spanisch mit manueller Sprachauswahl
 • Tastenkürzel: Schnell-Sync (Strg+Umschalt+.), Einstellungen öffnen (Strg+Umschalt+,) — anpassbar
 • Debug-Log: Sync-Tab — für Sync-Diagnostik aktivierbar, exportierbar
@@ -146,15 +154,19 @@ Fonctionnalités :
 • Intégration : créer le dossier ou récupérer les favoris lors de la configuration d'un nouveau profil
 • Profils de sync : temps réel, fréquent, normal ou économie d'énergie (intervalles prédéfinis)
 • Auto-sync à chaque modification de favori (délai configurable par profil)
+• Sync au démarrage / au focus : sync optionnel au lancement du navigateur ou au retour à la fenêtre (avec délai)
 • Sync périodique pour détecter les changements distants (1–120 minutes, configurable)
+• Notifications : Tout (succès + erreur), Erreurs uniquement, ou Désactivé
 • Push, Pull et Sync complet manuels via le popup
 • Détection des conflits lorsque la fusion automatique est impossible
 • Fichiers générés : README.md (aperçu), bookmarks.html (import navigateur), feed.xml (flux RSS 2.0) et dashy-conf.yml (tableau de bord Dashy) — chacun configurable comme Désactivé, Manuel ou Auto
 • Sync des paramètres avec Git : sauvegarde chiffrée des paramètres de l'extension dans le dépôt — mode Global (partagé) ou Individuel (par appareil) ; import depuis d'autres appareils ; même mot de passe, synchronisé automatiquement
 • Automatisation : ajouter des favoris via Git, CLI ou GitHub Actions — sans ouvrir le navigateur
-• Import/Export : sauvegarder et restaurer les favoris ou les paramètres en JSON ; paramètres exportables en .enc chiffré par mot de passe (interface claire avec sélection de fichier)
+• Import/Export : favoris (JSON), configuration Dashy (YAML) ou paramètres (JSON / .enc chiffré) ; import avec détection automatique du format
 • Enregistrement automatique : tous les paramètres se sauvegardent à la modification — pas de bouton Enregistrer
-• Thème : clair, sombre ou auto (système) pour les options et le popup
+• Options : 5 onglets (GitHub, Sync, Fichiers, Aide, À propos) avec sous-onglets pour GitHub et Fichiers
+• Thème : clair, sombre ou auto — bouton cycle (A → Sombre → Clair → A) dans les options et le popup
+• Vote backlog : sondage communautaire pour prioriser les prochaines fonctionnalités
 • Multilingue : anglais, allemand, français et espagnol avec sélection manuelle de la langue
 • Raccourcis clavier : sync rapide, paramètres — personnalisables
 • Journal de débogage : onglet Sync — pour le dépannage de sync
@@ -208,15 +220,19 @@ Características:
 • Integración: crear carpeta o importar marcadores al configurar un nuevo perfil
 • Perfiles de sync: tiempo real, frecuente, normal o ahorro de energía (intervalos predefinidos)
 • Auto-sync en cada cambio de marcador (retardo configurable por perfil)
+• Sync al inicio / al foco: sync opcional al abrir el navegador o al volver a la ventana (con enfriamiento)
 • Sync periódico para detectar cambios remotos (1–120 minutos, configurable)
+• Notificaciones: Todas (éxito + error), Solo errores o Desactivadas
 • Push, Pull y Sync completo manuales desde el popup
 • Detección de conflictos cuando la fusión automática no es posible
 • Archivos generados: README.md (resumen), bookmarks.html (importación del navegador), feed.xml (feed RSS 2.0) y dashy-conf.yml (panel Dashy) — cada uno configurable como Desactivado, Manual o Auto
 • Sync de ajustes con Git: copia cifrada de los ajustes de la extensión en el repositorio — modo Global (compartido) o Individual (por dispositivo); importar ajustes de otros dispositivos; misma contraseña, sincronizado automáticamente
 • Automatización: añadir marcadores vía Git, CLI o GitHub Actions — sin abrir el navegador
-• Importar/Exportar: respaldar y restaurar marcadores o ajustes en JSON; ajustes exportables como .enc cifrado con contraseña (interfaz clara con selector de archivo)
+• Importar/Exportar: marcadores (JSON), configuración Dashy (YAML) o ajustes (JSON / .enc cifrado); importación con detección automática de formato
 • Guardado automático: todos los ajustes se guardan al cambiar — sin botones Guardar
-• Tema: claro, oscuro o auto (sistema) para opciones y popup
+• Opciones: 5 pestañas (GitHub, Sync, Archivos, Ayuda, Acerca de) con sub-pestañas para GitHub y Archivos
+• Tema: claro, oscuro o auto — botón cíclico (A → Oscuro → Claro → A) en opciones y popup
+• Votación del backlog: encuesta comunitaria para priorizar las próximas funciones
 • Multilingüe: inglés, alemán, francés y español con selección manual del idioma
 • Atajos de teclado: sync rápido, configuración — personalizables
 • Registro de depuración: pestaña Sync — para diagnosticar la sincronización

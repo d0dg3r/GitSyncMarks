@@ -567,6 +567,8 @@
           <dd data-i18n="help_syncProfilesDesc">Real-time (1 min), Frequent (5 min), Normal (15 min), or Power save (60 min). Custom lets you set interval and debounce manually.</dd>
           <dt data-i18n="help_syncStartup">Sync on startup / focus</dt>
           <dd data-i18n="help_syncStartupDesc">Optional: sync when the browser starts or when you return to the browser window (with cooldown).</dd>
+          <dt data-i18n="help_debugLogTitle">Debug Log</dt>
+          <dd data-i18n="help_debugLogDesc">Enable in the Sync tab to record detailed sync diagnostics — diffs, merge decisions, and commit hashes. Export the log to share for troubleshooting.</dd>
         </dl>
         </div>
       </details>
@@ -582,9 +584,7 @@
           <dt data-i18n="help_settingsSyncTitle">Settings sync to Git</dt>
           <dd data-i18n="help_settingsSyncDesc">When enabled, extension settings are encrypted and stored in the repo. Choose Global (shared settings.enc) or Individual (device-specific settings-{id}.enc). In individual mode you can import settings from other devices.</dd>
           <dt data-i18n="help_backupBookmarks">Export / Import</dt>
-          <dd data-i18n="help_backupBookmarksDesc">Export all browser bookmarks as JSON. Import replaces all local bookmarks with the file contents.</dd>
-          <dt data-i18n="help_backupSettings">Export / Import Settings</dt>
-          <dd data-i18n="help_backupSettingsDesc">Export GitHub connection and sync settings (profiles with decrypted tokens). Import replaces all settings; the page reloads afterwards.</dd>
+          <dd data-i18n="help_backupBookmarksDesc2">Export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc). Import bookmarks or settings — encrypted files are decrypted with your password. Bookmark import replaces all local bookmarks; settings import replaces all profiles and reloads the page.</dd>
         </dl>
         </div>
       </details>
@@ -617,6 +617,20 @@
           <tr><td><kbd>Ctrl+Shift+,</kbd></td><td data-i18n="help_openOptions">Open extension settings</td></tr>
         </table>
         <p class="help-note" data-i18n="help_shortcutsNote">You can customize shortcuts in the browser's extension settings.</p>
+        </div>
+      </details>
+
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_themeAutoSaveTitle">Theme & Auto-save</h2>
+        </summary>
+        <div class="help-details-body">
+        <dl class="help-dl">
+          <dt data-i18n="help_themeCycleTitle">Theme</dt>
+          <dd data-i18n="help_themeCycleDesc">Click the button in the header to cycle: Auto (system) → Dark → Light → Auto. The icon shows the current mode. Works in options and popup.</dd>
+          <dt data-i18n="help_autoSaveTitle">Auto-save</dt>
+          <dd data-i18n="help_autoSaveDesc">All settings save automatically when you change them — there are no Save buttons. Changes take effect immediately.</dd>
+        </dl>
         </div>
       </details>
 

@@ -736,6 +736,30 @@
   "help_shortcutsNote": {
     "message": "You can customize shortcuts in the browser's extension settings."
   },
+  "help_debugLogTitle": {
+    "message": "Debug Log"
+  },
+  "help_debugLogDesc": {
+    "message": "Enable in the Sync tab to record detailed sync diagnostics — diffs, merge decisions, and commit hashes. Export the log to share for troubleshooting."
+  },
+  "help_backupBookmarksDesc2": {
+    "message": "Export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc). Import bookmarks or settings — encrypted files are decrypted with your password. Bookmark import replaces all local bookmarks; settings import replaces all profiles and reloads the page."
+  },
+  "help_themeAutoSaveTitle": {
+    "message": "Theme & Auto-save"
+  },
+  "help_themeCycleTitle": {
+    "message": "Theme"
+  },
+  "help_themeCycleDesc": {
+    "message": "Click the button in the header to cycle: Auto (system) → Dark → Light → Auto. The icon shows the current mode. Works in options and popup."
+  },
+  "help_autoSaveTitle": {
+    "message": "Auto-save"
+  },
+  "help_autoSaveDesc": {
+    "message": "All settings save automatically when you change them — there are no Save buttons. Changes take effect immediately."
+  },
   "help_whySlowTitle": {
     "message": "Why does sync sometimes take long?"
   },

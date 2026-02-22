@@ -22,16 +22,19 @@ Features:
 • Onboarding: create folder or pull bookmarks when configuring a new profile
 • Sync profiles: real-time, frequent, normal, or power-save
 • Auto-sync on every bookmark change (debounce configurable per profile)
+• Sync on startup / focus: optional sync when the browser starts or gains focus (with cooldown)
 • Periodic sync to detect remote changes (1–120 minutes, configurable)
+• Notifications: All (success + failure), Errors only, or Off
 • Manual Push, Pull, and full Sync via the popup
 • Conflict detection when automatic merge is not possible
 • Generated files: README.md (overview), bookmarks.html (browser import), feed.xml (RSS 2.0 feed), and dashy-conf.yml (Dashy dashboard) — each configurable as Off, Manual, or Auto
 • Settings sync to Git: encrypted backup of extension settings in the repo — Global (shared) or Individual (per device) mode; import settings from other devices; same password on every device, auto-synced
 • Options: 5 tabs (GitHub, Sync, Files, Help, About) with sub-tabs for GitHub and Files — clean, organized settings UI
 • Automation: add bookmarks via Git, CLI, or GitHub Actions — no browser needed
-• Import/Export: back up and restore bookmarks or settings as JSON files; settings can be exported as password-encrypted .enc for secure backup (clear UI with file picker)
+• Import/Export: export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc); import with automatic format detection
 • Auto-save: all settings save automatically when changed — no Save buttons
-• Theme: light, dark, or auto (system) for options and popup
+• Theme: light, dark, or auto — single cycle button (A → Dark → Light → A) in options and popup
+• Vote on backlog: community poll to influence which features come next
 • Multilanguage: English, German, French, and Spanish with manual language selection
 • Keyboard shortcuts: quick sync (Ctrl+Shift+.), open settings (Ctrl+Shift+,) — customizable
 • Debug log: Sync tab — enable for sync diagnostics, export for troubleshooting
@@ -77,14 +80,32 @@ Synchronisiere deine Firefox-Lesezeichen mit GitHub — bidirektional, konfliktf
 GitSyncMarks synchronisiert deine Firefox-Lesezeichen mit einem GitHub-Repository — bidirektional, automatisch und ohne externen Server.
 
 Funktionen:
-• Einzeldatei-Speicherung: Jedes Lesezeichen ist eine eigene JSON-Datei
-• Drei-Wege-Merge: automatische konfliktfreie Synchronisierung
+• Einzeldatei-Speicherung: Jedes Lesezeichen ist eine eigene JSON-Datei — lesbar und diff-freundlich
+• Drei-Wege-Merge: automatische konfliktfreie Synchronisierung bei Änderungen auf beiden Seiten
 • Volle Firefox-Unterstützung inkl. Lesezeichen-Menü
-• Bis zu 10 Profile, GitHub Repos-Ordner, Onboarding, Sync-Profile
-• Auto-Sync, periodischer Sync, manuelles Push/Pull
+• Mehrere Lesezeichen-Profile: bis zu 10 Profile mit getrennten GitHub-Repos; Wechsel ersetzt lokale Lesezeichen
+• GitHub-Repos-Ordner: optionaler Ordner mit Lesezeichen zu allen deinen GitHub-Repositories
+• Onboarding: Ordner anlegen oder Lesezeichen laden beim Konfigurieren eines neuen Profils
+• Sync-Profile: Echtzeit, häufig, normal oder Stromsparen
+• Auto-Sync bei jeder Lesezeichen-Änderung (Verzögerung pro Profil konfigurierbar)
+• Sync bei Start / Fokus: optionaler Sync beim Browserstart oder Fensterfokus (mit Cooldown)
+• Periodischer Sync zur Erkennung von Remote-Änderungen (1–120 Min., konfigurierbar)
+• Benachrichtigungen: Alle (Erfolg + Fehler), Nur Fehler oder Aus
+• Manuelles Push, Pull und Sync über das Popup
+• Konflikterkennung, wenn automatisches Mergen nicht möglich ist
+• Generierte Dateien: README.md, bookmarks.html, feed.xml und dashy-conf.yml — einzeln als Aus, Manuell oder Auto
+• Einstellungen-Sync mit Git: verschlüsseltes Backup im Repo — Global oder Individuell (pro Gerät)
+• Optionen: 5 Tabs (GitHub, Sync, Dateien, Hilfe, Über) mit Sub-Tabs für GitHub und Dateien
+• Automatisierung: Lesezeichen über Git, CLI oder GitHub Actions hinzufügen — ohne Browser
+• Import/Export: Lesezeichen (JSON), Dashy (YAML) oder Einstellungen (JSON / verschlüsselt .enc)
 • Auto-Save: alle Einstellungen speichern sich automatisch — keine Speichern-Buttons
-• Import/Export (JSON oder verschlüsselt .enc), Design Hell/Dunkel, Mehrsprachig, Tastenkürzel, Debug-Log
+• Design: Hell, Dunkel oder Auto — Wechsel-Button (A → Dunkel → Hell → A)
+• Mehrsprachig: Englisch, Deutsch, Französisch und Spanisch
+• Tastenkürzel: Schnell-Sync (Strg+Umschalt+.), Einstellungen öffnen (Strg+Umschalt+,)
+• Debug-Log: Sync-Tab — für Sync-Diagnostik aktivierbar, exportierbar
+• Backlog-Voting: Community-Abstimmung für Feature-Priorisierung
 • Mobile-Begleiter: GitSyncMarks-Mobile (iOS + Android)
+• Kein externer Server — kommuniziert direkt mit der GitHub API
 
 So funktioniert es:
 1. GitHub-Repository erstellen
@@ -116,12 +137,32 @@ Synchronisez vos favoris Firefox avec GitHub — bidirectionnel, sans conflit. S
 GitSyncMarks synchronise vos favoris Firefox avec un dépôt GitHub — bidirectionnel, automatique et sans serveur externe.
 
 Fonctionnalités :
-• Stockage par fichier, fusion triple, support complet Firefox (y compris le Menu favoris)
-• Jusqu'à 10 profils, dossier Repos GitHub, intégration, profils de sync
-• Auto-sync, sync périodique, Push/Pull manuel
-• Enregistrement auto : tous les paramètres se sauvegardent à la modification — pas de bouton Enregistrer
-• Import/Export (JSON ou .enc chiffré), thème clair/sombre, multilingue, raccourcis clavier, journal de débogage
+• Stockage par fichier : chaque favori est un fichier JSON individuel — lisible et adapté au diff
+• Fusion triple : synchronisation automatique sans conflit
+• Support complet Firefox y compris le Menu favoris
+• Plusieurs profils de favoris : jusqu'à 10 profils avec des dépôts GitHub séparés
+• Dossier Repos GitHub : dossier optionnel avec des favoris vers tous vos dépôts GitHub
+• Intégration : créer le dossier ou récupérer les favoris lors de la configuration d'un nouveau profil
+• Profils de sync : temps réel, fréquent, normal ou économie d'énergie
+• Auto-sync à chaque modification de favori (délai configurable par profil)
+• Sync au démarrage / au focus : sync optionnel au lancement du navigateur ou au retour à la fenêtre
+• Sync périodique pour détecter les changements distants (1–120 minutes, configurable)
+• Notifications : Tout (succès + erreur), Erreurs uniquement, ou Désactivé
+• Push, Pull et Sync complet manuels via le popup
+• Détection des conflits lorsque la fusion automatique est impossible
+• Fichiers générés : README.md, bookmarks.html, feed.xml et dashy-conf.yml — chacun configurable comme Désactivé, Manuel ou Auto
+• Sync des paramètres avec Git : sauvegarde chiffrée dans le dépôt — mode Global ou Individuel (par appareil)
+• Options : 5 onglets (GitHub, Sync, Fichiers, Aide, À propos) avec sous-onglets pour GitHub et Fichiers
+• Automatisation : ajouter des favoris via Git, CLI ou GitHub Actions — sans ouvrir le navigateur
+• Import/Export : favoris (JSON), configuration Dashy (YAML) ou paramètres (JSON / .enc chiffré)
+• Enregistrement automatique : tous les paramètres se sauvegardent à la modification — pas de bouton Enregistrer
+• Thème : clair, sombre ou auto — bouton cycle (A → Sombre → Clair → A)
+• Multilingue : anglais, allemand, français et espagnol
+• Raccourcis clavier : sync rapide, paramètres — personnalisables
+• Journal de débogage : onglet Sync — pour le dépannage de sync
+• Vote backlog : sondage communautaire pour prioriser les prochaines fonctionnalités
 • Application mobile : GitSyncMarks-Mobile (iOS + Android)
+• Pas de serveur externe — communique directement avec l'API GitHub
 
 Comment ça marche :
 1. Créer un dépôt GitHub
@@ -153,12 +194,32 @@ Sincroniza tus marcadores de Firefox con GitHub — bidireccional, sin conflicto
 GitSyncMarks sincroniza tus marcadores de Firefox con un repositorio GitHub — bidireccional, automáticamente y sin servidor externo.
 
 Características:
-• Almacenamiento por archivo, fusión triple, soporte completo Firefox (incl. menú de marcadores)
-• Hasta 10 perfiles, carpeta Repos GitHub, integración, perfiles de sync
-• Auto-sync, sync periódico, Push/Pull manual
+• Almacenamiento por archivo: cada marcador es un archivo JSON individual — legible y apto para diff
+• Fusión triple: sincronización automática sin conflictos
+• Soporte completo Firefox incluyendo el Menú de marcadores
+• Múltiples perfiles de marcadores: hasta 10 perfiles con repos GitHub separados
+• Carpeta Repos GitHub: carpeta opcional con marcadores a todos tus repositorios GitHub
+• Integración: crear carpeta o importar marcadores al configurar un nuevo perfil
+• Perfiles de sync: tiempo real, frecuente, normal o ahorro de energía
+• Auto-sync en cada cambio de marcador (retardo configurable por perfil)
+• Sync al inicio / al foco: sync opcional al abrir el navegador o al volver a la ventana
+• Sync periódico para detectar cambios remotos (1–120 minutos, configurable)
+• Notificaciones: Todas (éxito + error), Solo errores o Desactivadas
+• Push, Pull y Sync completo manuales desde el popup
+• Detección de conflictos cuando la fusión automática no es posible
+• Archivos generados: README.md, bookmarks.html, feed.xml y dashy-conf.yml — cada uno configurable como Desactivado, Manual o Auto
+• Sync de ajustes con Git: copia cifrada en el repositorio — modo Global o Individual (por dispositivo)
+• Opciones: 5 pestañas (GitHub, Sync, Archivos, Ayuda, Acerca de) con sub-pestañas para GitHub y Archivos
+• Automatización: añadir marcadores vía Git, CLI o GitHub Actions — sin abrir el navegador
+• Importar/Exportar: marcadores (JSON), configuración Dashy (YAML) o ajustes (JSON / .enc cifrado)
 • Guardado automático: todos los ajustes se guardan al cambiar — sin botones Guardar
-• Importar/Exportar (JSON o .enc cifrado), tema claro/oscuro, multilingüe, atajos de teclado, registro de depuración
+• Tema: claro, oscuro o auto — botón cíclico (A → Oscuro → Claro → A)
+• Multilingüe: inglés, alemán, francés y español
+• Atajos de teclado: sync rápido, configuración — personalizables
+• Registro de depuración: pestaña Sync — para diagnosticar la sincronización
+• Votación del backlog: encuesta comunitaria para priorizar las próximas funciones
 • App móvil: GitSyncMarks-Mobile (iOS + Android)
+• Sin servidor externo — se comunica directamente con la API de GitHub
 
 Cómo funciona:
 1. Crear un repositorio GitHub
