@@ -597,7 +597,7 @@
     "message": "Connection"
   },
   "options_subTabRepos": {
-    "message": "Repos"
+    "message": "GitHub Folder"
   },
   "options_subTabGenerated": {
     "message": "Generated"

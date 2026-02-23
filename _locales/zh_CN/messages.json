@@ -597,7 +597,7 @@
     "message": "连接"
   },
   "options_subTabRepos": {
-    "message": "仓库"
+    "message": "GitHub 文件夹"
   },
   "options_subTabGenerated": {
     "message": "生成"

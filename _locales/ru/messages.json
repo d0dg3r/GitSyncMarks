@@ -597,7 +597,7 @@
     "message": "Подключение"
   },
   "options_subTabRepos": {
-    "message": "Repos"
+    "message": "Папка GitHub"
   },
   "options_subTabGenerated": {
     "message": "Генерация"
