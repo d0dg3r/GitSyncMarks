@@ -72,7 +72,8 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 
 ### UX & Extras
 
-- **Onboarding**: Test Connection detects whether the repo folder is empty or has bookmarks — create base structure or pull existing data with one click
+- **Onboarding**: Test Connection detects whether the repo folder is empty or has bookmarks — create base structure or pull existing data with one click; folder browser to select the sync path from your repo
+- **Folder browser**: Browse your repository folders to select the sync path — navigate into subfolders or select with one click; no manual typing needed
 - **Multilanguage**: 12 languages — English, German, French, Spanish, Portuguese (Brazil), Italian, Japanese, Chinese (Simplified), Korean, Russian, Turkish, Polish; manual language selection or auto-detect from browser
 - **Keyboard shortcuts**: Quick sync (`Ctrl+Shift+.`), Open settings (`Ctrl+Shift+,`) — customizable in browser extension settings
 - **Theme**: Light, dark, or auto — single cycle button (A → Dark → Light → A) in options and popup
@@ -112,7 +113,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 1. Click the extension icon in the toolbar, then **Open Settings**
 2. In the **GitHub** tab, select a **Profile** (or add one with **+ Add** — you can have up to 10 profiles)
 3. Enter your **Personal Access Token**, **Repository Owner**, and **Repository Name**
-4. Set **Branch** (usually `main`) and **File Path** (default `bookmarks` — the folder in your repo where bookmark files will live)
+4. Set **Branch** (usually `main`) and **File Path** (default `bookmarks` — the folder in your repo where bookmark files will live). Use the **Browse** button to select an existing folder from your repo
 5. Click **Test Connection** to verify (settings are saved automatically before the test):
    - If the folder is **empty**: You can create the base structure (toolbar, other)
    - If **bookmarks already exist** in the repo: You can pull them into this browser

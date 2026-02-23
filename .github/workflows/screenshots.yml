@@ -1,0 +1,45 @@
+name: Generate Screenshots
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to generate screenshots on (leave empty for current)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch || github.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Build Chrome extension
+        run: npm run build:chrome
+
+      - name: Generate screenshots
+        run: npm run generate-screenshots
+        env:
+          CI: "true"
+
+      - name: Commit and push screenshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add store-assets/
+          git diff --cached --quiet || git commit -m "chore: update store screenshots"
+          git push

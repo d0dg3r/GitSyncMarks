@@ -29,7 +29,7 @@ Características:
 • Archivos generados: README.md, bookmarks.html, feed.xml y dashy-conf.yml — cada uno configurable como Desactivado, Manual o Auto
 • Sync de ajustes con Git: copia cifrada en el repositorio — modo Global o Individual (por dispositivo)
 • Importar/Exportar: marcadores (JSON), configuración Dashy (YAML) o ajustes (JSON / .enc cifrado)
-• Integración: crear carpeta o importar marcadores al configurar un nuevo perfil
+• Integración: explorador de carpetas para seleccionar la ruta de sync; crear carpeta o importar marcadores al configurar un nuevo perfil
 • Multilingüe: 12 idiomas — EN, DE, FR, ES, PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL
 • Atajos de teclado: sync rápido, configuración — personalizables
 • Tema: claro, oscuro o auto — botón cíclico (A → Oscuro → Claro → A)

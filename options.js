@@ -94,6 +94,13 @@ const ownerInput = document.getElementById('owner');
 const repoInput = document.getElementById('repo');
 const branchInput = document.getElementById('branch');
 const filepathInput = document.getElementById('filepath');
+const btnBrowseFolder = document.getElementById('btn-browse-folder');
+const folderBrowser = document.getElementById('folder-browser');
+const folderBrowserList = document.getElementById('folder-browser-list');
+const folderBrowserPath = document.getElementById('folder-browser-path');
+const folderBrowserEmpty = document.getElementById('folder-browser-empty');
+const folderBrowserLoading = document.getElementById('folder-browser-loading');
+const btnFolderUp = document.getElementById('btn-folder-up');
 const autoSyncInput = document.getElementById('auto-sync');
 const syncProfileSelect = document.getElementById('sync-profile');
 const syncCustomFields = document.getElementById('sync-custom-fields');
@@ -907,6 +914,103 @@ repoInput.addEventListener('change', saveSettings);
 branchInput.addEventListener('change', saveSettings);
 filepathInput.addEventListener('change', saveSettings);
 profileSwitchWithoutConfirmInput.addEventListener('change', saveSettings);
+
+// Folder browser
+let _folderBrowserCurrentPath = '';
+
+function closeFolderBrowser() {
+  folderBrowser.classList.add('hidden');
+}
+
+async function loadFolderBrowserContents(path) {
+  folderBrowserList.innerHTML = '';
+  folderBrowserEmpty.classList.add('hidden');
+  folderBrowserLoading.classList.remove('hidden');
+  _folderBrowserCurrentPath = path;
+  folderBrowserPath.textContent = '/' + (path || '');
+  btnFolderUp.disabled = !path;
+
+  try {
+    const token = tokenInput.value.trim();
+    const owner = ownerInput.value.trim();
+    const repo = repoInput.value.trim();
+    const branch = branchInput.value.trim() || 'main';
+    const api = new GitHubAPI(token, owner, repo, branch);
+    const dirs = await api.listContents(path);
+
+    folderBrowserLoading.classList.add('hidden');
+
+    if (dirs.length === 0) {
+      folderBrowserEmpty.classList.remove('hidden');
+      return;
+    }
+
+    for (const dir of dirs) {
+      const li = document.createElement('li');
+
+      const icon = document.createElement('span');
+      icon.className = 'folder-icon';
+      icon.textContent = '\uD83D\uDCC1';
+      li.appendChild(icon);
+
+      const name = document.createElement('span');
+      name.className = 'folder-name';
+      name.textContent = dir.name;
+      name.addEventListener('click', () => loadFolderBrowserContents(dir.path));
+      li.appendChild(name);
+
+      const selectBtn = document.createElement('button');
+      selectBtn.type = 'button';
+      selectBtn.className = 'folder-select-btn';
+      selectBtn.textContent = getMessage('options_browseFolderSelect') || 'Select';
+      selectBtn.addEventListener('click', () => {
+        filepathInput.value = dir.path;
+        closeFolderBrowser();
+        saveSettings();
+      });
+      li.appendChild(selectBtn);
+
+      folderBrowserList.appendChild(li);
+    }
+  } catch (err) {
+    folderBrowserLoading.classList.add('hidden');
+    folderBrowserEmpty.textContent = err.message || 'Error';
+    folderBrowserEmpty.classList.remove('hidden');
+  }
+}
+
+btnBrowseFolder.addEventListener('click', () => {
+  if (!folderBrowser.classList.contains('hidden')) {
+    closeFolderBrowser();
+    return;
+  }
+
+  const token = tokenInput.value.trim();
+  const owner = ownerInput.value.trim();
+  const repo = repoInput.value.trim();
+  if (!token || !owner || !repo) {
+    showValidation(getMessage('options_browseFolderNotConfigured') || 'Please configure token, owner, and repo first', 'error');
+    return;
+  }
+
+  folderBrowser.classList.remove('hidden');
+  loadFolderBrowserContents('');
+});
+
+btnFolderUp.addEventListener('click', () => {
+  const parts = _folderBrowserCurrentPath.split('/').filter(Boolean);
+  parts.pop();
+  loadFolderBrowserContents(parts.join('/'));
+});
+
+document.addEventListener('click', (e) => {
+  if (!folderBrowser.classList.contains('hidden') &&
+      !folderBrowser.contains(e.target) &&
+      e.target !== btnBrowseFolder &&
+      !btnBrowseFolder.contains(e.target)) {
+    closeFolderBrowser();
+  }
+});
 
 // Debug log: toggle saves immediately; export downloads log file
 debugLogEnabledInput.addEventListener('change', async () => {

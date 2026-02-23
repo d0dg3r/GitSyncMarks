@@ -167,6 +167,11 @@
   "options_filePathHint": {
     "message": "Dossier où seront stockés les fichiers de favoris."
   },
+  "options_browseFolder": { "message": "Parcourir" },
+  "options_browseFolderEmpty": { "message": "Aucun dossier trouvé" },
+  "options_browseFolderLoading": { "message": "Chargement\u2026" },
+  "options_browseFolderSelect": { "message": "Sélectionner" },
+  "options_browseFolderNotConfigured": { "message": "Veuillez d'abord configurer le token, le propriétaire et le dépôt" },
   "options_filePathChangeHint": {
     "message": "Lors de la prochaine sync, un conflit peut survenir. Utilisez \"GitHub → Local\" pour adopter l'état distant."
   },

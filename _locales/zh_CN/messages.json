@@ -169,6 +169,11 @@
   "options_filePathHint": {
     "message": "书签文件存储的文件夹。"
   },
+  "options_browseFolder": { "message": "浏览" },
+  "options_browseFolderEmpty": { "message": "未找到文件夹" },
+  "options_browseFolderLoading": { "message": "加载中\u2026" },
+  "options_browseFolderSelect": { "message": "选择" },
+  "options_browseFolderNotConfigured": { "message": "请先配置令牌、所有者和仓库" },
   "options_filePathChangeHint": {
     "message": "下次同步时可能会发生冲突。使用\"GitHub → 本地\"来采用远程状态。"
   },

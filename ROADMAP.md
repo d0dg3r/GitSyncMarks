@@ -21,7 +21,7 @@ Contributions and ideas welcome — open an issue or pull request.
 
 ## Recently completed
 
-- **v2.5.0** *Cortana* — Context menu (Add to Toolbar/Other, Sync Now, Switch Profile, Copy Favicon URL, Download Favicon); profile switching via context menu; favicon tools (copy URL / download PNG); 8 new languages (PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL — 12 total); dynamic keyboard shortcuts; factory reset; feature lists reordered; "No middleman" replaces "No server needed"
+- **v2.5.0** *Cortana* — Context menu (Add to Toolbar/Other, Sync Now, Switch Profile, Copy Favicon URL, Download Favicon); profile switching via context menu; favicon tools (copy URL / download PNG); 8 new languages (PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL — 12 total); dynamic keyboard shortcuts; factory reset; folder browser for path selection; CI screenshot workflow; feature lists reordered; "No middleman" replaces "No server needed"
 - **v2.4.0** *R2-D2* — Settings sync to Git (encrypted `settings.enc`); RSS feed export (`feed.xml`); dashy-conf.yml (Dashy dashboard); generated files mode selector (Off/Manual/Auto per file); options reorganized to 5 tabs with sub-tabs (GitHub, Sync, Files, Help, About); Debug Log moved to Sync tab; backlog voting; 6 store screenshots per language
 - **v2.3.0** *Data* — Encrypted settings export (password-protected .enc); plain JSON and encrypted supported; import with password prompt; Sync tab shortened to "Sync" in all languages; browser import files (`bookmarks.html`)
 - **v2.2.1** — Sync feedback message fix; state regression fix (stale fetch guard, cache-busting); debug log with commit hashes
@@ -39,8 +39,6 @@ Contributions and ideas welcome — open an issue or pull request.
 | Idea | Description | Effort |
 |------|-------------|--------|
 | **CI E2E Tests** | E2E-Workflow in GitHub Actions reaktivieren (xvfb/headed, Service-Worker-Start). Aktuell lokal mit `npm run test:e2e`. | Medium |
-| **CI Screenshots** | Screenshot-Generierung und Push im Release-Workflow. Aktuell lokal mit `npm run screenshots`. | Small |
-| **Folder browse/select** | Select or browse the sync folder in the Git repo instead of typing the path manually | Small |
 | **Open tabs sync** | Save open tabs to Git; full history in repo for restore/jump-back; default tabs per profile. | Large |
 | **Tab-Profile** | Named sets of URLs (from bookmark folder, current tabs, or manual). Open in current window (replace/append) or new window. Stored in repo (`tab-profiles.json`). See [docs/IDEAS-TAB-PROFILES.md](docs/IDEAS-TAB-PROFILES.md). | Large |
 | Additional sync sources (read-only) | Add extra folders from centrally maintained repos (e.g. team bookmarks). Your personal bookmarks stay in your repo; the shared folder is merged in read-only. Assemble bookmarks from multiple sources in one place | Medium |

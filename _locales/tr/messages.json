@@ -169,6 +169,11 @@
   "options_filePathHint": {
     "message": "Yer işareti dosyalarının saklanacağı klasör."
   },
+  "options_browseFolder": { "message": "Göz At" },
+  "options_browseFolderEmpty": { "message": "Klasör bulunamadı" },
+  "options_browseFolderLoading": { "message": "Yükleniyor\u2026" },
+  "options_browseFolderSelect": { "message": "Seç" },
+  "options_browseFolderNotConfigured": { "message": "Lütfen önce token, sahip ve depoyu yapılandırın" },
   "options_filePathChangeHint": {
     "message": "Bir sonraki senkronizasyonda çakışma oluşabilir. Uzak durumu almak için \"GitHub → Yerel\" seçeneğini kullanın."
   },

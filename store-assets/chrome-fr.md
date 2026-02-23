@@ -29,7 +29,7 @@ Fonctionnalités :
 • Fichiers générés : README.md (aperçu), bookmarks.html (import navigateur), feed.xml (flux RSS 2.0) et dashy-conf.yml (tableau de bord Dashy) — chacun configurable comme Désactivé, Manuel ou Auto
 • Sync des paramètres avec Git : sauvegarde chiffrée des paramètres de l'extension dans le dépôt — mode Global (partagé) ou Individuel (par appareil) ; import depuis d'autres appareils ; même mot de passe, synchronisé automatiquement
 • Import/Export : favoris (JSON), configuration Dashy (YAML) ou paramètres (JSON / .enc chiffré) ; import avec détection automatique du format
-• Intégration : créer le dossier ou récupérer les favoris lors de la configuration d'un nouveau profil
+• Intégration : navigateur de dossiers pour sélectionner le chemin de sync ; créer le dossier ou récupérer les favoris lors de la configuration d'un nouveau profil
 • Multilingue : 12 langues — EN, DE, FR, ES, PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL ; sélection manuelle ou auto-détection
 • Raccourcis clavier : sync rapide, paramètres — personnalisables
 • Thème : clair, sombre ou auto — bouton cycle (A → Sombre → Clair → A) dans les options et le popup

@@ -169,6 +169,11 @@
   "options_filePathHint": {
     "message": "Папка для хранения файлов закладок."
   },
+  "options_browseFolder": { "message": "Обзор" },
+  "options_browseFolderEmpty": { "message": "Папки не найдены" },
+  "options_browseFolderLoading": { "message": "Загрузка\u2026" },
+  "options_browseFolderSelect": { "message": "Выбрать" },
+  "options_browseFolderNotConfigured": { "message": "Сначала настройте токен, владельца и репозиторий" },
   "options_filePathChangeHint": {
     "message": "При следующей синхронизации может возникнуть конфликт. Используйте «GitHub → Локальные», чтобы принять удалённое состояние."
   },

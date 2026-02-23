@@ -113,6 +113,7 @@ Wraps both the **Contents API** (legacy, used for migration/validation) and the 
 |---|---|---|
 | `validateToken()` | REST | Check PAT validity |
 | `checkRepo()` | REST | Verify repository access |
+| `listContents(path)` | Contents | List directories at a given path (for folder browser) |
 | `getFile()` / `createOrUpdateFile()` | Contents | Single-file operations (legacy) |
 | `getLatestCommitSha()` | Git Data | Get current branch HEAD |
 | `getCommit()` / `getTree()` / `getBlob()` | Git Data | Read commit, tree, file content |
@@ -245,6 +246,7 @@ GitSyncMarks/
 ├── .github/workflows/
 │   ├── test-e2e.yml              # E2E tests (manual trigger only; CI disabled)
 │   ├── release.yml               # Build ZIPs, create release on tag
+│   ├── screenshots.yml           # Generate store screenshots (manual trigger)
 │   └── add-bookmark.yml          # Automation: add bookmark via dispatch
 ├── docs/                         # Architecture documentation
 ├── store-assets/                 # Store listings & screenshots (12 languages)

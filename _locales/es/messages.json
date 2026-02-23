@@ -167,6 +167,11 @@
   "options_filePathHint": {
     "message": "Carpeta donde se almacenarán los archivos de marcadores."
   },
+  "options_browseFolder": { "message": "Explorar" },
+  "options_browseFolderEmpty": { "message": "No se encontraron carpetas" },
+  "options_browseFolderLoading": { "message": "Cargando\u2026" },
+  "options_browseFolderSelect": { "message": "Seleccionar" },
+  "options_browseFolderNotConfigured": { "message": "Primero configure el token, el propietario y el repositorio" },
   "options_filePathChangeHint": {
     "message": "En la próxima sincronización puede haber conflicto. Usa \"GitHub → Local\" para adoptar el estado remoto."
   },

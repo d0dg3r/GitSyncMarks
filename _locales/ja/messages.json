@@ -169,6 +169,11 @@
   "options_filePathHint": {
     "message": "ブックマークファイルを保存するフォルダ。"
   },
+  "options_browseFolder": { "message": "参照" },
+  "options_browseFolderEmpty": { "message": "フォルダが見つかりません" },
+  "options_browseFolderLoading": { "message": "読み込み中\u2026" },
+  "options_browseFolderSelect": { "message": "選択" },
+  "options_browseFolderNotConfigured": { "message": "先にトークン、オーナー、リポジトリを設定してください" },
   "options_filePathChangeHint": {
     "message": "次の同期で競合が発生する場合があります。リモートの状態を採用するには「GitHub → ローカル」を使用してください。"
   },

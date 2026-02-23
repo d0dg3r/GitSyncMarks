@@ -132,7 +132,21 @@
 
           <div class="form-group">
             <label for="filepath" data-i18n="options_filePath">File Path in Repository</label>
-            <input type="text" id="filepath" placeholder="bookmarks" value="bookmarks">
+            <div class="filepath-browse-wrapper">
+              <input type="text" id="filepath" placeholder="bookmarks" value="bookmarks">
+              <button type="button" id="btn-browse-folder" class="btn-icon" data-i18n-title="options_browseFolder" title="Browse">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4.5V12a1.5 1.5 0 001.5 1.5h9A1.5 1.5 0 0014 12V6.5A1.5 1.5 0 0012.5 5H8L6.5 3H3.5A1.5 1.5 0 002 4.5z"/></svg>
+              </button>
+            </div>
+            <div id="folder-browser" class="folder-browser hidden">
+              <div class="folder-browser-header">
+                <button type="button" id="btn-folder-up" class="btn-icon btn-icon-sm" disabled title="Up">&#8593;</button>
+                <span id="folder-browser-path" class="folder-browser-path">/</span>
+              </div>
+              <ul id="folder-browser-list" class="folder-browser-list"></ul>
+              <div id="folder-browser-empty" class="folder-browser-msg hidden" data-i18n="options_browseFolderEmpty">No folders found</div>
+              <div id="folder-browser-loading" class="folder-browser-msg" data-i18n="options_browseFolderLoading">Loading…</div>
+            </div>
             <small data-i18n="options_filePathHint">Folder where bookmark files will be stored.</small>
           </div>
 

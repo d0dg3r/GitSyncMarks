@@ -169,6 +169,11 @@
   "options_filePathHint": {
     "message": "Folder, w którym będą przechowywane pliki zakładek."
   },
+  "options_browseFolder": { "message": "Przeglądaj" },
+  "options_browseFolderEmpty": { "message": "Nie znaleziono folderów" },
+  "options_browseFolderLoading": { "message": "Ładowanie\u2026" },
+  "options_browseFolderSelect": { "message": "Wybierz" },
+  "options_browseFolderNotConfigured": { "message": "Najpierw skonfiguruj token, właściciela i repozytorium" },
   "options_filePathChangeHint": {
     "message": "Przy następnej synchronizacji może wystąpić konflikt. Użyj \"GitHub → Lokalne\", aby przyjąć stan zdalny."
   },

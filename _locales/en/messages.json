@@ -169,6 +169,11 @@
   "options_filePathHint": {
     "message": "Folder where bookmark files will be stored."
   },
+  "options_browseFolder": { "message": "Browse" },
+  "options_browseFolderEmpty": { "message": "No folders found" },
+  "options_browseFolderLoading": { "message": "Loading\u2026" },
+  "options_browseFolderSelect": { "message": "Select" },
+  "options_browseFolderNotConfigured": { "message": "Please configure token, owner, and repo first" },
   "options_filePathChangeHint": {
     "message": "On the next sync a conflict may occur. Use \"GitHub → Local\" to adopt the remote state."
   },

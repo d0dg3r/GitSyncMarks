@@ -169,6 +169,11 @@
   "options_filePathHint": {
     "message": "Pasta onde os arquivos de favoritos serão armazenados."
   },
+  "options_browseFolder": { "message": "Procurar" },
+  "options_browseFolderEmpty": { "message": "Nenhuma pasta encontrada" },
+  "options_browseFolderLoading": { "message": "Carregando\u2026" },
+  "options_browseFolderSelect": { "message": "Selecionar" },
+  "options_browseFolderNotConfigured": { "message": "Configure primeiro o token, o proprietário e o repositório" },
   "options_filePathChangeHint": {
     "message": "Na próxima sincronização pode ocorrer um conflito. Use \"GitHub → Local\" para adotar o estado remoto."
   },

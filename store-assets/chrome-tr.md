@@ -29,7 +29,7 @@ GitSyncMarks, tarayıcı yer imlerinizi bir GitHub deposuyla senkronize eder —
 • Oluşturulan dosyalar: README.md (genel bakış), bookmarks.html (tarayıcı içe aktarma), feed.xml (RSS 2.0 akışı) ve dashy-conf.yml (Dashy panosu) — her biri Kapalı, Manuel veya Otomatik olarak yapılandırılabilir
 • Git ile ayar Sync'i: depodaki uzantı ayarlarının şifrelenmiş yedekleme — Global (paylaşılan) veya Bireysel (cihaz başına) mod; diğer cihazlardan ayarları içe aktarma; her cihazda aynı şifre, otomatik senkronize
 • İçe/Dışa Aktarma: yer imleri (JSON), Dashy yapılandırması (YAML) veya ayarlar (düz JSON / şifreli .enc) dışa aktarma; otomatik format algılama ile içe aktarma
-• Başlangıç kurulumu: yeni profil yapılandırırken klasör oluşturma veya yer imlerini Pull etme
+• Başlangıç kurulumu: klasör tarayıcısı ile sync yolunu seçme; yeni profil yapılandırırken klasör oluşturma veya yer imlerini Pull etme
 • Seçenekler: 5 sekme (GitHub, Sync, Dosyalar, Yardım, Hakkında) ile GitHub ve Dosyalar için alt sekmeler — düzenli ayarlar arayüzü
 • Tema: açık, koyu veya otomatik — döngü düğmesi (A → Koyu → Açık → A) seçeneklerde ve popup'ta
 • Backlog oylaması: sonraki özelliklerin önceliğini belirlemek için topluluk anketi

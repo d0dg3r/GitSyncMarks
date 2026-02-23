@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **8 new languages**: Portuguese (Brazil), Italian, Japanese, Chinese (Simplified), Korean, Russian, Turkish, Polish — extension now supports 12 languages total; auto-detection improved for regional locales (pt_BR, zh_CN)
 - **Dynamic keyboard shortcuts**: Shortcut keys displayed from `chrome.commands.getAll()` instead of hardcoded; "Customize shortcuts" button opens the browser's native shortcut settings
 - **Factory reset**: "Reset all data" button in Files → Settings — clears all profiles, tokens, and settings (browser bookmarks are preserved); two-step confirmation dialog
+- **Folder browser**: Browse repository folders to select the sync path — no more manual typing; available in GitHub → Connection next to the File Path input; navigate into subfolders or select with one click
+- **CI screenshot workflow**: GitHub Actions workflow (`screenshots.yml`) to auto-generate store screenshots for all 12 languages; manual trigger via `workflow_dispatch`; commits updated images back to the repo
 
 ### Changed
 

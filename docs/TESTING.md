@@ -54,6 +54,18 @@ Output: `store-assets/{en,de,fr,es,pt_BR,it,ja,zh_CN,ko,ru,tr,pl}/` — each wit
 
 **Prerequisites:** Playwright with Chromium (`npx playwright install chromium` — run once).
 
+### CI Screenshot Generation
+
+Screenshots can also be generated via GitHub Actions. The `screenshots.yml` workflow runs on `ubuntu-latest`, builds the extension, generates all 144 screenshots, and commits them back to the repo.
+
+**Trigger manually:**
+
+1. Go to Actions → Generate Screenshots → Run workflow
+2. Optionally specify a branch (defaults to current)
+3. The workflow commits updated images to `store-assets/` and pushes
+
+**Typical release flow:** Run the screenshot workflow on the development branch before tagging a release, so the latest screenshots are included.
+
 ---
 
 ## Chrome (Desktop)

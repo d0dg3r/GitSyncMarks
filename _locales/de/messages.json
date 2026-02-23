@@ -169,6 +169,11 @@
   "options_filePathHint": {
     "message": "Ordner, in dem die Lesezeichen-Dateien gespeichert werden."
   },
+  "options_browseFolder": { "message": "Durchsuchen" },
+  "options_browseFolderEmpty": { "message": "Keine Ordner gefunden" },
+  "options_browseFolderLoading": { "message": "Laden\u2026" },
+  "options_browseFolderSelect": { "message": "Auswählen" },
+  "options_browseFolderNotConfigured": { "message": "Bitte zuerst Token, Owner und Repo konfigurieren" },
   "options_filePathChangeHint": {
     "message": "Beim nächsten Sync kann ein Konflikt entstehen. Nutze „GitHub → Lokal“, um den Remote-Stand zu übernehmen."
   },

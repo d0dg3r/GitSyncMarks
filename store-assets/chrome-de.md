@@ -29,7 +29,7 @@ Funktionen:
 • Generierte Dateien: README.md (Übersicht), bookmarks.html (Browser-Import), feed.xml (RSS-2.0-Feed) und dashy-conf.yml (Dashy-Dashboard) — einzeln als Aus, Manuell oder Auto konfigurierbar
 • Einstellungen-Sync mit Git: verschlüsseltes Backup der Erweiterungseinstellungen im Repo — Global (geteilt) oder Individuell (pro Gerät); Einstellungen von anderen Geräten importieren; gleiches Passwort auf jedem Gerät, automatisch synchronisiert
 • Import/Export: Lesezeichen (JSON), Dashy-Konfiguration (YAML) oder Einstellungen (JSON / verschlüsselt .enc) exportieren; Import mit automatischer Formaterkennung
-• Onboarding: Ordner anlegen oder Lesezeichen laden beim Konfigurieren eines neuen Profils
+• Onboarding: Ordner-Browser zur Auswahl des Sync-Pfads; Ordner anlegen oder Lesezeichen laden beim Konfigurieren eines neuen Profils
 • Mehrsprachig: 12 Sprachen — EN, DE, FR, ES, PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL; manuelle Auswahl oder Auto-Erkennung
 • Tastenkürzel: Schnell-Sync (Strg+Umschalt+.), Einstellungen öffnen (Strg+Umschalt+,) — anpassbar
 • Design: Hell, Dunkel oder Auto — Wechsel-Button (A → Dunkel → Hell → A) in Optionen und Popup

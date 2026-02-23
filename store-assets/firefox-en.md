@@ -29,7 +29,7 @@ Features:
 • Generated files: README.md (overview), bookmarks.html (browser import), feed.xml (RSS 2.0 feed), and dashy-conf.yml (Dashy dashboard) — each configurable as Off, Manual, or Auto
 • Settings sync to Git: encrypted backup of extension settings in the repo — Global (shared) or Individual (per device) mode; import settings from other devices; same password on every device, auto-synced
 • Import/Export: export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc); import with automatic format detection
-• Onboarding: create folder or pull bookmarks when configuring a new profile
+• Onboarding: folder browser to select the sync path; create folder or pull bookmarks when configuring a new profile
 • Multilanguage: 12 languages — EN, DE, FR, ES, PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL; manual selection or auto-detect
 • Keyboard shortcuts: quick sync (Ctrl+Shift+.), open settings (Ctrl+Shift+,) — customizable
 • Theme: light, dark, or auto — single cycle button (A → Dark → Light → A) in options and popup

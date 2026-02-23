@@ -29,7 +29,7 @@ Funkcje:
 • Generowane pliki: README.md (przegląd), bookmarks.html (import do przeglądarki), feed.xml (kanał RSS 2.0) i dashy-conf.yml (panel Dashy) — każdy konfigurowalny jako Wyłączony, Ręczny lub Automatyczny
 • Sync ustawień z Git: zaszyfrowana kopia zapasowa ustawień rozszerzenia w repozytorium — tryb Globalny (współdzielony) lub Indywidualny (per urządzenie); import ustawień z innych urządzeń; to samo hasło na każdym urządzeniu, automatycznie zsynchronizowane
 • Import/Eksport: zakładki (JSON), konfiguracja Dashy (YAML) lub ustawienia (zwykły JSON / zaszyfrowany .enc); import z automatycznym wykrywaniem formatu
-• Onboarding: tworzenie folderu lub pobieranie zakładek podczas konfiguracji nowego profilu
+• Onboarding: przeglądarka folderów do wyboru ścieżki synchronizacji; tworzenie folderu lub pobieranie zakładek podczas konfiguracji nowego profilu
 • Opcje: 5 kart (GitHub, Sync, Pliki, Pomoc, O programie) z podkartami dla GitHub i Plików — przejrzysty interfejs ustawień
 • Motyw: jasny, ciemny lub automatyczny — przycisk cykliczny (A → Ciemny → Jasny → A) w opcjach i popup
 • Głosowanie na backlog: ankieta społecznościowa do ustalania priorytetów kolejnych funkcji

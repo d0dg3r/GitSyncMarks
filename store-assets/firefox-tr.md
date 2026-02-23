@@ -29,7 +29,7 @@ GitSyncMarks, Firefox yer imlerinizi bir GitHub deposuyla senkronize eder — ç
 • Oluşturulan dosyalar: README.md (genel bakış), bookmarks.html (tarayıcı içe aktarma), feed.xml (RSS 2.0 akışı) ve dashy-conf.yml (Dashy panosu) — her biri Kapalı, Manuel veya Otomatik olarak yapılandırılabilir
 • Ayarları Git ile Sync: depodaki uzantı ayarlarının şifreli yedeği — Global (paylaşılan) veya Bireysel (cihaz başına) modu; diğer cihazlardan ayarları içe aktarma; her cihazda aynı şifre, otomatik senkronize
 • İçe/Dışa Aktarma: yer imleri (JSON), Dashy yapılandırması (YAML) veya ayarlar (düz JSON / şifreli .enc); otomatik biçim algılamayla içe aktarma
-• Başlangıç: yeni profil yapılandırırken klasör oluşturma veya yer imlerini çekme
+• Başlangıç: klasör tarayıcısı ile sync yolunu seçme; yeni profil yapılandırırken klasör oluşturma veya yer imlerini çekme
 • Seçenekler: 5 sekme (GitHub, Sync, Dosyalar, Yardım, Hakkında) ve GitHub ile Dosyalar için alt sekmeler — düzenli ayarlar arayüzü
 • Tema: açık, koyu veya otomatik — döngü düğmesi (A → Koyu → Açık → A) seçeneklerde ve popup'ta
 • Backlog oylaması: topluluk anketi ile sonraki özelliklerin önceliğini belirleyin

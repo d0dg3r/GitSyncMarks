@@ -6,7 +6,7 @@ Open items and next steps for further development. Updated each session.
 
 ## Current Status (v2.5.0 *Cortana*)
 
-- **v2.5.0** *Cortana* – Context menu (Add to Toolbar/Other, Sync Now, Switch Profile, Copy Favicon URL, Download Favicon); profile switching via context menu (radio submenu); favicon tools (copy URL / download PNG with Google fallback); 8 new languages (PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL — 12 total); auto-detection improved for regional locales; translation guide (`docs/TRANSLATING.md`); store files split into per-language files with meta files; screenshots for all 12 languages; dynamic keyboard shortcuts; factory reset button; feature lists reordered by user interest; "No middleman" replaces "No server needed"
+- **v2.5.0** *Cortana* – Context menu (Add to Toolbar/Other, Sync Now, Switch Profile, Copy Favicon URL, Download Favicon); profile switching via context menu (radio submenu); favicon tools (copy URL / download PNG with Google fallback); 8 new languages (PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL — 12 total); auto-detection improved for regional locales; translation guide (`docs/TRANSLATING.md`); store files split into per-language files with meta files; screenshots for all 12 languages; dynamic keyboard shortcuts; factory reset button; folder browser for path selection; CI screenshot workflow (`screenshots.yml`); feature lists reordered by user interest; "No middleman" replaces "No server needed"
 - **v2.4.0** *R2-D2* – Settings sync to Git (encrypted, Global or Individual mode with device config import); RSS feed export (`feed.xml`); generated files mode selector (Off/Manual/Auto per file with "Generate now" button); backlog voting awareness in Help tab and README; Debug Log moved to Sync tab
 - **v2.3.0** *Data* – Encrypted settings export (password-protected .enc); plain JSON and encrypted supported; import with password prompt; Sync tab shortened to "Sync"; store screenshots improved; import hints (bookmarks = active profile, settings = all profiles); theme cycle button; full auto-save (no Save buttons)
 - **v2.2.1** – Sync feedback message fix; state regression fix (stale fetch guard, cache-busting); debug log extended with commit hashes
@@ -54,9 +54,11 @@ Open items and next steps for further development. Updated each session.
 16. [x] Dynamic keyboard shortcuts (chrome.commands.getAll)
 17. [x] Factory reset button (Files → Settings)
 18. [x] Feature lists reordered by user interest; "No middleman" replaces "No server needed"
-19. [ ] Test on Chrome, Firefox Desktop, Firefox Android
-20. [ ] Tag v2.5.0, publish release
-21. [ ] Submit to Chrome Web Store and Firefox Add-ons with updated store descriptions
+19. [x] Folder browser for sync path selection (GitHub → Connection)
+20. [x] CI screenshot workflow (`.github/workflows/screenshots.yml`)
+21. [ ] Test on Chrome, Firefox Desktop, Firefox Android
+22. [ ] Tag v2.5.0, publish release
+23. [ ] Submit to Chrome Web Store and Firefox Add-ons with updated store descriptions
 
 ---
 

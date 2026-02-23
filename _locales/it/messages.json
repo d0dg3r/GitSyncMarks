@@ -169,6 +169,11 @@
   "options_filePathHint": {
     "message": "Cartella in cui verranno salvati i file dei segnalibri."
   },
+  "options_browseFolder": { "message": "Sfoglia" },
+  "options_browseFolderEmpty": { "message": "Nessuna cartella trovata" },
+  "options_browseFolderLoading": { "message": "Caricamento\u2026" },
+  "options_browseFolderSelect": { "message": "Seleziona" },
+  "options_browseFolderNotConfigured": { "message": "Configurare prima token, proprietario e repository" },
   "options_filePathChangeHint": {
     "message": "Alla prossima sincronizzazione potrebbe verificarsi un conflitto. Usa \"GitHub → Locale\" per adottare lo stato remoto."
   },
