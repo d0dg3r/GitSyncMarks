@@ -5,39 +5,40 @@
 GitSyncMarks
 
 ### Summary (max 250 characters)
-Sincroniza tus marcadores de Firefox con GitHub — bidireccional, sin conflictos. Almacenamiento JSON por archivo, fusión triple, auto-sync. Soporte completo para Barra de marcadores, Menú y Móvil. Añade marcadores vía Git, CLI o GitHub Actions. Open source, sin servidor externo.
+Sincroniza tus marcadores de Firefox con GitHub — bidireccional, sin conflictos. Almacenamiento JSON por archivo, fusión triple, auto-sync. Soporte completo para Barra de marcadores, Menú y Móvil. Añade marcadores vía Git, CLI o GitHub Actions. Open source, sin intermediarios.
 
 ### Detailed Description
-GitSyncMarks sincroniza tus marcadores de Firefox con un repositorio GitHub — bidireccional, automáticamente y sin servidor externo.
+GitSyncMarks sincroniza tus marcadores de Firefox con un repositorio GitHub — bidireccional, automáticamente y sin intermediarios.
 
 Características:
+• Sin intermediarios: se comunica directamente con la API de GitHub — sin servidor de terceros, sin backend, tus datos permanecen entre tu navegador y GitHub
 • Almacenamiento por archivo: cada marcador es un archivo JSON individual — legible y apto para diff
 • Fusión triple: sincronización automática sin conflictos
 • Soporte completo Firefox incluyendo el Menú de marcadores
-• Múltiples perfiles de marcadores: hasta 10 perfiles con repos GitHub separados
-• Carpeta Repos GitHub: carpeta opcional con marcadores a todos tus repositorios GitHub
-• Integración: crear carpeta o importar marcadores al configurar un nuevo perfil
-• Perfiles de sync: tiempo real, frecuente, normal o ahorro de energía
 • Auto-sync en cada cambio de marcador (retardo configurable por perfil)
+• Múltiples perfiles de marcadores: hasta 10 perfiles con repos GitHub separados
+• Menú contextual: clic derecho en página o enlace — Añadir a la barra de marcadores, Añadir a otros marcadores, Sincronizar ahora, Cambiar perfil, Copiar URL del favicon, Descargar favicon
+• Herramientas de favicon: copia la URL del favicon de cualquier sitio al portapapeles o descárgalo como PNG — usa el favicon del navegador con el servicio de Google como alternativa
+• Automatización: añadir marcadores vía Git, CLI o GitHub Actions — sin abrir el navegador
+• Carpeta Repos GitHub: carpeta opcional con marcadores a todos tus repositorios GitHub
+• Perfiles de sync: tiempo real, frecuente, normal o ahorro de energía
 • Sync al inicio / al foco: sync opcional al abrir el navegador o al volver a la ventana
 • Sync periódico para detectar cambios remotos (1–120 minutos, configurable)
-• Notificaciones: Todas (éxito + error), Solo errores o Desactivadas
 • Push, Pull y Sync completo manuales desde el popup
 • Detección de conflictos cuando la fusión automática no es posible
 • Archivos generados: README.md, bookmarks.html, feed.xml y dashy-conf.yml — cada uno configurable como Desactivado, Manual o Auto
 • Sync de ajustes con Git: copia cifrada en el repositorio — modo Global o Individual (por dispositivo)
-• Opciones: 5 pestañas (GitHub, Sync, Archivos, Ayuda, Acerca de) con sub-pestañas para GitHub y Archivos
-• Menú contextual: clic derecho en página o enlace — Añadir a la barra de marcadores, Añadir a otros marcadores, Sincronizar ahora, Copiar URL del favicon, Descargar favicon
-• Automatización: añadir marcadores vía Git, CLI o GitHub Actions — sin abrir el navegador
 • Importar/Exportar: marcadores (JSON), configuración Dashy (YAML) o ajustes (JSON / .enc cifrado)
-• Guardado automático: todos los ajustes se guardan al cambiar — sin botones Guardar
-• Tema: claro, oscuro o auto — botón cíclico (A → Oscuro → Claro → A)
+• Integración: crear carpeta o importar marcadores al configurar un nuevo perfil
 • Multilingüe: 12 idiomas — EN, DE, FR, ES, PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL
 • Atajos de teclado: sync rápido, configuración — personalizables
+• Tema: claro, oscuro o auto — botón cíclico (A → Oscuro → Claro → A)
+• Opciones: 5 pestañas (GitHub, Sync, Archivos, Ayuda, Acerca de) con sub-pestañas para GitHub y Archivos
+• Notificaciones: Todas (éxito + error), Solo errores o Desactivadas
+• Guardado automático: todos los ajustes se guardan al cambiar — sin botones Guardar
 • Registro de depuración: pestaña Sync — para diagnosticar la sincronización
 • Votación del backlog: encuesta comunitaria para priorizar las próximas funciones
 • App móvil: GitSyncMarks-Mobile (iOS + Android)
-• Sin servidor externo — se comunica directamente con la API de GitHub
 
 Cómo funciona:
 1. Crear un repositorio GitHub

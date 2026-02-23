@@ -25,7 +25,7 @@ import { log as debugLog, getLogAsString } from './lib/debug-log.js';
 import { GitHubAPI } from './lib/github-api.js';
 import { migrateTokenIfNeeded } from './lib/crypto.js';
 import { migrateToProfiles, getActiveProfileId, getActiveProfile, getProfiles, switchProfile, getSyncState } from './lib/profile-manager.js';
-import { setupContextMenus, handleContextMenuClick } from './lib/context-menu.js';
+import { setupContextMenus, handleContextMenuClick, refreshProfileMenuItems } from './lib/context-menu.js';
 
 const ALARM_NAME = 'bookmarkSyncPull';
 const NOTIFICATION_ID = 'gitsyncmarks-sync';
@@ -242,7 +242,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       return false;
     }
     switchProfile(targetId)
-      .then(() => sendResponse({ success: true, message: getMessage('sync_pullSuccess') }))
+      .then(async () => {
+        await refreshProfileMenuItems();
+        sendResponse({ success: true, message: getMessage('sync_pullSuccess') });
+      })
       .catch((err) => {
         console.error('[GitSyncMarks] switchProfile failed:', err);
         sendResponse({ success: false, message: err.message || 'Switch failed' });
@@ -286,6 +289,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
+// ---- Refresh context menu when profiles change ----
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === 'sync' && (changes.profiles || changes.activeProfileId)) {
+    refreshProfileMenuItems();
+  }
+});
+
 // ---- Keyboard shortcuts ----
 
 chrome.commands?.onCommand?.addListener?.((command) => {
@@ -323,6 +334,7 @@ chrome.runtime.onStartup.addListener(async () => {
   await migrateTokenIfNeeded();
   await migrateToProfiles();
   await initI18n();
+  refreshProfileMenuItems();
   await setupAlarm();
   await checkAndMigrate();
 

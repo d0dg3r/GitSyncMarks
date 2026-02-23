@@ -5,31 +5,31 @@
 GitSyncMarks
 
 ### Summary (max 132 characters)
-Yer imleriniz GitHub'da güvende — dosya bazlı depolama, üç yönlü merge sync, Chrome ve Firefox. Sunucu gereksiz.
+Yer imleriniz GitHub'da güvende — dosya bazlı depolama, üç yönlü merge sync, Chrome ve Firefox. Aracısız.
 
 ### Detailed Description
-GitSyncMarks, tarayıcı yer imlerinizi bir GitHub deposuyla senkronize eder — çift yönlü, otomatik ve harici sunucu gerektirmez.
+GitSyncMarks, tarayıcı yer imlerinizi bir GitHub deposuyla senkronize eder — çift yönlü, otomatik ve aracısız.
 
 Özellikler:
+• Aracısız — Personal Access Token'ınızı kullanarak doğrudan GitHub API ile iletişim kurar
 • Dosya bazlı depolama: her yer imi ayrı bir JSON dosyası — okunabilir ve diff dostu
 • Üç yönlü merge: her iki tarafta da değişiklik olduğunda otomatik çakışmasız sync
 • Çapraz tarayıcı: Chrome, Chromium, Brave, Edge ve Firefox ile çalışır
-• Çoklu yer imi profili: ayrı GitHub depoları ile en fazla 10 profil; geçiş yerel yer imlerini değiştirir
-• GitHub Repos klasörü: tüm GitHub depolarınıza (genel ve özel) yer imleri içeren isteğe bağlı klasör
-• Başlangıç kurulumu: yeni profil yapılandırırken klasör oluşturma veya yer imlerini Pull etme
-• Sync profilleri: gerçek zamanlı, sık, normal veya enerji tasarrufu (önceden ayarlanmış aralıklar ve debounce)
 • Her yer imi değişikliğinde otomatik Sync (profil başına debounce yapılandırılabilir)
+• Çoklu yer imi profili: ayrı GitHub depoları ile en fazla 10 profil; geçiş yerel yer imlerini değiştirir
+• Bağlam menüsü: sayfa veya bağlantıya sağ tıklayın — Yer İşareti Çubuğuna Ekle, Diğer Yer İşaretlerine Ekle, Şimdi Senkronize Et, Profil Değiştir, Favicon URL Kopyala, Favicon İndir
+• Favicon araçları: herhangi bir sitenin favicon URL'sini panoya kopyalayın veya PNG olarak indirin — tarayıcı faviconunu kullanır, Google favicon hizmeti yedek olarak
+• Otomasyon: Git, CLI veya GitHub Actions ile yer imi ekleme — tarayıcı gerektirmez
+• GitHub Repos klasörü: tüm GitHub depolarınıza (genel ve özel) yer imleri içeren isteğe bağlı klasör
+• Sync profilleri: gerçek zamanlı, sık, normal veya enerji tasarrufu (önceden ayarlanmış aralıklar ve debounce)
 • Başlangıçta / odaklanmada Sync: tarayıcı başladığında veya odak kazandığında isteğe bağlı Sync (bekleme süresiyle)
 • Uzak değişiklikleri algılamak için periyodik Sync (1–120 dakika, yapılandırılabilir)
-• Bildirimler: Tümü (başarı + hata), Yalnızca hatalar veya Kapalı
 • Popup'tan manuel Push, Pull ve tam Sync
 • Otomatik merge mümkün olmadığında çakışma algılama
 • Oluşturulan dosyalar: README.md (genel bakış), bookmarks.html (tarayıcı içe aktarma), feed.xml (RSS 2.0 akışı) ve dashy-conf.yml (Dashy panosu) — her biri Kapalı, Manuel veya Otomatik olarak yapılandırılabilir
 • Git ile ayar Sync'i: depodaki uzantı ayarlarının şifrelenmiş yedekleme — Global (paylaşılan) veya Bireysel (cihaz başına) mod; diğer cihazlardan ayarları içe aktarma; her cihazda aynı şifre, otomatik senkronize
-• Bağlam menüsü: sayfa veya bağlantıya sağ tıklayın — Yer İşareti Çubuğuna Ekle, Diğer Yer İşaretlerine Ekle, Şimdi Senkronize Et, Favicon URL Kopyala, Favicon İndir
-• Otomasyon: Git, CLI veya GitHub Actions ile yer imi ekleme — tarayıcı gerektirmez
 • İçe/Dışa Aktarma: yer imleri (JSON), Dashy yapılandırması (YAML) veya ayarlar (düz JSON / şifreli .enc) dışa aktarma; otomatik format algılama ile içe aktarma
-• Otomatik kaydetme: tüm ayarlar değiştirildiğinde otomatik kaydedilir — Kaydet düğmesi yok
+• Başlangıç kurulumu: yeni profil yapılandırırken klasör oluşturma veya yer imlerini Pull etme
 • Seçenekler: 5 sekme (GitHub, Sync, Dosyalar, Yardım, Hakkında) ile GitHub ve Dosyalar için alt sekmeler — düzenli ayarlar arayüzü
 • Tema: açık, koyu veya otomatik — döngü düğmesi (A → Koyu → Açık → A) seçeneklerde ve popup'ta
 • Backlog oylaması: sonraki özelliklerin önceliğini belirlemek için topluluk anketi
@@ -37,7 +37,8 @@ GitSyncMarks, tarayıcı yer imlerinizi bir GitHub deposuyla senkronize eder —
 • Klavye kısayolları: hızlı Sync (Ctrl+Shift+.), ayarları aç (Ctrl+Shift+,) — özelleştirilebilir
 • Hata ayıklama günlüğü: Sync sekmesi — Sync tanılama için etkinleştirin, sorun giderme için dışa aktarın
 • Mobil eşlik uygulaması: GitSyncMarks-Mobile (iOS + Android) — hareket halindeyken yer imlerinizi görüntüleyin, deponuzdan salt okunur Sync
-• Harici sunucu yok — Personal Access Token'ınızı kullanarak doğrudan GitHub API ile iletişim kurar
+• Otomatik kaydetme: tüm ayarlar değiştirildiğinde otomatik kaydedilir — Kaydet düğmesi yok
+• Bildirimler: Tümü (başarı + hata), Yalnızca hatalar veya Kapalı
 
 Nasıl çalışır:
 1. Yer imleriniz için bir GitHub deposu oluşturun

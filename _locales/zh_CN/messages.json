@@ -334,6 +334,11 @@
   "options_settingsSyncImportSuccess": {
     "message": "设置导入成功"
   },
+  "options_resetTitle": { "message": "重置扩展" },
+  "options_resetDescription": { "message": "删除所有配置文件、令牌和设置。浏览器书签不受影响。" },
+  "options_resetBtn": { "message": "重置所有数据" },
+  "options_resetConfirm": { "message": "确定要重置吗？此操作无法撤销。所有配置文件和设置将被永久删除。" },
+  "options_resetSuccess": { "message": "扩展已重置。" },
   "options_notifications": {
     "message": "同步通知"
   },
@@ -733,8 +738,11 @@
   "help_openOptions": {
     "message": "打开扩展设置"
   },
-  "help_shortcutsNote": {
-    "message": "您可以在浏览器的扩展设置中自定义快捷键。"
+  "help_customizeShortcuts": {
+    "message": "自定义快捷键"
+  },
+  "help_shortcutNotSet": {
+    "message": "未设置"
   },
   "help_debugLogTitle": {
     "message": "调试日志"
@@ -973,5 +981,7 @@
   "contextMenu_notifFaviconCopied": { "message": "网站图标 URL 已复制" },
   "contextMenu_notifNotConfigured": { "message": "请先配置 GitSyncMarks" },
   "contextMenu_notifNoFavicon": { "message": "此页面没有可用的网站图标" },
-  "contextMenu_notifError": { "message": "操作失败 - 请重试" }
+  "contextMenu_notifError": { "message": "操作失败 - 请重试" },
+  "contextMenu_switchProfile": { "message": "切换配置文件" },
+  "contextMenu_notifProfileSwitched": { "message": "已切换到 $1", "placeholders": { "name": { "content": "$1" } } }
 }

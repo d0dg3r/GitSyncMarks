@@ -332,6 +332,11 @@
   "options_settingsSyncImportSuccess": {
     "message": "Paramètres importés avec succès"
   },
+  "options_resetTitle": { "message": "Réinitialiser l'extension" },
+  "options_resetDescription": { "message": "Supprimer tous les profils, jetons et paramètres. Vos favoris du navigateur ne seront pas affectés." },
+  "options_resetBtn": { "message": "Réinitialiser toutes les données" },
+  "options_resetConfirm": { "message": "Êtes-vous sûr ? Cette action est irréversible. Tous les profils et paramètres seront définitivement supprimés." },
+  "options_resetSuccess": { "message": "L'extension a été réinitialisée." },
   "options_notifications": {
     "message": "Notifications de sync"
   },
@@ -725,8 +730,11 @@
   "help_openOptions": {
     "message": "Ouvrir les paramètres de l'extension"
   },
-  "help_shortcutsNote": {
-    "message": "Vous pouvez personnaliser les raccourcis dans les paramètres de l'extension du navigateur."
+  "help_customizeShortcuts": {
+    "message": "Personnaliser les raccourcis"
+  },
+  "help_shortcutNotSet": {
+    "message": "Non défini"
   },
   "help_whySlowTitle": {
     "message": "Pourquoi la sync prend-elle parfois du temps ?"
@@ -962,5 +970,7 @@
   "contextMenu_notifFaviconCopied": { "message": "URL du favicon copiée" },
   "contextMenu_notifNotConfigured": { "message": "Veuillez d'abord configurer GitSyncMarks" },
   "contextMenu_notifNoFavicon": { "message": "Aucun favicon disponible pour cette page" },
-  "contextMenu_notifError": { "message": "Échec de l'action — veuillez réessayer" }
+  "contextMenu_notifError": { "message": "Échec de l'action — veuillez réessayer" },
+  "contextMenu_switchProfile": { "message": "Changer de profil" },
+  "contextMenu_notifProfileSwitched": { "message": "Basculé vers $1", "placeholders": { "name": { "content": "$1" } } }
 }

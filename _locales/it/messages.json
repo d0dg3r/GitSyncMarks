@@ -334,6 +334,11 @@
   "options_settingsSyncImportSuccess": {
     "message": "Impostazioni importate con successo"
   },
+  "options_resetTitle": { "message": "Reimposta estensione" },
+  "options_resetDescription": { "message": "Elimina tutti i profili, i token e le impostazioni. I segnalibri del browser non saranno modificati." },
+  "options_resetBtn": { "message": "Reimposta tutti i dati" },
+  "options_resetConfirm": { "message": "Sei sicuro? Questa azione non può essere annullata. Tutti i profili e le impostazioni verranno eliminati permanentemente." },
+  "options_resetSuccess": { "message": "L'estensione è stata reimpostata." },
   "options_notifications": {
     "message": "Notifiche di sincronizzazione"
   },
@@ -733,8 +738,11 @@
   "help_openOptions": {
     "message": "Apri impostazioni estensione"
   },
-  "help_shortcutsNote": {
-    "message": "Puoi personalizzare le scorciatoie nelle impostazioni delle estensioni del browser."
+  "help_customizeShortcuts": {
+    "message": "Personalizza scorciatoie"
+  },
+  "help_shortcutNotSet": {
+    "message": "Non impostato"
   },
   "help_debugLogTitle": {
     "message": "Log di debug"
@@ -973,5 +981,7 @@
   "contextMenu_notifFaviconCopied": { "message": "URL del favicon copiata" },
   "contextMenu_notifNotConfigured": { "message": "Configura prima GitSyncMarks" },
   "contextMenu_notifNoFavicon": { "message": "Nessun favicon disponibile per questa pagina" },
-  "contextMenu_notifError": { "message": "Azione fallita — riprova" }
+  "contextMenu_notifError": { "message": "Azione fallita — riprova" },
+  "contextMenu_switchProfile": { "message": "Cambia profilo" },
+  "contextMenu_notifProfileSwitched": { "message": "Passato a $1", "placeholders": { "name": { "content": "$1" } } }
 }

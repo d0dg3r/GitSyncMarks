@@ -5,39 +5,40 @@
 GitSyncMarks
 
 ### Summary (max 250 characters)
-Sync your Firefox bookmarks with GitHub — bidirectionally, conflict-free. Per-file JSON storage, three-way merge, auto-sync. Full support for Bookmarks Toolbar, Menu, and Mobile. Add bookmarks via Git, CLI, or GitHub Actions. Open source, no external server.
+Sync your Firefox bookmarks with GitHub — bidirectionally, conflict-free. Per-file JSON storage, three-way merge, auto-sync. Full support for Bookmarks Toolbar, Menu, and Mobile. Add bookmarks via Git, CLI, or GitHub Actions. Open source, no middleman.
 
 ### Detailed Description
-GitSyncMarks syncs your Firefox bookmarks with a GitHub repository — bidirectionally, automatically, and without any external server.
+GitSyncMarks syncs your Firefox bookmarks with a GitHub repository — bidirectionally, automatically, and with no middleman.
 
 Features:
+• No middleman: communicates directly with the GitHub API — no third-party server, no backend, your data stays between your browser and GitHub
 • Per-file storage: each bookmark is an individual JSON file — human-readable and diff-friendly
 • Three-way merge: automatic conflict-free sync when changes happen on both sides
 • Full Firefox support including the Bookmarks Menu folder
-• Multiple bookmark profiles: up to 10 profiles with separate GitHub repos; switch replaces local bookmarks
-• GitHub Repos folder: optional folder with bookmarks to all your GitHub repositories (public and private)
-• Onboarding: create folder or pull bookmarks when configuring a new profile
-• Sync profiles: real-time, frequent, normal, or power-save
 • Auto-sync on every bookmark change (debounce configurable per profile)
+• Multiple bookmark profiles: up to 10 profiles with separate GitHub repos; switch replaces local bookmarks
+• Context menu: right-click on page or link — Add to Toolbar, Add to Other Bookmarks, Sync Now, Switch Profile, Copy Favicon URL, Download Favicon
+• Favicon tools: copy any site's favicon URL to clipboard or download it as PNG — uses browser favicon with Google favicon service fallback
+• Automation: add bookmarks via Git, CLI, or GitHub Actions — no browser needed
+• GitHub Repos folder: optional folder with bookmarks to all your GitHub repositories (public and private)
+• Sync profiles: real-time, frequent, normal, or power-save
 • Sync on startup / focus: optional sync when the browser starts or gains focus (with cooldown)
 • Periodic sync to detect remote changes (1–120 minutes, configurable)
-• Notifications: All (success + failure), Errors only, or Off
 • Manual Push, Pull, and full Sync via the popup
 • Conflict detection when automatic merge is not possible
 • Generated files: README.md (overview), bookmarks.html (browser import), feed.xml (RSS 2.0 feed), and dashy-conf.yml (Dashy dashboard) — each configurable as Off, Manual, or Auto
 • Settings sync to Git: encrypted backup of extension settings in the repo — Global (shared) or Individual (per device) mode; import settings from other devices; same password on every device, auto-synced
-• Options: 5 tabs (GitHub, Sync, Files, Help, About) with sub-tabs for GitHub and Files — clean, organized settings UI
-• Context menu: right-click on page or link — Add to Toolbar, Add to Other Bookmarks, Sync Now, Copy Favicon URL, Download Favicon
-• Automation: add bookmarks via Git, CLI, or GitHub Actions — no browser needed
 • Import/Export: export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc); import with automatic format detection
-• Auto-save: all settings save automatically when changed — no Save buttons
-• Theme: light, dark, or auto — single cycle button (A → Dark → Light → A) in options and popup
-• Vote on backlog: community poll to influence which features come next
+• Onboarding: create folder or pull bookmarks when configuring a new profile
 • Multilanguage: 12 languages — EN, DE, FR, ES, PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL; manual selection or auto-detect
 • Keyboard shortcuts: quick sync (Ctrl+Shift+.), open settings (Ctrl+Shift+,) — customizable
+• Theme: light, dark, or auto — single cycle button (A → Dark → Light → A) in options and popup
+• Options: 5 tabs (GitHub, Sync, Files, Help, About) with sub-tabs for GitHub and Files — clean, organized settings UI
+• Notifications: All (success + failure), Errors only, or Off
+• Auto-save: all settings save automatically when changed — no Save buttons
 • Debug log: Sync tab — enable for sync diagnostics, export for troubleshooting
+• Vote on backlog: community poll to influence which features come next
 • Mobile companion: GitSyncMarks-Mobile (iOS + Android) — view bookmarks on the go, read-only sync from your repo
-• No external server — communicates directly with the GitHub API using your Personal Access Token
 
 How it works:
 1. Create a GitHub repository for your bookmarks

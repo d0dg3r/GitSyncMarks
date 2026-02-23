@@ -735,6 +735,23 @@ code {
   background: var(--color-btn-secondary-hover);
 }
 
+.btn-danger {
+  background: #dc3545;
+  color: #fff;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #bb2d3b;
+}
+
+.danger-zone {
+  border: 1px solid #dc354540;
+}
+
+.danger-zone h2 {
+  color: #dc3545;
+}
+
 .btn-icon {
   background: none;
   border: 1px solid var(--color-border);

@@ -334,6 +334,11 @@
   "options_settingsSyncImportSuccess": {
     "message": "Einstellungen erfolgreich importiert"
   },
+  "options_resetTitle": { "message": "Extension zurücksetzen" },
+  "options_resetDescription": { "message": "Alle Profile, Tokens und Einstellungen löschen. Ihre Browser-Lesezeichen bleiben erhalten." },
+  "options_resetBtn": { "message": "Alle Daten zurücksetzen" },
+  "options_resetConfirm": { "message": "Sind Sie sicher? Dies kann nicht rückgängig gemacht werden. Alle Profile und Einstellungen werden dauerhaft gelöscht." },
+  "options_resetSuccess": { "message": "Extension wurde zurückgesetzt." },
   "options_notifications": {
     "message": "Sync-Benachrichtigungen"
   },
@@ -733,8 +738,11 @@
   "help_openOptions": {
     "message": "Einstellungen öffnen"
   },
-  "help_shortcutsNote": {
-    "message": "Die Kürzel können in den Erweiterungseinstellungen des Browsers angepasst werden."
+  "help_customizeShortcuts": {
+    "message": "Tastenkürzel anpassen"
+  },
+  "help_shortcutNotSet": {
+    "message": "Nicht belegt"
   },
   "help_debugLogTitle": {
     "message": "Debug-Log"
@@ -973,5 +981,7 @@
   "contextMenu_notifFaviconCopied": { "message": "Favicon-URL kopiert" },
   "contextMenu_notifNotConfigured": { "message": "Bitte GitSyncMarks zuerst konfigurieren" },
   "contextMenu_notifNoFavicon": { "message": "Kein Favicon für diese Seite verfügbar" },
-  "contextMenu_notifError": { "message": "Aktion fehlgeschlagen — bitte erneut versuchen" }
+  "contextMenu_notifError": { "message": "Aktion fehlgeschlagen — bitte erneut versuchen" },
+  "contextMenu_switchProfile": { "message": "Profil wechseln" },
+  "contextMenu_notifProfileSwitched": { "message": "Gewechselt zu $1", "placeholders": { "name": { "content": "$1" } } }
 }

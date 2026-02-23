@@ -5,31 +5,31 @@
 GitSyncMarks
 
 ### Summary (max 132 characters)
-Twoje zakładki bezpiecznie na GitHub — pliki jednostkowe, synchronizacja z merge trójstronnym, Chrome i Firefox. Bez serwera.
+Twoje zakładki bezpiecznie na GitHub — pliki jednostkowe, synchronizacja z merge trójstronnym, Chrome i Firefox. Bez pośredników.
 
 ### Detailed Description
-GitSyncMarks synchronizuje zakładki przeglądarki z repozytorium GitHub — dwukierunkowo, automatycznie i bez żadnego zewnętrznego serwera.
+GitSyncMarks synchronizuje zakładki przeglądarki z repozytorium GitHub — dwukierunkowo, automatycznie i bez pośredników.
 
 Funkcje:
+• Bez pośredników — komunikuje się bezpośrednio z API GitHub przy użyciu Twojego Personal Access Token
 • Plikowe przechowywanie: każda zakładka to osobny plik JSON — czytelny i przyjazny dla diff
 • Trójstronny merge: automatyczna, bezkonfliktowa synchronizacja przy zmianach po obu stronach
 • Wieloprzeglądarkowy: działa z Chrome, Chromium, Brave, Edge i Firefox
-• Wiele profili zakładek: do 10 profili z oddzielnymi repozytoriami GitHub; przełączenie zastępuje lokalne zakładki
-• Folder GitHub Repos: opcjonalny folder z zakładkami do wszystkich Twoich repozytoriów GitHub (publicznych i prywatnych)
-• Onboarding: tworzenie folderu lub Pull zakładek przy konfiguracji nowego profilu
-• Profile Sync: czas rzeczywisty, częsty, normalny lub oszczędzanie energii (ustawione interwały i debounce)
 • Auto-Sync przy każdej zmianie zakładki (debounce konfigurowalny per profil)
+• Wiele profili zakładek: do 10 profili z oddzielnymi repozytoriami GitHub; przełączenie zastępuje lokalne zakładki
+• Menu kontekstowe: kliknij prawym przyciskiem stronę lub link — Dodaj do paska zakładek, Dodaj do innych zakładek, Synchronizuj teraz, Zmień profil, Kopiuj URL favikony, Pobierz favikonę
+• Narzędzia favicon: skopiuj URL faviconu dowolnej strony do schowka lub pobierz jako PNG — używa faviconu przeglądarki z usługą Google jako zapasową
+• Automatyzacja: dodawanie zakładek przez Git, CLI lub GitHub Actions — bez przeglądarki
+• Folder GitHub Repos: opcjonalny folder z zakładkami do wszystkich Twoich repozytoriów GitHub (publicznych i prywatnych)
+• Profile Sync: czas rzeczywisty, częsty, normalny lub oszczędzanie energii (ustawione interwały i debounce)
 • Sync przy uruchomieniu / fokusie: opcjonalny Sync przy starcie przeglądarki lub powrocie fokusa (z cooldownem)
 • Okresowy Sync do wykrywania zdalnych zmian (1–120 minut, konfigurowalne)
-• Powiadomienia: Wszystkie (sukces + błąd), Tylko błędy lub Wyłączone
 • Ręczny Push, Pull i pełny Sync z poziomu popup
 • Wykrywanie konfliktów, gdy automatyczny merge jest niemożliwy
 • Generowane pliki: README.md (przegląd), bookmarks.html (import do przeglądarki), feed.xml (kanał RSS 2.0) i dashy-conf.yml (panel Dashy) — każdy konfigurowalny jako Wyłączony, Ręczny lub Auto
 • Sync ustawień z Git: zaszyfrowana kopia zapasowa ustawień rozszerzenia w repozytorium — tryb Globalny (współdzielony) lub Indywidualny (per urządzenie); importowanie ustawień z innych urządzeń; to samo hasło na każdym urządzeniu, automatycznie synchronizowane
-• Menu kontekstowe: kliknij prawym przyciskiem stronę lub link — Dodaj do paska zakładek, Dodaj do innych zakładek, Synchronizuj teraz, Kopiuj URL favikony, Pobierz favikonę
-• Automatyzacja: dodawanie zakładek przez Git, CLI lub GitHub Actions — bez przeglądarki
 • Import/Eksport: eksport zakładek (JSON), konfiguracji Dashy (YAML) lub ustawień (zwykły JSON / zaszyfrowany .enc); import z automatycznym wykrywaniem formatu
-• Automatyczny zapis: wszystkie ustawienia zapisują się automatycznie przy zmianie — bez przycisków Zapisz
+• Onboarding: tworzenie folderu lub Pull zakładek przy konfiguracji nowego profilu
 • Opcje: 5 zakładek (GitHub, Sync, Pliki, Pomoc, O programie) z podzakładkami dla GitHub i Plików — przejrzysty interfejs ustawień
 • Motyw: jasny, ciemny lub auto — przycisk cykliczny (A → Ciemny → Jasny → A) w opcjach i popup
 • Głosowanie na backlog: ankieta społeczności do ustalania priorytetów funkcji
@@ -37,7 +37,8 @@ Funkcje:
 • Skróty klawiszowe: szybki Sync (Ctrl+Shift+.), otwórz ustawienia (Ctrl+Shift+,) — konfigurowalne
 • Dziennik debugowania: zakładka Sync — włącz do diagnostyki Sync, eksportuj do rozwiązywania problemów
 • Towarzysz mobilny: GitSyncMarks-Mobile (iOS + Android) — przeglądaj zakładki w podróży, Sync tylko do odczytu z repozytorium
-• Bez zewnętrznego serwera — komunikuje się bezpośrednio z API GitHub przy użyciu Twojego Personal Access Token
+• Automatyczny zapis: wszystkie ustawienia zapisują się automatycznie przy zmianie — bez przycisków Zapisz
+• Powiadomienia: Wszystkie (sukces + błąd), Tylko błędy lub Wyłączone
 
 Jak to działa:
 1. Utwórz repozytorium GitHub na swoje zakładki

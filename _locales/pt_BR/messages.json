@@ -334,6 +334,11 @@
   "options_settingsSyncImportSuccess": {
     "message": "Configurações importadas com sucesso"
   },
+  "options_resetTitle": { "message": "Redefinir extensão" },
+  "options_resetDescription": { "message": "Excluir todos os perfis, tokens e configurações. Seus favoritos do navegador não serão afetados." },
+  "options_resetBtn": { "message": "Redefinir todos os dados" },
+  "options_resetConfirm": { "message": "Tem certeza? Esta ação não pode ser desfeita. Todos os perfis e configurações serão permanentemente excluídos." },
+  "options_resetSuccess": { "message": "A extensão foi redefinida." },
   "options_notifications": {
     "message": "Notificações de sincronização"
   },
@@ -733,8 +738,11 @@
   "help_openOptions": {
     "message": "Abrir configurações da extensão"
   },
-  "help_shortcutsNote": {
-    "message": "Você pode personalizar os atalhos nas configurações de extensões do navegador."
+  "help_customizeShortcuts": {
+    "message": "Personalizar atalhos"
+  },
+  "help_shortcutNotSet": {
+    "message": "Não definido"
   },
   "help_debugLogTitle": {
     "message": "Log de Depuração"
@@ -973,5 +981,7 @@
   "contextMenu_notifFaviconCopied": { "message": "URL do favicon copiada" },
   "contextMenu_notifNotConfigured": { "message": "Configure o GitSyncMarks primeiro" },
   "contextMenu_notifNoFavicon": { "message": "Nenhum favicon disponível para esta página" },
-  "contextMenu_notifError": { "message": "Ação falhou — tente novamente" }
+  "contextMenu_notifError": { "message": "Ação falhou — tente novamente" },
+  "contextMenu_switchProfile": { "message": "Trocar perfil" },
+  "contextMenu_notifProfileSwitched": { "message": "Alternado para $1", "placeholders": { "name": { "content": "$1" } } }
 }

@@ -334,6 +334,11 @@
   "options_settingsSyncImportSuccess": {
     "message": "Ayarlar başarıyla içe aktarıldı"
   },
+  "options_resetTitle": { "message": "Eklentiyi sıfırla" },
+  "options_resetDescription": { "message": "Tüm profilleri, jetonları ve ayarları sil. Tarayıcı yer imleriniz etkilenmez." },
+  "options_resetBtn": { "message": "Tüm verileri sıfırla" },
+  "options_resetConfirm": { "message": "Emin misiniz? Bu işlem geri alınamaz. Tüm profiller ve ayarlar kalıcı olarak silinecektir." },
+  "options_resetSuccess": { "message": "Eklenti sıfırlandı." },
   "options_notifications": {
     "message": "Senkronizasyon bildirimleri"
   },
@@ -733,8 +738,11 @@
   "help_openOptions": {
     "message": "Uzantı ayarlarını aç"
   },
-  "help_shortcutsNote": {
-    "message": "Kısayolları tarayıcının uzantı ayarlarından özelleştirebilirsiniz."
+  "help_customizeShortcuts": {
+    "message": "Kısayolları özelleştir"
+  },
+  "help_shortcutNotSet": {
+    "message": "Ayarlanmamış"
   },
   "help_debugLogTitle": {
     "message": "Hata Ayıklama Günlüğü"
@@ -973,5 +981,7 @@
   "contextMenu_notifFaviconCopied": { "message": "Favicon URL'si kopyalandı" },
   "contextMenu_notifNotConfigured": { "message": "Lütfen önce GitSyncMarks'ı yapılandırın" },
   "contextMenu_notifNoFavicon": { "message": "Bu sayfa için favicon bulunamadı" },
-  "contextMenu_notifError": { "message": "İşlem başarısız — lütfen tekrar deneyin" }
+  "contextMenu_notifError": { "message": "İşlem başarısız — lütfen tekrar deneyin" },
+  "contextMenu_switchProfile": { "message": "Profil değiştir" },
+  "contextMenu_notifProfileSwitched": { "message": "$1 profiline geçildi", "placeholders": { "name": { "content": "$1" } } }
 }

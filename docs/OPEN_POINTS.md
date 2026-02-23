@@ -4,8 +4,9 @@ Open items and next steps for further development. Updated each session.
 
 ---
 
-## Current Status (v2.4.0 *R2-D2*)
+## Current Status (v2.5.0 *Cortana*)
 
+- **v2.5.0** *Cortana* – Context menu (Add to Toolbar/Other, Sync Now, Switch Profile, Copy Favicon URL, Download Favicon); profile switching via context menu (radio submenu); favicon tools (copy URL / download PNG with Google fallback); 8 new languages (PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL — 12 total); auto-detection improved for regional locales; translation guide (`docs/TRANSLATING.md`); store files split into per-language files with meta files; screenshots for all 12 languages; dynamic keyboard shortcuts; factory reset button; feature lists reordered by user interest; "No middleman" replaces "No server needed"
 - **v2.4.0** *R2-D2* – Settings sync to Git (encrypted, Global or Individual mode with device config import); RSS feed export (`feed.xml`); generated files mode selector (Off/Manual/Auto per file with "Generate now" button); backlog voting awareness in Help tab and README; Debug Log moved to Sync tab
 - **v2.3.0** *Data* – Encrypted settings export (password-protected .enc); plain JSON and encrypted supported; import with password prompt; Sync tab shortened to "Sync"; store screenshots improved; import hints (bookmarks = active profile, settings = all profiles); theme cycle button; full auto-save (no Save buttons)
 - **v2.2.1** – Sync feedback message fix; state regression fix (stale fetch guard, cache-busting); debug log extended with commit hashes
@@ -41,10 +42,21 @@ Open items and next steps for further development. Updated each session.
 4. [x] Debug Log moved to Sync tab
 5. [x] Settings sync to Git (encrypted `settings.enc`)
 6. [x] Tab reorganization (5 tabs, sub-tabs for GitHub and Files)
-7. [x] Store screenshots updated (6 per language: GitHub, Connection, Sync, Files, Export/Import, Popup)
-8. [ ] Test on Chrome, Firefox Desktop, Firefox Android
-9. [ ] Tag v2.4.0, publish release (manifest, CHANGELOG, docs updated)
-10. [ ] Submit to Chrome Web Store and Firefox Add-ons with updated store descriptions
+7. [x] Store screenshots updated (6 per language)
+8. [x] v2.4.0 released
+9. [x] Context menu (Add to Toolbar/Other, Sync Now, Copy Favicon URL, Download Favicon)
+10. [x] 8 new languages (12 total); regional locale auto-detection
+11. [x] Store files split into per-language files with meta files
+12. [x] Screenshots for all 12 languages (144 images)
+13. [x] Translation guide (`docs/TRANSLATING.md`)
+14. [x] Profile switching via context menu (radio submenu, dynamic refresh)
+15. [x] Favicon tools documented as standalone feature
+16. [x] Dynamic keyboard shortcuts (chrome.commands.getAll)
+17. [x] Factory reset button (Files → Settings)
+18. [x] Feature lists reordered by user interest; "No middleman" replaces "No server needed"
+19. [ ] Test on Chrome, Firefox Desktop, Firefox Android
+20. [ ] Tag v2.5.0, publish release
+21. [ ] Submit to Chrome Web Store and Firefox Add-ons with updated store descriptions
 
 ---
 

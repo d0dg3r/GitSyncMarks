@@ -334,6 +334,11 @@
   "options_settingsSyncImportSuccess": {
     "message": "Settings imported successfully"
   },
+  "options_resetTitle": { "message": "Reset Extension" },
+  "options_resetDescription": { "message": "Delete all profiles, tokens, and settings. Your browser bookmarks will not be affected." },
+  "options_resetBtn": { "message": "Reset all data" },
+  "options_resetConfirm": { "message": "Are you sure? This cannot be undone. All profiles and settings will be permanently deleted." },
+  "options_resetSuccess": { "message": "Extension has been reset." },
   "options_notifications": {
     "message": "Sync notifications"
   },
@@ -733,8 +738,11 @@
   "help_openOptions": {
     "message": "Open extension settings"
   },
-  "help_shortcutsNote": {
-    "message": "You can customize shortcuts in the browser's extension settings."
+  "help_customizeShortcuts": {
+    "message": "Customize shortcuts"
+  },
+  "help_shortcutNotSet": {
+    "message": "Not set"
   },
   "help_debugLogTitle": {
     "message": "Debug Log"
@@ -973,5 +981,7 @@
   "contextMenu_notifFaviconCopied": { "message": "Favicon URL copied" },
   "contextMenu_notifNotConfigured": { "message": "Please configure GitSyncMarks first" },
   "contextMenu_notifNoFavicon": { "message": "No favicon available for this page" },
-  "contextMenu_notifError": { "message": "Action failed — please try again" }
+  "contextMenu_notifError": { "message": "Action failed — please try again" },
+  "contextMenu_switchProfile": { "message": "Switch Profile" },
+  "contextMenu_notifProfileSwitched": { "message": "Switched to $1", "placeholders": { "name": { "content": "$1" } } }
 }

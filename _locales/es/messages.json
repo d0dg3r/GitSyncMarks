@@ -332,6 +332,11 @@
   "options_settingsSyncImportSuccess": {
     "message": "Configuración importada correctamente"
   },
+  "options_resetTitle": { "message": "Restablecer extensión" },
+  "options_resetDescription": { "message": "Eliminar todos los perfiles, tokens y ajustes. Los marcadores del navegador no se verán afectados." },
+  "options_resetBtn": { "message": "Restablecer todos los datos" },
+  "options_resetConfirm": { "message": "¿Estás seguro? Esta acción no se puede deshacer. Todos los perfiles y ajustes se eliminarán permanentemente." },
+  "options_resetSuccess": { "message": "La extensión se ha restablecido." },
   "options_notifications": {
     "message": "Notificaciones de sincronización"
   },
@@ -725,8 +730,11 @@
   "help_openOptions": {
     "message": "Abrir configuración de la extensión"
   },
-  "help_shortcutsNote": {
-    "message": "Puedes personalizar los atajos en la configuración de la extensión del navegador."
+  "help_customizeShortcuts": {
+    "message": "Personalizar atajos"
+  },
+  "help_shortcutNotSet": {
+    "message": "No definido"
   },
   "help_whySlowTitle": {
     "message": "¿Por qué la sincronización a veces tarda?"
@@ -962,5 +970,7 @@
   "contextMenu_notifFaviconCopied": { "message": "URL del favicon copiada" },
   "contextMenu_notifNotConfigured": { "message": "Por favor, configura GitSyncMarks primero" },
   "contextMenu_notifNoFavicon": { "message": "No hay favicon disponible para esta página" },
-  "contextMenu_notifError": { "message": "Acción fallida — inténtalo de nuevo" }
+  "contextMenu_notifError": { "message": "Acción fallida — inténtalo de nuevo" },
+  "contextMenu_switchProfile": { "message": "Cambiar perfil" },
+  "contextMenu_notifProfileSwitched": { "message": "Cambiado a $1", "placeholders": { "name": { "content": "$1" } } }
 }

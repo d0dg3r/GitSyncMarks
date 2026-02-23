@@ -5,12 +5,21 @@ All notable changes to GitSyncMarks are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.5.0] - 2026-02-23 (*Cortana*)
 
 ### Added
 
-- **Context menu**: Right-click on any page or link to add it to GitSyncMarks (Toolbar or Other Bookmarks); Sync Now, Copy Favicon URL, and Download Favicon actions; auto-syncs after adding; new permissions: `contextMenus`, `activeTab`, `scripting`, `downloads`
+- **Context menu**: Right-click on any page or link — Add to Toolbar, Add to Other Bookmarks, Sync Now, Switch Profile, Copy Favicon URL, Download Favicon; auto-syncs after adding; new permissions: `contextMenus`, `activeTab`, `scripting`, `downloads`
+- **Profile switching via context menu**: Switch between profiles directly from the right-click menu — active profile shown with radio check; submenu updates dynamically when profiles are added, renamed, or deleted
+- **Favicon tools**: Copy any site's favicon URL to clipboard or download it as PNG — uses the browser's `tab.favIconUrl` with Google favicon service fallback (`s2/favicons`)
 - **8 new languages**: Portuguese (Brazil), Italian, Japanese, Chinese (Simplified), Korean, Russian, Turkish, Polish — extension now supports 12 languages total; auto-detection improved for regional locales (pt_BR, zh_CN)
+- **Dynamic keyboard shortcuts**: Shortcut keys displayed from `chrome.commands.getAll()` instead of hardcoded; "Customize shortcuts" button opens the browser's native shortcut settings
+- **Factory reset**: "Reset all data" button in Files → Settings — clears all profiles, tokens, and settings (browser bookmarks are preserved); two-step confirmation dialog
+
+### Changed
+
+- **Feature lists reordered**: README and store listings now sorted by user interest — leading with unique selling points (No middleman, per-file storage, three-way merge)
+- **"No server needed" renamed to "No middleman"**: More precise wording — the extension communicates directly with the GitHub API, no third-party server or backend involved
 
 ## [2.4.0] - 2026-02-19 (*R2-D2*)
 

@@ -334,6 +334,11 @@
   "options_settingsSyncImportSuccess": {
     "message": "Ustawienia zaimportowane pomyślnie"
   },
+  "options_resetTitle": { "message": "Resetuj rozszerzenie" },
+  "options_resetDescription": { "message": "Usuń wszystkie profile, tokeny i ustawienia. Zakładki przeglądarki nie zostaną zmienione." },
+  "options_resetBtn": { "message": "Resetuj wszystkie dane" },
+  "options_resetConfirm": { "message": "Czy na pewno? Tej operacji nie można cofnąć. Wszystkie profile i ustawienia zostaną trwale usunięte." },
+  "options_resetSuccess": { "message": "Rozszerzenie zostało zresetowane." },
   "options_notifications": {
     "message": "Powiadomienia o synchronizacji"
   },
@@ -733,8 +738,11 @@
   "help_openOptions": {
     "message": "Otwórz ustawienia rozszerzenia"
   },
-  "help_shortcutsNote": {
-    "message": "Skróty można dostosować w ustawieniach rozszerzeń przeglądarki."
+  "help_customizeShortcuts": {
+    "message": "Dostosuj skróty"
+  },
+  "help_shortcutNotSet": {
+    "message": "Nie ustawiono"
   },
   "help_debugLogTitle": {
     "message": "Dziennik debugowania"
@@ -973,5 +981,7 @@
   "contextMenu_notifFaviconCopied": { "message": "URL favikony skopiowany" },
   "contextMenu_notifNotConfigured": { "message": "Najpierw skonfiguruj GitSyncMarks" },
   "contextMenu_notifNoFavicon": { "message": "Brak favikony dla tej strony" },
-  "contextMenu_notifError": { "message": "Akcja nie powiodła się — spróbuj ponownie" }
+  "contextMenu_notifError": { "message": "Akcja nie powiodła się — spróbuj ponownie" },
+  "contextMenu_switchProfile": { "message": "Zmień profil" },
+  "contextMenu_notifProfileSwitched": { "message": "Przełączono na $1", "placeholders": { "name": { "content": "$1" } } }
 }

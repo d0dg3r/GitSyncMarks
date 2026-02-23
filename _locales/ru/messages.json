@@ -334,6 +334,11 @@
   "options_settingsSyncImportSuccess": {
     "message": "Настройки успешно импортированы"
   },
+  "options_resetTitle": { "message": "Сбросить расширение" },
+  "options_resetDescription": { "message": "Удалить все профили, токены и настройки. Закладки браузера останутся без изменений." },
+  "options_resetBtn": { "message": "Сбросить все данные" },
+  "options_resetConfirm": { "message": "Вы уверены? Это действие нельзя отменить. Все профили и настройки будут удалены безвозвратно." },
+  "options_resetSuccess": { "message": "Расширение сброшено." },
   "options_notifications": {
     "message": "Уведомления о синхронизации"
   },
@@ -733,8 +738,11 @@
   "help_openOptions": {
     "message": "Открыть настройки расширения"
   },
-  "help_shortcutsNote": {
-    "message": "Горячие клавиши можно настроить в настройках расширений браузера."
+  "help_customizeShortcuts": {
+    "message": "Настроить горячие клавиши"
+  },
+  "help_shortcutNotSet": {
+    "message": "Не назначено"
   },
   "help_debugLogTitle": {
     "message": "Журнал отладки"
@@ -973,5 +981,7 @@
   "contextMenu_notifFaviconCopied": { "message": "URL фавикона скопирован" },
   "contextMenu_notifNotConfigured": { "message": "Сначала настройте GitSyncMarks" },
   "contextMenu_notifNoFavicon": { "message": "Фавикон для этой страницы недоступен" },
-  "contextMenu_notifError": { "message": "Действие не выполнено — попробуйте ещё раз" }
+  "contextMenu_notifError": { "message": "Действие не выполнено — попробуйте ещё раз" },
+  "contextMenu_switchProfile": { "message": "Сменить профиль" },
+  "contextMenu_notifProfileSwitched": { "message": "Переключено на $1", "placeholders": { "name": { "content": "$1" } } }
 }

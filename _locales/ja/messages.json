@@ -334,6 +334,11 @@
   "options_settingsSyncImportSuccess": {
     "message": "設定のインポートに成功しました"
   },
+  "options_resetTitle": { "message": "拡張機能をリセット" },
+  "options_resetDescription": { "message": "すべてのプロファイル、トークン、設定を削除します。ブラウザのブックマークには影響しません。" },
+  "options_resetBtn": { "message": "すべてのデータをリセット" },
+  "options_resetConfirm": { "message": "本当にリセットしますか？この操作は取り消せません。すべてのプロファイルと設定が完全に削除されます。" },
+  "options_resetSuccess": { "message": "拡張機能がリセットされました。" },
   "options_notifications": {
     "message": "同期通知"
   },
@@ -733,8 +738,11 @@
   "help_openOptions": {
     "message": "拡張機能の設定を開く"
   },
-  "help_shortcutsNote": {
-    "message": "ブラウザの拡張機能設定でショートカットをカスタマイズできます。"
+  "help_customizeShortcuts": {
+    "message": "ショートカットをカスタマイズ"
+  },
+  "help_shortcutNotSet": {
+    "message": "未設定"
   },
   "help_debugLogTitle": {
     "message": "デバッグログ"
@@ -973,5 +981,7 @@
   "contextMenu_notifFaviconCopied": { "message": "ファビコンURLをコピーしました" },
   "contextMenu_notifNotConfigured": { "message": "先にGitSyncMarksを設定してください" },
   "contextMenu_notifNoFavicon": { "message": "このページのファビコンはありません" },
-  "contextMenu_notifError": { "message": "操作に失敗しました — もう一度お試しください" }
+  "contextMenu_notifError": { "message": "操作に失敗しました — もう一度お試しください" },
+  "contextMenu_switchProfile": { "message": "プロファイルを切り替え" },
+  "contextMenu_notifProfileSwitched": { "message": "$1 に切り替えました", "placeholders": { "name": { "content": "$1" } } }
 }

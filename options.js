@@ -196,12 +196,75 @@ document.addEventListener('DOMContentLoaded', async () => {
   applyI18n();
   document.title = `GitSyncMarks – ${getMessage('options_subtitle')}`;
   await loadSettings();
+  loadShortcuts();
 
   // Show version: pre-release display or manifest
   const versionEl = document.getElementById('app-version');
   if (versionEl) {
     const version = DISPLAY_VERSION ?? chrome.runtime.getManifest().version;
     versionEl.textContent = version;
+  }
+});
+
+// ==============================
+// Help Tab: Dynamic Keyboard Shortcuts
+// ==============================
+
+const SHORTCUT_FORMAT = {
+  Period: '.', Comma: ',', Space: 'Space',
+  ArrowUp: '↑', ArrowDown: '↓', ArrowLeft: '←', ArrowRight: '→',
+};
+
+function formatShortcut(raw) {
+  if (!raw) return getMessage('help_shortcutNotSet');
+  return raw.split('+').map(p => SHORTCUT_FORMAT[p] || p).join('+');
+}
+
+function loadShortcuts() {
+  if (!chrome.commands?.getAll) return;
+  chrome.commands.getAll((commands) => {
+    for (const cmd of commands) {
+      if (cmd.name === 'quick-sync') {
+        const el = document.getElementById('shortcut-quick-sync');
+        if (el) el.textContent = formatShortcut(cmd.shortcut);
+      } else if (cmd.name === 'open-options') {
+        const el = document.getElementById('shortcut-open-options');
+        if (el) el.textContent = formatShortcut(cmd.shortcut);
+      }
+    }
+  });
+}
+
+document.getElementById('btn-customize-shortcuts')?.addEventListener('click', () => {
+  const isFirefox = navigator.userAgent.includes('Firefox');
+  const url = isFirefox ? 'about:addons' : 'chrome://extensions/shortcuts';
+  chrome.tabs.create({ url });
+});
+
+// ==============================
+// Files Tab: Factory Reset
+// ==============================
+
+const resetBtn = document.getElementById('btn-reset-extension');
+const resetConfirmDialog = document.getElementById('reset-confirm-dialog');
+const resetConfirmBtn = document.getElementById('btn-reset-confirm');
+const resetCancelBtn = document.getElementById('btn-reset-cancel');
+
+resetBtn?.addEventListener('click', () => {
+  resetConfirmDialog.style.display = 'flex';
+});
+
+resetCancelBtn?.addEventListener('click', () => {
+  resetConfirmDialog.style.display = 'none';
+});
+
+resetConfirmBtn?.addEventListener('click', async () => {
+  try {
+    await chrome.storage.sync.clear();
+    await chrome.storage.local.clear();
+    location.reload();
+  } catch (err) {
+    console.error('[GitSyncMarks] Reset failed:', err);
   }
 });
 

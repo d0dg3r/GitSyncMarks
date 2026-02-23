@@ -375,6 +375,19 @@
             </div>
           </div>
         </section>
+
+        <section class="card danger-zone" id="reset-card">
+          <h2 data-i18n="options_resetTitle">Reset Extension</h2>
+          <p class="card-desc" data-i18n="options_resetDescription">Delete all profiles, tokens, and settings. Your browser bookmarks will not be affected.</p>
+          <button type="button" class="btn btn-danger" id="btn-reset-extension" data-i18n="options_resetBtn">Reset all data</button>
+          <div id="reset-confirm-dialog" class="profile-confirm" style="display: none;">
+            <p data-i18n="options_resetConfirm">Are you sure? This cannot be undone. All profiles and settings will be permanently deleted.</p>
+            <div class="profile-confirm-actions">
+              <button type="button" class="btn btn-danger" id="btn-reset-confirm" data-i18n="options_resetBtn">Reset all data</button>
+              <button type="button" class="btn btn-secondary" id="btn-reset-cancel" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+            </div>
+          </div>
+        </section>
       </div>
 
       <div class="sub-tab-content" id="subtab-files-export-import">
@@ -613,10 +626,10 @@
         </summary>
         <div class="help-details-body">
         <table class="help-table">
-          <tr><td><kbd>Ctrl+Shift+.</kbd></td><td data-i18n="help_quickSync">Quick sync bookmarks</td></tr>
-          <tr><td><kbd>Ctrl+Shift+,</kbd></td><td data-i18n="help_openOptions">Open extension settings</td></tr>
+          <tr><td><kbd id="shortcut-quick-sync">Ctrl+Shift+.</kbd></td><td data-i18n="help_quickSync">Quick sync bookmarks</td></tr>
+          <tr><td><kbd id="shortcut-open-options">Ctrl+Shift+,</kbd></td><td data-i18n="help_openOptions">Open extension settings</td></tr>
         </table>
-        <p class="help-note" data-i18n="help_shortcutsNote">You can customize shortcuts in the browser's extension settings.</p>
+        <button type="button" class="sub-tab-btn" id="btn-customize-shortcuts" data-i18n="help_customizeShortcuts">Customize shortcuts</button>
         </div>
       </details>
 

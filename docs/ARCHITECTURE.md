@@ -27,6 +27,7 @@ flowchart TB
             I18N["i18n.js"]
             Theme["theme.js"]
             Crypto["crypto.js"]
+            CM["context-menu.js"]
             Polyfill["browser-polyfill.js"]
         end
     end
@@ -38,6 +39,7 @@ flowchart TB
 
     Popup -- "sendMessage()" --> BG
     Options -- "sendMessage()" --> BG
+    BG -- "import" --> CM
     BG -- "import" --> SE
     SE -- "import" --> GH
     SE -- "import" --> BS
@@ -60,13 +62,14 @@ Extension metadata. Two manifests for browser-specific differences:
 | Background | `service_worker: "background.js"` | `scripts: ["background.js"]` |
 | Browser-specific | — | `browser_specific_settings.gecko` |
 
-Shared: Manifest V3, permissions (`bookmarks`, `storage`, `alarms`), host permissions (`api.github.com`).
+Shared: Manifest V3, permissions (`bookmarks`, `storage`, `alarms`, `notifications`, `contextMenus`, `activeTab`, `scripting`, `downloads`), host permissions (`api.github.com`).
 
 ### `background.js` — Background Script
 
 The central coordinator:
 
 - **Bookmark event listeners** — `onCreated`, `onRemoved`, `onChanged`, `onMoved` trigger debounced auto-sync
+- **Context menu** — `contextMenus.onClicked` listener (top-level for SW persistence); `setupContextMenus()` called from `onInstalled`
 - **Periodic sync alarm** — `chrome.alarms` for periodic three-way merge sync
 - **Message handler** — Receives `sync`, `push`, `pull`, `generateFilesNow`, `getStatus`, `switchProfile`, `settingsChanged`, `setSettingsSyncPassword`, `clearSettingsSyncPassword`, `listDeviceConfigs`, `importDeviceConfig`, `getDebugLog` from popup/options
 - **Migration** — Checks for and migrates legacy `bookmarks.json` format on startup
@@ -185,6 +188,23 @@ Fetches the authenticated user's repos via GitHub REST API and maintains a "GitH
 |---|---|
 | `fetchRemoteFileMap(api, basePath, baseFiles)` | Fetch bookmark files from GitHub via Git Data API; returns `{ shaMap, fileMap, commitSha }` or `null` for empty repo |
 
+### `lib/context-menu.js` — Context Menu
+
+Right-click menu registered via `chrome.contextMenus` under a parent "GitSyncMarks" item:
+
+| Menu Item | Context | Action |
+|---|---|---|
+| Add to Toolbar | page, link | Creates bookmark in toolbar root via `chrome.bookmarks.create()`; auto-syncs via existing `onCreated` listener |
+| Add to Other Bookmarks | page, link | Creates bookmark in other root; auto-syncs |
+| Sync Now | page, link | Calls `sync()` from sync-engine.js directly |
+| Copy Favicon URL | page | Copies `tab.favIconUrl` to clipboard via `chrome.scripting.executeScript()` |
+| Download Favicon | page | Downloads favicon via `chrome.downloads.download()` |
+| Switch Profile | page, link | Submenu with radio items for each profile; active profile checked; calls `switchProfile(targetId)` and refreshes menu |
+
+`setupContextMenus()` is called from `onInstalled`; `handleContextMenuClick()` is wired to a top-level `contextMenus.onClicked` listener for MV3 service worker persistence. `refreshProfileMenuItems()` rebuilds the profile submenu dynamically — called on install, startup, and whenever profiles or active profile change (via `chrome.storage.onChanged` listener in background.js).
+
+Favicon source logic: `getFaviconUrl(tab)` returns `tab.favIconUrl` if available, otherwise falls back to Google's favicon service (`https://www.google.com/s2/favicons?domain={domain}&sz=64`).
+
 ### `lib/browser-polyfill.js` — Browser Detection
 
 Minimal shim: `isFirefox`, `isChrome`, `getBrowserName()`.
@@ -208,15 +228,15 @@ GitSyncMarks/
 │   ├── onboarding.js            # checkPathSetup, initializeRemoteFolder
 │   ├── remote-fetch.js           # fetchRemoteFileMap
 │   ├── crypto.js                 # Token encryption (AES-256-GCM)
+│   ├── context-menu.js            # Right-click context menu (Add, Sync, Favicon)
 │   ├── debug-log.js              # Debug log for sync diagnostics
 │   ├── i18n.js                   # Internationalization
 │   ├── theme.js                  # Light/dark/auto theme (cycle button)
 │   └── browser-polyfill.js      # Browser detection
-├── _locales/
+├── _locales/                     # 12 languages (en, de, fr, es, pt_BR, it, ja, zh_CN, ko, ru, tr, pl)
 │   ├── en/messages.json
 │   ├── de/messages.json
-│   ├── fr/messages.json
-│   └── es/messages.json
+│   └── .../messages.json
 ├── icons/
 ├── scripts/
 │   ├── build.sh                  # Build Chrome + Firefox packages
@@ -239,7 +259,7 @@ GitSyncMarks/
 |---|---|
 | Extension Framework | Manifest V3 (Chrome + Firefox) |
 | Background | Service Worker (Chrome) / Background Script (Firefox) |
-| Browser APIs | `chrome.bookmarks`, `chrome.storage`, `chrome.alarms` |
+| Browser APIs | `chrome.bookmarks`, `chrome.storage`, `chrome.alarms`, `chrome.contextMenus`, `chrome.scripting`, `chrome.downloads` |
 | Remote Storage | GitHub Git Data API (atomic multi-file commits) |
 | Authentication | Personal Access Token (PAT) with `repo` scope |
 | Sync Algorithm | Three-way merge (base vs local vs remote, per-file diff) |

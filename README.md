@@ -12,7 +12,7 @@
 
 <p align="center">
   A browser extension that bidirectionally syncs your bookmarks with a GitHub repository.<br>
-  Supports Chrome and Firefox. No server needed — syncs directly via the GitHub API.
+  Supports Chrome and Firefox. No middleman — syncs directly via the GitHub API.
 </p>
 
 <p align="center">
@@ -40,32 +40,33 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 
 ## Features
 
+- **No middleman**: Communicates directly with the GitHub API — no third-party server, no backend, your data stays between your browser and your GitHub repo
 - **Per-file storage**: Each bookmark is stored as an individual JSON file in your Git repo — human-readable and diff-friendly
 - **Three-way merge**: Automatic conflict-free sync when changes happen on both sides simultaneously
 - **Cross-browser**: Works with Chrome, Chromium, Brave, Edge, and Firefox
 - **Auto-sync**: Automatically syncs on every bookmark change (configurable debounce)
 - **Multiple profiles**: Up to 10 profiles (work, personal, etc.); each has its own GitHub repo config and bookmark set; Add, Rename, Delete; switching replaces local bookmarks with the target profile's data
-- **Onboarding**: Test Connection detects whether the repo folder is empty or has bookmarks — create base structure or pull existing data with one click
+- **Context menu**: Right-click on any page or link — Add to Toolbar, Add to Other Bookmarks, Sync Now, Switch Profile, Copy Favicon URL, Download Favicon; bookmark is auto-synced after adding
+- **Favicon tools**: Copy any site's favicon URL to clipboard or download it as PNG — accessible from the context menu; uses the browser's favicon with Google favicon service fallback
+- **Automation**: Add bookmarks via Git, CLI, or GitHub Actions — the extension picks them up automatically (Files → Git Add)
+- **GitHub Repos folder**: Optional folder with bookmarks to all your GitHub repositories (public and private); configurable position (toolbar/other); manual refresh
 - **Sync profiles**: Presets — Real-time (1 min), Frequent (5 min), Normal (15 min), Power save (60 min); Custom for manual interval and debounce
 - **Sync on startup / focus**: Optional sync when the browser starts or gains focus (with cooldown to avoid duplicates)
-- **Notifications**: Configurable sync notifications — All (success + failure), Errors only, or Off
-- **Theme**: Light, dark, or auto — single cycle button (A → Dark → Light → A) in options and popup
 - **Periodic sync**: Checks for remote changes at configurable intervals (1–120 minutes)
 - **Manual sync**: Push, Pull, and full Sync via popup buttons
 - **Conflict detection**: Notifies you when automatic merge is not possible
-- **Context menu**: Right-click on any page or link — Add to Toolbar, Add to Other Bookmarks, Sync Now, Copy Favicon URL, Download Favicon; bookmark is auto-synced after adding
-- **Automation**: Add bookmarks via Git, CLI, or GitHub Actions — the extension picks them up automatically (Files → Git Add)
-- **GitHub Repos folder**: Optional folder with bookmarks to all your GitHub repositories (public and private); configurable position (toolbar/other); manual refresh
-- **Auto-save**: All settings save automatically when changed — no Save buttons needed
-- **Import/Export**: Export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc); import bookmarks or settings with automatic format detection
 - **Generated files**: README.md (Markdown overview), bookmarks.html (Netscape import), feed.xml (RSS 2.0), dashy-conf.yml (Dashy dashboard) — each configurable as Off, Manual, or Auto
 - **Settings sync to Git**: Encrypted backup of extension settings in the repo — Global (shared) or Individual (per device) mode; import settings from other devices; same password on every device, auto-synced
-- **Options UI**: 5 tabs (GitHub, Sync, Files, Help, About) with sub-tabs for GitHub and Files — clean, organized settings
+- **Import/Export**: Export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc); import bookmarks or settings with automatic format detection
+- **Onboarding**: Test Connection detects whether the repo folder is empty or has bookmarks — create base structure or pull existing data with one click
 - **Multilanguage**: 12 languages — English, German, French, Spanish, Portuguese (Brazil), Italian, Japanese, Chinese (Simplified), Korean, Russian, Turkish, Polish; manual language selection or auto-detect from browser
 - **Keyboard shortcuts**: Quick sync (`Ctrl+Shift+.`), Open settings (`Ctrl+Shift+,`) — customizable in browser extension settings
+- **Theme**: Light, dark, or auto — single cycle button (A → Dark → Light → A) in options and popup
+- **Options UI**: 5 tabs (GitHub, Sync, Files, Help, About) with sub-tabs for GitHub and Files — clean, organized settings
+- **Notifications**: Configurable sync notifications — All (success + failure), Errors only, or Off
+- **Auto-save**: All settings save automatically when changed — no Save buttons needed
 - **Debug Log**: Options → Sync — enable to record sync diagnostics (diffs, merge decisions, commit hashes); export and share for troubleshooting
 - **Vote on backlog**: Community poll in Help tab — vote on which features to prioritize next
-- **No server needed**: Communicates directly with the GitHub API using your Personal Access Token
 
 ## Installation
 

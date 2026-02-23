@@ -334,6 +334,11 @@
   "options_settingsSyncImportSuccess": {
     "message": "설정을 성공적으로 가져왔습니다"
   },
+  "options_resetTitle": { "message": "확장 프로그램 초기화" },
+  "options_resetDescription": { "message": "모든 프로필, 토큰 및 설정을 삭제합니다. 브라우저 북마크에는 영향을 주지 않습니다." },
+  "options_resetBtn": { "message": "모든 데이터 초기화" },
+  "options_resetConfirm": { "message": "정말 초기화하시겠습니까? 이 작업은 되돌릴 수 없습니다. 모든 프로필과 설정이 영구 삭제됩니다." },
+  "options_resetSuccess": { "message": "확장 프로그램이 초기화되었습니다." },
   "options_notifications": {
     "message": "동기화 알림"
   },
@@ -733,8 +738,11 @@
   "help_openOptions": {
     "message": "확장 프로그램 설정 열기"
   },
-  "help_shortcutsNote": {
-    "message": "브라우저의 확장 프로그램 설정에서 단축키를 사용자 지정할 수 있습니다."
+  "help_customizeShortcuts": {
+    "message": "단축키 사용자 지정"
+  },
+  "help_shortcutNotSet": {
+    "message": "설정 안 됨"
   },
   "help_debugLogTitle": {
     "message": "디버그 로그"
@@ -973,5 +981,7 @@
   "contextMenu_notifFaviconCopied": { "message": "파비콘 URL이 복사되었습니다" },
   "contextMenu_notifNotConfigured": { "message": "먼저 GitSyncMarks를 설정해 주세요" },
   "contextMenu_notifNoFavicon": { "message": "이 페이지에 사용 가능한 파비콘이 없습니다" },
-  "contextMenu_notifError": { "message": "작업 실패 — 다시 시도해 주세요" }
+  "contextMenu_notifError": { "message": "작업 실패 — 다시 시도해 주세요" },
+  "contextMenu_switchProfile": { "message": "프로필 전환" },
+  "contextMenu_notifProfileSwitched": { "message": "$1(으)로 전환됨", "placeholders": { "name": { "content": "$1" } } }
 }
