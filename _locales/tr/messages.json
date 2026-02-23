@@ -963,5 +963,15 @@
   },
   "help_filesTitle": {
     "message": "Dosyalar"
-  }
+  },
+  "contextMenu_addToToolbar": { "message": "Yer İşareti Çubuğuna Ekle" },
+  "contextMenu_addToOther": { "message": "Diğer Yer İşaretlerine Ekle" },
+  "contextMenu_syncNow": { "message": "Şimdi Senkronize Et" },
+  "contextMenu_copyFaviconUrl": { "message": "Favicon URL'sini Kopyala" },
+  "contextMenu_downloadFavicon": { "message": "Favicon İndir" },
+  "contextMenu_notifAdded": { "message": "Yer işareti $1 konumuna eklendi" },
+  "contextMenu_notifFaviconCopied": { "message": "Favicon URL'si kopyalandı" },
+  "contextMenu_notifNotConfigured": { "message": "Lütfen önce GitSyncMarks'ı yapılandırın" },
+  "contextMenu_notifNoFavicon": { "message": "Bu sayfa için favicon bulunamadı" },
+  "contextMenu_notifError": { "message": "İşlem başarısız — lütfen tekrar deneyin" }
 }

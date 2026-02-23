@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Context menu**: Right-click on any page or link to add it to GitSyncMarks (Toolbar or Other Bookmarks); Sync Now, Copy Favicon URL, and Download Favicon actions; auto-syncs after adding; new permissions: `contextMenus`, `activeTab`, `scripting`, `downloads`
 - **8 new languages**: Portuguese (Brazil), Italian, Japanese, Chinese (Simplified), Korean, Russian, Turkish, Polish — extension now supports 12 languages total; auto-detection improved for regional locales (pt_BR, zh_CN)
 
 ## [2.4.0] - 2026-02-19 (*R2-D2*)

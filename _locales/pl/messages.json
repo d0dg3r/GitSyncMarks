@@ -963,5 +963,15 @@
   },
   "help_filesTitle": {
     "message": "Pliki"
-  }
+  },
+  "contextMenu_addToToolbar": { "message": "Dodaj do paska zakładek" },
+  "contextMenu_addToOther": { "message": "Dodaj do innych zakładek" },
+  "contextMenu_syncNow": { "message": "Synchronizuj teraz" },
+  "contextMenu_copyFaviconUrl": { "message": "Kopiuj URL favikony" },
+  "contextMenu_downloadFavicon": { "message": "Pobierz favikonę" },
+  "contextMenu_notifAdded": { "message": "Zakładka dodana do $1" },
+  "contextMenu_notifFaviconCopied": { "message": "URL favikony skopiowany" },
+  "contextMenu_notifNotConfigured": { "message": "Najpierw skonfiguruj GitSyncMarks" },
+  "contextMenu_notifNoFavicon": { "message": "Brak favikony dla tej strony" },
+  "contextMenu_notifError": { "message": "Akcja nie powiodła się — spróbuj ponownie" }
 }

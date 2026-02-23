@@ -963,5 +963,15 @@
   },
   "help_filesTitle": {
     "message": "Files"
-  }
+  },
+  "contextMenu_addToToolbar": { "message": "Add to Toolbar" },
+  "contextMenu_addToOther": { "message": "Add to Other Bookmarks" },
+  "contextMenu_syncNow": { "message": "Sync Now" },
+  "contextMenu_copyFaviconUrl": { "message": "Copy Favicon URL" },
+  "contextMenu_downloadFavicon": { "message": "Download Favicon" },
+  "contextMenu_notifAdded": { "message": "Bookmark added to $1" },
+  "contextMenu_notifFaviconCopied": { "message": "Favicon URL copied" },
+  "contextMenu_notifNotConfigured": { "message": "Please configure GitSyncMarks first" },
+  "contextMenu_notifNoFavicon": { "message": "No favicon available for this page" },
+  "contextMenu_notifError": { "message": "Action failed — please try again" }
 }

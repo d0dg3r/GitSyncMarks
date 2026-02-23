@@ -963,5 +963,15 @@
   },
   "help_filesTitle": {
     "message": "Dateien"
-  }
+  },
+  "contextMenu_addToToolbar": { "message": "Zur Lesezeichenleiste hinzufügen" },
+  "contextMenu_addToOther": { "message": "Zu Andere Lesezeichen hinzufügen" },
+  "contextMenu_syncNow": { "message": "Jetzt synchronisieren" },
+  "contextMenu_copyFaviconUrl": { "message": "Favicon-URL kopieren" },
+  "contextMenu_downloadFavicon": { "message": "Favicon herunterladen" },
+  "contextMenu_notifAdded": { "message": "Lesezeichen hinzugefügt zu $1" },
+  "contextMenu_notifFaviconCopied": { "message": "Favicon-URL kopiert" },
+  "contextMenu_notifNotConfigured": { "message": "Bitte GitSyncMarks zuerst konfigurieren" },
+  "contextMenu_notifNoFavicon": { "message": "Kein Favicon für diese Seite verfügbar" },
+  "contextMenu_notifError": { "message": "Aktion fehlgeschlagen — bitte erneut versuchen" }
 }

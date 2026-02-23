@@ -53,6 +53,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 - **Periodic sync**: Checks for remote changes at configurable intervals (1–120 minutes)
 - **Manual sync**: Push, Pull, and full Sync via popup buttons
 - **Conflict detection**: Notifies you when automatic merge is not possible
+- **Context menu**: Right-click on any page or link — Add to Toolbar, Add to Other Bookmarks, Sync Now, Copy Favicon URL, Download Favicon; bookmark is auto-synced after adding
 - **Automation**: Add bookmarks via Git, CLI, or GitHub Actions — the extension picks them up automatically (Files → Git Add)
 - **GitHub Repos folder**: Optional folder with bookmarks to all your GitHub repositories (public and private); configurable position (toolbar/other); manual refresh
 - **Auto-save**: All settings save automatically when changed — no Save buttons needed

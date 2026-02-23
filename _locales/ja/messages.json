@@ -963,5 +963,15 @@
   },
   "help_filesTitle": {
     "message": "ファイル"
-  }
+  },
+  "contextMenu_addToToolbar": { "message": "ツールバーに追加" },
+  "contextMenu_addToOther": { "message": "その他のブックマークに追加" },
+  "contextMenu_syncNow": { "message": "今すぐ同期" },
+  "contextMenu_copyFaviconUrl": { "message": "ファビコンURLをコピー" },
+  "contextMenu_downloadFavicon": { "message": "ファビコンをダウンロード" },
+  "contextMenu_notifAdded": { "message": "ブックマークを $1 に追加しました" },
+  "contextMenu_notifFaviconCopied": { "message": "ファビコンURLをコピーしました" },
+  "contextMenu_notifNotConfigured": { "message": "先にGitSyncMarksを設定してください" },
+  "contextMenu_notifNoFavicon": { "message": "このページのファビコンはありません" },
+  "contextMenu_notifError": { "message": "操作に失敗しました — もう一度お試しください" }
 }

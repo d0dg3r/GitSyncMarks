@@ -963,5 +963,15 @@
   },
   "help_filesTitle": {
     "message": "文件"
-  }
+  },
+  "contextMenu_addToToolbar": { "message": "添加到书签栏" },
+  "contextMenu_addToOther": { "message": "添加到其他书签" },
+  "contextMenu_syncNow": { "message": "立即同步" },
+  "contextMenu_copyFaviconUrl": { "message": "复制网站图标 URL" },
+  "contextMenu_downloadFavicon": { "message": "下载网站图标" },
+  "contextMenu_notifAdded": { "message": "书签已添加到 $1" },
+  "contextMenu_notifFaviconCopied": { "message": "网站图标 URL 已复制" },
+  "contextMenu_notifNotConfigured": { "message": "请先配置 GitSyncMarks" },
+  "contextMenu_notifNoFavicon": { "message": "此页面没有可用的网站图标" },
+  "contextMenu_notifError": { "message": "操作失败 - 请重试" }
 }

@@ -25,6 +25,7 @@ import { log as debugLog, getLogAsString } from './lib/debug-log.js';
 import { GitHubAPI } from './lib/github-api.js';
 import { migrateTokenIfNeeded } from './lib/crypto.js';
 import { migrateToProfiles, getActiveProfileId, getActiveProfile, getProfiles, switchProfile, getSyncState } from './lib/profile-manager.js';
+import { setupContextMenus, handleContextMenuClick } from './lib/context-menu.js';
 
 const ALARM_NAME = 'bookmarkSyncPull';
 const NOTIFICATION_ID = 'gitsyncmarks-sync';
@@ -46,6 +47,10 @@ async function showNotificationIfEnabled(result) {
     console.warn('[GitSyncMarks] Failed to show notification:', err);
   }
 }
+
+// ---- Context menu click handler (top-level for SW persistence) ----
+
+chrome.contextMenus.onClicked.addListener(handleContextMenuClick);
 
 // ---- Bookmark event listeners ----
 
@@ -308,6 +313,7 @@ chrome.runtime.onInstalled.addListener(async (details) => {
   await migrateTokenIfNeeded();
   await migrateToProfiles();
   await initI18n();
+  setupContextMenus();
   await setupAlarm();
   await checkAndMigrate();
 });

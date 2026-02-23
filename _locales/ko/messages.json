@@ -963,5 +963,15 @@
   },
   "help_filesTitle": {
     "message": "파일"
-  }
+  },
+  "contextMenu_addToToolbar": { "message": "북마크 바에 추가" },
+  "contextMenu_addToOther": { "message": "기타 북마크에 추가" },
+  "contextMenu_syncNow": { "message": "지금 동기화" },
+  "contextMenu_copyFaviconUrl": { "message": "파비콘 URL 복사" },
+  "contextMenu_downloadFavicon": { "message": "파비콘 다운로드" },
+  "contextMenu_notifAdded": { "message": "북마크가 $1에 추가되었습니다" },
+  "contextMenu_notifFaviconCopied": { "message": "파비콘 URL이 복사되었습니다" },
+  "contextMenu_notifNotConfigured": { "message": "먼저 GitSyncMarks를 설정해 주세요" },
+  "contextMenu_notifNoFavicon": { "message": "이 페이지에 사용 가능한 파비콘이 없습니다" },
+  "contextMenu_notifError": { "message": "작업 실패 — 다시 시도해 주세요" }
 }

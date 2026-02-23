@@ -952,5 +952,15 @@
   },
   "help_autoSaveDesc": {
     "message": "Todos los ajustes se guardan automáticamente al cambiar — no hay botones Guardar. Los cambios surten efecto inmediatamente."
-  }
+  },
+  "contextMenu_addToToolbar": { "message": "Añadir a la barra de marcadores" },
+  "contextMenu_addToOther": { "message": "Añadir a otros marcadores" },
+  "contextMenu_syncNow": { "message": "Sincronizar ahora" },
+  "contextMenu_copyFaviconUrl": { "message": "Copiar URL del favicon" },
+  "contextMenu_downloadFavicon": { "message": "Descargar favicon" },
+  "contextMenu_notifAdded": { "message": "Marcador añadido a $1" },
+  "contextMenu_notifFaviconCopied": { "message": "URL del favicon copiada" },
+  "contextMenu_notifNotConfigured": { "message": "Por favor, configura GitSyncMarks primero" },
+  "contextMenu_notifNoFavicon": { "message": "No hay favicon disponible para esta página" },
+  "contextMenu_notifError": { "message": "Acción fallida — inténtalo de nuevo" }
 }

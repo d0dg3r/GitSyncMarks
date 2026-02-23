@@ -963,5 +963,15 @@
   },
   "help_filesTitle": {
     "message": "File"
-  }
+  },
+  "contextMenu_addToToolbar": { "message": "Aggiungi alla barra dei preferiti" },
+  "contextMenu_addToOther": { "message": "Aggiungi ad altri preferiti" },
+  "contextMenu_syncNow": { "message": "Sincronizza ora" },
+  "contextMenu_copyFaviconUrl": { "message": "Copia URL favicon" },
+  "contextMenu_downloadFavicon": { "message": "Scarica favicon" },
+  "contextMenu_notifAdded": { "message": "Preferito aggiunto a $1" },
+  "contextMenu_notifFaviconCopied": { "message": "URL del favicon copiata" },
+  "contextMenu_notifNotConfigured": { "message": "Configura prima GitSyncMarks" },
+  "contextMenu_notifNoFavicon": { "message": "Nessun favicon disponibile per questa pagina" },
+  "contextMenu_notifError": { "message": "Azione fallita — riprova" }
 }

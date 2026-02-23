@@ -5,7 +5,7 @@
  * Uses Playwright to launch Chromium with the extension loaded.
  *
  * Each screenshot shows light and dark mode side by side (1280x800 total).
- * Output: store-assets/{en,de,fr,es}/chrome-*.png and firefox-*.png (Firefox copied from Chrome)
+ * Output: store-assets/{en,de,fr,es,pt_BR,it,ja,zh_CN,ko,ru,tr,pl}/chrome-*.png and firefox-*.png (Firefox copied from Chrome)
  *
  * Usage: node scripts/generate-screenshots.js
  */
@@ -21,7 +21,11 @@ const EXTENSION_PATH = path.join(ROOT, 'build', 'chrome');
 const STORE_ASSETS = path.join(ROOT, 'store-assets');
 const VIEWPORT = { width: 1280, height: 800 };
 
-const LANGUAGES = [{ code: 'en' }, { code: 'de' }, { code: 'fr' }, { code: 'es' }];
+const LANGUAGES = [
+  { code: 'en' }, { code: 'de' }, { code: 'fr' }, { code: 'es' },
+  { code: 'pt_BR' }, { code: 'it' }, { code: 'ja' }, { code: 'zh_CN' },
+  { code: 'ko' }, { code: 'ru' }, { code: 'tr' }, { code: 'pl' },
+];
 
 const OPTIONS_TABS = [
   { id: 'github', subtab: null, file: '1-github' },
@@ -208,7 +212,7 @@ async function main() {
   }
 
   await context.close();
-  console.log('\nDone. Screenshots in store-assets/en/, de/, fr/, es/');
+  console.log('\nDone. Screenshots in store-assets/{en,de,fr,es,pt_BR,it,ja,zh_CN,ko,ru,tr,pl}/');
 }
 
 main().catch((err) => {

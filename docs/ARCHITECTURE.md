@@ -227,7 +227,7 @@ GitSyncMarks/
 │   ├── release.yml               # Build ZIPs, create release on tag
 │   └── add-bookmark.yml          # Automation: add bookmark via dispatch
 ├── docs/                         # Architecture documentation
-├── store-assets/                 # Chrome Web Store assets
+├── store-assets/                 # Store listings & screenshots (12 languages)
 ├── LICENSE
 ├── PRIVACY.md
 └── README.md

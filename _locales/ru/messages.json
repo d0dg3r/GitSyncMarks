@@ -963,5 +963,15 @@
   },
   "help_filesTitle": {
     "message": "Файлы"
-  }
+  },
+  "contextMenu_addToToolbar": { "message": "Добавить на панель закладок" },
+  "contextMenu_addToOther": { "message": "Добавить в другие закладки" },
+  "contextMenu_syncNow": { "message": "Синхронизировать сейчас" },
+  "contextMenu_copyFaviconUrl": { "message": "Копировать URL фавикона" },
+  "contextMenu_downloadFavicon": { "message": "Скачать фавикон" },
+  "contextMenu_notifAdded": { "message": "Закладка добавлена в $1" },
+  "contextMenu_notifFaviconCopied": { "message": "URL фавикона скопирован" },
+  "contextMenu_notifNotConfigured": { "message": "Сначала настройте GitSyncMarks" },
+  "contextMenu_notifNoFavicon": { "message": "Фавикон для этой страницы недоступен" },
+  "contextMenu_notifError": { "message": "Действие не выполнено — попробуйте ещё раз" }
 }

@@ -952,5 +952,15 @@
   },
   "help_autoSaveDesc": {
     "message": "Tous les paramètres se sauvegardent automatiquement à la modification — il n'y a pas de bouton Enregistrer. Les changements prennent effet immédiatement."
-  }
+  },
+  "contextMenu_addToToolbar": { "message": "Ajouter à la barre de favoris" },
+  "contextMenu_addToOther": { "message": "Ajouter aux autres favoris" },
+  "contextMenu_syncNow": { "message": "Synchroniser maintenant" },
+  "contextMenu_copyFaviconUrl": { "message": "Copier l'URL du favicon" },
+  "contextMenu_downloadFavicon": { "message": "Télécharger le favicon" },
+  "contextMenu_notifAdded": { "message": "Favori ajouté à $1" },
+  "contextMenu_notifFaviconCopied": { "message": "URL du favicon copiée" },
+  "contextMenu_notifNotConfigured": { "message": "Veuillez d'abord configurer GitSyncMarks" },
+  "contextMenu_notifNoFavicon": { "message": "Aucun favicon disponible pour cette page" },
+  "contextMenu_notifError": { "message": "Échec de l'action — veuillez réessayer" }
 }
