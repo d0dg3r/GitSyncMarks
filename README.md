@@ -324,6 +324,7 @@ In the **Help** tab of the options page:
 - **[CHANGELOG.md](CHANGELOG.md)** — Version history
 - **[ROADMAP.md](ROADMAP.md)** — Planned features
 - **[Discussions](https://github.com/d0dg3r/GitSyncMarks/discussions)** · **[Issues](https://github.com/d0dg3r/GitSyncMarks/issues)** — Feedback, questions, bug reports
+- **[Help translate](docs/TRANSLATING.md)** — Improve translations or add new languages (no programming required)
 
 ## Requirements
 
