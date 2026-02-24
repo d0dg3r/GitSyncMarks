@@ -67,7 +67,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 ### Files & Export
 
 - **Generated files**: README.md (Markdown overview), bookmarks.html (Netscape import), feed.xml (RSS 2.0), dashy-conf.yml (Dashy dashboard) — each configurable as Off, Manual, or Auto
-- **Settings sync to Git**: Encrypted backup of extension settings in the repo — Global (shared) or Individual (per device) mode; import settings from other devices; same password on every device, auto-synced
+- **Settings sync to Git**: Encrypted backup of extension settings in the repo — user-first workflow with named repo settings, explicit actions (`Import & Apply`, `Sync current to selected`, `Create new setting`), and password prompts only when an action is executed. Global write-back to `settings.enc` stays read-only by default unless explicitly enabled per client
 - **Import/Export**: Export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc); import bookmarks or settings with automatic format detection
 
 ### UX & Extras
@@ -187,7 +187,7 @@ Status line shows last sync time and next scheduled sync. When a conflict occurs
 In the **Files** tab (four sub-tabs):
 
 - **Generated**: Each file — **README.md** (Markdown overview), **bookmarks.html** (Netscape format for browser import), **feed.xml** (RSS 2.0 feed), and **dashy-conf.yml** (Dashy dashboard config) — can be set to **Off**, **Manual**, or **Auto**. Use "Generate now" to manually trigger generation and push
-- **Settings**: Sync extension settings to Git (encrypted). Choose **Global** (shared `settings.enc`) or **Individual** (per-device `settings-{id}.enc`). Set one password per device; import configs from other devices
+- **Settings**: Sync extension settings to Git (encrypted). Settings are listed from the repository (named entries from `settings-index.json` + legacy `settings*.enc`). Select a setting, then run explicit actions: **Import & Apply**, **Sync current to selected**, or **Create new setting**. Password is requested only on these actions. Global imports ask for confirmation before applying, and global write-back is opt-in
 - **Export / Import**: Export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc). Import bookmarks or settings — encrypted files are decrypted with your password
 - **Git Add**: Add bookmarks without opening the browser — create a JSON file in the repo or use the GitHub Actions workflow (`add-bookmark.yml`)
 
@@ -203,6 +203,7 @@ bookmarks/
   feed.xml                        # RSS 2.0 feed — subscribe in any reader or use for automations
   dashy-conf.yml                  # Dashy dashboard config — sections with bookmark links
   settings.enc                    # Encrypted settings backup (if settings sync enabled)
+  settings-index.json             # Named settings registry metadata
   toolbar/                        # Bookmarks Bar
     _order.json                   # Defines order of items and subfolders in this folder
     github_a1b2.json              # One file per bookmark

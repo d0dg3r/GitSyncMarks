@@ -19,6 +19,10 @@ import {
   migrateFromLegacyFormat,
   listRemoteDeviceConfigs,
   importDeviceConfig,
+  listSettingsProfilesFromRepo,
+  importSettingsProfile,
+  syncCurrentSettingsToProfile,
+  createSettingsProfile,
   STORAGE_KEYS,
 } from './lib/sync-engine.js';
 import { log as debugLog, getLogAsString } from './lib/debug-log.js';
@@ -273,8 +277,39 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       .catch(err => sendResponse({ success: false, message: err.message }));
     return true;
   }
+  if (message.action === 'listSettingsProfiles') {
+    listSettingsProfilesFromRepo()
+      .then(configs => sendResponse({ success: true, configs }))
+      .catch(err => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
   if (message.action === 'importDeviceConfig') {
-    importDeviceConfig(message.filename)
+    importDeviceConfig(message.filename, message.password || '')
+      .then(result => sendResponse(result))
+      .catch(err => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'importSettingsProfile') {
+    importSettingsProfile(message.filename, message.password || '')
+      .then(result => sendResponse(result))
+      .catch(err => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'syncSettingsToProfile') {
+    syncCurrentSettingsToProfile({
+      filename: message.filename,
+      password: message.password || '',
+      name: message.name || '',
+    })
+      .then(result => sendResponse(result))
+      .catch(err => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'createSettingsProfile') {
+    createSettingsProfile({
+      name: message.name || '',
+      password: message.password || '',
+    })
       .then(result => sendResponse(result))
       .catch(err => sendResponse({ success: false, message: err.message }));
     return true;

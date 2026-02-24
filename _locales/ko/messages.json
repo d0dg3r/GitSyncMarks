@@ -324,6 +324,12 @@
   "options_settingsSyncModeIndividual": {
     "message": "개별 — 이 기기만"
   },
+  "options_settingsSyncGlobalWriteEnabled": {
+    "message": "Allow writing to global settings (settings.enc)"
+  },
+  "options_settingsSyncGlobalWriteHint": {
+    "message": "Recommended OFF. If enabled, this client can overwrite global settings for all devices."
+  },
   "options_settingsSyncImportTitle": {
     "message": "다른 기기에서 가져오기"
   },
@@ -339,6 +345,29 @@
   "options_settingsSyncImportSuccess": {
     "message": "설정을 성공적으로 가져왔습니다"
   },
+  "options_settingsSyncImportGlobalConfirm": {
+    "message": "Apply the global settings file now? This will overwrite current local settings on this device."
+  },
+  "options_settingsSyncImportGlobalConfirmBtn": {
+    "message": "Apply global config"
+  },
+  "options_settingsSyncImportReloadConfirm": {
+    "message": "Settings were imported. Reload now to apply them everywhere?"
+  },
+  "options_settingsSyncImportReloadConfirmBtn": {
+    "message": "Reload now"
+  },
+  "options_settingsRegistryTitle": { "message": "Available settings in repository" },
+  "options_settingsRegistryRefreshBtn": { "message": "Refresh" },
+  "options_settingsRegistryImportApplyBtn": { "message": "Import & Apply" },
+  "options_settingsRegistrySyncSelectedBtn": { "message": "Sync current to selected" },
+  "options_settingsRegistryCreateBtn": { "message": "Create new setting" },
+  "options_settingsRegistryNewNamePlaceholder": { "message": "New setting name" },
+  "options_settingsRegistryActionPasswordPrompt": { "message": "Enter password for this settings action" },
+  "options_settingsRegistryImportSuccess": { "message": "Settings imported and applied" },
+  "options_settingsRegistrySyncSuccess": { "message": "Current settings synced to selected profile" },
+  "options_settingsRegistryCreateSuccess": { "message": "New settings profile created" },
+  "options_settingsRegistryCreateNameRequired": { "message": "Please enter a name for the new setting" },
   "options_resetTitle": { "message": "확장 프로그램 초기화" },
   "options_resetDescription": { "message": "모든 프로필, 토큰 및 설정을 삭제합니다. 브라우저 북마크에는 영향을 주지 않습니다." },
   "options_resetBtn": { "message": "모든 데이터 초기화" },

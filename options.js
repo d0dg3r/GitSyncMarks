@@ -52,6 +52,7 @@ const STORAGE_KEYS = {
   GENERATE_DASHY_YML: 'generateDashyYml',
   SYNC_SETTINGS_TO_GIT: 'syncSettingsToGit',
   SETTINGS_SYNC_MODE: 'settingsSyncMode',
+  SETTINGS_SYNC_GLOBAL_WRITE_ENABLED: 'settingsSyncGlobalWriteEnabled',
 };
 
 function normalizeGenMode(val) {
@@ -116,6 +117,8 @@ const generateFilesBtn = document.getElementById('generate-files-btn');
 const syncSettingsToGitInput = document.getElementById('sync-settings-to-git');
 const settingsSyncOptionsGroup = document.getElementById('settings-sync-options-group');
 const settingsSyncModeSelect = document.getElementById('settings-sync-mode');
+const settingsSyncGlobalWriteGroup = document.getElementById('settings-sync-global-write-group');
+const settingsSyncGlobalWriteEnabledInput = document.getElementById('settings-sync-global-write-enabled');
 const settingsSyncPasswordInput = document.getElementById('settings-sync-password');
 const settingsSyncSavePwBtn = document.getElementById('settings-sync-save-pw-btn');
 const settingsSyncResult = document.getElementById('settings-sync-result');
@@ -123,6 +126,9 @@ const settingsSyncImportGroup = document.getElementById('settings-sync-import-gr
 const settingsSyncLoadBtn = document.getElementById('settings-sync-load-btn');
 const settingsSyncDeviceList = document.getElementById('settings-sync-device-list');
 const settingsSyncImportBtn = document.getElementById('settings-sync-import-btn');
+const settingsSyncPushSelectedBtn = document.getElementById('settings-sync-push-selected-btn');
+const settingsSyncNewNameInput = document.getElementById('settings-sync-new-name');
+const settingsSyncCreateBtn = document.getElementById('settings-sync-create-btn');
 const settingsSyncImportResult = document.getElementById('settings-sync-import-result');
 const notificationsModeSelect = document.getElementById('notifications-mode');
 const validateBtn = document.getElementById('validate-btn');
@@ -303,6 +309,15 @@ function getEffectiveDebounceMs() {
   return preset?.debounceMs ?? 5000;
 }
 
+function updateSettingsSyncVisibility() {
+  settingsSyncOptionsGroup.style.display = syncSettingsToGitInput.checked ? '' : 'none';
+  const isIndividualMode = settingsSyncModeSelect.value === 'individual';
+  settingsSyncImportGroup.style.display = syncSettingsToGitInput.checked ? '' : 'none';
+  settingsSyncGlobalWriteGroup.style.display = !isIndividualMode ? '' : 'none';
+}
+
+let settingsProfiles = [];
+
 function populateLanguageDropdown() {
   languageSelect.innerHTML = '';
 
@@ -378,6 +393,7 @@ async function loadSettings() {
     generateDashyYml: 'off',
     syncSettingsToGit: false,
     settingsSyncMode: 'global',
+    settingsSyncGlobalWriteEnabled: false,
     theme: 'auto',
     profileSwitchWithoutConfirm: false,
     debugLogEnabled: false,
@@ -398,8 +414,13 @@ async function loadSettings() {
   generateDashyYmlSelect.value = normalizeGenMode(globals.generateDashyYml);
   syncSettingsToGitInput.checked = globals.syncSettingsToGit === true;
   settingsSyncModeSelect.value = globals.settingsSyncMode || 'global';
-  settingsSyncOptionsGroup.style.display = syncSettingsToGitInput.checked ? '' : 'none';
-  settingsSyncImportGroup.style.display = settingsSyncModeSelect.value === 'individual' ? '' : 'none';
+  settingsSyncGlobalWriteEnabledInput.checked = globals.settingsSyncGlobalWriteEnabled === true;
+  updateSettingsSyncVisibility();
+  if (globals.syncSettingsToGit === true) {
+    await refreshSettingsProfiles();
+  } else {
+    renderSettingsProfiles([]);
+  }
   const localPwState = await chrome.storage.local.get({ settingsSyncPassword: '' });
   if (localPwState.settingsSyncPassword) {
     settingsSyncPasswordInput.value = '********';
@@ -872,6 +893,7 @@ async function saveSettings() {
       [STORAGE_KEYS.GENERATE_DASHY_YML]: generateDashyYmlSelect.value,
       [STORAGE_KEYS.SYNC_SETTINGS_TO_GIT]: syncSettingsToGitInput.checked,
       [STORAGE_KEYS.SETTINGS_SYNC_MODE]: settingsSyncModeSelect.value,
+      [STORAGE_KEYS.SETTINGS_SYNC_GLOBAL_WRITE_ENABLED]: settingsSyncGlobalWriteEnabledInput.checked,
       [STORAGE_KEYS.LANGUAGE]: languageSelect.value,
       [STORAGE_KEYS.PROFILE_SWITCH_WITHOUT_CONFIRM]: profileSwitchWithoutConfirmInput.checked,
     });
@@ -1123,7 +1145,7 @@ generateDashyYmlSelect.addEventListener('change', onGenerateFilesToggleChange);
 
 // Settings sync to Git
 syncSettingsToGitInput.addEventListener('change', async () => {
-  settingsSyncOptionsGroup.style.display = syncSettingsToGitInput.checked ? '' : 'none';
+  updateSettingsSyncVisibility();
   await saveSettings();
   if (!syncSettingsToGitInput.checked) {
     try {
@@ -1132,13 +1154,18 @@ syncSettingsToGitInput.addEventListener('change', async () => {
     settingsSyncPasswordInput.value = '';
     settingsSyncPasswordInput.dataset.hasPassword = '';
     settingsSyncResult.textContent = '';
+    renderSettingsProfiles([]);
+  } else {
+    await refreshSettingsProfiles();
   }
 });
 
 settingsSyncModeSelect.addEventListener('change', async () => {
-  settingsSyncImportGroup.style.display = settingsSyncModeSelect.value === 'individual' ? '' : 'none';
+  updateSettingsSyncVisibility();
   await saveSettings();
 });
+
+settingsSyncGlobalWriteEnabledInput.addEventListener('change', saveSettings);
 
 settingsSyncSavePwBtn.addEventListener('click', async () => {
   const pw = settingsSyncPasswordInput.value.trim();
@@ -1165,46 +1192,77 @@ settingsSyncSavePwBtn.addEventListener('click', async () => {
   settingsSyncSavePwBtn.disabled = false;
 });
 
-settingsSyncLoadBtn.addEventListener('click', async () => {
+function selectedSettingsProfile() {
+  const filename = settingsSyncDeviceList.value;
+  return settingsProfiles.find((p) => p.filename === filename) || null;
+}
+
+function renderSettingsProfiles(configs) {
+  settingsProfiles = Array.isArray(configs) ? configs : [];
+  settingsSyncDeviceList.innerHTML = '';
+  if (settingsProfiles.length === 0) {
+    const opt = document.createElement('option');
+    opt.textContent = getMessage('options_settingsSyncImportEmpty');
+    settingsSyncDeviceList.appendChild(opt);
+    settingsSyncDeviceList.disabled = true;
+    settingsSyncImportBtn.disabled = true;
+    settingsSyncPushSelectedBtn.disabled = true;
+    return;
+  }
+  for (const cfg of settingsProfiles) {
+    const opt = document.createElement('option');
+    opt.value = cfg.filename;
+    const datePart = cfg.updatedAt ? ` · ${new Date(cfg.updatedAt).toLocaleString()}` : '';
+    opt.textContent = `${cfg.name || cfg.filename} (${cfg.filename})${datePart}`;
+    settingsSyncDeviceList.appendChild(opt);
+  }
+  settingsSyncDeviceList.disabled = false;
+  settingsSyncImportBtn.disabled = false;
+  settingsSyncPushSelectedBtn.disabled = false;
+}
+
+async function refreshSettingsProfiles() {
   settingsSyncLoadBtn.disabled = true;
   settingsSyncImportResult.textContent = '';
   try {
-    const resp = await chrome.runtime.sendMessage({ action: 'listDeviceConfigs' });
-    settingsSyncDeviceList.innerHTML = '';
-    if (!resp.success || !resp.configs || resp.configs.length === 0) {
-      const opt = document.createElement('option');
-      opt.textContent = getMessage('options_settingsSyncImportEmpty');
-      settingsSyncDeviceList.appendChild(opt);
-      settingsSyncDeviceList.disabled = true;
-      settingsSyncImportBtn.disabled = true;
-    } else {
-      for (const cfg of resp.configs) {
-        const opt = document.createElement('option');
-        opt.value = cfg.filename;
-        opt.textContent = cfg.deviceId === 'global' ? 'Global (settings.enc)' : `Device ${cfg.deviceId} (${cfg.filename})`;
-        settingsSyncDeviceList.appendChild(opt);
-      }
-      settingsSyncDeviceList.disabled = false;
-      settingsSyncImportBtn.disabled = false;
+    const resp = await chrome.runtime.sendMessage({ action: 'listSettingsProfiles' });
+    renderSettingsProfiles(resp?.success ? resp.configs : []);
+    if (!resp?.success) {
+      settingsSyncImportResult.textContent = resp?.message || 'Error';
+      settingsSyncImportResult.className = 'validation-result error';
     }
   } catch (e) {
     settingsSyncImportResult.textContent = e.message || 'Error';
     settingsSyncImportResult.className = 'validation-result error';
   }
   settingsSyncLoadBtn.disabled = false;
-});
+}
+
+settingsSyncLoadBtn.addEventListener('click', refreshSettingsProfiles);
 
 settingsSyncImportBtn.addEventListener('click', async () => {
-  const filename = settingsSyncDeviceList.value;
+  const selected = selectedSettingsProfile();
+  const filename = selected?.filename || settingsSyncDeviceList.value;
   if (!filename) return;
+  if (filename === 'settings.enc') {
+    const confirmed = await showOnboardingConfirm(
+      getMessage('options_settingsSyncImportGlobalConfirm'),
+      getMessage('options_settingsSyncImportGlobalConfirmBtn')
+    );
+    hideOnboardingConfirm();
+    if (!confirmed) return;
+  }
   settingsSyncImportBtn.disabled = true;
   settingsSyncImportResult.textContent = '';
   try {
-    const resp = await chrome.runtime.sendMessage({ action: 'importDeviceConfig', filename });
+    const password = await showPasswordDialog('options_settingsRegistryActionPasswordPrompt', 'options_settingsRegistryImportApplyBtn');
+    if (!password) return;
+    const resp = await chrome.runtime.sendMessage({ action: 'importSettingsProfile', filename, password });
     if (resp.success) {
-      settingsSyncImportResult.textContent = getMessage('options_settingsSyncImportSuccess');
+      settingsSyncImportResult.textContent = getMessage('options_settingsRegistryImportSuccess');
       settingsSyncImportResult.className = 'validation-result success';
       await loadSettings();
+      await confirmReloadAfterImport();
     } else {
       settingsSyncImportResult.textContent = resp.message || 'Error';
       settingsSyncImportResult.className = 'validation-result error';
@@ -1214,6 +1272,65 @@ settingsSyncImportBtn.addEventListener('click', async () => {
     settingsSyncImportResult.className = 'validation-result error';
   }
   settingsSyncImportBtn.disabled = false;
+});
+
+settingsSyncPushSelectedBtn.addEventListener('click', async () => {
+  const selected = selectedSettingsProfile();
+  if (!selected?.filename) return;
+  settingsSyncPushSelectedBtn.disabled = true;
+  settingsSyncImportResult.textContent = '';
+  try {
+    const password = await showPasswordDialog('options_settingsRegistryActionPasswordPrompt', 'options_settingsRegistrySyncSelectedBtn');
+    if (!password) return;
+    const resp = await chrome.runtime.sendMessage({
+      action: 'syncSettingsToProfile',
+      filename: selected.filename,
+      name: selected.name || '',
+      password,
+    });
+    if (resp?.success) {
+      settingsSyncImportResult.textContent = getMessage('options_settingsRegistrySyncSuccess');
+      settingsSyncImportResult.className = 'validation-result success';
+      await refreshSettingsProfiles();
+    } else {
+      settingsSyncImportResult.textContent = resp?.message || 'Error';
+      settingsSyncImportResult.className = 'validation-result error';
+    }
+  } catch (e) {
+    settingsSyncImportResult.textContent = e.message || 'Error';
+    settingsSyncImportResult.className = 'validation-result error';
+  }
+  settingsSyncPushSelectedBtn.disabled = false;
+});
+
+settingsSyncCreateBtn.addEventListener('click', async () => {
+  const name = settingsSyncNewNameInput.value.trim();
+  if (!name) {
+    settingsSyncImportResult.textContent = getMessage('options_settingsRegistryCreateNameRequired');
+    settingsSyncImportResult.className = 'validation-result error';
+    return;
+  }
+  settingsSyncCreateBtn.disabled = true;
+  settingsSyncImportResult.textContent = '';
+  try {
+    const password = await showPasswordDialog('options_settingsRegistryActionPasswordPrompt', 'options_settingsRegistryCreateBtn');
+    if (!password) return;
+    const resp = await chrome.runtime.sendMessage({ action: 'createSettingsProfile', name, password });
+    if (resp?.success) {
+      settingsSyncImportResult.textContent = getMessage('options_settingsRegistryCreateSuccess');
+      settingsSyncImportResult.className = 'validation-result success';
+      settingsSyncNewNameInput.value = '';
+      await refreshSettingsProfiles();
+      reloadAfterSettingsImport(500);
+    } else {
+      settingsSyncImportResult.textContent = resp?.message || 'Error';
+      settingsSyncImportResult.className = 'validation-result error';
+    }
+  } catch (e) {
+    settingsSyncImportResult.textContent = e.message || 'Error';
+    settingsSyncImportResult.className = 'validation-result error';
+  }
+  settingsSyncCreateBtn.disabled = false;
 });
 
 // ==============================
@@ -1290,6 +1407,33 @@ function showPasswordDialog(promptKey, confirmKey) {
   });
 }
 
+/**
+ * Reload extension runtime after settings import so profile changes are
+ * immediately reflected across popup/background/options in all browsers.
+ */
+function reloadAfterSettingsImport(delayMs = 800) {
+  setTimeout(() => {
+    try {
+      if (chrome?.runtime?.reload) {
+        chrome.runtime.reload();
+        return;
+      }
+    } catch {
+      // Fallback below when runtime reload is unavailable.
+    }
+    location.reload();
+  }, delayMs);
+}
+
+async function confirmReloadAfterImport() {
+  const shouldReload = await showOnboardingConfirm(
+    getMessage('options_settingsSyncImportReloadConfirm'),
+    getMessage('options_settingsSyncImportReloadConfirmBtn')
+  );
+  hideOnboardingConfirm();
+  if (shouldReload) reloadAfterSettingsImport();
+}
+
 exportBtn.addEventListener('click', async () => {
   const type = exportTypeSelect.value;
   const date = new Date().toISOString().slice(0, 10);
@@ -1359,6 +1503,9 @@ async function applyImportedSettings(settings) {
         profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
         generateReadmeMd: settings.generateReadmeMd !== false,
         generateBookmarksHtml: settings.generateBookmarksHtml !== false,
+        generateFeedXml: settings.generateFeedXml ?? 'auto',
+        generateDashyYml: settings.generateDashyYml ?? 'off',
+        settingsSyncGlobalWriteEnabled: settings.settingsSyncGlobalWriteEnabled === true,
       });
       await chrome.storage.local.set({ profileTokens });
     } else {
@@ -1389,6 +1536,9 @@ async function applyImportedSettings(settings) {
         profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
         generateReadmeMd: settings.generateReadmeMd !== false,
         generateBookmarksHtml: settings.generateBookmarksHtml !== false,
+        generateFeedXml: settings.generateFeedXml ?? 'auto',
+        generateDashyYml: settings.generateDashyYml ?? 'off',
+        settingsSyncGlobalWriteEnabled: settings.settingsSyncGlobalWriteEnabled === true,
       });
       await chrome.storage.local.set({ profileTokens });
   }
@@ -1415,10 +1565,11 @@ importBtn.addEventListener('click', async () => {
       }
       await applyImportedSettings(settings);
       showResult(importResult, getMessage('options_importSuccess'), 'success');
+      await loadSettings();
       importFile.value = '';
       importBtn.disabled = true;
       importFilename.textContent = '';
-      setTimeout(() => { location.reload(); }, 1000);
+      await confirmReloadAfterImport();
     } else {
       const data = JSON.parse(text);
       const bookmarks = deserializeFromJson(data);

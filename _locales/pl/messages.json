@@ -324,6 +324,12 @@
   "options_settingsSyncModeIndividual": {
     "message": "Indywidualny — tylko to urządzenie"
   },
+  "options_settingsSyncGlobalWriteEnabled": {
+    "message": "Allow writing to global settings (settings.enc)"
+  },
+  "options_settingsSyncGlobalWriteHint": {
+    "message": "Recommended OFF. If enabled, this client can overwrite global settings for all devices."
+  },
   "options_settingsSyncImportTitle": {
     "message": "Importuj z innego urządzenia"
   },
@@ -339,6 +345,29 @@
   "options_settingsSyncImportSuccess": {
     "message": "Ustawienia zaimportowane pomyślnie"
   },
+  "options_settingsSyncImportGlobalConfirm": {
+    "message": "Apply the global settings file now? This will overwrite current local settings on this device."
+  },
+  "options_settingsSyncImportGlobalConfirmBtn": {
+    "message": "Apply global config"
+  },
+  "options_settingsSyncImportReloadConfirm": {
+    "message": "Settings were imported. Reload now to apply them everywhere?"
+  },
+  "options_settingsSyncImportReloadConfirmBtn": {
+    "message": "Reload now"
+  },
+  "options_settingsRegistryTitle": { "message": "Available settings in repository" },
+  "options_settingsRegistryRefreshBtn": { "message": "Refresh" },
+  "options_settingsRegistryImportApplyBtn": { "message": "Import & Apply" },
+  "options_settingsRegistrySyncSelectedBtn": { "message": "Sync current to selected" },
+  "options_settingsRegistryCreateBtn": { "message": "Create new setting" },
+  "options_settingsRegistryNewNamePlaceholder": { "message": "New setting name" },
+  "options_settingsRegistryActionPasswordPrompt": { "message": "Enter password for this settings action" },
+  "options_settingsRegistryImportSuccess": { "message": "Settings imported and applied" },
+  "options_settingsRegistrySyncSuccess": { "message": "Current settings synced to selected profile" },
+  "options_settingsRegistryCreateSuccess": { "message": "New settings profile created" },
+  "options_settingsRegistryCreateNameRequired": { "message": "Please enter a name for the new setting" },
   "options_resetTitle": { "message": "Resetuj rozszerzenie" },
   "options_resetDescription": { "message": "Usuń wszystkie profile, tokeny i ustawienia. Zakładki przeglądarki nie zostaną zmienione." },
   "options_resetBtn": { "message": "Resetuj wszystkie dane" },
