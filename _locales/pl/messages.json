@@ -1,0 +1,1069 @@
+{
+  "extName": {
+    "message": "GitSyncMarks"
+  },
+  "extDescription": {
+    "message": "Twoje zakładki, bezpiecznie na GitHub — przechowywanie w osobnych plikach, trójstronne scalanie, działa w Chrome i Firefox. Bez serwera."
+  },
+  "commands_quickSync": {
+    "message": "Szybka synchronizacja zakładek"
+  },
+  "commands_openOptions": {
+    "message": "Otwórz ustawienia rozszerzenia"
+  },
+
+  "popup_configureFirst": {
+    "message": "Najpierw skonfiguruj rozszerzenie."
+  },
+  "popup_openSettings": {
+    "message": "Otwórz ustawienia"
+  },
+  "popup_ready": {
+    "message": "Gotowe"
+  },
+  "popup_conflictDetected": {
+    "message": "Wykryto konflikt"
+  },
+  "popup_conflictDescription": {
+    "message": "Zarówno lokalne, jak i zdalne zakładki zostały zmodyfikowane. Wybierz rozwiązanie:"
+  },
+  "popup_localToGithub": {
+    "message": "Lokalne → GitHub"
+  },
+  "popup_githubToLocal": {
+    "message": "GitHub → Lokalne"
+  },
+  "popup_syncNow": {
+    "message": "Synchronizuj teraz"
+  },
+  "popup_pushUp": {
+    "message": "Wyślij ↑"
+  },
+  "popup_pullDown": {
+    "message": "Pobierz ↓"
+  },
+  "popup_autoSyncActive": {
+    "message": "Automatyczna synchronizacja aktywna"
+  },
+  "popup_autoSyncDisabled": {
+    "message": "Automatyczna synchronizacja wyłączona"
+  },
+  "popup_settings": {
+    "message": "Ustawienia"
+  },
+  "popup_synced": {
+    "message": "Zsynchronizowano"
+  },
+  "popup_notSyncedYet": {
+    "message": "Jeszcze nie zsynchronizowano"
+  },
+  "popup_lastSync": {
+    "message": "Ostatnia synchronizacja: $1"
+  },
+  "popup_justNow": {
+    "message": "przed chwilą"
+  },
+  "popup_minAgo": {
+    "message": "$1 min temu"
+  },
+  "popup_hoursAgo": {
+    "message": "$1 godz. temu"
+  },
+  "popup_syncing": {
+    "message": "Synchronizacja…"
+  },
+  "popup_profileSwitching": {
+    "message": "Przełączanie profilu…"
+  },
+  "popup_error": {
+    "message": "Błąd: $1"
+  },
+  "popup_nextSyncIn": {
+    "message": "Następna synchronizacja za $1"
+  },
+  "popup_lastDataChange": {
+    "message": "Ostatnia zmiana danych: $1"
+  },
+  "popup_lastCommit": {
+    "message": "Ostatni commit:"
+  },
+
+  "options_subtitle": {
+    "message": "Ustawienia"
+  },
+  "options_profile": {
+    "message": "Profil"
+  },
+  "options_profileAdd": {
+    "message": "+ Dodaj"
+  },
+  "options_profileAddNameLabel": {
+    "message": "Nazwa profilu"
+  },
+  "options_profileAddConfirmBtn": {
+    "message": "Dodaj"
+  },
+  "options_profileRenameLabel": {
+    "message": "Nowa nazwa"
+  },
+  "options_profileAddPlaceholder": {
+    "message": "Nowy profil"
+  },
+  "options_profileRename": {
+    "message": "Zmień nazwę"
+  },
+  "options_profileRenamePrompt": {
+    "message": "Nowa nazwa dla \"$1\":"
+  },
+  "options_profileDelete": {
+    "message": "Usuń"
+  },
+  "options_profileSwitchConfirm": {
+    "message": "Przełączyć na \"$1\"? Twoje zakładki zostaną zastąpione zakładkami tego profilu."
+  },
+  "options_profileDeleteConfirm": {
+    "message": "Usunąć profil \"$1\"? Tej operacji nie można cofnąć."
+  },
+  "options_profileSwitching": {
+    "message": "Przełączanie profilu…"
+  },
+  "options_profileSwitchWithoutConfirm": {
+    "message": "Przełączaj bez potwierdzenia"
+  },
+  "options_profileSwitchConfirmBtn": {
+    "message": "Przełącz"
+  },
+  "options_profileSwitchCancelBtn": {
+    "message": "Anuluj"
+  },
+  "options_profilesLimit": {
+    "message": "$1/$2 profili"
+  },
+  "options_githubConnection": {
+    "message": "Połączenie z GitHub"
+  },
+  "options_patLabel": {
+    "message": "Personal Access Token (PAT)"
+  },
+  "options_toggleToken": {
+    "message": "Pokaż/ukryj token"
+  },
+  "options_tokenHint": {
+    "message": "Wymaga zakresu <code>repo</code>. <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Utwórz token</a>"
+  },
+  "options_repoOwner": {
+    "message": "Właściciel repozytorium"
+  },
+  "options_ownerPlaceholder": {
+    "message": "twoja-nazwa-użytkownika-github"
+  },
+  "options_repoName": {
+    "message": "Nazwa repozytorium"
+  },
+  "options_branch": {
+    "message": "Gałąź"
+  },
+  "options_filePath": {
+    "message": "Ścieżka pliku w repozytorium"
+  },
+  "options_filePathHint": {
+    "message": "Folder, w którym będą przechowywane pliki zakładek."
+  },
+  "options_browseFolder": { "message": "Przeglądaj" },
+  "options_browseFolderEmpty": { "message": "Nie znaleziono folderów" },
+  "options_browseFolderLoading": { "message": "Ładowanie\u2026" },
+  "options_browseFolderSelect": { "message": "Wybierz" },
+  "options_browseFolderNotConfigured": { "message": "Najpierw skonfiguruj token, właściciela i repozytorium" },
+  "options_filePathChangeHint": {
+    "message": "Przy następnej synchronizacji może wystąpić konflikt. Użyj \"GitHub → Lokalne\", aby przyjąć stan zdalny."
+  },
+  "options_testConnection": {
+    "message": "Testuj połączenie"
+  },
+  "options_githubReposTitle": {
+    "message": "Folder GitHub Repos"
+  },
+  "options_githubReposDesc": {
+    "message": "Utwórz folder z zakładkami do wszystkich Twoich repozytoriów GitHub (publicznych i prywatnych)."
+  },
+  "options_githubReposEnabled": {
+    "message": "Folder GitHub Repos"
+  },
+  "options_githubReposParentLabel": {
+    "message": "Pozycja"
+  },
+  "options_githubReposParentToolbar": {
+    "message": "Pasek zakładek"
+  },
+  "options_githubReposParentOther": {
+    "message": "Inne zakładki"
+  },
+  "options_githubReposParentMenu": {
+    "message": "Menu zakładek"
+  },
+  "options_githubReposRefresh": {
+    "message": "Aktualizuj GitHub Repos"
+  },
+  "options_githubReposRefreshSuccess": {
+    "message": "Dodano $1 repozytoriów dla $2"
+  },
+  "options_synchronization": {
+    "message": "Synchronizacja"
+  },
+  "options_autoSync": {
+    "message": "Automatyczna synchronizacja"
+  },
+  "options_syncInterval": {
+    "message": "Interwał synchronizacji (minuty)"
+  },
+  "options_syncIntervalHint": {
+    "message": "Jak często sprawdzać zmiany zdalne."
+  },
+  "options_syncProfile": {
+    "message": "Profil synchronizacji"
+  },
+  "options_syncProfileRealtime": {
+    "message": "Czas rzeczywisty (1 min, 2s opóźnienie)"
+  },
+  "options_syncProfileFrequent": {
+    "message": "Częsta (5 min, 3s opóźnienie)"
+  },
+  "options_syncProfileNormal": {
+    "message": "Normalna (15 min, 5s opóźnienie)"
+  },
+  "options_syncProfilePowersave": {
+    "message": "Oszczędzanie energii (60 min, 10s opóźnienie)"
+  },
+  "options_syncProfileCustom": {
+    "message": "Własny"
+  },
+  "options_debounceDelay": {
+    "message": "Opóźnienie debounce (sekundy)"
+  },
+  "options_debounceDelayHint": {
+    "message": "Czas oczekiwania przed synchronizacją po zmianie zakładek."
+  },
+  "options_syncOnStartup": {
+    "message": "Synchronizuj przy starcie przeglądarki"
+  },
+  "options_syncOnFocus": {
+    "message": "Synchronizuj po przywróceniu okna przeglądarki"
+  },
+  "options_generatedFilesTitle": {
+    "message": "Generowane pliki"
+  },
+  "options_generatedFilesDesc": {
+    "message": "Pliki tworzone w repozytorium podczas synchronizacji. Wybierz Wył., Ręcznie lub Auto dla każdego pliku."
+  },
+  "options_generateModeOff": {
+    "message": "Wył."
+  },
+  "options_generateModeManual": {
+    "message": "Ręcznie"
+  },
+  "options_generateModeAuto": {
+    "message": "Auto"
+  },
+  "options_generateNowBtn": {
+    "message": "Generuj teraz"
+  },
+  "options_generateReadmeMd": {
+    "message": "README.md"
+  },
+  "options_generateReadmeMdDesc": {
+    "message": "Przegląd w formacie Markdown w repozytorium."
+  },
+  "options_generateBookmarksHtml": {
+    "message": "Generuj bookmarks.html"
+  },
+  "options_generateBookmarksHtmlDesc": {
+    "message": "Format Netscape do importu w przeglądarce (Chrome, Firefox)."
+  },
+  "options_generateFeedXml": {
+    "message": "Generuj feed.xml"
+  },
+  "options_generateFeedXmlDesc": {
+    "message": "Kanał RSS 2.0 — subskrybuj w dowolnym czytniku RSS lub używaj w automatyzacjach."
+  },
+  "options_generateDashyYml": {
+    "message": "Generuj dashy-conf.yml"
+  },
+  "options_generateDashyYmlDesc": {
+    "message": "Konfiguracja dashboardu Dashy — importuj jako sekcje do swojego conf.yml."
+  },
+  "options_settingsSyncTitle": {
+    "message": "Plik ustawień"
+  },
+  "options_settingsSyncDesc": {
+    "message": "Zaszyfrowana kopia zapasowa ustawień rozszerzenia w repozytorium. To samo hasło na każdym urządzeniu."
+  },
+  "options_syncSettingsToGit": {
+    "message": "Synchronizuj ustawienia do Git (szyfrowane)"
+  },
+  "options_settingsSyncPasswordLabel": {
+    "message": "Hasło szyfrowania"
+  },
+  "options_settingsSyncPasswordHint": {
+    "message": "Ustaw raz na urządzenie. Musi być takie samo na wszystkich urządzeniach."
+  },
+  "options_settingsSyncSaveBtn": {
+    "message": "Zapisz hasło"
+  },
+  "options_settingsSyncActive": {
+    "message": "Synchronizacja ustawień aktywna — ustawienia zostaną wysłane przy następnej synchronizacji."
+  },
+  "options_settingsSyncPasswordMissing": {
+    "message": "Wprowadź hasło."
+  },
+  "options_settingsSyncModeLabel": {
+    "message": "Tryb synchronizacji"
+  },
+  "options_settingsSyncModeGlobal": {
+    "message": "Globalny — wspólny dla wszystkich urządzeń"
+  },
+  "options_settingsSyncModeIndividual": {
+    "message": "Indywidualny — tylko to urządzenie"
+  },
+  "options_settingsSyncGlobalWriteEnabled": {
+    "message": "Allow writing to global settings (settings.enc)"
+  },
+  "options_settingsSyncGlobalWriteHint": {
+    "message": "Recommended OFF. If enabled, this client can overwrite global settings for all devices."
+  },
+  "options_settingsSyncImportTitle": {
+    "message": "Importuj z innego urządzenia"
+  },
+  "options_settingsSyncImportBtn": {
+    "message": "Wczytaj dostępne konfiguracje"
+  },
+  "options_settingsSyncImportApply": {
+    "message": "Importuj"
+  },
+  "options_settingsSyncImportEmpty": {
+    "message": "Nie znaleziono konfiguracji urządzeń"
+  },
+  "options_settingsSyncImportSuccess": {
+    "message": "Ustawienia zaimportowane pomyślnie"
+  },
+  "options_settingsSyncImportGlobalConfirm": {
+    "message": "Apply the global settings file now? This will overwrite current local settings on this device."
+  },
+  "options_settingsSyncImportGlobalConfirmBtn": {
+    "message": "Apply global config"
+  },
+  "options_settingsSyncImportReloadConfirm": {
+    "message": "Settings were imported. Reload now to apply them everywhere?"
+  },
+  "options_settingsSyncImportReloadConfirmBtn": {
+    "message": "Reload now"
+  },
+  "options_settingsRegistryTitle": { "message": "Available settings in repository" },
+  "options_settingsRegistryRefreshBtn": { "message": "Refresh" },
+  "options_settingsRegistryImportApplyBtn": { "message": "Import & Apply" },
+  "options_settingsRegistrySyncSelectedBtn": { "message": "Sync current to selected" },
+  "options_settingsRegistryCreateBtn": { "message": "Create new setting" },
+  "options_settingsRegistryNewNamePlaceholder": { "message": "New setting name" },
+  "options_settingsRegistryActionPasswordPrompt": { "message": "Enter password for this settings action" },
+  "options_settingsRegistryImportSuccess": { "message": "Settings imported and applied" },
+  "options_settingsRegistrySyncSuccess": { "message": "Current settings synced to selected profile" },
+  "options_settingsRegistryCreateSuccess": { "message": "New settings profile created" },
+  "options_settingsRegistryCreateNameRequired": { "message": "Please enter a name for the new setting" },
+  "options_resetTitle": { "message": "Resetuj rozszerzenie" },
+  "options_resetDescription": { "message": "Usuń wszystkie profile, tokeny i ustawienia. Zakładki przeglądarki nie zostaną zmienione." },
+  "options_resetBtn": { "message": "Resetuj wszystkie dane" },
+  "options_resetConfirm": { "message": "Czy na pewno? Tej operacji nie można cofnąć. Wszystkie profile i ustawienia zostaną trwale usunięte." },
+  "options_resetSuccess": { "message": "Rozszerzenie zostało zresetowane." },
+  "options_notifications": {
+    "message": "Powiadomienia o synchronizacji"
+  },
+  "options_notificationsOff": {
+    "message": "Wył."
+  },
+  "options_notificationsAll": {
+    "message": "Wszystkie (sukces i błędy)"
+  },
+  "options_notificationsErrorsOnly": {
+    "message": "Tylko błędy"
+  },
+  "options_notificationsHint": {
+    "message": "Wybierz, kiedy wyświetlać powiadomienia."
+  },
+  "notification_titleSuccess": {
+    "message": "Synchronizacja zakończona pomyślnie"
+  },
+  "notification_titleFailure": {
+    "message": "Synchronizacja nie powiodła się"
+  },
+  "options_saveSettings": {
+    "message": "Zapisz ustawienia"
+  },
+  "options_theme": {
+    "message": "Motyw"
+  },
+  "options_themeAuto": {
+    "message": "A Auto (systemowy)"
+  },
+  "options_themeLight": {
+    "message": "☀ Jasny"
+  },
+  "options_themeDark": {
+    "message": "☽ Ciemny"
+  },
+  "options_language": {
+    "message": "Język"
+  },
+  "options_langAuto": {
+    "message": "Auto (przeglądarka)"
+  },
+  "options_pleaseEnterToken": {
+    "message": "Wprowadź token."
+  },
+  "options_checking": {
+    "message": "Sprawdzanie…"
+  },
+  "options_invalidToken": {
+    "message": "Nieprawidłowy token."
+  },
+  "options_tokenValidMissingScope": {
+    "message": "Token prawidłowy ($1), ale brak zakresu \"repo\"."
+  },
+  "options_tokenValidRepoNotFound": {
+    "message": "Token prawidłowy ($1), ale repozytorium \"$2\" nie znaleziono."
+  },
+  "options_connectionOk": {
+    "message": "Połączenie OK! Użytkownik: $1, Repozytorium: $2"
+  },
+  "options_tokenValidSpecifyRepo": {
+    "message": "Token prawidłowy! Użytkownik: $1. Podaj repozytorium."
+  },
+  "options_error": {
+    "message": "Błąd: $1"
+  },
+  "options_onboardingCreateBtn": {
+    "message": "Utwórz"
+  },
+  "options_onboardingPullBtn": {
+    "message": "Wczytaj"
+  },
+  "options_onboardingCreateFolder": {
+    "message": "Folder $1 jeszcze nie istnieje. Utworzyć go z podstawową strukturą (toolbar, other)?"
+  },
+  "options_onboardingPullNow": {
+    "message": "Znaleziono zakładki w repozytorium. Pobrać je teraz do tej przeglądarki?"
+  },
+  "options_onboardingCreateSuccess": {
+    "message": "Folder utworzony pomyślnie."
+  },
+  "options_onboardingPullSuccess": {
+    "message": "Zakładki pobrane pomyślnie."
+  },
+  "options_onboardingWizardStart": { "message": "Uruchom kreator konfiguracji" },
+  "options_onboardingWizardTitle": { "message": "Kreator konfiguracji" },
+  "options_onboardingWizardStepWelcomeTitle": { "message": "Witamy" },
+  "options_onboardingWizardStepWelcomeText": { "message": "Ten kreator przeprowadzi przez konfigurację repozytorium, tokenu, test połączenia i pierwszy sync." },
+  "options_onboardingWizardStepRepoTitle": { "message": "Ustawienia repozytorium" },
+  "options_onboardingWizardStepRepoText": { "message": "Uzupełnij ownera, nazwę repozytorium, branch i ścieżkę bazową." },
+  "options_onboardingWizardStepTokenTitle": { "message": "Token dostępu" },
+  "options_onboardingWizardStepTokenText": { "message": "Dodaj token GitHub ze scope repo i zachowaj go prywatnie." },
+  "options_onboardingWizardStepValidateTitle": { "message": "Test połączenia" },
+  "options_onboardingWizardStepValidateText": { "message": "Uruchom test, aby sprawdzić token, repozytorium i dostęp do ścieżki." },
+  "options_onboardingWizardStepSyncTitle": { "message": "Pierwsza akcja sync" },
+  "options_onboardingWizardStepSyncTextEmpty": { "message": "Ścieżka jest pusta. Utwórz strukturę początkową, aby zacząć." },
+  "options_onboardingWizardStepSyncTextExisting": { "message": "W repozytorium są już zakładki. Pobierz je teraz do tej przeglądarki." },
+  "options_onboardingWizardStepFinishTitle": { "message": "Zakończenie" },
+  "options_onboardingWizardStepFinishText": { "message": "Konfiguracja zakończona. Możesz przejść do standardowych ustawień." },
+  "options_onboardingWizardActionTest": { "message": "Uruchom test" },
+  "options_onboardingWizardActionCreate": { "message": "Utwórz strukturę" },
+  "options_onboardingWizardActionPull": { "message": "Pobierz teraz" },
+  "options_onboardingWizardNext": { "message": "Dalej" },
+  "options_onboardingWizardBack": { "message": "Wstecz" },
+  "options_onboardingWizardSkip": { "message": "Wyjście" },
+  "options_onboardingWizardFinish": { "message": "Zakończ" },
+  "options_onboardingWizardNeedConnection": { "message": "Najpierw uruchom test połączenia." },
+  "options_onboardingWizardNeedAction": { "message": "Najpierw wykonaj pierwszą akcję sync." },
+  "options_onboardingWizardDismissed": { "message": "Kreator zamknięty. Możesz uruchomić go ponownie w każdej chwili." },
+  "options_onboardingWizardCompleted": { "message": "Kreator zakończony pomyślnie." },
+  "options_onboardingWizardStepTokenHelpTitle": { "message": "Utwórz token" },
+  "options_onboardingWizardStepTokenHelpText": { "message": "Otwórz ustawienia tokenów GitHub i utwórz Personal Access Token ze scope repo." },
+  "options_onboardingWizardTokenHelpText": { "message": "Utwórz Personal Access Token GitHub ze scope repo w ustawieniach GitHub." },
+  "options_onboardingWizardTokenHelpLink": { "message": "Otwórz stronę tokenów GitHub" },
+  "options_onboardingWizardStepHasTokenTitle": { "message": "Czy masz już token?" },
+  "options_onboardingWizardStepHasTokenText": { "message": "Jeśli nie, utwórz go najpierw, a potem przejdź dalej." },
+  "options_onboardingWizardHasTokenLabel": { "message": "Czy masz już token?" },
+  "options_onboardingWizardHasTokenYes": { "message": "Tak, mam już token" },
+  "options_onboardingWizardHasTokenNo": { "message": "Nie, pokaż jak" },
+  "options_onboardingWizardStepRepoDecisionTitle": { "message": "Tryb repozytorium" },
+  "options_onboardingWizardStepRepoDecisionText": { "message": "Wybierz automatyczne utworzenie repozytorium lub użycie istniejącego." },
+  "options_onboardingWizardRepoFlowLabel": { "message": "Tryb repozytorium" },
+  "options_onboardingWizardRepoFlowAuto": { "message": "Utwórz repozytorium automatycznie" },
+  "options_onboardingWizardRepoFlowManual": { "message": "Użyj istniejącego repozytorium" },
+  "options_onboardingWizardActionCheckEnvironment": { "message": "Sprawdź repozytorium i ścieżkę" },
+  "options_onboardingWizardTokenValidated": { "message": "Token jest poprawny i ma wymagany zakres." },
+  "options_onboardingWizardRepoRequired": { "message": "Podaj właściciela i nazwę repozytorium." },
+  "options_onboardingWizardRepoCreateFailed": { "message": "Nie udało się utworzyć repozytorium tym tokenem/uprawnieniami." },
+  "options_onboardingWizardEnvironmentChecked": { "message": "Sprawdzenie repozytorium i ścieżki zakończone." },
+  "options_onboardingWizardRepoOwnerMismatch": { "message": "Automatyczne tworzenie obsługuje tylko repozytoria Twojego użytkownika. Ustaw właściciela na $1." },
+  "options_onboardingWizardRepoUserOnlyHint": { "message": "Dla repozytoriów organizacji lub innego właściciela przełącz się na tryb ręczny (istniejące repozytorium)." },
+  "options_onboardingWizardRepoCreatePermissionDenied": { "message": "Ten token nie może tworzyć repozytoriów. Sprawdź zakres repo i uprawnienia konta." },
+  "options_settingsSaved": {
+    "message": "Ustawienia zapisane!"
+  },
+  "options_errorSaving": {
+    "message": "Błąd zapisu ustawień: $1"
+  },
+
+  "api_invalidToken": {
+    "message": "Nieprawidłowy token. Sprawdź swój Personal Access Token."
+  },
+  "api_rateLimitExceeded": {
+    "message": "Przekroczono limit zapytań API GitHub. Poczekaj chwilę."
+  },
+  "api_accessDenied": {
+    "message": "Odmowa dostępu. Sprawdź uprawnienia tokena."
+  },
+  "api_conflict": {
+    "message": "Konflikt: Plik został w międzyczasie zmodyfikowany."
+  },
+  "api_errorReading": {
+    "message": "Błąd odczytu pliku: $1"
+  },
+  "api_errorWriting": {
+    "message": "Błąd zapisu pliku: $1"
+  },
+  "api_branchNotFound": {
+    "message": "Gałąź \"$1\" nie została znaleziona."
+  },
+
+  "sync_alreadyInProgress": {
+    "message": "Synchronizacja już trwa."
+  },
+  "sync_notConfigured": {
+    "message": "Rozszerzenie nie jest skonfigurowane. Otwórz ustawienia."
+  },
+  "sync_noChanges": {
+    "message": "Brak zmian od ostatniej synchronizacji."
+  },
+  "sync_conflictRemoteModified": {
+    "message": "Wykryto konflikt: Zdalne dane również zostały zmodyfikowane."
+  },
+  "sync_pushSuccess": {
+    "message": "Zakładki pomyślnie wysłane na GitHub."
+  },
+  "sync_conflictFileModified": {
+    "message": "Konflikt: Plik został w międzyczasie zmodyfikowany."
+  },
+  "sync_pushFailed": {
+    "message": "Wysyłanie nie powiodło się: $1"
+  },
+  "sync_noBookmarksOnGithub": {
+    "message": "Nie znaleziono zakładek na GitHub."
+  },
+  "sync_alreadyUpToDate": {
+    "message": "Zakładki są już aktualne."
+  },
+  "sync_pullSuccess": {
+    "message": "Pobrano z GitHub."
+  },
+  "sync_pullFailed": {
+    "message": "Pobieranie nie powiodło się: $1"
+  },
+  "sync_allInSync": {
+    "message": "Wszystko zsynchronizowane. Brak zmian."
+  },
+  "sync_conflictBothModified": {
+    "message": "Konflikt: Zarówno lokalne, jak i zdalne zakładki zostały zmodyfikowane. Wybierz Wyślij lub Pobierz."
+  },
+  "sync_syncFailed": {
+    "message": "Synchronizacja nie powiodła się: $1"
+  },
+
+  "serializer_invalidFormat": {
+    "message": "Nieprawidłowy format danych zakładek."
+  },
+  "serializer_lastSynced": {
+    "message": "Ostatnia synchronizacja: $1"
+  },
+  "serializer_device": {
+    "message": "Urządzenie: $1"
+  },
+  "serializer_untitled": {
+    "message": "(Bez tytułu)"
+  },
+
+  "popup_reportIssue": {
+    "message": "Zgłoś problem"
+  },
+
+  "options_about": {
+    "message": "O rozszerzeniu"
+  },
+  "options_version": {
+    "message": "Wersja"
+  },
+  "options_by": {
+    "message": "Autor"
+  },
+  "options_specialThanks": {
+    "message": "Podziękowania"
+  },
+  "options_mobileAppTitle": {
+    "message": "Aplikacja mobilna"
+  },
+  "options_mobileAppDesc": {
+    "message": "Przeglądaj zakładki w podróży. GitSyncMarks-Mobile (iOS + Android) synchronizuje z Twojego repozytorium GitHub — towarzysz tylko do odczytu."
+  },
+  "options_mobileAppLink": {
+    "message": "GitSyncMarks-Mobile na GitHub"
+  },
+  "options_mobileAppStores": {
+    "message": "F-Droid i Google Play już wkrótce."
+  },
+  "options_links": {
+    "message": "Linki"
+  },
+  "options_githubRepo": {
+    "message": "Repozytorium GitHub"
+  },
+  "options_documentation": {
+    "message": "Dokumentacja"
+  },
+  "options_reportBug": {
+    "message": "Zgłoś błąd / Prośba o funkcję"
+  },
+  "options_privacyPolicy": {
+    "message": "Polityka prywatności"
+  },
+  "options_license": {
+    "message": "Licencja (MIT)"
+  },
+  "options_debugLogTitle": {
+    "message": "Dziennik debugowania"
+  },
+  "options_debugLogDesc": {
+    "message": "Włącz, aby rejestrować diagnostykę synchronizacji (różnice, decyzje scalania, konflikty, hasze commitów w kluczowych momentach). Używaj przy rozwiązywaniu problemów z synchronizacją. Eksportuj i udostępnij dziennik w celu uzyskania wsparcia."
+  },
+  "options_debugLogEnabled": {
+    "message": "Włącz dziennik debugowania"
+  },
+  "options_debugLogExport": {
+    "message": "Eksportuj dziennik"
+  },
+  "options_debugLogExportEmpty": {
+    "message": "Dziennik jest pusty. Włącz dziennik debugowania i uruchom synchronizację."
+  },
+
+  "options_tabGitHub": {
+    "message": "GitHub"
+  },
+  "options_tabSynchronization": {
+    "message": "Synchronizacja"
+  },
+  "options_tabFiles": {
+    "message": "Pliki"
+  },
+  "options_tabHelp": {
+    "message": "Pomoc"
+  },
+  "options_tabAbout": {
+    "message": "O rozszerzeniu"
+  },
+  "options_subTabProfile": {
+    "message": "Profil"
+  },
+  "options_subTabConnection": {
+    "message": "Połączenie"
+  },
+  "options_subTabRepos": {
+    "message": "Folder GitHub"
+  },
+  "options_subTabGenerated": {
+    "message": "Generowane"
+  },
+  "options_subTabSettings": {
+    "message": "Ustawienia"
+  },
+  "options_subTabExportImport": {
+    "message": "Eksport / Import"
+  },
+  "options_subTabGitAdd": {
+    "message": "Git Add"
+  },
+  "help_gettingStartedTitle": {
+    "message": "Pierwsze kroki"
+  },
+  "help_gettingStartedIntro": {
+    "message": "Utwórz repozytorium GitHub dla swoich zakładek, a następnie utwórz Personal Access Token (PAT) z zakresem <code>repo</code>. W zakładce GitHub wprowadź token, właściciela repozytorium, nazwę, gałąź (zwykle <code>main</code>) i ścieżkę folderu (domyślnie: <code>bookmarks</code>). Kliknij <strong>Testuj połączenie</strong>, aby zweryfikować."
+  },
+  "help_onboarding": {
+    "message": "Jeśli folder jest pusty, możesz utworzyć podstawową strukturę (toolbar, other). Jeśli zakładki już istnieją w repozytorium, możesz je pobrać do tej przeglądarki."
+  },
+  "help_profilesTitle": {
+    "message": "Profile"
+  },
+  "help_profilesIntro": {
+    "message": "Każdy profil ma własny zestaw zakładek i konfigurację repozytorium GitHub. Używaj profili do rozdzielenia pracy/życia prywatnego lub różnych urządzeń."
+  },
+  "help_profilesAdd": {
+    "message": "Dodaj, Zmień nazwę, Usuń"
+  },
+  "help_profilesAddDesc": {
+    "message": "Wybierz profil z listy rozwijanej, a następnie Dodaj (nowy profil), Zmień nazwę lub Usuń. Maksymalnie 10 profili. Usunięcie usuwa wybrany profil."
+  },
+  "help_profilesSwitch": {
+    "message": "Przełączanie profili"
+  },
+  "help_profilesSwitchDesc": {
+    "message": "Wybierz inny profil, aby przełączyć. Twoje aktualne zakładki są zapisywane i wysyłane do repozytorium bieżącego profilu przed przełączeniem. Zakładki docelowego profilu zastępują lokalne. Użyj Przełączaj bez potwierdzenia, aby pominąć okno dialogowe."
+  },
+  "help_profilesNote": {
+    "message": "Profile działają stabilnie. Przy wielu profilach mogą czasami wystąpić konflikty synchronizacji — ponowne użycie Wyślij lub Pobierz 2–3 razy zwykle je rozwiązuje. Ta funkcja jest nadal rozwijana. Jeśli napotkasz powtarzalne błędy, zgłoś je na GitHub."
+  },
+  "help_githubReposTitle": {
+    "message": "Folder GitHub Repos"
+  },
+  "help_githubReposDesc": {
+    "message": "Opcjonalnie: Utwórz folder z zakładkami do wszystkich Twoich repozytoriów GitHub (publicznych i prywatnych). Wybierz pozycję (toolbar, other). Folder jest synchronizowany jak zwykłe zakładki; użyj <strong>Aktualizuj GitHub Repos</strong>, aby odświeżyć listę."
+  },
+  "help_popupTitle": {
+    "message": "Popup (ikona rozszerzenia)"
+  },
+  "help_popupProfile": {
+    "message": "Wybór profilu"
+  },
+  "help_popupProfileDesc": {
+    "message": "Przełączaj profile bezpośrednio z nagłówka popup."
+  },
+  "help_popupSyncNow": {
+    "message": "Synchronizuj teraz"
+  },
+  "help_popupSyncNowDesc": {
+    "message": "Pełna trójstronna synchronizacja scalająca: lokalne i zdalne zmiany są scalane automatycznie, gdy to możliwe."
+  },
+  "help_popupPush": {
+    "message": "Wyślij ↑"
+  },
+  "help_popupPushDesc": {
+    "message": "Wyślij lokalne zakładki na GitHub (nadpisuje zmiany zdalne)."
+  },
+  "help_popupPull": {
+    "message": "Pobierz ↓"
+  },
+  "help_popupPullDesc": {
+    "message": "Pobierz z GitHub (nadpisuje zmiany lokalne)."
+  },
+  "help_syncTitle": {
+    "message": "Synchronizacja"
+  },
+  "help_autoSyncTitle": {
+    "message": "Automatyczna synchronizacja"
+  },
+  "help_autoSyncDesc": {
+    "message": "Po włączeniu synchronizuje automatycznie, gdy dodasz, edytujesz lub usuniesz zakładki. Opóźnienie debounce czeka na zakończenie szybkich zmian przed synchronizacją."
+  },
+  "help_syncProfiles": {
+    "message": "Profile synchronizacji"
+  },
+  "help_syncProfilesDesc": {
+    "message": "Czas rzeczywisty (1 min), Częsta (5 min), Normalna (15 min) lub Oszczędzanie energii (60 min). Własny pozwala ustawić interwał i debounce ręcznie."
+  },
+  "help_syncStartup": {
+    "message": "Synchronizacja przy starcie / przywróceniu"
+  },
+  "help_syncStartupDesc": {
+    "message": "Opcjonalnie: synchronizuj przy starcie przeglądarki lub po powrocie do okna przeglądarki (z okresem blokady)."
+  },
+  "help_generatedFilesTitle": {
+    "message": "Generowane pliki"
+  },
+  "help_generatedFilesDesc": {
+    "message": "README.md, bookmarks.html, feed.xml i dashy-conf.yml mogą być tworzone podczas synchronizacji. Wybierz Wył., Ręcznie lub Auto dla każdego pliku w zakładce Pliki."
+  },
+  "help_settingsSyncTitle": {
+    "message": "Plik ustawień"
+  },
+  "help_settingsSyncDesc": {
+    "message": "Po włączeniu ustawienia rozszerzenia (profile, tokeny, preferencje) są szyfrowane i przechowywane w repozytorium. Wybierz Globalny (wspólny settings.enc dla wszystkich urządzeń) lub Indywidualny (settings-{id}.enc specyficzny dla urządzenia). W trybie indywidualnym możesz importować ustawienia z innych urządzeń. Hasło jest przechowywane lokalnie na urządzeniu i musi być takie samo na wszystkich urządzeniach współdzielących repozytorium."
+  },
+  "help_notificationsTitle": {
+    "message": "Powiadomienia"
+  },
+  "help_notificationsDesc": {
+    "message": "Wybierz, kiedy wyświetlać powiadomienia o synchronizacji: Wszystkie (sukces i błędy), Tylko błędy lub Wył."
+  },
+  "help_backupTitle": {
+    "message": "Kopia zapasowa"
+  },
+  "help_backupBookmarks": {
+    "message": "Eksport / Import zakładek"
+  },
+  "help_backupBookmarksDesc": {
+    "message": "Eksportuj wszystkie zakładki przeglądarki jako JSON. Import zastępuje wszystkie zakładki w aktywnym profilu zawartością pliku."
+  },
+  "help_backupSettings": {
+    "message": "Eksport / Import ustawień"
+  },
+  "help_backupSettingsDesc": {
+    "message": "Eksportuj jako zwykły .json lub zaszyfrowany hasłem .enc. Import zastępuje wszystkie ustawienia (wszystkie profile); strona przeładowuje się po zakończeniu."
+  },
+  "help_conflictTitle": {
+    "message": "Konflikty"
+  },
+  "help_conflictDesc": {
+    "message": "Gdy zarówno lokalne, jak i zdalne zakładki zostały zmienione, popup pokazuje konflikt. Wybierz <strong>Wyślij</strong> (lokalne wygrywają, nadpisz zdalne) lub <strong>Pobierz</strong> (zdalne wygrywają, nadpisz lokalne). Nie ma automatycznego scalania dla konfliktów."
+  },
+  "help_shortcuts": {
+    "message": "Skróty klawiszowe"
+  },
+  "help_quickSync": {
+    "message": "Szybka synchronizacja zakładek"
+  },
+  "help_openOptions": {
+    "message": "Otwórz ustawienia rozszerzenia"
+  },
+  "help_customizeShortcuts": {
+    "message": "Dostosuj skróty"
+  },
+  "help_shortcutNotSet": {
+    "message": "Nie ustawiono"
+  },
+  "help_debugLogTitle": {
+    "message": "Dziennik debugowania"
+  },
+  "help_debugLogDesc": {
+    "message": "Włącz w zakładce Synchronizacja, aby rejestrować szczegółową diagnostykę synchronizacji — różnice, decyzje scalania i hasze commitów. Eksportuj dziennik, aby udostępnić go w celu rozwiązywania problemów."
+  },
+  "help_backupBookmarksDesc2": {
+    "message": "Eksportuj zakładki (JSON), konfigurację Dashy (YAML) lub ustawienia (zwykły JSON / zaszyfrowany .enc). Importuj zakładki lub ustawienia — zaszyfrowane pliki są odszyfrowywane Twoim hasłem. Import zakładek zastępuje wszystkie lokalne zakładki; import ustawień zastępuje wszystkie profile i przeładowuje stronę."
+  },
+  "help_themeAutoSaveTitle": {
+    "message": "Motyw i automatyczny zapis"
+  },
+  "help_themeCycleTitle": {
+    "message": "Motyw"
+  },
+  "help_themeCycleDesc": {
+    "message": "Kliknij przycisk w nagłówku, aby przełączać: Auto (systemowy) → Ciemny → Jasny → Auto. Ikona pokazuje aktualny tryb. Działa w opcjach i popup."
+  },
+  "help_autoSaveTitle": {
+    "message": "Automatyczny zapis"
+  },
+  "help_autoSaveDesc": {
+    "message": "Wszystkie ustawienia zapisują się automatycznie po ich zmianie — nie ma przycisków Zapisz. Zmiany obowiązują natychmiast."
+  },
+  "help_whySlowTitle": {
+    "message": "Dlaczego synchronizacja czasami trwa długo?"
+  },
+  "help_whySlowIntro": {
+    "message": "GitSyncMarks używa GitHub Git Data API do atomowych commitów. Każdy zmieniony lub nowy plik zakładek wymaga wywołania API. Przy wielu zmianach to się sumuje."
+  },
+  "help_whyAtomic": {
+    "message": "Wszystkie zmiany są zapisywane w jednym atomowym commicie: albo wszystko się powiedzie, albo nic. To zapobiega częściowemu lub uszkodzonemu stanowi w przypadku przerwania synchronizacji. Jeden commit zamiast wielu pozwala też uniknąć przekroczenia limitów API i utrzymuje czystą historię Git."
+  },
+  "help_reportIssue": {
+    "message": "Zgłoś problem"
+  },
+  "help_links": {
+    "message": "Linki"
+  },
+  "help_discussions": {
+    "message": "Dyskusje"
+  },
+  "help_voteBacklogTitle": {
+    "message": "Co dalej?"
+  },
+  "help_voteBacklogDesc": {
+    "message": "Zagłosuj, którą funkcję z backlogu realizujemy jako następną. Twój głos kształtuje plan rozwoju."
+  },
+  "help_voteBacklogBtn": {
+    "message": "Zagłosuj na backlog"
+  },
+
+  "options_backupTitle": {
+    "message": "Kopia zapasowa"
+  },
+  "options_backupIntro": {
+    "message": "Eksportuj lub importuj zakładki jako JSON; ustawienia jako JSON lub zaszyfrowany hasłem .enc."
+  },
+  "options_bookmarksCard": {
+    "message": "Zakładki"
+  },
+  "options_settingsCard": {
+    "message": "Ustawienia"
+  },
+  "options_exportBookmarks": {
+    "message": "Eksportuj zakładki"
+  },
+  "options_exportBookmarksDesc": {
+    "message": "Zapisz wszystkie zakładki jako JSON."
+  },
+  "options_exportDashy": {
+    "message": "Eksportuj konfigurację Dashy"
+  },
+  "options_exportDashyDesc": {
+    "message": "Eksportuj zakładki jako sekcje dashboardu Dashy (YAML)."
+  },
+  "options_exportBtn": {
+    "message": "Eksportuj"
+  },
+  "options_importBtn": {
+    "message": "Importuj"
+  },
+  "options_chooseFile": {
+    "message": "Wybierz plik"
+  },
+  "options_importBookmarks": {
+    "message": "Importuj zakładki"
+  },
+  "options_exportSettings": {
+    "message": "Eksportuj ustawienia"
+  },
+  "options_exportSettingsDesc": {
+    "message": "Połączenie z GitHub i ustawienia synchronizacji (z profilami)."
+  },
+  "options_importSettings": {
+    "message": "Importuj ustawienia"
+  },
+  "options_importBookmarksWarning": {
+    "message": "Zastępuje wszystkie zakładki w aktywnym profilu. Nie można cofnąć."
+  },
+  "options_importSettingsWarning": {
+    "message": "Zastępuje wszystkie ustawienia (wszystkie profile). Strona przeładuje się po zakończeniu."
+  },
+  "options_importSettingsFormats": {
+    "message": "Akceptuje pliki .json (zwykłe) lub .enc (zaszyfrowane)."
+  },
+  "options_selectFile": {
+    "message": "Wybierz plik…"
+  },
+  "options_importSuccess": {
+    "message": "Import zakończony pomyślnie!"
+  },
+  "options_exportSuccess": {
+    "message": "Eksport zakończony pomyślnie!"
+  },
+  "options_importError": {
+    "message": "Import nie powiódł się: $1"
+  },
+  "options_exportSettingsPlain": {
+    "message": "Eksportuj (zwykły)"
+  },
+  "options_exportSettingsEncrypted": {
+    "message": "Eksportuj zaszyfrowany"
+  },
+  "options_exportPasswordPrompt": {
+    "message": "Wprowadź hasło, aby zaszyfrować plik ustawień."
+  },
+  "options_importPasswordPrompt": {
+    "message": "Wprowadź hasło, aby odszyfrować plik ustawień."
+  },
+  "options_passwordPlaceholder": {
+    "message": "Hasło"
+  },
+  "options_decryptError": {
+    "message": "Odszyfrowywanie nie powiodło się. Złe hasło?"
+  },
+  "options_exportEncryptedSuccess": {
+    "message": "Zaszyfrowany eksport zakończony pomyślnie!"
+  },
+
+  "options_tabAutomation": {
+    "message": "Automatyzacja"
+  },
+  "options_automationTitle": {
+    "message": "Dodaj zakładki przez Git"
+  },
+  "options_automationIntro": {
+    "message": "Dodawaj zakładki bezpośrednio w swoim repozytorium. Rozszerzenie pobierze je przy następnej synchronizacji i automatycznie znormalizuje nazwy plików."
+  },
+  "options_automationFormatTitle": {
+    "message": "Format pliku"
+  },
+  "options_automationFoldersLabel": {
+    "message": "Sekcje:"
+  },
+  "options_automationGithubActionTitle": {
+    "message": "GitHub Action"
+  },
+  "options_automationWorkflowLink": {
+    "message": "Skopiuj add-bookmark.yml do swojego repozytorium"
+  },
+  "options_automationGithubActionParams": {
+    "message": "folder = root; path = opcjonalny podfolder; base-path jeśli Ścieżka pliku ≠ bookmarks"
+  },
+  "options_automationCreateFileTitle": {
+    "message": "Utwórz plik w repozytorium"
+  },
+  "options_automationCreateFileDesc": {
+    "message": "Dodaj nowy plik JSON w <code>bookmarks/toolbar/</code> lub <code>bookmarks/other/</code> (lub podfolderze). Użyj Ścieżki pliku swojego rozszerzenia, jeśli jest inna."
+  },
+  "options_automationCopy": {
+    "message": "Kopiuj"
+  },
+  "options_automationWorkflowRaw": {
+    "message": "Raw"
+  },
+  "options_automationSubfolderExample": {
+    "message": "Przykład: path=\"dev-tools\" → bookmarks/toolbar/dev-tools/"
+  },
+  "options_automationParamUrl": {
+    "message": "URL zakładki (wymagany)"
+  },
+  "options_automationParamTitle": {
+    "message": "Tytuł (opcjonalny; URL użyty jeśli pusty)"
+  },
+  "options_automationParamSection": {
+    "message": "Sekcja: toolbar lub other"
+  },
+  "options_automationParamFolder": {
+    "message": "Folder w sekcji (np. dev-tools)"
+  },
+  "options_automationParamBasePath": {
+    "message": "Folder bazowy w repozytorium (domyślnie bookmarks; musi odpowiadać ustawieniu Ścieżka pliku)"
+  },
+
+  "options_exportImportTitle": {
+    "message": "Eksport / Import"
+  },
+  "options_exportImportDesc": {
+    "message": "Eksportuj lub importuj zakładki i ustawienia rozszerzenia."
+  },
+  "options_exportLabel": {
+    "message": "Eksport"
+  },
+  "options_importLabel": {
+    "message": "Import"
+  },
+  "options_exportTypeBookmarks": {
+    "message": "Zakładki (JSON)"
+  },
+  "options_exportTypeDashy": {
+    "message": "Konfiguracja Dashy (YAML)"
+  },
+  "options_exportTypeSettingsPlain": {
+    "message": "Ustawienia (zwykły JSON)"
+  },
+  "options_exportTypeSettingsEncrypted": {
+    "message": "Ustawienia (zaszyfrowane)"
+  },
+  "options_importTypeBookmarks": {
+    "message": "Zakładki (JSON)"
+  },
+  "options_importTypeSettings": {
+    "message": "Ustawienia (JSON / ENC)"
+  },
+  "help_filesTitle": {
+    "message": "Pliki"
+  },
+  "contextMenu_addToToolbar": { "message": "Dodaj do paska zakładek" },
+  "contextMenu_addToOther": { "message": "Dodaj do innych zakładek" },
+  "contextMenu_syncNow": { "message": "Synchronizuj teraz" },
+  "contextMenu_copyFaviconUrl": { "message": "Kopiuj URL favikony" },
+  "contextMenu_downloadFavicon": { "message": "Pobierz favikonę" },
+  "contextMenu_notifAdded": { "message": "Zakładka dodana do $1" },
+  "contextMenu_notifFaviconCopied": { "message": "URL favikony skopiowany" },
+  "contextMenu_notifNotConfigured": { "message": "Najpierw skonfiguruj GitSyncMarks" },
+  "contextMenu_notifNoFavicon": { "message": "Brak favikony dla tej strony" },
+  "contextMenu_notifError": { "message": "Akcja nie powiodła się — spróbuj ponownie" },
+  "contextMenu_switchProfile": { "message": "Zmień profil" },
+  "contextMenu_notifProfileSwitched": { "message": "Przełączono na $1", "placeholders": { "name": { "content": "$1" } } }
+}

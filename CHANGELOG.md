@@ -5,9 +5,23 @@ All notable changes to GitSyncMarks are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.5.0] - 2026-02-23 (*Cortana*)
 
-*(Keine Einträge)*
+### Added
+
+- **Context menu**: Right-click on any page or link — Add to Toolbar, Add to Other Bookmarks, Sync Now, Switch Profile, Copy Favicon URL, Download Favicon; auto-syncs after adding; new permissions: `contextMenus`, `activeTab`, `scripting`, `downloads`
+- **Profile switching via context menu**: Switch between profiles directly from the right-click menu — active profile shown with radio check; submenu updates dynamically when profiles are added, renamed, or deleted
+- **Favicon tools**: Copy any site's favicon URL to clipboard or download it as PNG — uses the browser's `tab.favIconUrl` with Google favicon service fallback (`s2/favicons`)
+- **8 new languages**: Portuguese (Brazil), Italian, Japanese, Chinese (Simplified), Korean, Russian, Turkish, Polish — extension now supports 12 languages total; auto-detection improved for regional locales (pt_BR, zh_CN)
+- **Dynamic keyboard shortcuts**: Shortcut keys displayed from `chrome.commands.getAll()` instead of hardcoded; "Customize shortcuts" button opens the browser's native shortcut settings
+- **Factory reset**: "Reset all data" button in Files → Settings — clears all profiles, tokens, and settings (browser bookmarks are preserved); two-step confirmation dialog
+- **Folder browser**: Browse repository folders to select the sync path — no more manual typing; available in GitHub → Connection next to the File Path input; navigate into subfolders or select with one click
+- **CI screenshot workflow**: GitHub Actions workflow (`screenshots.yml`) to auto-generate store screenshots for all 12 languages; manual trigger via `workflow_dispatch`; commits updated images back to the repo
+
+### Changed
+
+- **Feature lists reordered**: README and store listings now sorted by user interest — leading with unique selling points (No middleman, per-file storage, three-way merge)
+- **"No server needed" renamed to "No middleman"**: More precise wording — the extension communicates directly with the GitHub API, no third-party server or backend involved
 
 ## [2.4.0] - 2026-02-19 (*R2-D2*)
 
@@ -198,7 +212,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release: bookmark sync with GitHub
 
-[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.4.0...HEAD
+[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.0...HEAD
+[2.5.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.2.1...v2.3.0
 [2.2.1]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.2.0...v2.2.1

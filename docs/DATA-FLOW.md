@@ -65,6 +65,62 @@ flowchart RL
     FMT --> BM
 ```
 
+## Data Flow: Context Menu
+
+```mermaid
+flowchart LR
+    subgraph UserAction["User Right-Click"]
+        RClick["contextMenus.onClicked"]
+    end
+
+    subgraph AddBookmark["Add to Toolbar / Other"]
+        GetRoot["getRootFolderIdForRole()"]
+        Create["chrome.bookmarks.create()"]
+        OnCreated["onCreated listener"]
+        AutoSync["debouncedSync()"]
+    end
+
+    subgraph SyncNow["Sync Now"]
+        SyncFn["sync()"]
+    end
+
+    subgraph FaviconActions["Favicon Actions"]
+        GetFav["getFaviconUrl(tab)"]
+        CopyFav["scripting.executeScript()\nnavigator.clipboard.writeText()"]
+        DownloadFav["chrome.downloads.download()"]
+    end
+
+    subgraph ProfileSwitch["Switch Profile"]
+        GetProfiles["getProfiles()"]
+        DoSwitch["switchProfile(targetId)"]
+        Replace["replaceLocalBookmarks()"]
+        RefreshMenu["refreshProfileMenuItems()"]
+    end
+
+    RClick -->|"Add to Toolbar/Other"| GetRoot
+    GetRoot --> Create
+    Create --> OnCreated
+    OnCreated --> AutoSync
+
+    RClick -->|"Sync Now"| SyncFn
+
+    RClick -->|"Copy Favicon URL"| GetFav
+    RClick -->|"Download Favicon"| GetFav
+    GetFav -->|"copy"| CopyFav
+    GetFav -->|"download"| DownloadFav
+
+    RClick -->|"Switch Profile"| GetProfiles
+    GetProfiles --> DoSwitch
+    DoSwitch --> Replace
+    DoSwitch --> RefreshMenu
+```
+
+- **Add to Toolbar / Other Bookmarks**: Resolves the target folder via `getRootFolderIdForRole()`, creates the bookmark with `chrome.bookmarks.create()`. The existing `onCreated` listener in `background.js` fires `debouncedSync()` automatically.
+- **Sync Now**: Calls `sync()` directly (same as popup sync button).
+- **Copy Favicon URL**: Resolves favicon via `getFaviconUrl(tab)` — uses `tab.favIconUrl` if available, falls back to Google's favicon service (`https://www.google.com/s2/favicons?domain={domain}&sz=64`). Then uses `chrome.scripting.executeScript()` to run `navigator.clipboard.writeText()` in the active tab context (clipboard API is not available in service workers).
+- **Download Favicon**: Same favicon resolution as Copy. Uses `chrome.downloads.download()` with `saveAs: true`; filename is `favicon_{hostname}.png`.
+- **Switch Profile**: Reads all profiles via `getProfiles()`, calls `switchProfile(targetId)` which saves current bookmarks, pushes to GitHub, loads target bookmarks via `replaceLocalBookmarks()`, then refreshes the context menu radio items.
+
 ## File Formats
 
 ### Bookmark File (e.g. `github_a1b2.json`)

@@ -10,6 +10,7 @@ import {
   sync,
   push,
   pull,
+  bootstrapFirstSync,
   getSyncStatus,
   getSettings,
   isConfigured,
@@ -19,15 +20,31 @@ import {
   migrateFromLegacyFormat,
   listRemoteDeviceConfigs,
   importDeviceConfig,
+  listSettingsProfilesFromRepo,
+  importSettingsProfile,
+  syncCurrentSettingsToProfile,
+  createSettingsProfile,
+  deleteSettingsProfile,
   STORAGE_KEYS,
 } from './lib/sync-engine.js';
 import { log as debugLog, getLogAsString } from './lib/debug-log.js';
 import { GitHubAPI } from './lib/github-api.js';
 import { migrateTokenIfNeeded } from './lib/crypto.js';
 import { migrateToProfiles, getActiveProfileId, getActiveProfile, getProfiles, switchProfile, getSyncState } from './lib/profile-manager.js';
+import { setupContextMenus, handleContextMenuClick, refreshProfileMenuItems } from './lib/context-menu.js';
 
 const ALARM_NAME = 'bookmarkSyncPull';
 const NOTIFICATION_ID = 'gitsyncmarks-sync';
+const ONBOARDING_WIZARD_COMPLETED = 'onboardingWizardCompleted';
+const ONBOARDING_WIZARD_DISMISSED = 'onboardingWizardDismissed';
+
+async function shouldAutoOpenOnboardingWizard() {
+  const state = await chrome.storage.sync.get({
+    [ONBOARDING_WIZARD_COMPLETED]: false,
+    [ONBOARDING_WIZARD_DISMISSED]: false,
+  });
+  return state[ONBOARDING_WIZARD_COMPLETED] !== true && state[ONBOARDING_WIZARD_DISMISSED] !== true;
+}
 
 async function showNotificationIfEnabled(result) {
   try {
@@ -46,6 +63,10 @@ async function showNotificationIfEnabled(result) {
     console.warn('[GitSyncMarks] Failed to show notification:', err);
   }
 }
+
+// ---- Context menu click handler (top-level for SW persistence) ----
+
+chrome.contextMenus.onClicked.addListener(handleContextMenuClick);
 
 // ---- Bookmark event listeners ----
 
@@ -199,6 +220,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     });
     return true;
   }
+  if (message.action === 'bootstrapFirstSync') {
+    bootstrapFirstSync()
+      .then((result) => sendResponse(result))
+      .catch((err) => sendResponse({ success: false, message: err?.message || 'Bootstrap failed' }));
+    return true;
+  }
   if (message.action === 'generateFilesNow') {
     generateFilesNow().then(async (result) => {
       await showNotificationIfEnabled(result);
@@ -237,11 +264,42 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       return false;
     }
     switchProfile(targetId)
-      .then(() => sendResponse({ success: true, message: getMessage('sync_pullSuccess') }))
+      .then(async () => {
+        await refreshProfileMenuItems();
+        sendResponse({ success: true, message: getMessage('sync_pullSuccess') });
+      })
       .catch((err) => {
         console.error('[GitSyncMarks] switchProfile failed:', err);
         sendResponse({ success: false, message: err.message || 'Switch failed' });
       });
+    return true;
+  }
+  if (message.action === 'createRepository') {
+    const { token, owner, repo, branch } = message;
+    if (!token || !owner || !repo) {
+      sendResponse({ success: false, message: 'Missing token/owner/repo' });
+      return false;
+    }
+    const api = new GitHubAPI(token, owner, repo, branch || 'main');
+    api.validateToken()
+      .then(async (tokenResult) => {
+        if (!tokenResult?.valid) {
+          throw new Error('Invalid token');
+        }
+        const normalizedOwner = String(owner).toLowerCase();
+        const normalizedUser = String(tokenResult.username || '').toLowerCase();
+        if (!normalizedUser || normalizedOwner !== normalizedUser) {
+          sendResponse({
+            success: false,
+            code: 'OWNER_MISMATCH',
+            message: `Auto-create supports user repositories only. Owner must match authenticated user (${tokenResult.username}).`,
+          });
+          return;
+        }
+        const created = await api.createRepository({ name: repo, private: true });
+        sendResponse({ success: true, created });
+      })
+      .catch((err) => sendResponse({ success: false, message: err.message || 'Repository creation failed' }));
     return true;
   }
   if (message.action === 'setSettingsSyncPassword') {
@@ -265,8 +323,45 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       .catch(err => sendResponse({ success: false, message: err.message }));
     return true;
   }
+  if (message.action === 'listSettingsProfiles') {
+    listSettingsProfilesFromRepo()
+      .then(configs => sendResponse({ success: true, configs }))
+      .catch(err => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
   if (message.action === 'importDeviceConfig') {
-    importDeviceConfig(message.filename)
+    importDeviceConfig(message.filename, message.password || '')
+      .then(result => sendResponse(result))
+      .catch(err => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'importSettingsProfile') {
+    importSettingsProfile(message.filename, message.password || '')
+      .then(result => sendResponse(result))
+      .catch(err => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'syncSettingsToProfile') {
+    syncCurrentSettingsToProfile({
+      filename: message.filename,
+      password: message.password || '',
+      name: message.name || '',
+    })
+      .then(result => sendResponse(result))
+      .catch(err => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'createSettingsProfile') {
+    createSettingsProfile({
+      name: message.name || '',
+      password: message.password || '',
+    })
+      .then(result => sendResponse(result))
+      .catch(err => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'deleteSettingsProfile') {
+    deleteSettingsProfile(message.filename || '')
       .then(result => sendResponse(result))
       .catch(err => sendResponse({ success: false, message: err.message }));
     return true;
@@ -278,6 +373,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'getDebugLog') {
     Promise.resolve(getLogAsString()).then((content) => sendResponse({ content }));
     return true; // keep channel open for async response
+  }
+});
+
+// ---- Refresh context menu when profiles change ----
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === 'sync' && (changes.profiles || changes.activeProfileId)) {
+    refreshProfileMenuItems();
   }
 });
 
@@ -308,8 +411,12 @@ chrome.runtime.onInstalled.addListener(async (details) => {
   await migrateTokenIfNeeded();
   await migrateToProfiles();
   await initI18n();
+  setupContextMenus();
   await setupAlarm();
   await checkAndMigrate();
+  if (details.reason === 'install' && await shouldAutoOpenOnboardingWizard()) {
+    chrome.runtime.openOptionsPage();
+  }
 });
 
 chrome.runtime.onStartup.addListener(async () => {
@@ -317,8 +424,12 @@ chrome.runtime.onStartup.addListener(async () => {
   await migrateTokenIfNeeded();
   await migrateToProfiles();
   await initI18n();
+  refreshProfileMenuItems();
   await setupAlarm();
   await checkAndMigrate();
+  if (await shouldAutoOpenOnboardingWizard()) {
+    chrome.runtime.openOptionsPage();
+  }
 
   const settings = await getSettings();
   if (settings[STORAGE_KEYS.SYNC_ON_STARTUP] && isConfigured(settings)) {

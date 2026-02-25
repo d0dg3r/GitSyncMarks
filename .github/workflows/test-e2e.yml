@@ -55,3 +55,10 @@ jobs:
             playwright-report/
             test-results/
           retention-days: 7
+
+      - name: Cleanup orphaned E2E repos
+        if: always()
+        env:
+          GITSYNCMARKS_TEST_PAT: ${{ secrets.GITSYNCMARKS_TEST_PAT }}
+          GITSYNCMARKS_TEST_REPO_OWNER: ${{ vars.GITSYNCMARKS_TEST_REPO_OWNER }}
+        run: npm run cleanup:e2e-repos || true

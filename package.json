@@ -1,8 +1,8 @@
 {
   "name": "gitsyncmarks",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "private": true,
-  "description": "Your bookmarks, safe on GitHub — per-file storage, three-way merge sync, works on Chrome & Firefox. No server needed.",
+  "description": "Your bookmarks, safe on GitHub — per-file storage, three-way merge sync, works on Chrome & Firefox. No middleman.",
   "scripts": {
     "build": "bash scripts/build.sh",
     "build:chrome": "bash scripts/build.sh chrome",
@@ -13,7 +13,8 @@
     "test:e2e": "npm run build:chrome && npx playwright test",
     "test:e2e:smoke": "npm run build:chrome && npx playwright test e2e/smoke.spec.js",
     "test:e2e:sync": "npm run build:chrome && npx playwright test e2e/connection.spec.js e2e/sync.spec.js",
-    "test:e2e:report": "npx playwright show-report"
+    "test:e2e:report": "npx playwright show-report",
+    "cleanup:e2e-repos": "node scripts/cleanup-e2e-repos.js"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",

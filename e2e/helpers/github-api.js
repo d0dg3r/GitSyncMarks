@@ -3,10 +3,10 @@
  * Used to add bookmarks to the test repo (for Pull test) and verify Push results.
  */
 
-async function githubFetch(path, options = {}) {
+async function githubFetch(path, options = {}, target = {}) {
   const token = process.env.GITSYNCMARKS_TEST_PAT;
-  const owner = process.env.GITSYNCMARKS_TEST_REPO_OWNER;
-  const repo = process.env.GITSYNCMARKS_TEST_REPO;
+  const owner = target.owner || process.env.GITSYNCMARKS_TEST_REPO_OWNER;
+  const repo = target.repo || process.env.GITSYNCMARKS_TEST_REPO;
   if (!token || !owner || !repo) {
     throw new Error('Missing GITSYNCMARKS_TEST_* env vars');
   }
@@ -25,15 +25,15 @@ async function githubFetch(path, options = {}) {
   return res.json();
 }
 
-async function getFileContent(path) {
-  const data = await githubFetch(`/contents/${path}`);
+async function getFileContent(path, target = {}) {
+  const data = await githubFetch(`/contents/${path}`, {}, target);
   if (data.content) {
     return Buffer.from(data.content, 'base64').toString('utf-8');
   }
   return null;
 }
 
-async function createOrUpdateFile(path, content, message, sha = null) {
+async function createOrUpdateFile(path, content, message, sha = null, target = {}) {
   const body = {
     message,
     content: Buffer.from(content).toString('base64'),
@@ -43,12 +43,20 @@ async function createOrUpdateFile(path, content, message, sha = null) {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
-  });
+  }, target);
 }
 
-async function listDir(path) {
-  const data = await githubFetch(`/contents/${path}`);
+async function listDir(path, target = {}) {
+  const data = await githubFetch(`/contents/${path}`, {}, target);
   return Array.isArray(data) ? data : [];
+}
+
+async function tryListDir(path, target = {}) {
+  try {
+    return await listDir(path, target);
+  } catch {
+    return [];
+  }
 }
 
 /**
@@ -135,11 +143,30 @@ async function getFirstBookmarkFileInToolbar() {
 /**
  * Count bookmark JSON files in toolbar (excluding _order.json).
  */
-async function countBookmarkFilesInToolbar() {
-  const entries = await listDir('bookmarks/toolbar');
-  return entries.filter(
-    (e) => e.name.endsWith('.json') && !e.name.startsWith('_')
-  ).length;
+async function countBookmarkFilesInToolbar(target = {}) {
+  return countBookmarkFilesInFolder('bookmarks', 'toolbar', target);
+}
+
+async function countBookmarkFilesInFolder(basePath, folder, target = {}) {
+  const entries = await tryListDir(`${basePath}/${folder}`, target);
+  return entries.filter((e) => e.name.endsWith('.json') && !e.name.startsWith('_')).length;
+}
+
+async function ensureMinimalStructure(basePath = 'bookmarks', target = {}) {
+  const indexPath = `${basePath}/_index.json`;
+  const toolbarOrderPath = `${basePath}/toolbar/_order.json`;
+  const otherOrderPath = `${basePath}/other/_order.json`;
+
+  let indexSha = null;
+  let toolbarSha = null;
+  let otherSha = null;
+  try { indexSha = (await githubFetch(`/contents/${indexPath}`, {}, target)).sha || null; } catch {}
+  try { toolbarSha = (await githubFetch(`/contents/${toolbarOrderPath}`, {}, target)).sha || null; } catch {}
+  try { otherSha = (await githubFetch(`/contents/${otherOrderPath}`, {}, target)).sha || null; } catch {}
+
+  await createOrUpdateFile(indexPath, JSON.stringify({ version: 2 }, null, 2), `E2E: ensure index at ${basePath}`, indexSha, target);
+  await createOrUpdateFile(toolbarOrderPath, JSON.stringify([], null, 2), `E2E: ensure toolbar order at ${basePath}`, toolbarSha, target);
+  await createOrUpdateFile(otherOrderPath, JSON.stringify([], null, 2), `E2E: ensure other order at ${basePath}`, otherSha, target);
 }
 
 /**
@@ -165,4 +192,6 @@ module.exports = {
   hasBookmarkFiles,
   hasMinimalStructure,
   countBookmarkFilesInToolbar,
+  countBookmarkFilesInFolder,
+  ensureMinimalStructure,
 };

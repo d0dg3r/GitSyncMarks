@@ -30,9 +30,11 @@ For the full release process (versioning, tagging, store assets), see [docs/RELE
 
 Follow the existing code style. Keep changes focused and small where possible.
 
-### i18n
+### Translations
 
-UI strings live in `_locales/en/messages.json` and `_locales/de/messages.json`. Add or update entries for new user-facing text. See [docs/I18N.md](docs/I18N.md).
+GitSyncMarks supports 12 languages. You can help improve translations or add new ones — no programming required. See the **[Translation Guide](docs/TRANSLATING.md)** for step-by-step instructions.
+
+For the technical i18n architecture (developers), see [docs/I18N.md](docs/I18N.md).
 
 ## License
 

@@ -6,7 +6,7 @@
 
 import { DISPLAY_VERSION } from './lib/display-version.js';
 import { GitHubAPI } from './lib/github-api.js';
-import { checkPathSetup, initializeRemoteFolder } from './lib/onboarding.js';
+import { checkPathSetup, waitForRemoteBaseline } from './lib/onboarding.js';
 import { initI18n, applyI18n, getMessage, reloadI18n, getLanguage, SUPPORTED_LANGUAGES } from './lib/i18n.js';
 import { initTheme, applyTheme } from './lib/theme.js';
 import { serializeToJson, deserializeFromJson, bookmarkTreeToFileMap, fileMapToDashyYaml } from './lib/bookmark-serializer.js';
@@ -52,6 +52,12 @@ const STORAGE_KEYS = {
   GENERATE_DASHY_YML: 'generateDashyYml',
   SYNC_SETTINGS_TO_GIT: 'syncSettingsToGit',
   SETTINGS_SYNC_MODE: 'settingsSyncMode',
+  SETTINGS_SYNC_GLOBAL_WRITE_ENABLED: 'settingsSyncGlobalWriteEnabled',
+  ONBOARDING_WIZARD_COMPLETED: 'onboardingWizardCompleted',
+  ONBOARDING_WIZARD_DISMISSED: 'onboardingWizardDismissed',
+};
+const LOCAL_STORAGE_KEYS = {
+  SETTINGS_SYNC_CLIENT_NAME: 'settingsSyncClientName',
 };
 
 function normalizeGenMode(val) {
@@ -94,6 +100,13 @@ const ownerInput = document.getElementById('owner');
 const repoInput = document.getElementById('repo');
 const branchInput = document.getElementById('branch');
 const filepathInput = document.getElementById('filepath');
+const btnBrowseFolder = document.getElementById('btn-browse-folder');
+const folderBrowser = document.getElementById('folder-browser');
+const folderBrowserList = document.getElementById('folder-browser-list');
+const folderBrowserPath = document.getElementById('folder-browser-path');
+const folderBrowserEmpty = document.getElementById('folder-browser-empty');
+const folderBrowserLoading = document.getElementById('folder-browser-loading');
+const btnFolderUp = document.getElementById('btn-folder-up');
 const autoSyncInput = document.getElementById('auto-sync');
 const syncProfileSelect = document.getElementById('sync-profile');
 const syncCustomFields = document.getElementById('sync-custom-fields');
@@ -109,21 +122,54 @@ const generateFilesBtn = document.getElementById('generate-files-btn');
 const syncSettingsToGitInput = document.getElementById('sync-settings-to-git');
 const settingsSyncOptionsGroup = document.getElementById('settings-sync-options-group');
 const settingsSyncModeSelect = document.getElementById('settings-sync-mode');
+const settingsSyncGlobalWriteGroup = document.getElementById('settings-sync-global-write-group');
+const settingsSyncGlobalWriteEnabledInput = document.getElementById('settings-sync-global-write-enabled');
 const settingsSyncPasswordInput = document.getElementById('settings-sync-password');
 const settingsSyncSavePwBtn = document.getElementById('settings-sync-save-pw-btn');
 const settingsSyncResult = document.getElementById('settings-sync-result');
 const settingsSyncImportGroup = document.getElementById('settings-sync-import-group');
+const settingsSyncClientNameInput = document.getElementById('settings-sync-client-name');
 const settingsSyncLoadBtn = document.getElementById('settings-sync-load-btn');
 const settingsSyncDeviceList = document.getElementById('settings-sync-device-list');
 const settingsSyncImportBtn = document.getElementById('settings-sync-import-btn');
+const settingsSyncPushSelectedBtn = document.getElementById('settings-sync-push-selected-btn');
+const settingsSyncCreateBtn = document.getElementById('settings-sync-create-btn');
 const settingsSyncImportResult = document.getElementById('settings-sync-import-result');
 const notificationsModeSelect = document.getElementById('notifications-mode');
 const validateBtn = document.getElementById('validate-btn');
 const validationResult = document.getElementById('validation-result');
+const connectionPathInitGroup = document.getElementById('connection-path-init-group');
+const connectionPathInitBtn = document.getElementById('connection-path-init-btn');
+const connectionPathInitHint = document.getElementById('connection-path-init-hint');
 const onboardingConfirm = document.getElementById('onboarding-confirm');
 const onboardingConfirmText = document.getElementById('onboarding-confirm-text');
 const onboardingConfirmYesBtn = document.getElementById('onboarding-confirm-yes-btn');
 const onboardingConfirmNoBtn = document.getElementById('onboarding-confirm-no-btn');
+const onboardingWizardScreen = document.getElementById('onboarding-wizard-screen');
+const settingsShell = document.getElementById('settings-shell');
+const onboardingWizardProgress = document.getElementById('onboarding-wizard-progress');
+const onboardingWizardStepTitle = document.getElementById('onboarding-wizard-step-title');
+const onboardingWizardStepText = document.getElementById('onboarding-wizard-step-text');
+const onboardingWizardResult = document.getElementById('onboarding-wizard-result');
+const onboardingWizardSpinner = document.getElementById('onboarding-wizard-spinner');
+const onboardingWizardHint = document.getElementById('onboarding-wizard-hint');
+const onboardingWizardActionBtn = document.getElementById('onboarding-wizard-action-btn');
+const onboardingWizardBackBtn = document.getElementById('onboarding-wizard-back-btn');
+const onboardingWizardNextBtn = document.getElementById('onboarding-wizard-next-btn');
+const onboardingWizardSkipBtn = document.getElementById('onboarding-wizard-skip-btn');
+const onboardingWizardStartBtn = document.getElementById('onboarding-wizard-start-btn');
+const onboardingWizardTokenHelp = document.getElementById('onboarding-wizard-token-help');
+const onboardingWizardHasTokenGroup = document.getElementById('onboarding-wizard-has-token-group');
+const onboardingWizardHasTokenSelect = document.getElementById('onboarding-wizard-has-token');
+const onboardingWizardTokenGroup = document.getElementById('onboarding-wizard-token-group');
+const onboardingWizardTokenInput = document.getElementById('onboarding-wizard-token');
+const onboardingWizardRepoFlowGroup = document.getElementById('onboarding-wizard-repo-flow-group');
+const onboardingWizardRepoFlowSelect = document.getElementById('onboarding-wizard-repo-flow');
+const onboardingWizardRepoGroup = document.getElementById('onboarding-wizard-repo-group');
+const onboardingWizardOwnerInput = document.getElementById('onboarding-wizard-owner');
+const onboardingWizardRepoInput = document.getElementById('onboarding-wizard-repo');
+const onboardingWizardBranchInput = document.getElementById('onboarding-wizard-branch');
+const onboardingWizardPathInput = document.getElementById('onboarding-wizard-path');
 const saveGitHubResult = document.getElementById('save-github-result');
 const saveSyncResult = document.getElementById('save-sync-result');
 const githubReposCard = document.getElementById('github-repos-card');
@@ -195,13 +241,98 @@ document.addEventListener('DOMContentLoaded', async () => {
   populateLanguageDropdown();
   applyI18n();
   document.title = `GitSyncMarks – ${getMessage('options_subtitle')}`;
+
+  // Screenshot demo mode: show wizard at specific step without API calls
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('screenshot') === 'wizard') {
+    const stepParam = params.get('step');
+    const stepIndex = stepParam !== null ? Math.max(0, Math.min(7, parseInt(stepParam, 10) || 0)) : 0;
+    wizardState.active = true;
+    wizardState.stepIndex = stepIndex;
+    onboardingWizardScreen.style.display = '';
+    settingsShell.style.display = 'none';
+    renderOnboardingWizardStep();
+    return;
+  }
+
   await loadSettings();
+  loadShortcuts();
 
   // Show version: pre-release display or manifest
   const versionEl = document.getElementById('app-version');
   if (versionEl) {
     const version = DISPLAY_VERSION ?? chrome.runtime.getManifest().version;
     versionEl.textContent = version;
+  }
+});
+
+// ==============================
+// Help Tab: Dynamic Keyboard Shortcuts
+// ==============================
+
+const SHORTCUT_FORMAT = {
+  Period: '.', Comma: ',', Space: 'Space',
+  ArrowUp: '↑', ArrowDown: '↓', ArrowLeft: '←', ArrowRight: '→',
+};
+
+function formatShortcut(raw) {
+  if (!raw) return getMessage('help_shortcutNotSet');
+  return raw.split('+').map(p => SHORTCUT_FORMAT[p] || p).join('+');
+}
+
+function loadShortcuts() {
+  if (!chrome.commands?.getAll) return;
+  chrome.commands.getAll((commands) => {
+    for (const cmd of commands) {
+      if (cmd.name === 'quick-sync') {
+        const el = document.getElementById('shortcut-quick-sync');
+        if (el) el.textContent = formatShortcut(cmd.shortcut);
+      } else if (cmd.name === 'open-options') {
+        const el = document.getElementById('shortcut-open-options');
+        if (el) el.textContent = formatShortcut(cmd.shortcut);
+      }
+    }
+  });
+}
+
+document.getElementById('btn-customize-shortcuts')?.addEventListener('click', () => {
+  const isFirefox = navigator.userAgent.includes('Firefox');
+  const url = isFirefox ? 'about:addons' : 'chrome://extensions/shortcuts';
+  chrome.tabs.create({ url });
+});
+
+// ==============================
+// Files Tab: Factory Reset
+// ==============================
+
+const resetBtn = document.getElementById('btn-reset-extension');
+const resetConfirmDialog = document.getElementById('reset-confirm-dialog');
+const resetConfirmBtn = document.getElementById('btn-reset-confirm');
+const resetCancelBtn = document.getElementById('btn-reset-cancel');
+
+resetBtn?.addEventListener('click', () => {
+  resetBtn.style.display = 'none';
+  resetConfirmDialog.style.display = 'flex';
+});
+
+resetCancelBtn?.addEventListener('click', () => {
+  resetConfirmDialog.style.display = 'none';
+  resetBtn.style.display = '';
+});
+
+resetConfirmBtn?.addEventListener('click', async () => {
+  resetConfirmBtn.disabled = true;
+  resetCancelBtn.disabled = true;
+  try {
+    await chrome.storage.sync.clear();
+    await chrome.storage.local.clear();
+    location.reload();
+  } catch (err) {
+    console.error('[GitSyncMarks] Reset failed:', err);
+    resetConfirmBtn.disabled = false;
+    resetCancelBtn.disabled = false;
+    resetConfirmDialog.style.display = 'none';
+    resetBtn.style.display = '';
   }
 });
 
@@ -231,6 +362,183 @@ function getEffectiveDebounceMs() {
   if (profile === 'custom') return (parseInt(debounceDelayInput.value, 10) || 5) * 1000;
   const preset = SYNC_PRESETS[profile];
   return preset?.debounceMs ?? 5000;
+}
+
+function updateSettingsSyncVisibility() {
+  settingsSyncOptionsGroup.style.display = syncSettingsToGitInput.checked ? '' : 'none';
+  // Global mode is temporarily unavailable; keep UI visible but fixed to individual.
+  settingsSyncModeSelect.value = 'individual';
+  settingsSyncModeSelect.disabled = true;
+  settingsSyncImportGroup.style.display = syncSettingsToGitInput.checked ? '' : 'none';
+  settingsSyncGlobalWriteGroup.style.display = 'none';
+}
+
+let settingsProfiles = [];
+
+function settingsSyncClientAlias() {
+  const raw = String(settingsSyncClientNameInput?.value || '').trim().toLowerCase();
+  return raw.replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 48);
+}
+const WIZARD_STEPS = ['welcome', 'tokenHelp', 'hasToken', 'tokenInput', 'repoDecision', 'repoDetails', 'environment', 'finish'];
+const wizardState = {
+  active: false,
+  stepIndex: 0,
+  tokenValidated: false,
+  environmentChecked: false,
+  pathStatus: null,
+  username: '',
+  repoRef: '',
+  firstSyncDone: false,
+  repoFlow: 'manual',
+};
+
+function resetWizardState() {
+  wizardState.stepIndex = 0;
+  wizardState.tokenValidated = false;
+  wizardState.environmentChecked = false;
+  wizardState.pathStatus = null;
+  wizardState.username = '';
+  wizardState.repoRef = '';
+  wizardState.firstSyncDone = false;
+  wizardState.repoFlow = 'manual';
+}
+
+async function persistWizardState(completed, dismissed) {
+  await chrome.storage.sync.set({
+    [STORAGE_KEYS.ONBOARDING_WIZARD_COMPLETED]: completed === true,
+    [STORAGE_KEYS.ONBOARDING_WIZARD_DISMISSED]: dismissed === true,
+  });
+}
+
+async function startOnboardingWizard({ manual = false } = {}) {
+  resetWizardState();
+  onboardingWizardTokenInput.value = tokenInput.value || '';
+  onboardingWizardOwnerInput.value = ownerInput.value || '';
+  onboardingWizardRepoInput.value = repoInput.value || '';
+  onboardingWizardBranchInput.value = branchInput.value || 'main';
+  onboardingWizardPathInput.value = filepathInput.value || 'bookmarks';
+  onboardingWizardHasTokenSelect.value = 'yes';
+  onboardingWizardRepoFlowSelect.value = 'manual';
+  wizardState.active = true;
+  onboardingWizardScreen.style.display = '';
+  settingsShell.style.display = 'none';
+  onboardingWizardResult.textContent = '';
+  onboardingWizardResult.className = 'validation-result';
+  if (manual) {
+    await persistWizardState(false, false);
+  }
+  renderOnboardingWizardStep();
+}
+
+async function completeOnboardingWizard() {
+  wizardState.active = false;
+  onboardingWizardScreen.style.display = 'none';
+  settingsShell.style.display = '';
+  await persistWizardState(true, false);
+}
+
+async function dismissOnboardingWizard() {
+  wizardState.active = false;
+  onboardingWizardScreen.style.display = 'none';
+  settingsShell.style.display = '';
+  await persistWizardState(false, true);
+  showValidation(getMessage('options_onboardingWizardDismissed'), 'success');
+}
+
+function setWizardResult(message, type = 'success') {
+  onboardingWizardResult.textContent = message;
+  onboardingWizardResult.className = `validation-result ${type}`;
+}
+
+function setWizardBusy(isBusy, loadingMessage = '') {
+  onboardingWizardSpinner.style.display = isBusy ? 'inline-block' : 'none';
+  onboardingWizardBackBtn.disabled = isBusy || wizardState.stepIndex === 0;
+  onboardingWizardNextBtn.disabled = isBusy;
+  onboardingWizardSkipBtn.disabled = isBusy;
+  onboardingWizardActionBtn.disabled = isBusy;
+  if (isBusy && loadingMessage) {
+    setWizardResult(loadingMessage, 'loading');
+  }
+}
+
+function wizardStepText(stepKey) {
+  switch (stepKey) {
+    case 'welcome':
+      return {
+        title: getMessage('options_onboardingWizardStepWelcomeTitle'),
+        text: getMessage('options_onboardingWizardStepWelcomeText'),
+      };
+    case 'tokenHelp':
+      return {
+        title: getMessage('options_onboardingWizardStepTokenHelpTitle'),
+        text: getMessage('options_onboardingWizardStepTokenHelpText'),
+      };
+    case 'hasToken':
+      return {
+        title: getMessage('options_onboardingWizardStepHasTokenTitle'),
+        text: getMessage('options_onboardingWizardStepHasTokenText'),
+      };
+    case 'tokenInput':
+      return {
+        title: getMessage('options_onboardingWizardStepTokenTitle'),
+        text: getMessage('options_onboardingWizardStepTokenText'),
+      };
+    case 'repoDecision':
+      return {
+        title: getMessage('options_onboardingWizardStepRepoDecisionTitle'),
+        text: getMessage('options_onboardingWizardStepRepoDecisionText'),
+      };
+    case 'repoDetails':
+      return {
+        title: getMessage('options_onboardingWizardStepRepoTitle'),
+        text: getMessage('options_onboardingWizardStepRepoText'),
+      };
+    case 'environment':
+      return {
+        title: getMessage('options_onboardingWizardStepValidateTitle'),
+        text: wizardState.environmentChecked
+          ? (wizardState.pathStatus === 'hasBookmarks'
+            ? getMessage('options_onboardingWizardStepSyncTextExisting')
+            : getMessage('options_onboardingWizardStepSyncTextEmpty'))
+          : getMessage('options_onboardingWizardStepValidateText'),
+      };
+    default:
+      return {
+        title: getMessage('options_onboardingWizardStepFinishTitle'),
+        text: getMessage('options_onboardingWizardStepFinishText'),
+      };
+  }
+}
+
+function renderOnboardingWizardStep() {
+  if (!wizardState.active) return;
+  const stepKey = WIZARD_STEPS[wizardState.stepIndex];
+  const step = wizardStepText(stepKey);
+  onboardingWizardProgress.textContent = `${wizardState.stepIndex + 1} / ${WIZARD_STEPS.length}`;
+  onboardingWizardStepTitle.textContent = step.title;
+  onboardingWizardStepText.textContent = step.text;
+
+  onboardingWizardBackBtn.disabled = wizardState.stepIndex === 0;
+  onboardingWizardSkipBtn.style.display = stepKey === 'finish' ? 'none' : '';
+  onboardingWizardNextBtn.textContent = stepKey === 'finish'
+    ? getMessage('options_onboardingWizardFinish')
+    : getMessage('options_onboardingWizardNext');
+
+  onboardingWizardTokenHelp.style.display = stepKey === 'tokenHelp' ? '' : 'none';
+  onboardingWizardHasTokenGroup.style.display = stepKey === 'hasToken' ? '' : 'none';
+  onboardingWizardTokenGroup.style.display = stepKey === 'tokenInput' ? '' : 'none';
+  onboardingWizardRepoFlowGroup.style.display = stepKey === 'repoDecision' ? '' : 'none';
+  onboardingWizardRepoGroup.style.display = stepKey === 'repoDetails' ? '' : 'none';
+  onboardingWizardHint.style.display = stepKey === 'environment' ? '' : 'none';
+  if (stepKey === 'environment') {
+    onboardingWizardHint.textContent = getMessage('options_onboardingWizardFirstSyncHint');
+  } else {
+    onboardingWizardHint.textContent = '';
+  }
+  onboardingWizardSpinner.style.display = 'none';
+
+  // Next now drives validation and bootstrap flow; keep action button hidden.
+  onboardingWizardActionBtn.style.display = 'none';
 }
 
 function populateLanguageDropdown() {
@@ -307,7 +615,10 @@ async function loadSettings() {
     generateFeedXml: 'auto',
     generateDashyYml: 'off',
     syncSettingsToGit: false,
-    settingsSyncMode: 'global',
+    settingsSyncMode: 'individual',
+    settingsSyncGlobalWriteEnabled: false,
+    onboardingWizardCompleted: false,
+    onboardingWizardDismissed: false,
     theme: 'auto',
     profileSwitchWithoutConfirm: false,
     debugLogEnabled: false,
@@ -327,14 +638,21 @@ async function loadSettings() {
   generateFeedXmlSelect.value = normalizeGenMode(globals.generateFeedXml);
   generateDashyYmlSelect.value = normalizeGenMode(globals.generateDashyYml);
   syncSettingsToGitInput.checked = globals.syncSettingsToGit === true;
-  settingsSyncModeSelect.value = globals.settingsSyncMode || 'global';
-  settingsSyncOptionsGroup.style.display = syncSettingsToGitInput.checked ? '' : 'none';
-  settingsSyncImportGroup.style.display = settingsSyncModeSelect.value === 'individual' ? '' : 'none';
+  settingsSyncModeSelect.value = 'individual';
+  settingsSyncGlobalWriteEnabledInput.checked = false;
+  updateSettingsSyncVisibility();
+  if (globals.syncSettingsToGit === true) {
+    await refreshSettingsProfiles();
+  } else {
+    renderSettingsProfiles([]);
+  }
   const localPwState = await chrome.storage.local.get({ settingsSyncPassword: '' });
   if (localPwState.settingsSyncPassword) {
     settingsSyncPasswordInput.value = '********';
     settingsSyncPasswordInput.dataset.hasPassword = 'true';
   }
+  const localNameState = await chrome.storage.local.get({ [LOCAL_STORAGE_KEYS.SETTINGS_SYNC_CLIENT_NAME]: '' });
+  settingsSyncClientNameInput.value = localNameState[LOCAL_STORAGE_KEYS.SETTINGS_SYNC_CLIENT_NAME] || '';
   updateGenerateFilesBtn();
   const mode = globals.notificationsMode;
   const oldEnabled = globals.notificationsEnabled;
@@ -359,8 +677,15 @@ async function loadSettings() {
   profileRenameDialog.style.display = 'none';
   profileMessage.style.display = 'none';
   onboardingConfirm.style.display = 'none';
+  resetConfirmDialog.style.display = 'none';
+  resetBtn.style.display = '';
+  hideConnectionPathInitAction();
 
   debugLogEnabledInput.checked = globals.debugLogEnabled === true;
+  onboardingWizardStartBtn.style.display = '';
+  if (!wizardState.active && globals.onboardingWizardCompleted !== true && globals.onboardingWizardDismissed !== true) {
+    await startOnboardingWizard();
+  }
 }
 
 // Profile selector: switching profiles replaces bookmarks
@@ -600,6 +925,7 @@ languageSelect.addEventListener('change', async () => {
   languageSelect.value = newLang;
   applyI18n();
   document.title = `GitSyncMarks – ${getMessage('options_subtitle')}`;
+  if (wizardState.active) renderOnboardingWizardStep();
 });
 
 // ==============================
@@ -675,7 +1001,30 @@ function hideOnboardingConfirm() {
   onboardingConfirm.style.display = 'none';
 }
 
-validateBtn.addEventListener('click', async () => {
+function hideConnectionPathInitAction() {
+  connectionPathInitGroup.style.display = 'none';
+  connectionPathInitGroup.dataset.path = '';
+  connectionPathInitHint.textContent = '';
+}
+
+function showConnectionPathInitAction(basePath) {
+  connectionPathInitGroup.dataset.path = basePath;
+  connectionPathInitHint.textContent = getMessage('options_onboardingInitPathHint', [basePath]);
+  connectionPathInitGroup.style.display = '';
+}
+
+async function initializePathAndRunFirstPush() {
+  try {
+    // Deterministic bootstrap entry: uses sync merge path instead of push-loop retries.
+    const result = await chrome.runtime.sendMessage({ action: 'bootstrapFirstSync' });
+    if (result?.success) return;
+    throw new Error(result?.message || 'Push failed');
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
   await saveSettings();
   const token = tokenInput.value.trim();
   const owner = ownerInput.value.trim();
@@ -684,7 +1033,7 @@ validateBtn.addEventListener('click', async () => {
 
   if (!token) {
     showValidation(getMessage('options_pleaseEnterToken'), 'error');
-    return;
+    return { ok: false };
   }
 
   showValidation(getMessage('options_checking'), 'loading');
@@ -695,41 +1044,36 @@ validateBtn.addEventListener('click', async () => {
     const tokenResult = await api.validateToken();
     if (!tokenResult.valid) {
       showValidation(getMessage('options_invalidToken'), 'error');
-      return;
+      return { ok: false };
     }
 
     if (!tokenResult.scopes.includes('repo')) {
+      hideConnectionPathInitAction();
       showValidation(getMessage('options_tokenValidMissingScope', [tokenResult.username]), 'error');
-      return;
+      return { ok: false };
     }
 
     if (owner && repo) {
       const repoExists = await api.checkRepo();
       if (!repoExists) {
+        hideConnectionPathInitAction();
         showValidation(getMessage('options_tokenValidRepoNotFound', [tokenResult.username, `${owner}/${repo}`]), 'error');
-        return;
+        return { ok: false };
       }
       const basePath = filepathInput.value.trim() || 'bookmarks';
       const pathCheck = await checkPathSetup(api, basePath);
-      if (pathCheck.status === 'unreachable' || pathCheck.status === 'empty') {
-        const confirmed = await showOnboardingConfirm(
-          getMessage('options_onboardingCreateFolder', [basePath]),
-          getMessage('options_onboardingCreateBtn')
-        );
-        hideOnboardingConfirm();
-        if (confirmed) {
-          try {
-            await initializeRemoteFolder(api, basePath);
-            showValidation(getMessage('options_onboardingCreateSuccess'), 'success');
-          } catch (createErr) {
-            showValidation(getMessage('options_error', [createErr.message]), 'error');
-          }
-        } else {
-          showValidation(getMessage('options_connectionOk', [tokenResult.username, `${owner}/${repo}`]), 'success');
-        }
-        return;
+      if (offerInteractiveActions && (pathCheck.status === 'unreachable' || pathCheck.status === 'empty')) {
+        showConnectionPathInitAction(basePath);
+        showValidation(getMessage('options_connectionOk', [tokenResult.username, `${owner}/${repo}`]), 'success');
+        return {
+          ok: true,
+          username: tokenResult.username,
+          repoRef: `${owner}/${repo}`,
+          pathStatus: pathCheck.status,
+        };
       }
-      if (pathCheck.status === 'hasBookmarks') {
+      hideConnectionPathInitAction();
+      if (offerInteractiveActions && pathCheck.status === 'hasBookmarks') {
         const confirmed = await showOnboardingConfirm(
           getMessage('options_onboardingPullNow'),
           getMessage('options_onboardingPullBtn')
@@ -749,11 +1093,299 @@ validateBtn.addEventListener('click', async () => {
         return;
       }
       showValidation(getMessage('options_connectionOk', [tokenResult.username, `${owner}/${repo}`]), 'success');
+      return {
+        ok: true,
+        username: tokenResult.username,
+        repoRef: `${owner}/${repo}`,
+        pathStatus: pathCheck.status,
+      };
     } else {
+      hideConnectionPathInitAction();
       showValidation(getMessage('options_tokenValidSpecifyRepo', [tokenResult.username]), 'success');
+      return {
+        ok: true,
+        username: tokenResult.username,
+        repoRef: '',
+        pathStatus: 'empty',
+      };
     }
   } catch (err) {
+    hideConnectionPathInitAction();
     showValidation(getMessage('options_error', [err.message]), 'error');
+    return { ok: false, error: err };
+  }
+}
+
+validateBtn.addEventListener('click', async () => {
+  await validateAndInspectRepo({ offerInteractiveActions: true });
+});
+
+connectionPathInitBtn.addEventListener('click', async () => {
+  const token = tokenInput.value.trim();
+  const owner = ownerInput.value.trim();
+  const repo = repoInput.value.trim();
+  const branch = branchInput.value.trim() || 'main';
+  const basePath = connectionPathInitGroup.dataset.path || filepathInput.value.trim() || 'bookmarks';
+  if (!token || !owner || !repo) {
+    showValidation(getMessage('options_browseFolderNotConfigured'), 'error');
+    return;
+  }
+
+  connectionPathInitBtn.disabled = true;
+  showValidation(getMessage('options_checking'), 'loading');
+  try {
+    const api = new GitHubAPI(token, owner, repo, branch);
+    const pathCheck = await checkPathSetup(api, basePath);
+    if (pathCheck.status === 'hasBookmarks') {
+      hideConnectionPathInitAction();
+      showValidation(getMessage('options_onboardingInitPathAlreadyExists', [basePath]), 'success');
+      return;
+    }
+    await saveSettings();
+    await initializePathAndRunFirstPush();
+    hideConnectionPathInitAction();
+    showValidation(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
+  } catch (err) {
+    showValidation(getMessage('options_error', [err.message]), 'error');
+  } finally {
+    connectionPathInitBtn.disabled = false;
+  }
+});
+
+onboardingWizardStartBtn.addEventListener('click', async () => {
+  await startOnboardingWizard({ manual: true });
+});
+
+function syncWizardFieldsToConnectionForm() {
+  tokenInput.value = onboardingWizardTokenInput.value.trim();
+  ownerInput.value = onboardingWizardOwnerInput.value.trim();
+  repoInput.value = onboardingWizardRepoInput.value.trim();
+  branchInput.value = onboardingWizardBranchInput.value.trim() || 'main';
+  filepathInput.value = onboardingWizardPathInput.value.trim() || 'bookmarks';
+}
+
+async function runWizardTokenValidation() {
+  onboardingWizardResult.textContent = '';
+  const token = onboardingWizardTokenInput.value.trim();
+  if (!token) {
+    setWizardResult(getMessage('options_pleaseEnterToken'), 'error');
+    return false;
+  }
+  const api = new GitHubAPI(token, 'x', 'x', 'main');
+  const tokenResult = await api.validateToken();
+  if (!tokenResult.valid) {
+    setWizardResult(getMessage('options_invalidToken'), 'error');
+    return false;
+  }
+  if (!tokenResult.scopes.includes('repo')) {
+    setWizardResult(getMessage('options_tokenValidMissingScope', [tokenResult.username]), 'error');
+    return false;
+  }
+  wizardState.username = tokenResult.username;
+  wizardState.tokenValidated = true;
+  if (!onboardingWizardOwnerInput.value.trim()) onboardingWizardOwnerInput.value = tokenResult.username;
+  setWizardResult(getMessage('options_onboardingWizardTokenValidated'), 'success');
+  return true;
+}
+
+async function runWizardEnvironmentCheck() {
+  if (!wizardState.tokenValidated) {
+    setWizardResult(getMessage('options_onboardingWizardNeedConnection'), 'error');
+    return false;
+  }
+
+  syncWizardFieldsToConnectionForm();
+  await saveSettings();
+
+  const token = onboardingWizardTokenInput.value.trim();
+  const owner = onboardingWizardOwnerInput.value.trim();
+  const repo = onboardingWizardRepoInput.value.trim();
+  const branch = onboardingWizardBranchInput.value.trim() || 'main';
+  const basePath = onboardingWizardPathInput.value.trim() || 'bookmarks';
+  if (!owner || !repo) {
+    setWizardResult(getMessage('options_onboardingWizardRepoRequired'), 'error');
+    return false;
+  }
+
+  if (onboardingWizardRepoFlowSelect.value === 'autoCreate') {
+    const normalizedOwner = owner.toLowerCase();
+    const normalizedUser = String(wizardState.username || '').toLowerCase();
+    if (!normalizedUser || normalizedOwner !== normalizedUser) {
+      setWizardResult(
+        `${getMessage('options_onboardingWizardRepoOwnerMismatch', [wizardState.username || ''])} ${getMessage('options_onboardingWizardRepoUserOnlyHint')}`,
+        'error'
+      );
+      return false;
+    }
+    const createResp = await chrome.runtime.sendMessage({
+      action: 'createRepository',
+      token,
+      owner,
+      repo,
+      branch,
+    });
+    if (!createResp?.success && !String(createResp?.message || '').includes('name already exists')) {
+      const message = createResp?.message || getMessage('options_onboardingWizardRepoCreateFailed');
+      const denied = /permission|forbidden|denied|access/i.test(message);
+      setWizardResult(
+        denied ? getMessage('options_onboardingWizardRepoCreatePermissionDenied') : message,
+        'error'
+      );
+      return false;
+    }
+  }
+
+  const api = new GitHubAPI(token, owner, repo, branch);
+  const repoExists = await api.checkRepo();
+  if (!repoExists) {
+    setWizardResult(getMessage('options_tokenValidRepoNotFound', [wizardState.username || owner, `${owner}/${repo}`]), 'error');
+    return false;
+  }
+  const pathCheck = await checkPathSetup(api, basePath);
+  wizardState.repoRef = `${owner}/${repo}`;
+  wizardState.pathStatus = pathCheck.status;
+  wizardState.firstSyncDone = false;
+  if (onboardingWizardRepoFlowSelect.value === 'autoCreate' && pathCheck.status !== 'hasBookmarks') {
+    await waitForRemoteBaseline(api);
+    await initializePathAndRunFirstPush();
+    wizardState.firstSyncDone = true;
+    setWizardResult(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
+  } else {
+    setWizardResult(getMessage('options_onboardingWizardEnvironmentChecked'), 'success');
+  }
+  wizardState.environmentChecked = true;
+  renderOnboardingWizardStep();
+  return true;
+}
+
+async function runWizardSyncAction() {
+  if (!wizardState.environmentChecked) {
+    setWizardResult(getMessage('options_onboardingWizardNeedAction'), 'error');
+    return false;
+  }
+  const token = onboardingWizardTokenInput.value.trim();
+  const owner = onboardingWizardOwnerInput.value.trim();
+  const repo = onboardingWizardRepoInput.value.trim();
+  const branch = onboardingWizardBranchInput.value.trim() || 'main';
+  const basePath = onboardingWizardPathInput.value.trim() || 'bookmarks';
+  const api = new GitHubAPI(token, owner, repo, branch);
+
+  if (wizardState.pathStatus === 'hasBookmarks') {
+    const pullResult = await chrome.runtime.sendMessage({ action: 'pull' });
+    if (!pullResult?.success) {
+      setWizardResult(pullResult?.message || 'Pull failed', 'error');
+      return false;
+    }
+    setWizardResult(getMessage('options_onboardingPullSuccess'), 'success');
+    wizardState.firstSyncDone = true;
+    return true;
+  }
+
+  await initializePathAndRunFirstPush();
+  setWizardResult(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
+  wizardState.firstSyncDone = true;
+  return true;
+}
+
+onboardingWizardBackBtn.addEventListener('click', () => {
+  if (!wizardState.active) return;
+  if (wizardState.stepIndex > 0) {
+    wizardState.stepIndex -= 1;
+    renderOnboardingWizardStep();
+  }
+});
+
+onboardingWizardSkipBtn.addEventListener('click', async () => {
+  if (!wizardState.active) return;
+  await dismissOnboardingWizard();
+});
+
+onboardingWizardActionBtn.addEventListener('click', async () => {
+  if (!wizardState.active) return;
+  const stepKey = WIZARD_STEPS[wizardState.stepIndex];
+  const shouldShowBusy = stepKey === 'tokenInput' || stepKey === 'environment';
+  if (shouldShowBusy) {
+    const loadingMsg = stepKey === 'environment'
+      ? getMessage('options_onboardingWizardSyncInProgress')
+      : getMessage('options_checking');
+    setWizardBusy(true, loadingMsg);
+  } else {
+    onboardingWizardActionBtn.disabled = true;
+  }
+  try {
+    if (stepKey === 'tokenInput') {
+      await runWizardTokenValidation();
+      return;
+    }
+    if (stepKey === 'environment') {
+      if (!wizardState.environmentChecked) {
+        await runWizardEnvironmentCheck();
+      } else {
+        await runWizardSyncAction();
+      }
+      return;
+    }
+  } catch (err) {
+    setWizardResult(getMessage('options_error', [err.message]), 'error');
+  } finally {
+    if (shouldShowBusy) {
+      setWizardBusy(false);
+    } else {
+      onboardingWizardActionBtn.disabled = false;
+    }
+  }
+});
+
+onboardingWizardNextBtn.addEventListener('click', async () => {
+  if (!wizardState.active) return;
+  const stepKey = WIZARD_STEPS[wizardState.stepIndex];
+  const shouldShowBusy = stepKey === 'tokenInput' || stepKey === 'environment';
+  if (shouldShowBusy) {
+    const loadingMsg = stepKey === 'environment'
+      ? getMessage('options_onboardingWizardSyncInProgress')
+      : getMessage('options_checking');
+    setWizardBusy(true, loadingMsg);
+  } else {
+    onboardingWizardNextBtn.disabled = true;
+  }
+  try {
+    if (stepKey === 'hasToken' && onboardingWizardHasTokenSelect.value === 'no') {
+      wizardState.stepIndex = WIZARD_STEPS.indexOf('tokenHelp');
+      renderOnboardingWizardStep();
+      return;
+    }
+    if (stepKey === 'tokenInput') {
+      const ok = await runWizardTokenValidation();
+      if (!ok) return;
+    }
+    if (stepKey === 'repoDecision') {
+      wizardState.repoFlow = onboardingWizardRepoFlowSelect.value;
+    }
+    if (stepKey === 'environment') {
+      if (!wizardState.environmentChecked) {
+        const checked = await runWizardEnvironmentCheck();
+        if (!checked) return;
+      }
+      if (!wizardState.firstSyncDone) {
+        const synced = await runWizardSyncAction();
+        if (!synced) return;
+      }
+    }
+    if (stepKey === 'finish') {
+      await completeOnboardingWizard();
+      showValidation(getMessage('options_onboardingWizardCompleted'), 'success');
+      return;
+    }
+    wizardState.stepIndex = Math.min(wizardState.stepIndex + 1, WIZARD_STEPS.length - 1);
+    renderOnboardingWizardStep();
+  } catch (err) {
+    setWizardResult(getMessage('options_error', [err.message]), 'error');
+  } finally {
+    if (shouldShowBusy) {
+      setWizardBusy(false);
+    } else {
+      onboardingWizardNextBtn.disabled = false;
+    }
   }
 });
 
@@ -801,7 +1433,8 @@ async function saveSettings() {
       [STORAGE_KEYS.GENERATE_FEED_XML]: generateFeedXmlSelect.value,
       [STORAGE_KEYS.GENERATE_DASHY_YML]: generateDashyYmlSelect.value,
       [STORAGE_KEYS.SYNC_SETTINGS_TO_GIT]: syncSettingsToGitInput.checked,
-      [STORAGE_KEYS.SETTINGS_SYNC_MODE]: settingsSyncModeSelect.value,
+      [STORAGE_KEYS.SETTINGS_SYNC_MODE]: 'individual',
+      [STORAGE_KEYS.SETTINGS_SYNC_GLOBAL_WRITE_ENABLED]: false,
       [STORAGE_KEYS.LANGUAGE]: languageSelect.value,
       [STORAGE_KEYS.PROFILE_SWITCH_WITHOUT_CONFIRM]: profileSwitchWithoutConfirmInput.checked,
     });
@@ -844,6 +1477,103 @@ repoInput.addEventListener('change', saveSettings);
 branchInput.addEventListener('change', saveSettings);
 filepathInput.addEventListener('change', saveSettings);
 profileSwitchWithoutConfirmInput.addEventListener('change', saveSettings);
+
+// Folder browser
+let _folderBrowserCurrentPath = '';
+
+function closeFolderBrowser() {
+  folderBrowser.classList.add('hidden');
+}
+
+async function loadFolderBrowserContents(path) {
+  folderBrowserList.innerHTML = '';
+  folderBrowserEmpty.classList.add('hidden');
+  folderBrowserLoading.classList.remove('hidden');
+  _folderBrowserCurrentPath = path;
+  folderBrowserPath.textContent = '/' + (path || '');
+  btnFolderUp.disabled = !path;
+
+  try {
+    const token = tokenInput.value.trim();
+    const owner = ownerInput.value.trim();
+    const repo = repoInput.value.trim();
+    const branch = branchInput.value.trim() || 'main';
+    const api = new GitHubAPI(token, owner, repo, branch);
+    const dirs = await api.listContents(path);
+
+    folderBrowserLoading.classList.add('hidden');
+
+    if (dirs.length === 0) {
+      folderBrowserEmpty.classList.remove('hidden');
+      return;
+    }
+
+    for (const dir of dirs) {
+      const li = document.createElement('li');
+
+      const icon = document.createElement('span');
+      icon.className = 'folder-icon';
+      icon.textContent = '\uD83D\uDCC1';
+      li.appendChild(icon);
+
+      const name = document.createElement('span');
+      name.className = 'folder-name';
+      name.textContent = dir.name;
+      name.addEventListener('click', () => loadFolderBrowserContents(dir.path));
+      li.appendChild(name);
+
+      const selectBtn = document.createElement('button');
+      selectBtn.type = 'button';
+      selectBtn.className = 'folder-select-btn';
+      selectBtn.textContent = getMessage('options_browseFolderSelect') || 'Select';
+      selectBtn.addEventListener('click', () => {
+        filepathInput.value = dir.path;
+        closeFolderBrowser();
+        saveSettings();
+      });
+      li.appendChild(selectBtn);
+
+      folderBrowserList.appendChild(li);
+    }
+  } catch (err) {
+    folderBrowserLoading.classList.add('hidden');
+    folderBrowserEmpty.textContent = err.message || 'Error';
+    folderBrowserEmpty.classList.remove('hidden');
+  }
+}
+
+btnBrowseFolder.addEventListener('click', () => {
+  if (!folderBrowser.classList.contains('hidden')) {
+    closeFolderBrowser();
+    return;
+  }
+
+  const token = tokenInput.value.trim();
+  const owner = ownerInput.value.trim();
+  const repo = repoInput.value.trim();
+  if (!token || !owner || !repo) {
+    showValidation(getMessage('options_browseFolderNotConfigured') || 'Please configure token, owner, and repo first', 'error');
+    return;
+  }
+
+  folderBrowser.classList.remove('hidden');
+  loadFolderBrowserContents('');
+});
+
+btnFolderUp.addEventListener('click', () => {
+  const parts = _folderBrowserCurrentPath.split('/').filter(Boolean);
+  parts.pop();
+  loadFolderBrowserContents(parts.join('/'));
+});
+
+document.addEventListener('click', (e) => {
+  if (!folderBrowser.classList.contains('hidden') &&
+      !folderBrowser.contains(e.target) &&
+      e.target !== btnBrowseFolder &&
+      !btnBrowseFolder.contains(e.target)) {
+    closeFolderBrowser();
+  }
+});
 
 // Debug log: toggle saves immediately; export downloads log file
 debugLogEnabledInput.addEventListener('change', async () => {
@@ -956,7 +1686,7 @@ generateDashyYmlSelect.addEventListener('change', onGenerateFilesToggleChange);
 
 // Settings sync to Git
 syncSettingsToGitInput.addEventListener('change', async () => {
-  settingsSyncOptionsGroup.style.display = syncSettingsToGitInput.checked ? '' : 'none';
+  updateSettingsSyncVisibility();
   await saveSettings();
   if (!syncSettingsToGitInput.checked) {
     try {
@@ -965,12 +1695,26 @@ syncSettingsToGitInput.addEventListener('change', async () => {
     settingsSyncPasswordInput.value = '';
     settingsSyncPasswordInput.dataset.hasPassword = '';
     settingsSyncResult.textContent = '';
+    renderSettingsProfiles([]);
+  } else {
+    await refreshSettingsProfiles();
   }
 });
 
 settingsSyncModeSelect.addEventListener('change', async () => {
-  settingsSyncImportGroup.style.display = settingsSyncModeSelect.value === 'individual' ? '' : 'none';
+  settingsSyncModeSelect.value = 'individual';
+  updateSettingsSyncVisibility();
   await saveSettings();
+});
+settingsSyncGlobalWriteEnabledInput.addEventListener('change', async () => {
+  settingsSyncGlobalWriteEnabledInput.checked = false;
+  await saveSettings();
+});
+
+settingsSyncClientNameInput.addEventListener('change', async () => {
+  await chrome.storage.local.set({
+    [LOCAL_STORAGE_KEYS.SETTINGS_SYNC_CLIENT_NAME]: settingsSyncClientNameInput.value.trim(),
+  });
 });
 
 settingsSyncSavePwBtn.addEventListener('click', async () => {
@@ -998,46 +1742,82 @@ settingsSyncSavePwBtn.addEventListener('click', async () => {
   settingsSyncSavePwBtn.disabled = false;
 });
 
-settingsSyncLoadBtn.addEventListener('click', async () => {
+function selectedSettingsProfile() {
+  const ref = settingsSyncDeviceList.value;
+  return settingsProfiles.find((p) => (p.path || p.filename) === ref) || null;
+}
+
+function renderSettingsProfiles(configs) {
+  settingsProfiles = Array.isArray(configs) ? configs : [];
+  settingsSyncDeviceList.innerHTML = '';
+  if (settingsProfiles.length === 0) {
+    const opt = document.createElement('option');
+    opt.textContent = getMessage('options_settingsSyncImportEmpty');
+    settingsSyncDeviceList.appendChild(opt);
+    settingsSyncDeviceList.disabled = true;
+    settingsSyncImportBtn.disabled = true;
+    settingsSyncPushSelectedBtn.disabled = true;
+    return;
+  }
+  for (const cfg of settingsProfiles) {
+    const opt = document.createElement('option');
+    opt.value = cfg.path || cfg.filename;
+    const datePart = cfg.updatedAt ? ` · ${new Date(cfg.updatedAt).toLocaleString()}` : '';
+    const alias = cfg.alias || cfg.name || cfg.filename;
+    opt.textContent = `${alias}${datePart}`;
+    settingsSyncDeviceList.appendChild(opt);
+  }
+  settingsSyncDeviceList.disabled = false;
+  settingsSyncImportBtn.disabled = false;
+  settingsSyncPushSelectedBtn.disabled = false;
+
+  const ownAlias = settingsSyncClientAlias();
+  if (ownAlias) {
+    const ownPath = `profiles/${ownAlias}/settings.enc`;
+    const ownOption = Array.from(settingsSyncDeviceList.options).find((o) => o.value === ownPath);
+    if (ownOption) settingsSyncDeviceList.value = ownPath;
+  }
+}
+
+async function refreshSettingsProfiles() {
   settingsSyncLoadBtn.disabled = true;
   settingsSyncImportResult.textContent = '';
   try {
-    const resp = await chrome.runtime.sendMessage({ action: 'listDeviceConfigs' });
-    settingsSyncDeviceList.innerHTML = '';
-    if (!resp.success || !resp.configs || resp.configs.length === 0) {
-      const opt = document.createElement('option');
-      opt.textContent = getMessage('options_settingsSyncImportEmpty');
-      settingsSyncDeviceList.appendChild(opt);
-      settingsSyncDeviceList.disabled = true;
-      settingsSyncImportBtn.disabled = true;
-    } else {
-      for (const cfg of resp.configs) {
-        const opt = document.createElement('option');
-        opt.value = cfg.filename;
-        opt.textContent = cfg.deviceId === 'global' ? 'Global (settings.enc)' : `Device ${cfg.deviceId} (${cfg.filename})`;
-        settingsSyncDeviceList.appendChild(opt);
-      }
-      settingsSyncDeviceList.disabled = false;
-      settingsSyncImportBtn.disabled = false;
+    const resp = await chrome.runtime.sendMessage({ action: 'listSettingsProfiles' });
+    renderSettingsProfiles(resp?.success ? resp.configs : []);
+    if (!resp?.success) {
+      settingsSyncImportResult.textContent = resp?.message || 'Error';
+      settingsSyncImportResult.className = 'validation-result error';
     }
   } catch (e) {
     settingsSyncImportResult.textContent = e.message || 'Error';
     settingsSyncImportResult.className = 'validation-result error';
   }
   settingsSyncLoadBtn.disabled = false;
-});
+}
+
+settingsSyncLoadBtn.addEventListener('click', refreshSettingsProfiles);
 
 settingsSyncImportBtn.addEventListener('click', async () => {
-  const filename = settingsSyncDeviceList.value;
+  if (!settingsSyncClientAlias()) {
+    settingsSyncImportResult.textContent = getMessage('options_settingsSyncClientNameRequired');
+    settingsSyncImportResult.className = 'validation-result error';
+    return;
+  }
+  const selected = selectedSettingsProfile();
+  const filename = selected?.path || selected?.filename || settingsSyncDeviceList.value;
   if (!filename) return;
   settingsSyncImportBtn.disabled = true;
   settingsSyncImportResult.textContent = '';
   try {
-    const resp = await chrome.runtime.sendMessage({ action: 'importDeviceConfig', filename });
+    const password = await showPasswordDialog('options_settingsRegistryActionPasswordPrompt', 'options_settingsRegistryImportApplyBtn');
+    if (!password) return;
+    const resp = await chrome.runtime.sendMessage({ action: 'importSettingsProfile', filename, password });
     if (resp.success) {
-      settingsSyncImportResult.textContent = getMessage('options_settingsSyncImportSuccess');
+      settingsSyncImportResult.textContent = getMessage('options_settingsRegistryImportSuccess');
       settingsSyncImportResult.className = 'validation-result success';
       await loadSettings();
+      await confirmReloadAfterImport();
     } else {
       settingsSyncImportResult.textContent = resp.message || 'Error';
       settingsSyncImportResult.className = 'validation-result error';
@@ -1047,6 +1827,81 @@ settingsSyncImportBtn.addEventListener('click', async () => {
     settingsSyncImportResult.className = 'validation-result error';
   }
   settingsSyncImportBtn.disabled = false;
+});
+
+settingsSyncPushSelectedBtn.addEventListener('click', async () => {
+  if (!settingsSyncClientAlias()) {
+    settingsSyncImportResult.textContent = getMessage('options_settingsSyncClientNameRequired');
+    settingsSyncImportResult.className = 'validation-result error';
+    return;
+  }
+  const selected = selectedSettingsProfile();
+  if (!(selected?.path || selected?.filename)) return;
+  settingsSyncPushSelectedBtn.disabled = true;
+  settingsSyncImportResult.textContent = '';
+  try {
+    const password = await showPasswordDialog('options_settingsRegistryActionPasswordPrompt', 'options_settingsRegistrySyncSelectedBtn');
+    if (!password) return;
+    const resp = await chrome.runtime.sendMessage({
+      action: 'syncSettingsToProfile',
+      filename: selected.path || selected.filename,
+      name: selected.alias || selected.name || '',
+      password,
+    });
+    if (resp?.success) {
+      settingsSyncImportResult.textContent = getMessage('options_settingsRegistrySyncSuccess');
+      settingsSyncImportResult.className = 'validation-result success';
+      await refreshSettingsProfiles();
+    } else {
+      settingsSyncImportResult.textContent = resp?.message || 'Error';
+      settingsSyncImportResult.className = 'validation-result error';
+    }
+  } catch (e) {
+    settingsSyncImportResult.textContent = e.message || 'Error';
+    settingsSyncImportResult.className = 'validation-result error';
+  }
+  settingsSyncPushSelectedBtn.disabled = false;
+});
+
+settingsSyncCreateBtn.addEventListener('click', async () => {
+  const name = settingsSyncClientNameInput.value.trim();
+  if (!name) {
+    settingsSyncImportResult.textContent = getMessage('options_settingsSyncClientNameRequired');
+    settingsSyncImportResult.className = 'validation-result error';
+    return;
+  }
+  settingsSyncCreateBtn.disabled = true;
+  settingsSyncImportResult.textContent = '';
+  try {
+    const password = await showPasswordDialog('options_settingsRegistryActionPasswordPrompt', 'options_settingsSyncCreateOwnBtn');
+    if (!password) return;
+    await chrome.storage.local.set({
+      [LOCAL_STORAGE_KEYS.SETTINGS_SYNC_CLIENT_NAME]: name,
+    });
+    const resp = await chrome.runtime.sendMessage({ action: 'createSettingsProfile', name, password });
+    if (resp?.success) {
+      if (resp.alias && resp.normalizedFrom) {
+        settingsSyncImportResult.textContent = getMessage('options_settingsRegistryAliasNormalized', [resp.alias]);
+      } else if (resp.alias) {
+        settingsSyncImportResult.textContent = `${getMessage('options_settingsRegistryCreateSuccess')} (${resp.alias})`;
+      } else {
+        settingsSyncImportResult.textContent = getMessage('options_settingsRegistryCreateSuccess');
+      }
+      settingsSyncImportResult.className = 'validation-result success';
+      await refreshSettingsProfiles();
+    } else {
+      if (resp?.code === 'CLIENT_NAME_CONFLICT') {
+        settingsSyncImportResult.textContent = getMessage('options_settingsSyncClientNameConflict', [name]);
+      } else {
+        settingsSyncImportResult.textContent = resp?.message || 'Error';
+      }
+      settingsSyncImportResult.className = 'validation-result error';
+    }
+  } catch (e) {
+    settingsSyncImportResult.textContent = e.message || 'Error';
+    settingsSyncImportResult.className = 'validation-result error';
+  }
+  settingsSyncCreateBtn.disabled = false;
 });
 
 // ==============================
@@ -1123,6 +1978,33 @@ function showPasswordDialog(promptKey, confirmKey) {
   });
 }
 
+/**
+ * Reload extension runtime after settings import so profile changes are
+ * immediately reflected across popup/background/options in all browsers.
+ */
+function reloadAfterSettingsImport(delayMs = 800) {
+  setTimeout(() => {
+    try {
+      if (chrome?.runtime?.reload) {
+        chrome.runtime.reload();
+        return;
+      }
+    } catch {
+      // Fallback below when runtime reload is unavailable.
+    }
+    location.reload();
+  }, delayMs);
+}
+
+async function confirmReloadAfterImport() {
+  const shouldReload = await showOnboardingConfirm(
+    getMessage('options_settingsSyncImportReloadConfirm'),
+    getMessage('options_settingsSyncImportReloadConfirmBtn')
+  );
+  hideOnboardingConfirm();
+  if (shouldReload) reloadAfterSettingsImport();
+}
+
 exportBtn.addEventListener('click', async () => {
   const type = exportTypeSelect.value;
   const date = new Date().toISOString().slice(0, 10);
@@ -1192,6 +2074,9 @@ async function applyImportedSettings(settings) {
         profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
         generateReadmeMd: settings.generateReadmeMd !== false,
         generateBookmarksHtml: settings.generateBookmarksHtml !== false,
+        generateFeedXml: settings.generateFeedXml ?? 'auto',
+        generateDashyYml: settings.generateDashyYml ?? 'off',
+        settingsSyncGlobalWriteEnabled: settings.settingsSyncGlobalWriteEnabled === true,
       });
       await chrome.storage.local.set({ profileTokens });
     } else {
@@ -1222,6 +2107,9 @@ async function applyImportedSettings(settings) {
         profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
         generateReadmeMd: settings.generateReadmeMd !== false,
         generateBookmarksHtml: settings.generateBookmarksHtml !== false,
+        generateFeedXml: settings.generateFeedXml ?? 'auto',
+        generateDashyYml: settings.generateDashyYml ?? 'off',
+        settingsSyncGlobalWriteEnabled: settings.settingsSyncGlobalWriteEnabled === true,
       });
       await chrome.storage.local.set({ profileTokens });
   }
@@ -1248,10 +2136,11 @@ importBtn.addEventListener('click', async () => {
       }
       await applyImportedSettings(settings);
       showResult(importResult, getMessage('options_importSuccess'), 'success');
+      await loadSettings();
       importFile.value = '';
       importBtn.disabled = true;
       importFilename.textContent = '';
-      setTimeout(() => { location.reload(); }, 1000);
+      await confirmReloadAfterImport();
     } else {
       const data = JSON.parse(text);
       const bookmarks = deserializeFromJson(data);

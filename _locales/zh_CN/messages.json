@@ -1,0 +1,1069 @@
+{
+  "extName": {
+    "message": "GitSyncMarks"
+  },
+  "extDescription": {
+    "message": "书签安全存储在 GitHub — 按文件存储、三方合并同步，支持 Chrome 和 Firefox。无需服务器。"
+  },
+  "commands_quickSync": {
+    "message": "快速同步书签"
+  },
+  "commands_openOptions": {
+    "message": "打开扩展设置"
+  },
+
+  "popup_configureFirst": {
+    "message": "请先配置扩展。"
+  },
+  "popup_openSettings": {
+    "message": "打开设置"
+  },
+  "popup_ready": {
+    "message": "就绪"
+  },
+  "popup_conflictDetected": {
+    "message": "检测到冲突"
+  },
+  "popup_conflictDescription": {
+    "message": "本地和远程书签均已修改。请选择解决方式："
+  },
+  "popup_localToGithub": {
+    "message": "本地 → GitHub"
+  },
+  "popup_githubToLocal": {
+    "message": "GitHub → 本地"
+  },
+  "popup_syncNow": {
+    "message": "立即同步"
+  },
+  "popup_pushUp": {
+    "message": "推送 ↑"
+  },
+  "popup_pullDown": {
+    "message": "拉取 ↓"
+  },
+  "popup_autoSyncActive": {
+    "message": "自动同步已启用"
+  },
+  "popup_autoSyncDisabled": {
+    "message": "自动同步已禁用"
+  },
+  "popup_settings": {
+    "message": "设置"
+  },
+  "popup_synced": {
+    "message": "已同步"
+  },
+  "popup_notSyncedYet": {
+    "message": "尚未同步"
+  },
+  "popup_lastSync": {
+    "message": "上次同步：$1"
+  },
+  "popup_justNow": {
+    "message": "刚刚"
+  },
+  "popup_minAgo": {
+    "message": "$1 分钟前"
+  },
+  "popup_hoursAgo": {
+    "message": "$1 小时前"
+  },
+  "popup_syncing": {
+    "message": "同步中..."
+  },
+  "popup_profileSwitching": {
+    "message": "切换配置文件中..."
+  },
+  "popup_error": {
+    "message": "错误：$1"
+  },
+  "popup_nextSyncIn": {
+    "message": "下次同步：$1"
+  },
+  "popup_lastDataChange": {
+    "message": "上次数据变更：$1"
+  },
+  "popup_lastCommit": {
+    "message": "上次提交："
+  },
+
+  "options_subtitle": {
+    "message": "设置"
+  },
+  "options_profile": {
+    "message": "配置文件"
+  },
+  "options_profileAdd": {
+    "message": "+ 添加"
+  },
+  "options_profileAddNameLabel": {
+    "message": "配置文件名称"
+  },
+  "options_profileAddConfirmBtn": {
+    "message": "添加"
+  },
+  "options_profileRenameLabel": {
+    "message": "新名称"
+  },
+  "options_profileAddPlaceholder": {
+    "message": "新配置文件"
+  },
+  "options_profileRename": {
+    "message": "重命名"
+  },
+  "options_profileRenamePrompt": {
+    "message": "\"$1\"的新名称："
+  },
+  "options_profileDelete": {
+    "message": "删除"
+  },
+  "options_profileSwitchConfirm": {
+    "message": "切换到\"$1\"？您的书签将被替换为该配置文件的书签。"
+  },
+  "options_profileDeleteConfirm": {
+    "message": "删除配置文件\"$1\"？此操作无法撤销。"
+  },
+  "options_profileSwitching": {
+    "message": "切换配置文件中..."
+  },
+  "options_profileSwitchWithoutConfirm": {
+    "message": "无需确认直接切换"
+  },
+  "options_profileSwitchConfirmBtn": {
+    "message": "切换"
+  },
+  "options_profileSwitchCancelBtn": {
+    "message": "取消"
+  },
+  "options_profilesLimit": {
+    "message": "$1/$2 个配置文件"
+  },
+  "options_githubConnection": {
+    "message": "GitHub 连接"
+  },
+  "options_patLabel": {
+    "message": "个人访问令牌 (PAT)"
+  },
+  "options_toggleToken": {
+    "message": "显示/隐藏令牌"
+  },
+  "options_tokenHint": {
+    "message": "需要 <code>repo</code> 权限范围。<a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">创建令牌</a>"
+  },
+  "options_repoOwner": {
+    "message": "仓库所有者"
+  },
+  "options_ownerPlaceholder": {
+    "message": "your-github-username"
+  },
+  "options_repoName": {
+    "message": "仓库名称"
+  },
+  "options_branch": {
+    "message": "分支"
+  },
+  "options_filePath": {
+    "message": "仓库中的文件路径"
+  },
+  "options_filePathHint": {
+    "message": "书签文件存储的文件夹。"
+  },
+  "options_browseFolder": { "message": "浏览" },
+  "options_browseFolderEmpty": { "message": "未找到文件夹" },
+  "options_browseFolderLoading": { "message": "加载中\u2026" },
+  "options_browseFolderSelect": { "message": "选择" },
+  "options_browseFolderNotConfigured": { "message": "请先配置令牌、所有者和仓库" },
+  "options_filePathChangeHint": {
+    "message": "下次同步时可能会发生冲突。使用\"GitHub → 本地\"来采用远程状态。"
+  },
+  "options_testConnection": {
+    "message": "测试连接"
+  },
+  "options_githubReposTitle": {
+    "message": "GitHub 仓库文件夹"
+  },
+  "options_githubReposDesc": {
+    "message": "创建一个包含所有 GitHub 仓库（公开和私有）书签的文件夹。"
+  },
+  "options_githubReposEnabled": {
+    "message": "GitHub 仓库文件夹"
+  },
+  "options_githubReposParentLabel": {
+    "message": "位置"
+  },
+  "options_githubReposParentToolbar": {
+    "message": "书签栏"
+  },
+  "options_githubReposParentOther": {
+    "message": "其他书签"
+  },
+  "options_githubReposParentMenu": {
+    "message": "书签菜单"
+  },
+  "options_githubReposRefresh": {
+    "message": "更新 GitHub 仓库"
+  },
+  "options_githubReposRefreshSuccess": {
+    "message": "已为 $2 添加 $1 个仓库"
+  },
+  "options_synchronization": {
+    "message": "同步"
+  },
+  "options_autoSync": {
+    "message": "自动同步"
+  },
+  "options_syncInterval": {
+    "message": "同步间隔（分钟）"
+  },
+  "options_syncIntervalHint": {
+    "message": "检查远程变更的频率。"
+  },
+  "options_syncProfile": {
+    "message": "同步方案"
+  },
+  "options_syncProfileRealtime": {
+    "message": "实时（1 分钟，2 秒防抖）"
+  },
+  "options_syncProfileFrequent": {
+    "message": "频繁（5 分钟，3 秒防抖）"
+  },
+  "options_syncProfileNormal": {
+    "message": "正常（15 分钟，5 秒防抖）"
+  },
+  "options_syncProfilePowersave": {
+    "message": "省电（60 分钟，10 秒防抖）"
+  },
+  "options_syncProfileCustom": {
+    "message": "自定义"
+  },
+  "options_debounceDelay": {
+    "message": "防抖延迟（秒）"
+  },
+  "options_debounceDelayHint": {
+    "message": "书签更改后等待同步的时间。"
+  },
+  "options_syncOnStartup": {
+    "message": "浏览器启动时同步"
+  },
+  "options_syncOnFocus": {
+    "message": "浏览器获得焦点时同步"
+  },
+  "options_generatedFilesTitle": {
+    "message": "生成的文件"
+  },
+  "options_generatedFilesDesc": {
+    "message": "同步时在仓库中创建的文件。为每个文件选择关闭、手动或自动。"
+  },
+  "options_generateModeOff": {
+    "message": "关闭"
+  },
+  "options_generateModeManual": {
+    "message": "手动"
+  },
+  "options_generateModeAuto": {
+    "message": "自动"
+  },
+  "options_generateNowBtn": {
+    "message": "立即生成"
+  },
+  "options_generateReadmeMd": {
+    "message": "README.md"
+  },
+  "options_generateReadmeMdDesc": {
+    "message": "仓库中的 Markdown 概览。"
+  },
+  "options_generateBookmarksHtml": {
+    "message": "生成 bookmarks.html"
+  },
+  "options_generateBookmarksHtmlDesc": {
+    "message": "Netscape 格式，可导入浏览器（Chrome、Firefox）。"
+  },
+  "options_generateFeedXml": {
+    "message": "生成 feed.xml"
+  },
+  "options_generateFeedXmlDesc": {
+    "message": "RSS 2.0 订阅源 — 可在任何 RSS 阅读器中订阅或用于自动化。"
+  },
+  "options_generateDashyYml": {
+    "message": "生成 dashy-conf.yml"
+  },
+  "options_generateDashyYmlDesc": {
+    "message": "Dashy 仪表板配置 — 作为分区导入到您的 conf.yml 中。"
+  },
+  "options_settingsSyncTitle": {
+    "message": "设置文件"
+  },
+  "options_settingsSyncDesc": {
+    "message": "仓库中加密备份的扩展设置。所有设备使用相同密码。"
+  },
+  "options_syncSettingsToGit": {
+    "message": "同步设置到 Git（加密）"
+  },
+  "options_settingsSyncPasswordLabel": {
+    "message": "加密密码"
+  },
+  "options_settingsSyncPasswordHint": {
+    "message": "每台设备设置一次。所有设备必须使用相同密码。"
+  },
+  "options_settingsSyncSaveBtn": {
+    "message": "保存密码"
+  },
+  "options_settingsSyncActive": {
+    "message": "设置同步已启用 — 设置将在下次同步时推送。"
+  },
+  "options_settingsSyncPasswordMissing": {
+    "message": "请输入密码。"
+  },
+  "options_settingsSyncModeLabel": {
+    "message": "同步模式"
+  },
+  "options_settingsSyncModeGlobal": {
+    "message": "全局 — 所有设备共享"
+  },
+  "options_settingsSyncModeIndividual": {
+    "message": "独立 — 仅限此设备"
+  },
+  "options_settingsSyncGlobalWriteEnabled": {
+    "message": "Allow writing to global settings (settings.enc)"
+  },
+  "options_settingsSyncGlobalWriteHint": {
+    "message": "Recommended OFF. If enabled, this client can overwrite global settings for all devices."
+  },
+  "options_settingsSyncImportTitle": {
+    "message": "从其他设备导入"
+  },
+  "options_settingsSyncImportBtn": {
+    "message": "加载可用配置"
+  },
+  "options_settingsSyncImportApply": {
+    "message": "导入"
+  },
+  "options_settingsSyncImportEmpty": {
+    "message": "未找到设备配置"
+  },
+  "options_settingsSyncImportSuccess": {
+    "message": "设置导入成功"
+  },
+  "options_settingsSyncImportGlobalConfirm": {
+    "message": "Apply the global settings file now? This will overwrite current local settings on this device."
+  },
+  "options_settingsSyncImportGlobalConfirmBtn": {
+    "message": "Apply global config"
+  },
+  "options_settingsSyncImportReloadConfirm": {
+    "message": "Settings were imported. Reload now to apply them everywhere?"
+  },
+  "options_settingsSyncImportReloadConfirmBtn": {
+    "message": "Reload now"
+  },
+  "options_settingsRegistryTitle": { "message": "Available settings in repository" },
+  "options_settingsRegistryRefreshBtn": { "message": "Refresh" },
+  "options_settingsRegistryImportApplyBtn": { "message": "Import & Apply" },
+  "options_settingsRegistrySyncSelectedBtn": { "message": "Sync current to selected" },
+  "options_settingsRegistryCreateBtn": { "message": "Create new setting" },
+  "options_settingsRegistryNewNamePlaceholder": { "message": "New setting name" },
+  "options_settingsRegistryActionPasswordPrompt": { "message": "Enter password for this settings action" },
+  "options_settingsRegistryImportSuccess": { "message": "Settings imported and applied" },
+  "options_settingsRegistrySyncSuccess": { "message": "Current settings synced to selected profile" },
+  "options_settingsRegistryCreateSuccess": { "message": "New settings profile created" },
+  "options_settingsRegistryCreateNameRequired": { "message": "Please enter a name for the new setting" },
+  "options_resetTitle": { "message": "重置扩展" },
+  "options_resetDescription": { "message": "删除所有配置文件、令牌和设置。浏览器书签不受影响。" },
+  "options_resetBtn": { "message": "重置所有数据" },
+  "options_resetConfirm": { "message": "确定要重置吗？此操作无法撤销。所有配置文件和设置将被永久删除。" },
+  "options_resetSuccess": { "message": "扩展已重置。" },
+  "options_notifications": {
+    "message": "同步通知"
+  },
+  "options_notificationsOff": {
+    "message": "关闭"
+  },
+  "options_notificationsAll": {
+    "message": "全部（成功和失败）"
+  },
+  "options_notificationsErrorsOnly": {
+    "message": "仅错误"
+  },
+  "options_notificationsHint": {
+    "message": "选择何时显示通知。"
+  },
+  "notification_titleSuccess": {
+    "message": "同步成功"
+  },
+  "notification_titleFailure": {
+    "message": "同步失败"
+  },
+  "options_saveSettings": {
+    "message": "保存设置"
+  },
+  "options_theme": {
+    "message": "主题"
+  },
+  "options_themeAuto": {
+    "message": "A 自动（跟随系统）"
+  },
+  "options_themeLight": {
+    "message": "☀ 浅色"
+  },
+  "options_themeDark": {
+    "message": "☽ 深色"
+  },
+  "options_language": {
+    "message": "语言"
+  },
+  "options_langAuto": {
+    "message": "自动（浏览器）"
+  },
+  "options_pleaseEnterToken": {
+    "message": "请输入令牌。"
+  },
+  "options_checking": {
+    "message": "检查中..."
+  },
+  "options_invalidToken": {
+    "message": "无效的令牌。"
+  },
+  "options_tokenValidMissingScope": {
+    "message": "令牌有效（$1），但缺少 \"repo\" 权限范围。"
+  },
+  "options_tokenValidRepoNotFound": {
+    "message": "令牌有效（$1），但未找到仓库\"$2\"。"
+  },
+  "options_connectionOk": {
+    "message": "连接成功！用户：$1，仓库：$2"
+  },
+  "options_tokenValidSpecifyRepo": {
+    "message": "令牌有效！用户：$1。请指定一个仓库。"
+  },
+  "options_error": {
+    "message": "错误：$1"
+  },
+  "options_onboardingCreateBtn": {
+    "message": "创建"
+  },
+  "options_onboardingPullBtn": {
+    "message": "加载"
+  },
+  "options_onboardingCreateFolder": {
+    "message": "文件夹 $1 尚不存在。是否创建基本结构（toolbar、other）？"
+  },
+  "options_onboardingPullNow": {
+    "message": "在仓库中找到书签。是否立即拉取到此浏览器？"
+  },
+  "options_onboardingCreateSuccess": {
+    "message": "文件夹创建成功。"
+  },
+  "options_onboardingPullSuccess": {
+    "message": "书签拉取成功。"
+  },
+  "options_onboardingWizardStart": { "message": "启动设置向导" },
+  "options_onboardingWizardTitle": { "message": "设置向导" },
+  "options_onboardingWizardStepWelcomeTitle": { "message": "欢迎" },
+  "options_onboardingWizardStepWelcomeText": { "message": "此向导将引导你完成仓库设置、令牌配置、连接测试和首次sync。" },
+  "options_onboardingWizardStepRepoTitle": { "message": "仓库设置" },
+  "options_onboardingWizardStepRepoText": { "message": "请填写仓库所有者、仓库名、分支和基础路径。" },
+  "options_onboardingWizardStepTokenTitle": { "message": "访问令牌" },
+  "options_onboardingWizardStepTokenText": { "message": "添加具有repo权限的GitHub令牌，并妥善保管。" },
+  "options_onboardingWizardStepValidateTitle": { "message": "测试连接" },
+  "options_onboardingWizardStepValidateText": { "message": "运行测试以验证令牌、仓库和路径访问是否正常。" },
+  "options_onboardingWizardStepSyncTitle": { "message": "首次sync操作" },
+  "options_onboardingWizardStepSyncTextEmpty": { "message": "路径为空。请先创建初始目录结构后再开始。" },
+  "options_onboardingWizardStepSyncTextExisting": { "message": "仓库中已有书签。现在拉取到此浏览器。" },
+  "options_onboardingWizardStepFinishTitle": { "message": "完成" },
+  "options_onboardingWizardStepFinishText": { "message": "设置已完成。你可以继续使用常规sync设置。" },
+  "options_onboardingWizardActionTest": { "message": "运行测试" },
+  "options_onboardingWizardActionCreate": { "message": "创建结构" },
+  "options_onboardingWizardActionPull": { "message": "立即拉取" },
+  "options_onboardingWizardNext": { "message": "下一步" },
+  "options_onboardingWizardBack": { "message": "上一步" },
+  "options_onboardingWizardSkip": { "message": "退出" },
+  "options_onboardingWizardFinish": { "message": "完成" },
+  "options_onboardingWizardNeedConnection": { "message": "请先运行连接测试。" },
+  "options_onboardingWizardNeedAction": { "message": "请先完成首次sync操作。" },
+  "options_onboardingWizardDismissed": { "message": "向导已关闭。你可随时重新启动。" },
+  "options_onboardingWizardCompleted": { "message": "向导已成功完成。" },
+  "options_onboardingWizardStepTokenHelpTitle": { "message": "创建令牌" },
+  "options_onboardingWizardStepTokenHelpText": { "message": "打开GitHub令牌设置并创建具有repo范围的Personal Access Token。" },
+  "options_onboardingWizardTokenHelpText": { "message": "请在GitHub设置中创建具有repo范围的Personal Access Token。" },
+  "options_onboardingWizardTokenHelpLink": { "message": "打开GitHub令牌页面" },
+  "options_onboardingWizardStepHasTokenTitle": { "message": "你已经有令牌了吗？" },
+  "options_onboardingWizardStepHasTokenText": { "message": "如果没有，请先创建令牌，再继续输入步骤。" },
+  "options_onboardingWizardHasTokenLabel": { "message": "你已经有令牌了吗？" },
+  "options_onboardingWizardHasTokenYes": { "message": "是的，我已经有了" },
+  "options_onboardingWizardHasTokenNo": { "message": "没有，请告诉我怎么做" },
+  "options_onboardingWizardStepRepoDecisionTitle": { "message": "仓库模式" },
+  "options_onboardingWizardStepRepoDecisionText": { "message": "选择自动创建仓库，或使用现有仓库。" },
+  "options_onboardingWizardRepoFlowLabel": { "message": "仓库模式" },
+  "options_onboardingWizardRepoFlowAuto": { "message": "自动创建仓库" },
+  "options_onboardingWizardRepoFlowManual": { "message": "使用现有仓库" },
+  "options_onboardingWizardActionCheckEnvironment": { "message": "检查仓库和路径" },
+  "options_onboardingWizardTokenValidated": { "message": "令牌有效且具备所需权限范围。" },
+  "options_onboardingWizardRepoRequired": { "message": "请输入仓库所有者和仓库名称。" },
+  "options_onboardingWizardRepoCreateFailed": { "message": "当前令牌/权限无法创建仓库。" },
+  "options_onboardingWizardEnvironmentChecked": { "message": "仓库与路径检查已完成。" },
+  "options_onboardingWizardRepoOwnerMismatch": { "message": "自动创建仅支持你自己的用户仓库。请将所有者设置为 $1。" },
+  "options_onboardingWizardRepoUserOnlyHint": { "message": "如果是组织仓库或其他所有者，请切换到“手动使用现有仓库”模式。" },
+  "options_onboardingWizardRepoCreatePermissionDenied": { "message": "此令牌无法创建仓库。请检查 repo 权限范围和账号权限。" },
+  "options_settingsSaved": {
+    "message": "设置已保存！"
+  },
+  "options_errorSaving": {
+    "message": "保存设置时出错：$1"
+  },
+
+  "api_invalidToken": {
+    "message": "无效的令牌。请检查您的个人访问令牌。"
+  },
+  "api_rateLimitExceeded": {
+    "message": "GitHub API 请求频率超限。请稍候。"
+  },
+  "api_accessDenied": {
+    "message": "访问被拒绝。请检查您的令牌权限。"
+  },
+  "api_conflict": {
+    "message": "冲突：文件已在此期间被修改。"
+  },
+  "api_errorReading": {
+    "message": "读取文件出错：$1"
+  },
+  "api_errorWriting": {
+    "message": "写入文件出错：$1"
+  },
+  "api_branchNotFound": {
+    "message": "未找到分支 '$1'。"
+  },
+
+  "sync_alreadyInProgress": {
+    "message": "同步正在进行中。"
+  },
+  "sync_notConfigured": {
+    "message": "扩展未配置。请打开设置。"
+  },
+  "sync_noChanges": {
+    "message": "上次同步以来没有变更。"
+  },
+  "sync_conflictRemoteModified": {
+    "message": "检测到冲突：远程也已修改。"
+  },
+  "sync_pushSuccess": {
+    "message": "书签已成功推送到 GitHub。"
+  },
+  "sync_conflictFileModified": {
+    "message": "冲突：文件已在此期间被修改。"
+  },
+  "sync_pushFailed": {
+    "message": "推送失败：$1"
+  },
+  "sync_noBookmarksOnGithub": {
+    "message": "在 GitHub 上未找到书签。"
+  },
+  "sync_alreadyUpToDate": {
+    "message": "书签已是最新。"
+  },
+  "sync_pullSuccess": {
+    "message": "已从 GitHub 加载。"
+  },
+  "sync_pullFailed": {
+    "message": "拉取失败：$1"
+  },
+  "sync_allInSync": {
+    "message": "全部同步完成，无变更。"
+  },
+  "sync_conflictBothModified": {
+    "message": "冲突：本地和远程书签均已修改。请选择推送或拉取。"
+  },
+  "sync_syncFailed": {
+    "message": "同步失败：$1"
+  },
+
+  "serializer_invalidFormat": {
+    "message": "无效的书签数据格式。"
+  },
+  "serializer_lastSynced": {
+    "message": "上次同步：$1"
+  },
+  "serializer_device": {
+    "message": "设备：$1"
+  },
+  "serializer_untitled": {
+    "message": "（无标题）"
+  },
+
+  "popup_reportIssue": {
+    "message": "报告问题"
+  },
+
+  "options_about": {
+    "message": "关于"
+  },
+  "options_version": {
+    "message": "版本"
+  },
+  "options_by": {
+    "message": "作者"
+  },
+  "options_specialThanks": {
+    "message": "特别鸣谢"
+  },
+  "options_mobileAppTitle": {
+    "message": "移动应用"
+  },
+  "options_mobileAppDesc": {
+    "message": "随时随地查看书签。GitSyncMarks-Mobile（iOS + Android）从您的 GitHub 仓库同步 — 只读伴侣应用。"
+  },
+  "options_mobileAppLink": {
+    "message": "GitSyncMarks-Mobile on GitHub"
+  },
+  "options_mobileAppStores": {
+    "message": "F-Droid 和 Google Play 即将推出。"
+  },
+  "options_links": {
+    "message": "链接"
+  },
+  "options_githubRepo": {
+    "message": "GitHub 仓库"
+  },
+  "options_documentation": {
+    "message": "文档"
+  },
+  "options_reportBug": {
+    "message": "报告错误 / 功能请求"
+  },
+  "options_privacyPolicy": {
+    "message": "隐私政策"
+  },
+  "options_license": {
+    "message": "许可证 (MIT)"
+  },
+  "options_debugLogTitle": {
+    "message": "调试日志"
+  },
+  "options_debugLogDesc": {
+    "message": "启用后可记录同步诊断信息（差异、合并决策、冲突、关键节点的提交哈希）。在排查同步问题时使用。导出并分享日志以获得支持。"
+  },
+  "options_debugLogEnabled": {
+    "message": "启用调试日志"
+  },
+  "options_debugLogExport": {
+    "message": "导出日志"
+  },
+  "options_debugLogExportEmpty": {
+    "message": "日志为空。请先启用调试日志并运行一次同步。"
+  },
+
+  "options_tabGitHub": {
+    "message": "GitHub"
+  },
+  "options_tabSynchronization": {
+    "message": "同步"
+  },
+  "options_tabFiles": {
+    "message": "文件"
+  },
+  "options_tabHelp": {
+    "message": "帮助"
+  },
+  "options_tabAbout": {
+    "message": "关于"
+  },
+  "options_subTabProfile": {
+    "message": "配置文件"
+  },
+  "options_subTabConnection": {
+    "message": "连接"
+  },
+  "options_subTabRepos": {
+    "message": "GitHub 文件夹"
+  },
+  "options_subTabGenerated": {
+    "message": "生成"
+  },
+  "options_subTabSettings": {
+    "message": "设置"
+  },
+  "options_subTabExportImport": {
+    "message": "导出 / 导入"
+  },
+  "options_subTabGitAdd": {
+    "message": "Git 添加"
+  },
+  "help_gettingStartedTitle": {
+    "message": "入门指南"
+  },
+  "help_gettingStartedIntro": {
+    "message": "创建一个 GitHub 仓库用于存储书签，然后创建一个具有 <code>repo</code> 权限范围的个人访问令牌 (PAT)。在 GitHub 选项卡中输入令牌、仓库所有者、名称、分支（通常为 <code>main</code>）和文件夹路径（默认：<code>bookmarks</code>）。点击<strong>测试连接</strong>进行验证。"
+  },
+  "help_onboarding": {
+    "message": "如果文件夹为空，您可以创建基本结构（toolbar、other）。如果仓库中已有书签，您可以将其拉取到此浏览器。"
+  },
+  "help_profilesTitle": {
+    "message": "配置文件"
+  },
+  "help_profilesIntro": {
+    "message": "每个配置文件都有自己的书签集和 GitHub 仓库配置。可用于区分工作/个人或不同设备。"
+  },
+  "help_profilesAdd": {
+    "message": "添加、重命名、删除"
+  },
+  "help_profilesAddDesc": {
+    "message": "在下拉菜单中选择配置文件，然后添加（新配置文件）、重命名或删除。最多支持 10 个配置文件。删除操作会移除所选配置文件。"
+  },
+  "help_profilesSwitch": {
+    "message": "配置文件切换"
+  },
+  "help_profilesSwitchDesc": {
+    "message": "选择另一个配置文件进行切换。切换前，当前书签会被保存并推送到当前配置文件的仓库。目标配置文件的书签将替换本地书签。使用\"无需确认直接切换\"可跳过确认对话框。"
+  },
+  "help_profilesNote": {
+    "message": "配置文件功能运行可靠。使用多个配置文件时，偶尔可能出现同步冲突 — 尝试推送或拉取 2–3 次通常可以解决。此功能仍在完善中。如果您遇到可复现的错误，请在 GitHub 上提交问题。"
+  },
+  "help_githubReposTitle": {
+    "message": "GitHub 仓库文件夹"
+  },
+  "help_githubReposDesc": {
+    "message": "可选：创建一个包含所有 GitHub 仓库（公开和私有）书签的文件夹。选择位置（书签栏、其他书签）。该文件夹与普通书签一样同步；使用<strong>更新 GitHub 仓库</strong>刷新列表。"
+  },
+  "help_popupTitle": {
+    "message": "弹出窗口（扩展图标）"
+  },
+  "help_popupProfile": {
+    "message": "配置文件选择器"
+  },
+  "help_popupProfileDesc": {
+    "message": "直接从弹出窗口顶部切换配置文件。"
+  },
+  "help_popupSyncNow": {
+    "message": "立即同步"
+  },
+  "help_popupSyncNowDesc": {
+    "message": "完整的三方合并同步：本地和远程更改在可能的情况下自动合并。"
+  },
+  "help_popupPush": {
+    "message": "推送 ↑"
+  },
+  "help_popupPushDesc": {
+    "message": "将本地书签上传到 GitHub（覆盖远程更改）。"
+  },
+  "help_popupPull": {
+    "message": "拉取 ↓"
+  },
+  "help_popupPullDesc": {
+    "message": "从 GitHub 下载（覆盖本地更改）。"
+  },
+  "help_syncTitle": {
+    "message": "同步"
+  },
+  "help_autoSyncTitle": {
+    "message": "自动同步"
+  },
+  "help_autoSyncDesc": {
+    "message": "启用后，当您添加、编辑或删除书签时自动同步。防抖延迟会等待快速连续的更改完成后再同步。"
+  },
+  "help_syncProfiles": {
+    "message": "同步方案"
+  },
+  "help_syncProfilesDesc": {
+    "message": "实时（1 分钟）、频繁（5 分钟）、正常（15 分钟）或省电（60 分钟）。自定义模式可手动设置间隔和防抖。"
+  },
+  "help_syncStartup": {
+    "message": "启动 / 获得焦点时同步"
+  },
+  "help_syncStartupDesc": {
+    "message": "可选：浏览器启动时或返回浏览器窗口时同步（有冷却时间）。"
+  },
+  "help_generatedFilesTitle": {
+    "message": "生成的文件"
+  },
+  "help_generatedFilesDesc": {
+    "message": "README.md、bookmarks.html、feed.xml 和 dashy-conf.yml 可在同步时创建。在\"文件\"选项卡中为每个文件选择关闭、手动或自动。"
+  },
+  "help_settingsSyncTitle": {
+    "message": "设置文件"
+  },
+  "help_settingsSyncDesc": {
+    "message": "启用后，扩展设置（配置文件、令牌、偏好设置）将加密存储在仓库中。选择全局模式（所有设备共享 settings.enc）或独立模式（设备专属 settings-{id}.enc）。在独立模式下，您可以从其他设备导入设置。密码存储在每台设备本地，共享仓库的所有设备必须使用相同密码。"
+  },
+  "help_notificationsTitle": {
+    "message": "通知"
+  },
+  "help_notificationsDesc": {
+    "message": "选择何时显示同步通知：全部（成功和失败）、仅错误或关闭。"
+  },
+  "help_backupTitle": {
+    "message": "备份"
+  },
+  "help_backupBookmarks": {
+    "message": "导出 / 导入书签"
+  },
+  "help_backupBookmarksDesc": {
+    "message": "将所有浏览器书签导出为 JSON。导入会用文件内容替换活动配置文件中的所有书签。"
+  },
+  "help_backupSettings": {
+    "message": "导出 / 导入设置"
+  },
+  "help_backupSettingsDesc": {
+    "message": "导出为纯 .json 或密码加密的 .enc 文件。导入会替换所有设置（所有配置文件）；之后页面会重新加载。"
+  },
+  "help_conflictTitle": {
+    "message": "冲突"
+  },
+  "help_conflictDesc": {
+    "message": "当本地和远程书签都发生更改时，弹出窗口会显示冲突。选择<strong>推送</strong>（本地优先，覆盖远程）或<strong>拉取</strong>（远程优先，覆盖本地）。冲突不会自动合并。"
+  },
+  "help_shortcuts": {
+    "message": "键盘快捷键"
+  },
+  "help_quickSync": {
+    "message": "快速同步书签"
+  },
+  "help_openOptions": {
+    "message": "打开扩展设置"
+  },
+  "help_customizeShortcuts": {
+    "message": "自定义快捷键"
+  },
+  "help_shortcutNotSet": {
+    "message": "未设置"
+  },
+  "help_debugLogTitle": {
+    "message": "调试日志"
+  },
+  "help_debugLogDesc": {
+    "message": "在\"同步\"选项卡中启用，可记录详细的同步诊断信息 — 差异、合并决策和提交哈希。导出日志以供排查问题。"
+  },
+  "help_backupBookmarksDesc2": {
+    "message": "导出书签（JSON）、Dashy 配置（YAML）或设置（纯 JSON / 加密 .enc）。导入书签或设置 — 加密文件将使用您的密码解密。书签导入会替换所有本地书签；设置导入会替换所有配置文件并重新加载页面。"
+  },
+  "help_themeAutoSaveTitle": {
+    "message": "主题和自动保存"
+  },
+  "help_themeCycleTitle": {
+    "message": "主题"
+  },
+  "help_themeCycleDesc": {
+    "message": "点击顶部按钮循环切换：自动（系统）→ 深色 → 浅色 → 自动。图标显示当前模式。在选项页面和弹出窗口中均可使用。"
+  },
+  "help_autoSaveTitle": {
+    "message": "自动保存"
+  },
+  "help_autoSaveDesc": {
+    "message": "所有设置在更改时自动保存 — 没有保存按钮。更改立即生效。"
+  },
+  "help_whySlowTitle": {
+    "message": "为什么同步有时很慢？"
+  },
+  "help_whySlowIntro": {
+    "message": "GitSyncMarks 使用 GitHub 的 Git Data API 进行原子提交。每个更改或新增的书签文件都需要一次 API 调用。当变更较多时，耗时会累积。"
+  },
+  "help_whyAtomic": {
+    "message": "所有更改都在一次原子提交中写入：要么全部成功，要么全部失败。这可以防止同步中断时出现不完整或损坏的状态。单次提交而非多次提交还能避免触发 API 频率限制，并保持 Git 历史记录的整洁。"
+  },
+  "help_reportIssue": {
+    "message": "报告问题"
+  },
+  "help_links": {
+    "message": "链接"
+  },
+  "help_discussions": {
+    "message": "讨论"
+  },
+  "help_voteBacklogTitle": {
+    "message": "下一步是什么？"
+  },
+  "help_voteBacklogDesc": {
+    "message": "为下一个待开发功能投票。您的声音将影响产品路线图。"
+  },
+  "help_voteBacklogBtn": {
+    "message": "为待开发功能投票"
+  },
+
+  "options_backupTitle": {
+    "message": "备份"
+  },
+  "options_backupIntro": {
+    "message": "导出或导入书签（JSON）；设置可导出为 JSON 或密码加密的 .enc 文件。"
+  },
+  "options_bookmarksCard": {
+    "message": "书签"
+  },
+  "options_settingsCard": {
+    "message": "设置"
+  },
+  "options_exportBookmarks": {
+    "message": "导出书签"
+  },
+  "options_exportBookmarksDesc": {
+    "message": "将所有书签保存为 JSON。"
+  },
+  "options_exportDashy": {
+    "message": "导出 Dashy 配置"
+  },
+  "options_exportDashyDesc": {
+    "message": "将书签导出为 Dashy 仪表板分区（YAML）。"
+  },
+  "options_exportBtn": {
+    "message": "导出"
+  },
+  "options_importBtn": {
+    "message": "导入"
+  },
+  "options_chooseFile": {
+    "message": "选择文件"
+  },
+  "options_importBookmarks": {
+    "message": "导入书签"
+  },
+  "options_exportSettings": {
+    "message": "导出设置"
+  },
+  "options_exportSettingsDesc": {
+    "message": "GitHub 连接和同步设置（含配置文件）。"
+  },
+  "options_importSettings": {
+    "message": "导入设置"
+  },
+  "options_importBookmarksWarning": {
+    "message": "将替换活动配置文件中的所有书签。此操作无法撤销。"
+  },
+  "options_importSettingsWarning": {
+    "message": "将替换所有设置（所有配置文件）。之后页面会重新加载。"
+  },
+  "options_importSettingsFormats": {
+    "message": "接受 .json（纯文本）或 .enc（加密）文件。"
+  },
+  "options_selectFile": {
+    "message": "选择文件..."
+  },
+  "options_importSuccess": {
+    "message": "导入成功！"
+  },
+  "options_exportSuccess": {
+    "message": "导出成功！"
+  },
+  "options_importError": {
+    "message": "导入失败：$1"
+  },
+  "options_exportSettingsPlain": {
+    "message": "导出（纯文本）"
+  },
+  "options_exportSettingsEncrypted": {
+    "message": "导出加密文件"
+  },
+  "options_exportPasswordPrompt": {
+    "message": "输入密码以加密设置文件。"
+  },
+  "options_importPasswordPrompt": {
+    "message": "输入密码以解密设置文件。"
+  },
+  "options_passwordPlaceholder": {
+    "message": "密码"
+  },
+  "options_decryptError": {
+    "message": "解密失败。密码错误？"
+  },
+  "options_exportEncryptedSuccess": {
+    "message": "加密导出成功！"
+  },
+
+  "options_tabAutomation": {
+    "message": "自动化"
+  },
+  "options_automationTitle": {
+    "message": "通过 Git 添加书签"
+  },
+  "options_automationIntro": {
+    "message": "直接在仓库中添加书签。扩展会在下次同步时获取并自动规范化文件名。"
+  },
+  "options_automationFormatTitle": {
+    "message": "文件格式"
+  },
+  "options_automationFoldersLabel": {
+    "message": "分区："
+  },
+  "options_automationGithubActionTitle": {
+    "message": "GitHub Action"
+  },
+  "options_automationWorkflowLink": {
+    "message": "将 add-bookmark.yml 复制到您的仓库"
+  },
+  "options_automationGithubActionParams": {
+    "message": "folder = 根目录；path = 可选子文件夹；如果文件路径不是 bookmarks，请设置 base-path"
+  },
+  "options_automationCreateFileTitle": {
+    "message": "在仓库中创建文件"
+  },
+  "options_automationCreateFileDesc": {
+    "message": "在 <code>bookmarks/toolbar/</code> 或 <code>bookmarks/other/</code>（或子文件夹）中添加新的 JSON 文件。如有不同，请使用扩展的文件路径。"
+  },
+  "options_automationCopy": {
+    "message": "复制"
+  },
+  "options_automationWorkflowRaw": {
+    "message": "原始文件"
+  },
+  "options_automationSubfolderExample": {
+    "message": "示例：path=\"dev-tools\" → bookmarks/toolbar/dev-tools/"
+  },
+  "options_automationParamUrl": {
+    "message": "书签 URL（必填）"
+  },
+  "options_automationParamTitle": {
+    "message": "标题（可选；为空时使用 URL）"
+  },
+  "options_automationParamSection": {
+    "message": "分区：toolbar 或 other"
+  },
+  "options_automationParamFolder": {
+    "message": "分区内的文件夹（例如 dev-tools）"
+  },
+  "options_automationParamBasePath": {
+    "message": "仓库中的基础文件夹（默认 bookmarks；必须与文件路径设置一致）"
+  },
+
+  "options_exportImportTitle": {
+    "message": "导出 / 导入"
+  },
+  "options_exportImportDesc": {
+    "message": "导出或导入书签和扩展设置。"
+  },
+  "options_exportLabel": {
+    "message": "导出"
+  },
+  "options_importLabel": {
+    "message": "导入"
+  },
+  "options_exportTypeBookmarks": {
+    "message": "书签 (JSON)"
+  },
+  "options_exportTypeDashy": {
+    "message": "Dashy 配置 (YAML)"
+  },
+  "options_exportTypeSettingsPlain": {
+    "message": "设置（纯 JSON）"
+  },
+  "options_exportTypeSettingsEncrypted": {
+    "message": "设置（加密）"
+  },
+  "options_importTypeBookmarks": {
+    "message": "书签 (JSON)"
+  },
+  "options_importTypeSettings": {
+    "message": "设置 (JSON / ENC)"
+  },
+  "help_filesTitle": {
+    "message": "文件"
+  },
+  "contextMenu_addToToolbar": { "message": "添加到书签栏" },
+  "contextMenu_addToOther": { "message": "添加到其他书签" },
+  "contextMenu_syncNow": { "message": "立即同步" },
+  "contextMenu_copyFaviconUrl": { "message": "复制网站图标 URL" },
+  "contextMenu_downloadFavicon": { "message": "下载网站图标" },
+  "contextMenu_notifAdded": { "message": "书签已添加到 $1" },
+  "contextMenu_notifFaviconCopied": { "message": "网站图标 URL 已复制" },
+  "contextMenu_notifNotConfigured": { "message": "请先配置 GitSyncMarks" },
+  "contextMenu_notifNoFavicon": { "message": "此页面没有可用的网站图标" },
+  "contextMenu_notifError": { "message": "操作失败 - 请重试" },
+  "contextMenu_switchProfile": { "message": "切换配置文件" },
+  "contextMenu_notifProfileSwitched": { "message": "已切换到 $1", "placeholders": { "name": { "content": "$1" } } }
+}

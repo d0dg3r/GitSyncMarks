@@ -21,6 +21,72 @@
       </div>
     </header>
 
+    <section id="onboarding-wizard-screen" class="card onboarding-screen" style="display: none;">
+      <h2 data-i18n="options_onboardingWizardTitle">Setup wizard</h2>
+      <p id="onboarding-wizard-step-title" class="onboarding-wizard-step-title"></p>
+      <p id="onboarding-wizard-step-text" class="onboarding-wizard-step-text"></p>
+      <div class="onboarding-wizard-progress-row">
+        <span id="onboarding-wizard-progress" class="onboarding-wizard-progress"></span>
+      </div>
+
+      <div id="onboarding-wizard-token-help" class="onboarding-wizard-section" style="display: none;">
+        <p data-i18n="options_onboardingWizardTokenHelpIntro">A Personal Access Token (PAT) lets GitSyncMarks access your GitHub repository to sync bookmarks. You create it in your GitHub account settings.</p>
+        <p data-i18n-html="options_onboardingWizardTokenHelpScopes">The token needs the <code>repo</code> scope. This gives read/write access to your repositories (including private ones) and lets the extension create a repo if you choose auto-create. Treat the token like a password and keep it private.</p>
+        <ol class="onboarding-wizard-token-steps">
+          <li data-i18n="options_onboardingWizardTokenStep1">Click the link below to open GitHub's token creation page.</li>
+          <li data-i18n="options_onboardingWizardTokenStep2">Give the token a name (e.g. "GitSyncMarks") and set an expiration if you prefer.</li>
+          <li data-i18n-html="options_onboardingWizardTokenStep3">Under "Scopes", check <code>repo</code> (full control of private repositories).</li>
+          <li data-i18n="options_onboardingWizardTokenStep4">Click "Generate token", copy it, and paste it in the field below.</li>
+        </ol>
+        <a href="https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks+Sync" target="_blank" rel="noopener" class="onboarding-wizard-token-link" data-i18n="options_onboardingWizardTokenHelpLink">Open GitHub token page</a>
+      </div>
+
+      <div id="onboarding-wizard-has-token-group" class="onboarding-wizard-section" style="display: none;">
+        <label for="onboarding-wizard-has-token" data-i18n="options_onboardingWizardHasTokenLabel">Do you already have a token?</label>
+        <select id="onboarding-wizard-has-token">
+          <option value="yes" data-i18n="options_onboardingWizardHasTokenYes">Yes, I already have one</option>
+          <option value="no" data-i18n="options_onboardingWizardHasTokenNo">No, show me how</option>
+        </select>
+      </div>
+
+      <div id="onboarding-wizard-token-group" class="onboarding-wizard-section" style="display: none;">
+        <label for="onboarding-wizard-token" data-i18n="options_patLabel">Personal Access Token (PAT)</label>
+        <input type="password" id="onboarding-wizard-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+      </div>
+
+      <div id="onboarding-wizard-repo-flow-group" class="onboarding-wizard-section" style="display: none;">
+        <label for="onboarding-wizard-repo-flow" data-i18n="options_onboardingWizardRepoFlowLabel">Repository setup mode</label>
+        <select id="onboarding-wizard-repo-flow">
+          <option value="autoCreate" data-i18n="options_onboardingWizardRepoFlowAuto">Auto-create repository</option>
+          <option value="manual" data-i18n="options_onboardingWizardRepoFlowManual">Use existing repository</option>
+        </select>
+      </div>
+
+      <div id="onboarding-wizard-repo-group" class="onboarding-wizard-section" style="display: none;">
+        <label for="onboarding-wizard-owner" data-i18n="options_repoOwner">Repository Owner</label>
+        <input type="text" id="onboarding-wizard-owner" data-i18n-placeholder="options_ownerPlaceholder" placeholder="your-github-username">
+        <label for="onboarding-wizard-repo" data-i18n="options_repoName">Repository Name</label>
+        <input type="text" id="onboarding-wizard-repo" placeholder="my-bookmarks">
+        <label for="onboarding-wizard-branch" data-i18n="options_branch">Branch</label>
+        <input type="text" id="onboarding-wizard-branch" placeholder="main" value="main">
+        <label for="onboarding-wizard-path" data-i18n="options_filePath">File Path in Repository</label>
+        <input type="text" id="onboarding-wizard-path" placeholder="bookmarks" value="bookmarks">
+      </div>
+
+      <div class="onboarding-wizard-actions">
+        <button type="button" id="onboarding-wizard-action-btn" class="btn btn-secondary btn-sm" style="display: none;"></button>
+        <button type="button" id="onboarding-wizard-back-btn" class="btn btn-secondary btn-sm" data-i18n="options_onboardingWizardBack">Back</button>
+        <button type="button" id="onboarding-wizard-next-btn" class="btn btn-primary btn-sm" data-i18n="options_onboardingWizardNext">Next</button>
+        <button type="button" id="onboarding-wizard-skip-btn" class="btn btn-secondary btn-sm" data-i18n="options_onboardingWizardSkip">Exit</button>
+      </div>
+      <div class="onboarding-wizard-feedback">
+        <span id="onboarding-wizard-spinner" class="spinner" style="display: none;"></span>
+        <span id="onboarding-wizard-hint" class="onboarding-wizard-hint" style="display: none;"></span>
+      </div>
+      <span id="onboarding-wizard-result" class="validation-result"></span>
+    </section>
+
+    <div id="settings-shell">
     <nav class="tab-bar">
       <button class="tab-btn active" data-tab="github" data-i18n="options_tabGitHub">GitHub</button>
       <button class="tab-btn" data-tab="sync" data-i18n="options_tabSynchronization">Sync</button>
@@ -35,7 +101,7 @@
       <div class="sub-tab-bar">
         <button class="sub-tab-btn active" data-subtab="github-profile" data-i18n="options_subTabProfile">Profile</button>
         <button class="sub-tab-btn" data-subtab="github-connection" data-i18n="options_subTabConnection">Connection</button>
-        <button class="sub-tab-btn" data-subtab="github-repos" data-i18n="options_subTabRepos">Repos</button>
+        <button class="sub-tab-btn" data-subtab="github-repos" data-i18n="options_subTabRepos">GitHub Folder</button>
       </div>
 
       <div class="sub-tab-content active" id="subtab-github-profile">
@@ -132,7 +198,21 @@
 
           <div class="form-group">
             <label for="filepath" data-i18n="options_filePath">File Path in Repository</label>
-            <input type="text" id="filepath" placeholder="bookmarks" value="bookmarks">
+            <div class="filepath-browse-wrapper">
+              <input type="text" id="filepath" placeholder="bookmarks" value="bookmarks">
+              <button type="button" id="btn-browse-folder" class="btn-icon" data-i18n-title="options_browseFolder" title="Browse">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4.5V12a1.5 1.5 0 001.5 1.5h9A1.5 1.5 0 0014 12V6.5A1.5 1.5 0 0012.5 5H8L6.5 3H3.5A1.5 1.5 0 002 4.5z"/></svg>
+              </button>
+            </div>
+            <div id="folder-browser" class="folder-browser hidden">
+              <div class="folder-browser-header">
+                <button type="button" id="btn-folder-up" class="btn-icon btn-icon-sm" disabled title="Up">&#8593;</button>
+                <span id="folder-browser-path" class="folder-browser-path">/</span>
+              </div>
+              <ul id="folder-browser-list" class="folder-browser-list"></ul>
+              <div id="folder-browser-empty" class="folder-browser-msg hidden" data-i18n="options_browseFolderEmpty">No folders found</div>
+              <div id="folder-browser-loading" class="folder-browser-msg" data-i18n="options_browseFolderLoading">Loading…</div>
+            </div>
             <small data-i18n="options_filePathHint">Folder where bookmark files will be stored.</small>
           </div>
 
@@ -140,6 +220,10 @@
             <button id="validate-btn" class="btn btn-secondary" data-i18n="options_testConnection">Test Connection</button>
             <span id="validation-spinner" class="spinner" style="display: none;"></span>
             <span id="validation-result" class="validation-result"></span>
+            <div id="connection-path-init-group" style="display: none; margin-top: 0.75rem;">
+              <button type="button" id="connection-path-init-btn" class="btn btn-secondary btn-sm" data-i18n="options_onboardingInitPathBtn">Create path and run first sync</button>
+              <small id="connection-path-init-hint" style="display: block; margin-top: 0.35rem;"></small>
+            </div>
             <div id="onboarding-confirm" class="onboarding-confirm" style="display: none; margin-top: 0.75rem;">
               <span id="onboarding-confirm-text" class="onboarding-confirm-text"></span>
               <div class="onboarding-confirm-actions">
@@ -150,6 +234,7 @@
           </div>
 
           <div class="actions actions-in-card actions-github-feedback">
+            <button type="button" id="onboarding-wizard-start-btn" class="btn btn-secondary btn-sm" data-i18n="options_onboardingWizardStart">Start setup wizard</button>
             <span id="save-github-result" class="save-result"></span>
           </div>
         </section>
@@ -186,6 +271,7 @@
         </section>
       </div>
 
+    </div>
     </div>
 
     <!-- ==================== Sync Tab ==================== -->
@@ -351,9 +437,19 @@
             <div class="form-group">
               <label for="settings-sync-mode" data-i18n="options_settingsSyncModeLabel">Sync mode</label>
               <select id="settings-sync-mode">
-                <option value="global" data-i18n="options_settingsSyncModeGlobal">Global — shared across all devices</option>
-                <option value="individual" data-i18n="options_settingsSyncModeIndividual">Individual — this device only</option>
+                <option value="global" data-i18n="options_settingsSyncModeGlobal" disabled>Global — shared across all devices</option>
+                <option value="individual" data-i18n="options_settingsSyncModeIndividual" selected>Individual — this device only</option>
               </select>
+              <small data-i18n="options_settingsSyncModeGlobalTemporarilyDisabled">Global mode is temporarily unavailable. Use profile-based client settings.</small>
+            </div>
+
+            <div id="settings-sync-global-write-group" class="form-group toggle-group" style="display: none;">
+              <label for="settings-sync-global-write-enabled" class="toggle-label">
+                <span data-i18n="options_settingsSyncGlobalWriteEnabled">Allow writing to global settings (settings.enc)</span>
+                <input type="checkbox" id="settings-sync-global-write-enabled">
+                <span class="toggle-slider"></span>
+              </label>
+              <small data-i18n="options_settingsSyncGlobalWriteHint">Recommended OFF. If enabled, this client can overwrite global settings for all devices.</small>
             </div>
 
             <div class="form-group">
@@ -365,13 +461,37 @@
             <span id="settings-sync-result" class="validation-result"></span>
 
             <div id="settings-sync-import-group" style="display: none; margin-top: 1rem;">
-              <label data-i18n="options_settingsSyncImportTitle">Import from other device</label>
+              <div class="form-group">
+                <label for="settings-sync-client-name" data-i18n="options_settingsSyncClientNameLabel">Client name</label>
+                <input type="text" id="settings-sync-client-name" data-i18n-placeholder="options_settingsSyncClientNamePlaceholder" placeholder="my-laptop">
+                <small data-i18n="options_settingsSyncClientNameHint">Required. This name identifies your client settings profile in the repository.</small>
+              </div>
+              <label data-i18n="options_settingsRegistryTitle">Available settings in repository</label>
               <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.4rem;">
-                <button id="settings-sync-load-btn" class="btn btn-secondary" data-i18n="options_settingsSyncImportBtn">Load available configs</button>
+                <button id="settings-sync-load-btn" class="btn btn-secondary" data-i18n="options_settingsRegistryRefreshBtn">Refresh</button>
                 <select id="settings-sync-device-list" style="flex: 1;" disabled></select>
-                <button id="settings-sync-import-btn" class="btn btn-secondary" data-i18n="options_settingsSyncImportApply" disabled>Import</button>
+              </div>
+              <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.6rem;">
+                <button id="settings-sync-import-btn" class="btn btn-secondary" data-i18n="options_settingsRegistryImportApplyBtn" disabled>Import &amp; Apply</button>
+                <button id="settings-sync-push-selected-btn" class="btn btn-secondary" data-i18n="options_settingsRegistrySyncSelectedBtn" disabled>Sync current to selected</button>
+              </div>
+              <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.6rem;">
+                <button id="settings-sync-create-btn" class="btn btn-secondary" data-i18n="options_settingsSyncCreateOwnBtn">Create my client setting</button>
               </div>
               <span id="settings-sync-import-result" class="validation-result"></span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card danger-zone" id="reset-card">
+          <h2 data-i18n="options_resetTitle">Reset Extension</h2>
+          <p class="card-desc" data-i18n="options_resetDescription">Delete all profiles, tokens, and settings. Your browser bookmarks will not be affected.</p>
+          <button type="button" class="btn btn-danger" id="btn-reset-extension" data-i18n="options_resetBtn">Reset all data</button>
+          <div id="reset-confirm-dialog" class="reset-confirm-dialog" style="display: none;">
+            <p data-i18n="options_resetConfirm">Are you sure? This cannot be undone. All profiles and settings will be permanently deleted.</p>
+            <div class="reset-confirm-actions">
+              <button type="button" class="btn btn-danger" id="btn-reset-confirm" data-i18n="options_resetConfirmBtn">Yes, delete all data</button>
+              <button type="button" class="btn btn-secondary" id="btn-reset-cancel" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
             </div>
           </div>
         </section>
@@ -582,7 +702,7 @@
           <dt data-i18n="help_generatedFilesTitle">Generated files</dt>
           <dd data-i18n="help_generatedFilesDesc">README.md, bookmarks.html, feed.xml, and dashy-conf.yml can be created during sync. Choose Off, Manual, or Auto per file in the Files tab.</dd>
           <dt data-i18n="help_settingsSyncTitle">Settings sync to Git</dt>
-          <dd data-i18n="help_settingsSyncDesc">When enabled, extension settings are encrypted and stored in the repo. Choose Global (shared settings.enc) or Individual (device-specific settings-{id}.enc). In individual mode you can import settings from other devices.</dd>
+          <dd data-i18n="help_settingsSyncDesc">When enabled, extension settings are encrypted and stored in the repo as profile folders (profiles/&lt;alias&gt;/settings.enc). Import and sync explicit client profiles from the repository list.</dd>
           <dt data-i18n="help_backupBookmarks">Export / Import</dt>
           <dd data-i18n="help_backupBookmarksDesc2">Export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc). Import bookmarks or settings — encrypted files are decrypted with your password. Bookmark import replaces all local bookmarks; settings import replaces all profiles and reloads the page.</dd>
         </dl>
@@ -613,10 +733,10 @@
         </summary>
         <div class="help-details-body">
         <table class="help-table">
-          <tr><td><kbd>Ctrl+Shift+.</kbd></td><td data-i18n="help_quickSync">Quick sync bookmarks</td></tr>
-          <tr><td><kbd>Ctrl+Shift+,</kbd></td><td data-i18n="help_openOptions">Open extension settings</td></tr>
+          <tr><td><kbd id="shortcut-quick-sync">Ctrl+Shift+.</kbd></td><td data-i18n="help_quickSync">Quick sync bookmarks</td></tr>
+          <tr><td><kbd id="shortcut-open-options">Ctrl+Shift+,</kbd></td><td data-i18n="help_openOptions">Open extension settings</td></tr>
         </table>
-        <p class="help-note" data-i18n="help_shortcutsNote">You can customize shortcuts in the browser's extension settings.</p>
+        <button type="button" class="sub-tab-btn" id="btn-customize-shortcuts" data-i18n="help_customizeShortcuts">Customize shortcuts</button>
         </div>
       </details>
 

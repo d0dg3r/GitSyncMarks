@@ -50,9 +50,21 @@ Or use the combined command:
 npm run screenshots
 ```
 
-Output: `store-assets/{en,de,fr,es}/` — each with `chrome-*.png` (GitHub-Profile, Connection, Sync, Files-Generated, Export-Import, Popup) and `firefox-*.png` (copied from Chrome; UI is identical). Each screenshot shows light and dark mode side by side (1280x800 total).
+Output: `store-assets/{en,de,fr,es,pt_BR,it,ja,zh_CN,ko,ru,tr,pl}/` — each with `chrome-*.png` (GitHub-Profile, Connection, Sync, Files-Generated, Export-Import, Popup, Wizard-Welcome, Wizard-Token, Wizard-Repo) and `firefox-*.png` (copied from Chrome; UI is identical). Each screenshot shows light and dark mode side by side (1280x800 total). 12 languages, 9 screenshots each = 108 Chrome + 108 Firefox = 216 images.
 
 **Prerequisites:** Playwright with Chromium (`npx playwright install chromium` — run once).
+
+### CI Screenshot Generation
+
+Screenshots can also be generated via GitHub Actions. The `screenshots.yml` workflow runs on `ubuntu-latest`, builds the extension, generates all 144 screenshots, and commits them back to the repo.
+
+**Trigger manually:**
+
+1. Go to Actions → Generate Screenshots → Run workflow
+2. Optionally specify a branch (defaults to current)
+3. The workflow commits updated images to `store-assets/` and pushes
+
+**Typical release flow:** Run the screenshot workflow on the development branch before tagging a release, so the latest screenshots are included.
 
 ---
 

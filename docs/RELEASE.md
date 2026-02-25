@@ -24,6 +24,7 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 |---------|----------|-----------|
 | 2.3.0 | **Data** | Star Trek — logical, reliable, all about data; fits auto-save and efficient sync |
 | 2.4.0 | **R2-D2** | Star Wars — the helper droid that does everything; fits settings sync to Git, RSS feed, generated files, tab reorganization with sub-tabs |
+| 2.5.0 | **Cortana** | Halo — AI assistant; fits context menu, favicon tools, 8 new languages, folder browser |
 | 3.0 | **GLaDOS** | Portal — AI, cult, iconic; fits AI features; the irony of "murderous" AI as bookmark keeper is fun |
 
 **Naming logic:**
@@ -37,6 +38,7 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 
 | Version | Codename | Description |
 |---|---|---|
+| `2.5.0` | *Cortana* | Context menu (Add to Toolbar/Other, Sync Now, Switch Profile, Copy Favicon URL, Download Favicon); profile switching via context menu; favicon tools; 8 new languages (PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL — 12 total); dynamic keyboard shortcuts; factory reset; folder browser; CI screenshot workflow; feature lists reordered; "No middleman" replaces "No server needed"; 9 store screenshots per language |
 | `2.4.0` | *R2-D2* | Settings sync to Git (encrypted `settings.enc` in repo); RSS feed export (`feed.xml`); dashy-conf.yml; generated files mode selector (Off/Manual/Auto per file with "Generate now" button); backlog voting awareness; Debug Log moved to Sync tab; options reorganized to 5 tabs with sub-tabs (GitHub/Sync/Files/Help/About); 6 store screenshots per language |
 | `2.3.0` | *Data* | Encrypted settings export (password-protected .enc); plain JSON and encrypted formats supported; import with password prompt for .enc files; Sync tab shortened to "Sync"; store screenshots (popup crop, options resize); import hints (active profile / all profiles); theme cycle button; full auto-save (no Save buttons); save feedback in cards |
 | `2.2.1` | — | Sync feedback message fix (merge shows push/pull success); state regression fix (stale fetch guard, cache-busting); debug log extended with commit hashes |
@@ -211,7 +213,7 @@ When publishing or updating the extension on the Chrome Web Store:
 1. Register as a Chrome Web Store developer ($5 one-time fee)
 2. Go to [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole)
 3. Create a new item and upload the ZIP
-4. Fill in listing details (see `store-assets/chrome-store.md` for prepared texts)
+4. Fill in listing details (see `store-assets/chrome-{lang}.md` and `store-assets/chrome-meta.md` for prepared texts)
 5. Upload screenshots and promo images from `store-assets/`
 6. Submit for review
 
@@ -231,16 +233,15 @@ All Chrome Web Store assets are in `store-assets/`:
 | File | Purpose | Dimensions |
 |---|---|---|
 | `icon128-store.png` | Store listing icon | 128 x 128 |
-| `en/chrome-*.png` | 6 screenshots: GitHub, Connection, Sync, Files, Export/Import, Popup (EN) | 1280 x 800 |
-| `de/chrome-*.png` | 6 screenshots (DE) | 1280 x 800 |
-| `fr/chrome-*.png` | 6 screenshots (FR) | 1280 x 800 |
-| `es/chrome-*.png` | 6 screenshots (ES) | 1280 x 800 |
-| `{en,de,fr,es}/firefox-*.png` | Firefox (copied from Chrome) | 1280 x 800 |
+| `{lang}/chrome-*.png` | 9 screenshots per language (12 languages) | 1280 x 800 |
+| `{lang}/firefox-*.png` | Firefox (copied from Chrome) | 1280 x 800 |
 | `promo-small.png` | Small promo tile | 440 x 280 |
 | `promo-marquee.png` | Marquee promo tile | 1400 x 560 |
-| `chrome-store.md` | Chrome listing texts (EN, DE, FR, ES) | — |
-| `firefox-store.md` | Firefox listing texts (EN, DE, FR, ES) | — |
-| `listing.md` | Index with links to both | — |
+| `chrome-{lang}.md` | Chrome listing texts (12 languages) | — |
+| `chrome-meta.md` | Chrome shared metadata (Privacy, Test, Distribution, Checklist) | — |
+| `firefox-{lang}.md` | Firefox listing texts (12 languages) | — |
+| `firefox-meta.md` | Firefox shared metadata (Privacy, Test, Distribution, Checklist) | — |
+| `listing.md` | Index with links to all store files | — |
 
 ## Troubleshooting
 

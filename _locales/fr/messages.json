@@ -167,6 +167,11 @@
   "options_filePathHint": {
     "message": "Dossier où seront stockés les fichiers de favoris."
   },
+  "options_browseFolder": { "message": "Parcourir" },
+  "options_browseFolderEmpty": { "message": "Aucun dossier trouvé" },
+  "options_browseFolderLoading": { "message": "Chargement\u2026" },
+  "options_browseFolderSelect": { "message": "Sélectionner" },
+  "options_browseFolderNotConfigured": { "message": "Veuillez d'abord configurer le token, le propriétaire et le dépôt" },
   "options_filePathChangeHint": {
     "message": "Lors de la prochaine sync, un conflit peut survenir. Utilisez \"GitHub → Local\" pour adopter l'état distant."
   },
@@ -317,6 +322,12 @@
   "options_settingsSyncModeIndividual": {
     "message": "Individuel — cet appareil uniquement"
   },
+  "options_settingsSyncGlobalWriteEnabled": {
+    "message": "Allow writing to global settings (settings.enc)"
+  },
+  "options_settingsSyncGlobalWriteHint": {
+    "message": "Recommended OFF. If enabled, this client can overwrite global settings for all devices."
+  },
   "options_settingsSyncImportTitle": {
     "message": "Importer depuis un autre appareil"
   },
@@ -332,6 +343,34 @@
   "options_settingsSyncImportSuccess": {
     "message": "Paramètres importés avec succès"
   },
+  "options_settingsSyncImportGlobalConfirm": {
+    "message": "Apply the global settings file now? This will overwrite current local settings on this device."
+  },
+  "options_settingsSyncImportGlobalConfirmBtn": {
+    "message": "Apply global config"
+  },
+  "options_settingsSyncImportReloadConfirm": {
+    "message": "Settings were imported. Reload now to apply them everywhere?"
+  },
+  "options_settingsSyncImportReloadConfirmBtn": {
+    "message": "Reload now"
+  },
+  "options_settingsRegistryTitle": { "message": "Available settings in repository" },
+  "options_settingsRegistryRefreshBtn": { "message": "Refresh" },
+  "options_settingsRegistryImportApplyBtn": { "message": "Import & Apply" },
+  "options_settingsRegistrySyncSelectedBtn": { "message": "Sync current to selected" },
+  "options_settingsRegistryCreateBtn": { "message": "Create new setting" },
+  "options_settingsRegistryNewNamePlaceholder": { "message": "New setting name" },
+  "options_settingsRegistryActionPasswordPrompt": { "message": "Enter password for this settings action" },
+  "options_settingsRegistryImportSuccess": { "message": "Settings imported and applied" },
+  "options_settingsRegistrySyncSuccess": { "message": "Current settings synced to selected profile" },
+  "options_settingsRegistryCreateSuccess": { "message": "New settings profile created" },
+  "options_settingsRegistryCreateNameRequired": { "message": "Please enter a name for the new setting" },
+  "options_resetTitle": { "message": "Réinitialiser l'extension" },
+  "options_resetDescription": { "message": "Supprimer tous les profils, jetons et paramètres. Vos favoris du navigateur ne seront pas affectés." },
+  "options_resetBtn": { "message": "Réinitialiser toutes les données" },
+  "options_resetConfirm": { "message": "Êtes-vous sûr ? Cette action est irréversible. Tous les profils et paramètres seront définitivement supprimés." },
+  "options_resetSuccess": { "message": "L'extension a été réinitialisée." },
   "options_notifications": {
     "message": "Notifications de sync"
   },
@@ -416,6 +455,54 @@
   "options_onboardingPullSuccess": {
     "message": "Favoris importés avec succès."
   },
+  "options_onboardingWizardStart": { "message": "Démarrer l'assistant de configuration" },
+  "options_onboardingWizardTitle": { "message": "Assistant de configuration" },
+  "options_onboardingWizardStepWelcomeTitle": { "message": "Bienvenue" },
+  "options_onboardingWizardStepWelcomeText": { "message": "Cet assistant vous guide pour le dépôt, le token, le test de connexion et le premier sync." },
+  "options_onboardingWizardStepRepoTitle": { "message": "Paramètres du dépôt" },
+  "options_onboardingWizardStepRepoText": { "message": "Renseignez propriétaire, nom du dépôt, branche et chemin de base." },
+  "options_onboardingWizardStepTokenTitle": { "message": "Token d'accès" },
+  "options_onboardingWizardStepTokenText": { "message": "Ajoutez un token GitHub avec le scope repo et gardez-le privé." },
+  "options_onboardingWizardStepValidateTitle": { "message": "Tester la connexion" },
+  "options_onboardingWizardStepValidateText": { "message": "Lancez le test pour vérifier le token, le dépôt et l'accès au chemin." },
+  "options_onboardingWizardStepSyncTitle": { "message": "Première action de sync" },
+  "options_onboardingWizardStepSyncTextEmpty": { "message": "Le chemin est vide. Créez la structure initiale pour commencer." },
+  "options_onboardingWizardStepSyncTextExisting": { "message": "Des favoris existent déjà dans le dépôt. Les importer maintenant dans ce navigateur." },
+  "options_onboardingWizardStepFinishTitle": { "message": "Terminer" },
+  "options_onboardingWizardStepFinishText": { "message": "Configuration terminée. Vous pouvez continuer avec les réglages standard." },
+  "options_onboardingWizardActionTest": { "message": "Lancer le test" },
+  "options_onboardingWizardActionCreate": { "message": "Créer la structure" },
+  "options_onboardingWizardActionPull": { "message": "Importer maintenant" },
+  "options_onboardingWizardNext": { "message": "Suivant" },
+  "options_onboardingWizardBack": { "message": "Retour" },
+  "options_onboardingWizardSkip": { "message": "Quitter" },
+  "options_onboardingWizardFinish": { "message": "Terminer" },
+  "options_onboardingWizardNeedConnection": { "message": "Veuillez d'abord lancer le test de connexion." },
+  "options_onboardingWizardNeedAction": { "message": "Veuillez d'abord terminer la première action de sync." },
+  "options_onboardingWizardDismissed": { "message": "Assistant fermé. Vous pouvez le relancer à tout moment." },
+  "options_onboardingWizardCompleted": { "message": "Assistant terminé avec succès." },
+  "options_onboardingWizardStepTokenHelpTitle": { "message": "Créer un token" },
+  "options_onboardingWizardStepTokenHelpText": { "message": "Ouvrez les paramètres de tokens GitHub et créez un Personal Access Token avec le scope repo." },
+  "options_onboardingWizardTokenHelpText": { "message": "Créez un Personal Access Token GitHub avec le scope repo dans vos paramètres GitHub." },
+  "options_onboardingWizardTokenHelpLink": { "message": "Ouvrir la page des tokens GitHub" },
+  "options_onboardingWizardStepHasTokenTitle": { "message": "Avez-vous déjà un token ?" },
+  "options_onboardingWizardStepHasTokenText": { "message": "Sinon, créez-en un d'abord puis continuez avec la saisie du token." },
+  "options_onboardingWizardHasTokenLabel": { "message": "Avez-vous déjà un token ?" },
+  "options_onboardingWizardHasTokenYes": { "message": "Oui, j'en ai déjà un" },
+  "options_onboardingWizardHasTokenNo": { "message": "Non, montrez-moi comment" },
+  "options_onboardingWizardStepRepoDecisionTitle": { "message": "Mode de dépôt" },
+  "options_onboardingWizardStepRepoDecisionText": { "message": "Choisissez entre créer automatiquement le dépôt ou utiliser un dépôt existant." },
+  "options_onboardingWizardRepoFlowLabel": { "message": "Mode de dépôt" },
+  "options_onboardingWizardRepoFlowAuto": { "message": "Créer le dépôt automatiquement" },
+  "options_onboardingWizardRepoFlowManual": { "message": "Utiliser un dépôt existant" },
+  "options_onboardingWizardActionCheckEnvironment": { "message": "Vérifier dépôt et chemin" },
+  "options_onboardingWizardTokenValidated": { "message": "Le token est valide et a le scope requis." },
+  "options_onboardingWizardRepoRequired": { "message": "Veuillez saisir le propriétaire et le nom du dépôt." },
+  "options_onboardingWizardRepoCreateFailed": { "message": "Impossible de créer le dépôt avec ce token/ces permissions." },
+  "options_onboardingWizardEnvironmentChecked": { "message": "Vérification du dépôt et du chemin terminée." },
+  "options_onboardingWizardRepoOwnerMismatch": { "message": "La création automatique prend uniquement en charge vos dépôts utilisateur. Définissez le propriétaire sur $1." },
+  "options_onboardingWizardRepoUserOnlyHint": { "message": "Pour un dépôt d'organisation ou d'un autre propriétaire, passez en mode manuel (dépôt existant)." },
+  "options_onboardingWizardRepoCreatePermissionDenied": { "message": "Ce token ne peut pas créer de dépôt. Vérifiez le scope repo et les permissions du compte." },
   "options_settingsSaved": {
     "message": "Paramètres enregistrés !"
   },
@@ -579,7 +666,7 @@
     "message": "Connexion"
   },
   "options_subTabRepos": {
-    "message": "Repos"
+    "message": "Dossier GitHub"
   },
   "options_subTabGenerated": {
     "message": "Générés"
@@ -725,8 +812,11 @@
   "help_openOptions": {
     "message": "Ouvrir les paramètres de l'extension"
   },
-  "help_shortcutsNote": {
-    "message": "Vous pouvez personnaliser les raccourcis dans les paramètres de l'extension du navigateur."
+  "help_customizeShortcuts": {
+    "message": "Personnaliser les raccourcis"
+  },
+  "help_shortcutNotSet": {
+    "message": "Non défini"
   },
   "help_whySlowTitle": {
     "message": "Pourquoi la sync prend-elle parfois du temps ?"
@@ -952,5 +1042,17 @@
   },
   "help_autoSaveDesc": {
     "message": "Tous les paramètres se sauvegardent automatiquement à la modification — il n'y a pas de bouton Enregistrer. Les changements prennent effet immédiatement."
-  }
+  },
+  "contextMenu_addToToolbar": { "message": "Ajouter à la barre de favoris" },
+  "contextMenu_addToOther": { "message": "Ajouter aux autres favoris" },
+  "contextMenu_syncNow": { "message": "Synchroniser maintenant" },
+  "contextMenu_copyFaviconUrl": { "message": "Copier l'URL du favicon" },
+  "contextMenu_downloadFavicon": { "message": "Télécharger le favicon" },
+  "contextMenu_notifAdded": { "message": "Favori ajouté à $1" },
+  "contextMenu_notifFaviconCopied": { "message": "URL du favicon copiée" },
+  "contextMenu_notifNotConfigured": { "message": "Veuillez d'abord configurer GitSyncMarks" },
+  "contextMenu_notifNoFavicon": { "message": "Aucun favicon disponible pour cette page" },
+  "contextMenu_notifError": { "message": "Échec de l'action — veuillez réessayer" },
+  "contextMenu_switchProfile": { "message": "Changer de profil" },
+  "contextMenu_notifProfileSwitched": { "message": "Basculé vers $1", "placeholders": { "name": { "content": "$1" } } }
 }
