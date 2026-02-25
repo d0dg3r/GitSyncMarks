@@ -6,7 +6,7 @@
 
 import { DISPLAY_VERSION } from './lib/display-version.js';
 import { GitHubAPI } from './lib/github-api.js';
-import { checkPathSetup, initializeRemoteFolder } from './lib/onboarding.js';
+import { checkPathSetup, waitForRemoteBaseline } from './lib/onboarding.js';
 import { initI18n, applyI18n, getMessage, reloadI18n, getLanguage, SUPPORTED_LANGUAGES } from './lib/i18n.js';
 import { initTheme, applyTheme } from './lib/theme.js';
 import { serializeToJson, deserializeFromJson, bookmarkTreeToFileMap, fileMapToDashyYaml } from './lib/bookmark-serializer.js';
@@ -55,6 +55,9 @@ const STORAGE_KEYS = {
   SETTINGS_SYNC_GLOBAL_WRITE_ENABLED: 'settingsSyncGlobalWriteEnabled',
   ONBOARDING_WIZARD_COMPLETED: 'onboardingWizardCompleted',
   ONBOARDING_WIZARD_DISMISSED: 'onboardingWizardDismissed',
+};
+const LOCAL_STORAGE_KEYS = {
+  SETTINGS_SYNC_CLIENT_NAME: 'settingsSyncClientName',
 };
 
 function normalizeGenMode(val) {
@@ -125,16 +128,19 @@ const settingsSyncPasswordInput = document.getElementById('settings-sync-passwor
 const settingsSyncSavePwBtn = document.getElementById('settings-sync-save-pw-btn');
 const settingsSyncResult = document.getElementById('settings-sync-result');
 const settingsSyncImportGroup = document.getElementById('settings-sync-import-group');
+const settingsSyncClientNameInput = document.getElementById('settings-sync-client-name');
 const settingsSyncLoadBtn = document.getElementById('settings-sync-load-btn');
 const settingsSyncDeviceList = document.getElementById('settings-sync-device-list');
 const settingsSyncImportBtn = document.getElementById('settings-sync-import-btn');
 const settingsSyncPushSelectedBtn = document.getElementById('settings-sync-push-selected-btn');
-const settingsSyncNewNameInput = document.getElementById('settings-sync-new-name');
 const settingsSyncCreateBtn = document.getElementById('settings-sync-create-btn');
 const settingsSyncImportResult = document.getElementById('settings-sync-import-result');
 const notificationsModeSelect = document.getElementById('notifications-mode');
 const validateBtn = document.getElementById('validate-btn');
 const validationResult = document.getElementById('validation-result');
+const connectionPathInitGroup = document.getElementById('connection-path-init-group');
+const connectionPathInitBtn = document.getElementById('connection-path-init-btn');
+const connectionPathInitHint = document.getElementById('connection-path-init-hint');
 const onboardingConfirm = document.getElementById('onboarding-confirm');
 const onboardingConfirmText = document.getElementById('onboarding-confirm-text');
 const onboardingConfirmYesBtn = document.getElementById('onboarding-confirm-yes-btn');
@@ -145,6 +151,8 @@ const onboardingWizardProgress = document.getElementById('onboarding-wizard-prog
 const onboardingWizardStepTitle = document.getElementById('onboarding-wizard-step-title');
 const onboardingWizardStepText = document.getElementById('onboarding-wizard-step-text');
 const onboardingWizardResult = document.getElementById('onboarding-wizard-result');
+const onboardingWizardSpinner = document.getElementById('onboarding-wizard-spinner');
+const onboardingWizardHint = document.getElementById('onboarding-wizard-hint');
 const onboardingWizardActionBtn = document.getElementById('onboarding-wizard-action-btn');
 const onboardingWizardBackBtn = document.getElementById('onboarding-wizard-back-btn');
 const onboardingWizardNextBtn = document.getElementById('onboarding-wizard-next-btn');
@@ -233,6 +241,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   populateLanguageDropdown();
   applyI18n();
   document.title = `GitSyncMarks – ${getMessage('options_subtitle')}`;
+
+  // Screenshot demo mode: show wizard at specific step without API calls
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('screenshot') === 'wizard') {
+    const stepParam = params.get('step');
+    const stepIndex = stepParam !== null ? Math.max(0, Math.min(7, parseInt(stepParam, 10) || 0)) : 0;
+    wizardState.active = true;
+    wizardState.stepIndex = stepIndex;
+    onboardingWizardScreen.style.display = '';
+    settingsShell.style.display = 'none';
+    renderOnboardingWizardStep();
+    return;
+  }
+
   await loadSettings();
   loadShortcuts();
 
@@ -289,20 +311,28 @@ const resetConfirmBtn = document.getElementById('btn-reset-confirm');
 const resetCancelBtn = document.getElementById('btn-reset-cancel');
 
 resetBtn?.addEventListener('click', () => {
+  resetBtn.style.display = 'none';
   resetConfirmDialog.style.display = 'flex';
 });
 
 resetCancelBtn?.addEventListener('click', () => {
   resetConfirmDialog.style.display = 'none';
+  resetBtn.style.display = '';
 });
 
 resetConfirmBtn?.addEventListener('click', async () => {
+  resetConfirmBtn.disabled = true;
+  resetCancelBtn.disabled = true;
   try {
     await chrome.storage.sync.clear();
     await chrome.storage.local.clear();
     location.reload();
   } catch (err) {
     console.error('[GitSyncMarks] Reset failed:', err);
+    resetConfirmBtn.disabled = false;
+    resetCancelBtn.disabled = false;
+    resetConfirmDialog.style.display = 'none';
+    resetBtn.style.display = '';
   }
 });
 
@@ -336,12 +366,19 @@ function getEffectiveDebounceMs() {
 
 function updateSettingsSyncVisibility() {
   settingsSyncOptionsGroup.style.display = syncSettingsToGitInput.checked ? '' : 'none';
-  const isIndividualMode = settingsSyncModeSelect.value === 'individual';
+  // Global mode is temporarily unavailable; keep UI visible but fixed to individual.
+  settingsSyncModeSelect.value = 'individual';
+  settingsSyncModeSelect.disabled = true;
   settingsSyncImportGroup.style.display = syncSettingsToGitInput.checked ? '' : 'none';
-  settingsSyncGlobalWriteGroup.style.display = !isIndividualMode ? '' : 'none';
+  settingsSyncGlobalWriteGroup.style.display = 'none';
 }
 
 let settingsProfiles = [];
+
+function settingsSyncClientAlias() {
+  const raw = String(settingsSyncClientNameInput?.value || '').trim().toLowerCase();
+  return raw.replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 48);
+}
 const WIZARD_STEPS = ['welcome', 'tokenHelp', 'hasToken', 'tokenInput', 'repoDecision', 'repoDetails', 'environment', 'finish'];
 const wizardState = {
   active: false,
@@ -413,6 +450,17 @@ function setWizardResult(message, type = 'success') {
   onboardingWizardResult.className = `validation-result ${type}`;
 }
 
+function setWizardBusy(isBusy, loadingMessage = '') {
+  onboardingWizardSpinner.style.display = isBusy ? 'inline-block' : 'none';
+  onboardingWizardBackBtn.disabled = isBusy || wizardState.stepIndex === 0;
+  onboardingWizardNextBtn.disabled = isBusy;
+  onboardingWizardSkipBtn.disabled = isBusy;
+  onboardingWizardActionBtn.disabled = isBusy;
+  if (isBusy && loadingMessage) {
+    setWizardResult(loadingMessage, 'loading');
+  }
+}
+
 function wizardStepText(stepKey) {
   switch (stepKey) {
     case 'welcome':
@@ -481,21 +529,16 @@ function renderOnboardingWizardStep() {
   onboardingWizardTokenGroup.style.display = stepKey === 'tokenInput' ? '' : 'none';
   onboardingWizardRepoFlowGroup.style.display = stepKey === 'repoDecision' ? '' : 'none';
   onboardingWizardRepoGroup.style.display = stepKey === 'repoDetails' ? '' : 'none';
-
-  onboardingWizardActionBtn.style.display = 'none';
-  if (stepKey === 'tokenInput') {
-    onboardingWizardActionBtn.style.display = '';
-    onboardingWizardActionBtn.textContent = getMessage('options_onboardingWizardActionTest');
-  } else if (stepKey === 'environment') {
-    onboardingWizardActionBtn.style.display = '';
-    if (!wizardState.environmentChecked) {
-      onboardingWizardActionBtn.textContent = getMessage('options_onboardingWizardActionCheckEnvironment');
-    } else {
-      onboardingWizardActionBtn.textContent = wizardState.pathStatus === 'hasBookmarks'
-        ? getMessage('options_onboardingWizardActionPull')
-        : getMessage('options_onboardingWizardActionCreate');
-    }
+  onboardingWizardHint.style.display = stepKey === 'environment' ? '' : 'none';
+  if (stepKey === 'environment') {
+    onboardingWizardHint.textContent = getMessage('options_onboardingWizardFirstSyncHint');
+  } else {
+    onboardingWizardHint.textContent = '';
   }
+  onboardingWizardSpinner.style.display = 'none';
+
+  // Next now drives validation and bootstrap flow; keep action button hidden.
+  onboardingWizardActionBtn.style.display = 'none';
 }
 
 function populateLanguageDropdown() {
@@ -572,7 +615,7 @@ async function loadSettings() {
     generateFeedXml: 'auto',
     generateDashyYml: 'off',
     syncSettingsToGit: false,
-    settingsSyncMode: 'global',
+    settingsSyncMode: 'individual',
     settingsSyncGlobalWriteEnabled: false,
     onboardingWizardCompleted: false,
     onboardingWizardDismissed: false,
@@ -595,8 +638,8 @@ async function loadSettings() {
   generateFeedXmlSelect.value = normalizeGenMode(globals.generateFeedXml);
   generateDashyYmlSelect.value = normalizeGenMode(globals.generateDashyYml);
   syncSettingsToGitInput.checked = globals.syncSettingsToGit === true;
-  settingsSyncModeSelect.value = globals.settingsSyncMode || 'global';
-  settingsSyncGlobalWriteEnabledInput.checked = globals.settingsSyncGlobalWriteEnabled === true;
+  settingsSyncModeSelect.value = 'individual';
+  settingsSyncGlobalWriteEnabledInput.checked = false;
   updateSettingsSyncVisibility();
   if (globals.syncSettingsToGit === true) {
     await refreshSettingsProfiles();
@@ -608,6 +651,8 @@ async function loadSettings() {
     settingsSyncPasswordInput.value = '********';
     settingsSyncPasswordInput.dataset.hasPassword = 'true';
   }
+  const localNameState = await chrome.storage.local.get({ [LOCAL_STORAGE_KEYS.SETTINGS_SYNC_CLIENT_NAME]: '' });
+  settingsSyncClientNameInput.value = localNameState[LOCAL_STORAGE_KEYS.SETTINGS_SYNC_CLIENT_NAME] || '';
   updateGenerateFilesBtn();
   const mode = globals.notificationsMode;
   const oldEnabled = globals.notificationsEnabled;
@@ -632,6 +677,9 @@ async function loadSettings() {
   profileRenameDialog.style.display = 'none';
   profileMessage.style.display = 'none';
   onboardingConfirm.style.display = 'none';
+  resetConfirmDialog.style.display = 'none';
+  resetBtn.style.display = '';
+  hideConnectionPathInitAction();
 
   debugLogEnabledInput.checked = globals.debugLogEnabled === true;
   onboardingWizardStartBtn.style.display = '';
@@ -877,6 +925,7 @@ languageSelect.addEventListener('change', async () => {
   languageSelect.value = newLang;
   applyI18n();
   document.title = `GitSyncMarks – ${getMessage('options_subtitle')}`;
+  if (wizardState.active) renderOnboardingWizardStep();
 });
 
 // ==============================
@@ -952,6 +1001,29 @@ function hideOnboardingConfirm() {
   onboardingConfirm.style.display = 'none';
 }
 
+function hideConnectionPathInitAction() {
+  connectionPathInitGroup.style.display = 'none';
+  connectionPathInitGroup.dataset.path = '';
+  connectionPathInitHint.textContent = '';
+}
+
+function showConnectionPathInitAction(basePath) {
+  connectionPathInitGroup.dataset.path = basePath;
+  connectionPathInitHint.textContent = getMessage('options_onboardingInitPathHint', [basePath]);
+  connectionPathInitGroup.style.display = '';
+}
+
+async function initializePathAndRunFirstPush() {
+  try {
+    // Deterministic bootstrap entry: uses sync merge path instead of push-loop retries.
+    const result = await chrome.runtime.sendMessage({ action: 'bootstrapFirstSync' });
+    if (result?.success) return;
+    throw new Error(result?.message || 'Push failed');
+  } catch (err) {
+    throw err;
+  }
+}
+
 async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
   await saveSettings();
   const token = tokenInput.value.trim();
@@ -976,6 +1048,7 @@ async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
     }
 
     if (!tokenResult.scopes.includes('repo')) {
+      hideConnectionPathInitAction();
       showValidation(getMessage('options_tokenValidMissingScope', [tokenResult.username]), 'error');
       return { ok: false };
     }
@@ -983,29 +1056,23 @@ async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
     if (owner && repo) {
       const repoExists = await api.checkRepo();
       if (!repoExists) {
+        hideConnectionPathInitAction();
         showValidation(getMessage('options_tokenValidRepoNotFound', [tokenResult.username, `${owner}/${repo}`]), 'error');
         return { ok: false };
       }
       const basePath = filepathInput.value.trim() || 'bookmarks';
       const pathCheck = await checkPathSetup(api, basePath);
       if (offerInteractiveActions && (pathCheck.status === 'unreachable' || pathCheck.status === 'empty')) {
-        const confirmed = await showOnboardingConfirm(
-          getMessage('options_onboardingCreateFolder', [basePath]),
-          getMessage('options_onboardingCreateBtn')
-        );
-        hideOnboardingConfirm();
-        if (confirmed) {
-          try {
-            await initializeRemoteFolder(api, basePath);
-            showValidation(getMessage('options_onboardingCreateSuccess'), 'success');
-          } catch (createErr) {
-            showValidation(getMessage('options_error', [createErr.message]), 'error');
-          }
-        } else {
-          showValidation(getMessage('options_connectionOk', [tokenResult.username, `${owner}/${repo}`]), 'success');
-        }
-        return;
+        showConnectionPathInitAction(basePath);
+        showValidation(getMessage('options_connectionOk', [tokenResult.username, `${owner}/${repo}`]), 'success');
+        return {
+          ok: true,
+          username: tokenResult.username,
+          repoRef: `${owner}/${repo}`,
+          pathStatus: pathCheck.status,
+        };
       }
+      hideConnectionPathInitAction();
       if (offerInteractiveActions && pathCheck.status === 'hasBookmarks') {
         const confirmed = await showOnboardingConfirm(
           getMessage('options_onboardingPullNow'),
@@ -1033,6 +1100,7 @@ async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
         pathStatus: pathCheck.status,
       };
     } else {
+      hideConnectionPathInitAction();
       showValidation(getMessage('options_tokenValidSpecifyRepo', [tokenResult.username]), 'success');
       return {
         ok: true,
@@ -1042,6 +1110,7 @@ async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
       };
     }
   } catch (err) {
+    hideConnectionPathInitAction();
     showValidation(getMessage('options_error', [err.message]), 'error');
     return { ok: false, error: err };
   }
@@ -1049,6 +1118,38 @@ async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
 
 validateBtn.addEventListener('click', async () => {
   await validateAndInspectRepo({ offerInteractiveActions: true });
+});
+
+connectionPathInitBtn.addEventListener('click', async () => {
+  const token = tokenInput.value.trim();
+  const owner = ownerInput.value.trim();
+  const repo = repoInput.value.trim();
+  const branch = branchInput.value.trim() || 'main';
+  const basePath = connectionPathInitGroup.dataset.path || filepathInput.value.trim() || 'bookmarks';
+  if (!token || !owner || !repo) {
+    showValidation(getMessage('options_browseFolderNotConfigured'), 'error');
+    return;
+  }
+
+  connectionPathInitBtn.disabled = true;
+  showValidation(getMessage('options_checking'), 'loading');
+  try {
+    const api = new GitHubAPI(token, owner, repo, branch);
+    const pathCheck = await checkPathSetup(api, basePath);
+    if (pathCheck.status === 'hasBookmarks') {
+      hideConnectionPathInitAction();
+      showValidation(getMessage('options_onboardingInitPathAlreadyExists', [basePath]), 'success');
+      return;
+    }
+    await saveSettings();
+    await initializePathAndRunFirstPush();
+    hideConnectionPathInitAction();
+    showValidation(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
+  } catch (err) {
+    showValidation(getMessage('options_error', [err.message]), 'error');
+  } finally {
+    connectionPathInitBtn.disabled = false;
+  }
 });
 
 onboardingWizardStartBtn.addEventListener('click', async () => {
@@ -1143,8 +1244,16 @@ async function runWizardEnvironmentCheck() {
   const pathCheck = await checkPathSetup(api, basePath);
   wizardState.repoRef = `${owner}/${repo}`;
   wizardState.pathStatus = pathCheck.status;
+  wizardState.firstSyncDone = false;
+  if (onboardingWizardRepoFlowSelect.value === 'autoCreate' && pathCheck.status !== 'hasBookmarks') {
+    await waitForRemoteBaseline(api);
+    await initializePathAndRunFirstPush();
+    wizardState.firstSyncDone = true;
+    setWizardResult(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
+  } else {
+    setWizardResult(getMessage('options_onboardingWizardEnvironmentChecked'), 'success');
+  }
   wizardState.environmentChecked = true;
-  setWizardResult(getMessage('options_onboardingWizardEnvironmentChecked'), 'success');
   renderOnboardingWizardStep();
   return true;
 }
@@ -1172,8 +1281,8 @@ async function runWizardSyncAction() {
     return true;
   }
 
-  await initializeRemoteFolder(api, basePath);
-  setWizardResult(getMessage('options_onboardingCreateSuccess'), 'success');
+  await initializePathAndRunFirstPush();
+  setWizardResult(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
   wizardState.firstSyncDone = true;
   return true;
 }
@@ -1194,7 +1303,15 @@ onboardingWizardSkipBtn.addEventListener('click', async () => {
 onboardingWizardActionBtn.addEventListener('click', async () => {
   if (!wizardState.active) return;
   const stepKey = WIZARD_STEPS[wizardState.stepIndex];
-  onboardingWizardActionBtn.disabled = true;
+  const shouldShowBusy = stepKey === 'tokenInput' || stepKey === 'environment';
+  if (shouldShowBusy) {
+    const loadingMsg = stepKey === 'environment'
+      ? getMessage('options_onboardingWizardSyncInProgress')
+      : getMessage('options_checking');
+    setWizardBusy(true, loadingMsg);
+  } else {
+    onboardingWizardActionBtn.disabled = true;
+  }
   try {
     if (stepKey === 'tokenInput') {
       await runWizardTokenValidation();
@@ -1211,36 +1328,65 @@ onboardingWizardActionBtn.addEventListener('click', async () => {
   } catch (err) {
     setWizardResult(getMessage('options_error', [err.message]), 'error');
   } finally {
-    onboardingWizardActionBtn.disabled = false;
+    if (shouldShowBusy) {
+      setWizardBusy(false);
+    } else {
+      onboardingWizardActionBtn.disabled = false;
+    }
   }
 });
 
 onboardingWizardNextBtn.addEventListener('click', async () => {
   if (!wizardState.active) return;
   const stepKey = WIZARD_STEPS[wizardState.stepIndex];
-  if (stepKey === 'tokenInput' && !wizardState.tokenValidated) {
-    setWizardResult(getMessage('options_onboardingWizardNeedConnection'), 'error');
-    return;
+  const shouldShowBusy = stepKey === 'tokenInput' || stepKey === 'environment';
+  if (shouldShowBusy) {
+    const loadingMsg = stepKey === 'environment'
+      ? getMessage('options_onboardingWizardSyncInProgress')
+      : getMessage('options_checking');
+    setWizardBusy(true, loadingMsg);
+  } else {
+    onboardingWizardNextBtn.disabled = true;
   }
-  if (stepKey === 'hasToken' && onboardingWizardHasTokenSelect.value === 'no') {
-    wizardState.stepIndex = WIZARD_STEPS.indexOf('tokenHelp');
+  try {
+    if (stepKey === 'hasToken' && onboardingWizardHasTokenSelect.value === 'no') {
+      wizardState.stepIndex = WIZARD_STEPS.indexOf('tokenHelp');
+      renderOnboardingWizardStep();
+      return;
+    }
+    if (stepKey === 'tokenInput') {
+      const ok = await runWizardTokenValidation();
+      if (!ok) return;
+    }
+    if (stepKey === 'repoDecision') {
+      wizardState.repoFlow = onboardingWizardRepoFlowSelect.value;
+    }
+    if (stepKey === 'environment') {
+      if (!wizardState.environmentChecked) {
+        const checked = await runWizardEnvironmentCheck();
+        if (!checked) return;
+      }
+      if (!wizardState.firstSyncDone) {
+        const synced = await runWizardSyncAction();
+        if (!synced) return;
+      }
+    }
+    if (stepKey === 'finish') {
+      await completeOnboardingWizard();
+      showValidation(getMessage('options_onboardingWizardCompleted'), 'success');
+      return;
+    }
+    wizardState.stepIndex = Math.min(wizardState.stepIndex + 1, WIZARD_STEPS.length - 1);
     renderOnboardingWizardStep();
-    return;
+  } catch (err) {
+    setWizardResult(getMessage('options_error', [err.message]), 'error');
+  } finally {
+    if (shouldShowBusy) {
+      setWizardBusy(false);
+    } else {
+      onboardingWizardNextBtn.disabled = false;
+    }
   }
-  if (stepKey === 'repoDecision') {
-    wizardState.repoFlow = onboardingWizardRepoFlowSelect.value;
-  }
-  if (stepKey === 'environment' && !wizardState.firstSyncDone) {
-    setWizardResult(getMessage('options_onboardingWizardNeedAction'), 'error');
-    return;
-  }
-  if (stepKey === 'finish') {
-    await completeOnboardingWizard();
-    showValidation(getMessage('options_onboardingWizardCompleted'), 'success');
-    return;
-  }
-  wizardState.stepIndex = Math.min(wizardState.stepIndex + 1, WIZARD_STEPS.length - 1);
-  renderOnboardingWizardStep();
 });
 
 function showValidation(message, type) {
@@ -1287,8 +1433,8 @@ async function saveSettings() {
       [STORAGE_KEYS.GENERATE_FEED_XML]: generateFeedXmlSelect.value,
       [STORAGE_KEYS.GENERATE_DASHY_YML]: generateDashyYmlSelect.value,
       [STORAGE_KEYS.SYNC_SETTINGS_TO_GIT]: syncSettingsToGitInput.checked,
-      [STORAGE_KEYS.SETTINGS_SYNC_MODE]: settingsSyncModeSelect.value,
-      [STORAGE_KEYS.SETTINGS_SYNC_GLOBAL_WRITE_ENABLED]: settingsSyncGlobalWriteEnabledInput.checked,
+      [STORAGE_KEYS.SETTINGS_SYNC_MODE]: 'individual',
+      [STORAGE_KEYS.SETTINGS_SYNC_GLOBAL_WRITE_ENABLED]: false,
       [STORAGE_KEYS.LANGUAGE]: languageSelect.value,
       [STORAGE_KEYS.PROFILE_SWITCH_WITHOUT_CONFIRM]: profileSwitchWithoutConfirmInput.checked,
     });
@@ -1556,11 +1702,20 @@ syncSettingsToGitInput.addEventListener('change', async () => {
 });
 
 settingsSyncModeSelect.addEventListener('change', async () => {
+  settingsSyncModeSelect.value = 'individual';
   updateSettingsSyncVisibility();
   await saveSettings();
 });
+settingsSyncGlobalWriteEnabledInput.addEventListener('change', async () => {
+  settingsSyncGlobalWriteEnabledInput.checked = false;
+  await saveSettings();
+});
 
-settingsSyncGlobalWriteEnabledInput.addEventListener('change', saveSettings);
+settingsSyncClientNameInput.addEventListener('change', async () => {
+  await chrome.storage.local.set({
+    [LOCAL_STORAGE_KEYS.SETTINGS_SYNC_CLIENT_NAME]: settingsSyncClientNameInput.value.trim(),
+  });
+});
 
 settingsSyncSavePwBtn.addEventListener('click', async () => {
   const pw = settingsSyncPasswordInput.value.trim();
@@ -1588,8 +1743,8 @@ settingsSyncSavePwBtn.addEventListener('click', async () => {
 });
 
 function selectedSettingsProfile() {
-  const filename = settingsSyncDeviceList.value;
-  return settingsProfiles.find((p) => p.filename === filename) || null;
+  const ref = settingsSyncDeviceList.value;
+  return settingsProfiles.find((p) => (p.path || p.filename) === ref) || null;
 }
 
 function renderSettingsProfiles(configs) {
@@ -1606,14 +1761,22 @@ function renderSettingsProfiles(configs) {
   }
   for (const cfg of settingsProfiles) {
     const opt = document.createElement('option');
-    opt.value = cfg.filename;
+    opt.value = cfg.path || cfg.filename;
     const datePart = cfg.updatedAt ? ` · ${new Date(cfg.updatedAt).toLocaleString()}` : '';
-    opt.textContent = `${cfg.name || cfg.filename} (${cfg.filename})${datePart}`;
+    const alias = cfg.alias || cfg.name || cfg.filename;
+    opt.textContent = `${alias}${datePart}`;
     settingsSyncDeviceList.appendChild(opt);
   }
   settingsSyncDeviceList.disabled = false;
   settingsSyncImportBtn.disabled = false;
   settingsSyncPushSelectedBtn.disabled = false;
+
+  const ownAlias = settingsSyncClientAlias();
+  if (ownAlias) {
+    const ownPath = `profiles/${ownAlias}/settings.enc`;
+    const ownOption = Array.from(settingsSyncDeviceList.options).find((o) => o.value === ownPath);
+    if (ownOption) settingsSyncDeviceList.value = ownPath;
+  }
 }
 
 async function refreshSettingsProfiles() {
@@ -1636,17 +1799,14 @@ async function refreshSettingsProfiles() {
 settingsSyncLoadBtn.addEventListener('click', refreshSettingsProfiles);
 
 settingsSyncImportBtn.addEventListener('click', async () => {
-  const selected = selectedSettingsProfile();
-  const filename = selected?.filename || settingsSyncDeviceList.value;
-  if (!filename) return;
-  if (filename === 'settings.enc') {
-    const confirmed = await showOnboardingConfirm(
-      getMessage('options_settingsSyncImportGlobalConfirm'),
-      getMessage('options_settingsSyncImportGlobalConfirmBtn')
-    );
-    hideOnboardingConfirm();
-    if (!confirmed) return;
+  if (!settingsSyncClientAlias()) {
+    settingsSyncImportResult.textContent = getMessage('options_settingsSyncClientNameRequired');
+    settingsSyncImportResult.className = 'validation-result error';
+    return;
   }
+  const selected = selectedSettingsProfile();
+  const filename = selected?.path || selected?.filename || settingsSyncDeviceList.value;
+  if (!filename) return;
   settingsSyncImportBtn.disabled = true;
   settingsSyncImportResult.textContent = '';
   try {
@@ -1670,8 +1830,13 @@ settingsSyncImportBtn.addEventListener('click', async () => {
 });
 
 settingsSyncPushSelectedBtn.addEventListener('click', async () => {
+  if (!settingsSyncClientAlias()) {
+    settingsSyncImportResult.textContent = getMessage('options_settingsSyncClientNameRequired');
+    settingsSyncImportResult.className = 'validation-result error';
+    return;
+  }
   const selected = selectedSettingsProfile();
-  if (!selected?.filename) return;
+  if (!(selected?.path || selected?.filename)) return;
   settingsSyncPushSelectedBtn.disabled = true;
   settingsSyncImportResult.textContent = '';
   try {
@@ -1679,8 +1844,8 @@ settingsSyncPushSelectedBtn.addEventListener('click', async () => {
     if (!password) return;
     const resp = await chrome.runtime.sendMessage({
       action: 'syncSettingsToProfile',
-      filename: selected.filename,
-      name: selected.name || '',
+      filename: selected.path || selected.filename,
+      name: selected.alias || selected.name || '',
       password,
     });
     if (resp?.success) {
@@ -1699,26 +1864,37 @@ settingsSyncPushSelectedBtn.addEventListener('click', async () => {
 });
 
 settingsSyncCreateBtn.addEventListener('click', async () => {
-  const name = settingsSyncNewNameInput.value.trim();
+  const name = settingsSyncClientNameInput.value.trim();
   if (!name) {
-    settingsSyncImportResult.textContent = getMessage('options_settingsRegistryCreateNameRequired');
+    settingsSyncImportResult.textContent = getMessage('options_settingsSyncClientNameRequired');
     settingsSyncImportResult.className = 'validation-result error';
     return;
   }
   settingsSyncCreateBtn.disabled = true;
   settingsSyncImportResult.textContent = '';
   try {
-    const password = await showPasswordDialog('options_settingsRegistryActionPasswordPrompt', 'options_settingsRegistryCreateBtn');
+    const password = await showPasswordDialog('options_settingsRegistryActionPasswordPrompt', 'options_settingsSyncCreateOwnBtn');
     if (!password) return;
+    await chrome.storage.local.set({
+      [LOCAL_STORAGE_KEYS.SETTINGS_SYNC_CLIENT_NAME]: name,
+    });
     const resp = await chrome.runtime.sendMessage({ action: 'createSettingsProfile', name, password });
     if (resp?.success) {
-      settingsSyncImportResult.textContent = getMessage('options_settingsRegistryCreateSuccess');
+      if (resp.alias && resp.normalizedFrom) {
+        settingsSyncImportResult.textContent = getMessage('options_settingsRegistryAliasNormalized', [resp.alias]);
+      } else if (resp.alias) {
+        settingsSyncImportResult.textContent = `${getMessage('options_settingsRegistryCreateSuccess')} (${resp.alias})`;
+      } else {
+        settingsSyncImportResult.textContent = getMessage('options_settingsRegistryCreateSuccess');
+      }
       settingsSyncImportResult.className = 'validation-result success';
-      settingsSyncNewNameInput.value = '';
       await refreshSettingsProfiles();
-      reloadAfterSettingsImport(500);
     } else {
-      settingsSyncImportResult.textContent = resp?.message || 'Error';
+      if (resp?.code === 'CLIENT_NAME_CONFLICT') {
+        settingsSyncImportResult.textContent = getMessage('options_settingsSyncClientNameConflict', [name]);
+      } else {
+        settingsSyncImportResult.textContent = resp?.message || 'Error';
+      }
       settingsSyncImportResult.className = 'validation-result error';
     }
   } catch (e) {

@@ -606,11 +606,49 @@ html.dark .theme-cycle-btn {
   gap: 8px;
   flex-wrap: wrap;
 }
+.onboarding-wizard-feedback {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 20px;
+  margin-top: 6px;
+}
+.onboarding-wizard-hint {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
 .onboarding-wizard-section {
   margin-top: 10px;
 }
 .onboarding-wizard-section label {
   margin-top: 8px;
+}
+#onboarding-wizard-token-help a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+#onboarding-wizard-token-help a:hover {
+  text-decoration: underline;
+}
+#onboarding-wizard-token-help a:visited {
+  color: var(--color-primary);
+}
+.onboarding-wizard-token-steps {
+  margin: 10px 0 12px 20px;
+  padding: 0;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+.onboarding-wizard-token-steps li {
+  margin-bottom: 6px;
+}
+.onboarding-wizard-token-steps code {
+  background: var(--color-code-bg);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 12px;
 }
 .profile-switch-confirm-text {
   flex: 1;
@@ -648,6 +686,22 @@ html.dark .theme-cycle-btn {
 }
 .btn-danger:hover {
   opacity: 0.9;
+}
+.reset-confirm-dialog {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-error);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-tertiary);
+}
+.reset-confirm-dialog p {
+  margin: 0;
+  color: var(--color-text);
+}
+.reset-confirm-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
 }
 .sr-only {
   position: absolute;

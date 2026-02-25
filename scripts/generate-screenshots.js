@@ -35,7 +35,13 @@ const OPTIONS_TABS = [
   { id: 'files', subtab: 'files-export-import', file: '5-export-import' },
 ];
 
-const FIREFOX_FILES = ['1-github', '2-connection', '3-sync', '4-files', '5-export-import', '6-popup'];
+const FIREFOX_FILES = ['1-github', '2-connection', '3-sync', '4-files', '5-export-import', '6-popup', '7-wizard-welcome', '8-wizard-token', '9-wizard-repo'];
+
+const WIZARD_STEPS_FOR_SCREENSHOTS = [
+  { step: 0, file: '7-wizard-welcome' },
+  { step: 1, file: '8-wizard-token' },
+  { step: 5, file: '9-wizard-repo' },
+];
 
 async function ensureDir(dir) {
   await fs.promises.mkdir(dir, { recursive: true });
@@ -137,6 +143,11 @@ async function main() {
     await page.goto(optionsUrl);
     await page.setViewportSize(VIEWPORT);
     await page.waitForLoadState('networkidle');
+    const wizard = page.locator('#onboarding-wizard-screen');
+    if (await wizard.isVisible()) {
+      await page.locator('#onboarding-wizard-skip-btn').click();
+      await page.waitForTimeout(500);
+    }
     await page.locator('#language-select option[value="' + code + '"]').waitFor({ state: 'attached', timeout: 10000 });
 
     await page.locator('#language-select').selectOption(code);
@@ -195,6 +206,37 @@ async function main() {
     await compositePopupLightDarkCrop(popupLightBuf, popupDarkBuf, popupPath);
     console.log('  ', `${code}/chrome-6-popup.png (light | dark)`);
     await popupPage.close();
+
+    console.log(`\nChrome (${code.toUpperCase()}) wizard:`);
+    for (const { step, file } of WIZARD_STEPS_FOR_SCREENSHOTS) {
+      const wizardPage = await context.newPage();
+      await wizardPage.goto(optionsUrl + '?screenshot=wizard&step=' + step);
+      await wizardPage.setViewportSize(VIEWPORT);
+      await wizardPage.waitForLoadState('networkidle');
+      await wizardPage.locator('#onboarding-wizard-screen').waitFor({ state: 'visible', timeout: 5000 });
+      await wizardPage.locator('#language-select option[value="' + code + '"]').waitFor({ state: 'attached', timeout: 10000 });
+      await wizardPage.locator('#language-select').selectOption(code);
+      await wizardPage.waitForTimeout(600);
+
+      await wizardPage.evaluate(async (theme) => {
+        await chrome.storage.sync.set({ theme });
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+      }, 'light');
+      await wizardPage.waitForTimeout(200);
+      const lightBuf = await wizardPage.screenshot();
+
+      await wizardPage.evaluate(async (theme) => {
+        await chrome.storage.sync.set({ theme });
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+      }, 'dark');
+      await wizardPage.waitForTimeout(200);
+      const darkBuf = await wizardPage.screenshot();
+
+      const outPath = path.join(langDir, `chrome-${file}.png`);
+      await compositeLightDark(lightBuf, darkBuf, outPath);
+      console.log('  ', `${code}/chrome-${file}.png (light | dark)`);
+      await wizardPage.close();
+    }
   }
 
   // ---- Firefox: copy from Chrome (UI is identical, Playwright cannot load Firefox extension) ----

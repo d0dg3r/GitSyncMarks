@@ -29,6 +29,8 @@ Funktionen:
 • Generierte Dateien: README.md, bookmarks.html, feed.xml und dashy-conf.yml — einzeln als Aus, Manuell oder Auto
 • Einstellungen-Sync mit Git: verschlüsseltes Backup im Repo — Global oder Individuell (pro Gerät)
 • Import/Export: Lesezeichen (JSON), Dashy (YAML) oder Einstellungen (JSON / verschlüsselt .enc)
+• Factory reset: „Alle Daten zurücksetzen" in Dateien → Einstellungen — löscht alle Profile, Token und Einstellungen (Browser-Lesezeichen bleiben erhalten); zweistufige Bestätigung
+• Setup-Wizard: geführtes 8-Schritte-Onboarding für Token, Repository und ersten Sync
 • Onboarding: Ordner-Browser zur Auswahl des Sync-Pfads; Ordner anlegen oder Lesezeichen laden beim Konfigurieren eines neuen Profils
 • Mehrsprachig: 12 Sprachen — EN, DE, FR, ES, PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL
 • Tastenkürzel: Schnell-Sync (Strg+Umschalt+.), Einstellungen öffnen (Strg+Umschalt+,)

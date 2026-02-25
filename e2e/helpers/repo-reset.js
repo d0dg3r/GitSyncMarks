@@ -30,6 +30,21 @@ function createMinimalStructure(dir) {
   }
 }
 
+function runGit(command, { cwd } = {}) {
+  try {
+    return execSync(command, {
+      cwd,
+      stdio: 'pipe',
+      encoding: 'utf-8',
+    });
+  } catch (err) {
+    const stdout = String(err?.stdout || '').trim();
+    const stderr = String(err?.stderr || '').trim();
+    const detail = [stdout, stderr].filter(Boolean).join('\n');
+    throw new Error(`repo-reset git command failed: ${command}${detail ? `\n${detail}` : ''}`);
+  }
+}
+
 /**
  * Reset the test repo to minimal state. Clones, replaces bookmarks/, pushes.
  * @returns {Promise<void>}
@@ -49,10 +64,7 @@ async function resetTestRepo() {
   const url = `https://${token}@github.com/${owner}/${repo}.git`;
 
   try {
-    execSync(`git clone --depth 1 ${url} ${cloneDir}`, {
-      stdio: 'pipe',
-      encoding: 'utf-8',
-    });
+    runGit(`git clone --depth 1 ${url} ${cloneDir}`);
 
     // Remove existing bookmarks, create minimal structure
     const bookmarksPath = path.join(cloneDir, BASE_PATH);
@@ -61,16 +73,20 @@ async function resetTestRepo() {
     }
     createMinimalStructure(cloneDir);
 
-    execSync('git add -A && git commit -m "E2E reset: minimal bookmark structure"', {
-      cwd: cloneDir,
-      stdio: 'pipe',
-      encoding: 'utf-8',
-    });
-    execSync('git push --force origin main', {
-      cwd: cloneDir,
-      stdio: 'pipe',
-      encoding: 'utf-8',
-    });
+    runGit('git add -A', { cwd: cloneDir });
+    const hasChanges = (() => {
+      try {
+        execSync('git diff --cached --quiet', { cwd: cloneDir, stdio: 'pipe' });
+        return false;
+      } catch {
+        return true;
+      }
+    })();
+
+    if (hasChanges) {
+      runGit('git commit -m "E2E reset: minimal bookmark structure"', { cwd: cloneDir });
+      runGit('git push --force origin main', { cwd: cloneDir });
+    }
 
     fs.rmSync(cloneDir, { recursive: true, force: true });
   } catch (err) {

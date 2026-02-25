@@ -477,7 +477,7 @@
   "options_onboardingWizardActionPull": { "message": "Importa ora" },
   "options_onboardingWizardNext": { "message": "Avanti" },
   "options_onboardingWizardBack": { "message": "Indietro" },
-  "options_onboardingWizardSkip": { "message": "Salta" },
+  "options_onboardingWizardSkip": { "message": "Esci" },
   "options_onboardingWizardFinish": { "message": "Fine" },
   "options_onboardingWizardNeedConnection": { "message": "Esegui prima il test di connessione." },
   "options_onboardingWizardNeedAction": { "message": "Completa prima la prima azione di sync." },

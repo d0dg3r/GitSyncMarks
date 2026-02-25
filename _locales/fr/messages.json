@@ -475,7 +475,7 @@
   "options_onboardingWizardActionPull": { "message": "Importer maintenant" },
   "options_onboardingWizardNext": { "message": "Suivant" },
   "options_onboardingWizardBack": { "message": "Retour" },
-  "options_onboardingWizardSkip": { "message": "Ignorer" },
+  "options_onboardingWizardSkip": { "message": "Quitter" },
   "options_onboardingWizardFinish": { "message": "Terminer" },
   "options_onboardingWizardNeedConnection": { "message": "Veuillez d'abord lancer le test de connexion." },
   "options_onboardingWizardNeedAction": { "message": "Veuillez d'abord terminer la première action de sync." },

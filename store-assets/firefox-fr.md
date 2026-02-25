@@ -29,6 +29,8 @@ Fonctionnalités :
 • Fichiers générés : README.md, bookmarks.html, feed.xml et dashy-conf.yml — chacun configurable comme Désactivé, Manuel ou Auto
 • Sync des paramètres avec Git : sauvegarde chiffrée dans le dépôt — mode Global ou Individuel (par appareil)
 • Import/Export : favoris (JSON), configuration Dashy (YAML) ou paramètres (JSON / .enc chiffré)
+• Réinitialisation complète : « Réinitialiser toutes les données » dans Fichiers → Paramètres — efface tous les profils, jetons et paramètres (les favoris du navigateur sont conservés) ; confirmation en deux étapes
+• Assistant de configuration : intégration guidée en 8 étapes pour le token, le dépôt et la première synchronisation
 • Intégration : navigateur de dossiers pour sélectionner le chemin de sync ; créer le dossier ou récupérer les favoris lors de la configuration d'un nouveau profil
 • Multilingue : 12 langues — EN, DE, FR, ES, PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL
 • Raccourcis clavier : sync rapide, paramètres — personnalisables

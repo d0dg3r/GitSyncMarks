@@ -10,6 +10,7 @@ import {
   sync,
   push,
   pull,
+  bootstrapFirstSync,
   getSyncStatus,
   getSettings,
   isConfigured,
@@ -23,6 +24,7 @@ import {
   importSettingsProfile,
   syncCurrentSettingsToProfile,
   createSettingsProfile,
+  deleteSettingsProfile,
   STORAGE_KEYS,
 } from './lib/sync-engine.js';
 import { log as debugLog, getLogAsString } from './lib/debug-log.js';
@@ -218,6 +220,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     });
     return true;
   }
+  if (message.action === 'bootstrapFirstSync') {
+    bootstrapFirstSync()
+      .then((result) => sendResponse(result))
+      .catch((err) => sendResponse({ success: false, message: err?.message || 'Bootstrap failed' }));
+    return true;
+  }
   if (message.action === 'generateFilesNow') {
     generateFilesNow().then(async (result) => {
       await showNotificationIfEnabled(result);
@@ -348,6 +356,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       name: message.name || '',
       password: message.password || '',
     })
+      .then(result => sendResponse(result))
+      .catch(err => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'deleteSettingsProfile') {
+    deleteSettingsProfile(message.filename || '')
       .then(result => sendResponse(result))
       .catch(err => sendResponse({ success: false, message: err.message }));
     return true;

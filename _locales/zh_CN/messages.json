@@ -477,7 +477,7 @@
   "options_onboardingWizardActionPull": { "message": "立即拉取" },
   "options_onboardingWizardNext": { "message": "下一步" },
   "options_onboardingWizardBack": { "message": "上一步" },
-  "options_onboardingWizardSkip": { "message": "跳过" },
+  "options_onboardingWizardSkip": { "message": "退出" },
   "options_onboardingWizardFinish": { "message": "完成" },
   "options_onboardingWizardNeedConnection": { "message": "请先运行连接测试。" },
   "options_onboardingWizardNeedAction": { "message": "请先完成首次sync操作。" },

@@ -477,7 +477,7 @@
   "options_onboardingWizardActionPull": { "message": "今すぐ取り込む" },
   "options_onboardingWizardNext": { "message": "次へ" },
   "options_onboardingWizardBack": { "message": "戻る" },
-  "options_onboardingWizardSkip": { "message": "スキップ" },
+  "options_onboardingWizardSkip": { "message": "終了" },
   "options_onboardingWizardFinish": { "message": "完了" },
   "options_onboardingWizardNeedConnection": { "message": "先に接続テストを実行してください。" },
   "options_onboardingWizardNeedAction": { "message": "先に初回syncアクションを完了してください。" },

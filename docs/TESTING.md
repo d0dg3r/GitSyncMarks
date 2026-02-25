@@ -50,7 +50,7 @@ Or use the combined command:
 npm run screenshots
 ```
 
-Output: `store-assets/{en,de,fr,es,pt_BR,it,ja,zh_CN,ko,ru,tr,pl}/` — each with `chrome-*.png` (GitHub-Profile, Connection, Sync, Files-Generated, Export-Import, Popup) and `firefox-*.png` (copied from Chrome; UI is identical). Each screenshot shows light and dark mode side by side (1280x800 total). 12 languages, 6 screenshots each = 72 Chrome + 72 Firefox = 144 images.
+Output: `store-assets/{en,de,fr,es,pt_BR,it,ja,zh_CN,ko,ru,tr,pl}/` — each with `chrome-*.png` (GitHub-Profile, Connection, Sync, Files-Generated, Export-Import, Popup, Wizard-Welcome, Wizard-Token, Wizard-Repo) and `firefox-*.png` (copied from Chrome; UI is identical). Each screenshot shows light and dark mode side by side (1280x800 total). 12 languages, 9 screenshots each = 108 Chrome + 108 Firefox = 216 images.
 
 **Prerequisites:** Playwright with Chromium (`npx playwright install chromium` — run once).
 

@@ -19,10 +19,20 @@ const hasTestCredentials = () =>
   process.env.GITSYNCMARKS_TEST_REPO_OWNER &&
   process.env.GITSYNCMARKS_TEST_REPO;
 
+async function skipWizardIfVisible(page) {
+  const wizard = page.locator('#onboarding-wizard-screen');
+  if (await wizard.isVisible()) {
+    await page.locator('#onboarding-wizard-skip-btn').click();
+    await test.expect(wizard).toBeHidden({ timeout: 3000 });
+  }
+}
+
 async function configureExtension(page, extensionId) {
   await page.goto(`chrome-extension://${extensionId}/options.html`);
   await page.waitForLoadState('networkidle');
   page.on('dialog', (d) => d.dismiss());
+  await skipWizardIfVisible(page);
+  await page.locator('.sub-tab-btn[data-subtab="github-connection"]').click();
 
   await page.locator('#token').fill(process.env.GITSYNCMARKS_TEST_PAT);
   await page.locator('#owner').fill(process.env.GITSYNCMARKS_TEST_REPO_OWNER);

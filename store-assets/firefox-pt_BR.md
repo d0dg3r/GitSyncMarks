@@ -29,6 +29,8 @@ Recursos:
 • Arquivos gerados: README.md (visão geral), bookmarks.html (importação do navegador), feed.xml (feed RSS 2.0) e dashy-conf.yml (painel Dashy) — cada um configurável como Desativado, Manual ou Auto
 • Sync de configurações com Git: backup criptografado das configurações da extensão no repositório — modo Global (compartilhado) ou Individual (por dispositivo); importar configurações de outros dispositivos; mesma senha em todos os dispositivos, sincronizado automaticamente
 • Importar/Exportar: favoritos (JSON), configuração Dashy (YAML) ou configurações (JSON / .enc criptografado); importação com detecção automática de formato
+• Redefinição total: « Redefinir todos os dados » em Arquivos → Configurações — limpa todos os perfis, tokens e configurações (os favoritos do navegador são preservados); confirmação em duas etapas
+• Assistente de configuração: integração guiada em 8 passos para token, repositório e primeira sincronização
 • Onboarding: navegador de pastas para selecionar o caminho de sync; criar pasta ou importar favoritos ao configurar um novo perfil
 • Multilíngue: 12 idiomas — EN, DE, FR, ES, PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL; seleção manual ou auto-detecção
 • Atalhos de teclado: sync rápido (Ctrl+Shift+.), abrir configurações (Ctrl+Shift+,) — personalizáveis

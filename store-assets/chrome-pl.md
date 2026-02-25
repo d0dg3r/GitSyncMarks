@@ -29,6 +29,8 @@ Funkcje:
 • Generowane pliki: README.md (przegląd), bookmarks.html (import do przeglądarki), feed.xml (kanał RSS 2.0) i dashy-conf.yml (panel Dashy) — każdy konfigurowalny jako Wyłączony, Ręczny lub Auto
 • Sync ustawień z Git: zaszyfrowana kopia zapasowa ustawień rozszerzenia w repozytorium — tryb Globalny (współdzielony) lub Indywidualny (per urządzenie); importowanie ustawień z innych urządzeń; to samo hasło na każdym urządzeniu, automatycznie synchronizowane
 • Import/Eksport: eksport zakładek (JSON), konfiguracji Dashy (YAML) lub ustawień (zwykły JSON / zaszyfrowany .enc); import z automatycznym wykrywaniem formatu
+• Pełny reset: « Zresetuj wszystkie dane » w Pliki → Ustawienia — usuwa wszystkie profile, tokeny i ustawienia (zakładki przeglądarki zachowane); potwierdzenie w dwóch krokach
+• Kreator konfiguracji: 8-krokowy przewodnik dla tokenu, repozytorium i pierwszej synchronizacji
 • Onboarding: przeglądarka folderów do wyboru ścieżki synchronizacji; tworzenie folderu lub Pull zakładek przy konfiguracji nowego profilu
 • Opcje: 5 zakładek (GitHub, Sync, Pliki, Pomoc, O programie) z podzakładkami dla GitHub i Plików — przejrzysty interfejs ustawień
 • Motyw: jasny, ciemny lub auto — przycisk cykliczny (A → Ciemny → Jasny → A) w opcjach i popup

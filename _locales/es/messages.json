@@ -475,7 +475,7 @@
   "options_onboardingWizardActionPull": { "message": "Traer ahora" },
   "options_onboardingWizardNext": { "message": "Siguiente" },
   "options_onboardingWizardBack": { "message": "Atrás" },
-  "options_onboardingWizardSkip": { "message": "Omitir" },
+  "options_onboardingWizardSkip": { "message": "Salir" },
   "options_onboardingWizardFinish": { "message": "Finalizar" },
   "options_onboardingWizardNeedConnection": { "message": "Primero ejecuta la prueba de conexión." },
   "options_onboardingWizardNeedAction": { "message": "Primero completa la primera acción de sync." },

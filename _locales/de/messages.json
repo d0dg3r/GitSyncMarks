@@ -499,7 +499,7 @@
   "options_onboardingWizardActionPull": { "message": "Jetzt ziehen" },
   "options_onboardingWizardNext": { "message": "Weiter" },
   "options_onboardingWizardBack": { "message": "Zurück" },
-  "options_onboardingWizardSkip": { "message": "Überspringen" },
+  "options_onboardingWizardSkip": { "message": "Beenden" },
   "options_onboardingWizardFinish": { "message": "Fertig" },
   "options_onboardingWizardNeedConnection": { "message": "Bitte zuerst den Verbindungstest ausführen." },
   "options_onboardingWizardNeedAction": { "message": "Bitte zuerst die erste Sync-Aktion abschließen." },

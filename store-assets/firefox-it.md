@@ -29,6 +29,8 @@ Funzionalità:
 • File generati: README.md (panoramica), bookmarks.html (importazione browser), feed.xml (feed RSS 2.0) e dashy-conf.yml (dashboard Dashy) — ciascuno configurabile come Disattivato, Manuale o Auto
 • Sync delle impostazioni con Git: backup crittografato delle impostazioni dell'estensione nel repository — modalità Globale (condivisa) o Individuale (per dispositivo); importa impostazioni da altri dispositivi; stessa password su ogni dispositivo, sincronizzato automaticamente
 • Importa/Esporta: segnalibri (JSON), configurazione Dashy (YAML) o impostazioni (JSON / .enc crittografato); importazione con rilevamento automatico del formato
+• Ripristino completo: « Reimposta tutti i dati » in File → Impostazioni — cancella tutti i profili, token e impostazioni (i segnalibri del browser sono preservati); conferma in due passaggi
+• Procedura guidata: onboarding guidato in 8 passaggi per token, repository e prima sincronizzazione
 • Onboarding: browser di cartelle per selezionare il percorso di sync; creare cartella o importare segnalibri durante la configurazione di un nuovo profilo
 • Multilingue: 12 lingue — EN, DE, FR, ES, PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL; selezione manuale o rilevamento automatico
 • Scorciatoie da tastiera: sync rapido (Ctrl+Shift+.), apri impostazioni (Ctrl+Shift+,) — personalizzabili

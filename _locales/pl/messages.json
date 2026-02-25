@@ -477,7 +477,7 @@
   "options_onboardingWizardActionPull": { "message": "Pobierz teraz" },
   "options_onboardingWizardNext": { "message": "Dalej" },
   "options_onboardingWizardBack": { "message": "Wstecz" },
-  "options_onboardingWizardSkip": { "message": "Pomiń" },
+  "options_onboardingWizardSkip": { "message": "Wyjście" },
   "options_onboardingWizardFinish": { "message": "Zakończ" },
   "options_onboardingWizardNeedConnection": { "message": "Najpierw uruchom test połączenia." },
   "options_onboardingWizardNeedAction": { "message": "Najpierw wykonaj pierwszą akcję sync." },

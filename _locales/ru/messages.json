@@ -477,7 +477,7 @@
   "options_onboardingWizardActionPull": { "message": "Загрузить сейчас" },
   "options_onboardingWizardNext": { "message": "Далее" },
   "options_onboardingWizardBack": { "message": "Назад" },
-  "options_onboardingWizardSkip": { "message": "Пропустить" },
+  "options_onboardingWizardSkip": { "message": "Выход" },
   "options_onboardingWizardFinish": { "message": "Завершить" },
   "options_onboardingWizardNeedConnection": { "message": "Сначала выполните проверку подключения." },
   "options_onboardingWizardNeedAction": { "message": "Сначала завершите первое действие sync." },

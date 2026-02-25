@@ -477,7 +477,7 @@
   "options_onboardingWizardActionPull": { "message": "Şimdi çek" },
   "options_onboardingWizardNext": { "message": "İleri" },
   "options_onboardingWizardBack": { "message": "Geri" },
-  "options_onboardingWizardSkip": { "message": "Atla" },
+  "options_onboardingWizardSkip": { "message": "Çıkış" },
   "options_onboardingWizardFinish": { "message": "Bitir" },
   "options_onboardingWizardNeedConnection": { "message": "Önce bağlantı testini çalıştırın." },
   "options_onboardingWizardNeedAction": { "message": "Önce ilk sync adımını tamamlayın." },

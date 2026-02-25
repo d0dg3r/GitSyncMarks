@@ -477,7 +477,7 @@
   "options_onboardingWizardActionPull": { "message": "지금 가져오기" },
   "options_onboardingWizardNext": { "message": "다음" },
   "options_onboardingWizardBack": { "message": "이전" },
-  "options_onboardingWizardSkip": { "message": "건너뛰기" },
+  "options_onboardingWizardSkip": { "message": "종료" },
   "options_onboardingWizardFinish": { "message": "완료" },
   "options_onboardingWizardNeedConnection": { "message": "먼저 연결 테스트를 실행하세요." },
   "options_onboardingWizardNeedAction": { "message": "먼저 첫 sync 작업을 완료하세요." },
