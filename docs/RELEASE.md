@@ -38,6 +38,7 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 
 | Version | Codename | Description |
 |---|---|---|
+| `2.5.1` | *Cortana* | Fix: password dialog for Settings sync actions (Import & Apply, etc.) now appears in Settings sub-tab instead of Export/Import |
 | `2.5.0` | *Cortana* | Context menu (Add to Toolbar/Other, Sync Now, Switch Profile, Copy Favicon URL, Download Favicon); profile switching via context menu; favicon tools; 8 new languages (PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL — 12 total); dynamic keyboard shortcuts; factory reset; folder browser; CI screenshot workflow; feature lists reordered; "No middleman" replaces "No server needed"; 9 store screenshots per language |
 | `2.4.0` | *R2-D2* | Settings sync to Git (encrypted `settings.enc` in repo); RSS feed export (`feed.xml`); dashy-conf.yml; generated files mode selector (Off/Manual/Auto per file with "Generate now" button); backlog voting awareness; Debug Log moved to Sync tab; options reorganized to 5 tabs with sub-tabs (GitHub/Sync/Files/Help/About); 6 store screenshots per language |
 | `2.3.0` | *Data* | Encrypted settings export (password-protected .enc); plain JSON and encrypted formats supported; import with password prompt for .enc files; Sync tab shortened to "Sync"; store screenshots (popup crop, options resize); import hints (active profile / all profiles); theme cycle button; full auto-save (no Save buttons); save feedback in cards |
