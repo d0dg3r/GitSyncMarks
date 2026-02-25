@@ -30,6 +30,11 @@
 <td align="center"><img src="store-assets/en/chrome-5-export-import.png" width="220" alt="Files (Export / Import)" /><br><sub>5. Export / Import</sub></td>
 <td align="center"><img src="store-assets/en/chrome-6-popup.png" width="220" alt="Popup" /><br><sub>6. Popup</sub></td>
 </tr>
+<tr>
+<td align="center"><img src="store-assets/en/chrome-7-wizard-welcome.png" width="220" alt="Setup wizard (Welcome)" /><br><sub>7. Wizard (Welcome)</sub></td>
+<td align="center"><img src="store-assets/en/chrome-8-wizard-token.png" width="220" alt="Setup wizard (Token)" /><br><sub>8. Wizard (Token)</sub></td>
+<td align="center"><img src="store-assets/en/chrome-9-wizard-repo.png" width="220" alt="Setup wizard (Repository)" /><br><sub>9. Wizard (Repository)</sub></td>
+</tr>
 </table>
 
 See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROADMAP.md](ROADMAP.md) for planned features. Vote on the [backlog poll](https://github.com/d0dg3r/GitSyncMarks/discussions/37) to influence what we build next. Release codenames (cult nerd figures): 2.3 *Data*, 2.4 *R2-D2*, 2.5 *Cortana*, 3.0 *GLaDOS* — see [docs/RELEASE.md](docs/RELEASE.md).
