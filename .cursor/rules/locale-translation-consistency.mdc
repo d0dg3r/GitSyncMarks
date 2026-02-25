@@ -1,0 +1,16 @@
+---
+description: English-first locale workflow with runtime fallback
+globs: _locales/*/messages.json
+alwaysApply: false
+---
+
+# Locale Translation Workflow
+
+When editing locale files in `_locales/*/messages.json`:
+
+- Add new UI text keys in `_locales/en/messages.json` first.
+- Other locale files may temporarily miss new keys; runtime must fall back to English.
+- Translation completion for non-English locales can be done in a separate follow-up task.
+- Keep key names identical across all locale files.
+- Preserve valid JSON formatting and existing structure.
+- Before release, schedule or complete locale update work for newly introduced keys.

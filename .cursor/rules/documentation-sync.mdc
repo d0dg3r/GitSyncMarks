@@ -1,0 +1,42 @@
+---
+description: Keep all docs in sync with code — README, architecture, store assets, screenshots, in-app help
+alwaysApply: true
+---
+
+# Documentation Sync
+
+Update documentation when code changes, **before any release**, or when docs appear out of sync.
+
+## When to Update
+
+- Before release (tag, version bump)
+- When adding/removing features, lib modules, UI tabs, or wizard steps
+- When changing sync logic, permissions, or manifest
+- When you notice docs drifting from code
+
+## Checklist by Change Type
+
+| Change | Update |
+|--------|--------|
+| **New feature / UI** | README features, `store-assets/chrome-en.md`, `firefox-en.md`, Help tab in `options.html`, `_locales/en/messages.json` (`help_*` keys) |
+| **New options tab / wizard step** | `scripts/generate-screenshots.js` (OPTIONS_TABS, WIZARD_STEPS_FOR_SCREENSHOTS), `store-assets/chrome-meta.md` checklist |
+| **New lib module** | `docs/ARCHITECTURE.md` (component list, file structure) |
+| **Sync / API** | `docs/ARCHITECTURE.md`, `docs/SYNC-LOGIC.md`, `docs/DATA-FLOW.md` |
+| **New permission** | `store-assets/chrome-meta.md`, `store-assets/firefox-meta.md` (Permission Justifications) |
+| **Release** | `CHANGELOG.md`, `docs/RELEASE.md` version history; run `npm run screenshots` if UI changed |
+
+## In-App Help
+
+- Help content: `options.html` (Help tab) with `data-i18n="help_*"`
+- Add keys to `_locales/en/messages.json` first; other locales fall back to English
+- Keep Help aligned with README and store descriptions
+
+## Store Assets
+
+- 12 languages: en, de, fr, es, pt_BR, it, ja, zh_CN, ko, ru, tr, pl
+- Update `chrome-en.md` and `firefox-en.md` for new features; other locales before release
+- Screenshots: `npm run screenshots` (or `npm run build:chrome && npm run generate-screenshots`)
+
+## Release Pre-Check
+
+Review and update all docs above; regenerate screenshots if UI changed; update CHANGELOG and version history.

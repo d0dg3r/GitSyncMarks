@@ -1,0 +1,13 @@
+---
+description: i18n workflow — add new strings in English first, use key prefixes
+globs: _locales/**/*.json, options.html, popup.html
+alwaysApply: false
+---
+
+# i18n Workflow
+
+- **New user-facing strings:** Add to `_locales/en/messages.json` first.
+- **Key prefixes:** `help_` (Help tab), `options_` (options UI), `popup_` (popup), `sync_`, `api_`, etc.
+- **Other locales:** Can temporarily miss new keys; runtime falls back to English. Complete translations before release.
+- **Placeholders:** Keep `$1`, `$2` in correct positions; move them for grammar in translations.
+- **HTML in messages:** Use `data-i18n-html` for trusted content; keep `<code>`, `<a>`, etc. intact in translations.

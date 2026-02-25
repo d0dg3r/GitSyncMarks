@@ -1,0 +1,14 @@
+---
+description: Use English by default for all project work
+alwaysApply: true
+---
+
+# English-Only Default
+
+Use English as the default language for all work in this repository.
+
+- Write code comments, docs, changelog text, and user-facing copy in English.
+- Use English for commit messages, PR titles, and PR descriptions.
+- Keep identifiers (variables, functions, classes, files) in English.
+- If a task starts in another language, still produce implementation artifacts in English unless explicitly requested otherwise.
+- Existing translated locale files may be edited, but new source/default text should be authored in English first.
