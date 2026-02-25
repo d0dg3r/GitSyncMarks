@@ -578,6 +578,40 @@ html.dark .theme-cycle-btn {
   gap: 8px;
   flex-shrink: 0;
 }
+.onboarding-screen {
+  max-width: 880px;
+  margin: 12px auto 20px;
+}
+.onboarding-wizard-progress-row {
+  display: flex;
+  justify-content: flex-end;
+}
+.onboarding-wizard-progress {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+.onboarding-wizard-step-title {
+  margin: 10px 0 4px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+.onboarding-wizard-step-text {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+.onboarding-wizard-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.onboarding-wizard-section {
+  margin-top: 10px;
+}
+.onboarding-wizard-section label {
+  margin-top: 8px;
+}
 .profile-switch-confirm-text {
   flex: 1;
   min-width: 180px;

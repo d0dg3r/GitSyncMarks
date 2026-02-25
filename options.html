@@ -21,6 +21,61 @@
       </div>
     </header>
 
+    <section id="onboarding-wizard-screen" class="card onboarding-screen" style="display: none;">
+      <h2 data-i18n="options_onboardingWizardTitle">Setup wizard</h2>
+      <p id="onboarding-wizard-step-title" class="onboarding-wizard-step-title"></p>
+      <p id="onboarding-wizard-step-text" class="onboarding-wizard-step-text"></p>
+      <div class="onboarding-wizard-progress-row">
+        <span id="onboarding-wizard-progress" class="onboarding-wizard-progress"></span>
+      </div>
+
+      <div id="onboarding-wizard-token-help" class="onboarding-wizard-section" style="display: none;">
+        <p data-i18n="options_onboardingWizardTokenHelpText">Create a GitHub Personal Access Token with repo scope in your GitHub settings.</p>
+        <a href="https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks+Sync" target="_blank" rel="noopener" data-i18n="options_onboardingWizardTokenHelpLink">Open GitHub token page</a>
+      </div>
+
+      <div id="onboarding-wizard-has-token-group" class="onboarding-wizard-section" style="display: none;">
+        <label for="onboarding-wizard-has-token" data-i18n="options_onboardingWizardHasTokenLabel">Do you already have a token?</label>
+        <select id="onboarding-wizard-has-token">
+          <option value="yes" data-i18n="options_onboardingWizardHasTokenYes">Yes, I already have one</option>
+          <option value="no" data-i18n="options_onboardingWizardHasTokenNo">No, show me how</option>
+        </select>
+      </div>
+
+      <div id="onboarding-wizard-token-group" class="onboarding-wizard-section" style="display: none;">
+        <label for="onboarding-wizard-token" data-i18n="options_patLabel">Personal Access Token (PAT)</label>
+        <input type="password" id="onboarding-wizard-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+      </div>
+
+      <div id="onboarding-wizard-repo-flow-group" class="onboarding-wizard-section" style="display: none;">
+        <label for="onboarding-wizard-repo-flow" data-i18n="options_onboardingWizardRepoFlowLabel">Repository setup mode</label>
+        <select id="onboarding-wizard-repo-flow">
+          <option value="autoCreate" data-i18n="options_onboardingWizardRepoFlowAuto">Auto-create repository</option>
+          <option value="manual" data-i18n="options_onboardingWizardRepoFlowManual">Use existing repository</option>
+        </select>
+      </div>
+
+      <div id="onboarding-wizard-repo-group" class="onboarding-wizard-section" style="display: none;">
+        <label for="onboarding-wizard-owner" data-i18n="options_repoOwner">Repository Owner</label>
+        <input type="text" id="onboarding-wizard-owner" data-i18n-placeholder="options_ownerPlaceholder" placeholder="your-github-username">
+        <label for="onboarding-wizard-repo" data-i18n="options_repoName">Repository Name</label>
+        <input type="text" id="onboarding-wizard-repo" placeholder="my-bookmarks">
+        <label for="onboarding-wizard-branch" data-i18n="options_branch">Branch</label>
+        <input type="text" id="onboarding-wizard-branch" placeholder="main" value="main">
+        <label for="onboarding-wizard-path" data-i18n="options_filePath">File Path in Repository</label>
+        <input type="text" id="onboarding-wizard-path" placeholder="bookmarks" value="bookmarks">
+      </div>
+
+      <div class="onboarding-wizard-actions">
+        <button type="button" id="onboarding-wizard-action-btn" class="btn btn-secondary btn-sm" style="display: none;"></button>
+        <button type="button" id="onboarding-wizard-back-btn" class="btn btn-secondary btn-sm" data-i18n="options_onboardingWizardBack">Back</button>
+        <button type="button" id="onboarding-wizard-next-btn" class="btn btn-primary btn-sm" data-i18n="options_onboardingWizardNext">Next</button>
+        <button type="button" id="onboarding-wizard-skip-btn" class="btn btn-secondary btn-sm" data-i18n="options_onboardingWizardSkip">Skip</button>
+      </div>
+      <span id="onboarding-wizard-result" class="validation-result"></span>
+    </section>
+
+    <div id="settings-shell">
     <nav class="tab-bar">
       <button class="tab-btn active" data-tab="github" data-i18n="options_tabGitHub">GitHub</button>
       <button class="tab-btn" data-tab="sync" data-i18n="options_tabSynchronization">Sync</button>
@@ -164,6 +219,7 @@
           </div>
 
           <div class="actions actions-in-card actions-github-feedback">
+            <button type="button" id="onboarding-wizard-start-btn" class="btn btn-secondary btn-sm" data-i18n="options_onboardingWizardStart">Start setup wizard</button>
             <span id="save-github-result" class="save-result"></span>
           </div>
         </section>
@@ -200,6 +256,7 @@
         </section>
       </div>
 
+    </div>
     </div>
 
     <!-- ==================== Sync Tab ==================== -->

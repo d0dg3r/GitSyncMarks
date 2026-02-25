@@ -119,6 +119,24 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
    - If **bookmarks already exist** in the repo: You can pull them into this browser
 6. All settings save automatically when you change them
 
+### First-run onboarding wizard
+
+On first install, GitSyncMarks automatically opens a standalone setup wizard screen (separate from normal settings controls).
+It walks you through:
+
+1. token help (where/how to create a GitHub token)
+2. token validation
+3. repository setup choice:
+   - auto-create repository, or
+   - use existing/manual repository
+4. repository owner/name, branch, and base path
+5. connection + environment checks
+6. first sync decision:
+   - create initial folder structure when the path is empty, or
+   - pull existing bookmarks when the repository already has data
+
+You can restart the wizard any time from the GitHub Connection card with **Start setup wizard**.
+
 ### First sync
 
 1. Click the extension icon

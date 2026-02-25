@@ -53,6 +53,8 @@ const STORAGE_KEYS = {
   SYNC_SETTINGS_TO_GIT: 'syncSettingsToGit',
   SETTINGS_SYNC_MODE: 'settingsSyncMode',
   SETTINGS_SYNC_GLOBAL_WRITE_ENABLED: 'settingsSyncGlobalWriteEnabled',
+  ONBOARDING_WIZARD_COMPLETED: 'onboardingWizardCompleted',
+  ONBOARDING_WIZARD_DISMISSED: 'onboardingWizardDismissed',
 };
 
 function normalizeGenMode(val) {
@@ -137,6 +139,29 @@ const onboardingConfirm = document.getElementById('onboarding-confirm');
 const onboardingConfirmText = document.getElementById('onboarding-confirm-text');
 const onboardingConfirmYesBtn = document.getElementById('onboarding-confirm-yes-btn');
 const onboardingConfirmNoBtn = document.getElementById('onboarding-confirm-no-btn');
+const onboardingWizardScreen = document.getElementById('onboarding-wizard-screen');
+const settingsShell = document.getElementById('settings-shell');
+const onboardingWizardProgress = document.getElementById('onboarding-wizard-progress');
+const onboardingWizardStepTitle = document.getElementById('onboarding-wizard-step-title');
+const onboardingWizardStepText = document.getElementById('onboarding-wizard-step-text');
+const onboardingWizardResult = document.getElementById('onboarding-wizard-result');
+const onboardingWizardActionBtn = document.getElementById('onboarding-wizard-action-btn');
+const onboardingWizardBackBtn = document.getElementById('onboarding-wizard-back-btn');
+const onboardingWizardNextBtn = document.getElementById('onboarding-wizard-next-btn');
+const onboardingWizardSkipBtn = document.getElementById('onboarding-wizard-skip-btn');
+const onboardingWizardStartBtn = document.getElementById('onboarding-wizard-start-btn');
+const onboardingWizardTokenHelp = document.getElementById('onboarding-wizard-token-help');
+const onboardingWizardHasTokenGroup = document.getElementById('onboarding-wizard-has-token-group');
+const onboardingWizardHasTokenSelect = document.getElementById('onboarding-wizard-has-token');
+const onboardingWizardTokenGroup = document.getElementById('onboarding-wizard-token-group');
+const onboardingWizardTokenInput = document.getElementById('onboarding-wizard-token');
+const onboardingWizardRepoFlowGroup = document.getElementById('onboarding-wizard-repo-flow-group');
+const onboardingWizardRepoFlowSelect = document.getElementById('onboarding-wizard-repo-flow');
+const onboardingWizardRepoGroup = document.getElementById('onboarding-wizard-repo-group');
+const onboardingWizardOwnerInput = document.getElementById('onboarding-wizard-owner');
+const onboardingWizardRepoInput = document.getElementById('onboarding-wizard-repo');
+const onboardingWizardBranchInput = document.getElementById('onboarding-wizard-branch');
+const onboardingWizardPathInput = document.getElementById('onboarding-wizard-path');
 const saveGitHubResult = document.getElementById('save-github-result');
 const saveSyncResult = document.getElementById('save-sync-result');
 const githubReposCard = document.getElementById('github-repos-card');
@@ -317,6 +342,161 @@ function updateSettingsSyncVisibility() {
 }
 
 let settingsProfiles = [];
+const WIZARD_STEPS = ['welcome', 'tokenHelp', 'hasToken', 'tokenInput', 'repoDecision', 'repoDetails', 'environment', 'finish'];
+const wizardState = {
+  active: false,
+  stepIndex: 0,
+  tokenValidated: false,
+  environmentChecked: false,
+  pathStatus: null,
+  username: '',
+  repoRef: '',
+  firstSyncDone: false,
+  repoFlow: 'manual',
+};
+
+function resetWizardState() {
+  wizardState.stepIndex = 0;
+  wizardState.tokenValidated = false;
+  wizardState.environmentChecked = false;
+  wizardState.pathStatus = null;
+  wizardState.username = '';
+  wizardState.repoRef = '';
+  wizardState.firstSyncDone = false;
+  wizardState.repoFlow = 'manual';
+}
+
+async function persistWizardState(completed, dismissed) {
+  await chrome.storage.sync.set({
+    [STORAGE_KEYS.ONBOARDING_WIZARD_COMPLETED]: completed === true,
+    [STORAGE_KEYS.ONBOARDING_WIZARD_DISMISSED]: dismissed === true,
+  });
+}
+
+async function startOnboardingWizard({ manual = false } = {}) {
+  resetWizardState();
+  onboardingWizardTokenInput.value = tokenInput.value || '';
+  onboardingWizardOwnerInput.value = ownerInput.value || '';
+  onboardingWizardRepoInput.value = repoInput.value || '';
+  onboardingWizardBranchInput.value = branchInput.value || 'main';
+  onboardingWizardPathInput.value = filepathInput.value || 'bookmarks';
+  onboardingWizardHasTokenSelect.value = 'yes';
+  onboardingWizardRepoFlowSelect.value = 'manual';
+  wizardState.active = true;
+  onboardingWizardScreen.style.display = '';
+  settingsShell.style.display = 'none';
+  onboardingWizardResult.textContent = '';
+  onboardingWizardResult.className = 'validation-result';
+  if (manual) {
+    await persistWizardState(false, false);
+  }
+  renderOnboardingWizardStep();
+}
+
+async function completeOnboardingWizard() {
+  wizardState.active = false;
+  onboardingWizardScreen.style.display = 'none';
+  settingsShell.style.display = '';
+  await persistWizardState(true, false);
+}
+
+async function dismissOnboardingWizard() {
+  wizardState.active = false;
+  onboardingWizardScreen.style.display = 'none';
+  settingsShell.style.display = '';
+  await persistWizardState(false, true);
+  showValidation(getMessage('options_onboardingWizardDismissed'), 'success');
+}
+
+function setWizardResult(message, type = 'success') {
+  onboardingWizardResult.textContent = message;
+  onboardingWizardResult.className = `validation-result ${type}`;
+}
+
+function wizardStepText(stepKey) {
+  switch (stepKey) {
+    case 'welcome':
+      return {
+        title: getMessage('options_onboardingWizardStepWelcomeTitle'),
+        text: getMessage('options_onboardingWizardStepWelcomeText'),
+      };
+    case 'tokenHelp':
+      return {
+        title: getMessage('options_onboardingWizardStepTokenHelpTitle'),
+        text: getMessage('options_onboardingWizardStepTokenHelpText'),
+      };
+    case 'hasToken':
+      return {
+        title: getMessage('options_onboardingWizardStepHasTokenTitle'),
+        text: getMessage('options_onboardingWizardStepHasTokenText'),
+      };
+    case 'tokenInput':
+      return {
+        title: getMessage('options_onboardingWizardStepTokenTitle'),
+        text: getMessage('options_onboardingWizardStepTokenText'),
+      };
+    case 'repoDecision':
+      return {
+        title: getMessage('options_onboardingWizardStepRepoDecisionTitle'),
+        text: getMessage('options_onboardingWizardStepRepoDecisionText'),
+      };
+    case 'repoDetails':
+      return {
+        title: getMessage('options_onboardingWizardStepRepoTitle'),
+        text: getMessage('options_onboardingWizardStepRepoText'),
+      };
+    case 'environment':
+      return {
+        title: getMessage('options_onboardingWizardStepValidateTitle'),
+        text: wizardState.environmentChecked
+          ? (wizardState.pathStatus === 'hasBookmarks'
+            ? getMessage('options_onboardingWizardStepSyncTextExisting')
+            : getMessage('options_onboardingWizardStepSyncTextEmpty'))
+          : getMessage('options_onboardingWizardStepValidateText'),
+      };
+    default:
+      return {
+        title: getMessage('options_onboardingWizardStepFinishTitle'),
+        text: getMessage('options_onboardingWizardStepFinishText'),
+      };
+  }
+}
+
+function renderOnboardingWizardStep() {
+  if (!wizardState.active) return;
+  const stepKey = WIZARD_STEPS[wizardState.stepIndex];
+  const step = wizardStepText(stepKey);
+  onboardingWizardProgress.textContent = `${wizardState.stepIndex + 1} / ${WIZARD_STEPS.length}`;
+  onboardingWizardStepTitle.textContent = step.title;
+  onboardingWizardStepText.textContent = step.text;
+
+  onboardingWizardBackBtn.disabled = wizardState.stepIndex === 0;
+  onboardingWizardSkipBtn.style.display = stepKey === 'finish' ? 'none' : '';
+  onboardingWizardNextBtn.textContent = stepKey === 'finish'
+    ? getMessage('options_onboardingWizardFinish')
+    : getMessage('options_onboardingWizardNext');
+
+  onboardingWizardTokenHelp.style.display = stepKey === 'tokenHelp' ? '' : 'none';
+  onboardingWizardHasTokenGroup.style.display = stepKey === 'hasToken' ? '' : 'none';
+  onboardingWizardTokenGroup.style.display = stepKey === 'tokenInput' ? '' : 'none';
+  onboardingWizardRepoFlowGroup.style.display = stepKey === 'repoDecision' ? '' : 'none';
+  onboardingWizardRepoGroup.style.display = stepKey === 'repoDetails' ? '' : 'none';
+
+  onboardingWizardActionBtn.style.display = 'none';
+  if (stepKey === 'tokenInput') {
+    onboardingWizardActionBtn.style.display = '';
+    onboardingWizardActionBtn.textContent = getMessage('options_onboardingWizardActionTest');
+  } else if (stepKey === 'environment') {
+    onboardingWizardActionBtn.style.display = '';
+    if (!wizardState.environmentChecked) {
+      onboardingWizardActionBtn.textContent = getMessage('options_onboardingWizardActionCheckEnvironment');
+    } else {
+      onboardingWizardActionBtn.textContent = wizardState.pathStatus === 'hasBookmarks'
+        ? getMessage('options_onboardingWizardActionPull')
+        : getMessage('options_onboardingWizardActionCreate');
+    }
+  }
+}
 
 function populateLanguageDropdown() {
   languageSelect.innerHTML = '';
@@ -394,6 +574,8 @@ async function loadSettings() {
     syncSettingsToGit: false,
     settingsSyncMode: 'global',
     settingsSyncGlobalWriteEnabled: false,
+    onboardingWizardCompleted: false,
+    onboardingWizardDismissed: false,
     theme: 'auto',
     profileSwitchWithoutConfirm: false,
     debugLogEnabled: false,
@@ -452,6 +634,10 @@ async function loadSettings() {
   onboardingConfirm.style.display = 'none';
 
   debugLogEnabledInput.checked = globals.debugLogEnabled === true;
+  onboardingWizardStartBtn.style.display = '';
+  if (!wizardState.active && globals.onboardingWizardCompleted !== true && globals.onboardingWizardDismissed !== true) {
+    await startOnboardingWizard();
+  }
 }
 
 // Profile selector: switching profiles replaces bookmarks
@@ -766,7 +952,7 @@ function hideOnboardingConfirm() {
   onboardingConfirm.style.display = 'none';
 }
 
-validateBtn.addEventListener('click', async () => {
+async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
   await saveSettings();
   const token = tokenInput.value.trim();
   const owner = ownerInput.value.trim();
@@ -775,7 +961,7 @@ validateBtn.addEventListener('click', async () => {
 
   if (!token) {
     showValidation(getMessage('options_pleaseEnterToken'), 'error');
-    return;
+    return { ok: false };
   }
 
   showValidation(getMessage('options_checking'), 'loading');
@@ -786,23 +972,23 @@ validateBtn.addEventListener('click', async () => {
     const tokenResult = await api.validateToken();
     if (!tokenResult.valid) {
       showValidation(getMessage('options_invalidToken'), 'error');
-      return;
+      return { ok: false };
     }
 
     if (!tokenResult.scopes.includes('repo')) {
       showValidation(getMessage('options_tokenValidMissingScope', [tokenResult.username]), 'error');
-      return;
+      return { ok: false };
     }
 
     if (owner && repo) {
       const repoExists = await api.checkRepo();
       if (!repoExists) {
         showValidation(getMessage('options_tokenValidRepoNotFound', [tokenResult.username, `${owner}/${repo}`]), 'error');
-        return;
+        return { ok: false };
       }
       const basePath = filepathInput.value.trim() || 'bookmarks';
       const pathCheck = await checkPathSetup(api, basePath);
-      if (pathCheck.status === 'unreachable' || pathCheck.status === 'empty') {
+      if (offerInteractiveActions && (pathCheck.status === 'unreachable' || pathCheck.status === 'empty')) {
         const confirmed = await showOnboardingConfirm(
           getMessage('options_onboardingCreateFolder', [basePath]),
           getMessage('options_onboardingCreateBtn')
@@ -820,7 +1006,7 @@ validateBtn.addEventListener('click', async () => {
         }
         return;
       }
-      if (pathCheck.status === 'hasBookmarks') {
+      if (offerInteractiveActions && pathCheck.status === 'hasBookmarks') {
         const confirmed = await showOnboardingConfirm(
           getMessage('options_onboardingPullNow'),
           getMessage('options_onboardingPullBtn')
@@ -840,12 +1026,221 @@ validateBtn.addEventListener('click', async () => {
         return;
       }
       showValidation(getMessage('options_connectionOk', [tokenResult.username, `${owner}/${repo}`]), 'success');
+      return {
+        ok: true,
+        username: tokenResult.username,
+        repoRef: `${owner}/${repo}`,
+        pathStatus: pathCheck.status,
+      };
     } else {
       showValidation(getMessage('options_tokenValidSpecifyRepo', [tokenResult.username]), 'success');
+      return {
+        ok: true,
+        username: tokenResult.username,
+        repoRef: '',
+        pathStatus: 'empty',
+      };
     }
   } catch (err) {
     showValidation(getMessage('options_error', [err.message]), 'error');
+    return { ok: false, error: err };
   }
+}
+
+validateBtn.addEventListener('click', async () => {
+  await validateAndInspectRepo({ offerInteractiveActions: true });
+});
+
+onboardingWizardStartBtn.addEventListener('click', async () => {
+  await startOnboardingWizard({ manual: true });
+});
+
+function syncWizardFieldsToConnectionForm() {
+  tokenInput.value = onboardingWizardTokenInput.value.trim();
+  ownerInput.value = onboardingWizardOwnerInput.value.trim();
+  repoInput.value = onboardingWizardRepoInput.value.trim();
+  branchInput.value = onboardingWizardBranchInput.value.trim() || 'main';
+  filepathInput.value = onboardingWizardPathInput.value.trim() || 'bookmarks';
+}
+
+async function runWizardTokenValidation() {
+  onboardingWizardResult.textContent = '';
+  const token = onboardingWizardTokenInput.value.trim();
+  if (!token) {
+    setWizardResult(getMessage('options_pleaseEnterToken'), 'error');
+    return false;
+  }
+  const api = new GitHubAPI(token, 'x', 'x', 'main');
+  const tokenResult = await api.validateToken();
+  if (!tokenResult.valid) {
+    setWizardResult(getMessage('options_invalidToken'), 'error');
+    return false;
+  }
+  if (!tokenResult.scopes.includes('repo')) {
+    setWizardResult(getMessage('options_tokenValidMissingScope', [tokenResult.username]), 'error');
+    return false;
+  }
+  wizardState.username = tokenResult.username;
+  wizardState.tokenValidated = true;
+  if (!onboardingWizardOwnerInput.value.trim()) onboardingWizardOwnerInput.value = tokenResult.username;
+  setWizardResult(getMessage('options_onboardingWizardTokenValidated'), 'success');
+  return true;
+}
+
+async function runWizardEnvironmentCheck() {
+  if (!wizardState.tokenValidated) {
+    setWizardResult(getMessage('options_onboardingWizardNeedConnection'), 'error');
+    return false;
+  }
+
+  syncWizardFieldsToConnectionForm();
+  await saveSettings();
+
+  const token = onboardingWizardTokenInput.value.trim();
+  const owner = onboardingWizardOwnerInput.value.trim();
+  const repo = onboardingWizardRepoInput.value.trim();
+  const branch = onboardingWizardBranchInput.value.trim() || 'main';
+  const basePath = onboardingWizardPathInput.value.trim() || 'bookmarks';
+  if (!owner || !repo) {
+    setWizardResult(getMessage('options_onboardingWizardRepoRequired'), 'error');
+    return false;
+  }
+
+  if (onboardingWizardRepoFlowSelect.value === 'autoCreate') {
+    const normalizedOwner = owner.toLowerCase();
+    const normalizedUser = String(wizardState.username || '').toLowerCase();
+    if (!normalizedUser || normalizedOwner !== normalizedUser) {
+      setWizardResult(
+        `${getMessage('options_onboardingWizardRepoOwnerMismatch', [wizardState.username || ''])} ${getMessage('options_onboardingWizardRepoUserOnlyHint')}`,
+        'error'
+      );
+      return false;
+    }
+    const createResp = await chrome.runtime.sendMessage({
+      action: 'createRepository',
+      token,
+      owner,
+      repo,
+      branch,
+    });
+    if (!createResp?.success && !String(createResp?.message || '').includes('name already exists')) {
+      const message = createResp?.message || getMessage('options_onboardingWizardRepoCreateFailed');
+      const denied = /permission|forbidden|denied|access/i.test(message);
+      setWizardResult(
+        denied ? getMessage('options_onboardingWizardRepoCreatePermissionDenied') : message,
+        'error'
+      );
+      return false;
+    }
+  }
+
+  const api = new GitHubAPI(token, owner, repo, branch);
+  const repoExists = await api.checkRepo();
+  if (!repoExists) {
+    setWizardResult(getMessage('options_tokenValidRepoNotFound', [wizardState.username || owner, `${owner}/${repo}`]), 'error');
+    return false;
+  }
+  const pathCheck = await checkPathSetup(api, basePath);
+  wizardState.repoRef = `${owner}/${repo}`;
+  wizardState.pathStatus = pathCheck.status;
+  wizardState.environmentChecked = true;
+  setWizardResult(getMessage('options_onboardingWizardEnvironmentChecked'), 'success');
+  renderOnboardingWizardStep();
+  return true;
+}
+
+async function runWizardSyncAction() {
+  if (!wizardState.environmentChecked) {
+    setWizardResult(getMessage('options_onboardingWizardNeedAction'), 'error');
+    return false;
+  }
+  const token = onboardingWizardTokenInput.value.trim();
+  const owner = onboardingWizardOwnerInput.value.trim();
+  const repo = onboardingWizardRepoInput.value.trim();
+  const branch = onboardingWizardBranchInput.value.trim() || 'main';
+  const basePath = onboardingWizardPathInput.value.trim() || 'bookmarks';
+  const api = new GitHubAPI(token, owner, repo, branch);
+
+  if (wizardState.pathStatus === 'hasBookmarks') {
+    const pullResult = await chrome.runtime.sendMessage({ action: 'pull' });
+    if (!pullResult?.success) {
+      setWizardResult(pullResult?.message || 'Pull failed', 'error');
+      return false;
+    }
+    setWizardResult(getMessage('options_onboardingPullSuccess'), 'success');
+    wizardState.firstSyncDone = true;
+    return true;
+  }
+
+  await initializeRemoteFolder(api, basePath);
+  setWizardResult(getMessage('options_onboardingCreateSuccess'), 'success');
+  wizardState.firstSyncDone = true;
+  return true;
+}
+
+onboardingWizardBackBtn.addEventListener('click', () => {
+  if (!wizardState.active) return;
+  if (wizardState.stepIndex > 0) {
+    wizardState.stepIndex -= 1;
+    renderOnboardingWizardStep();
+  }
+});
+
+onboardingWizardSkipBtn.addEventListener('click', async () => {
+  if (!wizardState.active) return;
+  await dismissOnboardingWizard();
+});
+
+onboardingWizardActionBtn.addEventListener('click', async () => {
+  if (!wizardState.active) return;
+  const stepKey = WIZARD_STEPS[wizardState.stepIndex];
+  onboardingWizardActionBtn.disabled = true;
+  try {
+    if (stepKey === 'tokenInput') {
+      await runWizardTokenValidation();
+      return;
+    }
+    if (stepKey === 'environment') {
+      if (!wizardState.environmentChecked) {
+        await runWizardEnvironmentCheck();
+      } else {
+        await runWizardSyncAction();
+      }
+      return;
+    }
+  } catch (err) {
+    setWizardResult(getMessage('options_error', [err.message]), 'error');
+  } finally {
+    onboardingWizardActionBtn.disabled = false;
+  }
+});
+
+onboardingWizardNextBtn.addEventListener('click', async () => {
+  if (!wizardState.active) return;
+  const stepKey = WIZARD_STEPS[wizardState.stepIndex];
+  if (stepKey === 'tokenInput' && !wizardState.tokenValidated) {
+    setWizardResult(getMessage('options_onboardingWizardNeedConnection'), 'error');
+    return;
+  }
+  if (stepKey === 'hasToken' && onboardingWizardHasTokenSelect.value === 'no') {
+    wizardState.stepIndex = WIZARD_STEPS.indexOf('tokenHelp');
+    renderOnboardingWizardStep();
+    return;
+  }
+  if (stepKey === 'repoDecision') {
+    wizardState.repoFlow = onboardingWizardRepoFlowSelect.value;
+  }
+  if (stepKey === 'environment' && !wizardState.firstSyncDone) {
+    setWizardResult(getMessage('options_onboardingWizardNeedAction'), 'error');
+    return;
+  }
+  if (stepKey === 'finish') {
+    await completeOnboardingWizard();
+    showValidation(getMessage('options_onboardingWizardCompleted'), 'success');
+    return;
+  }
+  wizardState.stepIndex = Math.min(wizardState.stepIndex + 1, WIZARD_STEPS.length - 1);
+  renderOnboardingWizardStep();
 });
 
 function showValidation(message, type) {

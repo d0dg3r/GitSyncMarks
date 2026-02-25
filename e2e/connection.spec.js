@@ -21,6 +21,9 @@ const hasTestCredentials = () =>
   process.env.GITSYNCMARKS_TEST_PAT &&
   process.env.GITSYNCMARKS_TEST_REPO_OWNER &&
   process.env.GITSYNCMARKS_TEST_REPO;
+const hasTokenAndOwner = () =>
+  process.env.GITSYNCMARKS_TEST_PAT &&
+  process.env.GITSYNCMARKS_TEST_REPO_OWNER;
 
 test.describe('Connection', () => {
   test.describe('Invalid token', () => {
@@ -83,6 +86,28 @@ test.describe('Connection', () => {
       const result = page.locator('#save-sync-result').first();
       await test.expect(result).toHaveClass(/success/, { timeout: 5000 });
       await test.expect(result).toContainText(/saved|Settings saved/i);
+    });
+
+    test.skip(!hasTokenAndOwner(), 'Missing token/owner for createRepository mismatch test');
+    test('createRepository rejects owner mismatch early', async ({ page, extensionId }) => {
+      await page.goto(`chrome-extension://${extensionId}/options.html`);
+      await page.waitForLoadState('networkidle');
+
+      const token = process.env.GITSYNCMARKS_TEST_PAT;
+      const mismatchedOwner = `${process.env.GITSYNCMARKS_TEST_REPO_OWNER}-mismatch`;
+      const response = await page.evaluate(async ({ token: tokenArg, ownerArg }) => {
+        return chrome.runtime.sendMessage({
+          action: 'createRepository',
+          token: tokenArg,
+          owner: ownerArg,
+          repo: `gitsyncmarks-e2e-mismatch-${Date.now()}`,
+          branch: 'main',
+        });
+      }, { token, ownerArg: mismatchedOwner });
+
+      test.expect(response?.success).toBeFalsy();
+      test.expect(response?.code).toBe('OWNER_MISMATCH');
+      test.expect(String(response?.message || '')).toMatch(/owner|authenticated user|auto-create/i);
     });
   });
 });

@@ -33,6 +33,16 @@ import { setupContextMenus, handleContextMenuClick, refreshProfileMenuItems } fr
 
 const ALARM_NAME = 'bookmarkSyncPull';
 const NOTIFICATION_ID = 'gitsyncmarks-sync';
+const ONBOARDING_WIZARD_COMPLETED = 'onboardingWizardCompleted';
+const ONBOARDING_WIZARD_DISMISSED = 'onboardingWizardDismissed';
+
+async function shouldAutoOpenOnboardingWizard() {
+  const state = await chrome.storage.sync.get({
+    [ONBOARDING_WIZARD_COMPLETED]: false,
+    [ONBOARDING_WIZARD_DISMISSED]: false,
+  });
+  return state[ONBOARDING_WIZARD_COMPLETED] !== true && state[ONBOARDING_WIZARD_DISMISSED] !== true;
+}
 
 async function showNotificationIfEnabled(result) {
   try {
@@ -256,6 +266,34 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       });
     return true;
   }
+  if (message.action === 'createRepository') {
+    const { token, owner, repo, branch } = message;
+    if (!token || !owner || !repo) {
+      sendResponse({ success: false, message: 'Missing token/owner/repo' });
+      return false;
+    }
+    const api = new GitHubAPI(token, owner, repo, branch || 'main');
+    api.validateToken()
+      .then(async (tokenResult) => {
+        if (!tokenResult?.valid) {
+          throw new Error('Invalid token');
+        }
+        const normalizedOwner = String(owner).toLowerCase();
+        const normalizedUser = String(tokenResult.username || '').toLowerCase();
+        if (!normalizedUser || normalizedOwner !== normalizedUser) {
+          sendResponse({
+            success: false,
+            code: 'OWNER_MISMATCH',
+            message: `Auto-create supports user repositories only. Owner must match authenticated user (${tokenResult.username}).`,
+          });
+          return;
+        }
+        const created = await api.createRepository({ name: repo, private: true });
+        sendResponse({ success: true, created });
+      })
+      .catch((err) => sendResponse({ success: false, message: err.message || 'Repository creation failed' }));
+    return true;
+  }
   if (message.action === 'setSettingsSyncPassword') {
     chrome.storage.local.set({ settingsSyncPassword: message.password }).then(async () => {
       if (message.triggerPush) {
@@ -362,6 +400,9 @@ chrome.runtime.onInstalled.addListener(async (details) => {
   setupContextMenus();
   await setupAlarm();
   await checkAndMigrate();
+  if (details.reason === 'install' && await shouldAutoOpenOnboardingWizard()) {
+    chrome.runtime.openOptionsPage();
+  }
 });
 
 chrome.runtime.onStartup.addListener(async () => {
@@ -372,6 +413,9 @@ chrome.runtime.onStartup.addListener(async () => {
   refreshProfileMenuItems();
   await setupAlarm();
   await checkAndMigrate();
+  if (await shouldAutoOpenOnboardingWizard()) {
+    chrome.runtime.openOptionsPage();
+  }
 
   const settings = await getSettings();
   if (settings[STORAGE_KEYS.SYNC_ON_STARTUP] && isConfigured(settings)) {
