@@ -5,6 +5,12 @@ All notable changes to GitSyncMarks are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.1] - 2026-02-25 (*Cortana*)
+
+### Fixed
+
+- **Password dialog placement**: Password prompt for Settings sync actions (Import & Apply, Sync current to selected, Create my client setting) now appears in the Settings sub-tab instead of the Export/Import sub-tab
+
 ## [2.5.0] - 2026-02-23 (*Cortana*)
 
 ### Added
@@ -212,7 +218,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release: bookmark sync with GitHub
 
-[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.0...HEAD
+[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.1...HEAD
+[2.5.1]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.2.1...v2.3.0
