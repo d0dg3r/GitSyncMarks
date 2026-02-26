@@ -241,7 +241,10 @@ GitSyncMarks/
 ├── icons/
 ├── scripts/
 │   ├── build.sh                  # Build Chrome + Firefox packages
-│   └── generate-screenshots.js   # Auto-generate store screenshots (Playwright + Sharp)
+│   ├── generate-screenshots.js   # Auto-generate store screenshots (Playwright + Sharp)
+│   ├── fetch-app-content.sh      # Fetch App README, assets from GitSyncMarks-App repo
+│   ├── build-docs.js             # Markdown → HTML for docs/
+│   └── build-index.js            # Build index.html with Extension | App tabs
 ├── package.json                  # npm scripts for building
 ├── .github/workflows/
 │   ├── test-e2e.yml              # E2E tests (manual trigger only; CI disabled)
@@ -249,6 +252,7 @@ GitSyncMarks/
 │   ├── screenshots.yml           # Generate store screenshots (manual trigger)
 │   └── add-bookmark.yml          # Automation: add bookmark via dispatch
 ├── docs/                         # Architecture documentation
+├── website/                      # GitHub Pages site (index, docs, styles)
 ├── store-assets/                 # Store listings & screenshots (12 languages)
 ├── LICENSE
 ├── PRIVACY.md

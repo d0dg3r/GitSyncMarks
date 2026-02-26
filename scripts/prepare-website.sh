@@ -5,9 +5,15 @@
 set -e
 cd "$(dirname "$0")/.."
 
-mkdir -p _site/assets/screenshots
+mkdir -p _site/assets/screenshots _site/assets/app
 touch _site/.nojekyll
-cp website/index.html website/styles.css _site/
+bash scripts/fetch-app-content.sh
+if [ -d website/_app-src/images ]; then
+  cp -r website/_app-src/images/* _site/assets/app/
+fi
+node scripts/build-docs.js
+node scripts/build-index.js
+cp website/styles.css website/docs.css _site/
 cp store-assets/marquee_promo_tile.jpg _site/assets/
 cp favicon.ico favicon-32x32.png apple-touch-icon.png _site/assets/
 cp store-assets/en/chrome-1-github.png \

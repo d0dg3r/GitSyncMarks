@@ -20,6 +20,7 @@
   "devDependencies": {
     "@playwright/test": "^1.58.2",
     "dotenv": "^17.3.1",
+    "marked": "^17.0.3",
     "playwright": "^1.58.2",
     "png-to-ico": "^2.1.0",
     "sharp": "^0.33.0"

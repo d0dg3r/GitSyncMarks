@@ -1,0 +1,220 @@
+/* Docs page styles */
+
+.docs-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.docs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-card);
+}
+
+.docs-home {
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.docs-home:hover {
+  color: var(--accent);
+}
+
+.docs-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.docs-nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.docs-nav a:hover {
+  color: var(--accent);
+}
+
+.docs-layout {
+  flex: 1;
+  display: flex;
+  max-width: 64rem;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.docs-sidebar {
+  width: 12rem;
+  flex-shrink: 0;
+  padding: 1.5rem 1rem;
+  border-right: 1px solid var(--border);
+}
+
+.docs-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.docs-sidebar-nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 0.35rem 0.5rem;
+  border-radius: 4px;
+}
+
+.docs-sidebar-nav a:hover {
+  color: var(--accent);
+  background: rgba(88, 166, 255, 0.1);
+}
+
+.docs-sidebar-nav a.active {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.docs-content {
+  flex: 1;
+  padding: 2rem 1.5rem;
+  min-width: 0;
+}
+
+.docs-index {
+  padding: 2rem 1.5rem;
+}
+
+.docs-index-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+
+.docs-index-list li {
+  margin-bottom: 0.5rem;
+}
+
+.docs-index-list a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.docs-index-list a:hover {
+  text-decoration: underline;
+}
+
+.doc-article {
+  line-height: 1.7;
+}
+
+.doc-article h1 {
+  font-size: 1.75rem;
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.doc-article h2 {
+  font-size: 1.25rem;
+  margin: 1.5rem 0 0.75rem;
+}
+
+.doc-article h3 {
+  font-size: 1.1rem;
+  margin: 1.25rem 0 0.5rem;
+}
+
+.doc-article p {
+  margin: 0 0 1rem;
+}
+
+.doc-article ul, .doc-article ol {
+  margin: 0 0 1rem;
+  padding-left: 1.5rem;
+}
+
+.doc-article li {
+  margin-bottom: 0.25rem;
+}
+
+.doc-article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.doc-article th,
+.doc-article td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+.doc-article th {
+  background: var(--bg-card);
+  font-weight: 600;
+}
+
+.doc-article .mermaid {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.doc-article pre:not(.mermaid) {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.875rem;
+}
+
+.doc-article code {
+  background: var(--bg-card);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.doc-article pre code {
+  background: none;
+  padding: 0;
+}
+
+.docs-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.docs-footer a {
+  color: var(--text-muted);
+  text-decoration: none;
+  margin: 0 1rem;
+}
+
+.docs-footer a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .docs-layout {
+    flex-direction: column;
+  }
+
+  .docs-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 1rem;
+  }
+
+  .docs-sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}

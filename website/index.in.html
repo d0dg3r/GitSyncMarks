@@ -20,6 +20,7 @@
   <link rel="icon" href="assets/favicon-32x32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="docs.css">
 </head>
 <body>
   <header class="hero">
@@ -33,6 +34,7 @@
         <a href="#how-it-works">How it works</a>
         <a href="#installation">Installation</a>
         <a href="#screenshots">Screenshots</a>
+        <a href="docs/">Docs</a>
       </nav>
       <div class="badges">
         <a href="https://chromewebstore.google.com/detail/kogijidhfkoibgihpiaiippajhgdgmif" class="badge badge-chrome">Chrome Web Store</a>
@@ -40,10 +42,15 @@
         <a href="https://github.com/d0dg3r/GitSyncMarks/releases" class="badge">Releases</a>
         <a href="https://github.com/d0dg3r/GitSyncMarks-App" class="badge badge-app">Companion App</a>
       </div>
+      <nav class="client-tabs">
+        <button type="button" class="tab-btn active" data-tab="extension">Browser Extension</button>
+        <button type="button" class="tab-btn" data-tab="app">Companion App</button>
+      </nav>
     </div>
   </header>
 
   <main>
+    <div id="tab-extension" class="tab-content active">
     <section class="intro">
       <p class="lead">A browser extension that bidirectionally syncs your bookmarks with a GitHub repository. Works with Chrome, Chromium, Brave, Edge, and Firefox. No third-party server — your data stays between your browser and your repo.</p>
     </section>
@@ -213,11 +220,6 @@
       </div>
     </section>
 
-    <section class="companion">
-      <h2>Companion App</h2>
-      <p><a href="https://github.com/d0dg3r/GitSyncMarks-App">GitSyncMarks-App</a> — Cross-platform (Android, iOS, Windows, macOS, Linux) that syncs bookmarks from your GitHub repo. View bookmarks on the go, move, reorder, add via share (mobile). Encrypted settings sync. Android stable; F-Droid and Google Play coming soon.</p>
-    </section>
-
     <section class="troubleshooting">
       <h2>Troubleshooting</h2>
       <dl>
@@ -231,10 +233,18 @@
         <dd>Choose Push or Pull in the popup when automatic merge is not possible.</dd>
       </dl>
     </section>
+    </div>
+
+    <div id="tab-app" class="tab-content">
+      <div class="app-content">
+{{APP_CONTENT}}
+      </div>
+    </div>
   </main>
 
   <footer>
     <nav>
+      <a href="docs/">Docs</a>
       <a href="https://github.com/d0dg3r/GitSyncMarks">GitHub</a>
       <a href="https://github.com/d0dg3r/GitSyncMarks/releases">Releases</a>
       <a href="https://github.com/d0dg3r/GitSyncMarks/discussions">Discussions</a>
@@ -246,5 +256,26 @@
     </nav>
     <p class="copyright">GitSyncMarks — MIT License · 12 languages · Manifest V3</p>
   </footer>
+
+  <script>
+    document.querySelectorAll('.tab-btn').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.tab;
+        document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('tab-' + target).classList.add('active');
+      });
+    });
+  </script>
+  <script type="module">
+    const appContent = document.querySelector('#tab-app .app-content');
+    if (appContent?.querySelector('.mermaid')) {
+      import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs').then(m => {
+        m.default.initialize({ startOnLoad: false, theme: 'dark' });
+        m.default.run({ nodes: appContent.querySelectorAll('.mermaid') });
+      });
+    }
+  </script>
 </body>
 </html>

@@ -115,6 +115,46 @@ body {
   background: rgba(108, 92, 231, 0.1);
 }
 
+/* Client tabs (Extension | App) */
+.client-tabs {
+  display: flex;
+  gap: 0;
+  justify-content: center;
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab-btn {
+  padding: 0.6rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  margin-bottom: -1px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.tab-btn:hover {
+  color: var(--text);
+}
+
+.tab-btn.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
 main {
   max-width: 56rem;
   margin: 0 auto;
@@ -296,8 +336,40 @@ pre code {
   color: var(--text-muted);
 }
 
-.companion p {
-  margin: 0;
+.app-content {
+  margin-top: 0;
+}
+
+.app-content :first-child {
+  margin-top: 0;
+}
+
+.app-icon-wrap {
+  text-align: center;
+  margin: 0 0 1rem;
+}
+
+.app-icon {
+  border-radius: 16px;
+}
+
+.app-store-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.app-store-badges a {
+  display: inline-block;
+  line-height: 0;
+}
+
+.app-store-badges img {
+  display: block;
+  height: 40px;
+  width: auto;
 }
 
 .troubleshooting dl {

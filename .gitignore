@@ -1,6 +1,7 @@
 # Build artifacts
 build/
 _site/
+website/_app-src/
 *.zip
 .favicon-48-tmp.png
 
