@@ -91,19 +91,19 @@ function buildAppContent() {
       <div class="badges app-store-badges">`;
   if (fs.existsSync(path.join(APP_SRC, "images", "badges", "badge_fdroid.png"))) {
     html += `
-        <a href="${fdroidUrl}" class="badge badge-app"><img src="assets/app/badges/badge_fdroid.png" alt="Get it on F-Droid" height="40"></a>`;
+        <a href="${fdroidUrl}" class="badge badge-app" target="_blank" rel="noopener noreferrer"><img src="assets/app/badges/badge_fdroid.png" alt="Get it on F-Droid" height="40"></a>`;
   }
   if (fs.existsSync(path.join(APP_SRC, "images", "badges", "badge_github.png"))) {
     html += `
-        <a href="${releasesUrl}" class="badge badge-app"><img src="assets/app/badges/badge_github.png" alt="GitHub Releases" height="40"></a>`;
+        <a href="${releasesUrl}" class="badge badge-app" target="_blank" rel="noopener noreferrer"><img src="assets/app/badges/badge_github.png" alt="GitHub Releases" height="40"></a>`;
   }
   if (fs.existsSync(path.join(APP_SRC, "images", "badges", "badge_obtainium.png"))) {
     html += `
-        <a href="${obtainiumUrl}" class="badge badge-app"><img src="assets/app/badges/badge_obtainium.png" alt="Obtainium" height="40"></a>`;
+        <a href="${obtainiumUrl}" class="badge badge-app" target="_blank" rel="noopener noreferrer"><img src="assets/app/badges/badge_obtainium.png" alt="Obtainium" height="40"></a>`;
   }
   html += `
       </div>
-      <p>Or download APK, Flatpak, or ZIP from <a href="${releasesUrl}">Releases</a>.</p>
+      <p>Or download APK, Flatpak, or ZIP from <a href="${releasesUrl}" target="_blank" rel="noopener noreferrer">Releases</a>.</p>
     </section>`;
 
   // Features
