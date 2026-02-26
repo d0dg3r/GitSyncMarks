@@ -357,6 +357,7 @@ In the **Help** tab of the options page:
 
 ## Documentation & Links
 
+- **[Website](https://d0dg3r.github.io/GitSyncMarks/)** — Project landing page
 - **[Backlog Poll](https://github.com/d0dg3r/GitSyncMarks/discussions/37)** — Vote on which features to prioritize next
 - **[Discussions](https://github.com/d0dg3r/GitSyncMarks/discussions)** — Q&A, ideas, show and tell; see [docs/GITHUB-DISCUSSIONS.md](docs/GITHUB-DISCUSSIONS.md) for category overview
 - **[GitSyncMarks-App](https://github.com/d0dg3r/GitSyncMarks-App)** — Cross-platform companion (Android, iOS, Windows, macOS, Linux); move/reorder/add bookmarks; encrypted settings sync

@@ -14,7 +14,8 @@
     "test:e2e:smoke": "npm run build:chrome && npx playwright test e2e/smoke.spec.js",
     "test:e2e:sync": "npm run build:chrome && npx playwright test e2e/connection.spec.js e2e/sync.spec.js",
     "test:e2e:report": "npx playwright show-report",
-    "cleanup:e2e-repos": "node scripts/cleanup-e2e-repos.js"
+    "cleanup:e2e-repos": "node scripts/cleanup-e2e-repos.js",
+    "website:preview": "bash scripts/prepare-website.sh && npx --yes serve _site -p 3000"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",
