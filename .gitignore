@@ -1,5 +1,6 @@
 # Build artifacts
 build/
+_site/
 *.zip
 .favicon-48-tmp.png
 
