@@ -5,7 +5,7 @@
   "version": "2.5.1",
   "description": "__MSG_extDescription__",
   "default_locale": "en",
-  "homepage_url": "https://github.com/d0dg3r/GitSyncMarks",
+  "homepage_url": "https://gitsyncmarks.com",
   "permissions": [
     "bookmarks",
     "storage",

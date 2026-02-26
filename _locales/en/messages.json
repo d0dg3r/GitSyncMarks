@@ -660,6 +660,9 @@
     "message": "(Untitled)"
   },
 
+  "popup_website": {
+    "message": "Website"
+  },
   "popup_reportIssue": {
     "message": "Report Issue"
   },
@@ -946,6 +949,9 @@
   },
   "help_voteBacklogBtn": {
     "message": "Vote on backlog"
+  },
+  "help_website": {
+    "message": "Website"
   },
 
   "options_backupTitle": {
