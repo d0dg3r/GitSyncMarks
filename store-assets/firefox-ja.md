@@ -40,7 +40,7 @@ GitSyncMarksは、FirefoxのブックマークをGitHubリポジトリと同期�
 • 自動保存: すべての設定は変更時に自動保存 — 保存ボタンなし
 • デバッグログ: Syncタブ — Sync診断の有効化、トラブルシューティング用エクスポート
 • バックログ投票: コミュニティ投票で次の機能の優先順位を決定
-• モバイルアプリ: GitSyncMarks-Mobile（iOS + Android） — 外出先でブックマークを閲覧、リポジトリからの読み取り専用同期
+• モバイルアプリ: GitSyncMarks-App（iOS + Android） — 外出先でブックマークを閲覧、リポジトリからの読み取り専用同期
 
 使い方:
 1. ブックマーク用のGitHubリポジトリを作成
@@ -59,7 +59,7 @@ Firefoxを開かずにブックマークを追加できます。GitSyncMarksに�
 
 GitSyncMarksは完全にオープンソースです: https://github.com/d0dg3r/GitSyncMarks
 
-モバイルアプリ: GitSyncMarks-Mobile（iOS + Android） — 外出先でブックマークを閲覧。読み取り専用コンパニオン; F-DroidとGoogle Playは近日公開予定。https://github.com/d0dg3r/GitSyncMarks-Mobile
+モバイルアプリ: GitSyncMarks-App（iOS + Android） — 外出先でブックマークを閲覧。読み取り専用コンパニオン; F-DroidとGoogle Playは近日公開予定。https://github.com/d0dg3r/GitSyncMarks-App
 
 ### Categories
 ブックマーク

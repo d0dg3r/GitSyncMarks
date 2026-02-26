@@ -610,10 +610,10 @@
     "message": "モバイルアプリ"
   },
   "options_mobileAppDesc": {
-    "message": "外出先でブックマークを閲覧できます。GitSyncMarks-Mobile（iOS + Android）はGitHubリポジトリから同期する読み取り専用コンパニオンです。"
+    "message": "外出先でブックマークを閲覧できます。GitSyncMarks-App（iOS + Android）はGitHubリポジトリから同期する読み取り専用コンパニオンです。"
   },
   "options_mobileAppLink": {
-    "message": "GitSyncMarks-Mobile（GitHub）"
+    "message": "GitSyncMarks-App（GitHub）"
   },
   "options_mobileAppStores": {
     "message": "F-Droid および Google Play は近日公開予定です。"

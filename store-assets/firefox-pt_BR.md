@@ -40,7 +40,7 @@ Recursos:
 • Auto-save: todas as configurações são salvas automaticamente ao alterar — sem botões Salvar
 • Log de depuração: aba Sync — ativar para diagnósticos de sync, exportar para solução de problemas
 • Votação do backlog: enquete comunitária para priorizar próximos recursos
-• App móvel: GitSyncMarks-Mobile (iOS + Android) — visualize seus favoritos em qualquer lugar, sync somente leitura do seu repositório
+• App móvel: GitSyncMarks-App (iOS + Android) — visualize seus favoritos em qualquer lugar, sync somente leitura do seu repositório
 
 Como funciona:
 1. Crie um repositório GitHub para seus favoritos
@@ -59,7 +59,7 @@ Você também pode criar arquivos de favoritos diretamente no repositório — b
 
 GitSyncMarks é totalmente open source: https://github.com/d0dg3r/GitSyncMarks
 
-App móvel: GitSyncMarks-Mobile (iOS + Android) — visualize seus favoritos em qualquer lugar. Companheiro somente leitura; F-Droid e Google Play em breve. https://github.com/d0dg3r/GitSyncMarks-Mobile
+App móvel: GitSyncMarks-App (iOS + Android) — visualize seus favoritos em qualquer lugar. Companheiro somente leitura; F-Droid e Google Play em breve. https://github.com/d0dg3r/GitSyncMarks-App
 
 ### Categories
 Favoritos

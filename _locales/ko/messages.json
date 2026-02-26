@@ -610,10 +610,10 @@
     "message": "모바일 앱"
   },
   "options_mobileAppDesc": {
-    "message": "이동 중에도 북마크를 확인하세요. GitSyncMarks-Mobile (iOS + Android)은 GitHub 저장소에서 동기화됩니다 — 읽기 전용 동반 앱입니다."
+    "message": "이동 중에도 북마크를 확인하세요. GitSyncMarks-App (iOS + Android)은 GitHub 저장소에서 동기화됩니다 — 읽기 전용 동반 앱입니다."
   },
   "options_mobileAppLink": {
-    "message": "GitHub의 GitSyncMarks-Mobile"
+    "message": "GitHub의 GitSyncMarks-App"
   },
   "options_mobileAppStores": {
     "message": "F-Droid 및 Google Play 출시 예정."

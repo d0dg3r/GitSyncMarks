@@ -40,7 +40,7 @@ Características:
 • Guardado automático: todos los ajustes se guardan al cambiar — sin botones Guardar
 • Registro de depuración: pestaña Sync — para diagnosticar la sincronización
 • Votación del backlog: encuesta comunitaria para priorizar las próximas funciones
-• App móvil: GitSyncMarks-Mobile (iOS + Android) — consulta tus marcadores en movimiento
+• App móvil: GitSyncMarks-App (iOS + Android) — consulta tus marcadores en movimiento
 
 Cómo funciona:
 1. Crea un repositorio GitHub para tus marcadores
@@ -59,7 +59,7 @@ También puedes crear archivos de marcadores directamente en el repositorio — 
 
 GitSyncMarks es totalmente open source: https://github.com/d0dg3r/GitSyncMarks
 
-App móvil: GitSyncMarks-Mobile (iOS + Android) — marcadores en movimiento. Solo lectura; F-Droid y Google Play próximamente. https://github.com/d0dg3r/GitSyncMarks-Mobile
+App móvil: GitSyncMarks-App (iOS + Android) — marcadores en movimiento. Solo lectura; F-Droid y Google Play próximamente. https://github.com/d0dg3r/GitSyncMarks-App
 
 ### Category
 Productividad

@@ -40,7 +40,7 @@ Funktionen:
 • Auto-Save: alle Einstellungen speichern sich automatisch bei Änderung — keine Speichern-Buttons
 • Debug-Log: Sync-Tab — für Sync-Diagnostik aktivierbar, exportierbar
 • Backlog-Voting: Community-Abstimmung für Feature-Priorisierung
-• Mobile-Begleiter: GitSyncMarks-Mobile (iOS + Android) — Lesezeichen unterwegs ansehen
+• Mobile-Begleiter: GitSyncMarks-App (iOS + Android) — Lesezeichen unterwegs ansehen
 
 So funktioniert es:
 1. Erstelle ein GitHub-Repository für deine Lesezeichen
@@ -59,7 +59,7 @@ Du kannst auch Lesezeichen-Dateien direkt im Repository erstellen — füge einf
 
 GitSyncMarks ist vollständig Open Source: https://github.com/d0dg3r/GitSyncMarks
 
-Mobile-App: GitSyncMarks-Mobile (iOS + Android) — Lesezeichen unterwegs. Nur Lese-Zugriff; F-Droid und Google Play bald. https://github.com/d0dg3r/GitSyncMarks-Mobile
+Mobile-App: GitSyncMarks-App (iOS + Android) — Lesezeichen unterwegs. Nur Lese-Zugriff; F-Droid und Google Play bald. https://github.com/d0dg3r/GitSyncMarks-App
 
 ### Category
 Produktivität

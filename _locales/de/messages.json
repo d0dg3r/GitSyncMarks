@@ -632,10 +632,10 @@
     "message": "Mobile-App"
   },
   "options_mobileAppDesc": {
-    "message": "Lesezeichen unterwegs ansehen. GitSyncMarks-Mobile (iOS + Android) synchronisiert aus deinem GitHub-Repo — nur Lese-Zugriff."
+    "message": "Lesezeichen unterwegs ansehen. GitSyncMarks-App (iOS + Android) synchronisiert aus deinem GitHub-Repo — nur Lese-Zugriff."
   },
   "options_mobileAppLink": {
-    "message": "GitSyncMarks-Mobile auf GitHub"
+    "message": "GitSyncMarks-App auf GitHub"
   },
   "options_mobileAppStores": {
     "message": "F-Droid und Google Play bald verfügbar."

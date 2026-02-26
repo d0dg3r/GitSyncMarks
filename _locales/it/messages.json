@@ -610,10 +610,10 @@
     "message": "App mobile"
   },
   "options_mobileAppDesc": {
-    "message": "Consulta i tuoi segnalibri ovunque. GitSyncMarks-Mobile (iOS + Android) si sincronizza dal tuo repository GitHub — companion in sola lettura."
+    "message": "Consulta i tuoi segnalibri ovunque. GitSyncMarks-App (iOS + Android) si sincronizza dal tuo repository GitHub — companion in sola lettura."
   },
   "options_mobileAppLink": {
-    "message": "GitSyncMarks-Mobile su GitHub"
+    "message": "GitSyncMarks-App su GitHub"
   },
   "options_mobileAppStores": {
     "message": "F-Droid e Google Play in arrivo."

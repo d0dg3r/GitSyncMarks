@@ -38,7 +38,7 @@ Funkcje:
 • Wielojęzyczność: 12 języków — EN, DE, FR, ES, PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL; wybór ręczny lub automatyczne wykrywanie
 • Skróty klawiszowe: szybki Sync (Ctrl+Shift+.), otwórz ustawienia (Ctrl+Shift+,) — konfigurowalne
 • Dziennik debugowania: zakładka Sync — włącz do diagnostyki Sync, eksportuj do rozwiązywania problemów
-• Towarzysz mobilny: GitSyncMarks-Mobile (iOS + Android) — przeglądaj zakładki w podróży, Sync tylko do odczytu z repozytorium
+• Towarzysz mobilny: GitSyncMarks-App (iOS + Android) — przeglądaj zakładki w podróży, Sync tylko do odczytu z repozytorium
 • Automatyczny zapis: wszystkie ustawienia zapisują się automatycznie przy zmianie — bez przycisków Zapisz
 • Powiadomienia: Wszystkie (sukces + błąd), Tylko błędy lub Wyłączone
 
@@ -59,7 +59,7 @@ Możesz też tworzyć pliki zakładek bezpośrednio w repozytorium — wystarczy
 
 GitSyncMarks jest w pełni open source: https://github.com/d0dg3r/GitSyncMarks
 
-Aplikacja mobilna: GitSyncMarks-Mobile (iOS + Android) — zakładki w podróży. Tylko odczyt; F-Droid i Google Play wkrótce. https://github.com/d0dg3r/GitSyncMarks-Mobile
+Aplikacja mobilna: GitSyncMarks-App (iOS + Android) — zakładki w podróży. Tylko odczyt; F-Droid i Google Play wkrótce. https://github.com/d0dg3r/GitSyncMarks-App
 
 ### Category
 Produktywność

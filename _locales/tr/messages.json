@@ -610,10 +610,10 @@
     "message": "Mobil Uygulama"
   },
   "options_mobileAppDesc": {
-    "message": "Yer işaretlerinizi hareket halinde görüntüleyin. GitSyncMarks-Mobile (iOS + Android) GitHub deponuzdan senkronize eder — salt okunur yardımcı uygulama."
+    "message": "Yer işaretlerinizi hareket halinde görüntüleyin. GitSyncMarks-App (iOS + Android) GitHub deponuzdan senkronize eder — salt okunur yardımcı uygulama."
   },
   "options_mobileAppLink": {
-    "message": "GitHub'da GitSyncMarks-Mobile"
+    "message": "GitHub'da GitSyncMarks-App"
   },
   "options_mobileAppStores": {
     "message": "F-Droid ve Google Play yakında."

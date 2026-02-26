@@ -7,7 +7,7 @@
   <a href="https://github.com/d0dg3r/GitSyncMarks/releases?q=pre"><img src="https://img.shields.io/github/v/release/d0dg3r/GitSyncMarks?include_prereleases&label=pre-release&logo=github&style=flat-square" alt="Pre-release"></a>
   <a href="https://chromewebstore.google.com/detail/kogijidhfkoibgihpiaiippajhgdgmif"><img src="https://img.shields.io/badge/Chrome_Web_Store-4285F4?style=flat-square&logo=googlechrome&logoColor=white" alt="Chrome Web Store"></a>
   <a href="https://addons.mozilla.org/en-US/firefox/addon/gitsyncmarks/"><img src="https://img.shields.io/badge/Firefox_Add-on-FF7139?style=flat-square&logo=firefoxbrowser&logoColor=white" alt="Firefox Add-on"></a>
-  <a href="https://github.com/d0dg3r/GitSyncMarks-Mobile"><img src="https://img.shields.io/badge/Mobile_App-iOS%20%2B%20Android-6c5ce7?style=flat-square" alt="GitSyncMarks-Mobile"></a>
+  <a href="https://github.com/d0dg3r/GitSyncMarks-App"><img src="https://img.shields.io/badge/Mobile_App-iOS%20%2B%20Android-6c5ce7?style=flat-square" alt="GitSyncMarks-App"></a>
 </p>
 
 <p align="center">
@@ -41,7 +41,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 
 ## Mobile App
 
-**[GitSyncMarks-Mobile](https://github.com/d0dg3r/GitSyncMarks-Mobile)** — View your bookmarks on iOS and Android. Read-only companion app that syncs from your GitHub repo. F-Droid and Google Play coming soon.
+**[GitSyncMarks-App](https://github.com/d0dg3r/GitSyncMarks-App)** — View your bookmarks on iOS and Android. Read-only companion app that syncs from your GitHub repo. F-Droid and Google Play coming soon.
 
 ## Features
 
@@ -359,7 +359,7 @@ In the **Help** tab of the options page:
 
 - **[Backlog Poll](https://github.com/d0dg3r/GitSyncMarks/discussions/37)** — Vote on which features to prioritize next
 - **[Discussions](https://github.com/d0dg3r/GitSyncMarks/discussions)** — Q&A, ideas, show and tell; see [docs/GITHUB-DISCUSSIONS.md](docs/GITHUB-DISCUSSIONS.md) for category overview
-- **[GitSyncMarks-Mobile](https://github.com/d0dg3r/GitSyncMarks-Mobile)** — iOS + Android companion app (read-only; F-Droid and Google Play coming soon)
+- **[GitSyncMarks-App](https://github.com/d0dg3r/GitSyncMarks-App)** — iOS + Android companion app (read-only; F-Droid and Google Play coming soon)
 - **[docs/](docs/)** — Architecture, release process, testing guide, GitHub Discussions setup
 - **[docs/TESTING.md](docs/TESTING.md)** — Local testing (Chrome, Firefox desktop, Firefox Android)
 - **[CHANGELOG.md](CHANGELOG.md)** — Version history

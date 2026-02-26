@@ -40,7 +40,7 @@ GitSyncMarksは、ブラウザのブックマークをGitHubリポジトリと�
 • 自動保存: すべての設定は変更時に自動保存 — 保存ボタン不要
 • デバッグログ: Syncタブ — Sync診断用に有効化、トラブルシューティング用にエクスポート
 • バックログ投票: 次の機能の優先順位を決めるコミュニティ投票
-• モバイルコンパニオン: GitSyncMarks-Mobile（iOS + Android） — 外出先でブックマークを閲覧、リポジトリからの読み取り専用Sync
+• モバイルコンパニオン: GitSyncMarks-App（iOS + Android） — 外出先でブックマークを閲覧、リポジトリからの読み取り専用Sync
 
 使い方:
 1. ブックマーク用のGitHubリポジトリを作成
@@ -59,7 +59,7 @@ GitSyncMarksは、ブラウザのブックマークをGitHubリポジトリと�
 
 GitSyncMarksは完全にオープンソースです: https://github.com/d0dg3r/GitSyncMarks
 
-モバイルアプリ: GitSyncMarks-Mobile（iOS + Android） — 外出先でブックマークを閲覧。読み取り専用; F-DroidとGoogle Playは近日公開予定。 https://github.com/d0dg3r/GitSyncMarks-Mobile
+モバイルアプリ: GitSyncMarks-App（iOS + Android） — 外出先でブックマークを閲覧。読み取り専用; F-DroidとGoogle Playは近日公開予定。 https://github.com/d0dg3r/GitSyncMarks-App
 
 ### Category
 仕事効率化

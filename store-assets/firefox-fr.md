@@ -40,7 +40,7 @@ Fonctionnalités :
 • Enregistrement automatique : tous les paramètres se sauvegardent à la modification — pas de bouton Enregistrer
 • Journal de débogage : onglet Sync — pour le dépannage de sync
 • Vote backlog : sondage communautaire pour prioriser les prochaines fonctionnalités
-• Application mobile : GitSyncMarks-Mobile (iOS + Android)
+• Application mobile : GitSyncMarks-App (iOS + Android)
 
 Comment ça marche :
 1. Créer un dépôt GitHub
@@ -50,7 +50,7 @@ Comment ça marche :
 
 GitSyncMarks est entièrement open source : https://github.com/d0dg3r/GitSyncMarks
 
-Application mobile : GitSyncMarks-Mobile (iOS + Android). https://github.com/d0dg3r/GitSyncMarks-Mobile
+Application mobile : GitSyncMarks-App (iOS + Android). https://github.com/d0dg3r/GitSyncMarks-App
 
 ### Categories
 Favoris

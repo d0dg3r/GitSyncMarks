@@ -610,10 +610,10 @@
     "message": "Мобильное приложение"
   },
   "options_mobileAppDesc": {
-    "message": "Просматривайте закладки на ходу. GitSyncMarks-Mobile (iOS + Android) синхронизируется с вашим GitHub-репозиторием — приложение-компаньон только для чтения."
+    "message": "Просматривайте закладки на ходу. GitSyncMarks-App (iOS + Android) синхронизируется с вашим GitHub-репозиторием — приложение-компаньон только для чтения."
   },
   "options_mobileAppLink": {
-    "message": "GitSyncMarks-Mobile на GitHub"
+    "message": "GitSyncMarks-App на GitHub"
   },
   "options_mobileAppStores": {
     "message": "F-Droid и Google Play скоро."

@@ -603,10 +603,10 @@
     "message": "Application mobile"
   },
   "options_mobileAppDesc": {
-    "message": "Consultez vos favoris en déplacement. GitSyncMarks-Mobile (iOS + Android) synchronise depuis votre dépôt GitHub — lecture seule."
+    "message": "Consultez vos favoris en déplacement. GitSyncMarks-App (iOS + Android) synchronise depuis votre dépôt GitHub — lecture seule."
   },
   "options_mobileAppLink": {
-    "message": "GitSyncMarks-Mobile sur GitHub"
+    "message": "GitSyncMarks-App sur GitHub"
   },
   "options_mobileAppStores": {
     "message": "F-Droid et Google Play bientôt disponibles."

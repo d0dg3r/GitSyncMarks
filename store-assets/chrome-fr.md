@@ -40,7 +40,7 @@ Fonctionnalités :
 • Enregistrement automatique : tous les paramètres se sauvegardent à la modification — pas de bouton Enregistrer
 • Journal de débogage : onglet Sync — pour le dépannage de sync
 • Vote backlog : sondage communautaire pour prioriser les prochaines fonctionnalités
-• Application mobile : GitSyncMarks-Mobile (iOS + Android) — consultez vos favoris en déplacement
+• Application mobile : GitSyncMarks-App (iOS + Android) — consultez vos favoris en déplacement
 
 Comment ça marche :
 1. Créez un dépôt GitHub pour vos favoris
@@ -59,7 +59,7 @@ Vous pouvez aussi créer des fichiers de favoris directement dans le dépôt —
 
 GitSyncMarks est entièrement open source : https://github.com/d0dg3r/GitSyncMarks
 
-Application mobile : GitSyncMarks-Mobile (iOS + Android) — favoris en déplacement. Lecture seule ; F-Droid et Google Play bientôt. https://github.com/d0dg3r/GitSyncMarks-Mobile
+Application mobile : GitSyncMarks-App (iOS + Android) — favoris en déplacement. Lecture seule ; F-Droid et Google Play bientôt. https://github.com/d0dg3r/GitSyncMarks-App
 
 ### Category
 Productivité

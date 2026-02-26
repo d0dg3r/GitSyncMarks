@@ -40,7 +40,7 @@ Features:
 • Auto-save: all settings save automatically when changed — no Save buttons
 • Debug log: Sync tab — enable for sync diagnostics, export for troubleshooting
 • Vote on backlog: community poll to influence which features come next
-• Mobile companion: GitSyncMarks-Mobile (iOS + Android) — view bookmarks on the go, read-only sync from your repo
+• Mobile companion: GitSyncMarks-App (iOS + Android) — view bookmarks on the go, read-only sync from your repo
 
 How it works:
 1. Create a GitHub repository for your bookmarks
@@ -59,7 +59,7 @@ You can also create bookmark files directly in the repository — just add a JSO
 
 GitSyncMarks is fully open source: https://github.com/d0dg3r/GitSyncMarks
 
-Mobile app: GitSyncMarks-Mobile (iOS + Android) — view your bookmarks on the go. Read-only companion; F-Droid and Google Play coming soon. https://github.com/d0dg3r/GitSyncMarks-Mobile
+Mobile app: GitSyncMarks-App (iOS + Android) — view your bookmarks on the go. Read-only companion; F-Droid and Google Play coming soon. https://github.com/d0dg3r/GitSyncMarks-App
 
 ### Categories
 Bookmarks

@@ -610,10 +610,10 @@
     "message": "Aplikacja mobilna"
   },
   "options_mobileAppDesc": {
-    "message": "Przeglądaj zakładki w podróży. GitSyncMarks-Mobile (iOS + Android) synchronizuje z Twojego repozytorium GitHub — towarzysz tylko do odczytu."
+    "message": "Przeglądaj zakładki w podróży. GitSyncMarks-App (iOS + Android) synchronizuje z Twojego repozytorium GitHub — towarzysz tylko do odczytu."
   },
   "options_mobileAppLink": {
-    "message": "GitSyncMarks-Mobile na GitHub"
+    "message": "GitSyncMarks-App na GitHub"
   },
   "options_mobileAppStores": {
     "message": "F-Droid i Google Play już wkrótce."

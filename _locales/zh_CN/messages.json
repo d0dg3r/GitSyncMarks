@@ -610,10 +610,10 @@
     "message": "移动应用"
   },
   "options_mobileAppDesc": {
-    "message": "随时随地查看书签。GitSyncMarks-Mobile（iOS + Android）从您的 GitHub 仓库同步 — 只读伴侣应用。"
+    "message": "随时随地查看书签。GitSyncMarks-App（iOS + Android）从您的 GitHub 仓库同步 — 只读伴侣应用。"
   },
   "options_mobileAppLink": {
-    "message": "GitSyncMarks-Mobile on GitHub"
+    "message": "GitSyncMarks-App on GitHub"
   },
   "options_mobileAppStores": {
     "message": "F-Droid 和 Google Play 即将推出。"

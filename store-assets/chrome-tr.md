@@ -38,7 +38,7 @@ GitSyncMarks, tarayıcı yer imlerinizi bir GitHub deposuyla senkronize eder —
 • Çok dilli: 12 dil — EN, DE, FR, ES, PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL; manuel seçim veya otomatik algılama
 • Klavye kısayolları: hızlı Sync (Ctrl+Shift+.), ayarları aç (Ctrl+Shift+,) — özelleştirilebilir
 • Hata ayıklama günlüğü: Sync sekmesi — Sync tanılama için etkinleştirin, sorun giderme için dışa aktarın
-• Mobil eşlik uygulaması: GitSyncMarks-Mobile (iOS + Android) — hareket halindeyken yer imlerinizi görüntüleyin, deponuzdan salt okunur Sync
+• Mobil eşlik uygulaması: GitSyncMarks-App (iOS + Android) — hareket halindeyken yer imlerinizi görüntüleyin, deponuzdan salt okunur Sync
 • Otomatik kaydetme: tüm ayarlar değiştirildiğinde otomatik kaydedilir — Kaydet düğmesi yok
 • Bildirimler: Tümü (başarı + hata), Yalnızca hatalar veya Kapalı
 
@@ -59,7 +59,7 @@ Doğrudan depoda yer imi dosyaları da oluşturabilirsiniz — herhangi bir yer 
 
 GitSyncMarks tamamen açık kaynaklıdır: https://github.com/d0dg3r/GitSyncMarks
 
-Mobil uygulama: GitSyncMarks-Mobile (iOS + Android) — hareket halindeyken yer imleriniz. Salt okunur; F-Droid ve Google Play yakında. https://github.com/d0dg3r/GitSyncMarks-Mobile
+Mobil uygulama: GitSyncMarks-App (iOS + Android) — hareket halindeyken yer imleriniz. Salt okunur; F-Droid ve Google Play yakında. https://github.com/d0dg3r/GitSyncMarks-App
 
 ### Category
 Üretkenlik

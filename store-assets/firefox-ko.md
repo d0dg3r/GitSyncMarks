@@ -40,7 +40,7 @@ GitSyncMarks는 Firefox 북마크를 GitHub 저장소와 동기화합니다 — 
 • 자동 저장: 모든 설정은 변경 시 자동 저장 — 저장 버튼 없음
 • 디버그 로그: Sync 탭 — 동기화 진단 활성화, 문제 해결을 위한 내보내기
 • 백로그 투표: 커뮤니티 투표로 다음 기능 우선순위 결정
-• 모바일 앱: GitSyncMarks-Mobile(iOS + Android) — 이동 중 북마크 보기, 저장소에서 읽기 전용 동기화
+• 모바일 앱: GitSyncMarks-App(iOS + Android) — 이동 중 북마크 보기, 저장소에서 읽기 전용 동기화
 
 사용 방법:
 1. 북마크용 GitHub 저장소 생성
@@ -59,7 +59,7 @@ Firefox를 열지 않고도 북마크를 추가할 수 있습니다. GitSyncMark
 
 GitSyncMarks는 완전 오픈 소스입니다: https://github.com/d0dg3r/GitSyncMarks
 
-모바일 앱: GitSyncMarks-Mobile(iOS + Android) — 이동 중 북마크 보기. 읽기 전용 동반 앱; F-Droid 및 Google Play 출시 예정. https://github.com/d0dg3r/GitSyncMarks-Mobile
+모바일 앱: GitSyncMarks-App(iOS + Android) — 이동 중 북마크 보기. 읽기 전용 동반 앱; F-Droid 및 Google Play 출시 예정. https://github.com/d0dg3r/GitSyncMarks-App
 
 ### Categories
 북마크

@@ -40,7 +40,7 @@ Funzionalità:
 • Salvataggio automatico: tutte le impostazioni si salvano automaticamente alla modifica — nessun pulsante Salva
 • Log di debug: scheda Sync — attivare per diagnostica sync, esportare per risoluzione problemi
 • Votazione backlog: sondaggio della comunità per dare priorità alle prossime funzionalità
-• App mobile: GitSyncMarks-Mobile (iOS + Android) — visualizza i tuoi segnalibri ovunque, sync in sola lettura dal tuo repository
+• App mobile: GitSyncMarks-App (iOS + Android) — visualizza i tuoi segnalibri ovunque, sync in sola lettura dal tuo repository
 
 Come funziona:
 1. Crea un repository GitHub per i tuoi segnalibri
@@ -59,7 +59,7 @@ Puoi anche creare file di segnalibri direttamente nel repository — basta aggiu
 
 GitSyncMarks è completamente open source: https://github.com/d0dg3r/GitSyncMarks
 
-App mobile: GitSyncMarks-Mobile (iOS + Android) — visualizza i tuoi segnalibri ovunque. Compagno in sola lettura; F-Droid e Google Play in arrivo. https://github.com/d0dg3r/GitSyncMarks-Mobile
+App mobile: GitSyncMarks-App (iOS + Android) — visualizza i tuoi segnalibri ovunque. Compagno in sola lettura; F-Droid e Google Play in arrivo. https://github.com/d0dg3r/GitSyncMarks-App
 
 ### Categories
 Segnalibri

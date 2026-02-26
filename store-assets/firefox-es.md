@@ -40,7 +40,7 @@ Características:
 • Guardado automático: todos los ajustes se guardan al cambiar — sin botones Guardar
 • Registro de depuración: pestaña Sync — para diagnosticar la sincronización
 • Votación del backlog: encuesta comunitaria para priorizar las próximas funciones
-• App móvil: GitSyncMarks-Mobile (iOS + Android)
+• App móvil: GitSyncMarks-App (iOS + Android)
 
 Cómo funciona:
 1. Crear un repositorio GitHub
@@ -50,7 +50,7 @@ Cómo funciona:
 
 GitSyncMarks es totalmente open source: https://github.com/d0dg3r/GitSyncMarks
 
-App móvil: GitSyncMarks-Mobile (iOS + Android). https://github.com/d0dg3r/GitSyncMarks-Mobile
+App móvil: GitSyncMarks-App (iOS + Android). https://github.com/d0dg3r/GitSyncMarks-App
 
 ### Categories
 Marcadores

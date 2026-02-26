@@ -40,7 +40,7 @@ GitSyncMarks는 브라우저 북마크를 GitHub 리포지토리와 동기화합
 • 자동 저장: 모든 설정은 변경 시 자동 저장 — 저장 버튼 없음
 • 디버그 로그: Sync 탭 — Sync 진단을 위해 활성화, 문제 해결을 위해 내보내기
 • 백로그 투표: 다음 기능 우선순위를 결정하는 커뮤니티 투표
-• 모바일 동반앱: GitSyncMarks-Mobile(iOS + Android) — 이동 중에 북마크 보기, 리포지토리에서 읽기 전용 Sync
+• 모바일 동반앱: GitSyncMarks-App(iOS + Android) — 이동 중에 북마크 보기, 리포지토리에서 읽기 전용 Sync
 
 사용 방법:
 1. 북마크용 GitHub 리포지토리 생성
@@ -59,7 +59,7 @@ GitSyncMarks는 브라우저 북마크를 GitHub 리포지토리와 동기화합
 
 GitSyncMarks는 완전히 오픈 소스입니다: https://github.com/d0dg3r/GitSyncMarks
 
-모바일 앱: GitSyncMarks-Mobile(iOS + Android) — 이동 중에 북마크 보기. 읽기 전용; F-Droid 및 Google Play 출시 예정. https://github.com/d0dg3r/GitSyncMarks-Mobile
+모바일 앱: GitSyncMarks-App(iOS + Android) — 이동 중에 북마크 보기. 읽기 전용; F-Droid 및 Google Play 출시 예정. https://github.com/d0dg3r/GitSyncMarks-App
 
 ### Category
 생산성

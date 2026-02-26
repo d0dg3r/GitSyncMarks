@@ -38,7 +38,7 @@ GitSyncMarks, Firefox yer imlerinizi bir GitHub deposuyla senkronize eder — ç
 • Çok dilli: 12 dil — EN, DE, FR, ES, PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL; manuel seçim veya otomatik algılama
 • Klavye kısayolları: hızlı Sync (Ctrl+Shift+.), ayarları aç (Ctrl+Shift+,) — özelleştirilebilir
 • Hata ayıklama günlüğü: Sync sekmesi — sync tanılaması için etkinleştirin, sorun giderme için dışa aktarın
-• Mobil uygulama: GitSyncMarks-Mobile (iOS + Android) — yer imlerinizi hareket halinde görüntüleyin, deponuzdan salt okunur sync
+• Mobil uygulama: GitSyncMarks-App (iOS + Android) — yer imlerinizi hareket halinde görüntüleyin, deponuzdan salt okunur sync
 • Otomatik kayıt: tüm ayarlar değiştirildiğinde otomatik kaydedilir — Kaydet düğmesi yok
 • Bildirimler: Tümü (başarılı + hata), Yalnızca hatalar veya Kapalı
 
@@ -59,7 +59,7 @@ Ayrıca depoda doğrudan yer imi dosyaları oluşturabilirsiniz — herhangi bir
 
 GitSyncMarks tamamen açık kaynaktır: https://github.com/d0dg3r/GitSyncMarks
 
-Mobil uygulama: GitSyncMarks-Mobile (iOS + Android) — yer imlerinizi hareket halinde görüntüleyin. Salt okunur yardımcı uygulama; F-Droid ve Google Play yakında. https://github.com/d0dg3r/GitSyncMarks-Mobile
+Mobil uygulama: GitSyncMarks-App (iOS + Android) — yer imlerinizi hareket halinde görüntüleyin. Salt okunur yardımcı uygulama; F-Droid ve Google Play yakında. https://github.com/d0dg3r/GitSyncMarks-App
 
 ### Categories
 Yer İmleri

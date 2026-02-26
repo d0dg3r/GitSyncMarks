@@ -40,7 +40,7 @@ GitSyncMarks将您的Firefox书签与GitHub仓库同步 — 双向、自动，�
 • 自动保存：所有设置更改时自动保存 — 无需保存按钮
 • 调试日志：Sync标签页 — 启用Sync诊断，导出以排查问题
 • 待办投票：社区投票影响下一个功能优先级
-• 移动应用：GitSyncMarks-Mobile（iOS + Android） — 随时随地查看书签，从仓库只读同步
+• 移动应用：GitSyncMarks-App（iOS + Android） — 随时随地查看书签，从仓库只读同步
 
 使用方法：
 1. 创建一个GitHub仓库用于存放书签
@@ -59,7 +59,7 @@ GitSyncMarks将您的Firefox书签与GitHub仓库同步 — 双向、自动，�
 
 GitSyncMarks完全开源：https://github.com/d0dg3r/GitSyncMarks
 
-移动应用：GitSyncMarks-Mobile（iOS + Android） — 随时随地查看书签。只读伴侣应用；F-Droid和Google Play即将推出。https://github.com/d0dg3r/GitSyncMarks-Mobile
+移动应用：GitSyncMarks-App（iOS + Android） — 随时随地查看书签。只读伴侣应用；F-Droid和Google Play即将推出。https://github.com/d0dg3r/GitSyncMarks-App
 
 ### Categories
 书签

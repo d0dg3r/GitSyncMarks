@@ -680,10 +680,10 @@
     "message": "Mobile App"
   },
   "options_mobileAppDesc": {
-    "message": "View your bookmarks on the go. GitSyncMarks-Mobile (iOS + Android) syncs from your GitHub repo — read-only companion."
+    "message": "View your bookmarks on the go. GitSyncMarks-App (iOS + Android) syncs from your GitHub repo — read-only companion."
   },
   "options_mobileAppLink": {
-    "message": "GitSyncMarks-Mobile on GitHub"
+    "message": "GitSyncMarks-App on GitHub"
   },
   "options_mobileAppStores": {
     "message": "F-Droid and Google Play coming soon."
