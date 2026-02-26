@@ -55,8 +55,18 @@
       <p class="lead">A browser extension that bidirectionally syncs your bookmarks with a GitHub repository. Works with Chrome, Chromium, Brave, Edge, and Firefox. No third-party server — your data stays between your browser and your repo.</p>
     </section>
 
+    <section class="installation" id="installation">
+      <h2>Get the Extension</h2>
+      <div class="badges">
+        <a href="https://chromewebstore.google.com/detail/kogijidhfkoibgihpiaiippajhgdgmif" class="badge badge-chrome">Chrome Web Store</a>
+        <a href="https://addons.mozilla.org/en-US/firefox/addon/gitsyncmarks/" class="badge badge-firefox">Firefox Add-on</a>
+        <a href="https://github.com/d0dg3r/GitSyncMarks/releases" class="badge">Releases</a>
+      </div>
+      <p>Or download the ZIP from <a href="https://github.com/d0dg3r/GitSyncMarks/releases">Releases</a> and load unpacked (Chrome: <code>chrome://extensions/</code>; Firefox: <code>about:debugging</code>).</p>
+    </section>
+
     <section class="features" id="features">
-      <h2>Core Features</h2>
+      <h2>Features</h2>
       <div class="feature-grid">
         <article class="feature-card">
           <h3>No middleman</h3>
@@ -78,104 +88,23 @@
           <h3>Auto-sync</h3>
           <p>Syncs automatically on every bookmark change. Configurable debounce so rapid edits are bundled into one sync.</p>
         </article>
+        <article class="feature-card">
+          <h3>Multiple profiles</h3>
+          <p>Up to 10 profiles (work, personal, projects). Each has its own GitHub repo config and bookmark set. Switch replaces local bookmarks with the target profile.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Context menu</h3>
+          <p>Right-click on any page or link: Add to Toolbar, Add to Other Bookmarks, Sync Now, Switch Profile, Copy Favicon URL, Download Favicon.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Automation</h3>
+          <p>Add bookmarks via Git, CLI, or GitHub Actions. The extension picks them up automatically on the next sync.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Generated files</h3>
+          <p>README.md, bookmarks.html, feed.xml, dashy-conf.yml — each configurable as Off, Manual, or Auto.</p>
+        </article>
       </div>
-    </section>
-
-    <section class="power-features">
-      <h2>Power Features</h2>
-      <ul class="power-list">
-        <li><strong>Multiple profiles</strong> — Up to 10 profiles (work, personal, projects). Each has its own GitHub repo config and bookmark set. Switch replaces local bookmarks with the target profile.</li>
-        <li><strong>Context menu</strong> — Right-click on any page or link: Add to Toolbar, Add to Other Bookmarks, Sync Now, Switch Profile, Copy Favicon URL, Download Favicon. Bookmark auto-syncs after adding.</li>
-        <li><strong>Automation</strong> — Add bookmarks via Git, CLI, or GitHub Actions. The extension picks them up automatically on the next sync.</li>
-        <li><strong>GitHub Repos folder</strong> — Optional folder with bookmarks to all your GitHub repositories (public and private). Configurable position (toolbar/other).</li>
-      </ul>
-    </section>
-
-    <section class="generated-files">
-      <h2>Generated Files</h2>
-      <p>GitSyncMarks can generate these files in your repo on each sync (each configurable as Off, Manual, or Auto):</p>
-      <ul>
-        <li><strong>README.md</strong> — Markdown overview of all bookmarks; browse directly on GitHub</li>
-        <li><strong>bookmarks.html</strong> — Netscape format; import into Chrome, Firefox, or Edge</li>
-        <li><strong>feed.xml</strong> — RSS 2.0 feed; subscribe in any reader or use for automations</li>
-        <li><strong>dashy-conf.yml</strong> — Config for the <a href="https://github.com/Lissy93/dashy">Dashy</a> dashboard</li>
-      </ul>
-    </section>
-
-    <section class="sync-config">
-      <h2>Sync Configuration</h2>
-      <p>Flexible sync behavior to match your workflow:</p>
-      <ul>
-        <li><strong>Sync profiles</strong> — Real-time (1 min), Frequent (5 min), Normal (15 min), Power save (60 min), or Custom</li>
-        <li><strong>Sync on startup / focus</strong> — Optional sync when the browser starts or gains focus (with cooldown)</li>
-        <li><strong>Manual sync</strong> — Push, Pull, or full Sync via popup buttons</li>
-        <li><strong>Conflict detection</strong> — Notifies when automatic merge is not possible; choose Push or Pull</li>
-      </ul>
-    </section>
-
-    <section class="how-it-works" id="how-it-works">
-      <h2>How It Works</h2>
-      <ol class="steps">
-        <li>Create a GitHub repository for your bookmarks</li>
-        <li>Generate a <a href="https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks+Sync">Personal Access Token</a> with the <code>repo</code> scope</li>
-        <li>Install the extension and configure token, repo owner, repo name, branch, and file path</li>
-        <li>Click <strong>Sync Now</strong> — your bookmarks are pushed as individual JSON files</li>
-      </ol>
-    </section>
-
-    <section class="installation" id="installation">
-      <h2>Installation</h2>
-      <div class="install-tabs">
-        <div class="install-block">
-          <h3>Chrome / Chromium / Edge / Brave</h3>
-          <ol>
-            <li>Go to the <a href="https://github.com/d0dg3r/GitSyncMarks/releases">Releases page</a></li>
-            <li>Download <code>GitSyncMarks-vX.X.X-chrome.zip</code></li>
-            <li>Extract the ZIP to a folder</li>
-            <li>Open <code>chrome://extensions/</code>, enable <strong>Developer mode</strong></li>
-            <li>Click <strong>Load unpacked</strong> and select the extracted folder</li>
-          </ol>
-          <p>Or install from the <a href="https://chromewebstore.google.com/detail/kogijidhfkoibgihpiaiippajhgdgmif">Chrome Web Store</a>.</p>
-        </div>
-        <div class="install-block">
-          <h3>Firefox</h3>
-          <ol>
-            <li>Go to the <a href="https://github.com/d0dg3r/GitSyncMarks/releases">Releases page</a></li>
-            <li>Download <code>GitSyncMarks-vX.X.X-firefox.zip</code></li>
-            <li>Open <code>about:debugging#/runtime/this-firefox</code></li>
-            <li>Click <strong>Load Temporary Add-on</strong> and select the ZIP</li>
-          </ol>
-          <p>For a permanent install, use the <a href="https://addons.mozilla.org/en-US/firefox/addon/gitsyncmarks/">Firefox Add-on</a> store.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="repo-structure">
-      <h2>Repository Structure</h2>
-      <p>After the first sync, your repo contains:</p>
-      <pre><code>bookmarks/
-  _index.json           # Metadata
-  README.md             # Auto-generated overview
-  bookmarks.html        # Netscape import
-  feed.xml              # RSS 2.0 feed
-  toolbar/              # Bookmarks Bar
-    _order.json
-    github_a1b2.json    # One file per bookmark
-  other/                # Other Bookmarks
-    _order.json
-    ...</code></pre>
-      <p>Each bookmark is a simple JSON file: <code>{"title": "GitHub", "url": "https://github.com"}</code></p>
-    </section>
-
-    <section class="automation">
-      <h2>Automation</h2>
-      <p>Add bookmarks without opening the browser:</p>
-      <h3>1. Create a file in the repo</h3>
-      <p>Add a JSON file to <code>bookmarks/toolbar/</code> or <code>bookmarks/other/</code>:</p>
-      <pre><code>{"title": "Example", "url": "https://example.com"}</code></pre>
-      <h3>2. GitHub Action</h3>
-      <p>Copy <a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/.github/workflows/add-bookmark.yml">add-bookmark.yml</a> to your repo and run:</p>
-      <pre><code>gh workflow run add-bookmark.yml -f url="https://example.com" -f title="Example" -f folder="toolbar"</code></pre>
     </section>
 
     <section class="screenshots" id="screenshots">
@@ -220,18 +149,14 @@
       </div>
     </section>
 
-    <section class="troubleshooting">
-      <h2>Troubleshooting</h2>
-      <dl>
-        <dt>Token invalid</dt>
-        <dd>Ensure the PAT has the <code>repo</code> scope; token may have been revoked.</dd>
-        <dt>Repo not found</dt>
-        <dd>Verify Repository Owner and Name; check repo exists and you have access.</dd>
-        <dt>Sync takes long</dt>
-        <dd>Many changed bookmarks = many API calls. Enable Debug Log in Options → Sync for diagnostics.</dd>
-        <dt>Conflict</dt>
-        <dd>Choose Push or Pull in the popup when automatic merge is not possible.</dd>
-      </dl>
+    <section class="how-it-works" id="how-it-works">
+      <h2>Configure the Extension</h2>
+      <ol class="steps">
+        <li>Create a GitHub repository for your bookmarks</li>
+        <li>Generate a <a href="https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks+Sync">Personal Access Token</a> with the <code>repo</code> scope</li>
+        <li>Install the extension and configure token, repo owner, repo name, branch, and file path</li>
+        <li>Click <strong>Sync Now</strong> — your bookmarks are pushed as individual JSON files</li>
+      </ol>
     </section>
     </div>
 

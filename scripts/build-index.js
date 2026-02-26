@@ -51,7 +51,6 @@ function buildAppContent() {
   let intro =
     "Cross-platform app (Android, iOS, Windows, macOS, Linux) that syncs bookmarks from your GitHub repo. Companion to the GitSyncMarks browser extension. View bookmarks on mobile, move, reorder, add via share. Sync once, browse offline.";
   let features = [];
-  let hasAppIcon = false;
   let hasBadges = false;
   let hasScreenshots = false;
 
@@ -66,7 +65,6 @@ function buildAppContent() {
     features = parseFeatures(md);
   }
 
-  hasAppIcon = fs.existsSync(path.join(APP_SRC, "images", "app_icon.png"));
   hasBadges =
     fs.existsSync(path.join(APP_SRC, "images", "badges", "badge_fdroid.png")) ||
     fs.existsSync(path.join(APP_SRC, "images", "badges", "badge_github.png"));
@@ -89,12 +87,7 @@ function buildAppContent() {
   // Badges (installation)
   html += `
     <section class="installation" id="app-installation">
-      <h2>Get the App</h2>`;
-  if (hasAppIcon) {
-    html += `
-      <p class="app-icon-wrap"><img src="assets/app/app_icon.png" alt="GitSyncMarks-App" class="app-icon" width="96" height="96"></p>`;
-  }
-  html += `
+      <h2>Get the App</h2>
       <div class="badges app-store-badges">`;
   if (fs.existsSync(path.join(APP_SRC, "images", "badges", "badge_fdroid.png"))) {
     html += `
