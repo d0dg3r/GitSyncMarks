@@ -9,6 +9,7 @@ mkdir -p _site/assets/screenshots
 touch _site/.nojekyll
 cp website/index.html website/styles.css _site/
 cp store-assets/marquee_promo_tile.jpg _site/assets/
+cp favicon.ico favicon-32x32.png apple-touch-icon.png _site/assets/
 cp store-assets/en/chrome-1-github.png \
    store-assets/en/chrome-2-connection.png \
    store-assets/en/chrome-3-sync.png \
