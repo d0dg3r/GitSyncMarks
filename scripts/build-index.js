@@ -78,31 +78,44 @@ function buildAppContent() {
 
   let html = "";
 
+  // Tab-specific nav and badges
+  const screenshotsNav = hasScreenshots
+    ? '<a href="#app-screenshots">Screenshots</a>'
+    : "";
+  html += `
+    <nav class="quick-nav">
+      <a href="#app-features">Features</a>
+      <a href="#app-how-it-works">How it works</a>
+      <a href="#app-installation">Installation</a>
+      ${screenshotsNav}
+      <a href="docs/">Docs</a>
+    </nav>
+    <div class="badges app-store-badges">`;
+  if (fs.existsSync(path.join(APP_SRC, "images", "badges", "badge_fdroid.png"))) {
+    html += `
+      <a href="${fdroidUrl}" class="badge badge-app" target="_blank" rel="noopener noreferrer"><img src="assets/app/badges/badge_fdroid.png" alt="Get it on F-Droid" height="40"></a>`;
+  }
+  if (fs.existsSync(path.join(APP_SRC, "images", "badges", "badge_github.png"))) {
+    html += `
+      <a href="${releasesUrl}" class="badge badge-app" target="_blank" rel="noopener noreferrer"><img src="assets/app/badges/badge_github.png" alt="GitHub Releases" height="40"></a>`;
+  }
+  if (fs.existsSync(path.join(APP_SRC, "images", "badges", "badge_obtainium.png"))) {
+    html += `
+      <a href="${obtainiumUrl}" class="badge badge-app" target="_blank" rel="noopener noreferrer"><img src="assets/app/badges/badge_obtainium.png" alt="Obtainium" height="40"></a>`;
+  }
+  html += `
+    </div>`;
+
   // Intro
   html += `
     <section class="intro">
       <p class="lead">${escapeHtml(intro)}</p>
     </section>`;
 
-  // Badges (installation)
+  // Installation
   html += `
     <section class="installation" id="app-installation">
       <h2>Get the App</h2>
-      <div class="badges app-store-badges">`;
-  if (fs.existsSync(path.join(APP_SRC, "images", "badges", "badge_fdroid.png"))) {
-    html += `
-        <a href="${fdroidUrl}" class="badge badge-app" target="_blank" rel="noopener noreferrer"><img src="assets/app/badges/badge_fdroid.png" alt="Get it on F-Droid" height="40"></a>`;
-  }
-  if (fs.existsSync(path.join(APP_SRC, "images", "badges", "badge_github.png"))) {
-    html += `
-        <a href="${releasesUrl}" class="badge badge-app" target="_blank" rel="noopener noreferrer"><img src="assets/app/badges/badge_github.png" alt="GitHub Releases" height="40"></a>`;
-  }
-  if (fs.existsSync(path.join(APP_SRC, "images", "badges", "badge_obtainium.png"))) {
-    html += `
-        <a href="${obtainiumUrl}" class="badge badge-app" target="_blank" rel="noopener noreferrer"><img src="assets/app/badges/badge_obtainium.png" alt="Obtainium" height="40"></a>`;
-  }
-  html += `
-      </div>
       <p>Or download APK, Flatpak, or ZIP from <a href="${releasesUrl}" target="_blank" rel="noopener noreferrer">Releases</a>.</p>
     </section>`;
 
@@ -149,7 +162,7 @@ function buildAppContent() {
 
   // Configure
   html += `
-    <section class="how-it-works">
+    <section class="how-it-works" id="app-how-it-works">
       <h2>Configure the App</h2>
       <ol class="steps">
         <li>Open the app and go to <strong>Settings</strong></li>

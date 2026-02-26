@@ -149,10 +149,15 @@ body {
 
 .tab-content {
   display: none;
+  padding-top: 1.5rem;
 }
 
 .tab-content.active {
   display: block;
+}
+
+.tab-content > .quick-nav {
+  margin-top: 0;
 }
 
 main {
