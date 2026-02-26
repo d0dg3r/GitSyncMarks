@@ -96,7 +96,7 @@ qaa "How do multiple profiles work?" \
 
 qaa "Can I add bookmarks without the browser?" \
   "I want to add or edit bookmarks without opening the browser. Is that possible?" \
-  $'Yes. Use the [GitHub Action add-bookmark.yml](https://github.com/d0dg3r/GitSyncMarks/blob/main/.github/workflows/add-bookmark.yml) to add bookmarks via CLI or GitHub UI. You can also create/edit JSON files directly in the repo. See Options → Automation tab for details.'
+  $'Yes. Use the [GitHub Action add-bookmark.yml](https://github.com/d0dg3r/GitSyncMarks/blob/main/.github/workflows/add-bookmark.yml) to add bookmarks via CLI or GitHub UI. You can also create/edit JSON files directly in the repo. See Options → Files → Git Add for details.'
 
 # Show and Tell - Share your structure
 create "$SHOW" "Share your bookmark repo structure" $'> How do you organize your bookmarks? Share your folder structure, automation setup, or workflows. Example:

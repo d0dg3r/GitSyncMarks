@@ -197,13 +197,13 @@ Auto-generated on push when mode is Auto (default). Each bookmark becomes an `<i
 
 Auto-generated on push when mode is Auto. Produces YAML sections with bookmark links for the [Dashy](https://github.com/Lissy93/dashy) dashboard. Each bookmark folder becomes a section with items. Not used for sync — purely for Dashy integration.
 
-### `settings.enc` / `settings-{id}.enc` — Encrypted Settings
+### `profiles/<alias>/settings.enc` — Encrypted Settings
 
 Optional. When "Sync settings to Git" is enabled, the extension writes an encrypted copy of all settings (profiles, tokens, sync preferences) to the repo. Uses the same `gitsyncmarks-enc:v1` format as the manual encrypted export (PBKDF2 + AES-256-GCM). The password is stored locally per device in `chrome.storage.local` and never synced.
 
-Two modes are available:
-- **Global** (default): All devices share a single `settings.enc`. On pull/sync, the remote file is decrypted and applied (last-write-wins).
-- **Individual**: Each device writes to `settings-{deviceId8}.enc`. Remote settings from `settings.enc` are not applied. Other devices can list and import individual device configs via the UI.
+**Individual mode** (current): Each device writes to `profiles/<alias>/settings.enc` where `<alias>` is the slugified client name (e.g. `base-chrome`). Other devices can list and import individual device configs via the UI.
+
+**Legacy**: `settings.enc` or `settings-{id}.enc` at the base path are still supported and migrated to `profiles/` on first sync.
 
 Excluded from three-way merge (`DIFF_IGNORE_SUFFIXES` + `SETTINGS_ENC_PATTERN`).
 
@@ -216,8 +216,9 @@ bookmarks/
   bookmarks.html
   feed.xml
   dashy-conf.yml
-  settings.enc              (global mode)
-  settings-a1b2c3d4.enc    (individual mode, per device)
+  profiles/                 (when settings sync enabled)
+    base-chrome/
+      settings.enc          (per-device, client name = base-chrome)
   toolbar/
     _order.json
     github_a1b2.json
@@ -229,6 +230,8 @@ bookmarks/
     _order.json
     ...
 ```
+
+Legacy: `settings.enc` or `settings-*.enc` at the base path are still supported and migrated to `profiles/` on first sync.
 
 Root folders are mapped by role:
 | Role | Chrome | Firefox |

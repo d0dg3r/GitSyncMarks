@@ -210,7 +210,7 @@ Status line shows last sync time and next scheduled sync. When a conflict occurs
 In the **Files** tab (four sub-tabs):
 
 - **Generated**: Each file — **README.md** (Markdown overview), **bookmarks.html** (Netscape format for browser import), **feed.xml** (RSS 2.0 feed), and **dashy-conf.yml** (Dashy dashboard config) — can be set to **Off**, **Manual**, or **Auto**. Use "Generate now" to manually trigger generation and push
-- **Settings**: Sync extension settings to Git (encrypted). Settings are listed from the repository (named entries from `settings-index.json` + legacy `settings*.enc`). Select a setting, then run explicit actions: **Import & Apply**, **Sync current to selected**, or **Create new setting**. Password is requested only on these actions. Global imports ask for confirmation before applying, and global write-back is opt-in
+- **Settings**: Sync extension settings to Git (encrypted). Settings are stored in `profiles/<alias>/settings.enc` (one per device/client name). Legacy `settings.enc` or `settings-*.enc` at the base path are also supported. Select a setting from the list, then run **Import & Apply**, **Sync current to selected**, or **Create new setting**. Password is requested only on these actions (prompt appears in the same tab). **Reset all data** button clears all profiles and settings (browser bookmarks preserved)
 - **Export / Import**: Export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc). Import bookmarks or settings — encrypted files are decrypted with your password
 - **Git Add**: Add bookmarks without opening the browser — create a JSON file in the repo or use the GitHub Actions workflow (`add-bookmark.yml`)
 
@@ -225,8 +225,9 @@ bookmarks/
   bookmarks.html                  # Netscape format — import directly in Chrome, Firefox, Edge
   feed.xml                        # RSS 2.0 feed — subscribe in any reader or use for automations
   dashy-conf.yml                  # Dashy dashboard config — sections with bookmark links
-  settings.enc                    # Encrypted settings backup (if settings sync enabled)
-  settings-index.json             # Named settings registry metadata
+  profiles/                       # Encrypted settings (if settings sync enabled)
+    base-chrome/
+      settings.enc                # Per-device encrypted settings (client name = base-chrome)
   toolbar/                        # Bookmarks Bar
     _order.json                   # Defines order of items and subfolders in this folder
     github_a1b2.json              # One file per bookmark
@@ -247,7 +248,7 @@ Each bookmark is a simple JSON file:
 }
 ```
 
-The `README.md` in the repo is regenerated on each sync — it lists all bookmarks with links, so you can browse your bookmarks directly on GitHub. The `bookmarks.html` file uses the Netscape format and can be imported in any browser (Chrome: Bookmarks → Import; Firefox: Import and Backup → Import Bookmarks from file). The `feed.xml` file is an RSS 2.0 feed that can be subscribed to in any RSS reader (Feedly, Thunderbird, etc.) or used for automations (Slack, IFTTT, n8n). The `dashy-conf.yml` provides bookmark sections for the [Dashy](https://github.com/Lissy93/dashy) dashboard. Each file can be set to Off, Manual (generate via button), or Auto (on every sync) in Settings → Files → Generated.
+The `README.md` in the repo is regenerated on each sync — it lists all bookmarks with links, so you can browse your bookmarks directly on GitHub. The `bookmarks.html` file uses the Netscape format and can be imported in any browser (Chrome: Bookmarks → Import; Firefox: Import and Backup → Import Bookmarks from file). The `feed.xml` file is an RSS 2.0 feed that can be subscribed to in any RSS reader (Feedly, Thunderbird, etc.) or used for automations (Slack, IFTTT, n8n). The `dashy-conf.yml` provides bookmark sections for the [Dashy](https://github.com/Lissy93/dashy) dashboard. Each file can be set to Off, Manual (generate via button), or Auto (on every sync) in Options → Files → Generated.
 
 ## Automation (Git Add)
 

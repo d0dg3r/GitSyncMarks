@@ -1600,7 +1600,7 @@ debugLogExportBtn.addEventListener('click', async () => {
   setTimeout(() => { debugLogResult.textContent = ''; }, 3000);
 });
 
-// Automation tab: copy JSON or gh command to clipboard
+// Files → Git Add: copy JSON or gh command to clipboard
 const automationCopyJsonBtn = document.getElementById('automation-copy-json-btn');
 const automationCopyGhBtn = document.getElementById('automation-copy-gh-btn');
 const automationJsonBlock = document.getElementById('automation-json-block');

@@ -106,7 +106,7 @@ Q&A entries use **two steps**: (1) create the discussion with the **question** i
 **Can I add bookmarks without the browser?**
 
 - **Question:** "I want to add or edit bookmarks without opening the browser. Is that possible?"
-- **Answer:** Yes. Use the [GitHub Action add-bookmark.yml](https://github.com/d0dg3r/GitSyncMarks/blob/main/.github/workflows/add-bookmark.yml) to add bookmarks via CLI or GitHub UI. You can also create/edit JSON files directly in the repo. See Options → Files tab for details.
+- **Answer:** Yes. Use the [GitHub Action add-bookmark.yml](https://github.com/d0dg3r/GitSyncMarks/blob/main/.github/workflows/add-bookmark.yml) to add bookmarks via CLI or GitHub UI. You can also create/edit JSON files directly in the repo. See Options → Files → Git Add for details.
 
 ---
 
