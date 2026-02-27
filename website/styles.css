@@ -108,8 +108,29 @@ body {
   background: rgba(88, 166, 255, 0.1);
 }
 
-.install-alt {
+.install-alt-block {
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
   text-align: center;
+}
+
+.install-alt {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.install-alt-paths {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.install-alt-paths code {
+  font-size: 0.85em;
 }
 
 .wizard-hint {
