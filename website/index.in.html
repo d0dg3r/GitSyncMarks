@@ -157,46 +157,46 @@
   </main>
 
   <footer>
-    <nav class="footer-nav">
-      <div class="footer-project">
-        <span class="footer-project-label">Extension</span>
-        <div class="footer-group">
-          <a href="docs/">Docs</a>
-          <a href="https://github.com/d0dg3r/GitSyncMarks">GitHub</a>
-          <a href="https://github.com/d0dg3r/GitSyncMarks/releases">Releases</a>
-          <a href="https://github.com/d0dg3r/GitSyncMarks/discussions">Discussions</a>
-          <a href="https://github.com/d0dg3r/GitSyncMarks/discussions/37">Backlog Poll</a>
-          <a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/README.md">README</a>
-          <a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/CHANGELOG.md">Changelog</a>
-          <a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/ROADMAP.md">Roadmap</a>
-          <a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/LICENSE">License</a>
-        </div>
-      </div>
-      <div class="footer-project">
-        <span class="footer-project-label">App</span>
-        <div class="footer-group">
-          <a href="https://github.com/d0dg3r/GitSyncMarks-App">GitHub</a>
-          <a href="https://github.com/d0dg3r/GitSyncMarks-App/releases">Releases</a>
-          <a href="https://github.com/d0dg3r/GitSyncMarks-App/issues/new?template=beta-signup.md&labels=beta-signup">Beta signup</a>
-          <a href="https://github.com/d0dg3r/GitSyncMarks-App/blob/main/README.md">README</a>
-          <a href="https://github.com/d0dg3r/GitSyncMarks-App/blob/main/CHANGELOG.md">Changelog</a>
-          <a href="https://github.com/d0dg3r/GitSyncMarks-App/blob/main/ROADMAP.md">Roadmap</a>
-          <a href="https://github.com/d0dg3r/GitSyncMarks-App/blob/main/LICENSE">License</a>
-        </div>
+    <nav class="footer-nav footer-extension" id="footer-extension">
+      <div class="footer-group">
+        <a href="docs/">Docs</a>
+        <a href="https://github.com/d0dg3r/GitSyncMarks">GitHub</a>
+        <a href="https://github.com/d0dg3r/GitSyncMarks/releases">Releases</a>
+        <a href="https://github.com/d0dg3r/GitSyncMarks/discussions">Discussions</a>
+        <a href="https://github.com/d0dg3r/GitSyncMarks/discussions/37">Backlog Poll</a>
+        <a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/README.md">README</a>
+        <a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/CHANGELOG.md">Changelog</a>
+        <a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/ROADMAP.md">Roadmap</a>
+        <a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/LICENSE">License</a>
       </div>
     </nav>
-    <p class="copyright">GitSyncMarks (Extension) · GitSyncMarks-App · MIT License</p>
+    <nav class="footer-nav footer-app" id="footer-app" hidden>
+      <div class="footer-group">
+        <a href="https://github.com/d0dg3r/GitSyncMarks-App">GitHub</a>
+        <a href="https://github.com/d0dg3r/GitSyncMarks-App/releases">Releases</a>
+        <a href="https://github.com/d0dg3r/GitSyncMarks-App/issues/new?template=beta-signup.md&labels=beta-signup">Beta signup</a>
+        <a href="https://github.com/d0dg3r/GitSyncMarks-App/blob/main/README.md">README</a>
+        <a href="https://github.com/d0dg3r/GitSyncMarks-App/blob/main/CHANGELOG.md">Changelog</a>
+        <a href="https://github.com/d0dg3r/GitSyncMarks-App/blob/main/ROADMAP.md">Roadmap</a>
+        <a href="https://github.com/d0dg3r/GitSyncMarks-App/blob/main/LICENSE">License</a>
+      </div>
+    </nav>
+    <p class="copyright"><span id="copyright-extension">GitSyncMarks — MIT License · 12 languages · Manifest V3</span><span id="copyright-app" hidden>GitSyncMarks-App — MIT License · Android, iOS, Desktop</span></p>
   </footer>
 
   <script>
+    function setActiveTab(target) {
+      document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.querySelector('[data-tab="' + target + '"]').classList.add('active');
+      document.getElementById('tab-' + target).classList.add('active');
+      document.getElementById('footer-extension').hidden = target !== 'extension';
+      document.getElementById('footer-app').hidden = target !== 'app';
+      document.getElementById('copyright-extension').hidden = target !== 'extension';
+      document.getElementById('copyright-app').hidden = target !== 'app';
+    }
     document.querySelectorAll('.tab-btn').forEach(tab => {
-      tab.addEventListener('click', () => {
-        const target = tab.dataset.tab;
-        document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById('tab-' + target).classList.add('active');
-      });
+      tab.addEventListener('click', () => setActiveTab(tab.dataset.tab));
     });
   </script>
   <script type="module">

@@ -425,21 +425,6 @@ footer nav.footer-nav {
   margin-bottom: 1.5rem;
 }
 
-footer .footer-project {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-footer .footer-project-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
-}
-
 footer .footer-group {
   display: flex;
   flex-wrap: wrap;
