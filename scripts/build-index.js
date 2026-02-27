@@ -78,13 +78,7 @@ function buildAppContent() {
 
   let html = "";
 
-  // Intro (first)
-  html += `
-    <section class="intro">
-      <p class="lead">${escapeHtml(intro)}</p>
-    </section>`;
-
-  // Quick-nav (menu at this position)
+  // Quick-nav (menu first)
   const screenshotsNav = hasScreenshots
     ? '<a href="#app-screenshots">Screenshots</a>'
     : "";
