@@ -135,7 +135,9 @@ body {
 
 .wizard-hint {
   text-align: center;
-  margin: 1rem 0 0;
+  margin: 1.5rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
   font-size: 0.95rem;
   color: var(--text-muted);
 }
