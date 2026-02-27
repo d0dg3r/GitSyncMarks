@@ -65,7 +65,8 @@ body {
   gap: 0.5rem 1rem;
   justify-content: center;
   margin-bottom: 1.5rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .quick-nav a {
@@ -195,6 +196,7 @@ h3:first-child {
 
 .intro {
   margin-bottom: 2.5rem;
+  text-align: center;
 }
 
 .lead {
