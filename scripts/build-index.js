@@ -88,7 +88,6 @@ function buildAppContent() {
       <a href="#app-how-it-works">How it works</a>
       <a href="#app-installation">Installation</a>
       ${screenshotsNav}
-      <a href="docs/">Docs</a>
     </nav>
     <div class="badges app-store-badges">`;
   if (fs.existsSync(path.join(APP_SRC, "images", "badges", "badge_fdroid.png"))) {
