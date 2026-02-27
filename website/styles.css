@@ -133,6 +133,32 @@ body {
   font-size: 0.85em;
 }
 
+.torvalds-quote {
+  margin: 2rem 0;
+  padding: 1.25rem 1.5rem;
+  background: var(--bg-card);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  text-align: center;
+}
+
+.torvalds-quote p {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--text);
+}
+
+.torvalds-quote p:last-child {
+  margin-bottom: 0;
+}
+
+.quote-attribution {
+  font-size: 0.9rem;
+  font-style: normal;
+  color: var(--text-muted);
+}
+
 .wizard-hint {
   text-align: center;
   margin: 1.5rem 0 0;

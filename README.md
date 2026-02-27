@@ -19,6 +19,11 @@
   <strong>Why GitSyncMarks?</strong> Your bookmarks live in <em>your</em> Git repo. Per-file storage means every bookmark is a readable JSON file — you can edit, version, and browse them on GitHub. Use multiple profiles for work/personal, automate bookmarking via CLI or GitHub Actions, and keep everything in sync across devices.
 </p>
 
+<blockquote align="center">
+  <p>"With a distributed tool, no single place is vital to your data."</p>
+  <p>— Linus Torvalds (Git creator)</p>
+</blockquote>
+
 <table align="center">
 <tr>
 <td align="center"><img src="store-assets/en/chrome-1-github.png" width="220" alt="GitHub (Profile)" /><br><sub>1. GitHub</sub></td>
