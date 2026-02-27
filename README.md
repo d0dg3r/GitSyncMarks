@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="store-assets/marquee_promo_tile.jpg" width="960" alt="GitSyncMarks — Effortless Bookmark Sync via GitHub">
+  <img src="store-assets/marquee_promo_tile.png" width="960" alt="GitSyncMarks — Effortless Bookmark Sync via GitHub">
 </p>
 
 <p align="center">
