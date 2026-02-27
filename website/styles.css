@@ -115,6 +115,10 @@ body {
   background: rgba(108, 92, 231, 0.1);
 }
 
+.install-alt {
+  text-align: center;
+}
+
 /* Client tabs (Extension | App) */
 .client-tabs {
   display: flex;

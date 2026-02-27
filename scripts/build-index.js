@@ -84,10 +84,21 @@ function buildAppContent() {
       <p class="lead">${escapeHtml(intro)}</p>
     </section>`;
 
-  // Installation: Get the App heading, badges, ZIP text
+  // Quick-nav (menu at this position)
+  const screenshotsNav = hasScreenshots
+    ? '<a href="#app-screenshots">Screenshots</a>'
+    : "";
+  html += `
+    <nav class="quick-nav">
+      <a href="#app-features">Features</a>
+      <a href="#app-how-it-works">How it works</a>
+      <a href="#app-installation">Installation</a>
+      ${screenshotsNav}
+    </nav>`;
+
+  // Installation: badges, ZIP text (centered)
   html += `
     <section class="installation" id="app-installation">
-      <h2>Get the App</h2>
       <div class="badges app-store-badges">`;
   if (fs.existsSync(path.join(APP_SRC, "images", "badges", "badge_fdroid.png"))) {
     html += `
@@ -103,20 +114,8 @@ function buildAppContent() {
   }
   html += `
       </div>
-      <p>Or download APK, Flatpak, or ZIP from <a href="${releasesUrl}" target="_blank" rel="noopener noreferrer">Releases</a>.</p>
+      <p class="install-alt">Or download APK, Flatpak, or ZIP from <a href="${releasesUrl}" target="_blank" rel="noopener noreferrer">Releases</a>.</p>
     </section>`;
-
-  // Quick-nav (after installation)
-  const screenshotsNav = hasScreenshots
-    ? '<a href="#app-screenshots">Screenshots</a>'
-    : "";
-  html += `
-    <nav class="quick-nav">
-      <a href="#app-features">Features</a>
-      <a href="#app-how-it-works">How it works</a>
-      <a href="#app-installation">Installation</a>
-      ${screenshotsNav}
-    </nav>`;
 
   // Features
   html += `
