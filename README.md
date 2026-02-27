@@ -16,7 +16,15 @@
 </p>
 
 <p align="center">
-  <strong>Why GitSyncMarks?</strong> Your bookmarks live in <em>your</em> Git repo. Per-file storage means every bookmark is a readable JSON file — you can edit, version, and browse them on GitHub. Use multiple profiles for work/personal, automate bookmarking via CLI or GitHub Actions, and keep everything in sync across devices.
+  <strong>Why GitSyncMarks?</strong>
+</p>
+
+<p align="center">
+  Your bookmarks live in <em>your</em> Git repo. Per-file storage means every bookmark is a readable JSON file — you can edit, version, and browse them on GitHub.
+</p>
+
+<p align="center">
+  Use multiple profiles for work/personal, automate bookmarking via CLI or GitHub Actions, and keep everything in sync across devices.
 </p>
 
 <blockquote align="center">
@@ -50,7 +58,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 
 ## Features
 
-### Core — Why GitSyncMarks
+### Core — GitSyncMarks
 
 - **No middleman**: Communicates directly with the GitHub API — no third-party server, no backend, your data stays between your browser and your GitHub repo
 - **Per-file storage**: Each bookmark is stored as an individual JSON file in your Git repo — human-readable and diff-friendly
