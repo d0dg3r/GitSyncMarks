@@ -59,6 +59,20 @@ body {
   margin-right: auto;
 }
 
+.hero-open-source {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.hero-open-source a {
+  color: var(--success);
+}
+
+.hero-open-source a:hover {
+  color: #56d364;
+}
+
 .quick-nav {
   display: flex;
   flex-wrap: wrap;
@@ -116,8 +130,37 @@ body {
   background: rgba(108, 92, 231, 0.1);
 }
 
+.badge-open-source:hover {
+  border-color: var(--success);
+  background: rgba(63, 185, 80, 0.1);
+}
+
+.badge-beta:hover {
+  border-color: var(--accent);
+  background: rgba(88, 166, 255, 0.1);
+}
+
 .install-alt {
   text-align: center;
+}
+
+.beta-cta {
+  text-align: center;
+  margin: 1.25rem 0 0;
+  padding: 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.beta-cta strong {
+  color: var(--text);
+}
+
+.beta-cta a {
+  font-weight: 500;
 }
 
 /* Client tabs (Extension | App) */
