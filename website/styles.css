@@ -112,6 +112,19 @@ body {
   text-align: center;
 }
 
+.wizard-hint {
+  text-align: center;
+  margin: 1rem 0 0;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.wizard-intro {
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
 .beta-cta {
   text-align: center;
   margin: 0.75rem 0 0;
