@@ -25,12 +25,13 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 | 2.3.0 | **Data** | Star Trek — logical, reliable, all about data; fits auto-save and efficient sync |
 | 2.4.0 | **R2-D2** | Star Wars — the helper droid that does everything; fits settings sync to Git, RSS feed, generated files, tab reorganization with sub-tabs |
 | 2.5.0 | **Cortana** | Halo — AI assistant; fits context menu, favicon tools, 8 new languages, folder browser |
+| 2.6.0 | **Link** | Zelda — wordplay with Linkwarden; hero who saves and collects |
 | 3.0 | **GLaDOS** | Portal — AI, cult, iconic; fits AI features; the irony of "murderous" AI as bookmark keeper is fun |
 
 **Naming logic:**
 - One codename per MINOR release (2.x.0); PATCH releases (2.3.1) keep the same codename
 - Each from a different franchise (Trek → Wars → Gaming) for variety
-- Name should fit the release theme: Data = data/sync, R2 = helper/tools, GLaDOS = AI
+- Name should fit the release theme: Data = data/sync, R2 = helper/tools, Link = Linkwarden, GLaDOS = AI
 - Format: **R2-D2** with hyphen (not R2D2)
 - Future candidates: Spock, Neo, Bender, Morpheus, TARS, HAL
 
@@ -38,6 +39,7 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 
 | Version | Codename | Description |
 |---|---|---|
+| `2.6.0` | *Link* | *(Planned)* Linkwarden integration — context menu Save to Linkwarden, options tab, tags, screenshots |
 | `2.5.1` | *Cortana* | Fix: password dialog for Settings sync actions (Import & Apply, etc.) now appears in Settings sub-tab instead of Export/Import |
 | `2.5.0` | *Cortana* | Context menu (Add to Toolbar/Other, Sync Now, Switch Profile, Copy Favicon URL, Download Favicon); profile switching via context menu; favicon tools; 8 new languages (PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL — 12 total); dynamic keyboard shortcuts; factory reset; folder browser; CI screenshot workflow; feature lists reordered; "No middleman" replaces "No server needed"; 9 store screenshots per language |
 | `2.4.0` | *R2-D2* | Settings sync to Git (encrypted `settings.enc` in repo); RSS feed export (`feed.xml`); dashy-conf.yml; generated files mode selector (Off/Manual/Auto per file with "Generate now" button); backlog voting awareness; Debug Log moved to Sync tab; options reorganized to 5 tabs with sub-tabs (GitHub/Sync/Files/Help/About); 6 store screenshots per language |

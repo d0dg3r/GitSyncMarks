@@ -1,6 +1,6 @@
 # Linkwarden Integration – Specification
 
-**Status:** Planned for v2.6.0  
+**Status:** Planned for v2.6.0 (*Link*)  
 **Reference:** [Linkwarden Browser Extension](https://github.com/linkwarden/browser-extension)  
 **Created:** February 2026
 

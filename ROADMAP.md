@@ -6,7 +6,7 @@ Contributions and ideas welcome — open an issue or pull request.
 
 ---
 
-## Planned for v2.6.0 — Linkwarden Integration
+## Planned for v2.6.0 (*Link*) — Linkwarden Integration
 
 - **Linkwarden context menu** — Save current page or right-clicked link directly to Linkwarden; "Save with screenshot" captures visible viewport and uploads to link archive
 - **Options tab: Linkwarden** — Instance URL, API key, default collection, default tags; test connection; enable/disable
