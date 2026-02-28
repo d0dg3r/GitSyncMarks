@@ -204,6 +204,59 @@ const blob = await (await fetch(dataUrl)).blob();
 
 ---
 
+## Phase 2 / Future: Sync Linkwarden ↔ Bookmarks
+
+Sync selected Linkwarden collections or tags into dedicated bookmark folders. Two modes possible:
+
+### Option A: One-Way Sync (Linkwarden → Bookmarks, Read-Only)
+
+| Aspect | Description |
+|--------|-------------|
+| **Direction** | Linkwarden → browser bookmarks only |
+| **Folders** | Dedicated folders (e.g. root "Linkwarden" with subfolders per collection or tag) |
+| **Read-only** | Bookmarks are read-only; changes in the browser (delete, move) do **not** sync back to Linkwarden |
+| **Mapping** | User selects: collections and/or tags → target bookmark folder(s) |
+| **Sync trigger** | Periodic (alarm) or manual "Sync from Linkwarden" button |
+| **Effort** | Medium — fetch links via API, create/update bookmarks, no conflict resolution |
+
+**Pros:** Simple, no conflicts, Linkwarden remains source of truth.  
+**Cons:** Browser changes are local only; Linkwarden stays unchanged.
+
+### Option B: Two-Way Sync (Linkwarden ↔ Bookmarks)
+
+| Aspect | Description |
+|--------|-------------|
+| **Direction** | Bidirectional — changes in either place sync to the other |
+| **Folders** | Dedicated folders; each folder maps to a Linkwarden collection |
+| **Browser → Linkwarden** | Add bookmark → create link; delete → delete link; move → update collection |
+| **Linkwarden → Browser** | Add/delete/update in Linkwarden → reflect in bookmark folder |
+| **Conflict resolution** | Required — e.g. last-write-wins, or merge strategy similar to GitHub sync |
+| **Effort** | Large — full CRUD mapping, conflict handling, different data models |
+
+**Linkwarden API for two-way:** `POST /api/v1/links`, `PUT /api/v1/links/:id`, `DELETE /api/v1/links/:id`, `GET /api/v1/links` (filter by collection/tags).
+
+**Challenges:**
+- **Data model mismatch:** Bookmarks = folder hierarchy + URL + title; Linkwarden = collections + tags + URL + name + description
+- **Identity:** Match items by URL; handle same URL in multiple collections
+- **Merge logic:** Similar to three-way merge in sync-engine, but with Linkwarden API semantics
+
+### Recommended Phasing
+
+1. **Phase 1 (v2.6.0):** Save to Linkwarden only (context menu, options, tags, screenshots)
+2. **Phase 2:** One-way sync (Linkwarden → bookmarks, read-only) — dedicated folders, periodic or manual sync
+3. **Phase 3 (optional):** Two-way sync — if user demand and effort justified
+
+### Storage / Options for Sync (Phase 2+)
+
+| Key | Type | Description |
+|-----|------|-------------|
+| `linkwardenSyncEnabled` | boolean | Enable sync from Linkwarden to bookmarks |
+| `linkwardenSyncMappings` | array | `[{ collectionId?, tagIds?, targetFolderId }]` — which collections/tags → which bookmark folder |
+| `linkwardenSyncReadOnly` | boolean | If true: browser changes never push to Linkwarden (Option A) |
+| `linkwardenSyncInterval` | number | Minutes between auto-sync (0 = manual only) |
+
+---
+
 ## Out of Scope (MVP)
 
 - Save all tabs to Linkwarden

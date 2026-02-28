@@ -13,7 +13,7 @@ Contributions and ideas welcome — open an issue or pull request.
 - **Tags** — Default tags from options; optional per-save tag editing (if dialog added)
 - **Screenshots** — `chrome.tabs.captureVisibleTab()` + `POST /api/v1/archives/:linkId` (PNG upload)
 
-See [docs/IDEAS-LINKWARDEN.md](docs/IDEAS-LINKWARDEN.md) for full specification (what, how, where). Feature parity with [official Linkwarden extension](https://github.com/linkwarden/browser-extension) (options, tags, screenshots).
+See [docs/IDEAS-LINKWARDEN.md](docs/IDEAS-LINKWARDEN.md) for full specification (what, how, where). Feature parity with [official Linkwarden extension](https://github.com/linkwarden/browser-extension) (options, tags, screenshots). **Phase 2 (future):** One-way sync Linkwarden → bookmarks (read-only, dedicated folders); **Phase 3 (optional):** Two-way sync.
 
 ---
 
