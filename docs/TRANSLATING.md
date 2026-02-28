@@ -60,7 +60,7 @@ This is the easiest way to help. You can do everything in your browser on GitHub
 ### Step by step
 
 1. Go to the GitSyncMarks repository: `https://github.com/d0dg3r/GitSyncMarks`
-2. Navigate to `_locales/{code}/messages.json` (e.g., `_locales/de/messages.json` for German)
+2. Navigate to `_locales/{code}/messages.json` (e.g. `_locales/de/messages.json` for German)
 3. Click the **pencil icon** (Edit this file) in the top-right corner of the file view
 4. Find the string you want to improve and change its `"message"` value
 5. Scroll down and click **"Propose changes"**
@@ -75,7 +75,7 @@ If you see a wrong translation in the extension but don't know which key it is:
 
 1. Open `_locales/en/messages.json` (the English reference file)
 2. Search for the English text you see in the UI (use Ctrl+F / Cmd+F)
-3. Note the key name (e.g., `popup_syncNow`)
+3. Note the key name (e.g. `popup_syncNow`)
 4. Open your language's file and search for the same key
 5. Fix the `"message"` value
 
@@ -88,12 +88,12 @@ Adding a completely new language takes more effort (328 strings to translate), b
 ### Step by step
 
 1. **Fork the repository**: Click "Fork" on the GitSyncMarks GitHub page. This creates your own copy.
-2. **Create a new folder**: In your fork, navigate to `_locales/` and create a new folder with your language code (e.g., `hi` for Hindi, `nl` for Dutch). Use [Chrome's supported locale codes](https://developer.chrome.com/docs/extensions/reference/api/i18n#locales).
+2. **Create a new folder**: In your fork, navigate to `_locales/` and create a new folder with your language code (e.g. `hi` for Hindi, `nl` for Dutch). Use [Chrome's supported locale codes](https://developer.chrome.com/docs/extensions/reference/api/i18n#locales).
 3. **Copy the English file**: Copy the contents of `_locales/en/messages.json` into a new file `messages.json` inside your new folder.
 4. **Translate all 328 `"message"` values**: Work through the file and translate each message. Leave keys, placeholders, and HTML tags untouched.
 5. **Create a pull request**: When done, submit a PR from your fork to the main repository.
 6. **In the PR description**, please include:
-   - The language name in its native script (e.g., "हिन्दी" for Hindi)
+   - The language name in its native script (e.g. "हिन्दी" for Hindi)
    - Whether it is a complete or partial translation
 
 A maintainer will register the new language in the codebase (one small code change in `lib/i18n.js`) so it appears in the settings dropdown. You do not need to do this yourself.
@@ -108,7 +108,7 @@ A maintainer will register the new language in the codebase (one small code chan
 
 ## Tips for Good Translations
 
-- **Be consistent**: Use the same word for the same concept throughout (e.g., always "Lesezeichen" in German, not sometimes "Bookmarks")
+- **Be consistent**: Use the same word for the same concept throughout (e.g. always "Lesezeichen" in German, not sometimes "Bookmarks")
 - **Match the tone**: The UI is informal and direct. Short sentences, no unnecessary formality.
 - **Test context**: The key prefix tells you where the string appears:
   - `popup_` — the small popup when clicking the extension icon
