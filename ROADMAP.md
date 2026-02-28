@@ -6,9 +6,14 @@ Contributions and ideas welcome — open an issue or pull request.
 
 ---
 
-## Planned for v2.5.0
+## Planned for v2.6.0 — Linkwarden Integration
 
-*(All features implemented — preparing release)*
+- **Linkwarden context menu** — Save current page or right-clicked link directly to Linkwarden; "Save with screenshot" captures visible viewport and uploads to link archive
+- **Options tab: Linkwarden** — Instance URL, API key, default collection, default tags; test connection; enable/disable
+- **Tags** — Default tags from options; optional per-save tag editing (if dialog added)
+- **Screenshots** — `chrome.tabs.captureVisibleTab()` + `POST /api/v1/archives/:linkId` (PNG upload)
+
+See [docs/IDEAS-LINKWARDEN.md](docs/IDEAS-LINKWARDEN.md) for full specification (what, how, where). Feature parity with [official Linkwarden extension](https://github.com/linkwarden/browser-extension) (options, tags, screenshots).
 
 ---
 
