@@ -1,0 +1,20 @@
+---
+description: Documentation written from developer perspective — technical, factual, not instructional
+globs: docs/**/*.md, *.md
+alwaysApply: true
+---
+
+# Documentation Style
+
+Write all documentation from the perspective of a developer writing for developers. Technical and factual.
+
+**Do:**
+- Use neutral, technical language
+- State what exists, how it works, where it lives
+- Use imperative or passive voice
+- Reference files, APIs, and components directly
+
+**Avoid:**
+- Instructional tone ("you should", "we will implement")
+- AI-writing-for-user style
+- Explaining how to work; document what is and how it behaves
