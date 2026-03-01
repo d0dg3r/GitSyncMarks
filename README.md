@@ -85,7 +85,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 ### Files & Export
 
 - **Generated files**: README.md (Markdown overview), bookmarks.html (Netscape import), feed.xml (RSS 2.0), dashy-conf.yml (Dashy dashboard) — each configurable as Off, Manual, or Auto
-- **Settings sync to Git**: Encrypted backup of extension settings in the repo — user-first workflow with named repo settings, explicit actions (`Import & Apply`, `Sync current to selected`, `Create new setting`), and password prompts only when an action is executed. Global write-back to `settings.enc` stays read-only by default unless explicitly enabled per client
+- **Settings sync to Git**: Encrypted backup of extension settings in the repo — user-first workflow with named repo settings; client name + Create in one row; Refresh, profile list, Import & Apply, Sync current to selected in one row; buttons disabled until client name is set; password prompts only when an action is executed; password saved automatically after successful Import/Sync/Create. Global write-back to `settings.enc` stays read-only by default unless explicitly enabled per client
 - **Import/Export**: Export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc); import bookmarks or settings with automatic format detection
 
 ### UX & Extras
@@ -161,7 +161,7 @@ It walks you through:
    - create initial folder structure when the path is empty, or
    - pull existing bookmarks when the repository already has data
 
-You can restart the wizard any time from the GitHub Connection card with **Start setup wizard**.
+You can restart the wizard any time from the GitHub Connection card or from Help → Getting Started with **Start setup wizard**.
 
 ### First sync
 
@@ -231,7 +231,7 @@ Status line shows last sync time and next scheduled sync. When a conflict occurs
 In the **Files** tab (four sub-tabs):
 
 - **Generated**: Each file — **README.md** (Markdown overview), **bookmarks.html** (Netscape format for browser import), **feed.xml** (RSS 2.0 feed), and **dashy-conf.yml** (Dashy dashboard config) — can be set to **Off**, **Manual**, or **Auto**. Use "Generate now" to manually trigger generation and push
-- **Settings**: Sync extension settings to Git (encrypted). Settings are stored in `profiles/<alias>/settings.enc` (one per device/client name). Legacy `settings.enc` or `settings-*.enc` at the base path are also supported. Select a setting from the list, then run **Import & Apply**, **Sync current to selected**, or **Create new setting**. Password is requested only on these actions (prompt appears in the same tab). **Reset all data** button clears all profiles and settings (browser bookmarks preserved)
+- **Settings**: Sync extension settings to Git (encrypted). Settings are stored in `profiles/<alias>/settings.enc` (one per device/client name). Legacy `settings.enc` or `settings-*.enc` at the base path are also supported. Enter a client name (required); Create my client setting sits next to it. Under "Available settings in repository": Refresh, select a profile, then **Import & Apply** or **Sync current to selected**. Buttons are disabled until a client name is set. Password is requested only on these actions; after a successful Import/Sync/Create, that password is saved as the encryption password. **Reset all data** button clears all profiles and settings (browser bookmarks preserved)
 - **Export / Import**: Export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc). Import bookmarks or settings — encrypted files are decrypted with your password
 - **Git Add**: Add bookmarks without opening the browser — create a JSON file in the repo or use the GitHub Actions workflow (`add-bookmark.yml`)
 
@@ -374,7 +374,7 @@ In the **Help** tab of the options page:
 
 - **Vote on backlog**: Quick access to the community poll for feature prioritization
 - **Quick links**: Documentation, Discussions, Report Issue
-- **Collapsible sections**: Getting Started, Why does sync take long?, Profiles, GitHub Repos Folder, Popup, Sync (incl. Debug Log), Files (incl. Settings sync, Export/Import), Notifications, Conflicts, Keyboard Shortcuts, Theme & Auto-save
+- **Collapsible sections**: Getting Started (with Start setup wizard button), Why does sync take long?, Profiles, GitHub Repos Folder, Popup, Sync (incl. Debug Log), Files (incl. Settings sync, Export/Import), Notifications, Conflicts, Keyboard Shortcuts, Theme & Auto-save
 
 ## Documentation & Links
 

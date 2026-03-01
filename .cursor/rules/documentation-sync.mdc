@@ -5,14 +5,14 @@ alwaysApply: true
 
 # Documentation Sync
 
-Update documentation when code changes, **before any release**, or when docs appear out of sync.
+**Always update documentation as part of every code change.** Do not wait for the user to ask. Fixes, features, and UI changes must be documented in the same step as the implementation.
 
 ## When to Update
 
+- **Every change** — document fixes, features, and UI changes immediately
 - Before release (tag, version bump)
 - When adding/removing features, lib modules, UI tabs, or wizard steps
 - When changing sync logic, permissions, or manifest
-- **When fixing bugs or implementing changes** — keep docs in sync with code so everything stays current
 - When you notice docs drifting from code
 
 ## Checklist by Change Type

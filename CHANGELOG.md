@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Website layout**: Extension and App tabs unified — intro removed; menu first; badges and ZIP/APK text below; layout matches across both tabs
 - **Website navigation**: Docs link removed from quick-nav (still in footer); download buttons no longer duplicated in extension tab
 - **README**: "Load from source" section added — load unpacked from `build/chrome/` (not project root) because Chrome rejects directories containing `_site/`
+- **Settings sync UI**: Import & Apply, Sync current to selected, and Create my client setting buttons are disabled until a client name is set; password entered for Import/Sync/Create is automatically saved as the encryption password; layout: Client name + Create in one row, Refresh + Dropdown + Import + Sync in one row under "Available settings in repository"
+- **Help tab**: "Start setup wizard" button added to Getting Started section — launches the onboarding wizard from Help
 
 ## [2.5.1] - 2026-02-25 (*Cortana*)
 

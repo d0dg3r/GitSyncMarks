@@ -463,20 +463,18 @@
             <div id="settings-sync-import-group" style="display: none; margin-top: 1rem;">
               <div class="form-group">
                 <label for="settings-sync-client-name" data-i18n="options_settingsSyncClientNameLabel">Client name</label>
-                <input type="text" id="settings-sync-client-name" data-i18n-placeholder="options_settingsSyncClientNamePlaceholder" placeholder="my-laptop">
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                  <input type="text" id="settings-sync-client-name" data-i18n-placeholder="options_settingsSyncClientNamePlaceholder" placeholder="my-laptop" style="flex: 1;">
+                  <button id="settings-sync-create-btn" class="btn btn-secondary" data-i18n="options_settingsSyncCreateOwnBtn" disabled>Create my client setting</button>
+                </div>
                 <small data-i18n="options_settingsSyncClientNameHint">Required. This name identifies your client settings profile in the repository.</small>
               </div>
               <label data-i18n="options_settingsRegistryTitle">Available settings in repository</label>
-              <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.4rem;">
+              <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.4rem; flex-wrap: wrap;">
                 <button id="settings-sync-load-btn" class="btn btn-secondary" data-i18n="options_settingsRegistryRefreshBtn">Refresh</button>
-                <select id="settings-sync-device-list" style="flex: 1;" disabled></select>
-              </div>
-              <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.6rem;">
+                <select id="settings-sync-device-list" style="flex: 1; min-width: 8rem;" disabled></select>
                 <button id="settings-sync-import-btn" class="btn btn-secondary" data-i18n="options_settingsRegistryImportApplyBtn" disabled>Import &amp; Apply</button>
                 <button id="settings-sync-push-selected-btn" class="btn btn-secondary" data-i18n="options_settingsRegistrySyncSelectedBtn" disabled>Sync current to selected</button>
-              </div>
-              <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.6rem;">
-                <button id="settings-sync-create-btn" class="btn btn-secondary" data-i18n="options_settingsSyncCreateOwnBtn">Create my client setting</button>
               </div>
               <span id="settings-sync-import-result" class="validation-result"></span>
             </div>
@@ -620,6 +618,7 @@
         <div class="help-details-body">
           <p data-i18n-html="help_gettingStartedIntro">Create a GitHub repository for your bookmarks, then create a Personal Access Token (PAT) with the <code>repo</code> scope. In the GitHub tab, enter token, repository owner, name, branch (usually <code>main</code>), and the folder path (default: <code>bookmarks</code>). Click <strong>Test Connection</strong> to verify.</p>
           <p data-i18n="help_onboarding">If the folder is empty, you can create the base structure (toolbar, other). If bookmarks already exist in the repo, you can pull them into this browser.</p>
+          <p><button type="button" id="help-wizard-btn" class="btn btn-secondary" data-i18n="options_onboardingWizardStart">Start setup wizard</button></p>
         </div>
       </details>
 

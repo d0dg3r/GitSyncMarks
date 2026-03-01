@@ -855,7 +855,7 @@
     "message": "Settings File"
   },
   "help_settingsSyncDesc": {
-    "message": "When enabled, extension settings (profiles, tokens, preferences) are encrypted and stored in the repo. Choose Global (shared settings.enc for all devices) or Individual (device-specific settings-{id}.enc). In individual mode you can import settings from other devices. The password is stored locally per device and must be the same on all devices sharing the repo."
+    "message": "When enabled, extension settings (profiles, tokens, preferences) are encrypted and stored in the repo as profiles/<alias>/settings.enc. Enter a client name first; Import, Sync, and Create buttons are disabled until set. After a successful Import, Sync, or Create, the password is saved automatically. Password must be the same on all devices sharing the repo."
   },
   "help_notificationsTitle": {
     "message": "Notifications"
