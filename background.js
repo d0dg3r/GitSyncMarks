@@ -55,7 +55,7 @@ async function showNotificationIfEnabled(result) {
     const title = result.success ? getMessage('notification_titleSuccess') : getMessage('notification_titleFailure');
     await chrome.notifications.create(NOTIFICATION_ID, {
       type: 'basic',
-      iconUrl: chrome.runtime.getURL('icons/icon128.png'),
+      iconUrl: chrome.runtime.getURL('icons/icon128-plain.png'),
       title,
       message: result.message || '',
     });

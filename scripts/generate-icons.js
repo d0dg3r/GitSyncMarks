@@ -114,15 +114,27 @@ async function main() {
 
   const logo = sharp(LOGO_SOURCE);
 
-  // Extension icons (browser toolbar) — blue border/frame only, logo stays visible
+  // Extension toolbar icons (browser action) — green border, separate from app UI
   for (const size of [16, 48, 128]) {
     await createIconWithBorder(
       logo,
       size,
       path.join(ROOT, "icons", `icon${size}.png`)
     );
-    console.log(`  icons/icon${size}.png`);
+    console.log(`  icons/icon${size}.png (toolbar)`);
   }
+
+  // App UI icons (popup, options) — plain logo, no border
+  await logo
+    .clone()
+    .resize(48, 48)
+    .toFile(path.join(ROOT, "icons", "icon48-plain.png"));
+  console.log("  icons/icon48-plain.png (app)");
+  await logo
+    .clone()
+    .resize(128, 128)
+    .toFile(path.join(ROOT, "icons", "icon128-plain.png"));
+  console.log("  icons/icon128-plain.png (app)");
 
   // Store icon — plain logo (no border)
   await logo
