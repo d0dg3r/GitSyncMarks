@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Extension icon**: Toolbar icon now has a thin green border (#3fb950) — better visibility in the toolbar without obscuring the logo
 - **Website layout**: Extension and App tabs unified — intro removed; menu first; badges and ZIP/APK text below; layout matches across both tabs
 - **Website navigation**: Docs link removed from quick-nav (still in footer); download buttons no longer duplicated in extension tab
 - **README**: "Load from source" section added — load unpacked from `build/chrome/` (not project root) because Chrome rejects directories containing `_site/`

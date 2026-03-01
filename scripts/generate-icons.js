@@ -14,8 +14,72 @@ const ROOT = path.resolve(__dirname, "..");
 const LOGO_SOURCE =
   process.argv[2] || path.join(ROOT, "assets", "logo-source.png");
 
+// Border color for toolbar icon frame (#3fb950 GitSyncMarks green)
+const ICON_BORDER = { r: 63, g: 185, b: 80 };
+
 async function ensureDir(dir) {
   await fs.promises.mkdir(dir, { recursive: true });
+}
+
+/**
+ * Create extension icon with a colored border/frame only (no fill).
+ * Logo centered with equal padding to all edges.
+ */
+async function createIconWithBorder(logo, size, outputPath) {
+  const borderWidth = Math.max(1, Math.round(size * 0.04));
+  const innerSize = size - 2 * borderWidth;
+  // Logo smaller than inner area, centered for equal spacing on all sides
+  const logoSize = Math.max(8, Math.round(innerSize * 0.85));
+  const offset = Math.round((innerSize - logoSize) / 2);
+  const left = borderWidth + offset;
+  const top = borderWidth + offset;
+
+  const logoBuf = await logo
+    .clone()
+    .resize(logoSize, logoSize)
+    .toBuffer();
+
+  // Transparent background with logo centered
+  const base = await sharp({
+    create: {
+      width: size,
+      height: size,
+      channels: 4,
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
+    },
+  })
+    .composite([{ input: logoBuf, left, top }])
+    .png()
+    .toBuffer();
+
+  // Draw border: overlay colored rects on the four edges
+  const borderRects = [
+    { left: 0, top: 0, width: size, height: borderWidth },
+    { left: 0, top: size - borderWidth, width: size, height: borderWidth },
+    { left: 0, top: 0, width: borderWidth, height: size },
+    { left: size - borderWidth, top: 0, width: borderWidth, height: size },
+  ];
+
+  const composites = await Promise.all(
+    borderRects.map(async (rect) => {
+      const rectBuf = await sharp({
+        create: {
+          width: rect.width,
+          height: rect.height,
+          channels: 4,
+          background: { ...ICON_BORDER, alpha: 1 },
+        },
+      })
+        .png()
+        .toBuffer();
+      return { input: rectBuf, left: rect.left, top: rect.top };
+    })
+  );
+
+  await sharp(base)
+    .composite(composites)
+    .png()
+    .toFile(outputPath);
 }
 
 async function createPromoTile(inputPath, outputPath, width, height) {
@@ -50,16 +114,17 @@ async function main() {
 
   const logo = sharp(LOGO_SOURCE);
 
-  // Extension icons
+  // Extension icons (browser toolbar) — blue border/frame only, logo stays visible
   for (const size of [16, 48, 128]) {
-    await logo
-      .clone()
-      .resize(size, size)
-      .toFile(path.join(ROOT, "icons", `icon${size}.png`));
+    await createIconWithBorder(
+      logo,
+      size,
+      path.join(ROOT, "icons", `icon${size}.png`)
+    );
     console.log(`  icons/icon${size}.png`);
   }
 
-  // Store icon
+  // Store icon — plain logo (no border)
   await logo
     .clone()
     .resize(128, 128)
