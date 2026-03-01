@@ -12,6 +12,7 @@ Update documentation when code changes, **before any release**, or when docs app
 - Before release (tag, version bump)
 - When adding/removing features, lib modules, UI tabs, or wizard steps
 - When changing sync logic, permissions, or manifest
+- **When fixing bugs or implementing changes** — keep docs in sync with code so everything stays current
 - When you notice docs drifting from code
 
 ## Checklist by Change Type
@@ -21,7 +22,8 @@ Update documentation when code changes, **before any release**, or when docs app
 | **New feature / UI** | README features, `store-assets/chrome-en.md`, `firefox-en.md`, Help tab in `options.html`, `_locales/en/messages.json` (`help_*` keys) |
 | **New options tab / wizard step** | `scripts/generate-screenshots.js` (OPTIONS_TABS, WIZARD_STEPS_FOR_SCREENSHOTS), `store-assets/chrome-meta.md` checklist |
 | **New lib module** | `docs/ARCHITECTURE.md` (component list, file structure) |
-| **Sync / API** | `docs/ARCHITECTURE.md`, `docs/SYNC-LOGIC.md`, `docs/DATA-FLOW.md` |
+| **Sync / API / generated files** | `docs/ARCHITECTURE.md`, `docs/SYNC-LOGIC.md`, `docs/DATA-FLOW.md` |
+| **Bug fix / behavior change** | `CHANGELOG.md`, relevant docs (DATA-FLOW, README, etc.) |
 | **New permission** | `store-assets/chrome-meta.md`, `store-assets/firefox-meta.md` (Permission Justifications) |
 | **Release** | `CHANGELOG.md`, `docs/RELEASE.md` version history; run `npm run screenshots` if UI changed |
 
@@ -40,3 +42,7 @@ Update documentation when code changes, **before any release**, or when docs app
 ## Release Pre-Check
 
 Review and update all docs above; regenerate screenshots if UI changed; update CHANGELOG and version history.
+
+## Version Assignment
+
+When unsure which version a change belongs to: check `git tag -l` and `git describe` — released tags (e.g. `v2.5.1`) are fixed; changes in the current branch belong to the next version (e.g. `develop/2.5.2` → 2.5.2).

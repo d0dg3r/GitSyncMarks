@@ -120,6 +120,14 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 
 > **Note:** For Firefox, "Load Temporary Add-on" loads the extension until you restart the browser. For a permanent install, use the [Firefox Add-on](https://addons.mozilla.org/en-US/firefox/addon/gitsyncmarks/) store.
 
+### Load from source (local development)
+
+1. Run `npm run build`
+2. Open `chrome://extensions/`, enable **Developer mode**
+3. Click **Load unpacked** and select the **`build/chrome/`** folder (not the project root)
+
+> **Note:** Chrome rejects extensions in directories that contain folders starting with `_` (e.g. `_site/`). Always load from `build/chrome/`, never from the project root.
+
 ### Create a GitHub Personal Access Token
 
 1. Go to [GitHub Settings > Tokens](https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks+Sync)
@@ -261,7 +269,7 @@ Each bookmark is a simple JSON file:
 }
 ```
 
-The `README.md` in the repo is regenerated on each sync — it lists all bookmarks with links, so you can browse your bookmarks directly on GitHub. The `bookmarks.html` file uses the Netscape format and can be imported in any browser (Chrome: Bookmarks → Import; Firefox: Import and Backup → Import Bookmarks from file). The `feed.xml` file is an RSS 2.0 feed that can be subscribed to in any RSS reader (Feedly, Thunderbird, etc.) or used for automations (Slack, IFTTT, n8n). The `dashy-conf.yml` provides bookmark sections for the [Dashy](https://github.com/Lissy93/dashy) dashboard. Each file can be set to Off, Manual (generate via button), or Auto (on every sync) in Options → Files → Generated.
+The `README.md` in the repo is regenerated on each sync — it lists all bookmarks with links (including subfolders recursively), so you can browse your bookmarks directly on GitHub. The `bookmarks.html` file uses the Netscape format and can be imported in any browser (Chrome: Bookmarks → Import; Firefox: Import and Backup → Import Bookmarks from file). The `feed.xml` file is an RSS 2.0 feed that can be subscribed to in any RSS reader (Feedly, Thunderbird, etc.) or used for automations (Slack, IFTTT, n8n). The `dashy-conf.yml` provides bookmark sections for the [Dashy](https://github.com/Lissy93/dashy) dashboard. All generated files include subfolders recursively, including orphan folders (present in the repo but not in the parent's `_order.json`). Each file can be set to Off, Manual (generate via button), or Auto (on every sync) in Options → Files → Generated.
 
 ## Automation (Git Add)
 

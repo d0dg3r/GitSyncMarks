@@ -123,7 +123,7 @@ Wraps both the **Contents API** (legacy, used for migration/validation) and the 
 
 ### `lib/bookmark-serializer.js` — Serializer
 
-Converts between browser bookmark trees and the per-file format:
+Converts between browser bookmark trees and the per-file format. All generators (Markdown, Netscape HTML, RSS, Dashy YAML) and the tree builder include **orphan subfolders**: folders present in the file map with their own `_order.json` but not listed in the parent's `_order.json`. This handles manually created folders, corrupted `_order.json`, or migration from older formats.
 
 | Function | Description |
 |---|---|
