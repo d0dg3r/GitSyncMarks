@@ -84,8 +84,8 @@ Full-page settings (opens in tab) with five tabs. Header: language dropdown, the
 
 1. **GitHub** (sub-tabs: Profile, Connection, Repos) — Profile selector (multiple profiles with separate repos); token, repository, connection test, onboarding (create folder or pull when path empty/has bookmarks); GitHub Repos folder (optional, position toolbar/other)
 2. **Sync** — Sync profile, auto-sync, sync on start/focus, notifications; Debug Log
-3. **Files** (sub-tabs: Generated, Settings, Export/Import, Git Add) — Generated files (README.md, bookmarks.html, feed.xml, dashy-conf.yml) with Off/Manual/Auto mode; settings sync to Git (Global `settings.enc` or Individual `settings-{id}.enc`, with device config import); compact export/import (bookmarks, Dashy, settings plain/encrypted via dropdown); automation guide for adding bookmarks via Git, CLI, or GitHub Actions
-4. **Help** — Quick links (Vote on backlog, Documentation, Discussions, Report Issue) as pill buttons; collapsible feature sections (Getting Started, Profiles, GitHub Repos, Popup, Sync, Files, Notifications, Conflicts, Keyboard Shortcuts)
+3. **Files** (sub-tabs: Generated, Settings, Export/Import, Git Add) — Generated files (README.md, bookmarks.html, feed.xml, dashy-conf.yml) with Off/Manual/Auto mode; settings sync to Git (client name + Create in one row; Refresh, profile list, Import & Apply, Sync current to selected in one row; buttons disabled until client name set; password saved after Import/Sync/Create); compact export/import (bookmarks, Dashy, settings plain/encrypted via dropdown); automation guide for adding bookmarks via Git, CLI, or GitHub Actions
+4. **Help** — Quick links (Vote on backlog, Documentation, Discussions, Report Issue) as pill buttons; collapsible feature sections (Getting Started with Start setup wizard button, Profiles, GitHub Repos, Popup, Sync, Files, Notifications, Conflicts, Keyboard Shortcuts)
 5. **About** — Version, links, license, mobile app
 
 ### `lib/sync-engine.js` — Sync Engine
@@ -123,7 +123,7 @@ Wraps both the **Contents API** (legacy, used for migration/validation) and the 
 
 ### `lib/bookmark-serializer.js` — Serializer
 
-Converts between browser bookmark trees and the per-file format:
+Converts between browser bookmark trees and the per-file format. All generators (Markdown, Netscape HTML, RSS, Dashy YAML) and the tree builder include **orphan subfolders**: folders present in the file map with their own `_order.json` but not listed in the parent's `_order.json`. This handles manually created folders, corrupted `_order.json`, or migration from older formats.
 
 | Function | Description |
 |---|---|

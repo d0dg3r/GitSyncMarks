@@ -156,6 +156,8 @@ Entries are either:
 
 Files not listed in `_order.json` (e.g., manually created) are picked up automatically and appended at the end.
 
+**Orphan subfolders**: Subfolders that exist in the file map (with their own `_order.json`) but are not listed in the parent's `_order.json` are also included. All generators (README.md, bookmarks.html, feed.xml, dashy-conf.yml) and the tree builder scan for such orphans and append them. This handles manually created folders, corrupted `_order.json`, or migration from older formats.
+
 ### `_index.json` — Metadata
 
 ```json
@@ -166,7 +168,7 @@ Files not listed in `_order.json` (e.g., manually created) are picked up automat
 
 ### `README.md` — Human-Readable Overview
 
-Auto-generated on every push. Shows all bookmarks as Markdown with folder headings. Not used for sync — purely informational.
+Auto-generated on every push. Shows all bookmarks as Markdown with folder headings. Includes subfolders recursively; orphan subfolders (present in file map but not in parent `_order.json`) are included. Not used for sync — purely informational.
 
 ```markdown
 # Bookmarks
@@ -187,15 +189,15 @@ Auto-generated on every push. Shows all bookmarks as Markdown with folder headin
 
 ### `bookmarks.html` — Netscape Format for Browser Import
 
-Auto-generated on push when mode is Auto (default). Uses the Netscape Bookmark File format (`<!DOCTYPE NETSCAPE-Bookmark-file-1>`) which Chrome, Firefox, Edge, and Safari can import directly. Not used for sync — purely for importing bookmarks without the extension.
+Auto-generated on push when mode is Auto (default). Uses the Netscape Bookmark File format (`<!DOCTYPE NETSCAPE-Bookmark-file-1>`) which Chrome, Firefox, Edge, and Safari can import directly. Includes all subfolders recursively, including orphans. Not used for sync — purely for importing bookmarks without the extension.
 
 ### `feed.xml` — RSS 2.0 Feed
 
-Auto-generated on push when mode is Auto (default). Each bookmark becomes an `<item>` with title, link, and category (folder path). Subscribable via any RSS reader (Feedly, Thunderbird, etc.); useful for automations (Slack, IFTTT, n8n) or embedding on websites. Works as a live feed via `raw.githubusercontent.com` or GitHub Pages.
+Auto-generated on push when mode is Auto (default). Each bookmark becomes an `<item>` with title, link, and category (folder path). Includes bookmarks from all subfolders recursively, including orphans. Subscribable via any RSS reader (Feedly, Thunderbird, etc.); useful for automations (Slack, IFTTT, n8n) or embedding on websites. Works as a live feed via `raw.githubusercontent.com` or GitHub Pages.
 
 ### `dashy-conf.yml` — Dashy Dashboard Config
 
-Auto-generated on push when mode is Auto. Produces YAML sections with bookmark links for the [Dashy](https://github.com/Lissy93/dashy) dashboard. Each bookmark folder becomes a section with items. Not used for sync — purely for Dashy integration.
+Auto-generated on push when mode is Auto. Produces YAML sections with bookmark links for the [Dashy](https://github.com/Lissy93/dashy) dashboard. Each bookmark folder (including orphan subfolders) becomes a section with items. Not used for sync — purely for Dashy integration.
 
 ### `profiles/<alias>/settings.enc` — Encrypted Settings
 
