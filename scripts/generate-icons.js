@@ -13,12 +13,41 @@ const pngToIco = require("png-to-ico");
 const ROOT = path.resolve(__dirname, "..");
 const LOGO_SOURCE =
   process.argv[2] || path.join(ROOT, "assets", "logo-source.png");
+const TOOLBAR_ICON_SOURCE = path.join(ROOT, "assets", "sync_logo.png");
 
 // Border color for toolbar icon frame (#3fb950 GitSyncMarks green)
 const ICON_BORDER = { r: 63, g: 185, b: 80 };
 
 async function ensureDir(dir) {
   await fs.promises.mkdir(dir, { recursive: true });
+}
+
+/**
+ * Keep only green pixels (sync icon), make everything else transparent.
+ */
+async function makeBackgroundTransparent(inputPath) {
+  const { data, info } = await sharp(inputPath)
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i];
+    const g = data[i + 1];
+    const b = data[i + 2];
+    const greenDominant = (g - r) > 25 && (g - b) > 25;
+    const isLightGreen = g > 140 && greenDominant;
+    if (isLightGreen) {
+      data[i + 3] = 255;
+    } else {
+      data[i + 3] = 0;
+    }
+  }
+  const pngBuf = await sharp(data, {
+    raw: { width: info.width, height: info.height, channels: 4 },
+  })
+    .png()
+    .toBuffer();
+  return sharp(pngBuf);
 }
 
 /**
@@ -37,6 +66,7 @@ async function createIconWithBorder(logo, size, outputPath) {
   const logoBuf = await logo
     .clone()
     .resize(logoSize, logoSize)
+    .png()
     .toBuffer();
 
   // Transparent background with logo centered
@@ -114,14 +144,38 @@ async function main() {
 
   const logo = sharp(LOGO_SOURCE);
 
-  // Extension toolbar icons (browser action) — green border, separate from app UI
-  for (const size of [16, 48, 128]) {
-    await createIconWithBorder(
-      logo,
-      size,
-      path.join(ROOT, "icons", `icon${size}.png`)
-    );
-    console.log(`  icons/icon${size}.png (toolbar)`);
+  // Extension toolbar icons (browser action) — sync_logo, transparent bg, max width, centered vertically
+  if (fs.existsSync(TOOLBAR_ICON_SOURCE)) {
+    const toolbarLogo = await makeBackgroundTransparent(TOOLBAR_ICON_SOURCE);
+    const trimmed = await toolbarLogo.clone().trim({ threshold: 10 }).toBuffer();
+    for (const size of [16, 48, 128]) {
+      const resized = await sharp(trimmed)
+        .resize(size, null)
+        .toBuffer();
+      const resizedMeta = await sharp(resized).metadata();
+      const top = Math.round((size - (resizedMeta.height || size)) / 2);
+      await sharp({
+        create: {
+          width: size,
+          height: size,
+          channels: 4,
+          background: { r: 0, g: 0, b: 0, alpha: 0 },
+        },
+      })
+        .composite([{ input: resized, left: 0, top: Math.max(0, top) }])
+        .png()
+        .toFile(path.join(ROOT, "icons", `icon${size}.png`));
+      console.log(`  icons/icon${size}.png (toolbar, from sync_logo)`);
+    }
+  } else {
+    console.warn(`  Toolbar icon source not found: ${TOOLBAR_ICON_SOURCE}, using logo-source`);
+    for (const size of [16, 48, 128]) {
+      await logo
+        .clone()
+        .resize(size, size)
+        .toFile(path.join(ROOT, "icons", `icon${size}.png`));
+      console.log(`  icons/icon${size}.png (toolbar)`);
+    }
   }
 
   // App UI icons (popup, options) — plain logo, no border
