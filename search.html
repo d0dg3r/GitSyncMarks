@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitSyncMarks - Bookmark Search</title>
+  <link rel="stylesheet" href="search.css">
+</head>
+<body>
+  <main class="search-shell">
+    <h1 data-i18n="search_title">Bookmark Search</h1>
+    <p class="subtitle" data-i18n="search_subtitle">Search local bookmarks and open matches in a new tab.</p>
+
+    <div class="search-row">
+      <input
+        type="text"
+        id="search-input"
+        data-i18n-placeholder="search_inputPlaceholder"
+        placeholder="Type title or URL..."
+        autocomplete="off"
+      >
+      <button type="button" id="search-clear-btn" class="btn-secondary" data-i18n="search_clearBtn">Clear</button>
+    </div>
+
+    <div id="search-status" class="search-status" aria-live="polite"></div>
+    <ul id="search-results" class="search-results"></ul>
+  </main>
+
+  <script type="module" src="search.js"></script>
+</body>
+</html>

@@ -31,7 +31,12 @@ import { log as debugLog, getLogAsString } from './lib/debug-log.js';
 import { GitHubAPI } from './lib/github-api.js';
 import { migrateTokenIfNeeded } from './lib/crypto.js';
 import { migrateToProfiles, getActiveProfileId, getActiveProfile, getProfiles, switchProfile, getSyncState } from './lib/profile-manager.js';
-import { setupContextMenus, handleContextMenuClick, refreshProfileMenuItems } from './lib/context-menu.js';
+import {
+  setupContextMenus,
+  handleContextMenuClick,
+  refreshProfileMenuItems,
+  refreshContextMenuDynamicItems,
+} from './lib/context-menu.js';
 
 const ALARM_NAME = 'bookmarkSyncPull';
 const NOTIFICATION_ID = 'gitsyncmarks-sync';
@@ -72,21 +77,25 @@ chrome.contextMenus.onClicked.addListener(handleContextMenuClick);
 
 chrome.bookmarks.onCreated.addListener((id, bookmark) => {
   console.log('[GitSyncMarks] Bookmark created:', bookmark.title);
+  refreshContextMenuDynamicItems();
   triggerAutoSync();
 });
 
 chrome.bookmarks.onRemoved.addListener((id, removeInfo) => {
   console.log('[GitSyncMarks] Bookmark removed:', id);
+  refreshContextMenuDynamicItems();
   triggerAutoSync();
 });
 
 chrome.bookmarks.onChanged.addListener((id, changeInfo) => {
   console.log('[GitSyncMarks] Bookmark changed:', id, changeInfo);
+  refreshContextMenuDynamicItems();
   triggerAutoSync();
 });
 
 chrome.bookmarks.onMoved.addListener((id, moveInfo) => {
   console.log('[GitSyncMarks] Bookmark moved:', id);
+  refreshContextMenuDynamicItems();
   triggerAutoSync();
 });
 
@@ -380,7 +389,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area === 'sync' && (changes.profiles || changes.activeProfileId)) {
-    refreshProfileMenuItems();
+    refreshContextMenuDynamicItems();
   }
 });
 
@@ -425,6 +434,7 @@ chrome.runtime.onStartup.addListener(async () => {
   await migrateToProfiles();
   await initI18n();
   refreshProfileMenuItems();
+  refreshContextMenuDynamicItems();
   await setupAlarm();
   await checkAndMigrate();
   if (await shouldAutoOpenOnboardingWizard()) {

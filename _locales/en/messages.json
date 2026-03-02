@@ -857,6 +857,12 @@
   "help_settingsSyncDesc": {
     "message": "When enabled, extension settings (profiles, tokens, preferences) are encrypted and stored in the repo as profiles/<alias>/settings.enc. Enter a client name first; Import, Sync, and Create buttons are disabled until set. After a successful Import, Sync, or Create, the password is saved automatically. Password must be the same on all devices sharing the repo."
   },
+  "help_contextMenuToolsTitle": {
+    "message": "Context menu tools"
+  },
+  "help_contextMenuToolsDesc": {
+    "message": "In Files -> Settings, you can pin up to 3 quick target folders for one-click Add actions and configure the Open All confirmation threshold. The context menu also includes Search Bookmarks, which opens a dedicated search popup."
+  },
   "help_notificationsTitle": {
     "message": "Notifications"
   },
@@ -1130,15 +1136,114 @@
   "help_filesTitle": {
     "message": "Files"
   },
+  "options_contextMenuToolsTitle": {
+    "message": "Context Menu Tools"
+  },
+  "options_contextMenuToolsDesc": {
+    "message": "Configure quick folder actions, open-all safety, and the Search Bookmarks popup shortcut."
+  },
+  "options_contextMenuQuickFoldersLabel": {
+    "message": "Pinned Quick Folders"
+  },
+  "options_contextMenuQuickFoldersHint": {
+    "message": "Choose up to three folders shown as one-click \"Add to ...\" entries in the context menu."
+  },
+  "options_contextMenuQuickFolder1": {
+    "message": "Quick folder 1"
+  },
+  "options_contextMenuQuickFolder2": {
+    "message": "Quick folder 2"
+  },
+  "options_contextMenuQuickFolder3": {
+    "message": "Quick folder 3"
+  },
+  "options_contextMenuQuickFolderNone": {
+    "message": "(none)"
+  },
+  "options_contextMenuRefreshFolders": {
+    "message": "Refresh folder list"
+  },
+  "options_contextMenuFoldersRefreshed": {
+    "message": "Folder list refreshed"
+  },
+  "options_contextMenuOpenAllThresholdLabel": {
+    "message": "Open-all confirmation threshold (tabs)"
+  },
+  "options_contextMenuOpenAllThresholdHint": {
+    "message": "If a folder has more tabs than this value, click the menu entry twice within 15 seconds to confirm."
+  },
+  "search_title": {
+    "message": "Bookmark Search"
+  },
+  "search_subtitle": {
+    "message": "Search local bookmarks and open matches in a new tab."
+  },
+  "search_inputPlaceholder": {
+    "message": "Type title or URL..."
+  },
+  "search_clearBtn": {
+    "message": "Clear"
+  },
+  "search_openBtn": {
+    "message": "Open"
+  },
+  "search_statusSearching": {
+    "message": "Searching..."
+  },
+  "search_statusNoResults": {
+    "message": "No bookmarks found"
+  },
+  "search_statusResultCount": {
+    "message": "$1 result(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
   "contextMenu_addToToolbar": { "message": "Add to Toolbar" },
   "contextMenu_addToOther": { "message": "Add to Other Bookmarks" },
+  "contextMenu_addToQuickFolder": {
+    "message": "Add to $1",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
   "contextMenu_syncNow": { "message": "Sync Now" },
+  "contextMenu_searchBookmarks": { "message": "Search Bookmarks" },
+  "contextMenu_openAllFromFolder": { "message": "Open All from Folder" },
   "contextMenu_copyFaviconUrl": { "message": "Copy Favicon URL" },
   "contextMenu_downloadFavicon": { "message": "Download Favicon" },
   "contextMenu_notifAdded": { "message": "Bookmark added to $1" },
   "contextMenu_notifFaviconCopied": { "message": "Favicon URL copied" },
   "contextMenu_notifNotConfigured": { "message": "Please configure GitSyncMarks first" },
   "contextMenu_notifNoFavicon": { "message": "No favicon available for this page" },
+  "contextMenu_notifFolderMissing": { "message": "Selected folder no longer exists. Refresh your quick folder settings." },
+  "contextMenu_notifOpenAllEmpty": { "message": "Selected folder has no bookmarks to open." },
+  "contextMenu_notifOpenAllNeedsConfirm": {
+    "message": "Folder contains $1 tabs (threshold: $2). Click again within 15 seconds to confirm.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "threshold": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_notifOpenAllSuccess": {
+    "message": "Opened $1 tab(s) from $2",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folderName": {
+        "content": "$2"
+      }
+    }
+  },
   "contextMenu_notifError": { "message": "Action failed — please try again" },
   "contextMenu_switchProfile": { "message": "Switch Profile" },
   "contextMenu_notifProfileSwitched": { "message": "Switched to $1", "placeholders": { "name": { "content": "$1" } } }

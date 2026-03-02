@@ -481,6 +481,38 @@
           </div>
         </section>
 
+        <section class="card" id="context-menu-card">
+          <h2 data-i18n="options_contextMenuToolsTitle">Context Menu Tools</h2>
+          <p class="card-desc" data-i18n="options_contextMenuToolsDesc">Configure quick folder actions, open-all safety, and the Search Bookmarks popup shortcut.</p>
+
+          <div class="form-group">
+            <label data-i18n="options_contextMenuQuickFoldersLabel">Pinned Quick Folders</label>
+            <small data-i18n="options_contextMenuQuickFoldersHint">Choose up to three folders shown as one-click \"Add to ...\" entries in the context menu.</small>
+          </div>
+          <div class="form-group">
+            <label for="quick-folder-1" data-i18n="options_contextMenuQuickFolder1">Quick folder 1</label>
+            <select id="quick-folder-1"></select>
+          </div>
+          <div class="form-group">
+            <label for="quick-folder-2" data-i18n="options_contextMenuQuickFolder2">Quick folder 2</label>
+            <select id="quick-folder-2"></select>
+          </div>
+          <div class="form-group">
+            <label for="quick-folder-3" data-i18n="options_contextMenuQuickFolder3">Quick folder 3</label>
+            <select id="quick-folder-3"></select>
+          </div>
+          <div class="form-group">
+            <button type="button" id="quick-folders-refresh-btn" class="btn btn-secondary btn-sm" data-i18n="options_contextMenuRefreshFolders">Refresh folder list</button>
+            <span id="quick-folders-result" class="validation-result"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="open-all-threshold" data-i18n="options_contextMenuOpenAllThresholdLabel">Open-all confirmation threshold (tabs)</label>
+            <input type="number" id="open-all-threshold" min="1" max="200" value="15">
+            <small data-i18n="options_contextMenuOpenAllThresholdHint">If a folder has more tabs than this value, click the menu entry twice within 15 seconds to confirm.</small>
+          </div>
+        </section>
+
         <section class="card danger-zone" id="reset-card">
           <h2 data-i18n="options_resetTitle">Reset Extension</h2>
           <p class="card-desc" data-i18n="options_resetDescription">Delete all profiles, tokens, and settings. Your browser bookmarks will not be affected.</p>
@@ -703,6 +735,8 @@
           <dd data-i18n="help_generatedFilesDesc">README.md, bookmarks.html, feed.xml, and dashy-conf.yml can be created during sync. Choose Off, Manual, or Auto per file in the Files tab.</dd>
           <dt data-i18n="help_settingsSyncTitle">Settings sync to Git</dt>
           <dd data-i18n="help_settingsSyncDesc">When enabled, extension settings are encrypted and stored in the repo as profile folders (profiles/&lt;alias&gt;/settings.enc). Import and sync explicit client profiles from the repository list.</dd>
+          <dt data-i18n="help_contextMenuToolsTitle">Context menu tools</dt>
+          <dd data-i18n="help_contextMenuToolsDesc">In Files → Settings, you can pin up to 3 quick target folders for one-click Add actions and configure the Open All confirmation threshold. The context menu also includes Search Bookmarks, which opens a dedicated search popup.</dd>
           <dt data-i18n="help_backupBookmarks">Export / Import</dt>
           <dd data-i18n="help_backupBookmarksDesc2">Export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc). Import bookmarks or settings — encrypted files are decrypted with your password. Bookmark import replaces all local bookmarks; settings import replaces all profiles and reloads the page.</dd>
         </dl>
