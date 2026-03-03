@@ -1,11 +1,18 @@
 import { initI18n, applyI18n, getMessage } from './lib/i18n.js';
+import { initTheme } from './lib/theme.js';
 
 const searchInput = document.getElementById('search-input');
 const searchClearBtn = document.getElementById('search-clear-btn');
+const searchCloseBtn = document.getElementById('search-close-btn');
 const searchStatus = document.getElementById('search-status');
 const searchResults = document.getElementById('search-results');
 
 let searchTimer = null;
+
+function updateClearButtonVisibility(value) {
+  const hasValue = String(value || '').trim().length > 0;
+  searchClearBtn.classList.toggle('hidden', !hasValue);
+}
 
 function setStatus(message = '', type = '') {
   searchStatus.textContent = message;
@@ -68,24 +75,43 @@ function runSearch(query) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+  await initTheme();
   await initI18n();
   applyI18n();
+  document.title = getMessage('search_windowTitle');
+  searchCloseBtn.setAttribute('aria-label', getMessage('search_closeBtn'));
+  searchCloseBtn.setAttribute('title', getMessage('search_closeBtn'));
+  searchClearBtn.setAttribute('aria-label', getMessage('search_clearBtn'));
+  searchClearBtn.setAttribute('title', getMessage('search_clearBtn'));
 
   const params = new URLSearchParams(window.location.search);
   const initialQuery = params.get('q') || '';
   searchInput.value = initialQuery;
+  updateClearButtonVisibility(initialQuery);
   searchInput.focus();
   if (initialQuery) runSearch(initialQuery);
 });
 
 searchInput.addEventListener('input', (e) => {
+  updateClearButtonVisibility(e.target.value);
   if (searchTimer) clearTimeout(searchTimer);
   searchTimer = setTimeout(() => runSearch(e.target.value), 150);
 });
 
 searchClearBtn.addEventListener('click', () => {
   searchInput.value = '';
+  updateClearButtonVisibility('');
   setStatus('');
   renderResults([]);
   searchInput.focus();
+});
+
+searchCloseBtn.addEventListener('click', () => {
+  window.close();
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape') return;
+  event.preventDefault();
+  window.close();
 });

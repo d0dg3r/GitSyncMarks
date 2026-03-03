@@ -65,6 +65,33 @@ test.describe('Smoke', () => {
     await page.goto(`chrome-extension://${extensionId}/search.html`);
     await page.waitForLoadState('domcontentloaded');
     await test.expect(page.locator('h1')).toContainText(/Bookmark Search/i);
+    await test.expect(page.locator('.search-logo')).toBeVisible();
+    await test.expect(page.locator('#search-close-btn')).toBeVisible();
+    await test.expect(page.locator('#search-clear-btn')).toBeHidden();
+    await page.evaluate(() => {
+      const shell = document.querySelector('.search-shell')?.getBoundingClientRect();
+      const closeBtn = document.querySelector('#search-close-btn')?.getBoundingClientRect();
+      if (!shell || !closeBtn) throw new Error('Missing popup shell or close button');
+      const nearTop = closeBtn.top - shell.top <= 16;
+      const nearRight = shell.right - closeBtn.right <= 16;
+      if (!nearTop || !nearRight) {
+        throw new Error('Close button is not positioned in top-right corner');
+      }
+    });
+
+    await page.evaluate(() => {
+      window.__closeCalled = false;
+      window.close = () => { window.__closeCalled = true; };
+    });
+    await page.keyboard.press('Escape');
+    await test.expect.poll(async () => page.evaluate(() => window.__closeCalled)).toBe(true);
+
+    await page.evaluate(() => {
+      window.__closeCalled = false;
+      window.close = () => { window.__closeCalled = true; };
+    });
+    await page.locator('#search-close-btn').click();
+    await test.expect.poll(async () => page.evaluate(() => window.__closeCalled)).toBe(true);
 
     const seed = await page.evaluate(async () => {
       const marker = Date.now();
@@ -75,7 +102,12 @@ test.describe('Smoke', () => {
     });
 
     await page.locator('#search-input').fill(seed.title);
+    await test.expect(page.locator('#search-clear-btn')).toBeVisible();
     await test.expect(page.locator('.search-result-item')).toContainText(seed.title, { timeout: 3000 });
+
+    await page.locator('#search-clear-btn').click();
+    await test.expect(page.locator('#search-clear-btn')).toBeHidden();
+    await page.locator('#search-input').fill(seed.title);
 
     const newTabPromise = context.waitForEvent('page');
     await page.locator('.search-open-btn').first().click();

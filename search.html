@@ -8,18 +8,28 @@
 </head>
 <body>
   <main class="search-shell">
-    <h1 data-i18n="search_title">Bookmark Search</h1>
-    <p class="subtitle" data-i18n="search_subtitle">Search local bookmarks and open matches in a new tab.</p>
+    <button type="button" id="search-close-btn" class="search-close-btn" aria-label="Close search popup">x</button>
+    <header class="search-header">
+      <div class="search-title-wrap">
+        <img src="icons/icon48-plain.png" alt="" class="search-logo">
+        <div>
+          <h1 data-i18n="search_title">Bookmark Search</h1>
+          <p class="subtitle" data-i18n="search_subtitle">Search local bookmarks and open matches in a new tab.</p>
+        </div>
+      </div>
+    </header>
 
     <div class="search-row">
-      <input
-        type="text"
-        id="search-input"
-        data-i18n-placeholder="search_inputPlaceholder"
-        placeholder="Type title or URL..."
-        autocomplete="off"
-      >
-      <button type="button" id="search-clear-btn" class="btn-secondary" data-i18n="search_clearBtn">Clear</button>
+      <div class="search-input-wrap">
+        <input
+          type="text"
+          id="search-input"
+          data-i18n-placeholder="search_inputPlaceholder"
+          placeholder="Type title or URL..."
+          autocomplete="off"
+        >
+        <button type="button" id="search-clear-btn" class="search-clear-btn" aria-label="Clear search">X</button>
+      </div>
     </div>
 
     <div id="search-status" class="search-status" aria-live="polite"></div>

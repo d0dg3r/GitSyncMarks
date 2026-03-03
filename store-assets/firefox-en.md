@@ -17,7 +17,7 @@ Features:
 • Full Firefox support including the Bookmarks Menu folder
 • Auto-sync on every bookmark change (debounce configurable per profile)
 • Multiple bookmark profiles: up to 10 profiles with separate GitHub repos; switch replaces local bookmarks
-• Context menu: right-click on page or link — Add to Toolbar, Add to Other Bookmarks, Add to up to 3 pinned Quick Folders, Sync Now, Search Bookmarks (opens a dedicated search popup), Open All from Folder (with tab-count safety confirmation), Switch Profile, Copy Favicon URL, Download Favicon
+• Context menu: right-click on page or link — Add to Toolbar, Add to Other Bookmarks, Add to up to 3 pinned Quick Folders, Sync Now, Search Bookmarks (opens a dedicated search popup with dark mode support, logo header, close button, and Esc-to-close), Open All from Folder (with tab-count safety confirmation), Switch Profile, Copy Favicon URL, Download Favicon
 • Favicon tools: copy any site's favicon URL to clipboard or download it as PNG — uses browser favicon with Google favicon service fallback
 • Automation: add bookmarks via Git, CLI, or GitHub Actions — no browser needed
 • GitHub Repos folder: optional folder with bookmarks to all your GitHub repositories (public and private)

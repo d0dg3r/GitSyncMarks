@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **Context menu refresh behavior**: Dynamic sections (quick folders, open-all folder list, profile entries) now refresh when bookmarks or active profile data changes
+- **Bookmark search popup polish**: Search popup now follows the extension theme (`auto/light/dark`), uses improved dark-mode button contrast, moves close to a compact top-right icon control, closes via both button and `Esc`, and replaces the old clear button with an inline `X` control in the search field
 - **E2E smoke test robustness**: Settings-sync smoke test now validates disabled/enabled button states around client-name requirement instead of clicking disabled actions
 
 ## [2.5.2] - 2026-02-27 (*Cortana*)

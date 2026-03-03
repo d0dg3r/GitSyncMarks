@@ -1178,8 +1178,14 @@
   "search_subtitle": {
     "message": "Search local bookmarks and open matches in a new tab."
   },
+  "search_windowTitle": {
+    "message": "GitSyncMarks - Bookmark Search"
+  },
   "search_inputPlaceholder": {
     "message": "Type title or URL..."
+  },
+  "search_closeBtn": {
+    "message": "Close"
   },
   "search_clearBtn": {
     "message": "Clear"
