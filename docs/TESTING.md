@@ -214,6 +214,9 @@ web-ext run --target=firefox-android --adb-device <device-id>
 - For popup HTML/CSS: temporarily open the popup in a tab to use the Inspector (see [Extension Workshop](https://extensionworkshop.com/documentation/develop/developing-extensions-for-firefox-for-android/))
 - Check `adb logcat` filtered by your extension ID for manifest and runtime messages
 
+> [!IMPORTANT]
+> **Bookmark Visibility:** On Firefox for Android, synced bookmarks will **not** appear in the native browser bookmark menu. This is a limitation of the Firefox for Android extension API. Use the **GitSyncMarks-App** to view and manage your bookmarks on mobile.
+
 ---
 
 ## Android Emulator (Without a Physical Device)

@@ -56,6 +56,9 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 
 **[GitSyncMarks-App](https://github.com/d0dg3r/GitSyncMarks-App)** — Cross-platform app (Android, iOS, Windows, macOS, Linux) that syncs bookmarks from your GitHub repo. Companion to this extension. Supports move, reorder, add via share (mobile), and encrypted settings sync. Android stable; F-Droid and Google Play coming soon.
 
+> [!NOTE]
+> On **Firefox for Android**, browser extensions cannot sync bookmarks directly to the native Firefox bookmark menu due to platform limitations. Use the **GitSyncMarks-App** to browse and manage your bookmarks on mobile.
+
 ## Features
 
 ### Core — GitSyncMarks
