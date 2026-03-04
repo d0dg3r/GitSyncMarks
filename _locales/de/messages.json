@@ -11,7 +11,6 @@
   "commands_openOptions": {
     "message": "Einstellungen öffnen"
   },
-
   "popup_configureFirst": {
     "message": "Bitte konfiguriere zuerst die Erweiterung."
   },
@@ -87,7 +86,6 @@
   "popup_lastCommit": {
     "message": "Letzter Commit:"
   },
-
   "options_subtitle": {
     "message": "Einstellungen"
   },
@@ -169,11 +167,21 @@
   "options_filePathHint": {
     "message": "Ordner, in dem die Lesezeichen-Dateien gespeichert werden."
   },
-  "options_browseFolder": { "message": "Durchsuchen" },
-  "options_browseFolderEmpty": { "message": "Keine Ordner gefunden" },
-  "options_browseFolderLoading": { "message": "Laden\u2026" },
-  "options_browseFolderSelect": { "message": "Auswählen" },
-  "options_browseFolderNotConfigured": { "message": "Bitte zuerst Token, Owner und Repo konfigurieren" },
+  "options_browseFolder": {
+    "message": "Durchsuchen"
+  },
+  "options_browseFolderEmpty": {
+    "message": "Keine Ordner gefunden"
+  },
+  "options_browseFolderLoading": {
+    "message": "Laden\u2026"
+  },
+  "options_browseFolderSelect": {
+    "message": "Auswählen"
+  },
+  "options_browseFolderNotConfigured": {
+    "message": "Bitte zuerst Token, Owner und Repo konfigurieren"
+  },
   "options_filePathChangeHint": {
     "message": "Beim nächsten Sync kann ein Konflikt entstehen. Nutze „GitHub → Lokal“, um den Remote-Stand zu übernehmen."
   },
@@ -390,11 +398,21 @@
   "options_settingsRegistryCreateNameRequired": {
     "message": "Please enter a name for the new setting"
   },
-  "options_resetTitle": { "message": "Extension zurücksetzen" },
-  "options_resetDescription": { "message": "Alle Profile, Tokens und Einstellungen löschen. Ihre Browser-Lesezeichen bleiben erhalten." },
-  "options_resetBtn": { "message": "Alle Daten zurücksetzen" },
-  "options_resetConfirm": { "message": "Sind Sie sicher? Dies kann nicht rückgängig gemacht werden. Alle Profile und Einstellungen werden dauerhaft gelöscht." },
-  "options_resetSuccess": { "message": "Extension wurde zurückgesetzt." },
+  "options_resetTitle": {
+    "message": "Extension zurücksetzen"
+  },
+  "options_resetDescription": {
+    "message": "Alle Profile, Tokens und Einstellungen löschen. Ihre Browser-Lesezeichen bleiben erhalten."
+  },
+  "options_resetBtn": {
+    "message": "Alle Daten zurücksetzen"
+  },
+  "options_resetConfirm": {
+    "message": "Sind Sie sicher? Dies kann nicht rückgängig gemacht werden. Alle Profile und Einstellungen werden dauerhaft gelöscht."
+  },
+  "options_resetSuccess": {
+    "message": "Extension wurde zurückgesetzt."
+  },
   "options_notifications": {
     "message": "Sync-Benachrichtigungen"
   },
@@ -479,61 +497,156 @@
   "options_onboardingPullSuccess": {
     "message": "Lesezeichen erfolgreich geladen."
   },
-  "options_onboardingWizardStart": { "message": "Setup-Assistent starten" },
-  "options_onboardingWizardTitle": { "message": "Setup-Assistent" },
-  "options_onboardingWizardStepWelcomeTitle": { "message": "Willkommen" },
-  "options_onboardingWizardStepWelcomeText": { "message": "Dieser Assistent führt durch Repository-Setup, Token-Konfiguration, Verbindungstest und ersten Sync." },
-  "options_onboardingWizardStepRepoTitle": { "message": "Repository-Einstellungen" },
-  "options_onboardingWizardStepRepoText": { "message": "Trage Owner, Repository-Name, Branch und Basispfad ein." },
-  "options_onboardingWizardStepTokenTitle": { "message": "Zugriffs-Token" },
-  "options_onboardingWizardStepTokenText": { "message": "Füge ein GitHub-Token mit repo-Berechtigung hinzu und halte es privat." },
-  "options_onboardingWizardStepValidateTitle": { "message": "Verbindung testen" },
-  "options_onboardingWizardStepValidateText": { "message": "Führe den Test aus, um Token-, Repository- und Pfadzugriff zu prüfen." },
-  "options_onboardingWizardStepSyncTitle": { "message": "Erste Sync-Aktion" },
-  "options_onboardingWizardStepSyncTextEmpty": { "message": "Der Pfad ist leer. Erstelle die Grundstruktur, um mit dem Sync zu starten." },
-  "options_onboardingWizardStepSyncTextExisting": { "message": "Im Repository sind bereits Lesezeichen vorhanden. Jetzt in diesen Browser ziehen." },
-  "options_onboardingWizardStepFinishTitle": { "message": "Abschließen" },
-  "options_onboardingWizardStepFinishText": { "message": "Setup abgeschlossen. Du kannst mit den normalen Sync-Einstellungen weiterarbeiten." },
-  "options_onboardingWizardActionTest": { "message": "Test ausführen" },
-  "options_onboardingWizardActionCreate": { "message": "Struktur erstellen" },
-  "options_onboardingWizardActionPull": { "message": "Jetzt ziehen" },
-  "options_onboardingWizardNext": { "message": "Weiter" },
-  "options_onboardingWizardBack": { "message": "Zurück" },
-  "options_onboardingWizardSkip": { "message": "Beenden" },
-  "options_onboardingWizardFinish": { "message": "Fertig" },
-  "options_onboardingWizardNeedConnection": { "message": "Bitte zuerst den Verbindungstest ausführen." },
-  "options_onboardingWizardNeedAction": { "message": "Bitte zuerst die erste Sync-Aktion abschließen." },
-  "options_onboardingWizardDismissed": { "message": "Assistent geschlossen. Du kannst ihn jederzeit neu starten." },
-  "options_onboardingWizardCompleted": { "message": "Assistent erfolgreich abgeschlossen." },
-  "options_onboardingWizardStepTokenHelpTitle": { "message": "Token erstellen" },
-  "options_onboardingWizardStepTokenHelpText": { "message": "Öffne die GitHub-Token-Einstellungen und erstelle ein Personal Access Token mit repo-Umfang." },
-  "options_onboardingWizardTokenHelpText": { "message": "Erstelle in GitHub ein Personal Access Token mit repo-Umfang." },
-  "options_onboardingWizardTokenHelpLink": { "message": "GitHub-Token-Seite öffnen" },
-  "options_onboardingWizardStepHasTokenTitle": { "message": "Hast du bereits ein Token?" },
-  "options_onboardingWizardStepHasTokenText": { "message": "Wenn nicht, erstelle zuerst ein Token und fahre dann fort." },
-  "options_onboardingWizardHasTokenLabel": { "message": "Hast du bereits ein Token?" },
-  "options_onboardingWizardHasTokenYes": { "message": "Ja, ich habe bereits eins" },
-  "options_onboardingWizardHasTokenNo": { "message": "Nein, zeig mir wie" },
-  "options_onboardingWizardStepRepoDecisionTitle": { "message": "Repository-Modus" },
-  "options_onboardingWizardStepRepoDecisionText": { "message": "Wähle zwischen automatischer Repo-Erstellung oder vorhandenem Repository." },
-  "options_onboardingWizardRepoFlowLabel": { "message": "Repository-Modus" },
-  "options_onboardingWizardRepoFlowAuto": { "message": "Repository automatisch erstellen" },
-  "options_onboardingWizardRepoFlowManual": { "message": "Vorhandenes Repository nutzen" },
-  "options_onboardingWizardActionCheckEnvironment": { "message": "Repository und Pfad prüfen" },
-  "options_onboardingWizardTokenValidated": { "message": "Token ist gültig und hat den benötigten Umfang." },
-  "options_onboardingWizardRepoRequired": { "message": "Bitte Repository-Owner und Namen eingeben." },
-  "options_onboardingWizardRepoCreateFailed": { "message": "Repository konnte mit diesem Token bzw. diesen Rechten nicht erstellt werden." },
-  "options_onboardingWizardEnvironmentChecked": { "message": "Repository- und Pfadprüfung abgeschlossen." },
-  "options_onboardingWizardRepoOwnerMismatch": { "message": "Auto-Erstellung unterstützt nur eigene Benutzer-Repositories. Setze den Owner auf $1." },
-  "options_onboardingWizardRepoUserOnlyHint": { "message": "Für Organisations- oder fremde Owner-Repositories bitte den manuellen Modus für bestehende Repositories verwenden." },
-  "options_onboardingWizardRepoCreatePermissionDenied": { "message": "Dieses Token kann keine Repositories erstellen. Prüfe den repo-Umfang und die Kontoberechtigungen." },
+  "options_onboardingWizardStart": {
+    "message": "Setup-Assistent starten"
+  },
+  "options_onboardingWizardTitle": {
+    "message": "Setup-Assistent"
+  },
+  "options_onboardingWizardStepWelcomeTitle": {
+    "message": "Willkommen"
+  },
+  "options_onboardingWizardStepWelcomeText": {
+    "message": "Dieser Assistent führt durch Repository-Setup, Token-Konfiguration, Verbindungstest und ersten Sync."
+  },
+  "options_onboardingWizardStepRepoTitle": {
+    "message": "Repository-Einstellungen"
+  },
+  "options_onboardingWizardStepRepoText": {
+    "message": "Trage Owner, Repository-Name, Branch und Basispfad ein."
+  },
+  "options_onboardingWizardStepTokenTitle": {
+    "message": "Zugriffs-Token"
+  },
+  "options_onboardingWizardStepTokenText": {
+    "message": "Füge ein GitHub-Token mit repo-Berechtigung hinzu und halte es privat."
+  },
+  "options_onboardingWizardStepValidateTitle": {
+    "message": "Verbindung testen"
+  },
+  "options_onboardingWizardStepValidateText": {
+    "message": "Führe den Test aus, um Token-, Repository- und Pfadzugriff zu prüfen."
+  },
+  "options_onboardingWizardStepSyncTitle": {
+    "message": "Erste Sync-Aktion"
+  },
+  "options_onboardingWizardStepSyncTextEmpty": {
+    "message": "Der Pfad ist leer. Erstelle die Grundstruktur, um mit dem Sync zu starten."
+  },
+  "options_onboardingWizardStepSyncTextExisting": {
+    "message": "Im Repository sind bereits Lesezeichen vorhanden. Jetzt in diesen Browser ziehen."
+  },
+  "options_onboardingWizardStepFinishTitle": {
+    "message": "Abschließen"
+  },
+  "options_onboardingWizardStepFinishText": {
+    "message": "Setup abgeschlossen. Du kannst mit den normalen Sync-Einstellungen weiterarbeiten."
+  },
+  "options_onboardingWizardActionTest": {
+    "message": "Test ausführen"
+  },
+  "options_onboardingWizardActionCreate": {
+    "message": "Struktur erstellen"
+  },
+  "options_onboardingWizardActionPull": {
+    "message": "Jetzt ziehen"
+  },
+  "options_onboardingWizardNext": {
+    "message": "Weiter"
+  },
+  "options_onboardingWizardBack": {
+    "message": "Zurück"
+  },
+  "options_onboardingWizardSkip": {
+    "message": "Beenden"
+  },
+  "options_onboardingWizardFinish": {
+    "message": "Fertig"
+  },
+  "options_onboardingWizardNeedConnection": {
+    "message": "Bitte zuerst den Verbindungstest ausführen."
+  },
+  "options_onboardingWizardNeedAction": {
+    "message": "Bitte zuerst die erste Sync-Aktion abschließen."
+  },
+  "options_onboardingWizardDismissed": {
+    "message": "Assistent geschlossen. Du kannst ihn jederzeit neu starten."
+  },
+  "options_onboardingWizardCompleted": {
+    "message": "Assistent erfolgreich abgeschlossen."
+  },
+  "options_onboardingWizardStepTokenHelpTitle": {
+    "message": "Token erstellen"
+  },
+  "options_onboardingWizardStepTokenHelpText": {
+    "message": "Öffne die GitHub-Token-Einstellungen und erstelle ein Personal Access Token mit repo-Umfang."
+  },
+  "options_onboardingWizardTokenHelpText": {
+    "message": "Erstelle in GitHub ein Personal Access Token mit repo-Umfang."
+  },
+  "options_onboardingWizardTokenHelpLink": {
+    "message": "GitHub-Token-Seite öffnen"
+  },
+  "options_onboardingWizardStepHasTokenTitle": {
+    "message": "Hast du bereits ein Token?"
+  },
+  "options_onboardingWizardStepHasTokenText": {
+    "message": "Wenn nicht, erstelle zuerst ein Token und fahre dann fort."
+  },
+  "options_onboardingWizardHasTokenLabel": {
+    "message": "Hast du bereits ein Token?"
+  },
+  "options_onboardingWizardHasTokenYes": {
+    "message": "Ja, ich habe bereits eins"
+  },
+  "options_onboardingWizardHasTokenNo": {
+    "message": "Nein, zeig mir wie"
+  },
+  "options_onboardingWizardStepRepoDecisionTitle": {
+    "message": "Repository-Modus"
+  },
+  "options_onboardingWizardStepRepoDecisionText": {
+    "message": "Wähle zwischen automatischer Repo-Erstellung oder vorhandenem Repository."
+  },
+  "options_onboardingWizardRepoFlowLabel": {
+    "message": "Repository-Modus"
+  },
+  "options_onboardingWizardRepoFlowAuto": {
+    "message": "Repository automatisch erstellen"
+  },
+  "options_onboardingWizardRepoFlowManual": {
+    "message": "Vorhandenes Repository nutzen"
+  },
+  "options_onboardingWizardActionCheckEnvironment": {
+    "message": "Repository und Pfad prüfen"
+  },
+  "options_onboardingWizardTokenValidated": {
+    "message": "Token ist gültig und hat den benötigten Umfang."
+  },
+  "options_onboardingWizardRepoRequired": {
+    "message": "Bitte Repository-Owner und Namen eingeben."
+  },
+  "options_onboardingWizardRepoCreateFailed": {
+    "message": "Repository konnte mit diesem Token bzw. diesen Rechten nicht erstellt werden."
+  },
+  "options_onboardingWizardEnvironmentChecked": {
+    "message": "Repository- und Pfadprüfung abgeschlossen."
+  },
+  "options_onboardingWizardRepoOwnerMismatch": {
+    "message": "Auto-Erstellung unterstützt nur eigene Benutzer-Repositories. Setze den Owner auf $1."
+  },
+  "options_onboardingWizardRepoUserOnlyHint": {
+    "message": "Für Organisations- oder fremde Owner-Repositories bitte den manuellen Modus für bestehende Repositories verwenden."
+  },
+  "options_onboardingWizardRepoCreatePermissionDenied": {
+    "message": "Dieses Token kann keine Repositories erstellen. Prüfe den repo-Umfang und die Kontoberechtigungen."
+  },
   "options_settingsSaved": {
     "message": "Einstellungen gespeichert!"
   },
   "options_errorSaving": {
     "message": "Fehler beim Speichern: $1"
   },
-
   "api_invalidToken": {
     "message": "Ungültiger Token. Bitte überprüfe deinen Personal Access Token."
   },
@@ -555,7 +668,6 @@
   "api_branchNotFound": {
     "message": "Branch '$1' nicht gefunden."
   },
-
   "sync_alreadyInProgress": {
     "message": "Synchronisierung läuft bereits."
   },
@@ -598,7 +710,6 @@
   "sync_syncFailed": {
     "message": "Synchronisierung fehlgeschlagen: $1"
   },
-
   "serializer_invalidFormat": {
     "message": "Ungültiges Lesezeichen-Datenformat."
   },
@@ -611,11 +722,9 @@
   "serializer_untitled": {
     "message": "(Ohne Titel)"
   },
-
   "popup_reportIssue": {
     "message": "Problem melden"
   },
-
   "options_about": {
     "message": "Über"
   },
@@ -630,6 +739,9 @@
   },
   "options_mobileAppTitle": {
     "message": "Mobile-App"
+  },
+  "options_mobileAppAlert": {
+    "message": "<strong>Hinweis für Android-Nutzer:</strong> Firefox für Android unterstützt keine direkte Lesezeichen-Synchronisierung über Erweiterungen. Du musst die Companion-App verwenden."
   },
   "options_mobileAppDesc": {
     "message": "Lesezeichen unterwegs ansehen. GitSyncMarks-App (iOS + Android) synchronisiert aus deinem GitHub-Repo — nur Lese-Zugriff."
@@ -673,7 +785,6 @@
   "options_debugLogExportEmpty": {
     "message": "Log ist leer. Debug-Log aktivieren und Sync ausführen."
   },
-
   "options_tabGitHub": {
     "message": "GitHub"
   },
@@ -899,7 +1010,6 @@
   "help_voteBacklogBtn": {
     "message": "Backlog abstimmen"
   },
-
   "options_backupTitle": {
     "message": "Backup"
   },
@@ -987,7 +1097,6 @@
   "options_exportEncryptedSuccess": {
     "message": "Verschlüsselter Export erfolgreich!"
   },
-
   "options_tabAutomation": {
     "message": "Automatisierung"
   },
@@ -1042,7 +1151,6 @@
   "options_automationParamBasePath": {
     "message": "Basisordner im Repo (Standard bookmarks; muss File Path entsprechen)"
   },
-
   "options_exportImportTitle": {
     "message": "Export / Import"
   },
@@ -1076,16 +1184,45 @@
   "help_filesTitle": {
     "message": "Dateien"
   },
-  "contextMenu_addToToolbar": { "message": "Zur Lesezeichenleiste hinzufügen" },
-  "contextMenu_addToOther": { "message": "Zu Andere Lesezeichen hinzufügen" },
-  "contextMenu_syncNow": { "message": "Jetzt synchronisieren" },
-  "contextMenu_copyFaviconUrl": { "message": "Favicon-URL kopieren" },
-  "contextMenu_downloadFavicon": { "message": "Favicon herunterladen" },
-  "contextMenu_notifAdded": { "message": "Lesezeichen hinzugefügt zu $1" },
-  "contextMenu_notifFaviconCopied": { "message": "Favicon-URL kopiert" },
-  "contextMenu_notifNotConfigured": { "message": "Bitte GitSyncMarks zuerst konfigurieren" },
-  "contextMenu_notifNoFavicon": { "message": "Kein Favicon für diese Seite verfügbar" },
-  "contextMenu_notifError": { "message": "Aktion fehlgeschlagen — bitte erneut versuchen" },
-  "contextMenu_switchProfile": { "message": "Profil wechseln" },
-  "contextMenu_notifProfileSwitched": { "message": "Gewechselt zu $1", "placeholders": { "name": { "content": "$1" } } }
+  "contextMenu_addToToolbar": {
+    "message": "Zur Lesezeichenleiste hinzufügen"
+  },
+  "contextMenu_addToOther": {
+    "message": "Zu Andere Lesezeichen hinzufügen"
+  },
+  "contextMenu_syncNow": {
+    "message": "Jetzt synchronisieren"
+  },
+  "contextMenu_copyFaviconUrl": {
+    "message": "Favicon-URL kopieren"
+  },
+  "contextMenu_downloadFavicon": {
+    "message": "Favicon herunterladen"
+  },
+  "contextMenu_notifAdded": {
+    "message": "Lesezeichen hinzugefügt zu $1"
+  },
+  "contextMenu_notifFaviconCopied": {
+    "message": "Favicon-URL kopiert"
+  },
+  "contextMenu_notifNotConfigured": {
+    "message": "Bitte GitSyncMarks zuerst konfigurieren"
+  },
+  "contextMenu_notifNoFavicon": {
+    "message": "Kein Favicon für diese Seite verfügbar"
+  },
+  "contextMenu_notifError": {
+    "message": "Aktion fehlgeschlagen — bitte erneut versuchen"
+  },
+  "contextMenu_switchProfile": {
+    "message": "Profil wechseln"
+  },
+  "contextMenu_notifProfileSwitched": {
+    "message": "Gewechselt zu $1",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  }
 }

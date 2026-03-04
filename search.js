@@ -6,6 +6,7 @@ const searchClearBtn = document.getElementById('search-clear-btn');
 const searchCloseBtn = document.getElementById('search-close-btn');
 const searchStatus = document.getElementById('search-status');
 const searchResults = document.getElementById('search-results');
+const searchSyncBtn = document.getElementById('search-sync-btn');
 
 let searchTimer = null;
 
@@ -19,7 +20,31 @@ function setStatus(message = '', type = '') {
   searchStatus.className = type ? `search-status ${type}` : 'search-status';
 }
 
-function renderResults(items) {
+function highlightText(text, query) {
+  if (!query) return document.createTextNode(text);
+  const lowerText = text.toLowerCase();
+  const lowerQuery = query.toLowerCase();
+  const index = lowerText.indexOf(lowerQuery);
+  if (index === -1) return document.createTextNode(text);
+
+  const before = text.substring(0, index);
+  const match = text.substring(index, index + query.length);
+  const after = text.substring(index + query.length);
+
+  // Create safe nodes to prevent XSS
+  const fragment = document.createDocumentFragment();
+  if (before) fragment.appendChild(document.createTextNode(before));
+  const mark = document.createElement('mark');
+  mark.textContent = match;
+  fragment.appendChild(mark);
+  if (after) {
+    // recursively highlight remaining text
+    fragment.appendChild(highlightText(after, query));
+  }
+  return fragment;
+}
+
+function renderResults(items, query) {
   searchResults.innerHTML = '';
   for (const item of items) {
     const li = document.createElement('li');
@@ -30,12 +55,23 @@ function renderResults(items) {
 
     const title = document.createElement('div');
     title.className = 'search-result-title';
-    title.textContent = item.title || item.url;
+    const cleanTitle = item.title || item.url;
+
+    if (query) {
+      title.appendChild(highlightText(cleanTitle, query));
+    } else {
+      title.textContent = cleanTitle;
+    }
     info.appendChild(title);
 
     const url = document.createElement('div');
     url.className = 'search-result-url';
-    url.textContent = item.url || '';
+    const cleanUrl = item.url || '';
+    if (query) {
+      url.appendChild(highlightText(cleanUrl, query));
+    } else {
+      url.textContent = cleanUrl;
+    }
     info.appendChild(url);
 
     const openBtn = document.createElement('button');
@@ -70,7 +106,7 @@ function runSearch(query) {
       return;
     }
     setStatus(getMessage('search_statusResultCount', [String(matches.length)]), 'success');
-    renderResults(matches);
+    renderResults(matches, term);
   });
 }
 
@@ -108,6 +144,23 @@ searchClearBtn.addEventListener('click', () => {
 
 searchCloseBtn.addEventListener('click', () => {
   window.close();
+});
+
+searchSyncBtn.addEventListener('click', () => {
+  setStatus(getMessage('search_statusSearching') || 'Syncing...', 'success');
+  searchSyncBtn.disabled = true;
+  chrome.runtime.sendMessage({ action: 'sync' }, (response) => {
+    searchSyncBtn.disabled = false;
+    if (response && response.success) {
+      setStatus('Sync complete', 'success');
+      // re-run current search if any
+      if (searchInput.value) {
+        runSearch(searchInput.value);
+      }
+    } else {
+      setStatus('Sync failed: ' + (response?.message || 'Unknown error'), 'error');
+    }
+  });
 });
 
 document.addEventListener('keydown', (event) => {
