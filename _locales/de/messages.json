@@ -1184,14 +1184,40 @@
   "help_filesTitle": {
     "message": "Dateien"
   },
-  "contextMenu_addToToolbar": {
+  "contextMenu_addToToolbar_chrome": {
     "message": "Zur Lesezeichenleiste hinzufügen"
   },
-  "contextMenu_addToOther": {
+  "contextMenu_addToToolbar_firefox": {
+    "message": "Zur Lesezeichen-Symbolleiste hinzufügen"
+  },
+  "contextMenu_addToOther_chrome": {
     "message": "Zu Andere Lesezeichen hinzufügen"
+  },
+  "contextMenu_addToOther_firefox": {
+    "message": "Zum Lesezeichen-Menü hinzufügen"
+  },
+  "contextMenu_addToFolderMenu": {
+    "message": "Zu Ordner hinzufügen..."
+  },
+  "contextMenu_addToThisFolder": {
+    "message": "In diesen Ordner hinzufügen"
+  },
+  "contextMenu_addToQuickFolder": {
+    "message": "Zu $1 hinzufügen",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      }
+    }
   },
   "contextMenu_syncNow": {
     "message": "Jetzt synchronisieren"
+  },
+  "contextMenu_searchBookmarks": {
+    "message": "Lesezeichen suchen"
+  },
+  "contextMenu_openAllFromFolder": {
+    "message": "Alle aus Ordner öffnen"
   },
   "contextMenu_copyFaviconUrl": {
     "message": "Favicon-URL kopieren"
@@ -1210,6 +1236,34 @@
   },
   "contextMenu_notifNoFavicon": {
     "message": "Kein Favicon für diese Seite verfügbar"
+  },
+  "contextMenu_notifFolderMissing": {
+    "message": "Gewählter Ordner existiert nicht mehr. Bitte Einstellungen aktualisieren."
+  },
+  "contextMenu_notifOpenAllEmpty": {
+    "message": "Gewählter Ordner enthält keine Lesezeichen zum Öffnen."
+  },
+  "contextMenu_notifOpenAllNeedsConfirm": {
+    "message": "Ordner enthält $1 Tabs (Schwellenwert: $2). Erneut klicken zum Bestätigen.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "threshold": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_notifOpenAllSuccess": {
+    "message": "$1 Tab(s) aus $2 geöffnet",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folderName": {
+        "content": "$2"
+      }
+    }
   },
   "contextMenu_notifError": {
     "message": "Aktion fehlgeschlagen — bitte erneut versuchen"

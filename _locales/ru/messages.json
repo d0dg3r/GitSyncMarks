@@ -11,7 +11,6 @@
   "commands_openOptions": {
     "message": "Открыть настройки расширения"
   },
-
   "popup_configureFirst": {
     "message": "Сначала настройте расширение."
   },
@@ -87,7 +86,6 @@
   "popup_lastCommit": {
     "message": "Последний коммит:"
   },
-
   "options_subtitle": {
     "message": "Настройки"
   },
@@ -169,11 +167,21 @@
   "options_filePathHint": {
     "message": "Папка для хранения файлов закладок."
   },
-  "options_browseFolder": { "message": "Обзор" },
-  "options_browseFolderEmpty": { "message": "Папки не найдены" },
-  "options_browseFolderLoading": { "message": "Загрузка\u2026" },
-  "options_browseFolderSelect": { "message": "Выбрать" },
-  "options_browseFolderNotConfigured": { "message": "Сначала настройте токен, владельца и репозиторий" },
+  "options_browseFolder": {
+    "message": "Обзор"
+  },
+  "options_browseFolderEmpty": {
+    "message": "Папки не найдены"
+  },
+  "options_browseFolderLoading": {
+    "message": "Загрузка\u2026"
+  },
+  "options_browseFolderSelect": {
+    "message": "Выбрать"
+  },
+  "options_browseFolderNotConfigured": {
+    "message": "Сначала настройте токен, владельца и репозиторий"
+  },
   "options_filePathChangeHint": {
     "message": "При следующей синхронизации может возникнуть конфликт. Используйте «GitHub → Локальные», чтобы принять удалённое состояние."
   },
@@ -357,22 +365,54 @@
   "options_settingsSyncImportReloadConfirmBtn": {
     "message": "Reload now"
   },
-  "options_settingsRegistryTitle": { "message": "Available settings in repository" },
-  "options_settingsRegistryRefreshBtn": { "message": "Refresh" },
-  "options_settingsRegistryImportApplyBtn": { "message": "Import & Apply" },
-  "options_settingsRegistrySyncSelectedBtn": { "message": "Sync current to selected" },
-  "options_settingsRegistryCreateBtn": { "message": "Create new setting" },
-  "options_settingsRegistryNewNamePlaceholder": { "message": "New setting name" },
-  "options_settingsRegistryActionPasswordPrompt": { "message": "Enter password for this settings action" },
-  "options_settingsRegistryImportSuccess": { "message": "Settings imported and applied" },
-  "options_settingsRegistrySyncSuccess": { "message": "Current settings synced to selected profile" },
-  "options_settingsRegistryCreateSuccess": { "message": "New settings profile created" },
-  "options_settingsRegistryCreateNameRequired": { "message": "Please enter a name for the new setting" },
-  "options_resetTitle": { "message": "Сбросить расширение" },
-  "options_resetDescription": { "message": "Удалить все профили, токены и настройки. Закладки браузера останутся без изменений." },
-  "options_resetBtn": { "message": "Сбросить все данные" },
-  "options_resetConfirm": { "message": "Вы уверены? Это действие нельзя отменить. Все профили и настройки будут удалены безвозвратно." },
-  "options_resetSuccess": { "message": "Расширение сброшено." },
+  "options_settingsRegistryTitle": {
+    "message": "Available settings in repository"
+  },
+  "options_settingsRegistryRefreshBtn": {
+    "message": "Refresh"
+  },
+  "options_settingsRegistryImportApplyBtn": {
+    "message": "Import & Apply"
+  },
+  "options_settingsRegistrySyncSelectedBtn": {
+    "message": "Sync current to selected"
+  },
+  "options_settingsRegistryCreateBtn": {
+    "message": "Create new setting"
+  },
+  "options_settingsRegistryNewNamePlaceholder": {
+    "message": "New setting name"
+  },
+  "options_settingsRegistryActionPasswordPrompt": {
+    "message": "Enter password for this settings action"
+  },
+  "options_settingsRegistryImportSuccess": {
+    "message": "Settings imported and applied"
+  },
+  "options_settingsRegistrySyncSuccess": {
+    "message": "Current settings synced to selected profile"
+  },
+  "options_settingsRegistryCreateSuccess": {
+    "message": "New settings profile created"
+  },
+  "options_settingsRegistryCreateNameRequired": {
+    "message": "Please enter a name for the new setting"
+  },
+  "options_resetTitle": {
+    "message": "Сбросить расширение"
+  },
+  "options_resetDescription": {
+    "message": "Удалить все профили, токены и настройки. Закладки браузера останутся без изменений."
+  },
+  "options_resetBtn": {
+    "message": "Сбросить все данные"
+  },
+  "options_resetConfirm": {
+    "message": "Вы уверены? Это действие нельзя отменить. Все профили и настройки будут удалены безвозвратно."
+  },
+  "options_resetSuccess": {
+    "message": "Расширение сброшено."
+  },
   "options_notifications": {
     "message": "Уведомления о синхронизации"
   },
@@ -457,61 +497,156 @@
   "options_onboardingPullSuccess": {
     "message": "Закладки успешно загружены."
   },
-  "options_onboardingWizardStart": { "message": "Запустить мастер настройки" },
-  "options_onboardingWizardTitle": { "message": "Мастер настройки" },
-  "options_onboardingWizardStepWelcomeTitle": { "message": "Добро пожаловать" },
-  "options_onboardingWizardStepWelcomeText": { "message": "Мастер проведет вас через настройку репозитория, токена, проверку подключения и первый sync." },
-  "options_onboardingWizardStepRepoTitle": { "message": "Настройки репозитория" },
-  "options_onboardingWizardStepRepoText": { "message": "Укажите владельца, имя репозитория, ветку и базовый путь." },
-  "options_onboardingWizardStepTokenTitle": { "message": "Токен доступа" },
-  "options_onboardingWizardStepTokenText": { "message": "Добавьте GitHub-токен со scope repo и храните его в секрете." },
-  "options_onboardingWizardStepValidateTitle": { "message": "Проверка подключения" },
-  "options_onboardingWizardStepValidateText": { "message": "Запустите тест, чтобы проверить токен, репозиторий и доступ к пути." },
-  "options_onboardingWizardStepSyncTitle": { "message": "Первое действие sync" },
-  "options_onboardingWizardStepSyncTextEmpty": { "message": "Путь пустой. Создайте начальную структуру, чтобы начать." },
-  "options_onboardingWizardStepSyncTextExisting": { "message": "В репозитории уже есть закладки. Загрузить их в этот браузер сейчас." },
-  "options_onboardingWizardStepFinishTitle": { "message": "Завершение" },
-  "options_onboardingWizardStepFinishText": { "message": "Настройка завершена. Можно продолжать с обычными параметрами sync." },
-  "options_onboardingWizardActionTest": { "message": "Запустить тест" },
-  "options_onboardingWizardActionCreate": { "message": "Создать структуру" },
-  "options_onboardingWizardActionPull": { "message": "Загрузить сейчас" },
-  "options_onboardingWizardNext": { "message": "Далее" },
-  "options_onboardingWizardBack": { "message": "Назад" },
-  "options_onboardingWizardSkip": { "message": "Выход" },
-  "options_onboardingWizardFinish": { "message": "Завершить" },
-  "options_onboardingWizardNeedConnection": { "message": "Сначала выполните проверку подключения." },
-  "options_onboardingWizardNeedAction": { "message": "Сначала завершите первое действие sync." },
-  "options_onboardingWizardDismissed": { "message": "Мастер закрыт. Вы можете запустить его снова в любое время." },
-  "options_onboardingWizardCompleted": { "message": "Мастер успешно завершен." },
-  "options_onboardingWizardStepTokenHelpTitle": { "message": "Создать токен" },
-  "options_onboardingWizardStepTokenHelpText": { "message": "Откройте настройки токенов GitHub и создайте Personal Access Token со scope repo." },
-  "options_onboardingWizardTokenHelpText": { "message": "Создайте Personal Access Token GitHub со scope repo в настройках GitHub." },
-  "options_onboardingWizardTokenHelpLink": { "message": "Открыть страницу токенов GitHub" },
-  "options_onboardingWizardStepHasTokenTitle": { "message": "У вас уже есть токен?" },
-  "options_onboardingWizardStepHasTokenText": { "message": "Если нет, сначала создайте его, затем продолжайте ввод токена." },
-  "options_onboardingWizardHasTokenLabel": { "message": "У вас уже есть токен?" },
-  "options_onboardingWizardHasTokenYes": { "message": "Да, у меня уже есть" },
-  "options_onboardingWizardHasTokenNo": { "message": "Нет, покажите как" },
-  "options_onboardingWizardStepRepoDecisionTitle": { "message": "Режим репозитория" },
-  "options_onboardingWizardStepRepoDecisionText": { "message": "Выберите: создать репозиторий автоматически или использовать существующий." },
-  "options_onboardingWizardRepoFlowLabel": { "message": "Режим репозитория" },
-  "options_onboardingWizardRepoFlowAuto": { "message": "Создать репозиторий автоматически" },
-  "options_onboardingWizardRepoFlowManual": { "message": "Использовать существующий репозиторий" },
-  "options_onboardingWizardActionCheckEnvironment": { "message": "Проверить репозиторий и путь" },
-  "options_onboardingWizardTokenValidated": { "message": "Токен корректен и имеет нужный scope." },
-  "options_onboardingWizardRepoRequired": { "message": "Укажите владельца и имя репозитория." },
-  "options_onboardingWizardRepoCreateFailed": { "message": "Не удалось создать репозиторий с текущим токеном/правами." },
-  "options_onboardingWizardEnvironmentChecked": { "message": "Проверка репозитория и пути завершена." },
-  "options_onboardingWizardRepoOwnerMismatch": { "message": "Автосоздание поддерживает только репозитории вашего пользователя. Укажите владельца: $1." },
-  "options_onboardingWizardRepoUserOnlyHint": { "message": "Для репозиториев организации или другого владельца используйте ручной режим существующего репозитория." },
-  "options_onboardingWizardRepoCreatePermissionDenied": { "message": "Этот токен не может создавать репозитории. Проверьте область repo и права аккаунта." },
+  "options_onboardingWizardStart": {
+    "message": "Запустить мастер настройки"
+  },
+  "options_onboardingWizardTitle": {
+    "message": "Мастер настройки"
+  },
+  "options_onboardingWizardStepWelcomeTitle": {
+    "message": "Добро пожаловать"
+  },
+  "options_onboardingWizardStepWelcomeText": {
+    "message": "Мастер проведет вас через настройку репозитория, токена, проверку подключения и первый sync."
+  },
+  "options_onboardingWizardStepRepoTitle": {
+    "message": "Настройки репозитория"
+  },
+  "options_onboardingWizardStepRepoText": {
+    "message": "Укажите владельца, имя репозитория, ветку и базовый путь."
+  },
+  "options_onboardingWizardStepTokenTitle": {
+    "message": "Токен доступа"
+  },
+  "options_onboardingWizardStepTokenText": {
+    "message": "Добавьте GitHub-токен со scope repo и храните его в секрете."
+  },
+  "options_onboardingWizardStepValidateTitle": {
+    "message": "Проверка подключения"
+  },
+  "options_onboardingWizardStepValidateText": {
+    "message": "Запустите тест, чтобы проверить токен, репозиторий и доступ к пути."
+  },
+  "options_onboardingWizardStepSyncTitle": {
+    "message": "Первое действие sync"
+  },
+  "options_onboardingWizardStepSyncTextEmpty": {
+    "message": "Путь пустой. Создайте начальную структуру, чтобы начать."
+  },
+  "options_onboardingWizardStepSyncTextExisting": {
+    "message": "В репозитории уже есть закладки. Загрузить их в этот браузер сейчас."
+  },
+  "options_onboardingWizardStepFinishTitle": {
+    "message": "Завершение"
+  },
+  "options_onboardingWizardStepFinishText": {
+    "message": "Настройка завершена. Можно продолжать с обычными параметрами sync."
+  },
+  "options_onboardingWizardActionTest": {
+    "message": "Запустить тест"
+  },
+  "options_onboardingWizardActionCreate": {
+    "message": "Создать структуру"
+  },
+  "options_onboardingWizardActionPull": {
+    "message": "Загрузить сейчас"
+  },
+  "options_onboardingWizardNext": {
+    "message": "Далее"
+  },
+  "options_onboardingWizardBack": {
+    "message": "Назад"
+  },
+  "options_onboardingWizardSkip": {
+    "message": "Выход"
+  },
+  "options_onboardingWizardFinish": {
+    "message": "Завершить"
+  },
+  "options_onboardingWizardNeedConnection": {
+    "message": "Сначала выполните проверку подключения."
+  },
+  "options_onboardingWizardNeedAction": {
+    "message": "Сначала завершите первое действие sync."
+  },
+  "options_onboardingWizardDismissed": {
+    "message": "Мастер закрыт. Вы можете запустить его снова в любое время."
+  },
+  "options_onboardingWizardCompleted": {
+    "message": "Мастер успешно завершен."
+  },
+  "options_onboardingWizardStepTokenHelpTitle": {
+    "message": "Создать токен"
+  },
+  "options_onboardingWizardStepTokenHelpText": {
+    "message": "Откройте настройки токенов GitHub и создайте Personal Access Token со scope repo."
+  },
+  "options_onboardingWizardTokenHelpText": {
+    "message": "Создайте Personal Access Token GitHub со scope repo в настройках GitHub."
+  },
+  "options_onboardingWizardTokenHelpLink": {
+    "message": "Открыть страницу токенов GitHub"
+  },
+  "options_onboardingWizardStepHasTokenTitle": {
+    "message": "У вас уже есть токен?"
+  },
+  "options_onboardingWizardStepHasTokenText": {
+    "message": "Если нет, сначала создайте его, затем продолжайте ввод токена."
+  },
+  "options_onboardingWizardHasTokenLabel": {
+    "message": "У вас уже есть токен?"
+  },
+  "options_onboardingWizardHasTokenYes": {
+    "message": "Да, у меня уже есть"
+  },
+  "options_onboardingWizardHasTokenNo": {
+    "message": "Нет, покажите как"
+  },
+  "options_onboardingWizardStepRepoDecisionTitle": {
+    "message": "Режим репозитория"
+  },
+  "options_onboardingWizardStepRepoDecisionText": {
+    "message": "Выберите: создать репозиторий автоматически или использовать существующий."
+  },
+  "options_onboardingWizardRepoFlowLabel": {
+    "message": "Режим репозитория"
+  },
+  "options_onboardingWizardRepoFlowAuto": {
+    "message": "Создать репозиторий автоматически"
+  },
+  "options_onboardingWizardRepoFlowManual": {
+    "message": "Использовать существующий репозиторий"
+  },
+  "options_onboardingWizardActionCheckEnvironment": {
+    "message": "Проверить репозиторий и путь"
+  },
+  "options_onboardingWizardTokenValidated": {
+    "message": "Токен корректен и имеет нужный scope."
+  },
+  "options_onboardingWizardRepoRequired": {
+    "message": "Укажите владельца и имя репозитория."
+  },
+  "options_onboardingWizardRepoCreateFailed": {
+    "message": "Не удалось создать репозиторий с текущим токеном/правами."
+  },
+  "options_onboardingWizardEnvironmentChecked": {
+    "message": "Проверка репозитория и пути завершена."
+  },
+  "options_onboardingWizardRepoOwnerMismatch": {
+    "message": "Автосоздание поддерживает только репозитории вашего пользователя. Укажите владельца: $1."
+  },
+  "options_onboardingWizardRepoUserOnlyHint": {
+    "message": "Для репозиториев организации или другого владельца используйте ручной режим существующего репозитория."
+  },
+  "options_onboardingWizardRepoCreatePermissionDenied": {
+    "message": "Этот токен не может создавать репозитории. Проверьте область repo и права аккаунта."
+  },
   "options_settingsSaved": {
     "message": "Настройки сохранены!"
   },
   "options_errorSaving": {
     "message": "Ошибка сохранения настроек: $1"
   },
-
   "api_invalidToken": {
     "message": "Недействительный токен. Проверьте ваш Personal Access Token."
   },
@@ -533,7 +668,6 @@
   "api_branchNotFound": {
     "message": "Ветка «$1» не найдена."
   },
-
   "sync_alreadyInProgress": {
     "message": "Синхронизация уже выполняется."
   },
@@ -576,7 +710,6 @@
   "sync_syncFailed": {
     "message": "Ошибка синхронизации: $1"
   },
-
   "serializer_invalidFormat": {
     "message": "Неверный формат данных закладок."
   },
@@ -589,11 +722,9 @@
   "serializer_untitled": {
     "message": "(Без названия)"
   },
-
   "popup_reportIssue": {
     "message": "Сообщить о проблеме"
   },
-
   "options_about": {
     "message": "О расширении"
   },
@@ -651,7 +782,6 @@
   "options_debugLogExportEmpty": {
     "message": "Журнал пуст. Включите журнал отладки и выполните синхронизацию."
   },
-
   "options_tabGitHub": {
     "message": "GitHub"
   },
@@ -877,7 +1007,6 @@
   "help_voteBacklogBtn": {
     "message": "Голосовать за бэклог"
   },
-
   "options_backupTitle": {
     "message": "Резервное копирование"
   },
@@ -965,7 +1094,6 @@
   "options_exportEncryptedSuccess": {
     "message": "Зашифрованный экспорт выполнен!"
   },
-
   "options_tabAutomation": {
     "message": "Автоматизация"
   },
@@ -1020,7 +1148,6 @@
   "options_automationParamBasePath": {
     "message": "Базовая папка в репозитории (по умолчанию bookmarks; должна совпадать с настройкой пути к файлам)"
   },
-
   "options_exportImportTitle": {
     "message": "Экспорт / Импорт"
   },
@@ -1054,16 +1181,57 @@
   "help_filesTitle": {
     "message": "Файлы"
   },
-  "contextMenu_addToToolbar": { "message": "Добавить на панель закладок" },
-  "contextMenu_addToOther": { "message": "Добавить в другие закладки" },
-  "contextMenu_syncNow": { "message": "Синхронизировать сейчас" },
-  "contextMenu_copyFaviconUrl": { "message": "Копировать URL фавикона" },
-  "contextMenu_downloadFavicon": { "message": "Скачать фавикон" },
-  "contextMenu_notifAdded": { "message": "Закладка добавлена в $1" },
-  "contextMenu_notifFaviconCopied": { "message": "URL фавикона скопирован" },
-  "contextMenu_notifNotConfigured": { "message": "Сначала настройте GitSyncMarks" },
-  "contextMenu_notifNoFavicon": { "message": "Фавикон для этой страницы недоступен" },
-  "contextMenu_notifError": { "message": "Действие не выполнено — попробуйте ещё раз" },
-  "contextMenu_switchProfile": { "message": "Сменить профиль" },
-  "contextMenu_notifProfileSwitched": { "message": "Переключено на $1", "placeholders": { "name": { "content": "$1" } } }
+  "contextMenu_addToToolbar_chrome": {
+    "message": "Добавить на панель закладок"
+  },
+  "contextMenu_addToToolbar_firefox": {
+    "message": "Добавить на панель закладок"
+  },
+  "contextMenu_addToOther_chrome": {
+    "message": "Добавить в другие закладки"
+  },
+  "contextMenu_addToOther_firefox": {
+    "message": "Добавить в меню закладок"
+  },
+  "contextMenu_addToFolderMenu": {
+    "message": "Добавить в папку..."
+  },
+  "contextMenu_addToThisFolder": {
+    "message": "Добавить в эту папку"
+  },
+  "contextMenu_syncNow": {
+    "message": "Синхронизировать сейчас"
+  },
+  "contextMenu_copyFaviconUrl": {
+    "message": "Копировать URL фавикона"
+  },
+  "contextMenu_downloadFavicon": {
+    "message": "Скачать фавикон"
+  },
+  "contextMenu_notifAdded": {
+    "message": "Закладка добавлена в $1"
+  },
+  "contextMenu_notifFaviconCopied": {
+    "message": "URL фавикона скопирован"
+  },
+  "contextMenu_notifNotConfigured": {
+    "message": "Сначала настройте GitSyncMarks"
+  },
+  "contextMenu_notifNoFavicon": {
+    "message": "Фавикон для этой страницы недоступен"
+  },
+  "contextMenu_notifError": {
+    "message": "Действие не выполнено — попробуйте ещё раз"
+  },
+  "contextMenu_switchProfile": {
+    "message": "Сменить профиль"
+  },
+  "contextMenu_notifProfileSwitched": {
+    "message": "Переключено на $1",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  }
 }

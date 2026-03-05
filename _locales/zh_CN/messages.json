@@ -11,7 +11,6 @@
   "commands_openOptions": {
     "message": "打开扩展设置"
   },
-
   "popup_configureFirst": {
     "message": "请先配置扩展。"
   },
@@ -87,7 +86,6 @@
   "popup_lastCommit": {
     "message": "上次提交："
   },
-
   "options_subtitle": {
     "message": "设置"
   },
@@ -169,11 +167,21 @@
   "options_filePathHint": {
     "message": "书签文件存储的文件夹。"
   },
-  "options_browseFolder": { "message": "浏览" },
-  "options_browseFolderEmpty": { "message": "未找到文件夹" },
-  "options_browseFolderLoading": { "message": "加载中\u2026" },
-  "options_browseFolderSelect": { "message": "选择" },
-  "options_browseFolderNotConfigured": { "message": "请先配置令牌、所有者和仓库" },
+  "options_browseFolder": {
+    "message": "浏览"
+  },
+  "options_browseFolderEmpty": {
+    "message": "未找到文件夹"
+  },
+  "options_browseFolderLoading": {
+    "message": "加载中\u2026"
+  },
+  "options_browseFolderSelect": {
+    "message": "选择"
+  },
+  "options_browseFolderNotConfigured": {
+    "message": "请先配置令牌、所有者和仓库"
+  },
   "options_filePathChangeHint": {
     "message": "下次同步时可能会发生冲突。使用\"GitHub → 本地\"来采用远程状态。"
   },
@@ -357,22 +365,54 @@
   "options_settingsSyncImportReloadConfirmBtn": {
     "message": "Reload now"
   },
-  "options_settingsRegistryTitle": { "message": "Available settings in repository" },
-  "options_settingsRegistryRefreshBtn": { "message": "Refresh" },
-  "options_settingsRegistryImportApplyBtn": { "message": "Import & Apply" },
-  "options_settingsRegistrySyncSelectedBtn": { "message": "Sync current to selected" },
-  "options_settingsRegistryCreateBtn": { "message": "Create new setting" },
-  "options_settingsRegistryNewNamePlaceholder": { "message": "New setting name" },
-  "options_settingsRegistryActionPasswordPrompt": { "message": "Enter password for this settings action" },
-  "options_settingsRegistryImportSuccess": { "message": "Settings imported and applied" },
-  "options_settingsRegistrySyncSuccess": { "message": "Current settings synced to selected profile" },
-  "options_settingsRegistryCreateSuccess": { "message": "New settings profile created" },
-  "options_settingsRegistryCreateNameRequired": { "message": "Please enter a name for the new setting" },
-  "options_resetTitle": { "message": "重置扩展" },
-  "options_resetDescription": { "message": "删除所有配置文件、令牌和设置。浏览器书签不受影响。" },
-  "options_resetBtn": { "message": "重置所有数据" },
-  "options_resetConfirm": { "message": "确定要重置吗？此操作无法撤销。所有配置文件和设置将被永久删除。" },
-  "options_resetSuccess": { "message": "扩展已重置。" },
+  "options_settingsRegistryTitle": {
+    "message": "Available settings in repository"
+  },
+  "options_settingsRegistryRefreshBtn": {
+    "message": "Refresh"
+  },
+  "options_settingsRegistryImportApplyBtn": {
+    "message": "Import & Apply"
+  },
+  "options_settingsRegistrySyncSelectedBtn": {
+    "message": "Sync current to selected"
+  },
+  "options_settingsRegistryCreateBtn": {
+    "message": "Create new setting"
+  },
+  "options_settingsRegistryNewNamePlaceholder": {
+    "message": "New setting name"
+  },
+  "options_settingsRegistryActionPasswordPrompt": {
+    "message": "Enter password for this settings action"
+  },
+  "options_settingsRegistryImportSuccess": {
+    "message": "Settings imported and applied"
+  },
+  "options_settingsRegistrySyncSuccess": {
+    "message": "Current settings synced to selected profile"
+  },
+  "options_settingsRegistryCreateSuccess": {
+    "message": "New settings profile created"
+  },
+  "options_settingsRegistryCreateNameRequired": {
+    "message": "Please enter a name for the new setting"
+  },
+  "options_resetTitle": {
+    "message": "重置扩展"
+  },
+  "options_resetDescription": {
+    "message": "删除所有配置文件、令牌和设置。浏览器书签不受影响。"
+  },
+  "options_resetBtn": {
+    "message": "重置所有数据"
+  },
+  "options_resetConfirm": {
+    "message": "确定要重置吗？此操作无法撤销。所有配置文件和设置将被永久删除。"
+  },
+  "options_resetSuccess": {
+    "message": "扩展已重置。"
+  },
   "options_notifications": {
     "message": "同步通知"
   },
@@ -457,61 +497,156 @@
   "options_onboardingPullSuccess": {
     "message": "书签拉取成功。"
   },
-  "options_onboardingWizardStart": { "message": "启动设置向导" },
-  "options_onboardingWizardTitle": { "message": "设置向导" },
-  "options_onboardingWizardStepWelcomeTitle": { "message": "欢迎" },
-  "options_onboardingWizardStepWelcomeText": { "message": "此向导将引导你完成仓库设置、令牌配置、连接测试和首次sync。" },
-  "options_onboardingWizardStepRepoTitle": { "message": "仓库设置" },
-  "options_onboardingWizardStepRepoText": { "message": "请填写仓库所有者、仓库名、分支和基础路径。" },
-  "options_onboardingWizardStepTokenTitle": { "message": "访问令牌" },
-  "options_onboardingWizardStepTokenText": { "message": "添加具有repo权限的GitHub令牌，并妥善保管。" },
-  "options_onboardingWizardStepValidateTitle": { "message": "测试连接" },
-  "options_onboardingWizardStepValidateText": { "message": "运行测试以验证令牌、仓库和路径访问是否正常。" },
-  "options_onboardingWizardStepSyncTitle": { "message": "首次sync操作" },
-  "options_onboardingWizardStepSyncTextEmpty": { "message": "路径为空。请先创建初始目录结构后再开始。" },
-  "options_onboardingWizardStepSyncTextExisting": { "message": "仓库中已有书签。现在拉取到此浏览器。" },
-  "options_onboardingWizardStepFinishTitle": { "message": "完成" },
-  "options_onboardingWizardStepFinishText": { "message": "设置已完成。你可以继续使用常规sync设置。" },
-  "options_onboardingWizardActionTest": { "message": "运行测试" },
-  "options_onboardingWizardActionCreate": { "message": "创建结构" },
-  "options_onboardingWizardActionPull": { "message": "立即拉取" },
-  "options_onboardingWizardNext": { "message": "下一步" },
-  "options_onboardingWizardBack": { "message": "上一步" },
-  "options_onboardingWizardSkip": { "message": "退出" },
-  "options_onboardingWizardFinish": { "message": "完成" },
-  "options_onboardingWizardNeedConnection": { "message": "请先运行连接测试。" },
-  "options_onboardingWizardNeedAction": { "message": "请先完成首次sync操作。" },
-  "options_onboardingWizardDismissed": { "message": "向导已关闭。你可随时重新启动。" },
-  "options_onboardingWizardCompleted": { "message": "向导已成功完成。" },
-  "options_onboardingWizardStepTokenHelpTitle": { "message": "创建令牌" },
-  "options_onboardingWizardStepTokenHelpText": { "message": "打开GitHub令牌设置并创建具有repo范围的Personal Access Token。" },
-  "options_onboardingWizardTokenHelpText": { "message": "请在GitHub设置中创建具有repo范围的Personal Access Token。" },
-  "options_onboardingWizardTokenHelpLink": { "message": "打开GitHub令牌页面" },
-  "options_onboardingWizardStepHasTokenTitle": { "message": "你已经有令牌了吗？" },
-  "options_onboardingWizardStepHasTokenText": { "message": "如果没有，请先创建令牌，再继续输入步骤。" },
-  "options_onboardingWizardHasTokenLabel": { "message": "你已经有令牌了吗？" },
-  "options_onboardingWizardHasTokenYes": { "message": "是的，我已经有了" },
-  "options_onboardingWizardHasTokenNo": { "message": "没有，请告诉我怎么做" },
-  "options_onboardingWizardStepRepoDecisionTitle": { "message": "仓库模式" },
-  "options_onboardingWizardStepRepoDecisionText": { "message": "选择自动创建仓库，或使用现有仓库。" },
-  "options_onboardingWizardRepoFlowLabel": { "message": "仓库模式" },
-  "options_onboardingWizardRepoFlowAuto": { "message": "自动创建仓库" },
-  "options_onboardingWizardRepoFlowManual": { "message": "使用现有仓库" },
-  "options_onboardingWizardActionCheckEnvironment": { "message": "检查仓库和路径" },
-  "options_onboardingWizardTokenValidated": { "message": "令牌有效且具备所需权限范围。" },
-  "options_onboardingWizardRepoRequired": { "message": "请输入仓库所有者和仓库名称。" },
-  "options_onboardingWizardRepoCreateFailed": { "message": "当前令牌/权限无法创建仓库。" },
-  "options_onboardingWizardEnvironmentChecked": { "message": "仓库与路径检查已完成。" },
-  "options_onboardingWizardRepoOwnerMismatch": { "message": "自动创建仅支持你自己的用户仓库。请将所有者设置为 $1。" },
-  "options_onboardingWizardRepoUserOnlyHint": { "message": "如果是组织仓库或其他所有者，请切换到“手动使用现有仓库”模式。" },
-  "options_onboardingWizardRepoCreatePermissionDenied": { "message": "此令牌无法创建仓库。请检查 repo 权限范围和账号权限。" },
+  "options_onboardingWizardStart": {
+    "message": "启动设置向导"
+  },
+  "options_onboardingWizardTitle": {
+    "message": "设置向导"
+  },
+  "options_onboardingWizardStepWelcomeTitle": {
+    "message": "欢迎"
+  },
+  "options_onboardingWizardStepWelcomeText": {
+    "message": "此向导将引导你完成仓库设置、令牌配置、连接测试和首次sync。"
+  },
+  "options_onboardingWizardStepRepoTitle": {
+    "message": "仓库设置"
+  },
+  "options_onboardingWizardStepRepoText": {
+    "message": "请填写仓库所有者、仓库名、分支和基础路径。"
+  },
+  "options_onboardingWizardStepTokenTitle": {
+    "message": "访问令牌"
+  },
+  "options_onboardingWizardStepTokenText": {
+    "message": "添加具有repo权限的GitHub令牌，并妥善保管。"
+  },
+  "options_onboardingWizardStepValidateTitle": {
+    "message": "测试连接"
+  },
+  "options_onboardingWizardStepValidateText": {
+    "message": "运行测试以验证令牌、仓库和路径访问是否正常。"
+  },
+  "options_onboardingWizardStepSyncTitle": {
+    "message": "首次sync操作"
+  },
+  "options_onboardingWizardStepSyncTextEmpty": {
+    "message": "路径为空。请先创建初始目录结构后再开始。"
+  },
+  "options_onboardingWizardStepSyncTextExisting": {
+    "message": "仓库中已有书签。现在拉取到此浏览器。"
+  },
+  "options_onboardingWizardStepFinishTitle": {
+    "message": "完成"
+  },
+  "options_onboardingWizardStepFinishText": {
+    "message": "设置已完成。你可以继续使用常规sync设置。"
+  },
+  "options_onboardingWizardActionTest": {
+    "message": "运行测试"
+  },
+  "options_onboardingWizardActionCreate": {
+    "message": "创建结构"
+  },
+  "options_onboardingWizardActionPull": {
+    "message": "立即拉取"
+  },
+  "options_onboardingWizardNext": {
+    "message": "下一步"
+  },
+  "options_onboardingWizardBack": {
+    "message": "上一步"
+  },
+  "options_onboardingWizardSkip": {
+    "message": "退出"
+  },
+  "options_onboardingWizardFinish": {
+    "message": "完成"
+  },
+  "options_onboardingWizardNeedConnection": {
+    "message": "请先运行连接测试。"
+  },
+  "options_onboardingWizardNeedAction": {
+    "message": "请先完成首次sync操作。"
+  },
+  "options_onboardingWizardDismissed": {
+    "message": "向导已关闭。你可随时重新启动。"
+  },
+  "options_onboardingWizardCompleted": {
+    "message": "向导已成功完成。"
+  },
+  "options_onboardingWizardStepTokenHelpTitle": {
+    "message": "创建令牌"
+  },
+  "options_onboardingWizardStepTokenHelpText": {
+    "message": "打开GitHub令牌设置并创建具有repo范围的Personal Access Token。"
+  },
+  "options_onboardingWizardTokenHelpText": {
+    "message": "请在GitHub设置中创建具有repo范围的Personal Access Token。"
+  },
+  "options_onboardingWizardTokenHelpLink": {
+    "message": "打开GitHub令牌页面"
+  },
+  "options_onboardingWizardStepHasTokenTitle": {
+    "message": "你已经有令牌了吗？"
+  },
+  "options_onboardingWizardStepHasTokenText": {
+    "message": "如果没有，请先创建令牌，再继续输入步骤。"
+  },
+  "options_onboardingWizardHasTokenLabel": {
+    "message": "你已经有令牌了吗？"
+  },
+  "options_onboardingWizardHasTokenYes": {
+    "message": "是的，我已经有了"
+  },
+  "options_onboardingWizardHasTokenNo": {
+    "message": "没有，请告诉我怎么做"
+  },
+  "options_onboardingWizardStepRepoDecisionTitle": {
+    "message": "仓库模式"
+  },
+  "options_onboardingWizardStepRepoDecisionText": {
+    "message": "选择自动创建仓库，或使用现有仓库。"
+  },
+  "options_onboardingWizardRepoFlowLabel": {
+    "message": "仓库模式"
+  },
+  "options_onboardingWizardRepoFlowAuto": {
+    "message": "自动创建仓库"
+  },
+  "options_onboardingWizardRepoFlowManual": {
+    "message": "使用现有仓库"
+  },
+  "options_onboardingWizardActionCheckEnvironment": {
+    "message": "检查仓库和路径"
+  },
+  "options_onboardingWizardTokenValidated": {
+    "message": "令牌有效且具备所需权限范围。"
+  },
+  "options_onboardingWizardRepoRequired": {
+    "message": "请输入仓库所有者和仓库名称。"
+  },
+  "options_onboardingWizardRepoCreateFailed": {
+    "message": "当前令牌/权限无法创建仓库。"
+  },
+  "options_onboardingWizardEnvironmentChecked": {
+    "message": "仓库与路径检查已完成。"
+  },
+  "options_onboardingWizardRepoOwnerMismatch": {
+    "message": "自动创建仅支持你自己的用户仓库。请将所有者设置为 $1。"
+  },
+  "options_onboardingWizardRepoUserOnlyHint": {
+    "message": "如果是组织仓库或其他所有者，请切换到“手动使用现有仓库”模式。"
+  },
+  "options_onboardingWizardRepoCreatePermissionDenied": {
+    "message": "此令牌无法创建仓库。请检查 repo 权限范围和账号权限。"
+  },
   "options_settingsSaved": {
     "message": "设置已保存！"
   },
   "options_errorSaving": {
     "message": "保存设置时出错：$1"
   },
-
   "api_invalidToken": {
     "message": "无效的令牌。请检查您的个人访问令牌。"
   },
@@ -533,7 +668,6 @@
   "api_branchNotFound": {
     "message": "未找到分支 '$1'。"
   },
-
   "sync_alreadyInProgress": {
     "message": "同步正在进行中。"
   },
@@ -576,7 +710,6 @@
   "sync_syncFailed": {
     "message": "同步失败：$1"
   },
-
   "serializer_invalidFormat": {
     "message": "无效的书签数据格式。"
   },
@@ -589,11 +722,9 @@
   "serializer_untitled": {
     "message": "（无标题）"
   },
-
   "popup_reportIssue": {
     "message": "报告问题"
   },
-
   "options_about": {
     "message": "关于"
   },
@@ -651,7 +782,6 @@
   "options_debugLogExportEmpty": {
     "message": "日志为空。请先启用调试日志并运行一次同步。"
   },
-
   "options_tabGitHub": {
     "message": "GitHub"
   },
@@ -877,7 +1007,6 @@
   "help_voteBacklogBtn": {
     "message": "为待开发功能投票"
   },
-
   "options_backupTitle": {
     "message": "备份"
   },
@@ -965,7 +1094,6 @@
   "options_exportEncryptedSuccess": {
     "message": "加密导出成功！"
   },
-
   "options_tabAutomation": {
     "message": "自动化"
   },
@@ -1020,7 +1148,6 @@
   "options_automationParamBasePath": {
     "message": "仓库中的基础文件夹（默认 bookmarks；必须与文件路径设置一致）"
   },
-
   "options_exportImportTitle": {
     "message": "导出 / 导入"
   },
@@ -1054,16 +1181,57 @@
   "help_filesTitle": {
     "message": "文件"
   },
-  "contextMenu_addToToolbar": { "message": "添加到书签栏" },
-  "contextMenu_addToOther": { "message": "添加到其他书签" },
-  "contextMenu_syncNow": { "message": "立即同步" },
-  "contextMenu_copyFaviconUrl": { "message": "复制网站图标 URL" },
-  "contextMenu_downloadFavicon": { "message": "下载网站图标" },
-  "contextMenu_notifAdded": { "message": "书签已添加到 $1" },
-  "contextMenu_notifFaviconCopied": { "message": "网站图标 URL 已复制" },
-  "contextMenu_notifNotConfigured": { "message": "请先配置 GitSyncMarks" },
-  "contextMenu_notifNoFavicon": { "message": "此页面没有可用的网站图标" },
-  "contextMenu_notifError": { "message": "操作失败 - 请重试" },
-  "contextMenu_switchProfile": { "message": "切换配置文件" },
-  "contextMenu_notifProfileSwitched": { "message": "已切换到 $1", "placeholders": { "name": { "content": "$1" } } }
+  "contextMenu_addToToolbar_chrome": {
+    "message": "添加到书签栏"
+  },
+  "contextMenu_addToToolbar_firefox": {
+    "message": "添加到书签工具栏"
+  },
+  "contextMenu_addToOther_chrome": {
+    "message": "添加到其他书签"
+  },
+  "contextMenu_addToOther_firefox": {
+    "message": "添加到书签菜单"
+  },
+  "contextMenu_addToFolderMenu": {
+    "message": "添加到文件夹..."
+  },
+  "contextMenu_addToThisFolder": {
+    "message": "添加到此文件夹"
+  },
+  "contextMenu_syncNow": {
+    "message": "立即同步"
+  },
+  "contextMenu_copyFaviconUrl": {
+    "message": "复制网站图标 URL"
+  },
+  "contextMenu_downloadFavicon": {
+    "message": "下载网站图标"
+  },
+  "contextMenu_notifAdded": {
+    "message": "书签已添加到 $1"
+  },
+  "contextMenu_notifFaviconCopied": {
+    "message": "网站图标 URL 已复制"
+  },
+  "contextMenu_notifNotConfigured": {
+    "message": "请先配置 GitSyncMarks"
+  },
+  "contextMenu_notifNoFavicon": {
+    "message": "此页面没有可用的网站图标"
+  },
+  "contextMenu_notifError": {
+    "message": "操作失败 - 请重试"
+  },
+  "contextMenu_switchProfile": {
+    "message": "切换配置文件"
+  },
+  "contextMenu_notifProfileSwitched": {
+    "message": "已切换到 $1",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  }
 }

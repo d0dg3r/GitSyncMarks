@@ -11,7 +11,6 @@
   "commands_openOptions": {
     "message": "Uzantı ayarlarını aç"
   },
-
   "popup_configureFirst": {
     "message": "Lütfen önce uzantıyı yapılandırın."
   },
@@ -87,7 +86,6 @@
   "popup_lastCommit": {
     "message": "Son commit:"
   },
-
   "options_subtitle": {
     "message": "Ayarlar"
   },
@@ -169,11 +167,21 @@
   "options_filePathHint": {
     "message": "Yer işareti dosyalarının saklanacağı klasör."
   },
-  "options_browseFolder": { "message": "Göz At" },
-  "options_browseFolderEmpty": { "message": "Klasör bulunamadı" },
-  "options_browseFolderLoading": { "message": "Yükleniyor\u2026" },
-  "options_browseFolderSelect": { "message": "Seç" },
-  "options_browseFolderNotConfigured": { "message": "Lütfen önce token, sahip ve depoyu yapılandırın" },
+  "options_browseFolder": {
+    "message": "Göz At"
+  },
+  "options_browseFolderEmpty": {
+    "message": "Klasör bulunamadı"
+  },
+  "options_browseFolderLoading": {
+    "message": "Yükleniyor\u2026"
+  },
+  "options_browseFolderSelect": {
+    "message": "Seç"
+  },
+  "options_browseFolderNotConfigured": {
+    "message": "Lütfen önce token, sahip ve depoyu yapılandırın"
+  },
   "options_filePathChangeHint": {
     "message": "Bir sonraki senkronizasyonda çakışma oluşabilir. Uzak durumu almak için \"GitHub → Yerel\" seçeneğini kullanın."
   },
@@ -357,22 +365,54 @@
   "options_settingsSyncImportReloadConfirmBtn": {
     "message": "Reload now"
   },
-  "options_settingsRegistryTitle": { "message": "Available settings in repository" },
-  "options_settingsRegistryRefreshBtn": { "message": "Refresh" },
-  "options_settingsRegistryImportApplyBtn": { "message": "Import & Apply" },
-  "options_settingsRegistrySyncSelectedBtn": { "message": "Sync current to selected" },
-  "options_settingsRegistryCreateBtn": { "message": "Create new setting" },
-  "options_settingsRegistryNewNamePlaceholder": { "message": "New setting name" },
-  "options_settingsRegistryActionPasswordPrompt": { "message": "Enter password for this settings action" },
-  "options_settingsRegistryImportSuccess": { "message": "Settings imported and applied" },
-  "options_settingsRegistrySyncSuccess": { "message": "Current settings synced to selected profile" },
-  "options_settingsRegistryCreateSuccess": { "message": "New settings profile created" },
-  "options_settingsRegistryCreateNameRequired": { "message": "Please enter a name for the new setting" },
-  "options_resetTitle": { "message": "Eklentiyi sıfırla" },
-  "options_resetDescription": { "message": "Tüm profilleri, jetonları ve ayarları sil. Tarayıcı yer imleriniz etkilenmez." },
-  "options_resetBtn": { "message": "Tüm verileri sıfırla" },
-  "options_resetConfirm": { "message": "Emin misiniz? Bu işlem geri alınamaz. Tüm profiller ve ayarlar kalıcı olarak silinecektir." },
-  "options_resetSuccess": { "message": "Eklenti sıfırlandı." },
+  "options_settingsRegistryTitle": {
+    "message": "Available settings in repository"
+  },
+  "options_settingsRegistryRefreshBtn": {
+    "message": "Refresh"
+  },
+  "options_settingsRegistryImportApplyBtn": {
+    "message": "Import & Apply"
+  },
+  "options_settingsRegistrySyncSelectedBtn": {
+    "message": "Sync current to selected"
+  },
+  "options_settingsRegistryCreateBtn": {
+    "message": "Create new setting"
+  },
+  "options_settingsRegistryNewNamePlaceholder": {
+    "message": "New setting name"
+  },
+  "options_settingsRegistryActionPasswordPrompt": {
+    "message": "Enter password for this settings action"
+  },
+  "options_settingsRegistryImportSuccess": {
+    "message": "Settings imported and applied"
+  },
+  "options_settingsRegistrySyncSuccess": {
+    "message": "Current settings synced to selected profile"
+  },
+  "options_settingsRegistryCreateSuccess": {
+    "message": "New settings profile created"
+  },
+  "options_settingsRegistryCreateNameRequired": {
+    "message": "Please enter a name for the new setting"
+  },
+  "options_resetTitle": {
+    "message": "Eklentiyi sıfırla"
+  },
+  "options_resetDescription": {
+    "message": "Tüm profilleri, jetonları ve ayarları sil. Tarayıcı yer imleriniz etkilenmez."
+  },
+  "options_resetBtn": {
+    "message": "Tüm verileri sıfırla"
+  },
+  "options_resetConfirm": {
+    "message": "Emin misiniz? Bu işlem geri alınamaz. Tüm profiller ve ayarlar kalıcı olarak silinecektir."
+  },
+  "options_resetSuccess": {
+    "message": "Eklenti sıfırlandı."
+  },
   "options_notifications": {
     "message": "Senkronizasyon bildirimleri"
   },
@@ -457,61 +497,156 @@
   "options_onboardingPullSuccess": {
     "message": "Yer işaretleri başarıyla çekildi."
   },
-  "options_onboardingWizardStart": { "message": "Kurulum sihirbazını başlat" },
-  "options_onboardingWizardTitle": { "message": "Kurulum sihirbazı" },
-  "options_onboardingWizardStepWelcomeTitle": { "message": "Hoş geldiniz" },
-  "options_onboardingWizardStepWelcomeText": { "message": "Bu sihirbaz depo kurulumu, jeton ayarı, bağlantı testi ve ilk sync adımında size rehberlik eder." },
-  "options_onboardingWizardStepRepoTitle": { "message": "Depo ayarları" },
-  "options_onboardingWizardStepRepoText": { "message": "Sahip, depo adı, dal ve temel yolu doldurun." },
-  "options_onboardingWizardStepTokenTitle": { "message": "Erişim jetonu" },
-  "options_onboardingWizardStepTokenText": { "message": "repo kapsamına sahip bir GitHub jetonu ekleyin ve gizli tutun." },
-  "options_onboardingWizardStepValidateTitle": { "message": "Bağlantıyı test et" },
-  "options_onboardingWizardStepValidateText": { "message": "Jeton, depo ve yol erişimini doğrulamak için testi çalıştırın." },
-  "options_onboardingWizardStepSyncTitle": { "message": "İlk sync adımı" },
-  "options_onboardingWizardStepSyncTextEmpty": { "message": "Yol boş. Başlamak için ilk klasör yapısını oluşturun." },
-  "options_onboardingWizardStepSyncTextExisting": { "message": "Depoda zaten yer işaretleri var. Bunları şimdi bu tarayıcıya çekin." },
-  "options_onboardingWizardStepFinishTitle": { "message": "Tamamla" },
-  "options_onboardingWizardStepFinishText": { "message": "Kurulum tamamlandı. Normal sync ayarlarıyla devam edebilirsiniz." },
-  "options_onboardingWizardActionTest": { "message": "Testi çalıştır" },
-  "options_onboardingWizardActionCreate": { "message": "Yapı oluştur" },
-  "options_onboardingWizardActionPull": { "message": "Şimdi çek" },
-  "options_onboardingWizardNext": { "message": "İleri" },
-  "options_onboardingWizardBack": { "message": "Geri" },
-  "options_onboardingWizardSkip": { "message": "Çıkış" },
-  "options_onboardingWizardFinish": { "message": "Bitir" },
-  "options_onboardingWizardNeedConnection": { "message": "Önce bağlantı testini çalıştırın." },
-  "options_onboardingWizardNeedAction": { "message": "Önce ilk sync adımını tamamlayın." },
-  "options_onboardingWizardDismissed": { "message": "Sihirbaz kapatıldı. İstediğiniz zaman yeniden başlatabilirsiniz." },
-  "options_onboardingWizardCompleted": { "message": "Sihirbaz başarıyla tamamlandı." },
-  "options_onboardingWizardStepTokenHelpTitle": { "message": "Jeton oluştur" },
-  "options_onboardingWizardStepTokenHelpText": { "message": "GitHub jeton ayarlarını açın ve repo kapsamına sahip bir Personal Access Token oluşturun." },
-  "options_onboardingWizardTokenHelpText": { "message": "GitHub ayarlarında repo kapsamına sahip bir Personal Access Token oluşturun." },
-  "options_onboardingWizardTokenHelpLink": { "message": "GitHub jeton sayfasını aç" },
-  "options_onboardingWizardStepHasTokenTitle": { "message": "Zaten bir jetonunuz var mı?" },
-  "options_onboardingWizardStepHasTokenText": { "message": "Yoksa önce oluşturun, ardından jeton girişine devam edin." },
-  "options_onboardingWizardHasTokenLabel": { "message": "Zaten bir jetonunuz var mı?" },
-  "options_onboardingWizardHasTokenYes": { "message": "Evet, zaten var" },
-  "options_onboardingWizardHasTokenNo": { "message": "Hayır, nasıl olduğunu göster" },
-  "options_onboardingWizardStepRepoDecisionTitle": { "message": "Depo modu" },
-  "options_onboardingWizardStepRepoDecisionText": { "message": "Depoyu otomatik oluşturmayı ya da mevcut depoyu kullanmayı seçin." },
-  "options_onboardingWizardRepoFlowLabel": { "message": "Depo modu" },
-  "options_onboardingWizardRepoFlowAuto": { "message": "Depoyu otomatik oluştur" },
-  "options_onboardingWizardRepoFlowManual": { "message": "Mevcut depoyu kullan" },
-  "options_onboardingWizardActionCheckEnvironment": { "message": "Depo ve yolu kontrol et" },
-  "options_onboardingWizardTokenValidated": { "message": "Jeton geçerli ve gerekli kapsama sahip." },
-  "options_onboardingWizardRepoRequired": { "message": "Lütfen depo sahibi ve adını girin." },
-  "options_onboardingWizardRepoCreateFailed": { "message": "Depo bu jeton/izinlerle oluşturulamadı." },
-  "options_onboardingWizardEnvironmentChecked": { "message": "Depo ve yol kontrolü tamamlandı." },
-  "options_onboardingWizardRepoOwnerMismatch": { "message": "Otomatik oluşturma yalnızca kendi kullanıcı deponuzu destekler. Sahibi $1 olarak ayarlayın." },
-  "options_onboardingWizardRepoUserOnlyHint": { "message": "Organizasyon veya farklı sahipli depolar için manuel mevcut depo moduna geçin." },
-  "options_onboardingWizardRepoCreatePermissionDenied": { "message": "Bu token depo oluşturamaz. repo kapsamını ve hesap izinlerini kontrol edin." },
+  "options_onboardingWizardStart": {
+    "message": "Kurulum sihirbazını başlat"
+  },
+  "options_onboardingWizardTitle": {
+    "message": "Kurulum sihirbazı"
+  },
+  "options_onboardingWizardStepWelcomeTitle": {
+    "message": "Hoş geldiniz"
+  },
+  "options_onboardingWizardStepWelcomeText": {
+    "message": "Bu sihirbaz depo kurulumu, jeton ayarı, bağlantı testi ve ilk sync adımında size rehberlik eder."
+  },
+  "options_onboardingWizardStepRepoTitle": {
+    "message": "Depo ayarları"
+  },
+  "options_onboardingWizardStepRepoText": {
+    "message": "Sahip, depo adı, dal ve temel yolu doldurun."
+  },
+  "options_onboardingWizardStepTokenTitle": {
+    "message": "Erişim jetonu"
+  },
+  "options_onboardingWizardStepTokenText": {
+    "message": "repo kapsamına sahip bir GitHub jetonu ekleyin ve gizli tutun."
+  },
+  "options_onboardingWizardStepValidateTitle": {
+    "message": "Bağlantıyı test et"
+  },
+  "options_onboardingWizardStepValidateText": {
+    "message": "Jeton, depo ve yol erişimini doğrulamak için testi çalıştırın."
+  },
+  "options_onboardingWizardStepSyncTitle": {
+    "message": "İlk sync adımı"
+  },
+  "options_onboardingWizardStepSyncTextEmpty": {
+    "message": "Yol boş. Başlamak için ilk klasör yapısını oluşturun."
+  },
+  "options_onboardingWizardStepSyncTextExisting": {
+    "message": "Depoda zaten yer işaretleri var. Bunları şimdi bu tarayıcıya çekin."
+  },
+  "options_onboardingWizardStepFinishTitle": {
+    "message": "Tamamla"
+  },
+  "options_onboardingWizardStepFinishText": {
+    "message": "Kurulum tamamlandı. Normal sync ayarlarıyla devam edebilirsiniz."
+  },
+  "options_onboardingWizardActionTest": {
+    "message": "Testi çalıştır"
+  },
+  "options_onboardingWizardActionCreate": {
+    "message": "Yapı oluştur"
+  },
+  "options_onboardingWizardActionPull": {
+    "message": "Şimdi çek"
+  },
+  "options_onboardingWizardNext": {
+    "message": "İleri"
+  },
+  "options_onboardingWizardBack": {
+    "message": "Geri"
+  },
+  "options_onboardingWizardSkip": {
+    "message": "Çıkış"
+  },
+  "options_onboardingWizardFinish": {
+    "message": "Bitir"
+  },
+  "options_onboardingWizardNeedConnection": {
+    "message": "Önce bağlantı testini çalıştırın."
+  },
+  "options_onboardingWizardNeedAction": {
+    "message": "Önce ilk sync adımını tamamlayın."
+  },
+  "options_onboardingWizardDismissed": {
+    "message": "Sihirbaz kapatıldı. İstediğiniz zaman yeniden başlatabilirsiniz."
+  },
+  "options_onboardingWizardCompleted": {
+    "message": "Sihirbaz başarıyla tamamlandı."
+  },
+  "options_onboardingWizardStepTokenHelpTitle": {
+    "message": "Jeton oluştur"
+  },
+  "options_onboardingWizardStepTokenHelpText": {
+    "message": "GitHub jeton ayarlarını açın ve repo kapsamına sahip bir Personal Access Token oluşturun."
+  },
+  "options_onboardingWizardTokenHelpText": {
+    "message": "GitHub ayarlarında repo kapsamına sahip bir Personal Access Token oluşturun."
+  },
+  "options_onboardingWizardTokenHelpLink": {
+    "message": "GitHub jeton sayfasını aç"
+  },
+  "options_onboardingWizardStepHasTokenTitle": {
+    "message": "Zaten bir jetonunuz var mı?"
+  },
+  "options_onboardingWizardStepHasTokenText": {
+    "message": "Yoksa önce oluşturun, ardından jeton girişine devam edin."
+  },
+  "options_onboardingWizardHasTokenLabel": {
+    "message": "Zaten bir jetonunuz var mı?"
+  },
+  "options_onboardingWizardHasTokenYes": {
+    "message": "Evet, zaten var"
+  },
+  "options_onboardingWizardHasTokenNo": {
+    "message": "Hayır, nasıl olduğunu göster"
+  },
+  "options_onboardingWizardStepRepoDecisionTitle": {
+    "message": "Depo modu"
+  },
+  "options_onboardingWizardStepRepoDecisionText": {
+    "message": "Depoyu otomatik oluşturmayı ya da mevcut depoyu kullanmayı seçin."
+  },
+  "options_onboardingWizardRepoFlowLabel": {
+    "message": "Depo modu"
+  },
+  "options_onboardingWizardRepoFlowAuto": {
+    "message": "Depoyu otomatik oluştur"
+  },
+  "options_onboardingWizardRepoFlowManual": {
+    "message": "Mevcut depoyu kullan"
+  },
+  "options_onboardingWizardActionCheckEnvironment": {
+    "message": "Depo ve yolu kontrol et"
+  },
+  "options_onboardingWizardTokenValidated": {
+    "message": "Jeton geçerli ve gerekli kapsama sahip."
+  },
+  "options_onboardingWizardRepoRequired": {
+    "message": "Lütfen depo sahibi ve adını girin."
+  },
+  "options_onboardingWizardRepoCreateFailed": {
+    "message": "Depo bu jeton/izinlerle oluşturulamadı."
+  },
+  "options_onboardingWizardEnvironmentChecked": {
+    "message": "Depo ve yol kontrolü tamamlandı."
+  },
+  "options_onboardingWizardRepoOwnerMismatch": {
+    "message": "Otomatik oluşturma yalnızca kendi kullanıcı deponuzu destekler. Sahibi $1 olarak ayarlayın."
+  },
+  "options_onboardingWizardRepoUserOnlyHint": {
+    "message": "Organizasyon veya farklı sahipli depolar için manuel mevcut depo moduna geçin."
+  },
+  "options_onboardingWizardRepoCreatePermissionDenied": {
+    "message": "Bu token depo oluşturamaz. repo kapsamını ve hesap izinlerini kontrol edin."
+  },
   "options_settingsSaved": {
     "message": "Ayarlar kaydedildi!"
   },
   "options_errorSaving": {
     "message": "Ayarlar kaydedilirken hata: $1"
   },
-
   "api_invalidToken": {
     "message": "Geçersiz jeton. Lütfen Kişisel Erişim Jetonunuzu kontrol edin."
   },
@@ -533,7 +668,6 @@
   "api_branchNotFound": {
     "message": "'$1' dalı bulunamadı."
   },
-
   "sync_alreadyInProgress": {
     "message": "Senkronizasyon zaten devam ediyor."
   },
@@ -576,7 +710,6 @@
   "sync_syncFailed": {
     "message": "Senkronizasyon başarısız: $1"
   },
-
   "serializer_invalidFormat": {
     "message": "Geçersiz yer işareti veri biçimi."
   },
@@ -589,11 +722,9 @@
   "serializer_untitled": {
     "message": "(Başlıksız)"
   },
-
   "popup_reportIssue": {
     "message": "Sorun Bildir"
   },
-
   "options_about": {
     "message": "Hakkında"
   },
@@ -651,7 +782,6 @@
   "options_debugLogExportEmpty": {
     "message": "Günlük boş. Hata ayıklama günlüğünü etkinleştirin ve önce bir senkronizasyon çalıştırın."
   },
-
   "options_tabGitHub": {
     "message": "GitHub"
   },
@@ -877,7 +1007,6 @@
   "help_voteBacklogBtn": {
     "message": "Backlog için oy ver"
   },
-
   "options_backupTitle": {
     "message": "Yedekleme"
   },
@@ -965,7 +1094,6 @@
   "options_exportEncryptedSuccess": {
     "message": "Şifreli dışa aktarma başarılı!"
   },
-
   "options_tabAutomation": {
     "message": "Otomasyon"
   },
@@ -1020,7 +1148,6 @@
   "options_automationParamBasePath": {
     "message": "Depodaki temel klasör (varsayılan bookmarks; Dosya Yolu ayarıyla eşleşmelidir)"
   },
-
   "options_exportImportTitle": {
     "message": "Dışa / İçe Aktar"
   },
@@ -1054,16 +1181,57 @@
   "help_filesTitle": {
     "message": "Dosyalar"
   },
-  "contextMenu_addToToolbar": { "message": "Yer İşareti Çubuğuna Ekle" },
-  "contextMenu_addToOther": { "message": "Diğer Yer İşaretlerine Ekle" },
-  "contextMenu_syncNow": { "message": "Şimdi Senkronize Et" },
-  "contextMenu_copyFaviconUrl": { "message": "Favicon URL'sini Kopyala" },
-  "contextMenu_downloadFavicon": { "message": "Favicon İndir" },
-  "contextMenu_notifAdded": { "message": "Yer işareti $1 konumuna eklendi" },
-  "contextMenu_notifFaviconCopied": { "message": "Favicon URL'si kopyalandı" },
-  "contextMenu_notifNotConfigured": { "message": "Lütfen önce GitSyncMarks'ı yapılandırın" },
-  "contextMenu_notifNoFavicon": { "message": "Bu sayfa için favicon bulunamadı" },
-  "contextMenu_notifError": { "message": "İşlem başarısız — lütfen tekrar deneyin" },
-  "contextMenu_switchProfile": { "message": "Profil değiştir" },
-  "contextMenu_notifProfileSwitched": { "message": "$1 profiline geçildi", "placeholders": { "name": { "content": "$1" } } }
+  "contextMenu_addToToolbar_chrome": {
+    "message": "Yer imleri çubuğuna ekle"
+  },
+  "contextMenu_addToToolbar_firefox": {
+    "message": "Yer imleri araç çubuğuna ekle"
+  },
+  "contextMenu_addToOther_chrome": {
+    "message": "Diğer yer imlerine ekle"
+  },
+  "contextMenu_addToOther_firefox": {
+    "message": "Yer imleri menüsüne ekle"
+  },
+  "contextMenu_addToFolderMenu": {
+    "message": "Klasöre ekle..."
+  },
+  "contextMenu_addToThisFolder": {
+    "message": "Bu klasöre ekle"
+  },
+  "contextMenu_syncNow": {
+    "message": "Şimdi Senkronize Et"
+  },
+  "contextMenu_copyFaviconUrl": {
+    "message": "Favicon URL'sini Kopyala"
+  },
+  "contextMenu_downloadFavicon": {
+    "message": "Favicon İndir"
+  },
+  "contextMenu_notifAdded": {
+    "message": "Yer işareti $1 konumuna eklendi"
+  },
+  "contextMenu_notifFaviconCopied": {
+    "message": "Favicon URL'si kopyalandı"
+  },
+  "contextMenu_notifNotConfigured": {
+    "message": "Lütfen önce GitSyncMarks'ı yapılandırın"
+  },
+  "contextMenu_notifNoFavicon": {
+    "message": "Bu sayfa için favicon bulunamadı"
+  },
+  "contextMenu_notifError": {
+    "message": "İşlem başarısız — lütfen tekrar deneyin"
+  },
+  "contextMenu_switchProfile": {
+    "message": "Profil değiştir"
+  },
+  "contextMenu_notifProfileSwitched": {
+    "message": "$1 profiline geçildi",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  }
 }

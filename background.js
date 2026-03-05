@@ -4,6 +4,8 @@
  * handles messages from popup/options pages, and triggers migration on first run.
  */
 
+const browserObj = typeof browser !== 'undefined' ? browser : chrome;
+
 import { initI18n, getMessage } from './lib/i18n.js';
 import {
   debouncedSync,
@@ -71,7 +73,7 @@ async function showNotificationIfEnabled(result) {
 
 // ---- Context menu click handler (top-level for SW persistence) ----
 
-chrome.contextMenus.onClicked.addListener(handleContextMenuClick);
+browserObj.contextMenus.onClicked.addListener(handleContextMenuClick);
 
 // ---- Bookmark event listeners ----
 

@@ -1333,14 +1333,23 @@
       }
     }
   },
-  "contextMenu_addToToolbar": {
-    "message": "Add to Toolbar"
+  "contextMenu_addToToolbar_chrome": {
+    "message": "Add to Bookmarks Bar"
   },
-  "contextMenu_addToOther": {
+  "contextMenu_addToToolbar_firefox": {
+    "message": "Add to Bookmarks Toolbar"
+  },
+  "contextMenu_addToOther_chrome": {
     "message": "Add to Other Bookmarks"
+  },
+  "contextMenu_addToOther_firefox": {
+    "message": "Add to Bookmarks Menu"
   },
   "contextMenu_addToFolderMenu": {
     "message": "Add to Folder..."
+  },
+  "contextMenu_addToThisFolder": {
+    "message": "Add to this folder"
   },
   "contextMenu_addToQuickFolder": {
     "message": "Add to $1",
