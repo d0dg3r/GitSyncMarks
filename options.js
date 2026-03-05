@@ -1692,9 +1692,9 @@ btnFolderUp.addEventListener('click', () => {
 
 document.addEventListener('click', (e) => {
   if (!folderBrowser.classList.contains('hidden') &&
-      !folderBrowser.contains(e.target) &&
-      e.target !== btnBrowseFolder &&
-      !btnBrowseFolder.contains(e.target)) {
+    !folderBrowser.contains(e.target) &&
+    e.target !== btnBrowseFolder &&
+    !btnBrowseFolder.contains(e.target)) {
     closeFolderBrowser();
   }
 });
@@ -1706,7 +1706,7 @@ debugLogEnabledInput.addEventListener('change', async () => {
 debugLogExportBtn.addEventListener('click', async () => {
   let content = '';
   try {
-    const res = await chrome.runtime.sendMessage({ action: 'getDebugLog' });
+    const res = await chrome.runtime.sendMessage({ action: 'getDebugLogExport' });
     content = res?.content ?? '';
   } catch {
     content = '';
@@ -1771,9 +1771,9 @@ function scheduleGenerateFilesSync(isRetry = false) {
 
 function updateGenerateFilesBtn() {
   const anyEnabled = generateReadmeMdSelect.value !== 'off' ||
-                     generateBookmarksHtmlSelect.value !== 'off' ||
-                     generateFeedXmlSelect.value !== 'off' ||
-                     generateDashyYmlSelect.value !== 'off';
+    generateBookmarksHtmlSelect.value !== 'off' ||
+    generateFeedXmlSelect.value !== 'off' ||
+    generateDashyYmlSelect.value !== 'off';
   generateFilesBtn.style.display = anyEnabled ? '' : 'none';
 }
 
@@ -1781,9 +1781,9 @@ async function onGenerateFilesToggleChange() {
   updateGenerateFilesBtn();
   await saveSettings();
   if (generateReadmeMdSelect.value === 'auto' ||
-      generateBookmarksHtmlSelect.value === 'auto' ||
-      generateFeedXmlSelect.value === 'auto' ||
-      generateDashyYmlSelect.value === 'auto') {
+    generateBookmarksHtmlSelect.value === 'auto' ||
+    generateFeedXmlSelect.value === 'auto' ||
+    generateDashyYmlSelect.value === 'auto') {
     scheduleGenerateFilesSync();
   }
 }
@@ -2164,77 +2164,77 @@ exportBtn.addEventListener('click', async () => {
 
 async function applyImportedSettings(settings) {
   if (settings.profiles && Object.keys(settings.profiles).length > 0) {
-      const profileTokens = {};
-      const profilesToSave = {};
-      for (const [id, p] of Object.entries(settings.profiles)) {
-        profilesToSave[id] = {
-          id: p.id || id,
-          name: p.name || 'Default',
-          owner: p.owner || '',
-          repo: p.repo || '',
-          branch: p.branch || 'main',
-          filePath: p.filePath || 'bookmarks',
-          githubReposEnabled: p.githubReposEnabled ?? false,
-          githubReposParent: p.githubReposParent ?? 'other',
-          githubReposUsername: p.githubReposUsername ?? '',
-        };
-        if (p.token) {
-          profileTokens[id] = await encryptToken(p.token);
-        }
-      }
-      await chrome.storage.sync.set({
-        profiles: profilesToSave,
-        activeProfileId: settings.activeProfileId || Object.keys(profilesToSave)[0],
-        autoSync: settings.autoSync !== false,
-        syncInterval: settings.syncInterval ?? 15,
-        syncOnStartup: settings.syncOnStartup || false,
-        syncOnFocus: settings.syncOnFocus || false,
-        syncProfile: settings.syncProfile || 'normal',
-        debounceDelay: settings.debounceDelay ?? 5000,
-        notificationsMode: settings.notificationsMode || 'all',
-        language: settings.language || 'auto',
-        theme: settings.theme || 'auto',
-        profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
-        generateReadmeMd: settings.generateReadmeMd !== false,
-        generateBookmarksHtml: settings.generateBookmarksHtml !== false,
-        generateFeedXml: settings.generateFeedXml ?? 'auto',
-        generateDashyYml: settings.generateDashyYml ?? 'off',
-        settingsSyncGlobalWriteEnabled: settings.settingsSyncGlobalWriteEnabled === true,
-      });
-      await chrome.storage.local.set({ profileTokens });
-    } else {
-      const defaultProfile = {
-        id: 'default',
-        name: 'Default',
-        owner: settings.repoOwner || '',
-        repo: settings.repoName || '',
-        branch: settings.branch || 'main',
-        filePath: settings.filePath || 'bookmarks',
+    const profileTokens = {};
+    const profilesToSave = {};
+    for (const [id, p] of Object.entries(settings.profiles)) {
+      profilesToSave[id] = {
+        id: p.id || id,
+        name: p.name || 'Default',
+        owner: p.owner || '',
+        repo: p.repo || '',
+        branch: p.branch || 'main',
+        filePath: p.filePath || 'bookmarks',
+        githubReposEnabled: p.githubReposEnabled ?? false,
+        githubReposParent: p.githubReposParent ?? 'other',
+        githubReposUsername: p.githubReposUsername ?? '',
       };
-      const profileTokens = {};
-      if (settings.githubToken) {
-        profileTokens.default = await encryptToken(settings.githubToken);
+      if (p.token) {
+        profileTokens[id] = await encryptToken(p.token);
       }
-      await chrome.storage.sync.set({
-        profiles: { default: defaultProfile },
-        activeProfileId: 'default',
-        autoSync: settings.autoSync !== false,
-        syncInterval: settings.syncInterval ?? 15,
-        syncOnStartup: settings.syncOnStartup || false,
-        syncOnFocus: settings.syncOnFocus || false,
-        syncProfile: settings.syncProfile || 'normal',
-        debounceDelay: settings.debounceDelay ?? 5000,
-        notificationsMode: settings.notificationsMode || 'all',
-        language: settings.language || 'auto',
-        theme: settings.theme || 'auto',
-        profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
-        generateReadmeMd: settings.generateReadmeMd !== false,
-        generateBookmarksHtml: settings.generateBookmarksHtml !== false,
-        generateFeedXml: settings.generateFeedXml ?? 'auto',
-        generateDashyYml: settings.generateDashyYml ?? 'off',
-        settingsSyncGlobalWriteEnabled: settings.settingsSyncGlobalWriteEnabled === true,
-      });
-      await chrome.storage.local.set({ profileTokens });
+    }
+    await chrome.storage.sync.set({
+      profiles: profilesToSave,
+      activeProfileId: settings.activeProfileId || Object.keys(profilesToSave)[0],
+      autoSync: settings.autoSync !== false,
+      syncInterval: settings.syncInterval ?? 15,
+      syncOnStartup: settings.syncOnStartup || false,
+      syncOnFocus: settings.syncOnFocus || false,
+      syncProfile: settings.syncProfile || 'normal',
+      debounceDelay: settings.debounceDelay ?? 5000,
+      notificationsMode: settings.notificationsMode || 'all',
+      language: settings.language || 'auto',
+      theme: settings.theme || 'auto',
+      profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
+      generateReadmeMd: settings.generateReadmeMd !== false,
+      generateBookmarksHtml: settings.generateBookmarksHtml !== false,
+      generateFeedXml: settings.generateFeedXml ?? 'auto',
+      generateDashyYml: settings.generateDashyYml ?? 'off',
+      settingsSyncGlobalWriteEnabled: settings.settingsSyncGlobalWriteEnabled === true,
+    });
+    await chrome.storage.local.set({ profileTokens });
+  } else {
+    const defaultProfile = {
+      id: 'default',
+      name: 'Default',
+      owner: settings.repoOwner || '',
+      repo: settings.repoName || '',
+      branch: settings.branch || 'main',
+      filePath: settings.filePath || 'bookmarks',
+    };
+    const profileTokens = {};
+    if (settings.githubToken) {
+      profileTokens.default = await encryptToken(settings.githubToken);
+    }
+    await chrome.storage.sync.set({
+      profiles: { default: defaultProfile },
+      activeProfileId: 'default',
+      autoSync: settings.autoSync !== false,
+      syncInterval: settings.syncInterval ?? 15,
+      syncOnStartup: settings.syncOnStartup || false,
+      syncOnFocus: settings.syncOnFocus || false,
+      syncProfile: settings.syncProfile || 'normal',
+      debounceDelay: settings.debounceDelay ?? 5000,
+      notificationsMode: settings.notificationsMode || 'all',
+      language: settings.language || 'auto',
+      theme: settings.theme || 'auto',
+      profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
+      generateReadmeMd: settings.generateReadmeMd !== false,
+      generateBookmarksHtml: settings.generateBookmarksHtml !== false,
+      generateFeedXml: settings.generateFeedXml ?? 'auto',
+      generateDashyYml: settings.generateDashyYml ?? 'off',
+      settingsSyncGlobalWriteEnabled: settings.settingsSyncGlobalWriteEnabled === true,
+    });
+    await chrome.storage.local.set({ profileTokens });
   }
   await chrome.runtime.sendMessage({ action: 'settingsChanged' });
 }

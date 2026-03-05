@@ -29,7 +29,7 @@ import {
   deleteSettingsProfile,
   STORAGE_KEYS,
 } from './lib/sync-engine.js';
-import { log as debugLog, getLogAsString } from './lib/debug-log.js';
+import { log as debugLog, getLogAsString, getDebugLogExportContent } from './lib/debug-log.js';
 import { GitHubAPI } from './lib/github-api.js';
 import { migrateTokenIfNeeded } from './lib/crypto.js';
 import { migrateToProfiles, getActiveProfileId, getActiveProfile, getProfiles, switchProfile, getSyncState } from './lib/profile-manager.js';
@@ -383,6 +383,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
   if (message.action === 'getDebugLog') {
     Promise.resolve(getLogAsString()).then((content) => sendResponse({ content }));
+    return true; // keep channel open for async response
+  }
+  if (message.action === 'getDebugLogExport') {
+    getDebugLogExportContent().then((content) => sendResponse({ content }));
     return true; // keep channel open for async response
   }
 });
