@@ -11,7 +11,6 @@
   "commands_openOptions": {
     "message": "拡張機能の設定を開く"
   },
-
   "popup_configureFirst": {
     "message": "最初に拡張機能を設定してください。"
   },
@@ -87,7 +86,6 @@
   "popup_lastCommit": {
     "message": "最終コミット:"
   },
-
   "options_subtitle": {
     "message": "設定"
   },
@@ -169,11 +167,21 @@
   "options_filePathHint": {
     "message": "ブックマークファイルを保存するフォルダ。"
   },
-  "options_browseFolder": { "message": "参照" },
-  "options_browseFolderEmpty": { "message": "フォルダが見つかりません" },
-  "options_browseFolderLoading": { "message": "読み込み中\u2026" },
-  "options_browseFolderSelect": { "message": "選択" },
-  "options_browseFolderNotConfigured": { "message": "先にトークン、オーナー、リポジトリを設定してください" },
+  "options_browseFolder": {
+    "message": "参照"
+  },
+  "options_browseFolderEmpty": {
+    "message": "フォルダが見つかりません"
+  },
+  "options_browseFolderLoading": {
+    "message": "読み込み中\u2026"
+  },
+  "options_browseFolderSelect": {
+    "message": "選択"
+  },
+  "options_browseFolderNotConfigured": {
+    "message": "先にトークン、オーナー、リポジトリを設定してください"
+  },
   "options_filePathChangeHint": {
     "message": "次の同期で競合が発生する場合があります。リモートの状態を採用するには「GitHub → ローカル」を使用してください。"
   },
@@ -357,22 +365,54 @@
   "options_settingsSyncImportReloadConfirmBtn": {
     "message": "Reload now"
   },
-  "options_settingsRegistryTitle": { "message": "Available settings in repository" },
-  "options_settingsRegistryRefreshBtn": { "message": "Refresh" },
-  "options_settingsRegistryImportApplyBtn": { "message": "Import & Apply" },
-  "options_settingsRegistrySyncSelectedBtn": { "message": "Sync current to selected" },
-  "options_settingsRegistryCreateBtn": { "message": "Create new setting" },
-  "options_settingsRegistryNewNamePlaceholder": { "message": "New setting name" },
-  "options_settingsRegistryActionPasswordPrompt": { "message": "Enter password for this settings action" },
-  "options_settingsRegistryImportSuccess": { "message": "Settings imported and applied" },
-  "options_settingsRegistrySyncSuccess": { "message": "Current settings synced to selected profile" },
-  "options_settingsRegistryCreateSuccess": { "message": "New settings profile created" },
-  "options_settingsRegistryCreateNameRequired": { "message": "Please enter a name for the new setting" },
-  "options_resetTitle": { "message": "拡張機能をリセット" },
-  "options_resetDescription": { "message": "すべてのプロファイル、トークン、設定を削除します。ブラウザのブックマークには影響しません。" },
-  "options_resetBtn": { "message": "すべてのデータをリセット" },
-  "options_resetConfirm": { "message": "本当にリセットしますか？この操作は取り消せません。すべてのプロファイルと設定が完全に削除されます。" },
-  "options_resetSuccess": { "message": "拡張機能がリセットされました。" },
+  "options_settingsRegistryTitle": {
+    "message": "Available settings in repository"
+  },
+  "options_settingsRegistryRefreshBtn": {
+    "message": "Refresh"
+  },
+  "options_settingsRegistryImportApplyBtn": {
+    "message": "Import & Apply"
+  },
+  "options_settingsRegistrySyncSelectedBtn": {
+    "message": "Sync current to selected"
+  },
+  "options_settingsRegistryCreateBtn": {
+    "message": "Create new setting"
+  },
+  "options_settingsRegistryNewNamePlaceholder": {
+    "message": "New setting name"
+  },
+  "options_settingsRegistryActionPasswordPrompt": {
+    "message": "Enter password for this settings action"
+  },
+  "options_settingsRegistryImportSuccess": {
+    "message": "Settings imported and applied"
+  },
+  "options_settingsRegistrySyncSuccess": {
+    "message": "Current settings synced to selected profile"
+  },
+  "options_settingsRegistryCreateSuccess": {
+    "message": "New settings profile created"
+  },
+  "options_settingsRegistryCreateNameRequired": {
+    "message": "Please enter a name for the new setting"
+  },
+  "options_resetTitle": {
+    "message": "拡張機能をリセット"
+  },
+  "options_resetDescription": {
+    "message": "すべてのプロファイル、トークン、設定を削除します。ブラウザのブックマークには影響しません。"
+  },
+  "options_resetBtn": {
+    "message": "すべてのデータをリセット"
+  },
+  "options_resetConfirm": {
+    "message": "本当にリセットしますか？この操作は取り消せません。すべてのプロファイルと設定が完全に削除されます。"
+  },
+  "options_resetSuccess": {
+    "message": "拡張機能がリセットされました。"
+  },
   "options_notifications": {
     "message": "同期通知"
   },
@@ -457,61 +497,156 @@
   "options_onboardingPullSuccess": {
     "message": "ブックマークの取り込みに成功しました。"
   },
-  "options_onboardingWizardStart": { "message": "セットアップウィザードを開始" },
-  "options_onboardingWizardTitle": { "message": "セットアップウィザード" },
-  "options_onboardingWizardStepWelcomeTitle": { "message": "ようこそ" },
-  "options_onboardingWizardStepWelcomeText": { "message": "このウィザードは、リポジトリ設定、トークン設定、接続テスト、初回syncを案内します。" },
-  "options_onboardingWizardStepRepoTitle": { "message": "リポジトリ設定" },
-  "options_onboardingWizardStepRepoText": { "message": "オーナー、リポジトリ名、ブランチ、ベースパスを入力してください。" },
-  "options_onboardingWizardStepTokenTitle": { "message": "アクセストークン" },
-  "options_onboardingWizardStepTokenText": { "message": "repoスコープのGitHubトークンを追加し、秘密に保ってください。" },
-  "options_onboardingWizardStepValidateTitle": { "message": "接続テスト" },
-  "options_onboardingWizardStepValidateText": { "message": "テストを実行して、トークン、リポジトリ、パスアクセスを確認します。" },
-  "options_onboardingWizardStepSyncTitle": { "message": "初回syncアクション" },
-  "options_onboardingWizardStepSyncTextEmpty": { "message": "パスが空です。開始するために初期構造を作成してください。" },
-  "options_onboardingWizardStepSyncTextExisting": { "message": "リポジトリに既存のブックマークがあります。今このブラウザに取り込みます。" },
-  "options_onboardingWizardStepFinishTitle": { "message": "完了" },
-  "options_onboardingWizardStepFinishText": { "message": "設定が完了しました。通常のsync設定を続けられます。" },
-  "options_onboardingWizardActionTest": { "message": "テスト実行" },
-  "options_onboardingWizardActionCreate": { "message": "構造を作成" },
-  "options_onboardingWizardActionPull": { "message": "今すぐ取り込む" },
-  "options_onboardingWizardNext": { "message": "次へ" },
-  "options_onboardingWizardBack": { "message": "戻る" },
-  "options_onboardingWizardSkip": { "message": "終了" },
-  "options_onboardingWizardFinish": { "message": "完了" },
-  "options_onboardingWizardNeedConnection": { "message": "先に接続テストを実行してください。" },
-  "options_onboardingWizardNeedAction": { "message": "先に初回syncアクションを完了してください。" },
-  "options_onboardingWizardDismissed": { "message": "ウィザードを閉じました。いつでも再開できます。" },
-  "options_onboardingWizardCompleted": { "message": "ウィザードが正常に完了しました。" },
-  "options_onboardingWizardStepTokenHelpTitle": { "message": "トークンを作成" },
-  "options_onboardingWizardStepTokenHelpText": { "message": "GitHubのトークン設定を開き、repoスコープ付きのPersonal Access Tokenを作成してください。" },
-  "options_onboardingWizardTokenHelpText": { "message": "GitHub設定でrepoスコープ付きのPersonal Access Tokenを作成してください。" },
-  "options_onboardingWizardTokenHelpLink": { "message": "GitHubトークンページを開く" },
-  "options_onboardingWizardStepHasTokenTitle": { "message": "すでにトークンを持っていますか？" },
-  "options_onboardingWizardStepHasTokenText": { "message": "持っていない場合は先に作成してからトークン入力へ進んでください。" },
-  "options_onboardingWizardHasTokenLabel": { "message": "すでにトークンを持っていますか？" },
-  "options_onboardingWizardHasTokenYes": { "message": "はい、すでに持っています" },
-  "options_onboardingWizardHasTokenNo": { "message": "いいえ、作り方を表示" },
-  "options_onboardingWizardStepRepoDecisionTitle": { "message": "リポジトリモード" },
-  "options_onboardingWizardStepRepoDecisionText": { "message": "リポジトリを自動作成するか、既存リポジトリを使うかを選択します。" },
-  "options_onboardingWizardRepoFlowLabel": { "message": "リポジトリモード" },
-  "options_onboardingWizardRepoFlowAuto": { "message": "リポジトリを自動作成" },
-  "options_onboardingWizardRepoFlowManual": { "message": "既存リポジトリを使用" },
-  "options_onboardingWizardActionCheckEnvironment": { "message": "リポジトリとパスを確認" },
-  "options_onboardingWizardTokenValidated": { "message": "トークンは有効で必要なスコープがあります。" },
-  "options_onboardingWizardRepoRequired": { "message": "リポジトリのオーナー名と名前を入力してください。" },
-  "options_onboardingWizardRepoCreateFailed": { "message": "現在のトークン/権限ではリポジトリを作成できませんでした。" },
-  "options_onboardingWizardEnvironmentChecked": { "message": "リポジトリとパスの確認が完了しました。" },
-  "options_onboardingWizardRepoOwnerMismatch": { "message": "自動作成はあなた自身のユーザーリポジトリのみ対応です。オーナーを $1 に設定してください。" },
-  "options_onboardingWizardRepoUserOnlyHint": { "message": "組織リポジトリや別オーナーのリポジトリは、手動の既存リポジトリモードを使用してください。" },
-  "options_onboardingWizardRepoCreatePermissionDenied": { "message": "このトークンではリポジトリを作成できません。repo スコープとアカウント権限を確認してください。" },
+  "options_onboardingWizardStart": {
+    "message": "セットアップウィザードを開始"
+  },
+  "options_onboardingWizardTitle": {
+    "message": "セットアップウィザード"
+  },
+  "options_onboardingWizardStepWelcomeTitle": {
+    "message": "ようこそ"
+  },
+  "options_onboardingWizardStepWelcomeText": {
+    "message": "このウィザードは、リポジトリ設定、トークン設定、接続テスト、初回syncを案内します。"
+  },
+  "options_onboardingWizardStepRepoTitle": {
+    "message": "リポジトリ設定"
+  },
+  "options_onboardingWizardStepRepoText": {
+    "message": "オーナー、リポジトリ名、ブランチ、ベースパスを入力してください。"
+  },
+  "options_onboardingWizardStepTokenTitle": {
+    "message": "アクセストークン"
+  },
+  "options_onboardingWizardStepTokenText": {
+    "message": "repoスコープのGitHubトークンを追加し、秘密に保ってください。"
+  },
+  "options_onboardingWizardStepValidateTitle": {
+    "message": "接続テスト"
+  },
+  "options_onboardingWizardStepValidateText": {
+    "message": "テストを実行して、トークン、リポジトリ、パスアクセスを確認します。"
+  },
+  "options_onboardingWizardStepSyncTitle": {
+    "message": "初回syncアクション"
+  },
+  "options_onboardingWizardStepSyncTextEmpty": {
+    "message": "パスが空です。開始するために初期構造を作成してください。"
+  },
+  "options_onboardingWizardStepSyncTextExisting": {
+    "message": "リポジトリに既存のブックマークがあります。今このブラウザに取り込みます。"
+  },
+  "options_onboardingWizardStepFinishTitle": {
+    "message": "完了"
+  },
+  "options_onboardingWizardStepFinishText": {
+    "message": "設定が完了しました。通常のsync設定を続けられます。"
+  },
+  "options_onboardingWizardActionTest": {
+    "message": "テスト実行"
+  },
+  "options_onboardingWizardActionCreate": {
+    "message": "構造を作成"
+  },
+  "options_onboardingWizardActionPull": {
+    "message": "今すぐ取り込む"
+  },
+  "options_onboardingWizardNext": {
+    "message": "次へ"
+  },
+  "options_onboardingWizardBack": {
+    "message": "戻る"
+  },
+  "options_onboardingWizardSkip": {
+    "message": "終了"
+  },
+  "options_onboardingWizardFinish": {
+    "message": "完了"
+  },
+  "options_onboardingWizardNeedConnection": {
+    "message": "先に接続テストを実行してください。"
+  },
+  "options_onboardingWizardNeedAction": {
+    "message": "先に初回syncアクションを完了してください。"
+  },
+  "options_onboardingWizardDismissed": {
+    "message": "ウィザードを閉じました。いつでも再開できます。"
+  },
+  "options_onboardingWizardCompleted": {
+    "message": "ウィザードが正常に完了しました。"
+  },
+  "options_onboardingWizardStepTokenHelpTitle": {
+    "message": "トークンを作成"
+  },
+  "options_onboardingWizardStepTokenHelpText": {
+    "message": "GitHubのトークン設定を開き、repoスコープ付きのPersonal Access Tokenを作成してください。"
+  },
+  "options_onboardingWizardTokenHelpText": {
+    "message": "GitHub設定でrepoスコープ付きのPersonal Access Tokenを作成してください。"
+  },
+  "options_onboardingWizardTokenHelpLink": {
+    "message": "GitHubトークンページを開く"
+  },
+  "options_onboardingWizardStepHasTokenTitle": {
+    "message": "すでにトークンを持っていますか？"
+  },
+  "options_onboardingWizardStepHasTokenText": {
+    "message": "持っていない場合は先に作成してからトークン入力へ進んでください。"
+  },
+  "options_onboardingWizardHasTokenLabel": {
+    "message": "すでにトークンを持っていますか？"
+  },
+  "options_onboardingWizardHasTokenYes": {
+    "message": "はい、すでに持っています"
+  },
+  "options_onboardingWizardHasTokenNo": {
+    "message": "いいえ、作り方を表示"
+  },
+  "options_onboardingWizardStepRepoDecisionTitle": {
+    "message": "リポジトリモード"
+  },
+  "options_onboardingWizardStepRepoDecisionText": {
+    "message": "リポジトリを自動作成するか、既存リポジトリを使うかを選択します。"
+  },
+  "options_onboardingWizardRepoFlowLabel": {
+    "message": "リポジトリモード"
+  },
+  "options_onboardingWizardRepoFlowAuto": {
+    "message": "リポジトリを自動作成"
+  },
+  "options_onboardingWizardRepoFlowManual": {
+    "message": "既存リポジトリを使用"
+  },
+  "options_onboardingWizardActionCheckEnvironment": {
+    "message": "リポジトリとパスを確認"
+  },
+  "options_onboardingWizardTokenValidated": {
+    "message": "トークンは有効で必要なスコープがあります。"
+  },
+  "options_onboardingWizardRepoRequired": {
+    "message": "リポジトリのオーナー名と名前を入力してください。"
+  },
+  "options_onboardingWizardRepoCreateFailed": {
+    "message": "現在のトークン/権限ではリポジトリを作成できませんでした。"
+  },
+  "options_onboardingWizardEnvironmentChecked": {
+    "message": "リポジトリとパスの確認が完了しました。"
+  },
+  "options_onboardingWizardRepoOwnerMismatch": {
+    "message": "自動作成はあなた自身のユーザーリポジトリのみ対応です。オーナーを $1 に設定してください。"
+  },
+  "options_onboardingWizardRepoUserOnlyHint": {
+    "message": "組織リポジトリや別オーナーのリポジトリは、手動の既存リポジトリモードを使用してください。"
+  },
+  "options_onboardingWizardRepoCreatePermissionDenied": {
+    "message": "このトークンではリポジトリを作成できません。repo スコープとアカウント権限を確認してください。"
+  },
   "options_settingsSaved": {
     "message": "設定を保存しました！"
   },
   "options_errorSaving": {
     "message": "設定の保存エラー: $1"
   },
-
   "api_invalidToken": {
     "message": "無効なトークンです。Personal Access Token を確認してください。"
   },
@@ -533,7 +668,6 @@
   "api_branchNotFound": {
     "message": "ブランチ '$1' が見つかりません。"
   },
-
   "sync_alreadyInProgress": {
     "message": "同期がすでに進行中です。"
   },
@@ -576,7 +710,6 @@
   "sync_syncFailed": {
     "message": "同期失敗: $1"
   },
-
   "serializer_invalidFormat": {
     "message": "無効なブックマークデータ形式です。"
   },
@@ -589,11 +722,9 @@
   "serializer_untitled": {
     "message": "（無題）"
   },
-
   "popup_reportIssue": {
     "message": "問題を報告"
   },
-
   "options_about": {
     "message": "概要"
   },
@@ -651,7 +782,6 @@
   "options_debugLogExportEmpty": {
     "message": "ログが空です。デバッグログを有効にして、まず同期を実行してください。"
   },
-
   "options_tabGitHub": {
     "message": "GitHub"
   },
@@ -877,7 +1007,6 @@
   "help_voteBacklogBtn": {
     "message": "バックログに投票"
   },
-
   "options_backupTitle": {
     "message": "バックアップ"
   },
@@ -965,7 +1094,6 @@
   "options_exportEncryptedSuccess": {
     "message": "暗号化エクスポート成功！"
   },
-
   "options_tabAutomation": {
     "message": "自動化"
   },
@@ -1020,7 +1148,6 @@
   "options_automationParamBasePath": {
     "message": "リポジトリ内のベースフォルダ（デフォルト bookmarks; ファイルパス設定と一致する必要があります）"
   },
-
   "options_exportImportTitle": {
     "message": "エクスポート / インポート"
   },
@@ -1054,16 +1181,57 @@
   "help_filesTitle": {
     "message": "ファイル"
   },
-  "contextMenu_addToToolbar": { "message": "ツールバーに追加" },
-  "contextMenu_addToOther": { "message": "その他のブックマークに追加" },
-  "contextMenu_syncNow": { "message": "今すぐ同期" },
-  "contextMenu_copyFaviconUrl": { "message": "ファビコンURLをコピー" },
-  "contextMenu_downloadFavicon": { "message": "ファビコンをダウンロード" },
-  "contextMenu_notifAdded": { "message": "ブックマークを $1 に追加しました" },
-  "contextMenu_notifFaviconCopied": { "message": "ファビコンURLをコピーしました" },
-  "contextMenu_notifNotConfigured": { "message": "先にGitSyncMarksを設定してください" },
-  "contextMenu_notifNoFavicon": { "message": "このページのファビコンはありません" },
-  "contextMenu_notifError": { "message": "操作に失敗しました — もう一度お試しください" },
-  "contextMenu_switchProfile": { "message": "プロファイルを切り替え" },
-  "contextMenu_notifProfileSwitched": { "message": "$1 に切り替えました", "placeholders": { "name": { "content": "$1" } } }
+  "contextMenu_addToToolbar_chrome": {
+    "message": "ブックマーク バーに追加"
+  },
+  "contextMenu_addToToolbar_firefox": {
+    "message": "ブックマークツールバーに追加"
+  },
+  "contextMenu_addToOther_chrome": {
+    "message": "その他のブックマークに追加"
+  },
+  "contextMenu_addToOther_firefox": {
+    "message": "ブックマークメニューに追加"
+  },
+  "contextMenu_addToFolderMenu": {
+    "message": "フォルダーに追加..."
+  },
+  "contextMenu_addToThisFolder": {
+    "message": "このフォルダーに追加"
+  },
+  "contextMenu_syncNow": {
+    "message": "今すぐ同期"
+  },
+  "contextMenu_copyFaviconUrl": {
+    "message": "ファビコンURLをコピー"
+  },
+  "contextMenu_downloadFavicon": {
+    "message": "ファビコンをダウンロード"
+  },
+  "contextMenu_notifAdded": {
+    "message": "ブックマークを $1 に追加しました"
+  },
+  "contextMenu_notifFaviconCopied": {
+    "message": "ファビコンURLをコピーしました"
+  },
+  "contextMenu_notifNotConfigured": {
+    "message": "先にGitSyncMarksを設定してください"
+  },
+  "contextMenu_notifNoFavicon": {
+    "message": "このページのファビコンはありません"
+  },
+  "contextMenu_notifError": {
+    "message": "操作に失敗しました — もう一度お試しください"
+  },
+  "contextMenu_switchProfile": {
+    "message": "プロファイルを切り替え"
+  },
+  "contextMenu_notifProfileSwitched": {
+    "message": "$1 に切り替えました",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  }
 }

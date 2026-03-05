@@ -4,6 +4,8 @@
  * handles messages from popup/options pages, and triggers migration on first run.
  */
 
+const browserObj = typeof browser !== 'undefined' ? browser : chrome;
+
 import { initI18n, getMessage } from './lib/i18n.js';
 import {
   debouncedSync,
@@ -27,11 +29,16 @@ import {
   deleteSettingsProfile,
   STORAGE_KEYS,
 } from './lib/sync-engine.js';
-import { log as debugLog, getLogAsString } from './lib/debug-log.js';
+import { log as debugLog, getLogAsString, getDebugLogExportContent } from './lib/debug-log.js';
 import { GitHubAPI } from './lib/github-api.js';
 import { migrateTokenIfNeeded } from './lib/crypto.js';
 import { migrateToProfiles, getActiveProfileId, getActiveProfile, getProfiles, switchProfile, getSyncState } from './lib/profile-manager.js';
-import { setupContextMenus, handleContextMenuClick, refreshProfileMenuItems } from './lib/context-menu.js';
+import {
+  setupContextMenus,
+  handleContextMenuClick,
+  refreshProfileMenuItems,
+  refreshContextMenuDynamicItems,
+} from './lib/context-menu.js';
 
 const ALARM_NAME = 'bookmarkSyncPull';
 const NOTIFICATION_ID = 'gitsyncmarks-sync';
@@ -66,27 +73,31 @@ async function showNotificationIfEnabled(result) {
 
 // ---- Context menu click handler (top-level for SW persistence) ----
 
-chrome.contextMenus.onClicked.addListener(handleContextMenuClick);
+browserObj.contextMenus.onClicked.addListener(handleContextMenuClick);
 
 // ---- Bookmark event listeners ----
 
 chrome.bookmarks.onCreated.addListener((id, bookmark) => {
   console.log('[GitSyncMarks] Bookmark created:', bookmark.title);
+  refreshContextMenuDynamicItems();
   triggerAutoSync();
 });
 
 chrome.bookmarks.onRemoved.addListener((id, removeInfo) => {
   console.log('[GitSyncMarks] Bookmark removed:', id);
+  refreshContextMenuDynamicItems();
   triggerAutoSync();
 });
 
 chrome.bookmarks.onChanged.addListener((id, changeInfo) => {
   console.log('[GitSyncMarks] Bookmark changed:', id, changeInfo);
+  refreshContextMenuDynamicItems();
   triggerAutoSync();
 });
 
 chrome.bookmarks.onMoved.addListener((id, moveInfo) => {
   console.log('[GitSyncMarks] Bookmark moved:', id);
+  refreshContextMenuDynamicItems();
   triggerAutoSync();
 });
 
@@ -374,13 +385,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     Promise.resolve(getLogAsString()).then((content) => sendResponse({ content }));
     return true; // keep channel open for async response
   }
+  if (message.action === 'getDebugLogExport') {
+    getDebugLogExportContent().then((content) => sendResponse({ content }));
+    return true; // keep channel open for async response
+  }
 });
 
 // ---- Refresh context menu when profiles change ----
 
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area === 'sync' && (changes.profiles || changes.activeProfileId)) {
-    refreshProfileMenuItems();
+    refreshContextMenuDynamicItems();
   }
 });
 
@@ -425,6 +440,7 @@ chrome.runtime.onStartup.addListener(async () => {
   await migrateToProfiles();
   await initI18n();
   refreshProfileMenuItems();
+  refreshContextMenuDynamicItems();
   await setupAlarm();
   await checkAndMigrate();
   if (await shouldAutoOpenOnboardingWizard()) {

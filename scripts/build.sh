@@ -56,6 +56,9 @@ SHARED_FILES=(
   popup.html
   popup.js
   popup.css
+  search.html
+  search.js
+  search.css
   options.html
   options.js
   options.css

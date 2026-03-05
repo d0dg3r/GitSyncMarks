@@ -5,6 +5,30 @@ All notable changes to GitSyncMarks are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.3] - 2026-03-02 (*Cortana*)
+
+### Added
+
+- **Dynamic Folders (context menu)**: New "Add to Folder..." recursive submenu in the context menu lets you add a bookmark directly to any folder. Added an "Add to this folder" entry at the top of submenus to allow direct parent selection.
+- **Browser-Native Naming**: Synced root folders ("Toolbar" and "Other") now automatically use browser-native names (e.g., "Bookmarks Bar" vs. "Bookmarks Toolbar") based on whether you are using Chrome or Firefox.
+- **Improved Context Menu Filtering**: The "Add to Folder..." menu is now filtered to only show sync-active root folders, providing a more focused user experience.
+- **Sync Now in Search**: New "Sync Now" button in the search popup header allows triggering a sync directly without opening the main popup.
+- **Search UI Redesign**: Redesigned the search popup header with unified styling for Sync and Close buttons, improved spacing, and better visual alignment.
+- **Full Translation**: The context menu and search UI are now fully translated into all 12 supported languages.
+- **Mobile App Info**: Added an explicit note in the Options -> About tab for Android users, clarifying that Firefox for Android does not support direct bookmark integration and directing them to the companion app.
+- **Pinned Quick Folders (context menu)**: Up to 3 profile-specific folders can now be pinned in Files -> Settings and used as one-click `Add to ...` entries in the right-click context menu.
+- **Open All from Folder (context menu)**: New submenu to open bookmark folders directly; safety guard requires a second click within 15 seconds when folder tab count exceeds the configured threshold.
+- **Bookmark search shortcut from context menu**: New `Search Bookmarks` entry opens a dedicated search popup window with local bookmark search and clickable result list.
+- **Files -> Settings tools card**: New UI block for context-menu quick-folder setup and open-all threshold configuration.
+
+### Changed
+
+- **Search highlighting**: The search text is now visually highlighted within titles and URLs in the search popup results.
+- **Context menu refresh behavior**: Dynamic sections (quick folders, open-all folder list, profile entries) now refresh when bookmarks or active profile data changes.
+- **Bookmark search popup polish**: Search popup now follows the extension theme (`auto/light/dark`), uses improved dark-mode button contrast, moves close to a compact top-right icon control, closes via both button and `Esc`, and replaces the old clear button with an inline `X` control in the search field.
+- **Bookmark search popup polish**: Search popup now follows the extension theme (`auto/light/dark`), uses improved dark-mode button contrast, moves close to a compact top-right icon control, closes via both button and `Esc`, and replaces the old clear button with an inline `X` control in the search field
+- **E2E smoke test robustness**: Settings-sync smoke test now validates disabled/enabled button states around client-name requirement instead of clicking disabled actions
+
 ## [2.5.2] - 2026-02-27 (*Cortana*)
 
 ### Fixed
@@ -233,7 +257,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release: bookmark sync with GitHub
 
-[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.2...HEAD
+[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.3...HEAD
+[2.5.3]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.2...v2.5.3
 [2.5.2]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.1...v2.5.2
 [2.5.1]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.4.0...v2.5.0

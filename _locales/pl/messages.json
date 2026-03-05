@@ -11,7 +11,6 @@
   "commands_openOptions": {
     "message": "Otwórz ustawienia rozszerzenia"
   },
-
   "popup_configureFirst": {
     "message": "Najpierw skonfiguruj rozszerzenie."
   },
@@ -87,7 +86,6 @@
   "popup_lastCommit": {
     "message": "Ostatni commit:"
   },
-
   "options_subtitle": {
     "message": "Ustawienia"
   },
@@ -169,11 +167,21 @@
   "options_filePathHint": {
     "message": "Folder, w którym będą przechowywane pliki zakładek."
   },
-  "options_browseFolder": { "message": "Przeglądaj" },
-  "options_browseFolderEmpty": { "message": "Nie znaleziono folderów" },
-  "options_browseFolderLoading": { "message": "Ładowanie\u2026" },
-  "options_browseFolderSelect": { "message": "Wybierz" },
-  "options_browseFolderNotConfigured": { "message": "Najpierw skonfiguruj token, właściciela i repozytorium" },
+  "options_browseFolder": {
+    "message": "Przeglądaj"
+  },
+  "options_browseFolderEmpty": {
+    "message": "Nie znaleziono folderów"
+  },
+  "options_browseFolderLoading": {
+    "message": "Ładowanie\u2026"
+  },
+  "options_browseFolderSelect": {
+    "message": "Wybierz"
+  },
+  "options_browseFolderNotConfigured": {
+    "message": "Najpierw skonfiguruj token, właściciela i repozytorium"
+  },
   "options_filePathChangeHint": {
     "message": "Przy następnej synchronizacji może wystąpić konflikt. Użyj \"GitHub → Lokalne\", aby przyjąć stan zdalny."
   },
@@ -357,22 +365,54 @@
   "options_settingsSyncImportReloadConfirmBtn": {
     "message": "Reload now"
   },
-  "options_settingsRegistryTitle": { "message": "Available settings in repository" },
-  "options_settingsRegistryRefreshBtn": { "message": "Refresh" },
-  "options_settingsRegistryImportApplyBtn": { "message": "Import & Apply" },
-  "options_settingsRegistrySyncSelectedBtn": { "message": "Sync current to selected" },
-  "options_settingsRegistryCreateBtn": { "message": "Create new setting" },
-  "options_settingsRegistryNewNamePlaceholder": { "message": "New setting name" },
-  "options_settingsRegistryActionPasswordPrompt": { "message": "Enter password for this settings action" },
-  "options_settingsRegistryImportSuccess": { "message": "Settings imported and applied" },
-  "options_settingsRegistrySyncSuccess": { "message": "Current settings synced to selected profile" },
-  "options_settingsRegistryCreateSuccess": { "message": "New settings profile created" },
-  "options_settingsRegistryCreateNameRequired": { "message": "Please enter a name for the new setting" },
-  "options_resetTitle": { "message": "Resetuj rozszerzenie" },
-  "options_resetDescription": { "message": "Usuń wszystkie profile, tokeny i ustawienia. Zakładki przeglądarki nie zostaną zmienione." },
-  "options_resetBtn": { "message": "Resetuj wszystkie dane" },
-  "options_resetConfirm": { "message": "Czy na pewno? Tej operacji nie można cofnąć. Wszystkie profile i ustawienia zostaną trwale usunięte." },
-  "options_resetSuccess": { "message": "Rozszerzenie zostało zresetowane." },
+  "options_settingsRegistryTitle": {
+    "message": "Available settings in repository"
+  },
+  "options_settingsRegistryRefreshBtn": {
+    "message": "Refresh"
+  },
+  "options_settingsRegistryImportApplyBtn": {
+    "message": "Import & Apply"
+  },
+  "options_settingsRegistrySyncSelectedBtn": {
+    "message": "Sync current to selected"
+  },
+  "options_settingsRegistryCreateBtn": {
+    "message": "Create new setting"
+  },
+  "options_settingsRegistryNewNamePlaceholder": {
+    "message": "New setting name"
+  },
+  "options_settingsRegistryActionPasswordPrompt": {
+    "message": "Enter password for this settings action"
+  },
+  "options_settingsRegistryImportSuccess": {
+    "message": "Settings imported and applied"
+  },
+  "options_settingsRegistrySyncSuccess": {
+    "message": "Current settings synced to selected profile"
+  },
+  "options_settingsRegistryCreateSuccess": {
+    "message": "New settings profile created"
+  },
+  "options_settingsRegistryCreateNameRequired": {
+    "message": "Please enter a name for the new setting"
+  },
+  "options_resetTitle": {
+    "message": "Resetuj rozszerzenie"
+  },
+  "options_resetDescription": {
+    "message": "Usuń wszystkie profile, tokeny i ustawienia. Zakładki przeglądarki nie zostaną zmienione."
+  },
+  "options_resetBtn": {
+    "message": "Resetuj wszystkie dane"
+  },
+  "options_resetConfirm": {
+    "message": "Czy na pewno? Tej operacji nie można cofnąć. Wszystkie profile i ustawienia zostaną trwale usunięte."
+  },
+  "options_resetSuccess": {
+    "message": "Rozszerzenie zostało zresetowane."
+  },
   "options_notifications": {
     "message": "Powiadomienia o synchronizacji"
   },
@@ -457,61 +497,156 @@
   "options_onboardingPullSuccess": {
     "message": "Zakładki pobrane pomyślnie."
   },
-  "options_onboardingWizardStart": { "message": "Uruchom kreator konfiguracji" },
-  "options_onboardingWizardTitle": { "message": "Kreator konfiguracji" },
-  "options_onboardingWizardStepWelcomeTitle": { "message": "Witamy" },
-  "options_onboardingWizardStepWelcomeText": { "message": "Ten kreator przeprowadzi przez konfigurację repozytorium, tokenu, test połączenia i pierwszy sync." },
-  "options_onboardingWizardStepRepoTitle": { "message": "Ustawienia repozytorium" },
-  "options_onboardingWizardStepRepoText": { "message": "Uzupełnij ownera, nazwę repozytorium, branch i ścieżkę bazową." },
-  "options_onboardingWizardStepTokenTitle": { "message": "Token dostępu" },
-  "options_onboardingWizardStepTokenText": { "message": "Dodaj token GitHub ze scope repo i zachowaj go prywatnie." },
-  "options_onboardingWizardStepValidateTitle": { "message": "Test połączenia" },
-  "options_onboardingWizardStepValidateText": { "message": "Uruchom test, aby sprawdzić token, repozytorium i dostęp do ścieżki." },
-  "options_onboardingWizardStepSyncTitle": { "message": "Pierwsza akcja sync" },
-  "options_onboardingWizardStepSyncTextEmpty": { "message": "Ścieżka jest pusta. Utwórz strukturę początkową, aby zacząć." },
-  "options_onboardingWizardStepSyncTextExisting": { "message": "W repozytorium są już zakładki. Pobierz je teraz do tej przeglądarki." },
-  "options_onboardingWizardStepFinishTitle": { "message": "Zakończenie" },
-  "options_onboardingWizardStepFinishText": { "message": "Konfiguracja zakończona. Możesz przejść do standardowych ustawień." },
-  "options_onboardingWizardActionTest": { "message": "Uruchom test" },
-  "options_onboardingWizardActionCreate": { "message": "Utwórz strukturę" },
-  "options_onboardingWizardActionPull": { "message": "Pobierz teraz" },
-  "options_onboardingWizardNext": { "message": "Dalej" },
-  "options_onboardingWizardBack": { "message": "Wstecz" },
-  "options_onboardingWizardSkip": { "message": "Wyjście" },
-  "options_onboardingWizardFinish": { "message": "Zakończ" },
-  "options_onboardingWizardNeedConnection": { "message": "Najpierw uruchom test połączenia." },
-  "options_onboardingWizardNeedAction": { "message": "Najpierw wykonaj pierwszą akcję sync." },
-  "options_onboardingWizardDismissed": { "message": "Kreator zamknięty. Możesz uruchomić go ponownie w każdej chwili." },
-  "options_onboardingWizardCompleted": { "message": "Kreator zakończony pomyślnie." },
-  "options_onboardingWizardStepTokenHelpTitle": { "message": "Utwórz token" },
-  "options_onboardingWizardStepTokenHelpText": { "message": "Otwórz ustawienia tokenów GitHub i utwórz Personal Access Token ze scope repo." },
-  "options_onboardingWizardTokenHelpText": { "message": "Utwórz Personal Access Token GitHub ze scope repo w ustawieniach GitHub." },
-  "options_onboardingWizardTokenHelpLink": { "message": "Otwórz stronę tokenów GitHub" },
-  "options_onboardingWizardStepHasTokenTitle": { "message": "Czy masz już token?" },
-  "options_onboardingWizardStepHasTokenText": { "message": "Jeśli nie, utwórz go najpierw, a potem przejdź dalej." },
-  "options_onboardingWizardHasTokenLabel": { "message": "Czy masz już token?" },
-  "options_onboardingWizardHasTokenYes": { "message": "Tak, mam już token" },
-  "options_onboardingWizardHasTokenNo": { "message": "Nie, pokaż jak" },
-  "options_onboardingWizardStepRepoDecisionTitle": { "message": "Tryb repozytorium" },
-  "options_onboardingWizardStepRepoDecisionText": { "message": "Wybierz automatyczne utworzenie repozytorium lub użycie istniejącego." },
-  "options_onboardingWizardRepoFlowLabel": { "message": "Tryb repozytorium" },
-  "options_onboardingWizardRepoFlowAuto": { "message": "Utwórz repozytorium automatycznie" },
-  "options_onboardingWizardRepoFlowManual": { "message": "Użyj istniejącego repozytorium" },
-  "options_onboardingWizardActionCheckEnvironment": { "message": "Sprawdź repozytorium i ścieżkę" },
-  "options_onboardingWizardTokenValidated": { "message": "Token jest poprawny i ma wymagany zakres." },
-  "options_onboardingWizardRepoRequired": { "message": "Podaj właściciela i nazwę repozytorium." },
-  "options_onboardingWizardRepoCreateFailed": { "message": "Nie udało się utworzyć repozytorium tym tokenem/uprawnieniami." },
-  "options_onboardingWizardEnvironmentChecked": { "message": "Sprawdzenie repozytorium i ścieżki zakończone." },
-  "options_onboardingWizardRepoOwnerMismatch": { "message": "Automatyczne tworzenie obsługuje tylko repozytoria Twojego użytkownika. Ustaw właściciela na $1." },
-  "options_onboardingWizardRepoUserOnlyHint": { "message": "Dla repozytoriów organizacji lub innego właściciela przełącz się na tryb ręczny (istniejące repozytorium)." },
-  "options_onboardingWizardRepoCreatePermissionDenied": { "message": "Ten token nie może tworzyć repozytoriów. Sprawdź zakres repo i uprawnienia konta." },
+  "options_onboardingWizardStart": {
+    "message": "Uruchom kreator konfiguracji"
+  },
+  "options_onboardingWizardTitle": {
+    "message": "Kreator konfiguracji"
+  },
+  "options_onboardingWizardStepWelcomeTitle": {
+    "message": "Witamy"
+  },
+  "options_onboardingWizardStepWelcomeText": {
+    "message": "Ten kreator przeprowadzi przez konfigurację repozytorium, tokenu, test połączenia i pierwszy sync."
+  },
+  "options_onboardingWizardStepRepoTitle": {
+    "message": "Ustawienia repozytorium"
+  },
+  "options_onboardingWizardStepRepoText": {
+    "message": "Uzupełnij ownera, nazwę repozytorium, branch i ścieżkę bazową."
+  },
+  "options_onboardingWizardStepTokenTitle": {
+    "message": "Token dostępu"
+  },
+  "options_onboardingWizardStepTokenText": {
+    "message": "Dodaj token GitHub ze scope repo i zachowaj go prywatnie."
+  },
+  "options_onboardingWizardStepValidateTitle": {
+    "message": "Test połączenia"
+  },
+  "options_onboardingWizardStepValidateText": {
+    "message": "Uruchom test, aby sprawdzić token, repozytorium i dostęp do ścieżki."
+  },
+  "options_onboardingWizardStepSyncTitle": {
+    "message": "Pierwsza akcja sync"
+  },
+  "options_onboardingWizardStepSyncTextEmpty": {
+    "message": "Ścieżka jest pusta. Utwórz strukturę początkową, aby zacząć."
+  },
+  "options_onboardingWizardStepSyncTextExisting": {
+    "message": "W repozytorium są już zakładki. Pobierz je teraz do tej przeglądarki."
+  },
+  "options_onboardingWizardStepFinishTitle": {
+    "message": "Zakończenie"
+  },
+  "options_onboardingWizardStepFinishText": {
+    "message": "Konfiguracja zakończona. Możesz przejść do standardowych ustawień."
+  },
+  "options_onboardingWizardActionTest": {
+    "message": "Uruchom test"
+  },
+  "options_onboardingWizardActionCreate": {
+    "message": "Utwórz strukturę"
+  },
+  "options_onboardingWizardActionPull": {
+    "message": "Pobierz teraz"
+  },
+  "options_onboardingWizardNext": {
+    "message": "Dalej"
+  },
+  "options_onboardingWizardBack": {
+    "message": "Wstecz"
+  },
+  "options_onboardingWizardSkip": {
+    "message": "Wyjście"
+  },
+  "options_onboardingWizardFinish": {
+    "message": "Zakończ"
+  },
+  "options_onboardingWizardNeedConnection": {
+    "message": "Najpierw uruchom test połączenia."
+  },
+  "options_onboardingWizardNeedAction": {
+    "message": "Najpierw wykonaj pierwszą akcję sync."
+  },
+  "options_onboardingWizardDismissed": {
+    "message": "Kreator zamknięty. Możesz uruchomić go ponownie w każdej chwili."
+  },
+  "options_onboardingWizardCompleted": {
+    "message": "Kreator zakończony pomyślnie."
+  },
+  "options_onboardingWizardStepTokenHelpTitle": {
+    "message": "Utwórz token"
+  },
+  "options_onboardingWizardStepTokenHelpText": {
+    "message": "Otwórz ustawienia tokenów GitHub i utwórz Personal Access Token ze scope repo."
+  },
+  "options_onboardingWizardTokenHelpText": {
+    "message": "Utwórz Personal Access Token GitHub ze scope repo w ustawieniach GitHub."
+  },
+  "options_onboardingWizardTokenHelpLink": {
+    "message": "Otwórz stronę tokenów GitHub"
+  },
+  "options_onboardingWizardStepHasTokenTitle": {
+    "message": "Czy masz już token?"
+  },
+  "options_onboardingWizardStepHasTokenText": {
+    "message": "Jeśli nie, utwórz go najpierw, a potem przejdź dalej."
+  },
+  "options_onboardingWizardHasTokenLabel": {
+    "message": "Czy masz już token?"
+  },
+  "options_onboardingWizardHasTokenYes": {
+    "message": "Tak, mam już token"
+  },
+  "options_onboardingWizardHasTokenNo": {
+    "message": "Nie, pokaż jak"
+  },
+  "options_onboardingWizardStepRepoDecisionTitle": {
+    "message": "Tryb repozytorium"
+  },
+  "options_onboardingWizardStepRepoDecisionText": {
+    "message": "Wybierz automatyczne utworzenie repozytorium lub użycie istniejącego."
+  },
+  "options_onboardingWizardRepoFlowLabel": {
+    "message": "Tryb repozytorium"
+  },
+  "options_onboardingWizardRepoFlowAuto": {
+    "message": "Utwórz repozytorium automatycznie"
+  },
+  "options_onboardingWizardRepoFlowManual": {
+    "message": "Użyj istniejącego repozytorium"
+  },
+  "options_onboardingWizardActionCheckEnvironment": {
+    "message": "Sprawdź repozytorium i ścieżkę"
+  },
+  "options_onboardingWizardTokenValidated": {
+    "message": "Token jest poprawny i ma wymagany zakres."
+  },
+  "options_onboardingWizardRepoRequired": {
+    "message": "Podaj właściciela i nazwę repozytorium."
+  },
+  "options_onboardingWizardRepoCreateFailed": {
+    "message": "Nie udało się utworzyć repozytorium tym tokenem/uprawnieniami."
+  },
+  "options_onboardingWizardEnvironmentChecked": {
+    "message": "Sprawdzenie repozytorium i ścieżki zakończone."
+  },
+  "options_onboardingWizardRepoOwnerMismatch": {
+    "message": "Automatyczne tworzenie obsługuje tylko repozytoria Twojego użytkownika. Ustaw właściciela na $1."
+  },
+  "options_onboardingWizardRepoUserOnlyHint": {
+    "message": "Dla repozytoriów organizacji lub innego właściciela przełącz się na tryb ręczny (istniejące repozytorium)."
+  },
+  "options_onboardingWizardRepoCreatePermissionDenied": {
+    "message": "Ten token nie może tworzyć repozytoriów. Sprawdź zakres repo i uprawnienia konta."
+  },
   "options_settingsSaved": {
     "message": "Ustawienia zapisane!"
   },
   "options_errorSaving": {
     "message": "Błąd zapisu ustawień: $1"
   },
-
   "api_invalidToken": {
     "message": "Nieprawidłowy token. Sprawdź swój Personal Access Token."
   },
@@ -533,7 +668,6 @@
   "api_branchNotFound": {
     "message": "Gałąź \"$1\" nie została znaleziona."
   },
-
   "sync_alreadyInProgress": {
     "message": "Synchronizacja już trwa."
   },
@@ -576,7 +710,6 @@
   "sync_syncFailed": {
     "message": "Synchronizacja nie powiodła się: $1"
   },
-
   "serializer_invalidFormat": {
     "message": "Nieprawidłowy format danych zakładek."
   },
@@ -589,11 +722,9 @@
   "serializer_untitled": {
     "message": "(Bez tytułu)"
   },
-
   "popup_reportIssue": {
     "message": "Zgłoś problem"
   },
-
   "options_about": {
     "message": "O rozszerzeniu"
   },
@@ -651,7 +782,6 @@
   "options_debugLogExportEmpty": {
     "message": "Dziennik jest pusty. Włącz dziennik debugowania i uruchom synchronizację."
   },
-
   "options_tabGitHub": {
     "message": "GitHub"
   },
@@ -877,7 +1007,6 @@
   "help_voteBacklogBtn": {
     "message": "Zagłosuj na backlog"
   },
-
   "options_backupTitle": {
     "message": "Kopia zapasowa"
   },
@@ -965,7 +1094,6 @@
   "options_exportEncryptedSuccess": {
     "message": "Zaszyfrowany eksport zakończony pomyślnie!"
   },
-
   "options_tabAutomation": {
     "message": "Automatyzacja"
   },
@@ -1020,7 +1148,6 @@
   "options_automationParamBasePath": {
     "message": "Folder bazowy w repozytorium (domyślnie bookmarks; musi odpowiadać ustawieniu Ścieżka pliku)"
   },
-
   "options_exportImportTitle": {
     "message": "Eksport / Import"
   },
@@ -1054,16 +1181,57 @@
   "help_filesTitle": {
     "message": "Pliki"
   },
-  "contextMenu_addToToolbar": { "message": "Dodaj do paska zakładek" },
-  "contextMenu_addToOther": { "message": "Dodaj do innych zakładek" },
-  "contextMenu_syncNow": { "message": "Synchronizuj teraz" },
-  "contextMenu_copyFaviconUrl": { "message": "Kopiuj URL favikony" },
-  "contextMenu_downloadFavicon": { "message": "Pobierz favikonę" },
-  "contextMenu_notifAdded": { "message": "Zakładka dodana do $1" },
-  "contextMenu_notifFaviconCopied": { "message": "URL favikony skopiowany" },
-  "contextMenu_notifNotConfigured": { "message": "Najpierw skonfiguruj GitSyncMarks" },
-  "contextMenu_notifNoFavicon": { "message": "Brak favikony dla tej strony" },
-  "contextMenu_notifError": { "message": "Akcja nie powiodła się — spróbuj ponownie" },
-  "contextMenu_switchProfile": { "message": "Zmień profil" },
-  "contextMenu_notifProfileSwitched": { "message": "Przełączono na $1", "placeholders": { "name": { "content": "$1" } } }
+  "contextMenu_addToToolbar_chrome": {
+    "message": "Dodaj do paska zakładek"
+  },
+  "contextMenu_addToToolbar_firefox": {
+    "message": "Dodaj do paska zakładek"
+  },
+  "contextMenu_addToOther_chrome": {
+    "message": "Dodaj do innych zakładek"
+  },
+  "contextMenu_addToOther_firefox": {
+    "message": "Dodaj do menu zakładek"
+  },
+  "contextMenu_addToFolderMenu": {
+    "message": "Dodaj do folderu..."
+  },
+  "contextMenu_addToThisFolder": {
+    "message": "Dodaj do tego folderu"
+  },
+  "contextMenu_syncNow": {
+    "message": "Synchronizuj teraz"
+  },
+  "contextMenu_copyFaviconUrl": {
+    "message": "Kopiuj URL favikony"
+  },
+  "contextMenu_downloadFavicon": {
+    "message": "Pobierz favikonę"
+  },
+  "contextMenu_notifAdded": {
+    "message": "Zakładka dodana do $1"
+  },
+  "contextMenu_notifFaviconCopied": {
+    "message": "URL favikony skopiowany"
+  },
+  "contextMenu_notifNotConfigured": {
+    "message": "Najpierw skonfiguruj GitSyncMarks"
+  },
+  "contextMenu_notifNoFavicon": {
+    "message": "Brak favikony dla tej strony"
+  },
+  "contextMenu_notifError": {
+    "message": "Akcja nie powiodła się — spróbuj ponownie"
+  },
+  "contextMenu_switchProfile": {
+    "message": "Zmień profil"
+  },
+  "contextMenu_notifProfileSwitched": {
+    "message": "Przełączono na $1",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  }
 }

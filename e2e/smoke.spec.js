@@ -61,6 +61,62 @@ test.describe('Smoke', () => {
     }
   });
 
+  test('Search popup finds and opens a bookmark', async ({ page, extensionId, context }) => {
+    await page.goto(`chrome-extension://${extensionId}/search.html`);
+    await page.waitForLoadState('domcontentloaded');
+    await test.expect(page.locator('h1')).toContainText(/Bookmark Search/i);
+    await test.expect(page.locator('.search-logo')).toBeVisible();
+    await test.expect(page.locator('#search-close-btn')).toBeVisible();
+    await test.expect(page.locator('#search-clear-btn')).toBeHidden();
+    await page.evaluate(() => {
+      const shell = document.querySelector('.search-shell')?.getBoundingClientRect();
+      const closeBtn = document.querySelector('#search-close-btn')?.getBoundingClientRect();
+      if (!shell || !closeBtn) throw new Error('Missing popup shell or close button');
+      const nearTop = closeBtn.top - shell.top <= 16;
+      const nearRight = shell.right - closeBtn.right <= 16;
+      if (!nearTop || !nearRight) {
+        throw new Error('Close button is not positioned in top-right corner');
+      }
+    });
+
+    await page.evaluate(() => {
+      window.__closeCalled = false;
+      window.close = () => { window.__closeCalled = true; };
+    });
+    await page.keyboard.press('Escape');
+    await test.expect.poll(async () => page.evaluate(() => window.__closeCalled)).toBe(true);
+
+    await page.evaluate(() => {
+      window.__closeCalled = false;
+      window.close = () => { window.__closeCalled = true; };
+    });
+    await page.locator('#search-close-btn').click();
+    await test.expect.poll(async () => page.evaluate(() => window.__closeCalled)).toBe(true);
+
+    const seed = await page.evaluate(async () => {
+      const marker = Date.now();
+      const title = `E2E Search Marker ${marker}`;
+      const url = `https://example.com/e2e-search-${marker}`;
+      await chrome.bookmarks.create({ parentId: '1', title, url });
+      return { title, url };
+    });
+
+    await page.locator('#search-input').fill(seed.title);
+    await test.expect(page.locator('#search-clear-btn')).toBeVisible();
+    await test.expect(page.locator('.search-result-item')).toContainText(seed.title, { timeout: 3000 });
+
+    await page.locator('#search-clear-btn').click();
+    await test.expect(page.locator('#search-clear-btn')).toBeHidden();
+    await page.locator('#search-input').fill(seed.title);
+
+    const newTabPromise = context.waitForEvent('page');
+    await page.locator('.search-open-btn').first().click();
+    const newTab = await newTabPromise;
+    await newTab.waitForLoadState('domcontentloaded');
+    await test.expect(newTab).toHaveURL(seed.url);
+    await newTab.close();
+  });
+
   test('Settings sync keeps global mode disabled', async ({ page, extensionId }) => {
     await page.goto(`chrome-extension://${extensionId}/options.html`);
     await page.waitForLoadState('networkidle');
@@ -87,8 +143,17 @@ test.describe('Smoke', () => {
     await page.locator('.sub-tab-btn[data-subtab="files-settings"]').click();
     await page.locator('label:has(#sync-settings-to-git)').click();
 
+    const createBtn = page.locator('#settings-sync-create-btn');
+    const importBtn = page.locator('#settings-sync-import-btn');
+    const syncSelectedBtn = page.locator('#settings-sync-push-selected-btn');
+
     await page.locator('#settings-sync-client-name').fill('');
-    await page.locator('#settings-sync-create-btn').click();
-    await test.expect(page.locator('#settings-sync-import-result')).toContainText(/client name/i);
+    await test.expect(createBtn).toBeDisabled();
+    await test.expect(importBtn).toBeDisabled();
+    await test.expect(syncSelectedBtn).toBeDisabled();
+
+    await page.locator('#settings-sync-client-name').fill('my-laptop');
+    await page.locator('#settings-sync-client-name').blur();
+    await test.expect(createBtn).toBeEnabled();
   });
 });

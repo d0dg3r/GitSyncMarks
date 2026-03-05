@@ -56,6 +56,9 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 
 **[GitSyncMarks-App](https://github.com/d0dg3r/GitSyncMarks-App)** — Cross-platform app (Android, iOS, Windows, macOS, Linux) that syncs bookmarks from your GitHub repo. Companion to this extension. Supports move, reorder, add via share (mobile), and encrypted settings sync. Android stable; F-Droid and Google Play coming soon.
 
+> [!NOTE]
+> On **Firefox for Android**, browser extensions cannot sync bookmarks directly to the native Firefox bookmark menu due to platform limitations. Use the **GitSyncMarks-App** to browse and manage your bookmarks on mobile.
+
 ## Features
 
 ### Core — GitSyncMarks
@@ -69,7 +72,9 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 ### Power Features
 
 - **Multiple profiles**: Up to 10 profiles (work, personal, etc.); each has its own GitHub repo config and bookmark set; Add, Rename, Delete; switching replaces local bookmarks with the target profile's data
-- **Context menu**: Right-click on any page or link — Add to Toolbar, Add to Other Bookmarks, Sync Now, Switch Profile, Copy Favicon URL, Download Favicon; bookmark is auto-synced after adding
+- **Context menu**: Right-click on any page or link — Add to Toolbar, Add to Other Bookmarks, Add to up to 3 pinned Quick Folders, Sync Now, Search Bookmarks (opens dedicated search popup with theme support, logo header, and close controls), Open All from Folder (with tab-count safety confirmation), Switch Profile, Copy Favicon URL, Download Favicon; bookmark is auto-synced after adding.
+  - **Browser-Native Folders**: Synced folders use native names (e.g., "Bookmarks Bar" vs. "Bookmarks Toolbar") based on your browser (Chrome/Firefox).
+  - **Dynamic Subfolders**: Use "Add to Folder..." to browse your entire synced tree; parents include an "Add to this folder" entry for quick placement.
 - **Favicon tools**: Copy any site's favicon URL to clipboard or download it as PNG — accessible from the context menu; uses the browser's favicon with Google favicon service fallback
 - **Automation**: Add bookmarks via Git, CLI, or GitHub Actions — the extension picks them up automatically (Files → Git Add)
 - **GitHub Repos folder**: Optional folder with bookmarks to all your GitHub repositories (public and private); configurable position (toolbar/other); manual refresh

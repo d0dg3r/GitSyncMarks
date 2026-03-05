@@ -55,6 +55,7 @@ const STORAGE_KEYS = {
   SETTINGS_SYNC_GLOBAL_WRITE_ENABLED: 'settingsSyncGlobalWriteEnabled',
   ONBOARDING_WIZARD_COMPLETED: 'onboardingWizardCompleted',
   ONBOARDING_WIZARD_DISMISSED: 'onboardingWizardDismissed',
+  CONTEXT_OPEN_ALL_THRESHOLD: 'contextOpenAllThreshold',
 };
 const LOCAL_STORAGE_KEYS = {
   SETTINGS_SYNC_CLIENT_NAME: 'settingsSyncClientName',
@@ -187,6 +188,12 @@ const THEME_TITLES = { auto: 'options_themeAuto', dark: 'options_themeDark', lig
 const debugLogEnabledInput = document.getElementById('debug-log-enabled');
 const debugLogExportBtn = document.getElementById('debug-log-export-btn');
 const debugLogResult = document.getElementById('debug-log-result');
+const quickFolderSelect1 = document.getElementById('quick-folder-1');
+const quickFolderSelect2 = document.getElementById('quick-folder-2');
+const quickFolderSelect3 = document.getElementById('quick-folder-3');
+const quickFoldersRefreshBtn = document.getElementById('quick-folders-refresh-btn');
+const quickFoldersResult = document.getElementById('quick-folders-result');
+const openAllThresholdInput = document.getElementById('open-all-threshold');
 
 // ---- DOM elements: Export/Import (compact dropdown UI) ----
 const exportTypeSelect = document.getElementById('export-type-select');
@@ -572,6 +579,53 @@ function populateLanguageDropdown() {
   }
 }
 
+let cachedBookmarkFolders = [];
+
+function flattenBookmarkFolders(node, parents, out) {
+  if (!node || node.url) return;
+  const title = node.title || '';
+  const pathParts = [...parents, title].filter(Boolean);
+  out.push({
+    id: node.id,
+    title: title || '(untitled folder)',
+    pathLabel: pathParts.join(' / ') || '(untitled folder)',
+  });
+  const children = Array.isArray(node.children) ? node.children : [];
+  for (const child of children) {
+    flattenBookmarkFolders(child, [...parents, title], out);
+  }
+}
+
+async function loadBookmarkFolders() {
+  const tree = await chrome.bookmarks.getTree();
+  const folders = [];
+  for (const root of tree || []) {
+    const rootChildren = Array.isArray(root.children) ? root.children : [];
+    for (const child of rootChildren) {
+      flattenBookmarkFolders(child, [], folders);
+    }
+  }
+  cachedBookmarkFolders = folders;
+  return folders;
+}
+
+function populateQuickFolderSelect(selectEl, selectedId) {
+  if (!selectEl) return;
+  selectEl.innerHTML = '';
+  const noneOpt = document.createElement('option');
+  noneOpt.value = '';
+  noneOpt.textContent = getMessage('options_contextMenuQuickFolderNone');
+  selectEl.appendChild(noneOpt);
+
+  for (const folder of cachedBookmarkFolders) {
+    const opt = document.createElement('option');
+    opt.value = folder.id;
+    opt.textContent = folder.pathLabel;
+    if (folder.id === selectedId) opt.selected = true;
+    selectEl.appendChild(opt);
+  }
+}
+
 async function loadSettings() {
   await migrateTokenIfNeeded();
   await migrateToProfiles();
@@ -608,6 +662,18 @@ async function loadSettings() {
     githubReposEnabledInput.checked = activeProfile?.githubReposEnabled ?? false;
     githubReposParentSelect.value = activeProfile?.githubReposParent ?? 'other';
   }
+  try {
+    await loadBookmarkFolders();
+  } catch (err) {
+    console.warn('[GitSyncMarks] Could not load bookmark folders for quick menu settings:', err);
+    cachedBookmarkFolders = [];
+  }
+  const quickFolderIds = Array.isArray(activeProfile?.contextQuickFolderIds)
+    ? activeProfile.contextQuickFolderIds.slice(0, 3)
+    : [];
+  populateQuickFolderSelect(quickFolderSelect1, quickFolderIds[0] || '');
+  populateQuickFolderSelect(quickFolderSelect2, quickFolderIds[1] || '');
+  populateQuickFolderSelect(quickFolderSelect3, quickFolderIds[2] || '');
 
   // Show GitHub Repos card only when token is configured
   const isConfigured = !!(tokenInput.value.trim() && ownerInput.value.trim() && repoInput.value.trim());
@@ -637,6 +703,7 @@ async function loadSettings() {
     theme: 'auto',
     profileSwitchWithoutConfirm: false,
     debugLogEnabled: false,
+    contextOpenAllThreshold: 15,
   };
   const globals = { ...syncDefaults, ...(await chrome.storage.sync.get(syncDefaults)) };
 
@@ -687,6 +754,9 @@ async function loadSettings() {
     themeCycleBtn.title = getMessage(THEME_TITLES[theme] ?? 'options_themeAuto');
   }
   profileSwitchWithoutConfirmInput.checked = globals.profileSwitchWithoutConfirm === true;
+  openAllThresholdInput.value = String(
+    Math.max(1, parseInt(globals.contextOpenAllThreshold, 10) || 15)
+  );
   profileSwitchConfirm.style.display = 'none';
   profileDeleteConfirm.style.display = 'none';
   profileAddDialog.style.display = 'none';
@@ -1440,6 +1510,11 @@ async function saveSettings() {
       token: tokenInput.value.trim(),
       githubReposEnabled: githubReposEnabledInput.checked,
       githubReposParent: githubReposParentSelect.value,
+      contextQuickFolderIds: [
+        quickFolderSelect1.value,
+        quickFolderSelect2.value,
+        quickFolderSelect3.value,
+      ].filter(Boolean),
     });
 
     // Save global sync settings
@@ -1460,6 +1535,7 @@ async function saveSettings() {
       [STORAGE_KEYS.SETTINGS_SYNC_GLOBAL_WRITE_ENABLED]: false,
       [STORAGE_KEYS.LANGUAGE]: languageSelect.value,
       [STORAGE_KEYS.PROFILE_SWITCH_WITHOUT_CONFIRM]: profileSwitchWithoutConfirmInput.checked,
+      [STORAGE_KEYS.CONTEXT_OPEN_ALL_THRESHOLD]: Math.max(1, parseInt(openAllThresholdInput.value, 10) || 15),
     });
 
     try {
@@ -1500,6 +1576,31 @@ repoInput.addEventListener('change', saveSettings);
 branchInput.addEventListener('change', saveSettings);
 filepathInput.addEventListener('change', saveSettings);
 profileSwitchWithoutConfirmInput.addEventListener('change', saveSettings);
+quickFolderSelect1.addEventListener('change', saveSettings);
+quickFolderSelect2.addEventListener('change', saveSettings);
+quickFolderSelect3.addEventListener('change', saveSettings);
+openAllThresholdInput.addEventListener('change', saveSettings);
+
+quickFoldersRefreshBtn.addEventListener('click', async () => {
+  try {
+    const selected = [
+      quickFolderSelect1.value,
+      quickFolderSelect2.value,
+      quickFolderSelect3.value,
+    ];
+    await loadBookmarkFolders();
+    populateQuickFolderSelect(quickFolderSelect1, selected[0]);
+    populateQuickFolderSelect(quickFolderSelect2, selected[1]);
+    populateQuickFolderSelect(quickFolderSelect3, selected[2]);
+    quickFoldersResult.textContent = getMessage('options_contextMenuFoldersRefreshed');
+    quickFoldersResult.className = 'validation-result success';
+    setTimeout(() => { quickFoldersResult.textContent = ''; }, 3000);
+    await saveSettings();
+  } catch (err) {
+    quickFoldersResult.textContent = getMessage('options_error', [err.message]);
+    quickFoldersResult.className = 'validation-result error';
+  }
+});
 
 // Folder browser
 let _folderBrowserCurrentPath = '';
@@ -1591,9 +1692,9 @@ btnFolderUp.addEventListener('click', () => {
 
 document.addEventListener('click', (e) => {
   if (!folderBrowser.classList.contains('hidden') &&
-      !folderBrowser.contains(e.target) &&
-      e.target !== btnBrowseFolder &&
-      !btnBrowseFolder.contains(e.target)) {
+    !folderBrowser.contains(e.target) &&
+    e.target !== btnBrowseFolder &&
+    !btnBrowseFolder.contains(e.target)) {
     closeFolderBrowser();
   }
 });
@@ -1605,7 +1706,7 @@ debugLogEnabledInput.addEventListener('change', async () => {
 debugLogExportBtn.addEventListener('click', async () => {
   let content = '';
   try {
-    const res = await chrome.runtime.sendMessage({ action: 'getDebugLog' });
+    const res = await chrome.runtime.sendMessage({ action: 'getDebugLogExport' });
     content = res?.content ?? '';
   } catch {
     content = '';
@@ -1670,9 +1771,9 @@ function scheduleGenerateFilesSync(isRetry = false) {
 
 function updateGenerateFilesBtn() {
   const anyEnabled = generateReadmeMdSelect.value !== 'off' ||
-                     generateBookmarksHtmlSelect.value !== 'off' ||
-                     generateFeedXmlSelect.value !== 'off' ||
-                     generateDashyYmlSelect.value !== 'off';
+    generateBookmarksHtmlSelect.value !== 'off' ||
+    generateFeedXmlSelect.value !== 'off' ||
+    generateDashyYmlSelect.value !== 'off';
   generateFilesBtn.style.display = anyEnabled ? '' : 'none';
 }
 
@@ -1680,9 +1781,9 @@ async function onGenerateFilesToggleChange() {
   updateGenerateFilesBtn();
   await saveSettings();
   if (generateReadmeMdSelect.value === 'auto' ||
-      generateBookmarksHtmlSelect.value === 'auto' ||
-      generateFeedXmlSelect.value === 'auto' ||
-      generateDashyYmlSelect.value === 'auto') {
+    generateBookmarksHtmlSelect.value === 'auto' ||
+    generateFeedXmlSelect.value === 'auto' ||
+    generateDashyYmlSelect.value === 'auto') {
     scheduleGenerateFilesSync();
   }
 }
@@ -2063,77 +2164,77 @@ exportBtn.addEventListener('click', async () => {
 
 async function applyImportedSettings(settings) {
   if (settings.profiles && Object.keys(settings.profiles).length > 0) {
-      const profileTokens = {};
-      const profilesToSave = {};
-      for (const [id, p] of Object.entries(settings.profiles)) {
-        profilesToSave[id] = {
-          id: p.id || id,
-          name: p.name || 'Default',
-          owner: p.owner || '',
-          repo: p.repo || '',
-          branch: p.branch || 'main',
-          filePath: p.filePath || 'bookmarks',
-          githubReposEnabled: p.githubReposEnabled ?? false,
-          githubReposParent: p.githubReposParent ?? 'other',
-          githubReposUsername: p.githubReposUsername ?? '',
-        };
-        if (p.token) {
-          profileTokens[id] = await encryptToken(p.token);
-        }
-      }
-      await chrome.storage.sync.set({
-        profiles: profilesToSave,
-        activeProfileId: settings.activeProfileId || Object.keys(profilesToSave)[0],
-        autoSync: settings.autoSync !== false,
-        syncInterval: settings.syncInterval ?? 15,
-        syncOnStartup: settings.syncOnStartup || false,
-        syncOnFocus: settings.syncOnFocus || false,
-        syncProfile: settings.syncProfile || 'normal',
-        debounceDelay: settings.debounceDelay ?? 5000,
-        notificationsMode: settings.notificationsMode || 'all',
-        language: settings.language || 'auto',
-        theme: settings.theme || 'auto',
-        profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
-        generateReadmeMd: settings.generateReadmeMd !== false,
-        generateBookmarksHtml: settings.generateBookmarksHtml !== false,
-        generateFeedXml: settings.generateFeedXml ?? 'auto',
-        generateDashyYml: settings.generateDashyYml ?? 'off',
-        settingsSyncGlobalWriteEnabled: settings.settingsSyncGlobalWriteEnabled === true,
-      });
-      await chrome.storage.local.set({ profileTokens });
-    } else {
-      const defaultProfile = {
-        id: 'default',
-        name: 'Default',
-        owner: settings.repoOwner || '',
-        repo: settings.repoName || '',
-        branch: settings.branch || 'main',
-        filePath: settings.filePath || 'bookmarks',
+    const profileTokens = {};
+    const profilesToSave = {};
+    for (const [id, p] of Object.entries(settings.profiles)) {
+      profilesToSave[id] = {
+        id: p.id || id,
+        name: p.name || 'Default',
+        owner: p.owner || '',
+        repo: p.repo || '',
+        branch: p.branch || 'main',
+        filePath: p.filePath || 'bookmarks',
+        githubReposEnabled: p.githubReposEnabled ?? false,
+        githubReposParent: p.githubReposParent ?? 'other',
+        githubReposUsername: p.githubReposUsername ?? '',
       };
-      const profileTokens = {};
-      if (settings.githubToken) {
-        profileTokens.default = await encryptToken(settings.githubToken);
+      if (p.token) {
+        profileTokens[id] = await encryptToken(p.token);
       }
-      await chrome.storage.sync.set({
-        profiles: { default: defaultProfile },
-        activeProfileId: 'default',
-        autoSync: settings.autoSync !== false,
-        syncInterval: settings.syncInterval ?? 15,
-        syncOnStartup: settings.syncOnStartup || false,
-        syncOnFocus: settings.syncOnFocus || false,
-        syncProfile: settings.syncProfile || 'normal',
-        debounceDelay: settings.debounceDelay ?? 5000,
-        notificationsMode: settings.notificationsMode || 'all',
-        language: settings.language || 'auto',
-        theme: settings.theme || 'auto',
-        profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
-        generateReadmeMd: settings.generateReadmeMd !== false,
-        generateBookmarksHtml: settings.generateBookmarksHtml !== false,
-        generateFeedXml: settings.generateFeedXml ?? 'auto',
-        generateDashyYml: settings.generateDashyYml ?? 'off',
-        settingsSyncGlobalWriteEnabled: settings.settingsSyncGlobalWriteEnabled === true,
-      });
-      await chrome.storage.local.set({ profileTokens });
+    }
+    await chrome.storage.sync.set({
+      profiles: profilesToSave,
+      activeProfileId: settings.activeProfileId || Object.keys(profilesToSave)[0],
+      autoSync: settings.autoSync !== false,
+      syncInterval: settings.syncInterval ?? 15,
+      syncOnStartup: settings.syncOnStartup || false,
+      syncOnFocus: settings.syncOnFocus || false,
+      syncProfile: settings.syncProfile || 'normal',
+      debounceDelay: settings.debounceDelay ?? 5000,
+      notificationsMode: settings.notificationsMode || 'all',
+      language: settings.language || 'auto',
+      theme: settings.theme || 'auto',
+      profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
+      generateReadmeMd: settings.generateReadmeMd !== false,
+      generateBookmarksHtml: settings.generateBookmarksHtml !== false,
+      generateFeedXml: settings.generateFeedXml ?? 'auto',
+      generateDashyYml: settings.generateDashyYml ?? 'off',
+      settingsSyncGlobalWriteEnabled: settings.settingsSyncGlobalWriteEnabled === true,
+    });
+    await chrome.storage.local.set({ profileTokens });
+  } else {
+    const defaultProfile = {
+      id: 'default',
+      name: 'Default',
+      owner: settings.repoOwner || '',
+      repo: settings.repoName || '',
+      branch: settings.branch || 'main',
+      filePath: settings.filePath || 'bookmarks',
+    };
+    const profileTokens = {};
+    if (settings.githubToken) {
+      profileTokens.default = await encryptToken(settings.githubToken);
+    }
+    await chrome.storage.sync.set({
+      profiles: { default: defaultProfile },
+      activeProfileId: 'default',
+      autoSync: settings.autoSync !== false,
+      syncInterval: settings.syncInterval ?? 15,
+      syncOnStartup: settings.syncOnStartup || false,
+      syncOnFocus: settings.syncOnFocus || false,
+      syncProfile: settings.syncProfile || 'normal',
+      debounceDelay: settings.debounceDelay ?? 5000,
+      notificationsMode: settings.notificationsMode || 'all',
+      language: settings.language || 'auto',
+      theme: settings.theme || 'auto',
+      profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
+      generateReadmeMd: settings.generateReadmeMd !== false,
+      generateBookmarksHtml: settings.generateBookmarksHtml !== false,
+      generateFeedXml: settings.generateFeedXml ?? 'auto',
+      generateDashyYml: settings.generateDashyYml ?? 'off',
+      settingsSyncGlobalWriteEnabled: settings.settingsSyncGlobalWriteEnabled === true,
+    });
+    await chrome.storage.local.set({ profileTokens });
   }
   await chrome.runtime.sendMessage({ action: 'settingsChanged' });
 }

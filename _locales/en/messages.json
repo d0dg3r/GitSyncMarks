@@ -11,7 +11,6 @@
   "commands_openOptions": {
     "message": "Open extension settings"
   },
-
   "popup_configureFirst": {
     "message": "Please configure the extension first."
   },
@@ -87,7 +86,6 @@
   "popup_lastCommit": {
     "message": "Last commit:"
   },
-
   "options_subtitle": {
     "message": "Settings"
   },
@@ -169,11 +167,21 @@
   "options_filePathHint": {
     "message": "Folder where bookmark files will be stored."
   },
-  "options_browseFolder": { "message": "Browse" },
-  "options_browseFolderEmpty": { "message": "No folders found" },
-  "options_browseFolderLoading": { "message": "Loading\u2026" },
-  "options_browseFolderSelect": { "message": "Select" },
-  "options_browseFolderNotConfigured": { "message": "Please configure token, owner, and repo first" },
+  "options_browseFolder": {
+    "message": "Browse"
+  },
+  "options_browseFolderEmpty": {
+    "message": "No folders found"
+  },
+  "options_browseFolderLoading": {
+    "message": "Loading\u2026"
+  },
+  "options_browseFolderSelect": {
+    "message": "Select"
+  },
+  "options_browseFolderNotConfigured": {
+    "message": "Please configure token, owner, and repo first"
+  },
   "options_filePathChangeHint": {
     "message": "On the next sync a conflict may occur. Use \"GitHub → Local\" to adopt the remote state."
   },
@@ -417,12 +425,24 @@
   "options_settingsSyncMigrationDone": {
     "message": "Legacy settings profiles were migrated to readable client names."
   },
-  "options_resetTitle": { "message": "Reset Extension" },
-  "options_resetDescription": { "message": "Delete all profiles, tokens, and settings. Your browser bookmarks will not be affected." },
-  "options_resetBtn": { "message": "Reset all data" },
-  "options_resetConfirmBtn": { "message": "Yes, delete all data" },
-  "options_resetConfirm": { "message": "Are you sure? This cannot be undone. All profiles and settings will be permanently deleted." },
-  "options_resetSuccess": { "message": "Extension has been reset." },
+  "options_resetTitle": {
+    "message": "Reset Extension"
+  },
+  "options_resetDescription": {
+    "message": "Delete all profiles, tokens, and settings. Your browser bookmarks will not be affected."
+  },
+  "options_resetBtn": {
+    "message": "Reset all data"
+  },
+  "options_resetConfirmBtn": {
+    "message": "Yes, delete all data"
+  },
+  "options_resetConfirm": {
+    "message": "Are you sure? This cannot be undone. All profiles and settings will be permanently deleted."
+  },
+  "options_resetSuccess": {
+    "message": "Extension has been reset."
+  },
   "options_notifications": {
     "message": "Sync notifications"
   },
@@ -519,69 +539,180 @@
   "options_onboardingPullSuccess": {
     "message": "Bookmarks pulled successfully."
   },
-  "options_onboardingWizardStart": { "message": "Start setup wizard" },
-  "options_onboardingWizardTitle": { "message": "Setup wizard" },
-  "options_onboardingWizardStepWelcomeTitle": { "message": "Welcome" },
-  "options_onboardingWizardStepWelcomeText": { "message": "This wizard guides you through token setup, repository configuration, automatic checks, and first sync." },
-  "options_onboardingWizardStepRepoTitle": { "message": "Repository settings" },
-  "options_onboardingWizardStepRepoText": { "message": "Fill repository owner, repository name, branch, and base path." },
-  "options_onboardingWizardStepTokenTitle": { "message": "Access token" },
-  "options_onboardingWizardStepTokenText": { "message": "Add a GitHub token with repo scope. Keep it private." },
-  "options_onboardingWizardStepValidateTitle": { "message": "Test connection" },
-  "options_onboardingWizardStepValidateText": { "message": "Click Next to automatically validate token, repository, and path access." },
-  "options_onboardingWizardStepSyncTitle": { "message": "First sync action" },
-  "options_onboardingWizardStepSyncTextEmpty": { "message": "Path is empty. Create the initial folder structure to start syncing." },
-  "options_onboardingWizardStepSyncTextExisting": { "message": "Bookmarks already exist in the repository. Pull them to this browser now." },
-  "options_onboardingWizardStepFinishTitle": { "message": "Finish" },
-  "options_onboardingWizardStepFinishText": { "message": "Setup is complete. You can continue with regular sync settings." },
-  "options_onboardingWizardActionTest": { "message": "Run test" },
-  "options_onboardingWizardActionCreate": { "message": "Create structure" },
-  "options_onboardingWizardActionPull": { "message": "Pull now" },
-  "options_onboardingWizardNext": { "message": "Next" },
-  "options_onboardingWizardBack": { "message": "Back" },
-  "options_onboardingWizardSkip": { "message": "Exit" },
-  "options_onboardingWizardFinish": { "message": "Finish" },
-  "options_onboardingWizardNeedConnection": { "message": "Please provide a valid token to continue." },
-  "options_onboardingWizardNeedAction": { "message": "Please complete the automatic setup step first." },
-  "options_onboardingWizardDismissed": { "message": "Wizard dismissed. You can restart it anytime." },
-  "options_onboardingWizardCompleted": { "message": "Wizard completed successfully." },
-  "options_onboardingWizardStepTokenHelpTitle": { "message": "Create token" },
-  "options_onboardingWizardStepTokenHelpText": { "message": "Open GitHub token settings and create a Personal Access Token with repo scope." },
-  "options_onboardingWizardTokenHelpText": { "message": "Create a GitHub Personal Access Token with repo scope in your GitHub settings." },
-  "options_onboardingWizardTokenHelpIntro": { "message": "A Personal Access Token (PAT) lets GitSyncMarks access your GitHub repository to sync bookmarks. You create it in your GitHub account settings." },
-  "options_onboardingWizardTokenHelpScopes": { "message": "The token needs the <code>repo</code> scope. This gives read/write access to your repositories (including private ones) and lets the extension create a repo if you choose auto-create. Treat the token like a password and keep it private." },
-  "options_onboardingWizardTokenStep1": { "message": "Click the link below to open GitHub's token creation page." },
-  "options_onboardingWizardTokenStep2": { "message": "Give the token a name (e.g. \"GitSyncMarks\") and set an expiration if you prefer." },
-  "options_onboardingWizardTokenStep3": { "message": "Under \"Scopes\", check <code>repo</code> (full control of private repositories)." },
-  "options_onboardingWizardTokenStep4": { "message": "Click \"Generate token\", copy it, and paste it in the field below." },
-  "options_onboardingWizardTokenHelpLink": { "message": "Open GitHub token page" },
-  "options_onboardingWizardStepHasTokenTitle": { "message": "Do you already have a token?" },
-  "options_onboardingWizardStepHasTokenText": { "message": "If not, create one first, then continue with token input." },
-  "options_onboardingWizardHasTokenLabel": { "message": "Do you already have a token?" },
-  "options_onboardingWizardHasTokenYes": { "message": "Yes, I already have one" },
-  "options_onboardingWizardHasTokenNo": { "message": "No, show me how" },
-  "options_onboardingWizardStepRepoDecisionTitle": { "message": "Repository setup mode" },
-  "options_onboardingWizardStepRepoDecisionText": { "message": "Choose auto-create repository or manual existing repository flow." },
-  "options_onboardingWizardRepoFlowLabel": { "message": "Repository setup mode" },
-  "options_onboardingWizardRepoFlowAuto": { "message": "Auto-create repository" },
-  "options_onboardingWizardRepoFlowManual": { "message": "Use existing repository" },
-  "options_onboardingWizardActionCheckEnvironment": { "message": "Check repository and path" },
-  "options_onboardingWizardTokenValidated": { "message": "Token is valid and has required scope." },
-  "options_onboardingWizardRepoRequired": { "message": "Please enter repository owner and name." },
-  "options_onboardingWizardRepoCreateFailed": { "message": "Repository could not be created with the current token/permissions." },
-  "options_onboardingWizardEnvironmentChecked": { "message": "Repository and path check completed." },
-  "options_onboardingWizardSyncInProgress": { "message": "Working in background, please wait..." },
-  "options_onboardingWizardFirstSyncHint": { "message": "First sync can take a little longer while repository checks, path setup, and initial sync are running." },
-  "options_onboardingWizardRepoOwnerMismatch": { "message": "Auto-create supports only your own user repositories. Set owner to $1." },
-  "options_onboardingWizardRepoUserOnlyHint": { "message": "For organization or different-owner repositories, switch to manual existing repository mode." },
-  "options_onboardingWizardRepoCreatePermissionDenied": { "message": "This token cannot create repositories. Check repo scope and account permissions." },
+  "options_onboardingWizardStart": {
+    "message": "Start setup wizard"
+  },
+  "options_onboardingWizardTitle": {
+    "message": "Setup wizard"
+  },
+  "options_onboardingWizardStepWelcomeTitle": {
+    "message": "Welcome"
+  },
+  "options_onboardingWizardStepWelcomeText": {
+    "message": "This wizard guides you through token setup, repository configuration, automatic checks, and first sync."
+  },
+  "options_onboardingWizardStepRepoTitle": {
+    "message": "Repository settings"
+  },
+  "options_onboardingWizardStepRepoText": {
+    "message": "Fill repository owner, repository name, branch, and base path."
+  },
+  "options_onboardingWizardStepTokenTitle": {
+    "message": "Access token"
+  },
+  "options_onboardingWizardStepTokenText": {
+    "message": "Add a GitHub token with repo scope. Keep it private."
+  },
+  "options_onboardingWizardStepValidateTitle": {
+    "message": "Test connection"
+  },
+  "options_onboardingWizardStepValidateText": {
+    "message": "Click Next to automatically validate token, repository, and path access."
+  },
+  "options_onboardingWizardStepSyncTitle": {
+    "message": "First sync action"
+  },
+  "options_onboardingWizardStepSyncTextEmpty": {
+    "message": "Path is empty. Create the initial folder structure to start syncing."
+  },
+  "options_onboardingWizardStepSyncTextExisting": {
+    "message": "Bookmarks already exist in the repository. Pull them to this browser now."
+  },
+  "options_onboardingWizardStepFinishTitle": {
+    "message": "Finish"
+  },
+  "options_onboardingWizardStepFinishText": {
+    "message": "Setup is complete. You can continue with regular sync settings."
+  },
+  "options_onboardingWizardActionTest": {
+    "message": "Run test"
+  },
+  "options_onboardingWizardActionCreate": {
+    "message": "Create structure"
+  },
+  "options_onboardingWizardActionPull": {
+    "message": "Pull now"
+  },
+  "options_onboardingWizardNext": {
+    "message": "Next"
+  },
+  "options_onboardingWizardBack": {
+    "message": "Back"
+  },
+  "options_onboardingWizardSkip": {
+    "message": "Exit"
+  },
+  "options_onboardingWizardFinish": {
+    "message": "Finish"
+  },
+  "options_onboardingWizardNeedConnection": {
+    "message": "Please provide a valid token to continue."
+  },
+  "options_onboardingWizardNeedAction": {
+    "message": "Please complete the automatic setup step first."
+  },
+  "options_onboardingWizardDismissed": {
+    "message": "Wizard dismissed. You can restart it anytime."
+  },
+  "options_onboardingWizardCompleted": {
+    "message": "Wizard completed successfully."
+  },
+  "options_onboardingWizardStepTokenHelpTitle": {
+    "message": "Create token"
+  },
+  "options_onboardingWizardStepTokenHelpText": {
+    "message": "Open GitHub token settings and create a Personal Access Token with repo scope."
+  },
+  "options_onboardingWizardTokenHelpText": {
+    "message": "Create a GitHub Personal Access Token with repo scope in your GitHub settings."
+  },
+  "options_onboardingWizardTokenHelpIntro": {
+    "message": "A Personal Access Token (PAT) lets GitSyncMarks access your GitHub repository to sync bookmarks. You create it in your GitHub account settings."
+  },
+  "options_onboardingWizardTokenHelpScopes": {
+    "message": "The token needs the <code>repo</code> scope. This gives read/write access to your repositories (including private ones) and lets the extension create a repo if you choose auto-create. Treat the token like a password and keep it private."
+  },
+  "options_onboardingWizardTokenStep1": {
+    "message": "Click the link below to open GitHub's token creation page."
+  },
+  "options_onboardingWizardTokenStep2": {
+    "message": "Give the token a name (e.g. \"GitSyncMarks\") and set an expiration if you prefer."
+  },
+  "options_onboardingWizardTokenStep3": {
+    "message": "Under \"Scopes\", check <code>repo</code> (full control of private repositories)."
+  },
+  "options_onboardingWizardTokenStep4": {
+    "message": "Click \"Generate token\", copy it, and paste it in the field below."
+  },
+  "options_onboardingWizardTokenHelpLink": {
+    "message": "Open GitHub token page"
+  },
+  "options_onboardingWizardStepHasTokenTitle": {
+    "message": "Do you already have a token?"
+  },
+  "options_onboardingWizardStepHasTokenText": {
+    "message": "If not, create one first, then continue with token input."
+  },
+  "options_onboardingWizardHasTokenLabel": {
+    "message": "Do you already have a token?"
+  },
+  "options_onboardingWizardHasTokenYes": {
+    "message": "Yes, I already have one"
+  },
+  "options_onboardingWizardHasTokenNo": {
+    "message": "No, show me how"
+  },
+  "options_onboardingWizardStepRepoDecisionTitle": {
+    "message": "Repository setup mode"
+  },
+  "options_onboardingWizardStepRepoDecisionText": {
+    "message": "Choose auto-create repository or manual existing repository flow."
+  },
+  "options_onboardingWizardRepoFlowLabel": {
+    "message": "Repository setup mode"
+  },
+  "options_onboardingWizardRepoFlowAuto": {
+    "message": "Auto-create repository"
+  },
+  "options_onboardingWizardRepoFlowManual": {
+    "message": "Use existing repository"
+  },
+  "options_onboardingWizardActionCheckEnvironment": {
+    "message": "Check repository and path"
+  },
+  "options_onboardingWizardTokenValidated": {
+    "message": "Token is valid and has required scope."
+  },
+  "options_onboardingWizardRepoRequired": {
+    "message": "Please enter repository owner and name."
+  },
+  "options_onboardingWizardRepoCreateFailed": {
+    "message": "Repository could not be created with the current token/permissions."
+  },
+  "options_onboardingWizardEnvironmentChecked": {
+    "message": "Repository and path check completed."
+  },
+  "options_onboardingWizardSyncInProgress": {
+    "message": "Working in background, please wait..."
+  },
+  "options_onboardingWizardFirstSyncHint": {
+    "message": "First sync can take a little longer while repository checks, path setup, and initial sync are running."
+  },
+  "options_onboardingWizardRepoOwnerMismatch": {
+    "message": "Auto-create supports only your own user repositories. Set owner to $1."
+  },
+  "options_onboardingWizardRepoUserOnlyHint": {
+    "message": "For organization or different-owner repositories, switch to manual existing repository mode."
+  },
+  "options_onboardingWizardRepoCreatePermissionDenied": {
+    "message": "This token cannot create repositories. Check repo scope and account permissions."
+  },
   "options_settingsSaved": {
     "message": "Settings saved!"
   },
   "options_errorSaving": {
     "message": "Error saving settings: $1"
   },
-
   "api_invalidToken": {
     "message": "Invalid token. Please check your Personal Access Token."
   },
@@ -603,7 +734,6 @@
   "api_branchNotFound": {
     "message": "Branch '$1' not found."
   },
-
   "sync_alreadyInProgress": {
     "message": "Sync already in progress."
   },
@@ -646,7 +776,6 @@
   "sync_syncFailed": {
     "message": "Sync failed: $1"
   },
-
   "serializer_invalidFormat": {
     "message": "Invalid bookmark data format."
   },
@@ -659,14 +788,12 @@
   "serializer_untitled": {
     "message": "(Untitled)"
   },
-
   "popup_website": {
     "message": "Website"
   },
   "popup_reportIssue": {
     "message": "Report Issue"
   },
-
   "options_about": {
     "message": "About"
   },
@@ -681,6 +808,9 @@
   },
   "options_mobileAppTitle": {
     "message": "Mobile App"
+  },
+  "options_mobileAppAlert": {
+    "message": "<strong>Note for Android users:</strong> Firefox for Android does not support direct bookmark syncing via extensions. You must use the companion app."
   },
   "options_mobileAppDesc": {
     "message": "View your bookmarks on the go. GitSyncMarks-App (iOS + Android) syncs from your GitHub repo — read-only companion."
@@ -724,7 +854,6 @@
   "options_debugLogExportEmpty": {
     "message": "Log is empty. Enable debug log and run a sync first."
   },
-
   "options_tabGitHub": {
     "message": "GitHub"
   },
@@ -857,6 +986,12 @@
   "help_settingsSyncDesc": {
     "message": "When enabled, extension settings (profiles, tokens, preferences) are encrypted and stored in the repo as profiles/<alias>/settings.enc. Enter a client name first; Import, Sync, and Create buttons are disabled until set. After a successful Import, Sync, or Create, the password is saved automatically. Password must be the same on all devices sharing the repo."
   },
+  "help_contextMenuToolsTitle": {
+    "message": "Context menu tools"
+  },
+  "help_contextMenuToolsDesc": {
+    "message": "In Files -> Settings, you can pin up to 3 quick target folders for one-click Add actions and configure the Open All confirmation threshold. The context menu also includes Search Bookmarks, which opens a dedicated search popup."
+  },
   "help_notificationsTitle": {
     "message": "Notifications"
   },
@@ -953,7 +1088,6 @@
   "help_website": {
     "message": "Website"
   },
-
   "options_backupTitle": {
     "message": "Backup"
   },
@@ -1041,7 +1175,6 @@
   "options_exportEncryptedSuccess": {
     "message": "Encrypted export successful!"
   },
-
   "options_tabAutomation": {
     "message": "Automation"
   },
@@ -1096,7 +1229,6 @@
   "options_automationParamBasePath": {
     "message": "Base folder in repo (default bookmarks; must match File Path setting)"
   },
-
   "options_exportImportTitle": {
     "message": "Export / Import"
   },
@@ -1130,16 +1262,170 @@
   "help_filesTitle": {
     "message": "Files"
   },
-  "contextMenu_addToToolbar": { "message": "Add to Toolbar" },
-  "contextMenu_addToOther": { "message": "Add to Other Bookmarks" },
-  "contextMenu_syncNow": { "message": "Sync Now" },
-  "contextMenu_copyFaviconUrl": { "message": "Copy Favicon URL" },
-  "contextMenu_downloadFavicon": { "message": "Download Favicon" },
-  "contextMenu_notifAdded": { "message": "Bookmark added to $1" },
-  "contextMenu_notifFaviconCopied": { "message": "Favicon URL copied" },
-  "contextMenu_notifNotConfigured": { "message": "Please configure GitSyncMarks first" },
-  "contextMenu_notifNoFavicon": { "message": "No favicon available for this page" },
-  "contextMenu_notifError": { "message": "Action failed — please try again" },
-  "contextMenu_switchProfile": { "message": "Switch Profile" },
-  "contextMenu_notifProfileSwitched": { "message": "Switched to $1", "placeholders": { "name": { "content": "$1" } } }
+  "options_contextMenuToolsTitle": {
+    "message": "Context Menu Tools"
+  },
+  "options_contextMenuToolsDesc": {
+    "message": "Configure quick folder actions, open-all safety, and the Search Bookmarks popup shortcut."
+  },
+  "options_contextMenuQuickFoldersLabel": {
+    "message": "Pinned Quick Folders"
+  },
+  "options_contextMenuQuickFoldersHint": {
+    "message": "Choose up to three folders shown as one-click \"Add to ...\" entries in the context menu."
+  },
+  "options_contextMenuQuickFolder1": {
+    "message": "Quick folder 1"
+  },
+  "options_contextMenuQuickFolder2": {
+    "message": "Quick folder 2"
+  },
+  "options_contextMenuQuickFolder3": {
+    "message": "Quick folder 3"
+  },
+  "options_contextMenuQuickFolderNone": {
+    "message": "(none)"
+  },
+  "options_contextMenuRefreshFolders": {
+    "message": "Refresh folder list"
+  },
+  "options_contextMenuFoldersRefreshed": {
+    "message": "Folder list refreshed"
+  },
+  "options_contextMenuOpenAllThresholdLabel": {
+    "message": "Open-all confirmation threshold (tabs)"
+  },
+  "options_contextMenuOpenAllThresholdHint": {
+    "message": "If a folder has more tabs than this value, click the menu entry twice within 15 seconds to confirm."
+  },
+  "search_title": {
+    "message": "Bookmark Search"
+  },
+  "search_subtitle": {
+    "message": "Search local bookmarks and open matches in a new tab."
+  },
+  "search_windowTitle": {
+    "message": "GitSyncMarks - Bookmark Search"
+  },
+  "search_inputPlaceholder": {
+    "message": "Type title or URL..."
+  },
+  "search_closeBtn": {
+    "message": "Close"
+  },
+  "search_clearBtn": {
+    "message": "Clear"
+  },
+  "search_openBtn": {
+    "message": "Open"
+  },
+  "search_statusSearching": {
+    "message": "Searching..."
+  },
+  "search_statusNoResults": {
+    "message": "No bookmarks found"
+  },
+  "search_statusResultCount": {
+    "message": "$1 result(s)",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "contextMenu_addToToolbar_chrome": {
+    "message": "Add to Bookmarks Bar"
+  },
+  "contextMenu_addToToolbar_firefox": {
+    "message": "Add to Bookmarks Toolbar"
+  },
+  "contextMenu_addToOther_chrome": {
+    "message": "Add to Other Bookmarks"
+  },
+  "contextMenu_addToOther_firefox": {
+    "message": "Add to Bookmarks Menu"
+  },
+  "contextMenu_addToFolderMenu": {
+    "message": "Add to Folder..."
+  },
+  "contextMenu_addToThisFolder": {
+    "message": "Add to this folder"
+  },
+  "contextMenu_addToQuickFolder": {
+    "message": "Add to $1",
+    "placeholders": {
+      "folderName": {
+        "content": "$1"
+      }
+    }
+  },
+  "contextMenu_syncNow": {
+    "message": "Sync Now"
+  },
+  "contextMenu_searchBookmarks": {
+    "message": "Search Bookmarks"
+  },
+  "contextMenu_openAllFromFolder": {
+    "message": "Open All from Folder"
+  },
+  "contextMenu_copyFaviconUrl": {
+    "message": "Copy Favicon URL"
+  },
+  "contextMenu_downloadFavicon": {
+    "message": "Download Favicon"
+  },
+  "contextMenu_notifAdded": {
+    "message": "Bookmark added to $1"
+  },
+  "contextMenu_notifFaviconCopied": {
+    "message": "Favicon URL copied"
+  },
+  "contextMenu_notifNotConfigured": {
+    "message": "Please configure GitSyncMarks first"
+  },
+  "contextMenu_notifNoFavicon": {
+    "message": "No favicon available for this page"
+  },
+  "contextMenu_notifFolderMissing": {
+    "message": "Selected folder no longer exists. Refresh your quick folder settings."
+  },
+  "contextMenu_notifOpenAllEmpty": {
+    "message": "Selected folder has no bookmarks to open."
+  },
+  "contextMenu_notifOpenAllNeedsConfirm": {
+    "message": "Folder contains $1 tabs (threshold: $2). Click again within 15 seconds to confirm.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "threshold": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_notifOpenAllSuccess": {
+    "message": "Opened $1 tab(s) from $2",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "folderName": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_notifError": {
+    "message": "Action failed — please try again"
+  },
+  "contextMenu_switchProfile": {
+    "message": "Switch Profile"
+  },
+  "contextMenu_notifProfileSwitched": {
+    "message": "Switched to $1",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  }
 }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitSyncMarks - Bookmark Search</title>
+  <link rel="stylesheet" href="search.css">
+</head>
+
+<body>
+  <main class="search-shell">
+    <header class="search-header">
+      <div class="search-title-wrap">
+        <img src="icons/icon48-plain.png" alt="" class="search-logo">
+        <div>
+          <h1 data-i18n="search_title">Bookmark Search</h1>
+          <p class="subtitle" data-i18n="search_subtitle">Search local bookmarks and open matches in a new tab.</p>
+        </div>
+      </div>
+      <div class="search-header-actions">
+        <button type="button" id="search-sync-btn" class="search-sync-btn" aria-label="Sync now" title="Sync now">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" class="search-sync-icon">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.92-10.26l5.58 5.58" />
+          </svg>
+        </button>
+        <button type="button" id="search-close-btn" class="search-close-btn" aria-label="Close search popup">x</button>
+      </div>
+    </header>
+
+    <div class="search-row">
+      <div class="search-input-wrap">
+        <input type="text" id="search-input" data-i18n-placeholder="search_inputPlaceholder"
+          placeholder="Type title or URL..." autocomplete="off">
+        <button type="button" id="search-clear-btn" class="search-clear-btn" aria-label="Clear search">X</button>
+      </div>
+    </div>
+
+    <div id="search-status" class="search-status" aria-live="polite"></div>
+    <ul id="search-results" class="search-results"></ul>
+  </main>
+
+  <script type="module" src="search.js"></script>
+</body>
+
+</html>

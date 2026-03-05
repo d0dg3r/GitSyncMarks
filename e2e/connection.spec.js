@@ -341,12 +341,12 @@ test.describe('Connection', () => {
       // No dialog - folder may already exist with content
     }
 
-    // Expect success: "Connection OK!" or "Folder created"
+    // Accept all successful connection outcomes.
     const validationResult = page.locator('#validation-result');
     await test.expect(validationResult).toHaveClass(/success/, { timeout: 15000 });
     await test
       .expect(validationResult)
-      .toContainText(/Connection OK|Folder created|Token valid/i, { timeout: 1000 });
+      .toContainText(/Connection OK|Folder created|Token valid|pulled successfully/i, { timeout: 1000 });
   });
 
     test.skip(!hasTestCredentials(), 'Missing test credentials');
