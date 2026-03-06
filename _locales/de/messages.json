@@ -428,11 +428,32 @@
   "options_notificationsHint": {
     "message": "Wähle, wann Benachrichtigungen angezeigt werden."
   },
+  "options_menu_showAsSubmenu": {
+    "message": "Als Untermenü anzeigen"
+  },
   "notification_titleSuccess": {
     "message": "Sync erfolgreich"
   },
   "notification_titleFailure": {
     "message": "Sync fehlgeschlagen"
+  },
+  "contextMenu_category_ADD": {
+    "message": "Lesezeichen hinzufügen"
+  },
+  "contextMenu_category_LINKWARDEN": {
+    "message": "Linkwarden"
+  },
+  "contextMenu_category_TOOLS": {
+    "message": "Werkzeuge & Sync"
+  },
+  "contextMenu_category_FAVICONS": {
+    "message": "Favicon-Tools"
+  },
+  "contextMenu_saveToLinkwarden": {
+    "message": "In Linkwarden speichern"
+  },
+  "contextMenu_saveToLinkwardenScreenshot": {
+    "message": "Mit Screenshot speichern"
   },
   "options_saveSettings": {
     "message": "Einstellungen speichern"
@@ -800,6 +821,9 @@
   "options_tabAbout": {
     "message": "Über"
   },
+  "options_tabMenu": {
+    "message": "Menü"
+  },
   "options_subTabProfile": {
     "message": "Profil"
   },
@@ -813,7 +837,7 @@
     "message": "Generiert"
   },
   "options_subTabSettings": {
-    "message": "Einstellungen"
+    "message": "Einstellungs-Sync"
   },
   "options_subTabExportImport": {
     "message": "Export / Import"
@@ -1278,5 +1302,50 @@
         "content": "$1"
       }
     }
+  },
+  "options_contextMenuConfigTitle": {
+    "message": "Sichtbarkeit & Reihenfolge der Menüpunkte"
+  },
+  "options_contextMenuConfigDesc": {
+    "message": "Schalte Elemente ein oder aus, um sie im Kontextmenü anzuzeigen. Verschiebe sie mit den Pfeilen, um die Reihenfolge zu ändern."
+  },
+  "options_contextMenuItem_ADD_TOOLBAR": {
+    "message": "In Lesezeichenleiste hinzufügen"
+  },
+  "options_contextMenuItem_ADD_OTHER": {
+    "message": "In weitere Lesezeichen hinzufügen"
+  },
+  "options_contextMenuItem_ADD_TO_FOLDER": {
+    "message": "In Ordner hinzufügen... (Menü)"
+  },
+  "options_contextMenuItem_QUICK_FOLDERS": {
+    "message": "Angepinnte Schnell-Ordner"
+  },
+  "options_contextMenuItem_SYNC_NOW": {
+    "message": "Jetzt synchronisieren"
+  },
+  "options_contextMenuItem_SEARCH_BOOKMARKS": {
+    "message": "Lesezeichen suchen"
+  },
+  "options_contextMenuItem_OPEN_ALL_FOLDER": {
+    "message": "Alle aus Ordner öffnen"
+  },
+  "options_contextMenuItem_COPY_FAVICON": {
+    "message": "Favicon-URL kopieren"
+  },
+  "options_contextMenuItem_DOWNLOAD_FAVICON": {
+    "message": "Favicon herunterladen"
+  },
+  "options_contextMenuItem_SWITCH_PROFILE": {
+    "message": "Profil wechseln"
+  },
+  "options_contextMenuResetBtn": {
+    "message": "Auf Standard zurücksetzen"
+  },
+  "options_contextMenuOpenAllThresholdLabel": {
+    "message": "Bestätigungsschwelle für „Alle öffnen“ (Tabs)"
+  },
+  "options_contextMenuOpenAllThresholdHint": {
+    "message": "Wenn ein Ordner mehr Tabs als diesen Wert hat, klicke den Menüeintrag innerhalb von 15 Sekunden zweimal an, um zu bestätigen."
   }
 }

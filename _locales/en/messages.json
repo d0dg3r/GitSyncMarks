@@ -458,11 +458,32 @@
   "options_notificationsHint": {
     "message": "Choose when to show notifications."
   },
+  "options_menu_showAsSubmenu": {
+    "message": "Show as submenu"
+  },
   "notification_titleSuccess": {
     "message": "Sync successful"
   },
   "notification_titleFailure": {
     "message": "Sync failed"
+  },
+  "contextMenu_category_ADD": {
+    "message": "Add Bookmark"
+  },
+  "contextMenu_category_LINKWARDEN": {
+    "message": "Linkwarden"
+  },
+  "contextMenu_category_TOOLS": {
+    "message": "Tools & Sync"
+  },
+  "contextMenu_category_FAVICONS": {
+    "message": "Favicon Tools"
+  },
+  "contextMenu_saveToLinkwarden": {
+    "message": "Save to Linkwarden"
+  },
+  "contextMenu_saveToLinkwardenScreenshot": {
+    "message": "Save with screenshot"
   },
   "options_saveSettings": {
     "message": "Save Settings"
@@ -869,6 +890,9 @@
   "options_tabAbout": {
     "message": "About"
   },
+  "options_tabMenu": {
+    "message": "Menu"
+  },
   "options_subTabProfile": {
     "message": "Profile"
   },
@@ -882,7 +906,7 @@
     "message": "Generated"
   },
   "options_subTabSettings": {
-    "message": "Settings"
+    "message": "Settings Sync"
   },
   "options_subTabExportImport": {
     "message": "Export / Import"
@@ -1270,6 +1294,45 @@
   },
   "options_contextMenuQuickFoldersLabel": {
     "message": "Pinned Quick Folders"
+  },
+  "options_contextMenuConfigTitle": {
+    "message": "Menu Item Visibility & Order"
+  },
+  "options_contextMenuConfigDesc": {
+    "message": "Toggle items to show them in the context menu. Drag or use arrows to change their order."
+  },
+  "options_contextMenuItem_ADD_TOOLBAR": {
+    "message": "Add to Bookmarks Bar"
+  },
+  "options_contextMenuItem_ADD_OTHER": {
+    "message": "Add to Other Bookmarks"
+  },
+  "options_contextMenuItem_ADD_TO_FOLDER": {
+    "message": "Add to Folder... (Menu)"
+  },
+  "options_contextMenuItem_QUICK_FOLDERS": {
+    "message": "Pinned Quick Folders"
+  },
+  "options_contextMenuItem_SYNC_NOW": {
+    "message": "Sync Now"
+  },
+  "options_contextMenuItem_SEARCH_BOOKMARKS": {
+    "message": "Search Bookmarks"
+  },
+  "options_contextMenuItem_OPEN_ALL_FOLDER": {
+    "message": "Open All from Folder"
+  },
+  "options_contextMenuItem_COPY_FAVICON": {
+    "message": "Copy Favicon URL"
+  },
+  "options_contextMenuItem_DOWNLOAD_FAVICON": {
+    "message": "Download Favicon"
+  },
+  "options_contextMenuItem_SWITCH_PROFILE": {
+    "message": "Switch Profile"
+  },
+  "options_contextMenuResetBtn": {
+    "message": "Reset to Default"
   },
   "options_contextMenuQuickFoldersHint": {
     "message": "Choose up to three folders shown as one-click \"Add to ...\" entries in the context menu."

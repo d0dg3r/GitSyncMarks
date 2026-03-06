@@ -109,6 +109,7 @@
         <button class="tab-btn active" data-tab="github" data-i18n="options_tabGitHub">GitHub</button>
         <button class="tab-btn" data-tab="sync" data-i18n="options_tabSynchronization">Sync</button>
         <button class="tab-btn" data-tab="files" data-i18n="options_tabFiles">Files</button>
+        <button class="tab-btn" data-tab="menu" data-i18n="options_tabMenu">Menu</button>
         <button class="tab-btn" data-tab="help" data-i18n="options_tabHelp">Help</button>
         <button class="tab-btn" data-tab="about" data-i18n="options_tabAbout">About</button>
       </nav>
@@ -405,7 +406,8 @@
       <div class="sub-tab-bar">
         <button class="sub-tab-btn active" data-subtab="files-generated"
           data-i18n="options_subTabGenerated">Generated</button>
-        <button class="sub-tab-btn" data-subtab="files-settings" data-i18n="options_subTabSettings">Settings</button>
+        <button class="sub-tab-btn" data-subtab="files-settings" data-i18n="options_subTabSettings">Settings
+          Sync</button>
         <button class="sub-tab-btn" data-subtab="files-export-import" data-i18n="options_subTabExportImport">Export /
           Import</button>
         <button class="sub-tab-btn" data-subtab="files-git-add" data-i18n="options_subTabGitAdd">Git Add</button>
@@ -536,61 +538,6 @@
                   data-i18n="options_settingsRegistrySyncSelectedBtn" disabled>Sync current to selected</button>
               </div>
               <span id="settings-sync-import-result" class="validation-result"></span>
-            </div>
-          </div>
-        </section>
-
-        <section class="card" id="context-menu-card">
-          <h2 data-i18n="options_contextMenuToolsTitle">Context Menu Tools</h2>
-          <p class="card-desc" data-i18n="options_contextMenuToolsDesc">Configure quick folder actions, open-all safety,
-            and the Search Bookmarks popup shortcut.</p>
-
-          <div class="form-group">
-            <label data-i18n="options_contextMenuQuickFoldersLabel">Pinned Quick Folders</label>
-            <small data-i18n="options_contextMenuQuickFoldersHint">Choose up to three folders shown as one-click \"Add
-              to ...\" entries in the context menu.</small>
-          </div>
-          <div class="form-group">
-            <label for="quick-folder-1" data-i18n="options_contextMenuQuickFolder1">Quick folder 1</label>
-            <select id="quick-folder-1"></select>
-          </div>
-          <div class="form-group">
-            <label for="quick-folder-2" data-i18n="options_contextMenuQuickFolder2">Quick folder 2</label>
-            <select id="quick-folder-2"></select>
-          </div>
-          <div class="form-group">
-            <label for="quick-folder-3" data-i18n="options_contextMenuQuickFolder3">Quick folder 3</label>
-            <select id="quick-folder-3"></select>
-          </div>
-          <div class="form-group">
-            <button type="button" id="quick-folders-refresh-btn" class="btn btn-secondary btn-sm"
-              data-i18n="options_contextMenuRefreshFolders">Refresh folder list</button>
-            <span id="quick-folders-result" class="validation-result"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="open-all-threshold" data-i18n="options_contextMenuOpenAllThresholdLabel">Open-all confirmation
-              threshold (tabs)</label>
-            <input type="number" id="open-all-threshold" min="1" max="200" value="15">
-            <small data-i18n="options_contextMenuOpenAllThresholdHint">If a folder has more tabs than this value, click
-              the menu entry twice within 15 seconds to confirm.</small>
-          </div>
-        </section>
-
-        <section class="card danger-zone" id="reset-card">
-          <h2 data-i18n="options_resetTitle">Reset Extension</h2>
-          <p class="card-desc" data-i18n="options_resetDescription">Delete all profiles, tokens, and settings. Your
-            browser bookmarks will not be affected.</p>
-          <button type="button" class="btn btn-danger" id="btn-reset-extension" data-i18n="options_resetBtn">Reset all
-            data</button>
-          <div id="reset-confirm-dialog" class="reset-confirm-dialog" style="display: none;">
-            <p data-i18n="options_resetConfirm">Are you sure? This cannot be undone. All profiles and settings will be
-              permanently deleted.</p>
-            <div class="reset-confirm-actions">
-              <button type="button" class="btn btn-danger" id="btn-reset-confirm"
-                data-i18n="options_resetConfirmBtn">Yes, delete all data</button>
-              <button type="button" class="btn btn-secondary" id="btn-reset-cancel"
-                data-i18n="options_profileSwitchCancelBtn">Cancel</button>
             </div>
           </div>
         </section>
@@ -731,6 +678,61 @@
         </div>
       </div>
 
+    </div>
+
+    <!-- ==================== Menu Tab ==================== -->
+    <div class="tab-content" id="tab-menu">
+      <section class="card" id="context-menu-card">
+        <h2 data-i18n="options_contextMenuToolsTitle">Context Menu Tools</h2>
+        <p class="card-desc" data-i18n="options_contextMenuToolsDesc">Configure quick folder actions, open-all safety,
+          and the Search Bookmarks popup shortcut.</p>
+
+        <div class="form-group">
+          <label data-i18n="options_contextMenuQuickFoldersLabel">Pinned Quick Folders</label>
+          <small data-i18n="options_contextMenuQuickFoldersHint">Choose up to three folders shown as one-click \"Add
+            to ...\" entries in the context menu.</small>
+        </div>
+        <div class="form-group">
+          <label for="quick-folder-1" data-i18n="options_contextMenuQuickFolder1">Quick folder 1</label>
+          <select id="quick-folder-1"></select>
+        </div>
+        <div class="form-group">
+          <label for="quick-folder-2" data-i18n="options_contextMenuQuickFolder2">Quick folder 2</label>
+          <select id="quick-folder-2"></select>
+        </div>
+        <div class="form-group">
+          <label for="quick-folder-3" data-i18n="options_contextMenuQuickFolder3">Quick folder 3</label>
+          <select id="quick-folder-3"></select>
+        </div>
+        <div class="form-group">
+          <button type="button" id="quick-folders-refresh-btn" class="btn btn-secondary btn-sm"
+            data-i18n="options_contextMenuRefreshFolders">Refresh folder list</button>
+          <span id="quick-folders-result" class="validation-result"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="open-all-threshold" data-i18n="options_contextMenuOpenAllThresholdLabel">Open-all confirmation
+            threshold (tabs)</label>
+          <input type="number" id="open-all-threshold" min="1" max="200" value="15">
+          <small data-i18n="options_contextMenuOpenAllThresholdHint">If a folder has more tabs than this value, click
+            the menu entry twice within 15 seconds to confirm.</small>
+        </div>
+
+        <div class="context-menu-config-separator"></div>
+
+        <div class="form-group">
+          <label data-i18n="options_contextMenuConfigTitle">Menu Item Visibility & Order</label>
+          <small data-i18n="options_contextMenuConfigDesc">Toggle items to show them in the context menu. Drag or use
+            arrows to change their order.</small>
+
+          <div id="context-menu-items-list" class="context-menu-items-list">
+            <!-- Populated dynamically -->
+          </div>
+
+          <button type="button" id="context-menu-reset-btn" class="btn btn-secondary btn-sm"
+            style="margin-top: 0.75rem;" data-i18n="options_contextMenuResetBtn">Reset to Default</button>
+        </div>
+      </section>
     </div>
 
     <!-- ==================== Help Tab ==================== -->
@@ -990,7 +992,25 @@
         </div>
       </section>
 
-      <section class="card" style="margin-top: 1rem;">
+      <section class="card danger-zone" id="reset-card">
+        <h2 data-i18n="options_resetTitle">Reset Extension</h2>
+        <p class="card-desc" data-i18n="options_resetDescription">Delete all profiles, tokens, and settings. Your
+          browser bookmarks will not be affected.</p>
+        <button type="button" class="btn btn-danger" id="btn-reset-extension" data-i18n="options_resetBtn">Reset all
+          data</button>
+        <div id="reset-confirm-dialog" class="reset-confirm-dialog" style="display: none;">
+          <p data-i18n="options_resetConfirm">Are you sure? This cannot be undone. All profiles and settings will be
+            permanently deleted.</p>
+          <div class="reset-confirm-actions">
+            <button type="button" class="btn btn-danger" id="btn-reset-confirm" data-i18n="options_resetConfirmBtn">Yes,
+              delete all data</button>
+            <button type="button" class="btn btn-secondary" id="btn-reset-cancel"
+              data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
         <h2 data-i18n="options_debugLogTitle">Debug Log</h2>
         <p class="card-desc" data-i18n="options_debugLogDesc">Enable to record sync diagnostics (diffs, merge decisions,
           conflicts). Use when troubleshooting sync issues. Export and share the log for support.</p>

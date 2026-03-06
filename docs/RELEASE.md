@@ -39,7 +39,7 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 
 | Version | Codename | Description |
 |---|---|---|
-| `2.6.0` | *Link* | *(Planned)* Linkwarden integration — context menu Save to Linkwarden, options tab, tags, screenshots |
+| `2.6.0` | *Link* | Linkwarden integration — context menu Save to Linkwarden, options tab, tags, screenshots |
 | `2.5.3` | *Cortana* | Context menu productivity update: pinned quick folders (up to 3), Search Bookmarks entry opens a dedicated search popup, Open All from Folder with safety confirmation threshold; Files -> Settings adds context-menu tools |
 | `2.5.2` | *Cortana* | Fix: orphan subfolders in generated files (README, bookmarks.html, feed.xml, dashy-conf.yml); website layout unified; Docs removed from quick-nav; README load-from-source section; Settings sync UI: buttons disabled until client name set, password saved after Import/Sync/Create, layout (Client name + Create in one row; Refresh + Dropdown + Import + Sync in one row); Help Getting Started: Start setup wizard button |
 | `2.5.1` | *Cortana* | Fix: password dialog for Settings sync actions (Import & Apply, etc.) now appears in Settings sub-tab instead of Export/Import |
@@ -92,6 +92,31 @@ Create a **Poll** in [Discussions → Polls](https://github.com/d0dg3r/GitSyncMa
 | 6 | Merge (main now has the release version) |
 | 7 | Tag and push: `git tag v2.2.0 && git push origin v2.2.0` |
 | 8 | GitHub Actions creates the release with ZIPs |
+
+### 2.6.0 Preparation Checklist
+
+Use this sequence when preparing `2.6.0`:
+
+1. **Version alignment**
+   - `manifest.json` -> `2.6.0`
+   - `manifest.firefox.json` -> `2.6.0`
+   - `package.json` + `package-lock.json` -> `2.6.0`
+2. **Docs + listings sync**
+   - `CHANGELOG.md` (`2.6.0` entry)
+   - `README.md`
+   - `store-assets/chrome-en.md`, `store-assets/firefox-en.md`
+   - Help tab text (`options.html` + `_locales/en/messages.json`)
+3. **Local preflight**
+   - `npm run build`
+   - `npm run test:e2e`
+   - `npm run build:firefox`
+4. **Release flow**
+   - Create `release/v2.6.0` branch from `main`
+   - Open PR to `main` and merge
+   - Tag and push: `git tag v2.6.0 && git push origin v2.6.0`
+5. **Post-tag verification**
+   - Check GitHub Release assets + notes
+   - Upload updated packages/listings to Chrome Web Store and AMO
 
 ### 2.5.3 Preparation Checklist
 

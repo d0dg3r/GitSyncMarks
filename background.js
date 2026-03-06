@@ -389,13 +389,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     getDebugLogExportContent().then((content) => sendResponse({ content }));
     return true; // keep channel open for async response
   }
+  if (message.action === 'refreshContextMenus') {
+    setupContextMenus();
+    sendResponse({ ok: true });
+    return true;
+  }
 });
 
 // ---- Refresh context menu when profiles change ----
 
 chrome.storage.onChanged.addListener((changes, area) => {
-  if (area === 'sync' && (changes.profiles || changes.activeProfileId)) {
-    refreshContextMenuDynamicItems();
+  if (area === 'sync' && (changes.profiles || changes.activeProfileId || changes.contextMenuItems)) {
+    setupContextMenus();
   }
 });
 
