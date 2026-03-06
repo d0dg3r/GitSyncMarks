@@ -688,48 +688,21 @@
 
     <!-- ==================== Menu Tab ==================== -->
     <div class="tab-content" id="tab-menu">
-      <section class="card" id="context-menu-card">
-        <h2 data-i18n="options_contextMenuToolsTitle">Context Menu Tools</h2>
-        <p class="card-desc" data-i18n="options_contextMenuToolsDesc">Configure quick folder actions, open-all safety,
-          and the Search Bookmarks popup shortcut.</p>
+      <div class="sub-tab-bar">
+        <button class="sub-tab-btn active" data-subtab="menu-items" data-i18n="options_subTabMenuItems">Visibility &
+          Order</button>
+        <button class="sub-tab-btn" data-subtab="menu-folders" data-i18n="options_subTabMenuFolders">Pinned
+          Folders</button>
+        <button class="sub-tab-btn" data-subtab="menu-advanced" data-i18n="options_subTabMenuAdvanced">Advanced &
+          Safety</button>
+      </div>
 
-        <div class="form-group">
-          <label data-i18n="options_contextMenuQuickFoldersLabel">Pinned Quick Folders</label>
-          <small data-i18n="options_contextMenuQuickFoldersHint">Choose up to three folders shown as one-click \"Add
-            to ...\" entries in the context menu.</small>
-        </div>
-        <div class="form-group">
-          <label for="quick-folder-1" data-i18n="options_contextMenuQuickFolder1">Quick folder 1</label>
-          <select id="quick-folder-1"></select>
-        </div>
-        <div class="form-group">
-          <label for="quick-folder-2" data-i18n="options_contextMenuQuickFolder2">Quick folder 2</label>
-          <select id="quick-folder-2"></select>
-        </div>
-        <div class="form-group">
-          <label for="quick-folder-3" data-i18n="options_contextMenuQuickFolder3">Quick folder 3</label>
-          <select id="quick-folder-3"></select>
-        </div>
-        <div class="form-group">
-          <button type="button" id="quick-folders-refresh-btn" class="btn btn-secondary btn-sm"
-            data-i18n="options_contextMenuRefreshFolders">Refresh folder list</button>
-          <span id="quick-folders-result" class="validation-result"></span>
-        </div>
-
-        <div class="form-group">
-          <label for="open-all-threshold" data-i18n="options_contextMenuOpenAllThresholdLabel">Open-all confirmation
-            threshold (tabs)</label>
-          <input type="number" id="open-all-threshold" min="1" max="200" value="15">
-          <small data-i18n="options_contextMenuOpenAllThresholdHint">If a folder has more tabs than this value, click
-            the menu entry twice within 15 seconds to confirm.</small>
-        </div>
-
-        <div class="context-menu-config-separator"></div>
-
-        <div class="form-group">
-          <label data-i18n="options_contextMenuConfigTitle">Menu Item Visibility & Order</label>
-          <small data-i18n="options_contextMenuConfigDesc">Toggle items to show them in the context menu. Drag or use
-            arrows to change their order.</small>
+      <div class="sub-tab-content active" id="subtab-menu-items">
+        <section class="card">
+          <h2 data-i18n="options_contextMenuConfigTitle">Menu Item Visibility & Order</h2>
+          <p class="card-desc" data-i18n="options_contextMenuConfigDesc">Toggle items to show them in the context menu.
+            Drag or use
+            arrows to change their order.</p>
 
           <div id="context-menu-items-list" class="context-menu-items-list">
             <!-- Populated dynamically -->
@@ -737,9 +710,54 @@
 
           <button type="button" id="context-menu-reset-btn" class="btn btn-secondary btn-sm"
             style="margin-top: 0.75rem;" data-i18n="options_contextMenuResetBtn">Reset to Default</button>
-        </div>
-      </section>
+        </section>
+      </div>
+
+      <div class="sub-tab-content" id="subtab-menu-folders">
+        <section class="card">
+          <h2 data-i18n="options_contextMenuQuickFoldersLabel">Pinned Quick Folders</h2>
+          <p class="card-desc" data-i18n="options_contextMenuQuickFoldersHint">Choose up to three folders shown as
+            one-click "Add
+            to ..." entries in the context menu.</p>
+
+          <div class="form-group">
+            <label for="quick-folder-1" data-i18n="options_contextMenuQuickFolder1">Quick folder 1</label>
+            <select id="quick-folder-1"></select>
+          </div>
+          <div class="form-group">
+            <label for="quick-folder-2" data-i18n="options_contextMenuQuickFolder2">Quick folder 2</label>
+            <select id="quick-folder-2"></select>
+          </div>
+          <div class="form-group">
+            <label for="quick-folder-3" data-i18n="options_contextMenuQuickFolder3">Quick folder 3</label>
+            <select id="quick-folder-3"></select>
+          </div>
+          <div class="form-group">
+            <button type="button" id="quick-folders-refresh-btn" class="btn btn-secondary btn-sm"
+              data-i18n="options_contextMenuRefreshFolders">Refresh folder list</button>
+            <span id="quick-folders-result" class="validation-result"></span>
+          </div>
+        </section>
+      </div>
+
+      <div class="sub-tab-content" id="subtab-menu-advanced">
+        <section class="card">
+          <h2 data-i18n="options_subTabMenuAdvanced">Advanced & Safety</h2>
+          <p class="card-desc" data-i18n="options_contextMenuToolsDesc">Configure open-all safety and other advanced
+            menu tools.</p>
+
+          <div class="form-group">
+            <label for="open-all-threshold" data-i18n="options_contextMenuOpenAllThresholdLabel">Confirmation safety for
+              "Open all" (tabs)</label>
+            <input type="number" id="open-all-threshold" min="1" max="200" value="15">
+            <small data-i18n="options_contextMenuOpenAllThresholdHint">If a folder has more bookmarks than this limit,
+              you will be asked to confirm (double-click) before opening to prevent accidentally opening too many
+              tabs.</small>
+          </div>
+        </section>
+      </div>
     </div>
+
 
     <!-- ==================== Help Tab ==================== -->
     <div class="tab-content" id="tab-help">

@@ -902,6 +902,15 @@
   "options_subTabRepos": {
     "message": "GitHub Folder"
   },
+  "options_subTabMenuItems": {
+    "message": "Visibility & Order"
+  },
+  "options_subTabMenuFolders": {
+    "message": "Pinned Folders"
+  },
+  "options_subTabMenuAdvanced": {
+    "message": "Advanced & Safety"
+  },
   "options_subTabGenerated": {
     "message": "Generated"
   },
@@ -1314,7 +1323,7 @@
     "message": "Context Menu Tools"
   },
   "options_contextMenuToolsDesc": {
-    "message": "Configure quick folder actions, open-all safety, and the Search Bookmarks popup shortcut."
+    "message": "Configure pinned folder actions, open-all safety, and visibility of menu items."
   },
   "options_contextMenuQuickFoldersLabel": {
     "message": "Pinned Quick Folders"
@@ -1380,10 +1389,10 @@
     "message": "Folder list refreshed"
   },
   "options_contextMenuOpenAllThresholdLabel": {
-    "message": "Open-all confirmation threshold (tabs)"
+    "message": "Confirmation safety for \"Open all\" (tabs)"
   },
   "options_contextMenuOpenAllThresholdHint": {
-    "message": "If a folder has more tabs than this value, click the menu entry twice within 15 seconds to confirm."
+    "message": "If a folder has more bookmarks than this limit, you will be asked to confirm (double-click) before opening to prevent accidentally opening too many tabs."
   },
   "search_title": {
     "message": "Bookmark Search"

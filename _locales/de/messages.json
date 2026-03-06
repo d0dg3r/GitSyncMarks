@@ -833,6 +833,15 @@
   "options_subTabRepos": {
     "message": "GitHub-Ordner"
   },
+  "options_subTabMenuItems": {
+    "message": "Sichtbarkeit & Reihenfolge"
+  },
+  "options_subTabMenuFolders": {
+    "message": "Gepinnte Ordner"
+  },
+  "options_subTabMenuAdvanced": {
+    "message": "Erweitert & Sicherheit"
+  },
   "options_subTabGenerated": {
     "message": "Generiert"
   },
@@ -1367,9 +1376,9 @@
     "message": "Auf Standard zurücksetzen"
   },
   "options_contextMenuOpenAllThresholdLabel": {
-    "message": "Bestätigungsschwelle für „Alle öffnen“ (Tabs)"
+    "message": "Best\u00e4tigungs-Schutz f\u00fcr \u201eAlle \u00f6ffnen\u201c (Tabs)"
   },
   "options_contextMenuOpenAllThresholdHint": {
-    "message": "Wenn ein Ordner mehr Tabs als diesen Wert hat, klicke den Menüeintrag innerhalb von 15 Sekunden zweimal an, um zu bestätigen."
+    "message": "Wenn ein Ordner mehr Lesezeichen als diesen Wert hat, musst du die Aktion doppelt anklicken. Das verhindert, dass versehentlich zu viele Tabs gleichzeitig ge\u00f6ffnet werden."
   }
 }
