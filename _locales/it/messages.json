@@ -818,6 +818,30 @@
   "options_subTabGitAdd": {
     "message": "Git Add"
   },
+  "help_wizardRestartTitle": {
+    "message": "Configurazione guidata"
+  },
+  "help_wizardRestartDesc": {
+    "message": "Guida passo-passo per collegare il tuo repository GitHub ed eseguire la prima sincronizzazione."
+  },
+  "options_onboardingWizardPhasePreparing": {
+    "message": "Preparazione dei dati dei segnalibri"
+  },
+  "options_onboardingWizardPhaseUploading": {
+    "message": "Caricamento dei segnalibri su GitHub"
+  },
+  "options_onboardingWizardPhaseCommit": {
+    "message": "Creazione del commit nel repository"
+  },
+  "options_onboardingWizardPhaseSaving": {
+    "message": "Salvataggio dello stato di sincronizzazione"
+  },
+  "options_onboardingWizardPhaseDownloading": {
+    "message": "Download dei segnalibri"
+  },
+  "options_onboardingWizardPhaseApplying": {
+    "message": "Applicazione dei segnalibri al browser"
+  },
   "help_gettingStartedTitle": {
     "message": "Guida introduttiva"
   },

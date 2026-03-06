@@ -818,6 +818,30 @@
   "options_subTabGitAdd": {
     "message": "Git Add"
   },
+  "help_wizardRestartTitle": {
+    "message": "Мастер настройки"
+  },
+  "help_wizardRestartDesc": {
+    "message": "Пошаговое руководство по подключению репозитория GitHub и выполнению первой синхронизации."
+  },
+  "options_onboardingWizardPhasePreparing": {
+    "message": "Подготовка данных закладок"
+  },
+  "options_onboardingWizardPhaseUploading": {
+    "message": "Загрузка закладок на GitHub"
+  },
+  "options_onboardingWizardPhaseCommit": {
+    "message": "Создание коммита в репозитории"
+  },
+  "options_onboardingWizardPhaseSaving": {
+    "message": "Сохранение состояния синхронизации"
+  },
+  "options_onboardingWizardPhaseDownloading": {
+    "message": "Скачивание закладок"
+  },
+  "options_onboardingWizardPhaseApplying": {
+    "message": "Применение закладок в браузере"
+  },
   "help_gettingStartedTitle": {
     "message": "Начало работы"
   },
