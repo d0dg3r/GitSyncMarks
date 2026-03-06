@@ -914,6 +914,30 @@
   "options_subTabGitAdd": {
     "message": "Git Add"
   },
+  "help_wizardRestartTitle": {
+    "message": "Setup Wizard"
+  },
+  "help_wizardRestartDesc": {
+    "message": "Step-by-step guide to connect your GitHub repository and run the first sync."
+  },
+  "options_onboardingWizardPhasePreparing": {
+    "message": "Preparing bookmark data"
+  },
+  "options_onboardingWizardPhaseUploading": {
+    "message": "Uploading bookmarks to GitHub"
+  },
+  "options_onboardingWizardPhaseCommit": {
+    "message": "Creating repository commit"
+  },
+  "options_onboardingWizardPhaseSaving": {
+    "message": "Saving sync state"
+  },
+  "options_onboardingWizardPhaseDownloading": {
+    "message": "Downloading bookmarks"
+  },
+  "options_onboardingWizardPhaseApplying": {
+    "message": "Applying bookmarks to browser"
+  },
   "help_gettingStartedTitle": {
     "message": "Getting Started"
   },

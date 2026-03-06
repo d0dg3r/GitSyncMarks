@@ -818,6 +818,30 @@
   "options_subTabGitAdd": {
     "message": "Git Add"
   },
+  "help_wizardRestartTitle": {
+    "message": "Asistente de configuración"
+  },
+  "help_wizardRestartDesc": {
+    "message": "Guía paso a paso para conectar tu repositorio de GitHub y realizar la primera sincronización."
+  },
+  "options_onboardingWizardPhasePreparing": {
+    "message": "Preparando datos de marcadores"
+  },
+  "options_onboardingWizardPhaseUploading": {
+    "message": "Subiendo marcadores a GitHub"
+  },
+  "options_onboardingWizardPhaseCommit": {
+    "message": "Creando commit en el repositorio"
+  },
+  "options_onboardingWizardPhaseSaving": {
+    "message": "Guardando estado de sincronización"
+  },
+  "options_onboardingWizardPhaseDownloading": {
+    "message": "Descargando marcadores"
+  },
+  "options_onboardingWizardPhaseApplying": {
+    "message": "Aplicando marcadores al navegador"
+  },
   "help_gettingStartedTitle": {
     "message": "Primeros pasos"
   },

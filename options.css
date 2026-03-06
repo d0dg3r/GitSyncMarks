@@ -599,17 +599,62 @@ html.dark .theme-cycle-btn {
   flex-wrap: wrap;
 }
 
-.onboarding-wizard-feedback {
+
+/* Unified wizard status area — one box for loading, success, and error */
+.wizard-status {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 20px;
-  margin-top: 6px;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-tertiary);
+  border-left: 3px solid var(--color-primary);
+  animation: fadeIn 0.15s ease;
+  font-size: 0.875rem;
+  color: var(--color-text);
 }
 
-.onboarding-wizard-hint {
-  font-size: 0.85rem;
-  color: var(--color-text-secondary);
+
+.wizard-status.success {
+  border-left-color: var(--color-success, #22863a);
+  background: var(--color-success-bg, #f0fdf4);
+  color: var(--color-success-text, #166534);
+}
+
+.wizard-status.error {
+  border-left-color: var(--color-error, #dc3545);
+  background: var(--color-error-bg, #fef2f2);
+  color: var(--color-error, #dc3545);
+}
+
+.wizard-status-spinner {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.wizard-status-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.wizard-status-elapsed {
+  font-size: 0.78rem;
+  opacity: 0.65;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .onboarding-wizard-section {
@@ -1522,10 +1567,58 @@ a.help-link-btn:focus-visible {
   outline-offset: 2px;
 }
 
+#tab-help .help-details.card {
+  padding: 14px 18px;
+  margin-bottom: 8px;
+  border-top: 1px solid var(--color-border-secondary);
+}
+
+#tab-help .help-details.card:first-of-type {
+  border-top: none;
+}
+
+
+/* Prominent wizard restart card */
+.wizard-restart-card {
+  padding: 14px 18px !important;
+  margin-bottom: 12px !important;
+  border-left: 3px solid var(--color-primary);
+}
+
+.wizard-restart-card-body {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wizard-restart-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.wizard-restart-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wizard-restart-text strong {
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.wizard-restart-text span {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+}
+
 #tab-help .card {
   padding: 16px 20px;
   margin-bottom: 12px;
 }
+
 
 #tab-help .help-details:last-child {
   margin-bottom: 0;
@@ -1720,6 +1813,7 @@ a.help-link-btn:focus-visible {
     font-size: 12px;
     padding: 10px 12px;
   }
+
 }
 
 /* Context Menu Configuration */

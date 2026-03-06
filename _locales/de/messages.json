@@ -845,6 +845,30 @@
   "options_subTabGitAdd": {
     "message": "Git Add"
   },
+  "help_wizardRestartTitle": {
+    "message": "Setup-Assistent"
+  },
+  "help_wizardRestartDesc": {
+    "message": "Schritt-für-Schritt-Anleitung, um dein GitHub-Repository zu verbinden und den ersten Sync auszuführen."
+  },
+  "options_onboardingWizardPhasePreparing": {
+    "message": "Lesezeichen-Daten werden vorbereitet"
+  },
+  "options_onboardingWizardPhaseUploading": {
+    "message": "Lesezeichen werden zu GitHub hochgeladen"
+  },
+  "options_onboardingWizardPhaseCommit": {
+    "message": "Repository-Commit wird erstellt"
+  },
+  "options_onboardingWizardPhaseSaving": {
+    "message": "Sync-Status wird gespeichert"
+  },
+  "options_onboardingWizardPhaseDownloading": {
+    "message": "Lesezeichen werden heruntergeladen"
+  },
+  "options_onboardingWizardPhaseApplying": {
+    "message": "Lesezeichen werden im Browser angewendet"
+  },
   "help_gettingStartedTitle": {
     "message": "Erste Schritte"
   },

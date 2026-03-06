@@ -818,6 +818,30 @@
   "options_subTabGitAdd": {
     "message": "Git 添加"
   },
+  "help_wizardRestartTitle": {
+    "message": "设置向导"
+  },
+  "help_wizardRestartDesc": {
+    "message": "分步指南，帮助您连接 GitHub 仓库并执行首次同步。"
+  },
+  "options_onboardingWizardPhasePreparing": {
+    "message": "正在准备书签数据"
+  },
+  "options_onboardingWizardPhaseUploading": {
+    "message": "正在上传书签到 GitHub"
+  },
+  "options_onboardingWizardPhaseCommit": {
+    "message": "正在创建仓库提交"
+  },
+  "options_onboardingWizardPhaseSaving": {
+    "message": "正在保存同步状态"
+  },
+  "options_onboardingWizardPhaseDownloading": {
+    "message": "正在下载书签"
+  },
+  "options_onboardingWizardPhaseApplying": {
+    "message": "正在应用书签到浏览器"
+  },
   "help_gettingStartedTitle": {
     "message": "入门指南"
   },

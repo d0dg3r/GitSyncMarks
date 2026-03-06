@@ -818,6 +818,30 @@
   "options_subTabGitAdd": {
     "message": "Git Add"
   },
+  "help_wizardRestartTitle": {
+    "message": "セットアップ・ウィザード"
+  },
+  "help_wizardRestartDesc": {
+    "message": "GitHubリポジトリの接続と初回同期を行うためのステップバイステップガイド。"
+  },
+  "options_onboardingWizardPhasePreparing": {
+    "message": "ブックマークデータを準備中"
+  },
+  "options_onboardingWizardPhaseUploading": {
+    "message": "GitHubにブックマークをアップロード中"
+  },
+  "options_onboardingWizardPhaseCommit": {
+    "message": "リポジトリのコミットを作成中"
+  },
+  "options_onboardingWizardPhaseSaving": {
+    "message": "同期状態を保存中"
+  },
+  "options_onboardingWizardPhaseDownloading": {
+    "message": "ブックマークをダウンロード中"
+  },
+  "options_onboardingWizardPhaseApplying": {
+    "message": "ブラウザにブックマークを適用中"
+  },
   "help_gettingStartedTitle": {
     "message": "はじめに"
   },

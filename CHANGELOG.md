@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.6.0] - TBD
 - *(Planned)* Linkwarden integration — context menu Save to Linkwarden, options tab, tags, screenshots
 
+## [2.5.4] - 2026-03-06 (*Cortana*)
+
+
+### Fixed
+
+- **Onboarding rate limiting** ([#51](https://github.com/d0dg3r/GitSyncMarks/issues/51)): Initial sync blob uploads are now created in parallel batches of 5 instead of sequentially. This is ~3× faster and prevents hitting GitHub secondary rate limits during first sync.
+- **Sync lock stuck after error**: `checkStorageQuota()` was called before the `try` block in `sync()`, so any error it threw left `isSyncing = true` permanently, blocking all future syncs with "Sync already in progress". The call is now inside the `try/finally` block.
+- **`checkStorageQuota` undefined**: The function was called but never defined in `sync-engine.js`. Added the missing implementation (checks Chrome storage quota and logs a warning when below 20%).
+- **Stale sync state after repo change**: `saveProfile()` only cleared `lastCommitSha` / `lastSyncFiles` when the file *path* changed, not when the repo owner or name changed. Reconnecting to a new or recreated repo with the same name would carry over old commit SHAs, breaking the wizard. State is now cleared whenever owner, repo name, or path changes.
+
+### Improved
+
+- **Wizard sync progress**: The onboarding wizard now shows a unified status area (below the action buttons) for all states — loading (spinner + animated phase messages + elapsed seconds counter), success, and error — in a single consistent box instead of two separate areas.
+- **Onboarding sync timing**: Bookmark count and both estimated and actual sync duration are logged to the extension debug log after first sync completes (visible in Service Worker DevTools).
+- **Internationalization (i18n)**: Added full localization for all 12 supported languages to the onboarding wizard phases and the new "Restart Wizard" card in the Help tab.
+- **Wizard discoverability**: The Setup Wizard can now be easily restarted from the Help tab via a prominent restart card, making it easier for users to reconfigure their connection.
+
+### Added
+
+- **Wizard Restart Card**: A new interactive card in the Help tab that displays the current connection status and allows one-click access to the Setup Wizard for reconfiguration.
+
 ## [2.5.3] - 2026-03-02 (*Cortana*)
 
 ### Added
@@ -260,7 +281,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial release: bookmark sync with GitHub
 
 [Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.6.0...HEAD
-[2.6.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.3...v2.6.0
+[2.6.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.4...v2.6.0
+[2.5.4]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.3...v2.5.4
+
 [2.5.3]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.2...v2.5.3
 [2.5.2]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.1...v2.5.2
 [2.5.1]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.0...v2.5.1

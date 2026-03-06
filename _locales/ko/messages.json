@@ -818,6 +818,30 @@
   "options_subTabGitAdd": {
     "message": "Git Add"
   },
+  "help_wizardRestartTitle": {
+    "message": "설정 마법사"
+  },
+  "help_wizardRestartDesc": {
+    "message": "GitHub 저장소를 연결하고 첫 번째 동기화를 실행하기 위한 단계별 안내입니다."
+  },
+  "options_onboardingWizardPhasePreparing": {
+    "message": "즐겨찾기 데이터 준비 중"
+  },
+  "options_onboardingWizardPhaseUploading": {
+    "message": "GitHub에 즐겨찾기 업로드 중"
+  },
+  "options_onboardingWizardPhaseCommit": {
+    "message": "저장소 커밋 생성 중"
+  },
+  "options_onboardingWizardPhaseSaving": {
+    "message": "동기화 상태 저장 중"
+  },
+  "options_onboardingWizardPhaseDownloading": {
+    "message": "즐겨찾기 다운로드 중"
+  },
+  "options_onboardingWizardPhaseApplying": {
+    "message": "브라우저에 즐겨찾기 적용 중"
+  },
   "help_gettingStartedTitle": {
     "message": "시작하기"
   },
