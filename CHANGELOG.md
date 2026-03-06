@@ -5,9 +5,7 @@ All notable changes to GitSyncMarks are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.5.4] - 2026-03-06 (*Cortana*) — **Beta**
-
-> **Beta / Pre-release** — intended for testing. Install the `.zip` manually (`chrome://extensions/` → Load unpacked). Please report issues.
+## [2.5.4] - 2026-03-06 (*Cortana*)
 
 ### Fixed
 
@@ -20,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Wizard sync progress**: The onboarding wizard now shows a unified status area (below the action buttons) for all states — loading (spinner + animated phase messages + elapsed seconds counter), success, and error — in a single consistent box instead of two separate areas.
 - **Onboarding sync timing**: Bookmark count and both estimated and actual sync duration are logged to the extension debug log after first sync completes (visible in Service Worker DevTools).
+- **Internationalization (i18n)**: Added full localization for all 12 supported languages to the onboarding wizard phases and the new "Restart Wizard" card in the Help tab.
+- **Wizard discoverability**: The Setup Wizard can now be easily restarted from the Help tab via a prominent restart card, making it easier for users to reconfigure their connection.
+
+### Added
+
+- **Wizard Restart Card**: A new interactive card in the Help tab that displays the current connection status and allows one-click access to the Setup Wizard for reconfiguration.
 
 ## [2.5.3] - 2026-03-02 (*Cortana*)
 

@@ -818,6 +818,30 @@
   "options_subTabGitAdd": {
     "message": "Git Add"
   },
+  "help_wizardRestartTitle": {
+    "message": "Kreator konfiguracji"
+  },
+  "help_wizardRestartDesc": {
+    "message": "Przewodnik krok po kroku, który pomoże Ci połączyć repozytorium GitHub i wykonać pierwszą synchronizację."
+  },
+  "options_onboardingWizardPhasePreparing": {
+    "message": "Przygotowywanie danych zakładek"
+  },
+  "options_onboardingWizardPhaseUploading": {
+    "message": "Przesyłanie zakładek do GitHub"
+  },
+  "options_onboardingWizardPhaseCommit": {
+    "message": "Tworzenie commita w repozytorium"
+  },
+  "options_onboardingWizardPhaseSaving": {
+    "message": "Zapisywanie stanu synchronizacji"
+  },
+  "options_onboardingWizardPhaseDownloading": {
+    "message": "Pobieranie zakładek"
+  },
+  "options_onboardingWizardPhaseApplying": {
+    "message": "Stosowanie zakładek w przeglądarce"
+  },
   "help_gettingStartedTitle": {
     "message": "Pierwsze kroki"
   },

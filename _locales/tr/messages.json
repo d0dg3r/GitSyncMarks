@@ -818,6 +818,30 @@
   "options_subTabGitAdd": {
     "message": "Git Add"
   },
+  "help_wizardRestartTitle": {
+    "message": "Kurulum Sihirbazı"
+  },
+  "help_wizardRestartDesc": {
+    "message": "GitHub deponuzu bağlamak ve ilk senkronizasyonu gerçekleştirmek için adım adım bir kılavuz."
+  },
+  "options_onboardingWizardPhasePreparing": {
+    "message": "Yer imi verileri hazırlanıyor"
+  },
+  "options_onboardingWizardPhaseUploading": {
+    "message": "Yer imleri GitHub'a yükleniyor"
+  },
+  "options_onboardingWizardPhaseCommit": {
+    "message": "Depo işlemesi (commit) oluşturuluyor"
+  },
+  "options_onboardingWizardPhaseSaving": {
+    "message": "Senkronizasyon durumu kaydediliyor"
+  },
+  "options_onboardingWizardPhaseDownloading": {
+    "message": "Yer imleri indiriliyor"
+  },
+  "options_onboardingWizardPhaseApplying": {
+    "message": "Yer imleri tarayıcıya uygulanıyor"
+  },
   "help_gettingStartedTitle": {
     "message": "Başlarken"
   },

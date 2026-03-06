@@ -1429,9 +1429,9 @@ async function runWizardSyncAction() {
 
   if (wizardState.pathStatus === 'hasBookmarks') {
     const stopPulse = startProgressPulse([
-      getMessage('options_onboardingWizardSyncInProgress') || 'Downloading bookmarks',
-      'Applying bookmarks to browser',
-      'Saving sync state',
+      getMessage('options_onboardingWizardPhaseDownloading') || 'Downloading bookmarks',
+      getMessage('options_onboardingWizardPhaseApplying') || 'Applying bookmarks to browser',
+      getMessage('options_onboardingWizardPhaseSaving') || 'Saving sync state',
     ]);
     try {
       const pullResult = await chrome.runtime.sendMessage({ action: 'pull' });
@@ -1450,10 +1450,10 @@ async function runWizardSyncAction() {
   }
 
   const stopPulse = startProgressPulse([
-    'Preparing bookmark data',
-    'Uploading bookmarks to GitHub',
-    'Creating repository commit',
-    'Saving sync state',
+    getMessage('options_onboardingWizardPhasePreparing') || 'Preparing bookmark data',
+    getMessage('options_onboardingWizardPhaseUploading') || 'Uploading bookmarks to GitHub',
+    getMessage('options_onboardingWizardPhaseCommit') || 'Creating repository commit',
+    getMessage('options_onboardingWizardPhaseSaving') || 'Saving sync state',
   ]);
 
   // Count bookmarks for estimated time (logged to debug log only, not shown in UI)

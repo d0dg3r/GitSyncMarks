@@ -1612,6 +1612,42 @@ a.help-link-btn:focus-visible {
   border-top: none;
 }
 
+/* Prominent wizard restart card */
+.wizard-restart-card {
+  padding: 14px 18px !important;
+  margin-bottom: 12px !important;
+  border-left: 3px solid var(--color-primary);
+}
+
+.wizard-restart-card-body {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wizard-restart-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.wizard-restart-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wizard-restart-text strong {
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.wizard-restart-text span {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+}
+
 #tab-help .card {
   padding: 16px 20px;
   margin-bottom: 12px;
