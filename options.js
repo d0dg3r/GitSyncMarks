@@ -151,9 +151,11 @@ const settingsShell = document.getElementById('settings-shell');
 const onboardingWizardProgress = document.getElementById('onboarding-wizard-progress');
 const onboardingWizardStepTitle = document.getElementById('onboarding-wizard-step-title');
 const onboardingWizardStepText = document.getElementById('onboarding-wizard-step-text');
-const onboardingWizardResult = document.getElementById('onboarding-wizard-result');
+const onboardingWizardResult = document.getElementById('onboarding-wizard-result'); // hidden; not used for display
+const wizardStatusEl = document.getElementById('wizard-status');
 const onboardingWizardSpinner = document.getElementById('onboarding-wizard-spinner');
 const onboardingWizardHint = document.getElementById('onboarding-wizard-hint');
+const onboardingWizardElapsed = document.getElementById('onboarding-wizard-elapsed');
 const onboardingWizardActionBtn = document.getElementById('onboarding-wizard-action-btn');
 const onboardingWizardBackBtn = document.getElementById('onboarding-wizard-back-btn');
 const onboardingWizardNextBtn = document.getElementById('onboarding-wizard-next-btn');
@@ -468,18 +470,28 @@ async function dismissOnboardingWizard() {
 }
 
 function setWizardResult(message, type = 'success') {
-  onboardingWizardResult.textContent = message;
-  onboardingWizardResult.className = `validation-result ${type}`;
+  onboardingWizardSpinner.style.display = 'none';
+  onboardingWizardHint.textContent = message;
+  onboardingWizardElapsed.textContent = '';
+  wizardStatusEl.className = `wizard-status ${type}`;
+  wizardStatusEl.style.display = 'flex';
 }
 
 function setWizardBusy(isBusy, loadingMessage = '') {
-  onboardingWizardSpinner.style.display = isBusy ? 'inline-block' : 'none';
   onboardingWizardBackBtn.disabled = isBusy || wizardState.stepIndex === 0;
   onboardingWizardNextBtn.disabled = isBusy;
   onboardingWizardSkipBtn.disabled = isBusy;
   onboardingWizardActionBtn.disabled = isBusy;
-  if (isBusy && loadingMessage) {
-    setWizardResult(loadingMessage, 'loading');
+  if (isBusy) {
+    onboardingWizardSpinner.style.display = 'inline-block';
+    onboardingWizardHint.textContent = loadingMessage || '';
+    onboardingWizardElapsed.textContent = '';
+    wizardStatusEl.className = 'wizard-status';
+    wizardStatusEl.style.display = 'flex';
+  } else {
+    wizardStatusEl.style.display = 'none';
+    onboardingWizardHint.textContent = '';
+    onboardingWizardElapsed.textContent = '';
   }
 }
 
@@ -551,13 +563,8 @@ function renderOnboardingWizardStep() {
   onboardingWizardTokenGroup.style.display = stepKey === 'tokenInput' ? '' : 'none';
   onboardingWizardRepoFlowGroup.style.display = stepKey === 'repoDecision' ? '' : 'none';
   onboardingWizardRepoGroup.style.display = stepKey === 'repoDetails' ? '' : 'none';
-  onboardingWizardHint.style.display = stepKey === 'environment' ? '' : 'none';
-  if (stepKey === 'environment') {
-    onboardingWizardHint.textContent = getMessage('options_onboardingWizardFirstSyncHint');
-  } else {
-    onboardingWizardHint.textContent = '';
-  }
-  onboardingWizardSpinner.style.display = 'none';
+  // Unified status area: hidden between steps; setWizardBusy/setWizardResult show it as needed.
+  wizardStatusEl.style.display = 'none';
 
   // Next now drives validation and bootstrap flow; keep action button hidden.
   onboardingWizardActionBtn.style.display = 'none';
@@ -1334,13 +1341,34 @@ async function runWizardEnvironmentCheck() {
     setWizardResult(getMessage('options_tokenValidRepoNotFound', [wizardState.username || owner, `${owner}/${repo}`]), 'error');
     return false;
   }
-  const pathCheck = await checkPathSetup(api, basePath);
+
+  const stopPathPulse = startProgressPulse([
+    'Checking repository path',
+    'Inspecting remote folder structure',
+  ], 2500);
+  let pathCheck;
+  try {
+    pathCheck = await checkPathSetup(api, basePath);
+  } finally {
+    stopPathPulse();
+  }
+
   wizardState.repoRef = `${owner}/${repo}`;
   wizardState.pathStatus = pathCheck.status;
   wizardState.firstSyncDone = false;
   if (onboardingWizardRepoFlowSelect.value === 'autoCreate' && pathCheck.status !== 'hasBookmarks') {
-    await waitForRemoteBaseline(api);
-    await initializePathAndRunFirstPush();
+    const stopInitPulse = startProgressPulse([
+      'Waiting for repository to be ready',
+      'Setting up initial folder structure',
+      'Uploading bookmarks to GitHub',
+      'Creating first commit',
+    ]);
+    try {
+      await waitForRemoteBaseline(api);
+      await initializePathAndRunFirstPush();
+    } finally {
+      stopInitPulse();
+    }
     wizardState.firstSyncDone = true;
     setWizardResult(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
   } else {
@@ -1349,6 +1377,38 @@ async function runWizardEnvironmentCheck() {
   wizardState.environmentChecked = true;
   renderOnboardingWizardStep();
   return true;
+}
+
+/**
+ * Show animated progress messages while a long async operation runs.
+ * Cycles through the provided messages with animated dots.
+ * Returns a stop function — call it when done.
+ * @param {string[]} messages - Ordered list of status messages to cycle through
+ * @param {number} msPerStep - How long to show each message before advancing
+ * @returns {() => void} stop function
+ */
+function startProgressPulse(messages, msPerStep = 3000) {
+  let msgIndex = 0;
+  let dotCount = 1;
+  const intervalMs = 600;
+  const startTime = Date.now();
+
+  const tick = () => {
+    const elapsed = Math.round((Date.now() - startTime) / 1000);
+    const dots = '.'.repeat(dotCount);
+    onboardingWizardHint.textContent = `${messages[msgIndex]}${dots}`;
+    onboardingWizardElapsed.textContent = elapsed > 0 ? `${elapsed}s` : '';
+    dotCount = (dotCount % 3) + 1;
+    if (Date.now() - phaseStart >= msPerStep && msgIndex < messages.length - 1) {
+      msgIndex++;
+      phaseStart = Date.now();
+    }
+  };
+
+  let phaseStart = Date.now();
+  tick();
+  const id = setInterval(tick, intervalMs);
+  return () => clearInterval(id);
 }
 
 async function runWizardSyncAction() {
@@ -1363,21 +1423,67 @@ async function runWizardSyncAction() {
   const basePath = onboardingWizardPathInput.value.trim() || 'bookmarks';
   const api = new GitHubAPI(token, owner, repo, branch);
 
+  // renderOnboardingWizardStep() (called inside runWizardEnvironmentCheck) hides
+  // the status area. Re-show it so the user sees feedback during sync.
+  wizardStatusEl.style.display = 'flex';
+
   if (wizardState.pathStatus === 'hasBookmarks') {
-    const pullResult = await chrome.runtime.sendMessage({ action: 'pull' });
-    if (!pullResult?.success) {
-      setWizardResult(pullResult?.message || 'Pull failed', 'error');
-      return false;
+    const stopPulse = startProgressPulse([
+      getMessage('options_onboardingWizardSyncInProgress') || 'Downloading bookmarks',
+      'Applying bookmarks to browser',
+      'Saving sync state',
+    ]);
+    try {
+      const pullResult = await chrome.runtime.sendMessage({ action: 'pull' });
+      stopPulse();
+      if (!pullResult?.success) {
+        setWizardResult(pullResult?.message || 'Pull failed', 'error');
+        return false;
+      }
+      setWizardResult(getMessage('options_onboardingPullSuccess'), 'success');
+      wizardState.firstSyncDone = true;
+      return true;
+    } catch (err) {
+      stopPulse();
+      throw err;
     }
-    setWizardResult(getMessage('options_onboardingPullSuccess'), 'success');
-    wizardState.firstSyncDone = true;
-    return true;
   }
 
-  await initializePathAndRunFirstPush();
-  setWizardResult(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
-  wizardState.firstSyncDone = true;
-  return true;
+  const stopPulse = startProgressPulse([
+    'Preparing bookmark data',
+    'Uploading bookmarks to GitHub',
+    'Creating repository commit',
+    'Saving sync state',
+  ]);
+
+  // Count bookmarks for estimated time (logged to debug log only, not shown in UI)
+  let bookmarkCount = 0;
+  let estSec = null;
+  try {
+    const tree = await chrome.bookmarks.getTree();
+    const countNodes = (nodes) => nodes.reduce((n, node) =>
+      n + (node.url ? 1 : 0) + (node.children ? countNodes(node.children) : 0), 0);
+    bookmarkCount = countNodes(tree);
+    // ~5 blobs/s with concurrency=5 + ~5s overhead (tree/commit/ref)
+    estSec = Math.round(bookmarkCount / 5) + 5;
+  } catch (_) { /* non-fatal */ }
+
+  const syncStart = Date.now();
+  try {
+    await initializePathAndRunFirstPush();
+    stopPulse();
+    const actualSec = ((Date.now() - syncStart) / 1000).toFixed(1);
+    console.log(
+      `[GitSyncMarks] Onboarding sync done — bookmarks: ${bookmarkCount}, ` +
+      `estimated: ${estSec != null ? estSec + 's' : 'n/a'}, actual: ${actualSec}s`
+    );
+    setWizardResult(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
+    wizardState.firstSyncDone = true;
+    return true;
+  } catch (err) {
+    stopPulse();
+    throw err;
+  }
 }
 
 onboardingWizardBackBtn.addEventListener('click', () => {

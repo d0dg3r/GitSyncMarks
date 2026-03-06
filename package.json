@@ -1,6 +1,6 @@
 {
   "name": "gitsyncmarks",
-  "version": "2.5.3",
+  "version": "2.5.4",
   "private": true,
   "description": "Your bookmarks, safe on GitHub — per-file storage, three-way merge sync, works on Chrome & Firefox. No middleman.",
   "scripts": {
@@ -15,6 +15,8 @@
     "test:e2e:sync": "npm run build:chrome && npx playwright test e2e/connection.spec.js e2e/sync.spec.js",
     "test:e2e:report": "npx playwright show-report",
     "cleanup:e2e-repos": "node scripts/cleanup-e2e-repos.js",
+    "test:rate-limit": "node scripts/test-onboarding-rate-limit.js",
+    "test:rate-limit:reset": "node scripts/test-onboarding-rate-limit.js --reset",
     "website:preview": "bash scripts/prepare-website.sh && npx --yes serve _site -p 3000"
   },
   "devDependencies": {

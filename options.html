@@ -97,11 +97,17 @@
         <button type="button" id="onboarding-wizard-skip-btn" class="btn btn-secondary btn-sm"
           data-i18n="options_onboardingWizardSkip">Exit</button>
       </div>
-      <div class="onboarding-wizard-feedback">
-        <span id="onboarding-wizard-spinner" class="spinner" style="display: none;"></span>
-        <span id="onboarding-wizard-hint" class="onboarding-wizard-hint" style="display: none;"></span>
+
+      <!-- Single unified feedback area for all states -->
+      <div id="wizard-status" class="wizard-status" style="display:none;">
+        <span id="onboarding-wizard-spinner" class="spinner wizard-status-spinner"></span>
+        <div class="wizard-status-body">
+          <span id="onboarding-wizard-hint"></span>
+          <span id="onboarding-wizard-elapsed" class="wizard-status-elapsed"></span>
+        </div>
       </div>
-      <span id="onboarding-wizard-result" class="validation-result"></span>
+      <!-- Keep result id alive for non-loading messages (success/error reuse wizard-status) -->
+      <span id="onboarding-wizard-result" style="display:none;"></span>
     </section>
 
     <div id="settings-shell">
