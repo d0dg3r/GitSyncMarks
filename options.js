@@ -765,6 +765,38 @@ async function loadSettings() {
   linkwardenDefaultTagsInput.value = globals.linkwardenDefaultTags || '';
   linkwardenSettingsGroup.style.display = linkwardenEnabledInput.checked ? 'block' : 'none';
 
+  // Attempt to fetch collections if configured
+  if (linkwardenEnabledInput.checked && linkwardenUrlInput.value && linkwardenTokenInput.value) {
+    let origin;
+    try {
+      origin = new URL(linkwardenUrlInput.value).origin + '/*';
+      chrome.permissions.contains({ origins: [origin] }, async (hasPermission) => {
+        if (hasPermission) {
+          try {
+            const api = new LinkwardenAPI(linkwardenUrlInput.value, linkwardenTokenInput.value);
+            const collections = await api.getCollections();
+            if (collections && collections.response && Array.isArray(collections.response)) {
+              const currentSelection = globals.linkwardenDefaultCollection || '';
+              linkwardenDefaultCollectionSelect.innerHTML = '<option value="" data-i18n="options_none">None</option>';
+              applyI18n();
+              collections.response.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id;
+                opt.textContent = c.name;
+                if (c.id.toString() === currentSelection) opt.selected = true;
+                linkwardenDefaultCollectionSelect.appendChild(opt);
+              });
+            }
+          } catch (e) {
+            console.warn('[GitSyncMarks] Failed to auto-fetch Linkwarden collections on load', e);
+          }
+        }
+      });
+    } catch (e) {
+      // Invalid URL
+    }
+  }
+
   generateBookmarksHtmlSelect.value = normalizeGenMode(globals.generateBookmarksHtml);
   generateFeedXmlSelect.value = normalizeGenMode(globals.generateFeedXml);
   generateDashyYmlSelect.value = normalizeGenMode(globals.generateDashyYml);
@@ -806,6 +838,15 @@ async function loadSettings() {
   openAllThresholdInput.value = String(
     Math.max(1, parseInt(globals.contextOpenAllThreshold, 10) || 15)
   );
+
+  // Ensure default context menu items (like recently added Linkwarden) are present in the list
+  const existingMenuIds = new Set(globals.contextMenuItems.map(i => i.id));
+  for (const defItem of DEFAULT_CONTEXT_MENU_ITEMS) {
+    if (!existingMenuIds.has(defItem.id)) {
+      globals.contextMenuItems.push(defItem);
+    }
+  }
+
   renderContextMenuConfig(globals.contextMenuItems);
   profileSwitchConfirm.style.display = 'none';
   profileDeleteConfirm.style.display = 'none';
