@@ -12,7 +12,9 @@ import { initTheme, applyTheme } from './lib/theme.js';
 import { serializeToJson, deserializeFromJson, bookmarkTreeToFileMap, fileMapToDashyYaml } from './lib/bookmark-serializer.js';
 import { replaceLocalBookmarks, SYNC_PRESETS } from './lib/sync-engine.js';
 import { updateGitHubReposFolder } from './lib/github-repos.js';
+import { LinkwardenAPI } from './lib/linkwarden-api.js';
 import { encryptToken, decryptToken, migrateTokenIfNeeded, encryptWithPassword, decryptWithPassword, PASSWORD_ENC_PREFIX } from './lib/crypto.js';
+
 import {
   isDebugLogEnabled,
   setDebugLogEnabled,
@@ -58,7 +60,13 @@ const STORAGE_KEYS = {
   CONTEXT_OPEN_ALL_THRESHOLD: 'contextOpenAllThreshold',
   CONTEXT_MENU_ITEMS: 'contextMenuItems',
   CONTEXT_MENU_SUBMENUS: 'contextMenuSubmenus',
+  LINKWARDEN_ENABLED: 'linkwardenEnabled',
+  LINKWARDEN_URL: 'linkwardenUrl',
+  LINKWARDEN_TOKEN: 'linkwardenToken',
+  LINKWARDEN_DEFAULT_COLLECTION: 'linkwardenDefaultCollection',
+  LINKWARDEN_DEFAULT_TAGS: 'linkwardenDefaultTags',
 };
+
 const LOCAL_STORAGE_KEYS = {
   SETTINGS_SYNC_CLIENT_NAME: 'settingsSyncClientName',
 };
@@ -200,6 +208,19 @@ const quickFoldersResult = document.getElementById('quick-folders-result');
 const openAllThresholdInput = document.getElementById('open-all-threshold');
 const contextMenuItemsList = document.getElementById('context-menu-items-list');
 const contextMenuResetBtn = document.getElementById('context-menu-reset-btn');
+
+// ---- DOM elements: Linkwarden Tab ----
+const linkwardenEnabledInput = document.getElementById('linkwarden-enabled');
+const linkwardenSettingsGroup = document.getElementById('linkwarden-settings');
+const linkwardenUrlInput = document.getElementById('linkwarden-url');
+const linkwardenTokenInput = document.getElementById('linkwarden-token');
+const toggleLinkwardenTokenBtn = document.getElementById('toggle-linkwarden-token');
+const linkwardenDefaultCollectionSelect = document.getElementById('linkwarden-default-collection');
+const linkwardenDefaultTagsInput = document.getElementById('linkwarden-default-tags');
+const linkwardenTestBtn = document.getElementById('linkwarden-test-btn');
+const linkwardenTestSpinner = document.getElementById('linkwarden-test-spinner');
+const linkwardenTestResult = document.getElementById('linkwarden-test-result');
+
 
 
 // ---- DOM elements: Export/Import (compact dropdown UI) ----
@@ -717,8 +738,14 @@ async function loadSettings() {
     debugLogEnabled: false,
     contextMenuOpenAllThreshold: 15,
     contextMenuItems: DEFAULT_CONTEXT_MENU_ITEMS,
+    linkwardenEnabled: false,
+    linkwardenUrl: '',
+    linkwardenToken: '',
+    linkwardenDefaultCollection: '',
+    linkwardenDefaultTags: '',
   };
   const globals = { ...syncDefaults, ...(await chrome.storage.sync.get(syncDefaults)) };
+
 
   autoSyncInput.checked = globals.autoSync !== false;
   syncIntervalInput.value = globals.syncInterval ?? 15;
@@ -729,6 +756,15 @@ async function loadSettings() {
   syncOnStartupInput.checked = globals.syncOnStartup === true;
   syncOnFocusInput.checked = globals.syncOnFocus === true;
   generateReadmeMdSelect.value = normalizeGenMode(globals.generateReadmeMd);
+
+  // Linkwarden settings
+  linkwardenEnabledInput.checked = globals.linkwardenEnabled === true;
+  linkwardenUrlInput.value = globals.linkwardenUrl || '';
+  linkwardenTokenInput.value = globals.linkwardenToken ? await decryptToken(globals.linkwardenToken) : '';
+  linkwardenDefaultCollectionSelect.value = globals.linkwardenDefaultCollection || '';
+  linkwardenDefaultTagsInput.value = globals.linkwardenDefaultTags || '';
+  linkwardenSettingsGroup.style.display = linkwardenEnabledInput.checked ? 'block' : 'none';
+
   generateBookmarksHtmlSelect.value = normalizeGenMode(globals.generateBookmarksHtml);
   generateFeedXmlSelect.value = normalizeGenMode(globals.generateFeedXml);
   generateDashyYmlSelect.value = normalizeGenMode(globals.generateDashyYml);
@@ -1649,7 +1685,13 @@ async function saveSettings() {
       [STORAGE_KEYS.LANGUAGE]: languageSelect.value,
       [STORAGE_KEYS.PROFILE_SWITCH_WITHOUT_CONFIRM]: profileSwitchWithoutConfirmInput.checked,
       [STORAGE_KEYS.CONTEXT_OPEN_ALL_THRESHOLD]: Math.max(1, parseInt(openAllThresholdInput.value, 10) || 15),
+      [STORAGE_KEYS.LINKWARDEN_ENABLED]: linkwardenEnabledInput.checked,
+      [STORAGE_KEYS.LINKWARDEN_URL]: linkwardenUrlInput.value.trim(),
+      [STORAGE_KEYS.LINKWARDEN_TOKEN]: linkwardenTokenInput.value.trim() ? await encryptToken(linkwardenTokenInput.value.trim()) : '',
+      [STORAGE_KEYS.LINKWARDEN_DEFAULT_COLLECTION]: linkwardenDefaultCollectionSelect.value,
+      [STORAGE_KEYS.LINKWARDEN_DEFAULT_TAGS]: linkwardenDefaultTagsInput.value.trim(),
     });
+
 
     try {
       await chrome.runtime.sendMessage({ action: 'settingsChanged' });
@@ -1812,8 +1854,114 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// Debug log: toggle saves immediately; export downloads log file
+// ==============================
+// Sync Tab Logic
+// ==============================
+
+autoSyncInput.addEventListener('change', saveSettings);
+syncProfileSelect.addEventListener('change', () => {
+  syncCustomFields.style.display = syncProfileSelect.value === 'custom' ? 'block' : 'none';
+  saveSettings();
+});
+syncIntervalInput.addEventListener('change', saveSettings);
+debounceDelayInput.addEventListener('change', saveSettings);
+syncOnStartupInput.addEventListener('change', saveSettings);
+syncOnFocusInput.addEventListener('change', saveSettings);
+notificationsModeSelect.addEventListener('change', saveSettings);
+
+// ==============================
+// Linkwarden Tab Logic
+// ==============================
+
+linkwardenEnabledInput.addEventListener('change', () => {
+  linkwardenSettingsGroup.style.display = linkwardenEnabledInput.checked ? 'block' : 'none';
+  saveSettings();
+});
+
+linkwardenUrlInput.addEventListener('change', saveSettings);
+linkwardenTokenInput.addEventListener('change', saveSettings);
+linkwardenDefaultCollectionSelect.addEventListener('change', saveSettings);
+linkwardenDefaultTagsInput.addEventListener('change', saveSettings);
+
+toggleLinkwardenTokenBtn.addEventListener('click', () => {
+  const isPassword = linkwardenTokenInput.type === 'password';
+  linkwardenTokenInput.type = isPassword ? 'text' : 'password';
+  toggleLinkwardenTokenBtn.querySelector('.icon-eye').textContent = isPassword ? '👁️‍🗨️' : '👁';
+});
+
+linkwardenTestBtn.addEventListener('click', async () => {
+  const url = linkwardenUrlInput.value.trim();
+  const token = linkwardenTokenInput.value.trim();
+
+  if (!url || !token) {
+    linkwardenTestResult.textContent = 'URL and Token are required';
+    linkwardenTestResult.className = 'validation-result error';
+    return;
+  }
+
+  let origin;
+  try {
+    origin = new URL(url).origin + '/*';
+  } catch (e) {
+    linkwardenTestResult.textContent = 'Invalid URL format';
+    linkwardenTestResult.className = 'validation-result error';
+    return;
+  }
+
+  chrome.permissions.contains({ origins: [origin] }, (hasPermission) => {
+    if (hasPermission) {
+      performLinkwardenTest(url, token);
+    } else {
+      chrome.permissions.request({ origins: [origin] }, (granted) => {
+        if (granted) {
+          performLinkwardenTest(url, token);
+        } else {
+          linkwardenTestResult.textContent = 'Host permission denied. Cannot connect to Linkwarden.';
+          linkwardenTestResult.className = 'validation-result error';
+        }
+      });
+    }
+  });
+});
+
+async function performLinkwardenTest(url, token) {
+  linkwardenTestBtn.disabled = true;
+  linkwardenTestSpinner.style.display = 'inline-block';
+  linkwardenTestResult.textContent = '';
+
+  try {
+    const api = new LinkwardenAPI(url, token);
+    const collections = await api.getCollections();
+
+    // Attempt to populate the default collection select if it was successful
+    if (collections && collections.response && Array.isArray(collections.response)) {
+      const currentSelection = linkwardenDefaultCollectionSelect.value;
+      linkwardenDefaultCollectionSelect.innerHTML = '<option value="" data-i18n="options_none">None</option>';
+      applyI18n(); // Re-apply to the "None" option
+      collections.response.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = c.name;
+        if (c.id.toString() === currentSelection) opt.selected = true;
+        linkwardenDefaultCollectionSelect.appendChild(opt);
+      });
+    }
+
+    linkwardenTestResult.textContent = 'Connection successful!';
+    linkwardenTestResult.className = 'validation-result success';
+  } catch (err) {
+    linkwardenTestResult.textContent = `Connection failed: ${err.message}`;
+    linkwardenTestResult.className = 'validation-result error';
+  } finally {
+    linkwardenTestBtn.disabled = false;
+    linkwardenTestSpinner.style.display = 'none';
+  }
+}
+
+
+
 debugLogEnabledInput.addEventListener('change', async () => {
+
   await setDebugLogEnabled(debugLogEnabledInput.checked);
 });
 debugLogExportBtn.addEventListener('click', async () => {

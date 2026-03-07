@@ -875,8 +875,8 @@
   "options_debugLogExportEmpty": {
     "message": "Log is empty. Enable debug log and run a sync first."
   },
-  "options_tabGitHub": {
-    "message": "GitHub"
+  "options_tabGit": {
+    "message": "Git"
   },
   "options_tabSynchronization": {
     "message": "Sync"
@@ -922,6 +922,36 @@
   },
   "options_subTabGitAdd": {
     "message": "Git Add"
+  },
+  "options_subTabSync": {
+    "message": "Synchronization"
+  },
+  "options_tabLinkwarden": {
+    "message": "Linkwarden"
+  },
+  "options_linkwardenTitle": {
+    "message": "Linkwarden Integration"
+  },
+  "options_linkwardenIntro": {
+    "message": "Configure your Linkwarden instance to save bookmarks directly from the context menu."
+  },
+  "options_linkwardenInstanceUrl": {
+    "message": "Instance URL"
+  },
+  "options_linkwardenApiKey": {
+    "message": "API Key"
+  },
+  "options_linkwardenDefaultCollection": {
+    "message": "Default Collection"
+  },
+  "options_linkwardenDefaultTags": {
+    "message": "Default Tags"
+  },
+  "options_linkwardenEnabled": {
+    "message": "Enable Linkwarden"
+  },
+  "options_linkwardenTestConnection": {
+    "message": "Test Connection"
   },
   "help_wizardRestartTitle": {
     "message": "Setup Wizard"

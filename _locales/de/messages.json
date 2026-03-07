@@ -137,8 +137,8 @@
   "options_profilesLimit": {
     "message": "$1/$2 Profile"
   },
-  "options_githubConnection": {
-    "message": "GitHub-Verbindung"
+  "options_tabGit": {
+    "message": "Git"
   },
   "options_patLabel": {
     "message": "Personal Access Token (PAT)"
@@ -214,6 +214,36 @@
   },
   "options_githubReposRefreshSuccess": {
     "message": "$1 Repos für $2 hinzugefügt"
+  },
+  "options_tabLinkwarden": {
+    "message": "Linkwarden"
+  },
+  "options_linkwardenTitle": {
+    "message": "Linkwarden-Integration"
+  },
+  "options_linkwardenIntro": {
+    "message": "Konfiguriere deine Linkwarden-Instanz, um Lesezeichen direkt aus dem Kontextmenü zu speichern."
+  },
+  "options_linkwardenInstanceUrl": {
+    "message": "Instanz-URL"
+  },
+  "options_linkwardenApiKey": {
+    "message": "API-Token"
+  },
+  "options_linkwardenDefaultCollection": {
+    "message": "Standard-Sammlung"
+  },
+  "options_linkwardenDefaultTags": {
+    "message": "Standard-Tags"
+  },
+  "options_linkwardenEnabled": {
+    "message": "Linkwarden aktivieren"
+  },
+  "options_linkwardenTestConnection": {
+    "message": "Verbindung testen"
+  },
+  "options_subTabSync": {
+    "message": "Synchronisierung"
   },
   "options_synchronization": {
     "message": "Synchronisierung"

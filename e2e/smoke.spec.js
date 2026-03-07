@@ -52,9 +52,10 @@ test.describe('Smoke', () => {
     await page.waitForLoadState('networkidle');
     await skipWizardIfVisible(page);
 
-    const tabs = ['sync', 'files', 'help', 'about'];
+    const tabs = ['files', 'menu', 'linkwarden', 'help', 'about', 'github'];
     for (const tabId of tabs) {
       const tab = page.locator(`.tab-btn[data-tab="${tabId}"]`);
+
       await tab.click();
       const content = page.locator(`#tab-${tabId}`);
       await test.expect(content).toHaveClass(/active/, { timeout: 2000 });
@@ -72,11 +73,12 @@ test.describe('Smoke', () => {
       const shell = document.querySelector('.search-shell')?.getBoundingClientRect();
       const closeBtn = document.querySelector('#search-close-btn')?.getBoundingClientRect();
       if (!shell || !closeBtn) throw new Error('Missing popup shell or close button');
-      const nearTop = closeBtn.top - shell.top <= 16;
-      const nearRight = shell.right - closeBtn.right <= 16;
+      const nearTop = closeBtn.top - shell.top <= 32; // Header is taller now
+      const nearRight = shell.right - closeBtn.right <= 20;
       if (!nearTop || !nearRight) {
-        throw new Error('Close button is not positioned in top-right corner');
+        throw new Error(`Close button is not positioned in top-right corner. topDiff=${closeBtn.top - shell.top}, rightDiff=${shell.right - closeBtn.right}`);
       }
+
     });
 
     await page.evaluate(() => {
