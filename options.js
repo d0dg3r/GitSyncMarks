@@ -2119,7 +2119,8 @@ linkwardenTestBtn.addEventListener('click', () => {
     if (granted) {
       performLinkwardenTest(url, token);
     } else {
-      const errorMsg = chrome.runtime.lastError ? chrome.runtime.lastError.message : 'Host permission denied. Please ensure you allow the permission popup.';
+      const lastErr = chrome.runtime.lastError || (typeof browser !== 'undefined' ? browser.runtime.lastError : null);
+      const errorMsg = lastErr ? lastErr.message : 'Host permission denied. Please check your browser address bar/popup blocker.';
       linkwardenTestBtn.disabled = false;
       linkwardenTestSpinner.style.display = 'none';
       linkwardenTestResult.textContent = errorMsg;
