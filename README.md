@@ -11,13 +11,19 @@
 
 <p align="center">
   <strong>GitSyncMarks</strong> — Your bookmarks, safe on GitHub. <br>
-  Bidirectional, automatic sync for Chrome and Firefox. <br>
+  Bidirectional, automatic sync for Chrome, Firefox, and the <strong>Companion App</strong>. <br>
   <em>No middleman. No privacy concerns. Total control.</em>
 </p>
 
 ---
 
 ## Highlights
+
+### 📱 Companion App
+Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/d0dg3r/GitSyncMarks-App)**.
+- **Cross-Platform**: Available for Android, iOS, Windows, macOS, and Linux.
+- **Direct Sync**: Connects directly to your GitHub repository.
+- **Mobile Power**: Browse, search, and manage your bookmarks on the go.
 
 ### Linkwarden Synergy
 Save any page or link directly to your **Linkwarden** instance from the right-click menu.
@@ -36,7 +42,7 @@ Industrial-grade reliability. If you change bookmarks on two devices at once, Gi
 
 ### Guided Onboarding Wizard
 Perfect for new users. GitSyncMarks walks you through the entire setup process.
-- **Zero to Sync**: Step-by-step guidance for tokens, repository selection, and first sync.
+- **Zero to Sync**: Step-by-Step guidance for tokens, repository selection, and first sync.
 - **Auto-Validation**: Instant feedback on your GitHub connection and folder paths.
 - **Flexible Flow**: Restart the wizard any time from the help or connection settings.
 
@@ -94,12 +100,6 @@ Automatically generate and push these files to your repository on every sync:
 2. Enter your Instance URL and API Key.
 3. Enable features like **Auto-Screenshots** for the best experience.
 
----
-
-## 📱 Companion App
-
-Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/d0dg3r/GitSyncMarks-App)**.
-Available for **Android, iOS, Windows, macOS, and Linux**. It syncs directly from your GitHub repo, allowing you to browse, search, and manage bookmarks on mobile.
 
 ---
 
