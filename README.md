@@ -15,6 +15,10 @@
   <em>No middleman. No privacy concerns. Total control.</em>
 </p>
 
+> [!NOTE]
+> *"With a distributed tool, no single place is vital to your data."*
+> — **Linus Torvalds** (Git creator)
+
 ---
 
 ## Highlights
