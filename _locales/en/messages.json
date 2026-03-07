@@ -147,7 +147,7 @@
     "message": "Show/hide token"
   },
   "options_tokenHint": {
-    "message": "Requires the <code>repo</code> scope. <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Create token</a>"
+    "message": "Requires the <code>repo</code> scope (classic) or <code>Contents: Read/Write</code> and <code>Metadata: Read</code> (fine-grained). <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Create token</a>"
   },
   "options_repoOwner": {
     "message": "Repository Owner"
@@ -579,7 +579,7 @@
     "message": "Access token"
   },
   "options_onboardingWizardStepTokenText": {
-    "message": "Add a GitHub token with repo scope. Keep it private."
+    "message": "Add a GitHub token with repo scope (classic) or Contents: Read/Write (fine-grained). Keep it private."
   },
   "options_onboardingWizardStepValidateTitle": {
     "message": "Test connection"
@@ -648,7 +648,7 @@
     "message": "A Personal Access Token (PAT) lets GitSyncMarks access your GitHub repository to sync bookmarks. You create it in your GitHub account settings."
   },
   "options_onboardingWizardTokenHelpScopes": {
-    "message": "The token needs the <code>repo</code> scope. This gives read/write access to your repositories (including private ones) and lets the extension create a repo if you choose auto-create. Treat the token like a password and keep it private."
+    "message": "The token needs the <code>repo</code> scope (classic) or <code>Contents: Read/Write</code> and <code>Metadata: Read</code> (fine-grained). This gives access to your repositories and lets the extension create a repo if you choose auto-create. Keep it private."
   },
   "options_onboardingWizardTokenStep1": {
     "message": "Click the link below to open GitHub's token creation page."
@@ -657,7 +657,7 @@
     "message": "Give the token a name (e.g. \"GitSyncMarks\") and set an expiration if you prefer."
   },
   "options_onboardingWizardTokenStep3": {
-    "message": "Under \"Scopes\", check <code>repo</code> (full control of private repositories)."
+    "message": "Under \"Permissions\" or \"Scopes\", ensure you grant access to repository contents (Read/Write)."
   },
   "options_onboardingWizardTokenStep4": {
     "message": "Click \"Generate token\", copy it, and paste it in the field below."

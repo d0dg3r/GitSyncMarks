@@ -1265,7 +1265,10 @@ async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
       return { ok: false };
     }
 
-    if (!tokenResult.scopes.includes('repo')) {
+    // Classic PATs return scopes. Fine-grained tokens/Apps don't return scopes 
+    // in the header. If scopes are missing (ambiguous), we skip the strict 'repo' check
+    // and let the following repo check verify access.
+    if (!tokenResult.ambiguous && !tokenResult.scopes.includes('repo')) {
       hideConnectionPathInitAction();
       showValidation(getMessage('options_tokenValidMissingScope', [tokenResult.username]), 'error');
       return { ok: false };
@@ -1402,7 +1405,7 @@ async function runWizardTokenValidation() {
     setWizardResult(getMessage('options_invalidToken'), 'error');
     return false;
   }
-  if (!tokenResult.scopes.includes('repo')) {
+  if (!tokenResult.ambiguous && !tokenResult.scopes.includes('repo')) {
     setWizardResult(getMessage('options_tokenValidMissingScope', [tokenResult.username]), 'error');
     return false;
   }
