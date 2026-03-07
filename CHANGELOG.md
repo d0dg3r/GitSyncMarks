@@ -5,6 +5,12 @@ All notable changes to GitSyncMarks are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [2.6.0-beta.1] - 2026-03-07
+
+### Migration
+- **No breaking changes**: Core bookmark sync remains fully compatible with existing v2.5.x repositories.
+- **Linkwarden**: New integration requires manual configuration in the Linkwarden settings tab (URL & API Key).
+
+### Added
 - Linkwarden integration — context menu Save to Linkwarden, options tab, tags, screenshots
 - Smart Search — lightning-fast search interface with theme support and keyboard navigation
 - Setup Wizard — guided onboarding for tokens and repository configuration

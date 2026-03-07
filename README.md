@@ -77,6 +77,20 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 
 ---
 
+---
+
+## 🚀 Upgrading to v2.6.0 (Beta)
+
+> [!IMPORTANT]
+> **v2.6.0-beta.1** is a major feature update. While there are **no breaking changes** to your core bookmark sync, please review the migration steps below if you plan to use the new Linkwarden integration.
+
+### Migration Steps
+- **No Action Needed**: Your current GitHub bookmark sync will continue to work perfectly after the update.
+- **Linkwarden Setup**: To use the new "Save to Linkwarden" feature, visit the new **Linkwarden tab** in settings and enter your instance URL and API key.
+- **Wizard Access**: If you want to re-verify your connection, use the **Restart Wizard** button in the **Help** tab.
+
+---
+
 ## Setup & Installation
 
 ### 1. Installation
