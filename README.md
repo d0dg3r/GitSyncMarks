@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="store-assets/marquee_promo_tile.png" width="960" alt="GitSyncMarks — Effortless Bookmark Sync via GitHub">
+  <img src="store-assets/marquee_promo_tile_linkwarden.png" width="960" alt="GitSyncMarks — Effortless Bookmark Sync via GitHub">
 </p>
 
 <p align="center">
@@ -34,19 +34,19 @@
 
 <table align="center">
 <tr>
-<td align="center"><img src="store-assets/en/chrome-1-github.png" width="220" alt="GitHub (Profile)" /><br><sub>1. GitHub</sub></td>
-<td align="center"><img src="store-assets/en/chrome-2-connection.png" width="220" alt="GitHub (Connection)" /><br><sub>2. Connection</sub></td>
-<td align="center"><img src="store-assets/en/chrome-3-sync.png" width="220" alt="Sync" /><br><sub>3. Sync</sub></td>
+<td align="center"><img src="store-assets/en/chrome-1-connection.png" width="220" alt="GitHub Connection" /><br><sub>1. Connection</sub></td>
+<td align="center"><img src="store-assets/en/chrome-2-sync.png" width="220" alt="Sync Settings" /><br><sub>2. Synchronization</sub></td>
+<td align="center"><img src="store-assets/en/chrome-3-menu.png" width="220" alt="Context Menu" /><br><sub>3. Context Menu</sub></td>
 </tr>
 <tr>
-<td align="center"><img src="store-assets/en/chrome-4-files.png" width="220" alt="Files (Generated)" /><br><sub>4. Files</sub></td>
-<td align="center"><img src="store-assets/en/chrome-5-export-import.png" width="220" alt="Files (Export / Import)" /><br><sub>5. Export / Import</sub></td>
-<td align="center"><img src="store-assets/en/chrome-6-popup.png" width="220" alt="Popup" /><br><sub>6. Popup</sub></td>
+<td align="center"><img src="store-assets/en/chrome-4-linkwarden.png" width="220" alt="Linkwarden" /><br><sub>4. Linkwarden</sub></td>
+<td align="center"><img src="store-assets/en/chrome-5-search.png" width="220" alt="Search Bookmarks" /><br><sub>5. Search Bookmarks</sub></td>
+<td align="center"><img src="store-assets/en/chrome-6-popup.png" width="220" alt="Action Popup" /><br><sub>6. Popup</sub></td>
 </tr>
 <tr>
-<td align="center"><img src="store-assets/en/chrome-7-wizard-welcome.png" width="220" alt="Setup wizard (Welcome)" /><br><sub>7. Wizard (Welcome)</sub></td>
-<td align="center"><img src="store-assets/en/chrome-8-wizard-token.png" width="220" alt="Setup wizard (Token)" /><br><sub>8. Wizard (Token)</sub></td>
-<td align="center"><img src="store-assets/en/chrome-9-wizard-repo.png" width="220" alt="Setup wizard (Repository)" /><br><sub>9. Wizard (Repository)</sub></td>
+<td align="center"><img src="store-assets/en/chrome-7-linkwarden-save.png" width="220" alt="Linkwarden Save Popup" /><br><sub>7. Save to Linkwarden</sub></td>
+<td align="center"><img src="store-assets/en/chrome-9-wizard-token.png" width="220" alt="Setup Wizard Token" /><br><sub>8. Wizard (Token)</sub></td>
+<td align="center"><img src="store-assets/en/chrome-10-wizard-repo.png" width="220" alt="Setup Wizard Repository" /><br><sub>9. Wizard (Repository)</sub></td>
 </tr>
 </table>
 
@@ -71,8 +71,9 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes. See [ROA
 
 ### Power Features
 
+- **Linkwarden Integration**: Connect to your Linkwarden instance to save bookmarks directly from the context menu (with auto-screenshots and default tags). Sync your Linkwarden collections straight into your browser bookmarks and push them to Git.
 - **Multiple profiles**: Up to 10 profiles (work, personal, etc.); each has its own GitHub repo config and bookmark set; Add, Rename, Delete; switching replaces local bookmarks with the target profile's data
-- **Context menu**: Right-click on any page or link — Add to Toolbar, Add to Other Bookmarks, Add to up to 3 pinned Quick Folders, Sync Now, Search Bookmarks (opens dedicated search popup with theme support, logo header, and close controls), Open All from Folder (with tab-count safety confirmation), Switch Profile, Copy Favicon URL, Download Favicon; bookmark is auto-synced after adding.
+- **Context menu**: Right-click on any page or link — Add to Toolbar, Add to Other Bookmarks, Add to up to 3 pinned Quick Folders, Save to Linkwarden, Sync Now, Search Bookmarks (opens dedicated search popup with theme support, logo header, and close controls), Open All from Folder (with tab-count safety confirmation), Switch Profile, Copy Favicon URL, Download Favicon; bookmark is auto-synced after adding.
   - **Browser-Native Folders**: Synced folders use native names (e.g., "Bookmarks Bar" vs. "Bookmarks Toolbar") based on your browser (Chrome/Firefox).
   - **Dynamic Subfolders**: Use "Add to Folder..." to browse your entire synced tree; parents include an "Add to this folder" entry for quick placement.
 - **Favicon tools**: Copy any site's favicon URL to clipboard or download it as PNG — accessible from the context menu; uses the browser's favicon with Google favicon service fallback
@@ -185,7 +186,9 @@ The extension settings open in a new tab with five main tabs. Header: language d
 | **GitHub** | Profile, Connection, Repos | Profile selector (add/rename/delete); token, repo, branch, file path, Test Connection, onboarding; GitHub Repos folder toggle |
 | **Sync** | — | Auto-sync, sync profile, sync on start/focus, notifications; Debug Log |
 | **Files** | Generated, Settings, Export/Import, Git Add | Generated files (README.md, bookmarks.html, feed.xml, dashy-conf.yml) with Off/Manual/Auto; Settings sync to Git (encrypted, global/individual); Export/import bookmarks and settings (JSON or encrypted .enc); Add bookmarks via Git or GitHub Actions |
-| **Help** | — | Backlog poll, quick links (Docs, Discussions, Report Issue), feature overview, keyboard shortcuts |
+| **Menu** | Visibility & Order, Pinned Folders, Advanced & Safety | Toggle context menu items, configure quick folders and open-all folder threshold |
+| **Linkwarden**| General, Synchronization | Connect instance (URL, API key), default tags, auto-screenshots; Sync collections to bookmarks |
+| **Help** | — | Backlog poll, quick links (Docs, Discussions, Report Issue), feature overview, setup wizard, keyboard shortcuts |
 | **About** | — | Version, links, license, contributors, mobile app |
 
 ---

@@ -1148,6 +1148,24 @@
   "help_whySlowIntro": {
     "message": "GitSyncMarks uses GitHub's Git Data API for atomic commits. Each changed or new bookmark file requires an API call. With many changes, this adds up."
   },
+  "help_linkwardenTitle": {
+    "message": "Linkwarden"
+  },
+  "help_linkwardenIntegrationTitle": {
+    "message": "Integration"
+  },
+  "help_linkwardenIntegrationDesc": {
+    "message": "Connect to your Linkwarden instance to save bookmarks directly from the context menu. You can specify default tags and auto-capture screenshots."
+  },
+  "help_linkwardenSyncTitle": {
+    "message": "Sync Collections"
+  },
+  "help_linkwardenSyncDesc": {
+    "message": "Sync your Linkwarden collections into your browser bookmark folders and optionally push them to your Git repository."
+  },
+  "help_menuTitle": {
+    "message": "Menu"
+  },
   "help_whyAtomic": {
     "message": "All changes are written in a single atomic commit: either everything succeeds or nothing does. This prevents partial or corrupted state if the sync is interrupted. One commit instead of many also avoids hitting API rate limits and keeps the Git history clean."
   },

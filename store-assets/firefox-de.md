@@ -17,7 +17,8 @@ Funktionen:
 • Volle Firefox-Unterstützung inkl. Lesezeichen-Menü
 • Auto-Sync bei jeder Lesezeichen-Änderung (Verzögerung pro Profil konfigurierbar)
 • Mehrere Lesezeichen-Profile: bis zu 10 Profile mit getrennten GitHub-Repos; Wechsel ersetzt lokale Lesezeichen
-• Kontextmenü: Rechtsklick auf Seite oder Link — Zur Lesezeichenleiste hinzufügen, Zu Andere Lesezeichen, Jetzt synchronisieren, Profil wechseln, Favicon-URL kopieren, Favicon herunterladen
+• Linkwarden-Integration: Speichere Lesezeichen direkt über das Kontextmenü (mit Auto-Screenshots und Standard-Tags), synchronisiere Kollektionen in den Browser
+• Kontextmenü: Rechtsklick auf Seite oder Link — Zur Lesezeichenleiste hinzufügen, Zu Andere Lesezeichen, Zu bis zu 3 angepinnten Schnell-Ordnern hinzufügen, In Linkwarden speichern, Jetzt synchronisieren, Lesezeichen durchsuchen (öffnet dediziertes Such-Popup), Alle aus Ordner öffnen (mit Sicherheitsabfrage bei zu vielen Tabs), Profil wechseln, Favicon-URL kopieren, Favicon herunterladen
 • Favicon-Tools: Favicon-URL einer Webseite in die Zwischenablage kopieren oder als PNG herunterladen — nutzt das Browser-Favicon mit Google-Favicon-Dienst als Fallback
 • Automatisierung: Lesezeichen über Git, CLI oder GitHub Actions hinzufügen — ohne Browser
 • GitHub-Repos-Ordner: optionaler Ordner mit Lesezeichen zu allen deinen GitHub-Repositories
