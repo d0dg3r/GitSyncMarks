@@ -1,21 +1,38 @@
 # Firefox Add-ons (AMO) — GitSyncMarks (Italiano)
 <!-- See firefox-meta.md for Privacy, Test Instructions, and Distribution -->
 
-### Nome
+### Name
 GitSyncMarks
 
-Puoi aggiungere segnalibri senza aprire Firefox. GitSyncMarks include un workflow GitHub Actions (add-bookmark.yml) che permette di aggiungere segnalibri tramite l'interfaccia web di GitHub o la riga di comando:
+### Summary (max 250 characters)
+Sincronizzazione segnalibri via GitHub. Sinergia Linkwarden, ricerca veloce e configurazione guidata. Sicuro e privato. Supporto Firefox nativo.
 
-  gh workflow run add-bookmark.yml -f url="https://example.com" -f title="Example" -f folder="toolbar"
+### Detailed Description
+GitSyncMarks è un'estensione professionale per Firefox che sincronizza automaticamente i tuoi segnalibri con un repository GitHub. Nessun intermediario: i tuoi dati restano completamente sotto il tuo controllo.
 
-Puoi anche creare file di segnalibri direttamente nel repository — basta aggiungere un file JSON con "title" e "url" in qualsiasi cartella di segnalibri. L'estensione rileva i nuovi file automaticamente alla prossima sincronizzazione.
+Caratteristiche Principali
 
-GitSyncMarks è completamente open source: https://github.com/d0dg3r/GitSyncMarks
+- Sinergia Linkwarden: Salva pagine o link direttamente sulla tua istanza di Linkwarden. Include screenshot automatici, sincronizzazione collezioni e tag.
+- Ricerca Intelligente: Un'interfaccia dedicata e velocissima per i segnalibri. Supporta temi (chiaro/scuro) ed è accessibile da tastiera.
+- Installazione Guidata: Un processo passo-passo che guida l'utente nella configurazione di token e repository per il primo avvio.
+- Unione a Tre Vie (Three-Way Merge): Affidabilità industriale grazie a un algoritmo che combina intelligentemente i cambiamenti su più dispositivi.
 
-App mobile: GitSyncMarks-App (iOS + Android) — visualizza i tuoi segnalibri ovunque. Compagno in sola lettura; F-Droid e Google Play in arrivo. https://github.com/d0dg3r/GitSyncMarks-App
+Funzionalità Chiave
+
+- Privacy by Design: Comunicazione diretta con le API di GitHub. Nessun terzo accede ai tuoi dati.
+- Ottimizzato per Firefox: Supporta la struttura nativa dei segnalibri.
+- Archiviazione in File Singoli: Ogni segnalibro è un file JSON leggibile, perfetto per il versionamento manuale su GitHub.
+- Profili Multipli: Gestisci fino a 10 profili separati con repository propri.
+- Automazione: Aggiungi segnalibri via CLI o GitHub Actions; l'estensione li integra automaticamente.
+- File Generati: Crea automaticamente un README.md, bookmarks.html o feed RSS nel tuo repository.
+
+App Complementare
+Usa GitSyncMarks-App (Android, iOS, Desktop) per gestire i segnalibri sui dispositivi mobili. (Nota: Firefox per Android non supporta la sincronizzazione nativa tramite estensioni).
+
+GitSyncMarks è Open Source: https://github.com/d0dg3r/GitSyncMarks
 
 ### Categories
-Segnalibri
+Bookmarks
 
 ### Tags
 bookmarks, sync, github, backup, automation

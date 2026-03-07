@@ -1,43 +1,38 @@
-# Chrome Web Store — GitSyncMarks (Português Brasil)
-<!-- See chrome-meta.md for Privacy, Test Instructions, and Distribution -->### Nome
+# Chrome Web Store — GitSyncMarks (Português (Brasil))
+<!-- See chrome-meta.md for Privacy, Test Instructions, and Distribution -->
+
+### Name
 GitSyncMarks
 
-### Resumo (max 132 caracteres)
-Sincronização de favoritos via GitHub. Sinergia com Linkwarden, Busca Inteligente e App Companion. Direto, seguro, privado.
+### Summary (max 132 characters)
+Sincronização de favoritos via GitHub. Sinergia com Linkwarden, Smart Search e app complementar. Direto, seguro, privado.
 
-### Descrição Detalhada
-GitSyncMarks é uma solução profissional para sincronizar seus favoritos de forma automática e bidirecional com um repositório GitHub. Gerencie seus dados no desktop via Chrome e Firefox, ou em qualquer lugar com o App Companion GitSyncMarks. Sem intermediários, sem servidores de terceiros – controle total e privacidade.
+### Detailed Description
+GitSyncMarks é uma solução profissional para sincronizar bi-direcionalmente e de forma automática seus favoritos com um repositório GitHub. Total controle e privacidade, sem servidores de terceiros ou intermediários.
 
-Highlights
+Destaques
 
-- Sinergia com Linkwarden: Salve páginas ou links diretamente em sua instância Linkwarden. Inclui capturas de tela automáticas, sincronização de coleções e tags predefinidas.
-- Busca Inteligente: Uma interface de busca dedicada e ultrarrápida para seus favoritos. Suporta temas claro e escuro e é totalmente acessível via teclado.
-- Assistente de Configuração Guiado: Um processo de integração passo a passo guia novos usuários desde a configuração do token e repositório até o primeiro sync com sucesso.
-- Merge de Três Vias: Confiabilidade de nível industrial através de um algoritmo de merge avançado que combina inteligentemente alterações de múltiplos dispositivos.
+- Sinergia com Linkwarden: Salve páginas diretas para seu Linkwarden, gerando capturas de tela e sincronizando coleções automaticamente.
+- Smart Search: Interface super rápida dedicada a encontrar seus links. Suporta modo claro/escuro e navegação pelo teclado.
+- Assistente Guiado: Um assistente simples demonstra em poucos passos a criação e o fluxo da sincronização inicial com Tokens.
+- Fusão em Três Vias (Three-Way Merge): Algoritmo de classe empresarial que evita conflitos durante o mesclado provenientes de múltiplos locais.
 
-Capacidades Chave
+Principais Funções
 
-- Privado por Design: Comunicação direta com a API do GitHub. Nenhum terceiro vê seus dados.
-- Armazenamento por Arquivo: Cada favorito é armazenado como um arquivo JSON legível – ideal para controle de versão e edição manual no GitHub.
-- Múltiplos Perfis: Gerencie até 10 perfis separados (ex: Trabalho/Pessoal) com repositórios individuais.
-- Automação: Adicione favoritos via CLI ou GitHub Actions; a extensão os integra automaticamente no próximo sync.
-- Arquivos Gerados: Cria automaticamente um README.md (visão geral), bookmarks.html (importação de navegador) ou feed RSS em seu repositório.
-- Design e i18n: Temas claro e escuro profissionais com suporte para 12 idiomas.
+- Privado por Natureza: Conexão direta via API do GitHub apenas, seus dados ficam sob seu controle.
+- Arquivos de Armazenamento Individuais: Os favoritos são salvos em itens JSON distintos. Total controle de versões do repositório.
+- Perfis Múltiplos: Use em paralelo até 10 esquemas distintos (p.ex. Trabalho, Casa) com repositório próprio.
+- Automação: Integra facilmente via CLI; sincronizando os marcadores adicionados de volta ao navegador em passagens futuras.
+- Gerador de Arquivos: A ferramenta propicia na raiz a publicação de README.md, HTMLs e RSS Feed via push.
+- Design & Idiomas: Traduções para 12 nações e temas limpos para uma excelente leitura.
 
-Instalação e Configuração
-
-1. Instalação: Baixe o ZIP do GitHub (Chrome/Edge) ou instale pela web store.
-2. GitHub PAT: Crie um Token de Acesso Pessoal com escopo "repo" (clássico) ou "Contents: Read/Write" (fine-grained).
-3. Assistente de Configuração: Siga o processo guiado em Ajuda -> Primeiros Passos.
-4. Linkwarden (opcional): Configure sua instância na aba dedicada do Linkwarden.
-
-App Companion
-Use o GitSyncMarks-App (Android, iOS, Desktop) para gerenciar seus favoritos diretamente do seu repositório GitHub em dispositivos móveis.
+App Adicional
+Acompanha o aplicativo Mobile GitSyncMarks (Android, iOS e Windows) de interface gráfica nativa capaz de manipular sem perdas na ponta de seu celular.
 
 GitSyncMarks é Open Source: https://github.com/d0dg3r/GitSyncMarks
 
 ### Category
-Produtividade
+Productivity
 
 ### Language
 Português (Brasil)

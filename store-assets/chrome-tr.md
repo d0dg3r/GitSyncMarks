@@ -4,42 +4,35 @@
 ### Name
 GitSyncMarks
 
-### Özet (maks. 132 karakter)
-GitHub üzerinden yer imi senkronizasyonu. Linkwarden sinerjisi, Akıllı Arama ve Yardımcı Uygulama. Doğrudan, güvenli, özel.
+### Summary (max 132 characters)
+GitHub üzerinden yer imi senkronizasyonu. Linkwarden sinerjisi, Akıllı Arama ve Yardımcı Uygulama. Doğrudan, güvenli ve özel.
 
-### Detaylı Açıklama
-GitSyncMarks, yer imlerinizi bir GitHub deposuyla otomatik ve çift yönlü olarak senkronize eden profesyonel bir tarayıcı uzantısıdır. Verilerinizi masaüstünde Chrome ve Firefox üzerinden veya seyahat halindeyken GitSyncMarks Yardımcı Uygulaması ile yönetin. Aracı yok, üçüncü taraf sunucusu yok – tam kontrol ve gizlilik.
+### Detailed Description
+GitSyncMarks, yer imlerinizi bir GitHub deposuyla otomatik ve çift yönlü olarak senkronize eden profesyonel bir araçtır. Aracı yok, üçüncü taraf sunucusu yok – tam kontrol ve gizlilik.
 
 Öne Çıkanlar
 
-- Linkwarden Sinerjisi: Sayfaları veya bağlantıları doğrudan Linkwarden örneğinize kaydedin. Otomatik görünüm alanı ekran görüntüleri, koleksiyon senkronizasyonu ve önceden tanımlanmış etiketler içerir.
-- Akıllı Arama: Yer imleriniz için özel, yıldırım hızında bir arama arayüzü. Açık ve koyu temaları destekler ve tamamen klavye ile erişilebilir durumdadır.
-- Rehberli Kurulum Sihirbazı: Adım adım ilerleyen kurulum süreci, yeni kullanıcıları token ve depo yapılandırmasından ilk başarılı senkronizasyona kadar güvenle yönlendirir.
-- Üç Yönlü Birleştirme: Birden fazla cihazdan gelen değişiklikleri akıllıca birleştiren gelişmiş bir birleştirme algoritması ile endüstriyel düzeyde güvenilirlik sağlar.
+- Linkwarden Sinerjisi: Sayfaları doğrudan Linkwarden'a kaydedin. Otomatik ekran görüntüleri, koleksiyon senkronizasyonu ve etiketler dahildir.
+- Akıllı Arama (Smart Search): Yıldırım hızında arama arayüzü. Açık/koyu tema ve klavye destekli.
+- Rehberli Kurulum: Yeni kullanıcıları token ve depo yapılandırmasından senkronizasyona kadar yönlendiren basit sihirbaz.
+- Üç Yönlü Birleştirme (Three-Way Merge): Birden fazla cihazdan gelen değişiklikleri akıllıca birleştiren gelişmiş algoritma sayesinde mutlak güvenilirlik.
 
-Temel Yetenekler
+Temel Özellikler
 
-- Tasarım Gereği Gizli: GitHub API ile doğrudan iletişim kurar. Üçüncü taraflar verilerinizi görmez.
-- Dosya Tabanlı Depolama: Her yer imi okunabilir bir JSON dosyası olarak saklanır – GitHub üzerinde sürüm oluşturma ve manuel düzenleme için idealdir.
-- Çoklu Profiller: İş, kişisel veya projeler için ayrı depolarla 10 adede kadar farklı profili yönetin.
-- Otomasyon: CLI veya GitHub Actions aracılığıyla yer imleri ekleyin; uzantı bir sonraki senkronizasyonda bunları otomatik olarak entegre eder.
-- Oluşturulan Dosyalar: Deponuzda otomatik olarak bir README.md (genel bakış), bookmarks.html (tarayıcı içe aktarma) veya RSS beslemesi oluşturur.
-- Tasarım ve i18n: 12 dil desteği ile profesyonel açık ve koyu temalar.
-
-Kurulum ve Yapılandırma
-
-1. Kurulum: GitHub'dan ZIP dosyasını indirin (Chrome/Edge) veya web mağazasından yükleyin.
-2. GitHub PAT: "repo" kapsamına sahip bir Kişisel Erişim Token'ı oluşturun.
-3. Kurulum Sihirbazı: Yardım -> Başlarken altındaki rehberli süreci takip edin.
-4. Linkwarden (isteğe bağlı): Örneğinizi özel Linkwarden sekmesinde yapılandırın.
+- Gizlilik Odaklı: İletişim tamamen doğrudan GitHub API iledir. Üçüncü şahıslar görmez.
+- Tekil Dosya Depolama: Her yer imi JSON formatında depolanır, böylece değişiklikleri GitHub üzerinden takip edebilirsiniz.
+- Çoklu Profiller: Kendi depolarıyla 10'a kadar iş, özel profil tanımlaması.
+- Otomasyon: CLI aracılığıyla eklenti harici kayıt oluşturdunuzda otomatik birleştirilir.
+- Otomatik Çıktılar: Orijinal klasör deponuza bookmarks.html, RSS feed veya özet README dosyaları yerleştirilebilir.
+- Tema ve 12 Dil desteği.
 
 Yardımcı Uygulama
-Mobil cihazlarda yer imlerinizi doğrudan GitHub deponuzdan yönetmek için GitSyncMarks-App (Android, iOS, Masaüstü) kullanın.
+GitSyncMarks mobil uygulamasını kullanarak Android/iOS üzerinde yer imlerinizi GitHub bağlamında tam kontrol edin.
 
-GitSyncMarks Açık Kaynaktır: https://github.com/d0dg3r/GitSyncMarks
+Açık Kaynak Projesi: https://github.com/d0dg3r/GitSyncMarks
 
 ### Category
-Üretkenlik
+Productivity
 
 ### Language
 Türkçe

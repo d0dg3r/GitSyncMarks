@@ -5,40 +5,34 @@
 GitSyncMarks
 
 ### Summary (max 250 characters)
-Firefox yer imlerinizi GitHub ile senkronize edin — çift yönlü, çakışmasız. Dosya başına JSON, üç yönlü merge, otomatik sync. Yer İmleri Araç Çubuğu, Menü ve Mobil tam destek. Git, CLI veya GitHub Actions ile ekleyin. Açık kaynak, aracısız.
+GitHub üzerinden yer imi senkronizasyonu. Linkwarden sinerjisi, Akıllı Arama ve rehberli kurulum. Tamamen özel. Özgün Firefox desteği.
 
 ### Detailed Description
-GitSyncMarks, Firefox yer imlerinizi bir GitHub deposuyla senkronize eder — çift yönlü, otomatik ve aracısız.
+GitSyncMarks, yer imlerinizi bir GitHub deposuyla otomatik olarak senkronize eden Firefox eklentisidir. Verileriniz sunucumuz olmadan kendi kontrolünüzde kalır.
 
-Özellikler:
-• Aracısız — Personal Access Token'ınızı kullanarak doğrudan GitHub API ile iletişim kurar
-• Klavye kısayolları: hızlı Sync (Ctrl+Shift+.), ayarları aç (Ctrl+Shift+,) — özelleştirilebilir
-• Hata ayıklama günlüğü: Sync sekmesi — sync tanılaması için etkinleştirin, sorun giderme için dışa aktarın
-• Mobil uygulama: GitSyncMarks-App (iOS + Android) — yer imlerinizi hareket halinde görüntüleyin, deponuzdan salt okunur sync
-• Otomatik kayıt: tüm ayarlar değiştirildiğinde otomatik kaydedilir — Kaydet düğmesi yok
-• Bildirimler: Tümü (başarılı + hata), Yalnızca hatalar veya Kapalı
+Öne Çıkanlar
 
-Nasıl çalışır:
-1. Yer imleriniz için bir GitHub deposu oluşturun
-2. klasik "repo" veya fine-grained "Contents: Read/Write" kapsamında bir Personal Access Token oluşturun
-3. GitSyncMarks'ı token ve deponuzla yapılandırın
-4. "Şimdi Senkronize Et"e tıklayın — tamam!
+- Linkwarden Sinerjisi: Sayfaları doğrudan Linkwarden'a kaydedin. Otomatik ekran görüntüleri, koleksiyon senkronizasyonu ve etiketler dahildir.
+- Akıllı Arama (Smart Search): Yıldırım hızında arama arayüzü. Açık/koyu tema ve klavye destekli.
+- Rehberli Kurulum: Yeni kullanıcıları token ve depo yapılandırmasından senkronizasyona kadar yönlendiren basit sihirbaz.
+- Üç Yönlü Birleştirme (Three-Way Merge): Birden fazla cihazdan gelen değişiklikleri akıllıca birleştiren gelişmiş algoritma sayesinde mutlak güvenilirlik.
 
-Her yer imi, deponuzda ayrı bir JSON dosyası olarak saklanır ve Firefox yer imi hiyerarşinizi (Yer İmleri Araç Çubuğu, Yer İmleri Menüsü, Diğer Yer İmleri) yansıtan klasörler halinde düzenlenir. README.md doğrudan GitHub'da genel bir bakış sunar; bookmarks.html herhangi bir tarayıcıya içe aktarmayı sağlar; feed.xml RSS akışı abonelik veya otomasyon için kullanılabilir; dashy-conf.yml Dashy panosu için bölümler sağlar.
+Temel Özellikler
 
-Otomasyon:
-Firefox'u açmadan yer imi ekleyebilirsiniz. GitSyncMarks, GitHub web arayüzü veya komut satırı üzerinden yer imi eklemenizi sağlayan bir GitHub Actions iş akışı (add-bookmark.yml) içerir:
+- Gizlilik Odaklı: İletişim tamamen doğrudan GitHub API iledir. Üçüncü şahıslar görmez.
+- Firefox Uyumlu: Firefox yer imi dizin yapısına uyarlanmıştır.
+- Tekil Dosya Depolama: Her yer imi tekil JSON halinde sunulur.
+- Çoklu Profiller: Kendi depolarıyla 10'a kadar iş, özel profil tanımlaması.
+- Otomasyon: CLI aracılığıyla eklenti harici kayıt oluşturdunuzda otomatik birleştirilir.
+- Otomatik Çıktılar: Orijinal klasör deponuza bookmarks.html, RSS feed veya özet README dosyaları yerleştirilebilir.
 
-  gh workflow run add-bookmark.yml -f url="https://example.com" -f title="Example" -f folder="toolbar"
+Yardımcı Uygulama
+GitSyncMarks mobil uygulamasını kullanarak Android/iOS üzerinde erişim sağlayabilirsiniz. (Bilgi: Firefox Mobil desteği sunulamadığından ek app mevcuttur).
 
-Ayrıca depoda doğrudan yer imi dosyaları oluşturabilirsiniz — herhangi bir yer imi klasörüne "title" ve "url" içeren bir JSON dosyası ekleyin. Uzantı, sonraki senkronizasyonda yeni dosyaları otomatik olarak algılar.
-
-GitSyncMarks tamamen açık kaynaktır: https://github.com/d0dg3r/GitSyncMarks
-
-Mobil uygulama: GitSyncMarks-App (iOS + Android) — yer imlerinizi hareket halinde görüntüleyin. Salt okunur yardımcı uygulama; F-Droid ve Google Play yakında. https://github.com/d0dg3r/GitSyncMarks-App
+Açık Kaynak Projesi: https://github.com/d0dg3r/GitSyncMarks
 
 ### Categories
-Yer İmleri
+Bookmarks
 
 ### Tags
 bookmarks, sync, github, backup, automation

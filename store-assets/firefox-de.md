@@ -26,12 +26,6 @@ Kernfunktionen
 - Automatisierung: Fügen Sie Lesezeichen über CLI oder GitHub Actions hinzu; die Erweiterung integriert diese beim nächsten Sync automatisch.
 - Generierte Dateien: Erstellt automatisch eine README.md (Übersicht), bookmarks.html (Import-Datei) oder einen RSS-Feed in Ihrem Repository.
 
-Installation und Einrichtung
-
-1. Installation: GitSyncMarks aus Firefox Add-ons (AMO) laden.
-2. GitHub PAT: Erstellen Sie einen Personal Access Token mit klassische "repo"-Berechtigung oder "Contents: Read/Write" (fine-grained).
-3. Setup-Wizard: Folgen Sie dem geführten Prozess unter Hilfe -> Erste Schritte.
-4. Linkwarden (optional): Konfigurieren Sie Ihre Instanz im Linkwarden-Tab.
 
 Begleit-App
 Nutzen Sie die GitSyncMarks-App (Android, iOS, Desktop), um Ihre Lesezeichen direkt aus dem GitHub-Repository auf mobilen Geräten zu verwalten. (Hinweis: Firefox für Android unterstützt keinen direkten Lesezeichen-Sync durch Erweiterungen – nutzen Sie hierfür die App).

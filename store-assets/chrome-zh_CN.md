@@ -1,36 +1,38 @@
-# Chrome Web Store — GitSyncMarks (中文简体)
+# Chrome Web Store — GitSyncMarks (中文 (简体))
 <!-- See chrome-meta.md for Privacy, Test Instructions, and Distribution -->
 
-### 名称
+### Name
 GitSyncMarks
 
-• 通知：全部（成功+失败）、仅错误或关闭
-• 自动保存：所有设置更改时自动保存 — 无需保存按钮
-• 调试日志：Sync标签页 — 启用Sync诊断，导出以排查问题
-• 待办投票：社区投票决定下一步开发哪些功能
-• 移动伴侣：GitSyncMarks-App（iOS + Android） — 随时随地查看书签，从仓库只读Sync
+### Summary (max 132 characters)
+通过GitHub同步书签。支持Linkwarden、智能搜索和配套应用。双向、安全且绝对私密。
 
-使用方法：
-1. 为书签创建一个GitHub仓库
-2. 生成具有"repo"范围的Personal Access Token
-3. 使用您的token和仓库配置GitSyncMarks
-4. 点击"立即同步" — 完成！
+### Detailed Description
+GitSyncMarks 是一个专业的扩展，它能与您的 GitHub 仓库双向、自动同步书签。没有中间人，没有第三方服务器——完全的控制与隐私。
 
-每个书签作为独立的JSON文件存储在您的仓库中，按照书签层级结构组织到文件夹中。README.md在GitHub上直接提供清晰概览；bookmarks.html可导入任何浏览器；feed.xml RSS feed可订阅或用于自动化；dashy-conf.yml为Dashy仪表板提供分区。
+新版亮点
 
-自动化：
-您无需打开浏览器即可添加书签。GitSyncMarks包含GitHub Actions工作流（add-bookmark.yml），可通过GitHub网页界面或命令行添加书签：
+- Linkwarden 联动：直接将网页保存至您的 Linkwarden。包含自动化页面截图、文件夹同步及内置标签功能。
+- 智能搜索 (Smart Search)：闪电般响应速度的独立搜索界面。支持暗色主题切换并提供全键盘导航支持。
+- 引导式设置向导：通过简单的几个步骤引导新用户完成令牌获取、仓库配置到完成首次云端同步。
+- 三方合并算法 (Three-Way Merge)：高级合并算法，可靠解决多台设备上的文件修改冲突，实现工程级的同步稳定性。
 
-  gh workflow run add-bookmark.yml -f url="https://example.com" -f title="Example" -f folder="toolbar"
+核心能力
 
-您也可以直接在仓库中创建书签文件 — 只需在书签文件夹中添加包含"title"和"url"的JSON文件。扩展程序会在下次Sync时自动检测新文件并将其规范化为标准格式。
+- 隐私设计 (Private-by-Design)：与 GitHub API 直连通信，绝无第三方触及您的隐私数据。
+- 独立文件存储：每条书签均以可读性极强的 JSON 格式单独存放，便于手动修改或进行 Git 版本控制。
+- 多配置文件：在一个浏览器内同时管理最多10个完全独立的仓库/身份配置文件（例如：工作、生活）。
+- 高度自动化兼容：无论外界通过什么手段（Git CLI, Actions）变动了书签，扩展都能自动并入更新。
+- 输出生成文件：可以命令扩展自动在仓库内生成 README.md 总览说明、供随时导入的 HTML 或 RSS 供稿。
+- 精心设计的 UI，具备 12 种国际语言及完善的夜间模式支持。
 
-GitSyncMarks完全开源：https://github.com/d0dg3r/GitSyncMarks
+移动配套应用
+下载使用 GitSyncMarks 专用的手机应用程序 (Android, iOS) 即可在手机随时读写您的 GitHub 书签。
 
-移动应用：GitSyncMarks-App（iOS + Android） — 随时随地查看书签。只读伴侣；F-Droid和Google Play即将推出。 https://github.com/d0dg3r/GitSyncMarks-App
+项目代码开源于: https://github.com/d0dg3r/GitSyncMarks
 
 ### Category
-效率工具
+Productivity
 
 ### Language
-中文（简体）
+中文 (简体)
