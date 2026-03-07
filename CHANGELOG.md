@@ -4,6 +4,16 @@ All notable changes to GitSyncMarks are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [2.6.1] - 2026-03-07 (*Link*)
+
+### Fixed
+- **Firefox Linkwarden permissions**: Resolved "Host permission denied" error in Firefox Manifest V3 by fixing lost user gesture context during permission requests and adding missing host patterns to `manifest.firefox.json`.
+- **Website Banner**: Updated website promo banner and meta tags to use the Linkwarden-branded marquee tile, matching the project README.
+
+### Improved
+- **Store Descriptions**: Standardized and synchronized feature descriptions (Linkwarden, Smart Search, Wizard) across all 12 supported languages for Chrome and Firefox.
+- **Chrome Marquee Tile**: Added dedicated 1400x560 promo marquee asset (no alpha) for Chrome Web Store compliance.
+
 ## [2.6.0] - 2026-03-07 (*Link*)
 
 ### Migration
@@ -289,7 +299,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release: bookmark sync with GitHub
 
-[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.6.0...HEAD
+[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.6.1...HEAD
+[2.6.1]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.6.0...v2.6.1
 [2.6.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.4...v2.6.0
 [2.5.4]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.3...v2.5.4
 
