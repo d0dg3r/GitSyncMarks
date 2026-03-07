@@ -76,133 +76,145 @@ All regions
 - [ ] `store-assets/promo-small.png` — 440x280px small promo tile
 
 ### English (EN)
-- [x] `en/chrome-1-github.png` — GitHub tab (Profile)
-- [x] `en/chrome-2-connection.png` — GitHub tab (Connection)
-- [x] `en/chrome-3-sync.png` — Sync tab
-- [x] `en/chrome-4-files.png` — Files tab (Generated)
-- [x] `en/chrome-5-export-import.png` — Files tab (Export / Import)
-- [x] `en/chrome-6-popup.png` — Popup (centered)
-- [x] `en/chrome-7-wizard-welcome.png` — Setup wizard (Welcome)
-- [x] `en/chrome-8-wizard-token.png` — Setup wizard (Token help)
-- [x] `en/chrome-9-wizard-repo.png` — Setup wizard (Repository details)
+- [x] `en/chrome-1-connection.png` — Connection
+- [x] `en/chrome-2-sync.png` — Sync
+- [x] `en/chrome-3-menu.png` — Menu
+- [x] `en/chrome-4-linkwarden.png` — Linkwarden
+- [x] `en/chrome-5-search.png` — Search
+- [x] `en/chrome-6-popup.png` — Popup
+- [x] `en/chrome-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `en/chrome-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `en/chrome-9-wizard-token.png` — Wizard (Token)
+- [x] `en/chrome-10-wizard-repo.png` — Wizard (Repository)
 
 ### Deutsch (DE)
-- [x] `de/chrome-1-github.png` — GitHub-Tab (Profil)
-- [x] `de/chrome-2-connection.png` — GitHub-Tab (Verbindung)
-- [x] `de/chrome-3-sync.png` — Sync-Tab
-- [x] `de/chrome-4-files.png` — Dateien-Tab (Generiert)
-- [x] `de/chrome-5-export-import.png` — Dateien-Tab (Export / Import)
+- [x] `de/chrome-1-connection.png` — Connection
+- [x] `de/chrome-2-sync.png` — Sync
+- [x] `de/chrome-3-menu.png` — Menu
+- [x] `de/chrome-4-linkwarden.png` — Linkwarden
+- [x] `de/chrome-5-search.png` — Search
 - [x] `de/chrome-6-popup.png` — Popup
-- [x] `de/chrome-7-wizard-welcome.png` — Setup-Wizard (Willkommen)
-- [x] `de/chrome-8-wizard-token.png` — Setup-Wizard (Token-Hilfe)
-- [x] `de/chrome-9-wizard-repo.png` — Setup-Wizard (Repository-Details)
+- [x] `de/chrome-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `de/chrome-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `de/chrome-9-wizard-token.png` — Wizard (Token)
+- [x] `de/chrome-10-wizard-repo.png` — Wizard (Repository)
 
 ### Français (FR)
-- [x] `fr/chrome-1-github.png` — Onglet GitHub (Profil)
-- [x] `fr/chrome-2-connection.png` — Onglet GitHub (Connexion)
-- [x] `fr/chrome-3-sync.png` — Onglet Sync
-- [x] `fr/chrome-4-files.png` — Onglet Fichiers (Générés)
-- [x] `fr/chrome-5-export-import.png` — Onglet Fichiers (Export / Import)
+- [x] `fr/chrome-1-connection.png` — Connection
+- [x] `fr/chrome-2-sync.png` — Sync
+- [x] `fr/chrome-3-menu.png` — Menu
+- [x] `fr/chrome-4-linkwarden.png` — Linkwarden
+- [x] `fr/chrome-5-search.png` — Search
 - [x] `fr/chrome-6-popup.png` — Popup
-- [x] `fr/chrome-7-wizard-welcome.png` — Assistant de configuration (Bienvenue)
-- [x] `fr/chrome-8-wizard-token.png` — Assistant de configuration (Aide token)
-- [x] `fr/chrome-9-wizard-repo.png` — Assistant de configuration (Détails dépôt)
+- [x] `fr/chrome-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `fr/chrome-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `fr/chrome-9-wizard-token.png` — Wizard (Token)
+- [x] `fr/chrome-10-wizard-repo.png` — Wizard (Repository)
 
 ### Español (ES)
-- [x] `es/chrome-1-github.png` — Pestaña GitHub (Perfil)
-- [x] `es/chrome-2-connection.png` — Pestaña GitHub (Conexión)
-- [x] `es/chrome-3-sync.png` — Pestaña Sync
-- [x] `es/chrome-4-files.png` — Pestaña Archivos (Generados)
-- [x] `es/chrome-5-export-import.png` — Pestaña Archivos (Exportar / Importar)
+- [x] `es/chrome-1-connection.png` — Connection
+- [x] `es/chrome-2-sync.png` — Sync
+- [x] `es/chrome-3-menu.png` — Menu
+- [x] `es/chrome-4-linkwarden.png` — Linkwarden
+- [x] `es/chrome-5-search.png` — Search
 - [x] `es/chrome-6-popup.png` — Popup
-- [x] `es/chrome-7-wizard-welcome.png` — Asistente de configuración (Bienvenida)
-- [x] `es/chrome-8-wizard-token.png` — Asistente de configuración (Ayuda token)
-- [x] `es/chrome-9-wizard-repo.png` — Asistente de configuración (Detalles repositorio)
+- [x] `es/chrome-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `es/chrome-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `es/chrome-9-wizard-token.png` — Wizard (Token)
+- [x] `es/chrome-10-wizard-repo.png` — Wizard (Repository)
 
 ### Português Brasil (PT-BR)
-- [x] `pt_BR/chrome-1-github.png` — Aba GitHub (Perfil)
-- [x] `pt_BR/chrome-2-connection.png` — Aba GitHub (Conexão)
-- [x] `pt_BR/chrome-3-sync.png` — Aba Sync
-- [x] `pt_BR/chrome-4-files.png` — Aba Arquivos (Gerados)
-- [x] `pt_BR/chrome-5-export-import.png` — Aba Arquivos (Exportar / Importar)
+- [x] `pt_BR/chrome-1-connection.png` — Connection
+- [x] `pt_BR/chrome-2-sync.png` — Sync
+- [x] `pt_BR/chrome-3-menu.png` — Menu
+- [x] `pt_BR/chrome-4-linkwarden.png` — Linkwarden
+- [x] `pt_BR/chrome-5-search.png` — Search
 - [x] `pt_BR/chrome-6-popup.png` — Popup
-- [x] `pt_BR/chrome-7-wizard-welcome.png` — Assistente de configuração (Bem-vindo)
-- [x] `pt_BR/chrome-8-wizard-token.png` — Assistente de configuração (Ajuda token)
-- [x] `pt_BR/chrome-9-wizard-repo.png` — Assistente de configuração (Detalhes repositório)
+- [x] `pt_BR/chrome-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `pt_BR/chrome-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `pt_BR/chrome-9-wizard-token.png` — Wizard (Token)
+- [x] `pt_BR/chrome-10-wizard-repo.png` — Wizard (Repository)
 
 ### Italiano (IT)
-- [x] `it/chrome-1-github.png` — Scheda GitHub (Profilo)
-- [x] `it/chrome-2-connection.png` — Scheda GitHub (Connessione)
-- [x] `it/chrome-3-sync.png` — Scheda Sync
-- [x] `it/chrome-4-files.png` — Scheda File (Generati)
-- [x] `it/chrome-5-export-import.png` — Scheda File (Esporta / Importa)
+- [x] `it/chrome-1-connection.png` — Connection
+- [x] `it/chrome-2-sync.png` — Sync
+- [x] `it/chrome-3-menu.png` — Menu
+- [x] `it/chrome-4-linkwarden.png` — Linkwarden
+- [x] `it/chrome-5-search.png` — Search
 - [x] `it/chrome-6-popup.png` — Popup
-- [x] `it/chrome-7-wizard-welcome.png` — Procedura guidata (Benvenuto)
-- [x] `it/chrome-8-wizard-token.png` — Procedura guidata (Aiuto token)
-- [x] `it/chrome-9-wizard-repo.png` — Procedura guidata (Dettagli repository)
+- [x] `it/chrome-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `it/chrome-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `it/chrome-9-wizard-token.png` — Wizard (Token)
+- [x] `it/chrome-10-wizard-repo.png` — Wizard (Repository)
 
 ### 日本語 (JA)
-- [x] `ja/chrome-1-github.png` — GitHub (プロフィール)
-- [x] `ja/chrome-2-connection.png` — GitHub (接続)
-- [x] `ja/chrome-3-sync.png` — Sync
-- [x] `ja/chrome-4-files.png` — ファイル (生成)
-- [x] `ja/chrome-5-export-import.png` — ファイル (エクスポート / インポート)
+- [x] `ja/chrome-1-connection.png` — Connection
+- [x] `ja/chrome-2-sync.png` — Sync
+- [x] `ja/chrome-3-menu.png` — Menu
+- [x] `ja/chrome-4-linkwarden.png` — Linkwarden
+- [x] `ja/chrome-5-search.png` — Search
 - [x] `ja/chrome-6-popup.png` — Popup
-- [x] `ja/chrome-7-wizard-welcome.png` — セットアップウィザード (ようこそ)
-- [x] `ja/chrome-8-wizard-token.png` — セットアップウィザード (トークン)
-- [x] `ja/chrome-9-wizard-repo.png` — セットアップウィザード (リポジトリ)
+- [x] `ja/chrome-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `ja/chrome-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `ja/chrome-9-wizard-token.png` — Wizard (Token)
+- [x] `ja/chrome-10-wizard-repo.png` — Wizard (Repository)
 
 ### 中文简体 (ZH-CN)
-- [x] `zh_CN/chrome-1-github.png` — GitHub (个人资料)
-- [x] `zh_CN/chrome-2-connection.png` — GitHub (连接)
-- [x] `zh_CN/chrome-3-sync.png` — Sync
-- [x] `zh_CN/chrome-4-files.png` — 文件 (生成)
-- [x] `zh_CN/chrome-5-export-import.png` — 文件 (导出 / 导入)
+- [x] `zh_CN/chrome-1-connection.png` — Connection
+- [x] `zh_CN/chrome-2-sync.png` — Sync
+- [x] `zh_CN/chrome-3-menu.png` — Menu
+- [x] `zh_CN/chrome-4-linkwarden.png` — Linkwarden
+- [x] `zh_CN/chrome-5-search.png` — Search
 - [x] `zh_CN/chrome-6-popup.png` — Popup
-- [x] `zh_CN/chrome-7-wizard-welcome.png` — 设置向导 (欢迎)
-- [x] `zh_CN/chrome-8-wizard-token.png` — 设置向导 (令牌)
-- [x] `zh_CN/chrome-9-wizard-repo.png` — 设置向导 (仓库)
+- [x] `zh_CN/chrome-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `zh_CN/chrome-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `zh_CN/chrome-9-wizard-token.png` — Wizard (Token)
+- [x] `zh_CN/chrome-10-wizard-repo.png` — Wizard (Repository)
 
 ### 한국어 (KO)
-- [x] `ko/chrome-1-github.png` — GitHub (프로필)
-- [x] `ko/chrome-2-connection.png` — GitHub (연결)
-- [x] `ko/chrome-3-sync.png` — Sync
-- [x] `ko/chrome-4-files.png` — 파일 (생성)
-- [x] `ko/chrome-5-export-import.png` — 파일 (내보내기 / 가져오기)
+- [x] `ko/chrome-1-connection.png` — Connection
+- [x] `ko/chrome-2-sync.png` — Sync
+- [x] `ko/chrome-3-menu.png` — Menu
+- [x] `ko/chrome-4-linkwarden.png` — Linkwarden
+- [x] `ko/chrome-5-search.png` — Search
 - [x] `ko/chrome-6-popup.png` — Popup
-- [x] `ko/chrome-7-wizard-welcome.png` — 설정 마법사 (환영)
-- [x] `ko/chrome-8-wizard-token.png` — 설정 마법사 (토큰)
-- [x] `ko/chrome-9-wizard-repo.png` — 설정 마법사 (저장소)
+- [x] `ko/chrome-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `ko/chrome-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `ko/chrome-9-wizard-token.png` — Wizard (Token)
+- [x] `ko/chrome-10-wizard-repo.png` — Wizard (Repository)
 
 ### Русский (RU)
-- [x] `ru/chrome-1-github.png` — Вкладка GitHub (Профиль)
-- [x] `ru/chrome-2-connection.png` — Вкладка GitHub (Подключение)
-- [x] `ru/chrome-3-sync.png` — Вкладка Sync
-- [x] `ru/chrome-4-files.png` — Вкладка Файлы (Генерируемые)
-- [x] `ru/chrome-5-export-import.png` — Вкладка Файлы (Экспорт / Импорт)
+- [x] `ru/chrome-1-connection.png` — Connection
+- [x] `ru/chrome-2-sync.png` — Sync
+- [x] `ru/chrome-3-menu.png` — Menu
+- [x] `ru/chrome-4-linkwarden.png` — Linkwarden
+- [x] `ru/chrome-5-search.png` — Search
 - [x] `ru/chrome-6-popup.png` — Popup
-- [x] `ru/chrome-7-wizard-welcome.png` — Мастер настройки (Приветствие)
-- [x] `ru/chrome-8-wizard-token.png` — Мастер настройки (Токен)
-- [x] `ru/chrome-9-wizard-repo.png` — Мастер настройки (Репозиторий)
+- [x] `ru/chrome-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `ru/chrome-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `ru/chrome-9-wizard-token.png` — Wizard (Token)
+- [x] `ru/chrome-10-wizard-repo.png` — Wizard (Repository)
 
 ### Türkçe (TR)
-- [x] `tr/chrome-1-github.png` — GitHub (Profil)
-- [x] `tr/chrome-2-connection.png` — GitHub (Bağlantı)
-- [x] `tr/chrome-3-sync.png` — Sync
-- [x] `tr/chrome-4-files.png` — Dosyalar (Oluşturulan)
-- [x] `tr/chrome-5-export-import.png` — Dosyalar (Dışa / İçe Aktar)
+- [x] `tr/chrome-1-connection.png` — Connection
+- [x] `tr/chrome-2-sync.png` — Sync
+- [x] `tr/chrome-3-menu.png` — Menu
+- [x] `tr/chrome-4-linkwarden.png` — Linkwarden
+- [x] `tr/chrome-5-search.png` — Search
 - [x] `tr/chrome-6-popup.png` — Popup
-- [x] `tr/chrome-7-wizard-welcome.png` — Kurulum sihirbazı (Hoş geldiniz)
-- [x] `tr/chrome-8-wizard-token.png` — Kurulum sihirbazı (Token)
-- [x] `tr/chrome-9-wizard-repo.png` — Kurulum sihirbazı (Depo)
+- [x] `tr/chrome-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `tr/chrome-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `tr/chrome-9-wizard-token.png` — Wizard (Token)
+- [x] `tr/chrome-10-wizard-repo.png` — Wizard (Repository)
 
 ### Polski (PL)
-- [x] `pl/chrome-1-github.png` — Zakładka GitHub (Profil)
-- [x] `pl/chrome-2-connection.png` — Zakładka GitHub (Połączenie)
-- [x] `pl/chrome-3-sync.png` — Zakładka Sync
-- [x] `pl/chrome-4-files.png` — Zakładka Pliki (Generowane)
-- [x] `pl/chrome-5-export-import.png` — Zakładka Pliki (Eksport / Import)
+- [x] `pl/chrome-1-connection.png` — Connection
+- [x] `pl/chrome-2-sync.png` — Sync
+- [x] `pl/chrome-3-menu.png` — Menu
+- [x] `pl/chrome-4-linkwarden.png` — Linkwarden
+- [x] `pl/chrome-5-search.png` — Search
 - [x] `pl/chrome-6-popup.png` — Popup
-- [x] `pl/chrome-7-wizard-welcome.png` — Kreator konfiguracji (Powitanie)
-- [x] `pl/chrome-8-wizard-token.png` — Kreator konfiguracji (Token)
-- [x] `pl/chrome-9-wizard-repo.png` — Kreator konfiguracji (Repozytorium)
+- [x] `pl/chrome-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `pl/chrome-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `pl/chrome-9-wizard-token.png` — Wizard (Token)
+- [x] `pl/chrome-10-wizard-repo.png` — Wizard (Repository)

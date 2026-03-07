@@ -73,133 +73,145 @@ All regions
 **Screenshots** are copied from Chrome (UI is identical; Playwright cannot load Firefox extension). Run `npm run screenshots`. Each image shows light and dark mode side by side.
 
 ### English (EN)
-- [x] `en/firefox-1-github.png` — GitHub tab (Profile)
-- [x] `en/firefox-2-connection.png` — GitHub tab (Connection)
-- [x] `en/firefox-3-sync.png` — Sync tab
-- [x] `en/firefox-4-files.png` — Files tab (Generated)
-- [x] `en/firefox-5-export-import.png` — Files tab (Export / Import)
-- [x] `en/firefox-6-popup.png` — Popup (centered)
-- [x] `en/firefox-7-wizard-welcome.png` — Setup wizard (Welcome)
-- [x] `en/firefox-8-wizard-token.png` — Setup wizard (Token help)
-- [x] `en/firefox-9-wizard-repo.png` — Setup wizard (Repository details)
+- [x] `en/firefox-1-connection.png` — Connection
+- [x] `en/firefox-2-sync.png` — Sync
+- [x] `en/firefox-3-menu.png` — Menu
+- [x] `en/firefox-4-linkwarden.png` — Linkwarden
+- [x] `en/firefox-5-search.png` — Search
+- [x] `en/firefox-6-popup.png` — Popup
+- [x] `en/firefox-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `en/firefox-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `en/firefox-9-wizard-token.png` — Wizard (Token)
+- [x] `en/firefox-10-wizard-repo.png` — Wizard (Repository)
 
 ### Deutsch (DE)
-- [x] `de/firefox-1-github.png` — GitHub-Tab (Profil)
-- [x] `de/firefox-2-connection.png` — GitHub-Tab (Verbindung)
-- [x] `de/firefox-3-sync.png` — Sync-Tab
-- [x] `de/firefox-4-files.png` — Dateien-Tab (Generiert)
-- [x] `de/firefox-5-export-import.png` — Dateien-Tab (Export / Import)
-- [x] `de/firefox-6-popup.png` — Popup (zentriert)
-- [x] `de/firefox-7-wizard-welcome.png` — Setup-Wizard (Willkommen)
-- [x] `de/firefox-8-wizard-token.png` — Setup-Wizard (Token-Hilfe)
-- [x] `de/firefox-9-wizard-repo.png` — Setup-Wizard (Repository-Details)
+- [x] `de/firefox-1-connection.png` — Connection
+- [x] `de/firefox-2-sync.png` — Sync
+- [x] `de/firefox-3-menu.png` — Menu
+- [x] `de/firefox-4-linkwarden.png` — Linkwarden
+- [x] `de/firefox-5-search.png` — Search
+- [x] `de/firefox-6-popup.png` — Popup
+- [x] `de/firefox-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `de/firefox-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `de/firefox-9-wizard-token.png` — Wizard (Token)
+- [x] `de/firefox-10-wizard-repo.png` — Wizard (Repository)
 
 ### Français (FR)
-- [x] `fr/firefox-1-github.png` — Onglet GitHub (Profil)
-- [x] `fr/firefox-2-connection.png` — Onglet GitHub (Connexion)
-- [x] `fr/firefox-3-sync.png` — Onglet Sync
-- [x] `fr/firefox-4-files.png` — Onglet Fichiers (Généré)
-- [x] `fr/firefox-5-export-import.png` — Onglet Fichiers (Export / Import)
-- [x] `fr/firefox-6-popup.png` — Popup (centré)
-- [x] `fr/firefox-7-wizard-welcome.png` — Assistant de configuration (Bienvenue)
-- [x] `fr/firefox-8-wizard-token.png` — Assistant de configuration (Aide token)
-- [x] `fr/firefox-9-wizard-repo.png` — Assistant de configuration (Détails dépôt)
+- [x] `fr/firefox-1-connection.png` — Connection
+- [x] `fr/firefox-2-sync.png` — Sync
+- [x] `fr/firefox-3-menu.png` — Menu
+- [x] `fr/firefox-4-linkwarden.png` — Linkwarden
+- [x] `fr/firefox-5-search.png` — Search
+- [x] `fr/firefox-6-popup.png` — Popup
+- [x] `fr/firefox-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `fr/firefox-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `fr/firefox-9-wizard-token.png` — Wizard (Token)
+- [x] `fr/firefox-10-wizard-repo.png` — Wizard (Repository)
 
 ### Español (ES)
-- [x] `es/firefox-1-github.png` — Pestaña GitHub (Perfil)
-- [x] `es/firefox-2-connection.png` — Pestaña GitHub (Conexión)
-- [x] `es/firefox-3-sync.png` — Pestaña Sync
-- [x] `es/firefox-4-files.png` — Pestaña Archivos (Generados)
-- [x] `es/firefox-5-export-import.png` — Pestaña Archivos (Export / Import)
-- [x] `es/firefox-6-popup.png` — Popup (centrado)
-- [x] `es/firefox-7-wizard-welcome.png` — Asistente de configuración (Bienvenida)
-- [x] `es/firefox-8-wizard-token.png` — Asistente de configuración (Ayuda token)
-- [x] `es/firefox-9-wizard-repo.png` — Asistente de configuración (Detalles repositorio)
+- [x] `es/firefox-1-connection.png` — Connection
+- [x] `es/firefox-2-sync.png` — Sync
+- [x] `es/firefox-3-menu.png` — Menu
+- [x] `es/firefox-4-linkwarden.png` — Linkwarden
+- [x] `es/firefox-5-search.png` — Search
+- [x] `es/firefox-6-popup.png` — Popup
+- [x] `es/firefox-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `es/firefox-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `es/firefox-9-wizard-token.png` — Wizard (Token)
+- [x] `es/firefox-10-wizard-repo.png` — Wizard (Repository)
 
 ### Português Brasil (PT-BR)
-- [x] `pt_BR/firefox-1-github.png` — Aba GitHub (Perfil)
-- [x] `pt_BR/firefox-2-connection.png` — Aba GitHub (Conexão)
-- [x] `pt_BR/firefox-3-sync.png` — Aba Sync
-- [x] `pt_BR/firefox-4-files.png` — Aba Arquivos (Gerados)
-- [x] `pt_BR/firefox-5-export-import.png` — Aba Arquivos (Exportar / Importar)
+- [x] `pt_BR/firefox-1-connection.png` — Connection
+- [x] `pt_BR/firefox-2-sync.png` — Sync
+- [x] `pt_BR/firefox-3-menu.png` — Menu
+- [x] `pt_BR/firefox-4-linkwarden.png` — Linkwarden
+- [x] `pt_BR/firefox-5-search.png` — Search
 - [x] `pt_BR/firefox-6-popup.png` — Popup
-- [x] `pt_BR/firefox-7-wizard-welcome.png` — Assistente de configuração (Bem-vindo)
-- [x] `pt_BR/firefox-8-wizard-token.png` — Assistente de configuração (Ajuda token)
-- [x] `pt_BR/firefox-9-wizard-repo.png` — Assistente de configuração (Detalhes repositório)
+- [x] `pt_BR/firefox-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `pt_BR/firefox-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `pt_BR/firefox-9-wizard-token.png` — Wizard (Token)
+- [x] `pt_BR/firefox-10-wizard-repo.png` — Wizard (Repository)
 
 ### Italiano (IT)
-- [x] `it/firefox-1-github.png` — Scheda GitHub (Profilo)
-- [x] `it/firefox-2-connection.png` — Scheda GitHub (Connessione)
-- [x] `it/firefox-3-sync.png` — Scheda Sync
-- [x] `it/firefox-4-files.png` — Scheda File (Generati)
-- [x] `it/firefox-5-export-import.png` — Scheda File (Esporta / Importa)
+- [x] `it/firefox-1-connection.png` — Connection
+- [x] `it/firefox-2-sync.png` — Sync
+- [x] `it/firefox-3-menu.png` — Menu
+- [x] `it/firefox-4-linkwarden.png` — Linkwarden
+- [x] `it/firefox-5-search.png` — Search
 - [x] `it/firefox-6-popup.png` — Popup
-- [x] `it/firefox-7-wizard-welcome.png` — Procedura guidata (Benvenuto)
-- [x] `it/firefox-8-wizard-token.png` — Procedura guidata (Aiuto token)
-- [x] `it/firefox-9-wizard-repo.png` — Procedura guidata (Dettagli repository)
+- [x] `it/firefox-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `it/firefox-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `it/firefox-9-wizard-token.png` — Wizard (Token)
+- [x] `it/firefox-10-wizard-repo.png` — Wizard (Repository)
 
 ### 日本語 (JA)
-- [x] `ja/firefox-1-github.png` — GitHub (プロフィール)
-- [x] `ja/firefox-2-connection.png` — GitHub (接続)
-- [x] `ja/firefox-3-sync.png` — Sync
-- [x] `ja/firefox-4-files.png` — ファイル (生成)
-- [x] `ja/firefox-5-export-import.png` — ファイル (エクスポート / インポート)
+- [x] `ja/firefox-1-connection.png` — Connection
+- [x] `ja/firefox-2-sync.png` — Sync
+- [x] `ja/firefox-3-menu.png` — Menu
+- [x] `ja/firefox-4-linkwarden.png` — Linkwarden
+- [x] `ja/firefox-5-search.png` — Search
 - [x] `ja/firefox-6-popup.png` — Popup
-- [x] `ja/firefox-7-wizard-welcome.png` — セットアップウィザード (ようこそ)
-- [x] `ja/firefox-8-wizard-token.png` — セットアップウィザード (トークン)
-- [x] `ja/firefox-9-wizard-repo.png` — セットアップウィザード (リポジトリ)
+- [x] `ja/firefox-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `ja/firefox-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `ja/firefox-9-wizard-token.png` — Wizard (Token)
+- [x] `ja/firefox-10-wizard-repo.png` — Wizard (Repository)
 
 ### 中文简体 (ZH-CN)
-- [x] `zh_CN/firefox-1-github.png` — GitHub (个人资料)
-- [x] `zh_CN/firefox-2-connection.png` — GitHub (连接)
-- [x] `zh_CN/firefox-3-sync.png` — Sync
-- [x] `zh_CN/firefox-4-files.png` — 文件 (生成)
-- [x] `zh_CN/firefox-5-export-import.png` — 文件 (导出 / 导入)
+- [x] `zh_CN/firefox-1-connection.png` — Connection
+- [x] `zh_CN/firefox-2-sync.png` — Sync
+- [x] `zh_CN/firefox-3-menu.png` — Menu
+- [x] `zh_CN/firefox-4-linkwarden.png` — Linkwarden
+- [x] `zh_CN/firefox-5-search.png` — Search
 - [x] `zh_CN/firefox-6-popup.png` — Popup
-- [x] `zh_CN/firefox-7-wizard-welcome.png` — 设置向导 (欢迎)
-- [x] `zh_CN/firefox-8-wizard-token.png` — 设置向导 (令牌)
-- [x] `zh_CN/firefox-9-wizard-repo.png` — 设置向导 (仓库)
+- [x] `zh_CN/firefox-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `zh_CN/firefox-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `zh_CN/firefox-9-wizard-token.png` — Wizard (Token)
+- [x] `zh_CN/firefox-10-wizard-repo.png` — Wizard (Repository)
 
 ### 한국어 (KO)
-- [x] `ko/firefox-1-github.png` — GitHub (프로필)
-- [x] `ko/firefox-2-connection.png` — GitHub (연결)
-- [x] `ko/firefox-3-sync.png` — Sync
-- [x] `ko/firefox-4-files.png` — 파일 (생성)
-- [x] `ko/firefox-5-export-import.png` — 파일 (내보내기 / 가져오기)
+- [x] `ko/firefox-1-connection.png` — Connection
+- [x] `ko/firefox-2-sync.png` — Sync
+- [x] `ko/firefox-3-menu.png` — Menu
+- [x] `ko/firefox-4-linkwarden.png` — Linkwarden
+- [x] `ko/firefox-5-search.png` — Search
 - [x] `ko/firefox-6-popup.png` — Popup
-- [x] `ko/firefox-7-wizard-welcome.png` — 설정 마법사 (환영)
-- [x] `ko/firefox-8-wizard-token.png` — 설정 마법사 (토큰)
-- [x] `ko/firefox-9-wizard-repo.png` — 설정 마법사 (저장소)
+- [x] `ko/firefox-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `ko/firefox-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `ko/firefox-9-wizard-token.png` — Wizard (Token)
+- [x] `ko/firefox-10-wizard-repo.png` — Wizard (Repository)
 
 ### Русский (RU)
-- [x] `ru/firefox-1-github.png` — Вкладка GitHub (Профиль)
-- [x] `ru/firefox-2-connection.png` — Вкладка GitHub (Подключение)
-- [x] `ru/firefox-3-sync.png` — Вкладка Sync
-- [x] `ru/firefox-4-files.png` — Вкладка Файлы (Генерируемые)
-- [x] `ru/firefox-5-export-import.png` — Вкладка Файлы (Экспорт / Импорт)
+- [x] `ru/firefox-1-connection.png` — Connection
+- [x] `ru/firefox-2-sync.png` — Sync
+- [x] `ru/firefox-3-menu.png` — Menu
+- [x] `ru/firefox-4-linkwarden.png` — Linkwarden
+- [x] `ru/firefox-5-search.png` — Search
 - [x] `ru/firefox-6-popup.png` — Popup
-- [x] `ru/firefox-7-wizard-welcome.png` — Мастер настройки (Приветствие)
-- [x] `ru/firefox-8-wizard-token.png` — Мастер настройки (Токен)
-- [x] `ru/firefox-9-wizard-repo.png` — Мастер настройки (Репозиторий)
+- [x] `ru/firefox-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `ru/firefox-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `ru/firefox-9-wizard-token.png` — Wizard (Token)
+- [x] `ru/firefox-10-wizard-repo.png` — Wizard (Repository)
 
 ### Türkçe (TR)
-- [x] `tr/firefox-1-github.png` — GitHub (Profil)
-- [x] `tr/firefox-2-connection.png` — GitHub (Bağlantı)
-- [x] `tr/firefox-3-sync.png` — Sync
-- [x] `tr/firefox-4-files.png` — Dosyalar (Oluşturulan)
-- [x] `tr/firefox-5-export-import.png` — Dosyalar (Dışa / İçe Aktar)
+- [x] `tr/firefox-1-connection.png` — Connection
+- [x] `tr/firefox-2-sync.png` — Sync
+- [x] `tr/firefox-3-menu.png` — Menu
+- [x] `tr/firefox-4-linkwarden.png` — Linkwarden
+- [x] `tr/firefox-5-search.png` — Search
 - [x] `tr/firefox-6-popup.png` — Popup
-- [x] `tr/firefox-7-wizard-welcome.png` — Kurulum sihirbazı (Hoş geldiniz)
-- [x] `tr/firefox-8-wizard-token.png` — Kurulum sihirbazı (Token)
-- [x] `tr/firefox-9-wizard-repo.png` — Kurulum sihirbazı (Depo)
+- [x] `tr/firefox-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `tr/firefox-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `tr/firefox-9-wizard-token.png` — Wizard (Token)
+- [x] `tr/firefox-10-wizard-repo.png` — Wizard (Repository)
 
 ### Polski (PL)
-- [x] `pl/firefox-1-github.png` — Zakładka GitHub (Profil)
-- [x] `pl/firefox-2-connection.png` — Zakładka GitHub (Połączenie)
-- [x] `pl/firefox-3-sync.png` — Zakładka Sync
-- [x] `pl/firefox-4-files.png` — Zakładka Pliki (Generowane)
-- [x] `pl/firefox-5-export-import.png` — Zakładka Pliki (Eksport / Import)
+- [x] `pl/firefox-1-connection.png` — Connection
+- [x] `pl/firefox-2-sync.png` — Sync
+- [x] `pl/firefox-3-menu.png` — Menu
+- [x] `pl/firefox-4-linkwarden.png` — Linkwarden
+- [x] `pl/firefox-5-search.png` — Search
 - [x] `pl/firefox-6-popup.png` — Popup
-- [x] `pl/firefox-7-wizard-welcome.png` — Kreator konfiguracji (Powitanie)
-- [x] `pl/firefox-8-wizard-token.png` — Kreator konfiguracji (Token)
-- [x] `pl/firefox-9-wizard-repo.png` — Kreator konfiguracji (Repozytorium)
+- [x] `pl/firefox-7-linkwarden-save.png` — Save to Linkwarden
+- [x] `pl/firefox-8-wizard-welcome.png` — Wizard (Welcome)
+- [x] `pl/firefox-9-wizard-token.png` — Wizard (Token)
+- [x] `pl/firefox-10-wizard-repo.png` — Wizard (Repository)
