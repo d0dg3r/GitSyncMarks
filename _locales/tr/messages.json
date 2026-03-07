@@ -1667,13 +1667,13 @@
     "message": "Şimdi Senkronize Et"
   },
   "options_linkwardenSyncSuccess": {
-    "message": "$ koleksiyon ve $ bağlantı senkronize edildi.",
+    "message": "$1 koleksiyon ve $2 bağlantı senkronize edildi.",
     "placeholders": {
       "1": {
-        "content": ""
+        "content": "$1"
       },
       "2": {
-        "content": ""
+        "content": "$2"
       }
     }
   },

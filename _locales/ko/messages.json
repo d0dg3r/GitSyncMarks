@@ -1667,13 +1667,13 @@
     "message": "지금 동기화"
   },
   "options_linkwardenSyncSuccess": {
-    "message": " 컬렉션과  링크가 동기화되었습니다.",
+    "message": "$1개 컬렉션과 $2개 링크가 동기화되었습니다.",
     "placeholders": {
       "1": {
-        "content": ""
+        "content": "$1"
       },
       "2": {
-        "content": ""
+        "content": "$2"
       }
     }
   },

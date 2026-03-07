@@ -1667,13 +1667,13 @@
     "message": "Синхронизировать сейчас"
   },
   "options_linkwardenSyncSuccess": {
-    "message": "Синхронизировано $ коллекций и $ ссылок.",
+    "message": "Синхронизировано $1 коллекций и $2 ссылок.",
     "placeholders": {
       "1": {
-        "content": ""
+        "content": "$1"
       },
       "2": {
-        "content": ""
+        "content": "$2"
       }
     }
   },

@@ -1667,13 +1667,13 @@
     "message": "Jetzt synchronisieren"
   },
   "options_linkwardenSyncSuccess": {
-    "message": "$ Kollektionen und $ Links synchronisiert.",
+    "message": "$1 Kollektionen und $2 Links synchronisiert.",
     "placeholders": {
       "1": {
-        "content": ""
+        "content": "$1"
       },
       "2": {
-        "content": ""
+        "content": "$2"
       }
     }
   },

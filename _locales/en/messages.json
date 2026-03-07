@@ -1639,13 +1639,13 @@
     "message": "Sync Now"
   },
   "options_linkwardenSyncSuccess": {
-    "message": "Synced $ collections and $ links.",
+    "message": "$1 collections and $2 links synced.",
     "placeholders": {
       "1": {
-        "content": ""
+        "content": "$1"
       },
       "2": {
-        "content": ""
+        "content": "$2"
       }
     }
   },

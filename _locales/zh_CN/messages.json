@@ -1667,13 +1667,13 @@
     "message": "立即同步"
   },
   "options_linkwardenSyncSuccess": {
-    "message": "已同步 $ 个集合和 $ 个链接。",
+    "message": "已同步 $1 个集合和 $2 个链接。",
     "placeholders": {
       "1": {
-        "content": ""
+        "content": "$1"
       },
       "2": {
-        "content": ""
+        "content": "$2"
       }
     }
   },

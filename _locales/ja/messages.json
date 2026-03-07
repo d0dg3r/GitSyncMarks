@@ -1667,13 +1667,13 @@
     "message": "今すぐ同期"
   },
   "options_linkwardenSyncSuccess": {
-    "message": "$ 個のコレクションと $ 個のリンクを同期しました。",
+    "message": "$1 件のコレクションと $2 件의 リンクを同期しました。",
     "placeholders": {
       "1": {
-        "content": ""
+        "content": "$1"
       },
       "2": {
-        "content": ""
+        "content": "$2"
       }
     }
   },
