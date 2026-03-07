@@ -17,24 +17,24 @@
 
 ---
 
-## ✨ Top Features
+## 📋 Highlights
 
-### 🛡️ Linkwarden Synergy
+### 🔒 Linkwarden Synergy
 Save any page or link directly to your **Linkwarden** instance from the right-click menu.
 - **Auto-Screenshots**: Capture the viewport automatically on save.
 - **Default Tags**: Organise flawlessly with pre-configured tags.
 - **Collection Sync**: Pull your Linkwarden collections straight into your browser bookmarks and push them to Git.
 
-### 🔍 Smart Search Popup
+### 🔎 Smart Search Popup
 A dedicated, lightning-fast search interface accessible from anywhere.
 - **Theme Support**: Beautiful light and dark modes.
 - **Keyboard Friendly**: Instant results with "Esc" to close.
 - **Visual Clarity**: Logo headers and clean result lists.
 
-### 🔄 Three-Way Merge
+### 🔃 Three-Way Merge
 Industrial-grade reliability. If you change bookmarks on two devices at once, GitSyncMarks handles the merge automatically whenever possible—no manual "fixing" required.
 
-### 🚀 Guided Onboarding Wizard
+### ⚙️ Guided Onboarding Wizard
 Perfect for new users. GitSyncMarks walks you through the entire setup process.
 - **Zero to Sync**: Step-by-step guidance for tokens, repository selection, and first sync.
 - **Auto-Validation**: Instant feedback on your GitHub connection and folder paths.
