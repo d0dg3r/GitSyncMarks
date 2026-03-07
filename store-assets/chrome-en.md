@@ -1,66 +1,41 @@
 # Chrome Web Store — GitSyncMarks (English)
 <!-- See chrome-meta.md for Privacy, Test Instructions, and Distribution -->
-
 ### Name
 GitSyncMarks
 
 ### Summary (max 132 characters)
-Your bookmarks, safe on GitHub — per-file storage, three-way merge sync, works on Chrome & Firefox. No middleman.
+Bookmark sync via GitHub. Linkwarden synergy, Smart Search, and guided onboarding wizard. Direct, secure, private.
 
 ### Detailed Description
-GitSyncMarks syncs your browser bookmarks with a GitHub repository — bidirectionally, automatically, and with no middleman.
+GitSyncMarks is a professional browser extension that bidirectionally and automatically synchronizes your bookmarks with a GitHub repository. No middleman, no third-party servers – your data remains entirely under your control.
 
-Features:
-• No middleman: communicates directly with the GitHub API — no third-party server, no backend, your data stays between your browser and GitHub
-• Per-file storage: each bookmark is an individual JSON file — human-readable and diff-friendly
-• Three-way merge: automatic conflict-free sync when changes happen on both sides
-• Cross-browser: works with Chrome, Chromium, Brave, Edge, and Firefox
-• Auto-sync on every bookmark change (debounce configurable per profile)
-• Multiple bookmark profiles: up to 10 profiles with separate GitHub repos; switch replaces local bookmarks
-• Linkwarden Integration: save bookmarks directly from the context menu (with auto-screenshots and default tags), sync collections to browser
-• Context menu: right-click on page or link — Add to Toolbar, Add to Other Bookmarks, Add to up to 3 pinned Quick Folders, Save to Linkwarden, Sync Now, Search Bookmarks (opens a dedicated search popup with dark mode support, logo header, close button, and Esc-to-close), Open All from Folder (with tab-count safety confirmation), Switch Profile, Copy Favicon URL, Download Favicon
-• Favicon tools: copy any site's favicon URL to clipboard or download it as PNG — uses browser favicon with Google favicon service fallback
-• Automation: add bookmarks via Git, CLI, or GitHub Actions — no browser needed
-• GitHub Repos folder: optional folder with bookmarks to all your GitHub repositories (public and private)
-• Sync profiles: real-time, frequent, normal, or power-save (preset intervals and debounce)
-• Sync on startup / focus: optional sync when the browser starts or gains focus (with cooldown)
-• Periodic sync to detect remote changes (1–120 minutes, configurable)
-• Manual Push, Pull, and full Sync via the popup
-• Conflict detection when automatic merge is not possible
-• Generated files: README.md (overview), bookmarks.html (browser import), feed.xml (RSS 2.0 feed), and dashy-conf.yml (Dashy dashboard) — each configurable as Off, Manual, or Auto
-• Settings sync to Git: encrypted backup of extension settings in the repo — Global (shared) or Individual (per device) mode; import settings from other devices; same password on every device, auto-synced
-• Import/Export: export bookmarks (JSON), Dashy config (YAML), or settings (plain JSON / encrypted .enc); import with automatic format detection
-• Factory reset: "Reset all data" in Files → Settings — clears all profiles, tokens, and settings (browser bookmarks preserved); two-step confirmation
-• Setup wizard: guided 8-step onboarding for token, repository, and first sync
-• Onboarding: folder browser to select the sync path; create folder or pull bookmarks when configuring a new profile
-• Multilanguage: 12 languages — EN, DE, FR, ES, PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL; manual selection or auto-detect
-• Keyboard shortcuts: quick sync (Ctrl+Shift+.), open settings (Ctrl+Shift+,) — customizable
-• Theme: light, dark, or auto — single cycle button (A → Dark → Light → A) in options and popup
-• Options: 5 tabs (GitHub, Sync, Files, Help, About) with sub-tabs for GitHub and Files — clean, organized settings UI
-• Notifications: All (success + failure), Errors only, or Off
-• Auto-save: all settings save automatically when changed — no Save buttons
-• Debug log: Sync tab — enable for sync diagnostics, export for troubleshooting
-• Vote on backlog: community poll to influence which features come next
-• Mobile companion: GitSyncMarks-App (iOS + Android) — view bookmarks on the go, read-only sync from your repo
+Highlights
 
-How it works:
-1. Create a GitHub repository for your bookmarks
-2. Generate a Personal Access Token with the "repo" scope
-3. Configure GitSyncMarks with your token and repository
-4. Click "Sync Now" — done!
+- Linkwarden Synergy: Save pages or links directly to your Linkwarden instance. Includes automatic viewport screenshots, collection synchronization, and predefined tags.
+- Smart Search: A dedicated, lightning-fast search interface for your bookmarks. Supports light and dark modes and is fully keyboard-accessible.
+- Guided Onboarding Wizard: A step-by-step onboarding process leads new users through token and repository configuration to their first successful sync.
+- Three-Way Merge: Industrial-grade reliability via an advanced merge algorithm that intelligently combines changes from multiple devices.
 
-Each bookmark is stored as an individual JSON file in your repository, organized into folders that mirror your bookmark hierarchy. A README.md gives you a clean overview directly on GitHub; a bookmarks.html lets you import into any browser; a feed.xml RSS feed lets you subscribe or use for automations; a dashy-conf.yml provides sections for the Dashy dashboard.
+Key Capabilities
 
-Automation:
-You can add bookmarks without even opening the browser. GitSyncMarks includes a GitHub Actions workflow (add-bookmark.yml) that lets you add bookmarks via the GitHub web UI or the command line:
+- Private by Design: Direct communication with the GitHub API. No third parties see your data.
+- File-Based Storage: Each bookmark is stored as a readable JSON file – ideal for versioning and manual editing on GitHub.
+- Multiple Profiles: Manage up to 10 separate profiles (e.g., Work/Personal) with individual repositories.
+- Automation: Add bookmarks via CLI or GitHub Actions; the extension integrates them automatically during the next sync.
+- Generated Files: Automatically creates a README.md (overview), bookmarks.html (browser import), or RSS feed in your repository.
+- Design & i18n: Professional light and dark themes with support for 12 languages.
 
-  gh workflow run add-bookmark.yml -f url="https://example.com" -f title="Example" -f folder="toolbar"
+Setup & Installation
 
-You can also create bookmark files directly in the repository — just add a JSON file with "title" and "url" to any bookmark folder. The extension detects new files automatically on the next sync and normalizes them into its canonical format.
+1. Installation: Download the ZIP from GitHub (Chrome/Edge) or install from the web store.
+2. GitHub PAT: Create a Personal Access Token with "repo" scope.
+3. Setup Wizard: Follow the guided process under Help -> Getting Started.
+4. Linkwarden (optional): Configure your instance in the dedicated Linkwarden tab.
 
-GitSyncMarks is fully open source: https://github.com/d0dg3r/GitSyncMarks
+Companion App
+Use the GitSyncMarks-App (Android, iOS, Desktop) to manage your bookmarks directly from your GitHub repository on mobile devices.
 
-Mobile app: GitSyncMarks-App (iOS + Android) — view your bookmarks on the go. Read-only companion; F-Droid and Google Play coming soon. https://github.com/d0dg3r/GitSyncMarks-App
+GitSyncMarks is Open Source: https://github.com/d0dg3r/GitSyncMarks
 
 ### Category
 Productivity

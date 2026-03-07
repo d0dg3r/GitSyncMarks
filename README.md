@@ -42,7 +42,7 @@ Perfect for new users. GitSyncMarks walks you through the entire setup process.
 
 ---
 
-## 📸 Visual Tour
+## Visual Tour
 
 | **1. Guided Onboarding** | **2. Smart Search** | **3. Linkwarden Tab** |
 | :---: | :---: | :---: |
