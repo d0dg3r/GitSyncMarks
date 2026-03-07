@@ -480,10 +480,7 @@
     "message": "Favicon-Tools"
   },
   "contextMenu_saveToLinkwarden": {
-    "message": "In Linkwarden speichern"
-  },
-  "contextMenu_saveToLinkwardenScreenshot": {
-    "message": "Mit Screenshot speichern"
+    "message": "In Linkwarden speichern..."
   },
   "options_saveSettings": {
     "message": "Einstellungen speichern"
@@ -1581,5 +1578,83 @@
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – Lesezeichen-Suche"
+  },
+  "linkwardenSave_title": {
+    "message": "In Linkwarden speichern"
+  },
+  "linkwardenSave_urlLabel": {
+    "message": "URL"
+  },
+  "linkwardenSave_titleLabel": {
+    "message": "Titel"
+  },
+  "linkwardenSave_descriptionLabel": {
+    "message": "Beschreibung"
+  },
+  "linkwardenSave_descriptionPlaceholder": {
+    "message": "Optionale Beschreibung..."
+  },
+  "linkwardenSave_collectionLabel": {
+    "message": "Sammlung"
+  },
+  "linkwardenSave_collectionNone": {
+    "message": "Unsortiert"
+  },
+  "linkwardenSave_collectionNew": {
+    "message": "Neue Sammlung erstellen"
+  },
+  "linkwardenSave_collectionNewPlaceholder": {
+    "message": "Name der neuen Sammlung..."
+  },
+  "linkwardenSave_tagsLabel": {
+    "message": "Tags"
+  },
+  "linkwardenSave_tagsPlaceholder": {
+    "message": "Tags hinzufügen..."
+  },
+  "linkwardenSave_screenshotLabel": {
+    "message": "Screenshot anhängen"
+  },
+  "linkwardenSave_saveBtn": {
+    "message": "Speichern"
+  },
+  "linkwardenSave_cancelBtn": {
+    "message": "Abbrechen"
+  },
+  "linkwardenSave_statusSaving": {
+    "message": "Wird gespeichert..."
+  },
+  "linkwardenSave_statusSaved": {
+    "message": "Gespeichert!"
+  },
+  "linkwardenSave_statusDuplicate": {
+    "message": "Bereits in Linkwarden gespeichert"
+  },
+  "linkwardenSave_statusError": {
+    "message": "Fehler"
+  },
+  "linkwardenSave_quickSaveBtn": {
+    "message": "Schnellspeichern"
+  },
+  "options_contextMenuItem_LINKWARDEN_SAVE": {
+    "message": "In Linkwarden speichern..."
+  },
+  "options_linkwardenDefaultTagsHint": {
+    "message": "Klicken Sie auf vorhandene Tags oder tippen Sie, um neue zu erstellen. Wird bei jedem Speichern angewendet."
+  },
+  "options_linkwardenDefaultScreenshot": {
+    "message": "Standard-Screenshots"
+  },
+  "options_linkwardenDefaultScreenshotHint": {
+    "message": "Gibt an, ob Screenshots im Speicher-Popup standardmäßig aktiviert sein sollen."
+  },
+  "linkwardenSave_deleteBtn": {
+    "message": "Löschen"
+  },
+  "linkwardenSave_deleteConfirm": {
+    "message": "Soll dieser Link wirklich aus Linkwarden gelöscht werden?"
+  },
+  "linkwardenSave_statusDeleted": {
+    "message": "Link erfolgreich gelöscht!"
   }
 }

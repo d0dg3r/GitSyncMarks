@@ -1310,10 +1310,7 @@
     "message": "从文件夹打开全部"
   },
   "contextMenu_saveToLinkwarden": {
-    "message": "保存到 Linkwarden"
-  },
-  "contextMenu_saveToLinkwardenScreenshot": {
-    "message": "保存并截图"
+    "message": "保存到 Linkwarden..."
   },
   "contextMenu_searchBookmarks": {
     "message": "搜索书签"
@@ -1581,5 +1578,83 @@
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – 书签搜索"
+  },
+  "linkwardenSave_title": {
+    "message": "保存到 Linkwarden"
+  },
+  "linkwardenSave_urlLabel": {
+    "message": "URL"
+  },
+  "linkwardenSave_titleLabel": {
+    "message": "标题"
+  },
+  "linkwardenSave_descriptionLabel": {
+    "message": "描述"
+  },
+  "linkwardenSave_descriptionPlaceholder": {
+    "message": "可选描述..."
+  },
+  "linkwardenSave_collectionLabel": {
+    "message": "集合"
+  },
+  "linkwardenSave_collectionNone": {
+    "message": "未分类"
+  },
+  "linkwardenSave_collectionNew": {
+    "message": "创建新集合"
+  },
+  "linkwardenSave_collectionNewPlaceholder": {
+    "message": "新集合名称..."
+  },
+  "linkwardenSave_tagsLabel": {
+    "message": "标签"
+  },
+  "linkwardenSave_tagsPlaceholder": {
+    "message": "添加标签..."
+  },
+  "linkwardenSave_screenshotLabel": {
+    "message": "包含截图"
+  },
+  "linkwardenSave_saveBtn": {
+    "message": "保存"
+  },
+  "linkwardenSave_cancelBtn": {
+    "message": "取消"
+  },
+  "linkwardenSave_statusSaving": {
+    "message": "保存中..."
+  },
+  "linkwardenSave_statusSaved": {
+    "message": "已保存！"
+  },
+  "linkwardenSave_statusDuplicate": {
+    "message": "已保存在 Linkwarden 中"
+  },
+  "linkwardenSave_statusError": {
+    "message": "错误"
+  },
+  "linkwardenSave_quickSaveBtn": {
+    "message": "快速保存"
+  },
+  "options_contextMenuItem_LINKWARDEN_SAVE": {
+    "message": "保存到 Linkwarden..."
+  },
+  "options_linkwardenDefaultTagsHint": {
+    "message": "点击添加现有标签或输入创建新标签。每次保存时应用。"
+  },
+  "options_linkwardenDefaultScreenshot": {
+    "message": "默认截图"
+  },
+  "options_linkwardenDefaultScreenshotHint": {
+    "message": "保存弹出窗口中是否默认启用截图。"
+  },
+  "linkwardenSave_deleteBtn": {
+    "message": "删除"
+  },
+  "linkwardenSave_deleteConfirm": {
+    "message": "您确定要从 Linkwarden 中删除此链接吗？"
+  },
+  "linkwardenSave_statusDeleted": {
+    "message": "链接删除成功！"
   }
 }

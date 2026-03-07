@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitSyncMarks - Save to Linkwarden</title>
+    <link rel="stylesheet" href="linkwarden-save.css">
+</head>
+
+<body>
+    <main class="lw-shell">
+        <header class="lw-header">
+            <div class="lw-title-wrap">
+                <img src="icons/icon48-plain.png" alt="" class="lw-logo">
+                <div>
+                    <h1 data-i18n="linkwardenSave_title">Save to Linkwarden</h1>
+                </div>
+            </div>
+            <button type="button" id="lw-close-btn" class="lw-close-btn" aria-label="Close">×</button>
+        </header>
+
+        <!-- Duplicate badge -->
+        <div id="lw-duplicate-badge" class="lw-duplicate-badge hidden">
+            <span class="lw-badge-icon">↻</span>
+            <span data-i18n="linkwardenSave_statusDuplicate">Already saved in Linkwarden</span>
+            <button type="button" id="lw-delete-btn" class="lw-delete-btn-compact" data-i18n="linkwardenSave_deleteBtn"
+                title="Delete this link from Linkwarden">Delete</button>
+        </div>
+
+        <form id="lw-form" class="lw-form" autocomplete="off">
+            <!-- URL -->
+            <div class="lw-field">
+                <label for="lw-url" data-i18n="linkwardenSave_urlLabel">URL</label>
+                <input type="url" id="lw-url" readonly class="lw-url-input">
+            </div>
+
+            <!-- Title -->
+            <div class="lw-field">
+                <label for="lw-title" data-i18n="linkwardenSave_titleLabel">Title</label>
+                <input type="text" id="lw-title" required>
+            </div>
+
+            <!-- Description -->
+            <div class="lw-field">
+                <label for="lw-description" data-i18n="linkwardenSave_descriptionLabel">Description</label>
+                <textarea id="lw-description" rows="2" data-i18n-placeholder="linkwardenSave_descriptionPlaceholder"
+                    placeholder="Optional description..."></textarea>
+            </div>
+
+            <!-- Collection -->
+            <div class="lw-field">
+                <label for="lw-collection" data-i18n="linkwardenSave_collectionLabel">Collection</label>
+                <div class="lw-collection-row">
+                    <select id="lw-collection">
+                        <option value="" data-i18n="linkwardenSave_collectionNone">Unorganized</option>
+                    </select>
+                    <button type="button" id="lw-collection-new-btn" class="lw-btn-icon"
+                        title="Create new collection">+</button>
+                </div>
+                <div id="lw-collection-new-row" class="lw-collection-new-row hidden">
+                    <input type="text" id="lw-collection-new-input"
+                        data-i18n-placeholder="linkwardenSave_collectionNewPlaceholder"
+                        placeholder="New collection name...">
+                    <button type="button" id="lw-collection-new-confirm" class="lw-btn-small lw-btn-primary">OK</button>
+                    <button type="button" id="lw-collection-new-cancel" class="lw-btn-small">✕</button>
+                </div>
+            </div>
+
+            <!-- Tags -->
+            <div class="lw-field">
+                <label data-i18n="linkwardenSave_tagsLabel">Tags</label>
+                <div class="lw-tags-wrap">
+                    <div id="lw-tag-chips" class="lw-tag-chips"></div>
+                    <div class="lw-tag-input-wrap">
+                        <input type="text" id="lw-tag-input" data-i18n-placeholder="linkwardenSave_tagsPlaceholder"
+                            placeholder="Add tags..." autocomplete="off">
+                    </div>
+                </div>
+                <div id="lw-tag-cloud" class="lw-tag-cloud"></div>
+            </div>
+
+            <!-- Screenshot -->
+            <div class="lw-field lw-field-inline">
+                <label class="lw-toggle-label">
+                    <input type="checkbox" id="lw-screenshot">
+                    <span class="lw-toggle-slider"></span>
+                    <span data-i18n="linkwardenSave_screenshotLabel">Include screenshot</span>
+                </label>
+            </div>
+
+            <!-- Actions -->
+            <div class="lw-actions">
+                <div id="lw-status" class="lw-status"></div>
+                <div class="lw-btn-group">
+                    <button type="button" id="lw-cancel-btn" class="lw-btn"
+                        data-i18n="linkwardenSave_cancelBtn">Cancel</button>
+                    <button type="button" id="lw-quick-save-btn" class="lw-btn lw-btn-secondary"
+                        data-i18n="linkwardenSave_quickSaveBtn" title="Save immediately with defaults">Quick
+                        Save</button>
+                    <button type="submit" id="lw-save-btn" class="lw-btn lw-btn-primary"
+                        data-i18n="linkwardenSave_saveBtn">Save</button>
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <script type="module" src="linkwarden-save.js"></script>
+</body>
+
+</html>

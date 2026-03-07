@@ -1310,10 +1310,7 @@
     "message": "폴더에서 모두 열기"
   },
   "contextMenu_saveToLinkwarden": {
-    "message": "Linkwarden에 저장"
-  },
-  "contextMenu_saveToLinkwardenScreenshot": {
-    "message": "스크린샷과 함께 저장"
+    "message": "Linkwarden에 저장..."
   },
   "contextMenu_searchBookmarks": {
     "message": "북마크 검색"
@@ -1581,5 +1578,83 @@
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – 북마크 검색"
+  },
+  "linkwardenSave_title": {
+    "message": "Linkwarden에 저장"
+  },
+  "linkwardenSave_urlLabel": {
+    "message": "URL"
+  },
+  "linkwardenSave_titleLabel": {
+    "message": "제목"
+  },
+  "linkwardenSave_descriptionLabel": {
+    "message": "설명"
+  },
+  "linkwardenSave_descriptionPlaceholder": {
+    "message": "선택적 설명..."
+  },
+  "linkwardenSave_collectionLabel": {
+    "message": "컬렉션"
+  },
+  "linkwardenSave_collectionNone": {
+    "message": "미분류"
+  },
+  "linkwardenSave_collectionNew": {
+    "message": "새 컬렉션 만들기"
+  },
+  "linkwardenSave_collectionNewPlaceholder": {
+    "message": "새 컬렉션 이름..."
+  },
+  "linkwardenSave_tagsLabel": {
+    "message": "태그"
+  },
+  "linkwardenSave_tagsPlaceholder": {
+    "message": "태그 추가..."
+  },
+  "linkwardenSave_screenshotLabel": {
+    "message": "스크린샷 포함"
+  },
+  "linkwardenSave_saveBtn": {
+    "message": "저장"
+  },
+  "linkwardenSave_cancelBtn": {
+    "message": "취소"
+  },
+  "linkwardenSave_statusSaving": {
+    "message": "저장 중..."
+  },
+  "linkwardenSave_statusSaved": {
+    "message": "저장됨!"
+  },
+  "linkwardenSave_statusDuplicate": {
+    "message": "이미 Linkwarden에 저장됨"
+  },
+  "linkwardenSave_statusError": {
+    "message": "오류"
+  },
+  "linkwardenSave_quickSaveBtn": {
+    "message": "빠른 저장"
+  },
+  "options_contextMenuItem_LINKWARDEN_SAVE": {
+    "message": "Linkwarden에 저장..."
+  },
+  "options_linkwardenDefaultTagsHint": {
+    "message": "기존 태그를 클릭하거나 입력하여 새 태그를 만듭니다. 저장할 때마다 적용됩니다."
+  },
+  "options_linkwardenDefaultScreenshot": {
+    "message": "기본 스크린샷"
+  },
+  "options_linkwardenDefaultScreenshotHint": {
+    "message": "저장 팝업에서 기본적으로 스크린샷을 활성화할지 여부입니다."
+  },
+  "linkwardenSave_deleteBtn": {
+    "message": "삭제"
+  },
+  "linkwardenSave_deleteConfirm": {
+    "message": "Linkwarden에서 이 링크를 삭제하시겠습니까?"
+  },
+  "linkwardenSave_statusDeleted": {
+    "message": "링크가 성공적으로 삭제되었습니다!"
   }
 }

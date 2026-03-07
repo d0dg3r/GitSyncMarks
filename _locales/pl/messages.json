@@ -1310,10 +1310,7 @@
     "message": "Otwórz wszystko z folderu"
   },
   "contextMenu_saveToLinkwarden": {
-    "message": "Zapisz w Linkwarden"
-  },
-  "contextMenu_saveToLinkwardenScreenshot": {
-    "message": "Zapisz ze zrzutem ekranu"
+    "message": "Zapisz w Linkwarden..."
   },
   "contextMenu_searchBookmarks": {
     "message": "Szukaj zakładek"
@@ -1581,5 +1578,83 @@
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – Wyszukiwanie zakładek"
+  },
+  "linkwardenSave_title": {
+    "message": "Zapisz w Linkwarden"
+  },
+  "linkwardenSave_urlLabel": {
+    "message": "URL"
+  },
+  "linkwardenSave_titleLabel": {
+    "message": "Tytuł"
+  },
+  "linkwardenSave_descriptionLabel": {
+    "message": "Opis"
+  },
+  "linkwardenSave_descriptionPlaceholder": {
+    "message": "Opcjonalny opis..."
+  },
+  "linkwardenSave_collectionLabel": {
+    "message": "Kolekcja"
+  },
+  "linkwardenSave_collectionNone": {
+    "message": "Nieprzypisane"
+  },
+  "linkwardenSave_collectionNew": {
+    "message": "Utwórz nową kolekcję"
+  },
+  "linkwardenSave_collectionNewPlaceholder": {
+    "message": "Nazwa nowej kolekcji..."
+  },
+  "linkwardenSave_tagsLabel": {
+    "message": "Tagi"
+  },
+  "linkwardenSave_tagsPlaceholder": {
+    "message": "Dodaj tagi..."
+  },
+  "linkwardenSave_screenshotLabel": {
+    "message": "Dołącz zrzut ekranu"
+  },
+  "linkwardenSave_saveBtn": {
+    "message": "Zapisz"
+  },
+  "linkwardenSave_cancelBtn": {
+    "message": "Anuluj"
+  },
+  "linkwardenSave_statusSaving": {
+    "message": "Zapisywanie..."
+  },
+  "linkwardenSave_statusSaved": {
+    "message": "Zapisano!"
+  },
+  "linkwardenSave_statusDuplicate": {
+    "message": "Już zapisano w Linkwarden"
+  },
+  "linkwardenSave_statusError": {
+    "message": "Błąd"
+  },
+  "linkwardenSave_quickSaveBtn": {
+    "message": "Szybki zapis"
+  },
+  "options_contextMenuItem_LINKWARDEN_SAVE": {
+    "message": "Zapisz w Linkwarden..."
+  },
+  "options_linkwardenDefaultTagsHint": {
+    "message": "Kliknij, aby dodać istniejące tagi lub wpisz, aby utworzyć nowe. Stosowane przy każdym zapisie."
+  },
+  "options_linkwardenDefaultScreenshot": {
+    "message": "Domyślne zrzuty ekranu"
+  },
+  "options_linkwardenDefaultScreenshotHint": {
+    "message": "Czy zrzuty ekranu powinny być domyślnie włączone w oknie zapisu."
+  },
+  "linkwardenSave_deleteBtn": {
+    "message": "Usuń"
+  },
+  "linkwardenSave_deleteConfirm": {
+    "message": "Czy na pewno chcesz usunąć ten link z Linkwarden?"
+  },
+  "linkwardenSave_statusDeleted": {
+    "message": "Link został pomyślnie usunięty!"
   }
 }

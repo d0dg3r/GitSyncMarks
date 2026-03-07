@@ -1310,10 +1310,7 @@
     "message": "Открыть все из папки"
   },
   "contextMenu_saveToLinkwarden": {
-    "message": "Сохранить в Linkwarden"
-  },
-  "contextMenu_saveToLinkwardenScreenshot": {
-    "message": "Сохранить со снимком экрана"
+    "message": "Сохранить в Linkwarden..."
   },
   "contextMenu_searchBookmarks": {
     "message": "Поиск закладок"
@@ -1581,5 +1578,83 @@
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – Поиск закладок"
+  },
+  "linkwardenSave_title": {
+    "message": "Сохранить в Linkwarden"
+  },
+  "linkwardenSave_urlLabel": {
+    "message": "URL"
+  },
+  "linkwardenSave_titleLabel": {
+    "message": "Заголовок"
+  },
+  "linkwardenSave_descriptionLabel": {
+    "message": "Описание"
+  },
+  "linkwardenSave_descriptionPlaceholder": {
+    "message": "Необязательное описание..."
+  },
+  "linkwardenSave_collectionLabel": {
+    "message": "Коллекция"
+  },
+  "linkwardenSave_collectionNone": {
+    "message": "Без категории"
+  },
+  "linkwardenSave_collectionNew": {
+    "message": "Создать коллекцию"
+  },
+  "linkwardenSave_collectionNewPlaceholder": {
+    "message": "Название коллекции..."
+  },
+  "linkwardenSave_tagsLabel": {
+    "message": "Теги"
+  },
+  "linkwardenSave_tagsPlaceholder": {
+    "message": "Добавить теги..."
+  },
+  "linkwardenSave_screenshotLabel": {
+    "message": "Прикрепить снимок экрана"
+  },
+  "linkwardenSave_saveBtn": {
+    "message": "Сохранить"
+  },
+  "linkwardenSave_cancelBtn": {
+    "message": "Отмена"
+  },
+  "linkwardenSave_statusSaving": {
+    "message": "Сохранение..."
+  },
+  "linkwardenSave_statusSaved": {
+    "message": "Сохранено!"
+  },
+  "linkwardenSave_statusDuplicate": {
+    "message": "Уже сохранено в Linkwarden"
+  },
+  "linkwardenSave_statusError": {
+    "message": "Ошибка"
+  },
+  "linkwardenSave_quickSaveBtn": {
+    "message": "Быстрое сохранение"
+  },
+  "options_contextMenuItem_LINKWARDEN_SAVE": {
+    "message": "Сохранить в Linkwarden..."
+  },
+  "options_linkwardenDefaultTagsHint": {
+    "message": "Нажмите, чтобы добавить существующие теги, или введите текст для создания новых. Применяется к каждому сохранению."
+  },
+  "options_linkwardenDefaultScreenshot": {
+    "message": "Скриншоты по умолчанию"
+  },
+  "options_linkwardenDefaultScreenshotHint": {
+    "message": "Должны ли скриншоты быть включены по умолчанию в окне сохранения."
+  },
+  "linkwardenSave_deleteBtn": {
+    "message": "Удалить"
+  },
+  "linkwardenSave_deleteConfirm": {
+    "message": "Вы уверены, что хотите удалить эту ссылку из Linkwarden?"
+  },
+  "linkwardenSave_statusDeleted": {
+    "message": "Ссылка успешно удалена!"
   }
 }

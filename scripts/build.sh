@@ -59,6 +59,9 @@ SHARED_FILES=(
   search.html
   search.js
   search.css
+  linkwarden-save.html
+  linkwarden-save.js
+  linkwarden-save.css
   options.html
   options.js
   options.css

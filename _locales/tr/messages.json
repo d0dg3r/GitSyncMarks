@@ -1310,10 +1310,7 @@
     "message": "Klasörden tümünü aç"
   },
   "contextMenu_saveToLinkwarden": {
-    "message": "Linkwarden'a kaydet"
-  },
-  "contextMenu_saveToLinkwardenScreenshot": {
-    "message": "Ekran görüntüsüyle kaydet"
+    "message": "Linkwarden'a kaydet..."
   },
   "contextMenu_searchBookmarks": {
     "message": "Yer imlerini ara"
@@ -1581,5 +1578,83 @@
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – Yer İmi Arama"
+  },
+  "linkwardenSave_title": {
+    "message": "Linkwarden'a kaydet"
+  },
+  "linkwardenSave_urlLabel": {
+    "message": "URL"
+  },
+  "linkwardenSave_titleLabel": {
+    "message": "Başlık"
+  },
+  "linkwardenSave_descriptionLabel": {
+    "message": "Açıklama"
+  },
+  "linkwardenSave_descriptionPlaceholder": {
+    "message": "İsteğe bağlı açıklama..."
+  },
+  "linkwardenSave_collectionLabel": {
+    "message": "Koleksiyon"
+  },
+  "linkwardenSave_collectionNone": {
+    "message": "Düzenlenmemiş"
+  },
+  "linkwardenSave_collectionNew": {
+    "message": "Yeni koleksiyon oluştur"
+  },
+  "linkwardenSave_collectionNewPlaceholder": {
+    "message": "Yeni koleksiyon adı..."
+  },
+  "linkwardenSave_tagsLabel": {
+    "message": "Etiketler"
+  },
+  "linkwardenSave_tagsPlaceholder": {
+    "message": "Etiket ekle..."
+  },
+  "linkwardenSave_screenshotLabel": {
+    "message": "Ekran görüntüsü ekle"
+  },
+  "linkwardenSave_saveBtn": {
+    "message": "Kaydet"
+  },
+  "linkwardenSave_cancelBtn": {
+    "message": "İptal"
+  },
+  "linkwardenSave_statusSaving": {
+    "message": "Kaydediliyor..."
+  },
+  "linkwardenSave_statusSaved": {
+    "message": "Kaydedildi!"
+  },
+  "linkwardenSave_statusDuplicate": {
+    "message": "Zaten Linkwarden'da kayıtlı"
+  },
+  "linkwardenSave_statusError": {
+    "message": "Hata"
+  },
+  "linkwardenSave_quickSaveBtn": {
+    "message": "Hızlı kaydet"
+  },
+  "options_contextMenuItem_LINKWARDEN_SAVE": {
+    "message": "Linkwarden'a kaydet..."
+  },
+  "options_linkwardenDefaultTagsHint": {
+    "message": "Mevcut etiketlere tıklayın veya yenilerini oluşturmak için yazın. Her kaydetmede uygulanır."
+  },
+  "options_linkwardenDefaultScreenshot": {
+    "message": "Varsayılan Ekran Görüntüleri"
+  },
+  "options_linkwardenDefaultScreenshotHint": {
+    "message": "Kaydetme penceresinde ekran görüntülerinin varsayılan olarak etkinleştirilip etkinleştirilmeyeceği."
+  },
+  "linkwardenSave_deleteBtn": {
+    "message": "Sil"
+  },
+  "linkwardenSave_deleteConfirm": {
+    "message": "Bu bağlantıyı Linkwarden'dan silmek istediğinize emin misiniz?"
+  },
+  "linkwardenSave_statusDeleted": {
+    "message": "Bağlantı başarıyla silindi!"
   }
 }

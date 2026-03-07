@@ -1310,10 +1310,7 @@
     "message": "Apri tutto dalla cartella"
   },
   "contextMenu_saveToLinkwarden": {
-    "message": "Salva su Linkwarden"
-  },
-  "contextMenu_saveToLinkwardenScreenshot": {
-    "message": "Salva con screenshot"
+    "message": "Salva su Linkwarden..."
   },
   "contextMenu_searchBookmarks": {
     "message": "Cerca segnalibri"
@@ -1581,5 +1578,83 @@
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – Ricerca segnalibri"
+  },
+  "linkwardenSave_title": {
+    "message": "Salva su Linkwarden"
+  },
+  "linkwardenSave_urlLabel": {
+    "message": "URL"
+  },
+  "linkwardenSave_titleLabel": {
+    "message": "Titolo"
+  },
+  "linkwardenSave_descriptionLabel": {
+    "message": "Descrizione"
+  },
+  "linkwardenSave_descriptionPlaceholder": {
+    "message": "Descrizione opzionale..."
+  },
+  "linkwardenSave_collectionLabel": {
+    "message": "Collezione"
+  },
+  "linkwardenSave_collectionNone": {
+    "message": "Non organizzato"
+  },
+  "linkwardenSave_collectionNew": {
+    "message": "Crea nuova collezione"
+  },
+  "linkwardenSave_collectionNewPlaceholder": {
+    "message": "Nome della nuova collezione..."
+  },
+  "linkwardenSave_tagsLabel": {
+    "message": "Tag"
+  },
+  "linkwardenSave_tagsPlaceholder": {
+    "message": "Aggiungi tag..."
+  },
+  "linkwardenSave_screenshotLabel": {
+    "message": "Includi screenshot"
+  },
+  "linkwardenSave_saveBtn": {
+    "message": "Salva"
+  },
+  "linkwardenSave_cancelBtn": {
+    "message": "Annulla"
+  },
+  "linkwardenSave_statusSaving": {
+    "message": "Salvataggio..."
+  },
+  "linkwardenSave_statusSaved": {
+    "message": "Salvato!"
+  },
+  "linkwardenSave_statusDuplicate": {
+    "message": "Già salvato in Linkwarden"
+  },
+  "linkwardenSave_statusError": {
+    "message": "Errore"
+  },
+  "linkwardenSave_quickSaveBtn": {
+    "message": "Salvataggio rapido"
+  },
+  "options_contextMenuItem_LINKWARDEN_SAVE": {
+    "message": "Salva su Linkwarden..."
+  },
+  "options_linkwardenDefaultTagsHint": {
+    "message": "Clicca per aggiungere tag esistenti o digita per crearne di nuovi. Applicato ad ogni salvataggio."
+  },
+  "options_linkwardenDefaultScreenshot": {
+    "message": "Screenshot predefiniti"
+  },
+  "options_linkwardenDefaultScreenshotHint": {
+    "message": "Se gli screenshot debbano essere abilitati di default nel popup di salvataggio."
+  },
+  "linkwardenSave_deleteBtn": {
+    "message": "Elimina"
+  },
+  "linkwardenSave_deleteConfirm": {
+    "message": "Sei sicuro di voler eliminare questo link da Linkwarden?"
+  },
+  "linkwardenSave_statusDeleted": {
+    "message": "Link eliminato con successo!"
   }
 }
