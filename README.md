@@ -19,7 +19,7 @@
 
 ## Highlights
 
-### 📱 Companion App
+### Companion App
 Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/d0dg3r/GitSyncMarks-App)**.
 - **Cross-Platform**: Available for Android, iOS, Windows, macOS, and Linux.
 - **Direct Sync**: Connects directly to your GitHub repository.
