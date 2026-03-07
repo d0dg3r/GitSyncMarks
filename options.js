@@ -2113,18 +2113,14 @@ linkwardenTestBtn.addEventListener('click', async () => {
     return;
   }
 
-  chrome.permissions.contains({ origins: [origin] }, (hasPermission) => {
-    if (hasPermission) {
+  chrome.permissions.request({ origins: [origin] }, (granted) => {
+    if (granted) {
       performLinkwardenTest(url, token);
     } else {
-      chrome.permissions.request({ origins: [origin] }, (granted) => {
-        if (granted) {
-          performLinkwardenTest(url, token);
-        } else {
-          linkwardenTestResult.textContent = 'Host permission denied. Cannot connect to Linkwarden.';
-          linkwardenTestResult.className = 'validation-result error';
-        }
-      });
+      linkwardenTestBtn.disabled = false;
+      linkwardenTestSpinner.style.display = 'none';
+      linkwardenTestResult.textContent = 'Host permission denied. Cannot connect to Linkwarden.';
+      linkwardenTestResult.className = 'validation-result error';
     }
   });
 });
