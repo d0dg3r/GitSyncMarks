@@ -1682,5 +1682,8 @@
   },
   "options_linkwardenSyncPushToGit": {
     "message": "LinkwardenのブックマークをGitにプッシュする"
+  },
+  "options_subTabGeneral": {
+    "message": "全般"
   }
 }

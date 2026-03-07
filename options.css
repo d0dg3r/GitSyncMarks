@@ -254,7 +254,8 @@ html.dark .theme-cycle-btn {
 #tab-files .card,
 #tab-menu .card,
 #tab-help .card,
-#tab-about .card {
+#tab-about .card,
+#tab-linkwarden .card {
   padding: 16px 20px;
   margin-bottom: 12px;
 }
@@ -264,7 +265,8 @@ html.dark .theme-cycle-btn {
 #tab-files .card h2,
 #tab-menu .card h2,
 #tab-help .card h2,
-#tab-about .card h2 {
+#tab-about .card h2,
+#tab-linkwarden .card h2 {
   margin-bottom: 14px;
   padding-bottom: 8px;
   font-size: 16px;
@@ -275,7 +277,8 @@ html.dark .theme-cycle-btn {
 #tab-files .card h2:has(+ .card-desc),
 #tab-menu .card h2:has(+ .card-desc),
 #tab-help .card h2:has(+ .card-desc),
-#tab-about .card h2:has(+ .card-desc) {
+#tab-about .card h2:has(+ .card-desc),
+#tab-linkwarden .card h2:has(+ .card-desc) {
   margin-bottom: 4px;
   padding-bottom: 0;
 }
@@ -285,7 +288,8 @@ html.dark .theme-cycle-btn {
 #tab-files .card-desc,
 #tab-menu .card-desc,
 #tab-help .card-desc,
-#tab-about .card-desc {
+#tab-about .card-desc,
+#tab-linkwarden .card-desc {
   margin-bottom: 12px;
   font-size: 13px;
 }
@@ -293,21 +297,24 @@ html.dark .theme-cycle-btn {
 #tab-github .form-group,
 #tab-sync .form-group,
 #tab-files .form-group,
-#tab-menu .form-group {
+#tab-menu .form-group,
+#tab-linkwarden .form-group {
   margin-bottom: 12px;
 }
 
 #tab-github .form-group small,
 #tab-sync .form-group small,
 #tab-files .form-group small,
-#tab-menu .form-group small {
+#tab-menu .form-group small,
+#tab-linkwarden .form-group small {
   margin-top: 4px;
 }
 
 #tab-github .form-group label,
 #tab-sync .form-group label,
 #tab-files .form-group label,
-#tab-menu .form-group label {
+#tab-menu .form-group label,
+#tab-linkwarden .form-group label {
   font-size: 13px;
 }
 

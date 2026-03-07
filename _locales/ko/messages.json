@@ -1682,5 +1682,8 @@
   },
   "options_linkwardenSyncPushToGit": {
     "message": "Linkwarden 북마크를 Git에 푸시"
+  },
+  "options_subTabGeneral": {
+    "message": "일반"
   }
 }

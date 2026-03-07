@@ -1654,5 +1654,8 @@
   },
   "options_linkwardenSyncPushToGit": {
     "message": "Push Linkwarden Bookmarks to Git"
+  },
+  "options_subTabGeneral": {
+    "message": "General"
   }
 }

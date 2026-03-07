@@ -1682,5 +1682,8 @@
   },
   "options_linkwardenSyncPushToGit": {
     "message": "Linkwarden-Lesezeichen zu Git übertragen"
+  },
+  "options_subTabGeneral": {
+    "message": "Allgemein"
   }
 }

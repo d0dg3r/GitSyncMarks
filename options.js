@@ -216,6 +216,7 @@ const contextMenuResetBtn = document.getElementById('context-menu-reset-btn');
 
 // ---- DOM elements: Linkwarden Tab ----
 const linkwardenEnabledInput = document.getElementById('linkwarden-enabled');
+const linkwardenSubtabBar = document.getElementById('linkwarden-subtab-bar');
 const linkwardenSettingsGroup = document.getElementById('linkwarden-settings');
 const linkwardenUrlInput = document.getElementById('linkwarden-url');
 const linkwardenTokenInput = document.getElementById('linkwarden-token');
@@ -231,6 +232,8 @@ const linkwardenSyncEnabledInput = document.getElementById('linkwarden-sync-enab
 const linkwardenSyncOptions = document.getElementById('linkwarden-sync-options');
 const linkwardenSyncParentSelect = document.getElementById('linkwarden-sync-parent');
 const linkwardenSyncPushToGitInput = document.getElementById('linkwarden-sync-push-to-git');
+const linkwardenSyncEnabledGroup = document.getElementById('linkwarden-sync-enabled-group');
+const linkwardenSyncDisabledMsg = document.getElementById('linkwarden-sync-disabled-msg');
 const linkwardenSyncRefreshBtn = document.getElementById('linkwarden-sync-refresh-btn');
 const linkwardenSyncSpinner = document.getElementById('linkwarden-sync-spinner');
 const linkwardenSyncResult = document.getElementById('linkwarden-sync-result');
@@ -793,6 +796,9 @@ async function loadSettings() {
   linkwardenSyncParentSelect.value = globals.linkwardenSyncParent || 'other';
   linkwardenSyncPushToGitInput.checked = globals.linkwardenSyncPushToGit === true;
   linkwardenSettingsGroup.style.display = linkwardenEnabledInput.checked ? 'block' : 'none';
+  linkwardenSubtabBar.style.display = linkwardenEnabledInput.checked ? 'flex' : 'none';
+  linkwardenSyncEnabledGroup.style.display = linkwardenEnabledInput.checked ? 'block' : 'none';
+  linkwardenSyncDisabledMsg.style.display = linkwardenEnabledInput.checked ? 'none' : 'block';
 
   // Attempt to fetch collections if configured
   if (linkwardenEnabledInput.checked && linkwardenUrlInput.value && linkwardenTokenInput.value) {
@@ -1955,6 +1961,9 @@ notificationsModeSelect.addEventListener('change', saveSettings);
 
 linkwardenEnabledInput.addEventListener('change', () => {
   linkwardenSettingsGroup.style.display = linkwardenEnabledInput.checked ? 'block' : 'none';
+  linkwardenSubtabBar.style.display = linkwardenEnabledInput.checked ? 'flex' : 'none';
+  linkwardenSyncEnabledGroup.style.display = linkwardenEnabledInput.checked ? 'block' : 'none';
+  linkwardenSyncDisabledMsg.style.display = linkwardenEnabledInput.checked ? 'none' : 'block';
   saveSettings();
 });
 
