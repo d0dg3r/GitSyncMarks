@@ -12,6 +12,7 @@ import { initTheme, applyTheme } from './lib/theme.js';
 import { serializeToJson, deserializeFromJson, bookmarkTreeToFileMap, fileMapToDashyYaml } from './lib/bookmark-serializer.js';
 import { replaceLocalBookmarks, SYNC_PRESETS } from './lib/sync-engine.js';
 import { updateGitHubReposFolder } from './lib/github-repos.js';
+import { updateLinkwardenCollectionsFolder } from './lib/linkwarden-sync.js';
 import { LinkwardenAPI } from './lib/linkwarden-api.js';
 import { encryptToken, decryptToken, migrateTokenIfNeeded, encryptWithPassword, decryptWithPassword, PASSWORD_ENC_PREFIX } from './lib/crypto.js';
 
@@ -65,6 +66,9 @@ const STORAGE_KEYS = {
   LINKWARDEN_TOKEN: 'linkwardenToken',
   LINKWARDEN_DEFAULT_COLLECTION: 'linkwardenDefaultCollection',
   LINKWARDEN_DEFAULT_TAGS: 'linkwardenDefaultTags',
+  LINKWARDEN_DEFAULT_SCREENSHOT: 'linkwardenDefaultScreenshot',
+  LINKWARDEN_SYNC_ENABLED: 'linkwardenSyncEnabled',
+  LINKWARDEN_SYNC_PARENT: 'linkwardenSyncParent',
 };
 
 const LOCAL_STORAGE_KEYS = {
@@ -216,7 +220,18 @@ const linkwardenUrlInput = document.getElementById('linkwarden-url');
 const linkwardenTokenInput = document.getElementById('linkwarden-token');
 const toggleLinkwardenTokenBtn = document.getElementById('toggle-linkwarden-token');
 const linkwardenDefaultCollectionSelect = document.getElementById('linkwarden-default-collection');
-const linkwardenDefaultTagsInput = document.getElementById('linkwarden-default-tags');
+const lwOptionsTagChips = document.getElementById('lw-options-tag-chips');
+const lwOptionsTagInput = document.getElementById('lw-options-tag-input');
+const lwOptionsTagCloud = document.getElementById('lw-options-tag-cloud');
+let lwOptionsSelectedTags = [];
+let lwOptionsAllTags = [];
+const linkwardenDefaultScreenshotInput = document.getElementById('linkwarden-default-screenshot');
+const linkwardenSyncEnabledInput = document.getElementById('linkwarden-sync-enabled');
+const linkwardenSyncOptions = document.getElementById('linkwarden-sync-options');
+const linkwardenSyncParentSelect = document.getElementById('linkwarden-sync-parent');
+const linkwardenSyncRefreshBtn = document.getElementById('linkwarden-sync-refresh-btn');
+const linkwardenSyncSpinner = document.getElementById('linkwarden-sync-spinner');
+const linkwardenSyncResult = document.getElementById('linkwarden-sync-result');
 const linkwardenTestBtn = document.getElementById('linkwarden-test-btn');
 const linkwardenTestSpinner = document.getElementById('linkwarden-test-spinner');
 const linkwardenTestResult = document.getElementById('linkwarden-test-result');
@@ -743,6 +758,9 @@ async function loadSettings() {
     linkwardenToken: '',
     linkwardenDefaultCollection: '',
     linkwardenDefaultTags: '',
+    linkwardenDefaultScreenshot: false,
+    linkwardenSyncEnabled: false,
+    linkwardenSyncParent: 'other',
   };
   const globals = { ...syncDefaults, ...(await chrome.storage.sync.get(syncDefaults)) };
 
@@ -762,7 +780,14 @@ async function loadSettings() {
   linkwardenUrlInput.value = globals.linkwardenUrl || '';
   linkwardenTokenInput.value = globals.linkwardenToken ? await decryptToken(globals.linkwardenToken) : '';
   linkwardenDefaultCollectionSelect.value = globals.linkwardenDefaultCollection || '';
-  linkwardenDefaultTagsInput.value = globals.linkwardenDefaultTags || '';
+  // Parse saved default tags (comma-separated) into chip picker
+  lwOptionsSelectedTags = (globals.linkwardenDefaultTags || '').split(',').map(t => t.trim()).filter(Boolean);
+  renderLwOptionsTagChips();
+  renderLwOptionsTagCloud();
+  linkwardenDefaultScreenshotInput.checked = globals.linkwardenDefaultScreenshot === true;
+  linkwardenSyncEnabledInput.checked = globals.linkwardenSyncEnabled === true;
+  linkwardenSyncOptions.style.display = linkwardenSyncEnabledInput.checked ? 'block' : 'none';
+  linkwardenSyncParentSelect.value = globals.linkwardenSyncParent || 'other';
   linkwardenSettingsGroup.style.display = linkwardenEnabledInput.checked ? 'block' : 'none';
 
   // Attempt to fetch collections if configured
@@ -786,6 +811,12 @@ async function loadSettings() {
                 if (c.id.toString() === currentSelection) opt.selected = true;
                 linkwardenDefaultCollectionSelect.appendChild(opt);
               });
+            }
+            // Also fetch tags for the cloud
+            const tags = await api.getTags().catch(() => null);
+            if (tags?.response) {
+              lwOptionsAllTags = tags.response.map(t => ({ id: t.id, name: t.name }));
+              renderLwOptionsTagCloud();
             }
           } catch (e) {
             console.warn('[GitSyncMarks] Failed to auto-fetch Linkwarden collections on load', e);
@@ -1730,7 +1761,10 @@ async function saveSettings() {
       [STORAGE_KEYS.LINKWARDEN_URL]: linkwardenUrlInput.value.trim(),
       [STORAGE_KEYS.LINKWARDEN_TOKEN]: linkwardenTokenInput.value.trim() ? await encryptToken(linkwardenTokenInput.value.trim()) : '',
       [STORAGE_KEYS.LINKWARDEN_DEFAULT_COLLECTION]: linkwardenDefaultCollectionSelect.value,
-      [STORAGE_KEYS.LINKWARDEN_DEFAULT_TAGS]: linkwardenDefaultTagsInput.value.trim(),
+      [STORAGE_KEYS.LINKWARDEN_DEFAULT_TAGS]: lwOptionsSelectedTags.join(', '),
+      [STORAGE_KEYS.LINKWARDEN_DEFAULT_SCREENSHOT]: linkwardenDefaultScreenshotInput.checked,
+      [STORAGE_KEYS.LINKWARDEN_SYNC_ENABLED]: linkwardenSyncEnabledInput.checked,
+      [STORAGE_KEYS.LINKWARDEN_SYNC_PARENT]: linkwardenSyncParentSelect.value,
     });
 
 
@@ -1922,7 +1956,119 @@ linkwardenEnabledInput.addEventListener('change', () => {
 linkwardenUrlInput.addEventListener('change', saveSettings);
 linkwardenTokenInput.addEventListener('change', saveSettings);
 linkwardenDefaultCollectionSelect.addEventListener('change', saveSettings);
-linkwardenDefaultTagsInput.addEventListener('change', saveSettings);
+// Linkwarden options page tag picker
+function lwOptionsAddTag(name) {
+  const n = name.trim();
+  if (!n || lwOptionsSelectedTags.includes(n)) return;
+  lwOptionsSelectedTags.push(n);
+  renderLwOptionsTagChips();
+  renderLwOptionsTagCloud();
+  lwOptionsTagInput.value = '';
+  saveSettings();
+}
+
+function lwOptionsRemoveTag(name) {
+  lwOptionsSelectedTags = lwOptionsSelectedTags.filter(t => t !== name);
+  renderLwOptionsTagChips();
+  renderLwOptionsTagCloud();
+  saveSettings();
+}
+
+function renderLwOptionsTagChips() {
+  lwOptionsTagChips.innerHTML = '';
+  for (const tag of lwOptionsSelectedTags) {
+    const chip = document.createElement('span');
+    chip.className = 'lw-options-tag-chip';
+    chip.textContent = tag;
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.className = 'lw-options-tag-chip-remove';
+    removeBtn.textContent = '×';
+    removeBtn.addEventListener('click', () => lwOptionsRemoveTag(tag));
+    chip.appendChild(removeBtn);
+    lwOptionsTagChips.appendChild(chip);
+  }
+}
+
+function renderLwOptionsTagCloud(filter = '') {
+  lwOptionsTagCloud.innerHTML = '';
+  const q = filter.toLowerCase().trim();
+  const available = lwOptionsAllTags
+    .filter(t => !lwOptionsSelectedTags.includes(t.name))
+    .filter(t => !q || t.name.toLowerCase().includes(q));
+  for (const tag of available) {
+    const pill = document.createElement('span');
+    pill.className = 'lw-options-tag-cloud-item';
+    pill.textContent = tag.name;
+    pill.addEventListener('click', () => lwOptionsAddTag(tag.name));
+    lwOptionsTagCloud.appendChild(pill);
+  }
+  if (q && !lwOptionsAllTags.some(t => t.name.toLowerCase() === q) && !lwOptionsSelectedTags.some(t => t.toLowerCase() === q)) {
+    const createPill = document.createElement('span');
+    createPill.className = 'lw-options-tag-cloud-item lw-options-tag-cloud-new';
+    createPill.textContent = `+ "${filter.trim()}"`;
+    createPill.addEventListener('click', () => lwOptionsAddTag(filter.trim()));
+    lwOptionsTagCloud.appendChild(createPill);
+  }
+}
+
+lwOptionsTagInput.addEventListener('input', () => renderLwOptionsTagCloud(lwOptionsTagInput.value));
+lwOptionsTagInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ',' || e.key === 'Tab') {
+    if (lwOptionsTagInput.value.trim()) {
+      e.preventDefault();
+      lwOptionsAddTag(lwOptionsTagInput.value);
+    }
+  } else if (e.key === 'Backspace' && !lwOptionsTagInput.value && lwOptionsSelectedTags.length > 0) {
+    lwOptionsRemoveTag(lwOptionsSelectedTags[lwOptionsSelectedTags.length - 1]);
+  }
+});
+
+document.getElementById('lw-options-tags-wrap').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget || e.target === lwOptionsTagChips) {
+    lwOptionsTagInput.focus();
+  }
+});
+
+linkwardenDefaultScreenshotInput.addEventListener('change', saveSettings);
+
+linkwardenSyncEnabledInput.addEventListener('change', () => {
+  linkwardenSyncOptions.style.display = linkwardenSyncEnabledInput.checked ? 'block' : 'none';
+  saveSettings();
+});
+linkwardenSyncParentSelect.addEventListener('change', saveSettings);
+
+linkwardenSyncRefreshBtn.addEventListener('click', async () => {
+  await saveSettings();
+  const url = linkwardenUrlInput.value.trim();
+  const tokenEnc = linkwardenTokenInput.value.trim();
+
+  if (!url || !tokenEnc) {
+    linkwardenSyncResult.textContent = getMessage('options_pleaseEnterLinkwardenConfig') || 'Linkwarden URL and Token are required';
+    linkwardenSyncResult.className = 'validation-result error';
+    return;
+  }
+
+  try {
+    linkwardenSyncRefreshBtn.disabled = true;
+    linkwardenSyncSpinner.style.display = 'inline-block';
+    linkwardenSyncResult.textContent = '';
+
+    const token = await decryptToken(tokenEnc);
+    const parent = linkwardenSyncParentSelect.value || 'other';
+
+    const result = await updateLinkwardenCollectionsFolder(url, token, parent);
+
+    linkwardenSyncResult.textContent = getMessage('options_linkwardenSyncSuccess', [result.collections.toString(), result.links.toString()]) || `Synced ${result.collections} collections and ${result.links} links.`;
+    linkwardenSyncResult.className = 'validation-result success';
+  } catch (err) {
+    linkwardenSyncResult.textContent = getMessage('options_error', [err.message]);
+    linkwardenSyncResult.className = 'validation-result error';
+  } finally {
+    linkwardenSyncRefreshBtn.disabled = false;
+    linkwardenSyncSpinner.style.display = 'none';
+  }
+});
 
 toggleLinkwardenTokenBtn.addEventListener('click', () => {
   const isPassword = linkwardenTokenInput.type === 'password';
@@ -1990,6 +2136,15 @@ async function performLinkwardenTest(url, token) {
 
     linkwardenTestResult.textContent = 'Connection successful!';
     linkwardenTestResult.className = 'validation-result success';
+
+    // Also fetch tags for the cloud
+    try {
+      const tagsRes = await api.getTags();
+      if (tagsRes?.response) {
+        lwOptionsAllTags = tagsRes.response.map(t => ({ id: t.id, name: t.name }));
+        renderLwOptionsTagCloud();
+      }
+    } catch { /* tags optional */ }
   } catch (err) {
     linkwardenTestResult.textContent = `Connection failed: ${err.message}`;
     linkwardenTestResult.className = 'validation-result error';
@@ -2620,7 +2775,6 @@ const DEFAULT_CONTEXT_MENU_ITEMS = [
   { id: 'ADD_TO_FOLDER', enabled: true },
   { id: 'QUICK_FOLDERS', enabled: true },
   { id: 'LINKWARDEN_SAVE', enabled: true },
-  { id: 'LINKWARDEN_SAVE_SCREENSHOT', enabled: true },
   { id: 'SYNC_NOW', enabled: true },
   { id: 'SEARCH_BOOKMARKS', enabled: true },
   { id: 'OPEN_ALL_FOLDER', enabled: true },
@@ -2642,7 +2796,6 @@ const ITEM_CATEGORY_MAP = {
   ADD_TO_FOLDER: CATEGORIES.ADD,
   QUICK_FOLDERS: CATEGORIES.ADD,
   LINKWARDEN_SAVE: CATEGORIES.LINKWARDEN,
-  LINKWARDEN_SAVE_SCREENSHOT: CATEGORIES.LINKWARDEN,
   SYNC_NOW: CATEGORIES.TOOLS,
   SEARCH_BOOKMARKS: CATEGORIES.TOOLS,
   OPEN_ALL_FOLDER: CATEGORIES.TOOLS,

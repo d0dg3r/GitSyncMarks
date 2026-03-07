@@ -1310,10 +1310,7 @@
     "message": "Abrir todo desde carpeta"
   },
   "contextMenu_saveToLinkwarden": {
-    "message": "Guardar en Linkwarden"
-  },
-  "contextMenu_saveToLinkwardenScreenshot": {
-    "message": "Guardar con captura de pantalla"
+    "message": "Guardar en Linkwarden..."
   },
   "contextMenu_searchBookmarks": {
     "message": "Buscar marcadores"
@@ -1581,5 +1578,106 @@
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – Búsqueda de marcadores"
+  },
+  "linkwardenSave_title": {
+    "message": "Guardar en Linkwarden"
+  },
+  "linkwardenSave_urlLabel": {
+    "message": "URL"
+  },
+  "linkwardenSave_titleLabel": {
+    "message": "Título"
+  },
+  "linkwardenSave_descriptionLabel": {
+    "message": "Descripción"
+  },
+  "linkwardenSave_descriptionPlaceholder": {
+    "message": "Descripción opcional..."
+  },
+  "linkwardenSave_collectionLabel": {
+    "message": "Colección"
+  },
+  "linkwardenSave_collectionNone": {
+    "message": "Sin organizar"
+  },
+  "linkwardenSave_collectionNew": {
+    "message": "Crear nueva colección"
+  },
+  "linkwardenSave_collectionNewPlaceholder": {
+    "message": "Nombre de la nueva colección..."
+  },
+  "linkwardenSave_tagsLabel": {
+    "message": "Etiquetas"
+  },
+  "linkwardenSave_tagsPlaceholder": {
+    "message": "Añadir etiquetas..."
+  },
+  "linkwardenSave_screenshotLabel": {
+    "message": "Incluir captura de pantalla"
+  },
+  "linkwardenSave_saveBtn": {
+    "message": "Guardar"
+  },
+  "linkwardenSave_cancelBtn": {
+    "message": "Cancelar"
+  },
+  "linkwardenSave_statusSaving": {
+    "message": "Guardando..."
+  },
+  "linkwardenSave_statusSaved": {
+    "message": "¡Guardado!"
+  },
+  "linkwardenSave_statusDuplicate": {
+    "message": "Ya guardado en Linkwarden"
+  },
+  "linkwardenSave_statusError": {
+    "message": "Error"
+  },
+  "linkwardenSave_quickSaveBtn": {
+    "message": "Guardado rápido"
+  },
+  "options_contextMenuItem_LINKWARDEN_SAVE": {
+    "message": "Guardar en Linkwarden..."
+  },
+  "options_linkwardenDefaultTagsHint": {
+    "message": "Haga clic para agregar etiquetas existentes o escriba para crear nuevas. Se aplican a cada guardado."
+  },
+  "options_linkwardenDefaultScreenshot": {
+    "message": "Capturas de pantalla por defecto"
+  },
+  "options_linkwardenDefaultScreenshotHint": {
+    "message": "Si las capturas de pantalla deben estar habilitadas por defecto en la ventana emergente de guardado."
+  },
+  "linkwardenSave_deleteBtn": {
+    "message": "Eliminar"
+  },
+  "linkwardenSave_deleteConfirm": {
+    "message": "¿Estás seguro de que quieres eliminar este enlace de Linkwarden?"
+  },
+  "linkwardenSave_statusDeleted": {
+    "message": "¡Enlace eliminado correctamente!"
+  },
+  "options_linkwardenSyncEnabled": {
+    "message": "Sincronizar colecciones con marcadores"
+  },
+  "options_linkwardenSyncParent": {
+    "message": "Carpeta superior"
+  },
+  "options_linkwardenSyncRefresh": {
+    "message": "Sincronizar ahora"
+  },
+  "options_linkwardenSyncSuccess": {
+    "message": "Se han sincronizado $ colecciones y $ enlaces.",
+    "placeholders": {
+      "1": {
+        "content": ""
+      },
+      "2": {
+        "content": ""
+      }
+    }
+  },
+  "options_pleaseEnterLinkwardenConfig": {
+    "message": "Por favor, introduce primero la URL y el token de Linkwarden."
   }
 }

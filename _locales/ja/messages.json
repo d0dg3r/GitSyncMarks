@@ -1310,10 +1310,7 @@
     "message": "フォルダーからすべて開く"
   },
   "contextMenu_saveToLinkwarden": {
-    "message": "Linkwarden に保存"
-  },
-  "contextMenu_saveToLinkwardenScreenshot": {
-    "message": "スクリーンショット付きで保存"
+    "message": "Linkwarden に保存..."
   },
   "contextMenu_searchBookmarks": {
     "message": "ブックマークを検索"
@@ -1581,5 +1578,106 @@
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – ブックマーク検索"
+  },
+  "linkwardenSave_title": {
+    "message": "Linkwarden に保存"
+  },
+  "linkwardenSave_urlLabel": {
+    "message": "URL"
+  },
+  "linkwardenSave_titleLabel": {
+    "message": "タイトル"
+  },
+  "linkwardenSave_descriptionLabel": {
+    "message": "説明"
+  },
+  "linkwardenSave_descriptionPlaceholder": {
+    "message": "説明（任意）..."
+  },
+  "linkwardenSave_collectionLabel": {
+    "message": "コレクション"
+  },
+  "linkwardenSave_collectionNone": {
+    "message": "未整理"
+  },
+  "linkwardenSave_collectionNew": {
+    "message": "新しいコレクションを作成"
+  },
+  "linkwardenSave_collectionNewPlaceholder": {
+    "message": "新しいコレクション名..."
+  },
+  "linkwardenSave_tagsLabel": {
+    "message": "タグ"
+  },
+  "linkwardenSave_tagsPlaceholder": {
+    "message": "タグを追加..."
+  },
+  "linkwardenSave_screenshotLabel": {
+    "message": "スクリーンショットを含める"
+  },
+  "linkwardenSave_saveBtn": {
+    "message": "保存"
+  },
+  "linkwardenSave_cancelBtn": {
+    "message": "キャンセル"
+  },
+  "linkwardenSave_statusSaving": {
+    "message": "保存中..."
+  },
+  "linkwardenSave_statusSaved": {
+    "message": "保存しました！"
+  },
+  "linkwardenSave_statusDuplicate": {
+    "message": "Linkwarden に既に保存済み"
+  },
+  "linkwardenSave_statusError": {
+    "message": "エラー"
+  },
+  "linkwardenSave_quickSaveBtn": {
+    "message": "クイック保存"
+  },
+  "options_contextMenuItem_LINKWARDEN_SAVE": {
+    "message": "Linkwarden に保存..."
+  },
+  "options_linkwardenDefaultTagsHint": {
+    "message": "既存のタグをクリックするか、入力して新しいタグを作成します。保存のたびに適用されます。"
+  },
+  "options_linkwardenDefaultScreenshot": {
+    "message": "デフォルトのスクリーンショット"
+  },
+  "options_linkwardenDefaultScreenshotHint": {
+    "message": "保存ポップアップでスクリーンショットをデフォルトで有効にするかどうか。"
+  },
+  "linkwardenSave_deleteBtn": {
+    "message": "削除"
+  },
+  "linkwardenSave_deleteConfirm": {
+    "message": "Linkwardenからこのリンクを削除してもよろしいですか？"
+  },
+  "linkwardenSave_statusDeleted": {
+    "message": "リンクが正常に削除されました。"
+  },
+  "options_linkwardenSyncEnabled": {
+    "message": "コレクションをブックマークと同期する"
+  },
+  "options_linkwardenSyncParent": {
+    "message": "親フォルダー"
+  },
+  "options_linkwardenSyncRefresh": {
+    "message": "今すぐ同期"
+  },
+  "options_linkwardenSyncSuccess": {
+    "message": "$ 個のコレクションと $ 個のリンクを同期しました。",
+    "placeholders": {
+      "1": {
+        "content": ""
+      },
+      "2": {
+        "content": ""
+      }
+    }
+  },
+  "options_pleaseEnterLinkwardenConfig": {
+    "message": "最初にLinkwardenのURLとトークンを入力してください。"
   }
 }

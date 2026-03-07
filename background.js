@@ -389,6 +389,26 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     getDebugLogExportContent().then((content) => sendResponse({ content }));
     return true; // keep channel open for async response
   }
+  if (message.action === 'captureScreenshot') {
+    const { windowId } = message;
+    const targetWindowId = windowId ? parseInt(windowId, 10) : null;
+    (async () => {
+      try {
+        // Focus the source window so captureVisibleTab captures the right content
+        if (targetWindowId) {
+          await chrome.windows.update(targetWindowId, { focused: true });
+          // Brief delay for the window to actually paint
+          await new Promise(r => setTimeout(r, 300));
+        }
+        const dataUrl = await chrome.tabs.captureVisibleTab(targetWindowId || null, { format: 'png' });
+        sendResponse(dataUrl);
+      } catch (err) {
+        console.warn('[GitSyncMarks] captureScreenshot failed:', err);
+        sendResponse(null);
+      }
+    })();
+    return true;
+  }
   if (message.action === 'refreshContextMenus') {
     setupContextMenus();
     sendResponse({ ok: true });

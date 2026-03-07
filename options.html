@@ -444,9 +444,25 @@
           </div>
 
           <div class="form-group">
-            <label for="linkwarden-default-tags" data-i18n="options_linkwardenDefaultTags">Default Tags</label>
-            <input type="text" id="linkwarden-default-tags" placeholder="tag1, tag2">
-            <small>Comma-separated tags to apply to every save.</small>
+            <label data-i18n="options_linkwardenDefaultTags">Default Tags</label>
+            <div class="lw-options-tags-wrap" id="lw-options-tags-wrap">
+              <div id="lw-options-tag-chips" class="lw-options-tag-chips"></div>
+              <input type="text" id="lw-options-tag-input" placeholder="Add tags..." autocomplete="off"
+                class="lw-options-tag-input">
+            </div>
+            <div id="lw-options-tag-cloud" class="lw-options-tag-cloud"></div>
+            <small data-i18n="options_linkwardenDefaultTagsHint">Click to add existing tags or type to create new ones.
+              Applied to every save.</small>
+          </div>
+
+          <div class="form-group toggle-group">
+            <label for="linkwarden-default-screenshot" class="toggle-label">
+              <span data-i18n="options_linkwardenDefaultScreenshot">Default Screenshots</span>
+              <input type="checkbox" id="linkwarden-default-screenshot">
+              <span class="toggle-slider"></span>
+            </label>
+            <small data-i18n="options_linkwardenDefaultScreenshotHint">Whether screenshots should be enabled by default
+              in the save popup.</small>
           </div>
 
           <div class="form-group">
@@ -454,6 +470,33 @@
               Connection</button>
             <span id="linkwarden-test-spinner" class="spinner" style="display: none;"></span>
             <span id="linkwarden-test-result" class="validation-result"></span>
+          </div>
+
+          <hr class="sub-divider">
+
+          <div class="form-group toggle-group">
+            <label for="linkwarden-sync-enabled" class="toggle-label">
+              <span data-i18n="options_linkwardenSyncEnabled">Sync Collections to Bookmarks</span>
+              <input type="checkbox" id="linkwarden-sync-enabled">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div id="linkwarden-sync-options" style="display: none;">
+            <div class="form-group">
+              <label for="linkwarden-sync-parent" data-i18n="options_linkwardenSyncParent">Parent Folder</label>
+              <select id="linkwarden-sync-parent">
+                <option value="toolbar" data-i18n="options_parentToolbar">Bookmarks Bar</option>
+                <option value="other" data-i18n="options_parentOther">Other Bookmarks</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <button id="linkwarden-sync-refresh-btn" class="btn btn-secondary"
+                data-i18n="options_linkwardenSyncRefresh">Sync Now</button>
+              <span id="linkwarden-sync-spinner" class="spinner" style="display: none;"></span>
+              <span id="linkwarden-sync-result" class="validation-result"></span>
+            </div>
           </div>
         </div>
       </section>
