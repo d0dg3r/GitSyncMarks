@@ -4,8 +4,11 @@ All notable changes to GitSyncMarks are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-## [2.6.0] - TBD
-- *(Planned)* Linkwarden integration — context menu Save to Linkwarden, options tab, tags, screenshots
+## [2.6.0-beta.1] - 2026-03-07
+- Linkwarden integration — context menu Save to Linkwarden, options tab, tags, screenshots
+- Smart Search — lightning-fast search interface with theme support and keyboard navigation
+- Setup Wizard — guided onboarding for tokens and repository configuration
+- Enhanced README.md — comprehensive feature documentation and visual tour
 
 ## [2.5.4] - 2026-03-06 (*Cortana*)
 
