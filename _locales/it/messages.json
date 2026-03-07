@@ -147,7 +147,7 @@
     "message": "Mostra/nascondi token"
   },
   "options_tokenHint": {
-    "message": "Richiede lo scope <code>repo</code>. <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Crea token</a>"
+    "message": "Richiede lo scope <code>repo</code> (classic) o <code>Contents: Read/Write</code> e <code>Metadata: Read</code> (fine-grained). <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Crea token</a>"
   },
   "options_repoOwner": {
     "message": "Proprietario del repository"
@@ -846,7 +846,7 @@
     "message": "Guida introduttiva"
   },
   "help_gettingStartedIntro": {
-    "message": "Crea un repository GitHub per i tuoi segnalibri, poi crea un Personal Access Token (PAT) con lo scope <code>repo</code>. Nella scheda GitHub, inserisci token, proprietario del repository, nome, branch (di solito <code>main</code>) e il percorso della cartella (predefinito: <code>bookmarks</code>). Clicca <strong>Testa connessione</strong> per verificare."
+    "message": "Crea un repository GitHub per i tuoi segnalibri, poi crea un Personal Access Token (PAT) con lo scope <code>repo</code> (classic) o <code>Contents: Read/Write</code> e <code>Metadata: Read</code> (fine-grained). Nella scheda GitHub, inserisci token, proprietario del repository, nome, branch (di solito <code>main</code>) e il percorso della cartella (predefinito: <code>bookmarks</code>). Clicca <strong>Testa connessione</strong> per verificare."
   },
   "help_onboarding": {
     "message": "Se la cartella è vuota, puoi creare la struttura di base (toolbar, other). Se nel repository esistono già dei segnalibri, puoi scaricarli in questo browser."
@@ -1685,5 +1685,20 @@
   },
   "options_subTabGeneral": {
     "message": "Generale"
+  },
+  "help_linkwardenTitle": {
+    "message": "Linkwarden"
+  },
+  "help_linkwardenIntegrationTitle": {
+    "message": "Integration"
+  },
+  "help_linkwardenIntegrationDesc": {
+    "message": "Connect to your Linkwarden instance to save bookmarks directly from the context menu. You can specify default tags and auto-capture screenshots."
+  },
+  "help_linkwardenSyncTitle": {
+    "message": "Sync Collections"
+  },
+  "help_linkwardenSyncDesc": {
+    "message": "Sync your Linkwarden collections into your browser bookmark folders and optionally push them to your Git repository."
   }
 }

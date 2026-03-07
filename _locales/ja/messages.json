@@ -147,7 +147,7 @@
     "message": "トークンの表示/非表示"
   },
   "options_tokenHint": {
-    "message": "<code>repo</code> スコープが必要です。<a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">トークンを作成</a>"
+    "message": "<code>repo</code> スコープ (classic) または <code>Contents: Read/Write</code> および <code>Metadata: Read</code> (fine-grained) が必要です。<a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">トークンを作成</a>"
   },
   "options_repoOwner": {
     "message": "リポジトリオーナー"
@@ -1487,7 +1487,7 @@
     "message": "パーソナルアクセストークン（PAT）により、GitSyncMarks が GitHub リポジトリにアクセスしてブックマークを同期できます。GitHub アカウント設定で作成します。"
   },
   "options_onboardingWizardTokenHelpScopes": {
-    "message": "トークンには <code>repo</code> スコープが必要です。リポジトリ（プライベート含む）への読み書きアクセスを許可します。トークンはパスワードと同様に扱ってください。"
+    "message": "トークンには <code>repo</code> スコープ (classic) または <code>Contents: Read/Write</code> および <code>Metadata: Read</code> (fine-grained) が必要です。リポジトリ（プライベート含む）への読み書きアクセスを許可します。トークンはパスワードと同様に扱ってください。"
   },
   "options_onboardingWizardTokenStep1": {
     "message": "下のリンクをクリックして GitHub のトークン作成ページを開いてください。"
@@ -1685,5 +1685,20 @@
   },
   "options_subTabGeneral": {
     "message": "全般"
+  },
+  "help_linkwardenTitle": {
+    "message": "Linkwarden"
+  },
+  "help_linkwardenIntegrationTitle": {
+    "message": "Integration"
+  },
+  "help_linkwardenIntegrationDesc": {
+    "message": "Connect to your Linkwarden instance to save bookmarks directly from the context menu. You can specify default tags and auto-capture screenshots."
+  },
+  "help_linkwardenSyncTitle": {
+    "message": "Sync Collections"
+  },
+  "help_linkwardenSyncDesc": {
+    "message": "Sync your Linkwarden collections into your browser bookmark folders and optionally push them to your Git repository."
   }
 }

@@ -29,7 +29,7 @@ Capacités Clés
 Installation et Configuration
 
 1. Installation : Téléchargez le ZIP depuis GitHub (Chrome/Edge) ou installez depuis le web store.
-2. PAT GitHub : Créez un jeton d'accès personnel avec le scope "repo".
+2. PAT GitHub : Créez un jeton d'accès personnel avec le scope classic "repo" ou fine-grained "Contents: Read/Write".
 3. Assistant de Configuration : Suivez le processus guidé sous Aide -> Prise en main.
 4. Linkwarden (optionnel) : Configurez votre instance dans l'onglet Linkwarden dédié.
 

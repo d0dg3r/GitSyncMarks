@@ -20,7 +20,7 @@ GitSyncMarks, Firefox yer imlerinizi bir GitHub deposuyla senkronize eder — ç
 
 Nasıl çalışır:
 1. Yer imleriniz için bir GitHub deposu oluşturun
-2. "repo" kapsamında bir Personal Access Token oluşturun
+2. klasik "repo" veya fine-grained "Contents: Read/Write" kapsamında bir Personal Access Token oluşturun
 3. GitSyncMarks'ı token ve deponuzla yapılandırın
 4. "Şimdi Senkronize Et"e tıklayın — tamam!
 

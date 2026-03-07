@@ -10,7 +10,7 @@ GitSyncMarks
 
 Jak to działa:
 1. Utwórz repozytorium GitHub na swoje zakładki
-2. Wygeneruj Personal Access Token z uprawnieniem "repo"
+2. Wygeneruj Personal Access Token z uprawnieniem "repo" (classic) lub "Contents: Read/Write" (fine-grained)
 3. Skonfiguruj GitSyncMarks z tokenem i repozytorium
 4. Kliknij „Synchronizuj teraz" — gotowe!
 

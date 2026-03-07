@@ -29,7 +29,7 @@ Capacidades Chave
 Instalação e Configuração
 
 1. Instalação: Instale o GitSyncMarks a partir do Firefox Add-ons (AMO).
-2. GitHub PAT: Crie um Token de Acesso Pessoal com escopo "repo".
+2. GitHub PAT: Crie um Token de Acesso Pessoal com escopo "repo" (clássico) ou "Contents: Read/Write" (fine-grained).
 3. Assistente de Configuração: Siga o processo guiado em Ajuda -> Primeiros Passos.
 4. Linkwarden (opcional): Configure sua instância na aba dedicada do Linkwarden.
 
@@ -40,7 +40,7 @@ GitSyncMarks é Open Source: https://github.com/d0dg3r/GitSyncMarks
 
 Como funciona:
 1. Crie um repositório GitHub para seus favoritos
-2. Gere um Personal Access Token com o escopo "repo"
+2. Gere um Personal Access Token com o escopo "repo" (clássico) ou "Contents: Read/Write" (fine-grained)
 3. Configure o GitSyncMarks com seu token e repositório
 4. Clique em "Sincronizar agora" — pronto!
 

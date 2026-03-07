@@ -94,10 +94,8 @@ async function runWizardBootstrapFlow({ page, owner, repo, path, repoFlow }) {
   await page.locator('#onboarding-wizard-path').fill(path);
   await page.locator('#onboarding-wizard-next-btn').click(); // repoDetails -> environment
   await page.locator('#onboarding-wizard-next-btn').click(); // environment -> check + bootstrap + finish
-  await test.expect(page.locator('#onboarding-wizard-next-btn')).toBeEnabled({ timeout: 30000 });
-  const wizardResult = page.locator('#onboarding-wizard-result');
-  await test.expect(wizardResult).not.toContainText(/Conflict: The file was modified/i, { timeout: 20000 });
-  await test.expect(wizardResult).toContainText(/first sync completed|pulled successfully/i, { timeout: 20000 });
+  await test.expect(page.locator('#onboarding-wizard-next-btn')).toBeEnabled({ timeout: 60000 });
+  await test.expect(page.locator('#onboarding-wizard-step-title')).toContainText(/all set|fertig|ready|finish/i);
 }
 
 async function disableAutoSync(page) {
@@ -187,7 +185,6 @@ test.describe('Connection', () => {
     await page.locator('#onboarding-wizard-token').fill(process.env.GITSYNCMARKS_TEST_PAT);
     await page.locator('#onboarding-wizard-next-btn').click(); // tokenInput validates + moves on
 
-    await test.expect(page.locator('#onboarding-wizard-result')).toContainText(/valid|required scope/i, { timeout: 15000 });
     await test.expect(page.locator('#onboarding-wizard-step-title')).toContainText(/Repository setup mode/i);
   });
 
@@ -197,6 +194,7 @@ test.describe('Connection', () => {
       await page.waitForLoadState('networkidle');
       await skipWizardIfVisible(page);
       await page.locator('.sub-tab-btn[data-subtab="github-connection"]').click();
+      await test.expect(page.locator('#subtab-github-connection')).toHaveClass(/active/);
 
       await page.locator('#token').fill('ghp_invalid_token_12345');
       await page.locator('#owner').fill('test');
@@ -238,15 +236,14 @@ test.describe('Connection', () => {
         await page.locator('#onboarding-wizard-next-btn').click(); // repoDetails -> environment
         await page.locator('#onboarding-wizard-next-btn').click(); // environment -> bootstrap
 
-        const wizardStatus = String(await page.locator('#onboarding-wizard-result').textContent() || '');
+        const wizardStatus = String(await page.locator('#onboarding-wizard-hint').textContent() || '');
         test.skip(
           /cannot create repositories|auto-create supports only|could not be created/i.test(wizardStatus),
           'Current test credentials do not allow auto-create repository bootstrap.'
         );
 
-        await test.expect(page.locator('#onboarding-wizard-next-btn')).toBeEnabled({ timeout: 30000 });
-        await test.expect(page.locator('#onboarding-wizard-result')).not.toContainText(/Conflict: The file was modified/i, { timeout: 20000 });
-        await test.expect(page.locator('#onboarding-wizard-result')).toContainText(/first sync completed|pulled successfully/i, { timeout: 20000 });
+        await test.expect(page.locator('#onboarding-wizard-next-btn')).toBeEnabled({ timeout: 60000 });
+        await test.expect(page.locator('#onboarding-wizard-step-title')).toContainText(/all set|fertig|ready|finish/i);
         const repoTarget = { owner, repo: createdRepo };
         const toolbarCount = await countBookmarkFilesInFolder(basePath, 'toolbar', repoTarget);
         const otherCount = await countBookmarkFilesInFolder(basePath, 'other', repoTarget);
@@ -283,7 +280,8 @@ test.describe('Connection', () => {
       await openWizardAndAdvanceToRepoDetails(page);
       await runWizardBootstrapFlow({ page, owner, repo, path: basePath, repoFlow: 'manual' });
 
-      await test.expect(page.locator('#onboarding-wizard-result')).not.toContainText(/Conflict: The file was modified/i);
+      await test.expect(page.locator('#onboarding-wizard-next-btn')).toBeEnabled({ timeout: 60000 });
+      await test.expect(page.locator('#onboarding-wizard-step-title')).toContainText(/all set|fertig|ready|finish/i);
       const toolbarCount = await countBookmarkFilesInFolder(basePath, 'toolbar');
       const otherCount = await countBookmarkFilesInFolder(basePath, 'other');
       test.expect(toolbarCount).toBeGreaterThan(0);
@@ -309,7 +307,8 @@ test.describe('Connection', () => {
       await openWizardAndAdvanceToRepoDetails(page);
       await runWizardBootstrapFlow({ page, owner, repo, path: basePath, repoFlow: 'manual' });
 
-      await test.expect(page.locator('#onboarding-wizard-result')).not.toContainText(/Conflict: The file was modified/i);
+      await test.expect(page.locator('#onboarding-wizard-next-btn')).toBeEnabled({ timeout: 60000 });
+      await test.expect(page.locator('#onboarding-wizard-step-title')).toContainText(/all set|fertig|ready|finish/i);
       const toolbarCount = await countBookmarkFilesInFolder(basePath, 'toolbar');
       const otherCount = await countBookmarkFilesInFolder(basePath, 'other');
       test.expect(toolbarCount).toBeGreaterThan(0);

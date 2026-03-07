@@ -147,7 +147,7 @@
     "message": "Mostrar/ocultar token"
   },
   "options_tokenHint": {
-    "message": "Requer o escopo <code>repo</code>. <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Criar token</a>"
+    "message": "Requer o escopo <code>repo</code> (clássico) ou <code>Contents: Read/Write</code> e <code>Metadata: Read</code> (fine-grained). <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Criar token</a>"
   },
   "options_repoOwner": {
     "message": "Proprietário do Repositório"
@@ -846,7 +846,7 @@
     "message": "Primeiros Passos"
   },
   "help_gettingStartedIntro": {
-    "message": "Crie um repositório no GitHub para seus favoritos e depois crie um Token de Acesso Pessoal (PAT) com o escopo <code>repo</code>. Na aba GitHub, insira o token, proprietário do repositório, nome, branch (geralmente <code>main</code>) e o caminho da pasta (padrão: <code>bookmarks</code>). Clique em <strong>Testar Conexão</strong> para verificar."
+    "message": "Crie um repositório no GitHub para seus favoritos e depois crie um Token de Acesso Pessoal (PAT) com o escopo <code>repo</code> (clássico) ou <code>Contents: Read/Write</code> e <code>Metadata: Read</code> (fine-grained). Na aba GitHub, insira o token, proprietário do repositório, nome, branch (geralmente <code>main</code>) e o caminho da pasta (padrão: <code>bookmarks</code>). Clique em <strong>Testar Conexão</strong> para verificar."
   },
   "help_onboarding": {
     "message": "Se a pasta estiver vazia, você pode criar a estrutura base (toolbar, other). Se já existirem favoritos no repositório, você pode baixá-los para este navegador."
@@ -1487,7 +1487,7 @@
     "message": "Um Token de Acesso Pessoal (PAT) permite que o GitSyncMarks acesse seu repositório GitHub para sincronizar favoritos. Você o cria nas configurações da sua conta GitHub."
   },
   "options_onboardingWizardTokenHelpScopes": {
-    "message": "O token precisa do escopo <code>repo</code>. Isso concede acesso de leitura/escrita aos seus repositórios (incluindo privados) e permite que a extensão crie um repositório automaticamente. Trate o token como uma senha."
+    "message": "O token precisa do escopo <code>repo</code> (clássico) ou <code>Contents: Read/Write</code> e <code>Metadata: Read</code> (fine-grained). Isso concede acesso de leitura/escrita aos seus repositórios (incluindo privados) e permite que a extensão crie um repositório automaticamente. Trate o token como uma senha."
   },
   "options_onboardingWizardTokenStep1": {
     "message": "Clique no link abaixo para abrir a página de criação de tokens do GitHub."
@@ -1685,5 +1685,20 @@
   },
   "options_subTabGeneral": {
     "message": "Geral"
+  },
+  "help_linkwardenTitle": {
+    "message": "Linkwarden"
+  },
+  "help_linkwardenIntegrationTitle": {
+    "message": "Integration"
+  },
+  "help_linkwardenIntegrationDesc": {
+    "message": "Connect to your Linkwarden instance to save bookmarks directly from the context menu. You can specify default tags and auto-capture screenshots."
+  },
+  "help_linkwardenSyncTitle": {
+    "message": "Sync Collections"
+  },
+  "help_linkwardenSyncDesc": {
+    "message": "Sync your Linkwarden collections into your browser bookmark folders and optionally push them to your Git repository."
   }
 }

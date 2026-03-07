@@ -29,7 +29,7 @@ Kernfunktionen
 Installation und Einrichtung
 
 1. Installation: GitSyncMarks aus Firefox Add-ons (AMO) laden.
-2. GitHub PAT: Erstellen Sie einen Personal Access Token mit "repo"-Berechtigung.
+2. GitHub PAT: Erstellen Sie einen Personal Access Token mit klassische "repo"-Berechtigung oder "Contents: Read/Write" (fine-grained).
 3. Setup-Wizard: Folgen Sie dem geführten Prozess unter Hilfe -> Erste Schritte.
 4. Linkwarden (optional): Konfigurieren Sie Ihre Instanz im Linkwarden-Tab.
 

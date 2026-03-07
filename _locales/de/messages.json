@@ -147,7 +147,7 @@
     "message": "Token anzeigen/verbergen"
   },
   "options_tokenHint": {
-    "message": "Benötigt den <code>repo</code>-Scope. <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Token erstellen</a>"
+    "message": "Benötigt den <code>repo</code>-Scope (klassisch) oder <code>Contents: Read/Write</code> und <code>Metadata: Read</code> (fine-grained). <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Token erstellen</a>"
   },
   "options_repoOwner": {
     "message": "Repository-Besitzer"
@@ -567,7 +567,7 @@
     "message": "Zugriffs-Token"
   },
   "options_onboardingWizardStepTokenText": {
-    "message": "Füge ein GitHub-Token mit repo-Berechtigung hinzu und halte es privat."
+    "message": "Füge ein GitHub-Token mit repo-Berechtigung (klassisch) oder Contents: Read/Write (fine-grained) hinzu. Halte es privat."
   },
   "options_onboardingWizardStepValidateTitle": {
     "message": "Verbindung testen"
@@ -1685,5 +1685,20 @@
   },
   "options_subTabGeneral": {
     "message": "Allgemein"
+  },
+  "help_linkwardenTitle": {
+    "message": "Linkwarden"
+  },
+  "help_linkwardenIntegrationTitle": {
+    "message": "Integration"
+  },
+  "help_linkwardenIntegrationDesc": {
+    "message": "Verbinde deine Linkwarden-Instanz, um Lesezeichen direkt aus dem Kontextmenü zu speichern. Du kannst Standard-Tags festlegen und automatische Screenshots aktivieren."
+  },
+  "help_linkwardenSyncTitle": {
+    "message": "Sammlungen synchronisieren"
+  },
+  "help_linkwardenSyncDesc": {
+    "message": "Synchronisiere deine Linkwarden-Sammlungen in deine Browser-Lesezeichen-Ordner und übertrage sie optional in dein Git-Repository."
   }
 }

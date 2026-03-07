@@ -28,7 +28,7 @@ Key Capabilities
 Setup & Installation
 
 1. Installation: Download the ZIP from GitHub (Chrome/Edge) or install from the web store.
-2. GitHub PAT: Create a Personal Access Token with "repo" scope.
+2. GitHub PAT: Create a Personal Access Token with classic "repo" or fine-grained "Contents: Read/Write".
 3. Setup Wizard: Follow the guided process under Help -> Getting Started.
 4. Linkwarden (optional): Configure your instance in the dedicated Linkwarden tab.
 

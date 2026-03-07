@@ -27,7 +27,7 @@ Capacidades Clave
 Instalación y Configuración
 
 1. Instalación: Descargue el ZIP desde GitHub (Chrome/Edge) o instálelo desde la tienda web.
-2. GitHub PAT: Cree un Token de Acceso Personal con el permiso "repo".
+2. GitHub PAT: Cree un Token de Acceso Personal con el permiso "repo" (clásico) o "Contents: Read/Write" (fine-grained).
 3. Asistente de Configuración: Siga el proceso guiado en Ayuda -> Primeros pasos.
 4. Linkwarden (opcional): Configure su instancia en la pestaña dedicada de Linkwarden.
 

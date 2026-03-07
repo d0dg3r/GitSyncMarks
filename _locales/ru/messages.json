@@ -147,7 +147,7 @@
     "message": "Показать/скрыть токен"
   },
   "options_tokenHint": {
-    "message": "Требуется область <code>repo</code>. <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Создать токен</a>"
+    "message": "Требуется область <code>repo</code> (classic) или <code>Contents: Read/Write</code> и <code>Metadata: Read</code> (fine-grained). <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Создать токен</a>"
   },
   "options_repoOwner": {
     "message": "Владелец репозитория"
@@ -1487,7 +1487,7 @@
     "message": "Персональный токен доступа (PAT) позволяет GitSyncMarks получить доступ к вашему репозиторию GitHub для синхронизации закладок. Создайте его в настройках аккаунта GitHub."
   },
   "options_onboardingWizardTokenHelpScopes": {
-    "message": "Токену нужна область <code>repo</code>. Это даёт доступ на чтение/запись к репозиториям (включая приватные). Обращайтесь с токеном как с паролем."
+    "message": "Токену нужна область <code>repo</code> (classic) или <code>Contents: Read/Write</code> и <code>Metadata: Read</code> (fine-grained). Это даёт доступ на чтение/запись к репозиториям (включая приватные). Обращайтесь с токеном как с паролем."
   },
   "options_onboardingWizardTokenStep1": {
     "message": "Нажмите на ссылку ниже, чтобы открыть страницу создания токенов GitHub."
@@ -1685,5 +1685,20 @@
   },
   "options_subTabGeneral": {
     "message": "Общие"
+  },
+  "help_linkwardenTitle": {
+    "message": "Linkwarden"
+  },
+  "help_linkwardenIntegrationTitle": {
+    "message": "Integration"
+  },
+  "help_linkwardenIntegrationDesc": {
+    "message": "Connect to your Linkwarden instance to save bookmarks directly from the context menu. You can specify default tags and auto-capture screenshots."
+  },
+  "help_linkwardenSyncTitle": {
+    "message": "Sync Collections"
+  },
+  "help_linkwardenSyncDesc": {
+    "message": "Sync your Linkwarden collections into your browser bookmark folders and optionally push them to your Git repository."
   }
 }

@@ -39,7 +39,7 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 
 | Version | Codename | Description |
 |---|---|---|
-| `2.6.0` | *Link* | Linkwarden integration — context menu Save to Linkwarden, options tab, tags, screenshots |
+| `2.6.0` | *Link* | Linkwarden integration; Smart Search; Onboarding Wizard; switched to Bearer authentication; support for Fine-grained PATs and GitHub Apps |
 | `2.5.3` | *Cortana* | Context menu productivity update: pinned quick folders (up to 3), Search Bookmarks entry opens a dedicated search popup, Open All from Folder with safety confirmation threshold; Files -> Settings adds context-menu tools |
 | `2.5.2` | *Cortana* | Fix: orphan subfolders in generated files (README, bookmarks.html, feed.xml, dashy-conf.yml); website layout unified; Docs removed from quick-nav; README load-from-source section; Settings sync UI: buttons disabled until client name set, password saved after Import/Sync/Create, layout (Client name + Create in one row; Refresh + Dropdown + Import + Sync in one row); Help Getting Started: Start setup wizard button |
 | `2.5.1` | *Cortana* | Fix: password dialog for Settings sync actions (Import & Apply, etc.) now appears in Settings sub-tab instead of Export/Import |
