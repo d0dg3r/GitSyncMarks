@@ -16,6 +16,10 @@
     "scripting",
     "downloads"
   ],
+  "optional_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ],
   "host_permissions": [
     "https://api.github.com/*"
   ],
