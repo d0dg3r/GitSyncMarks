@@ -79,7 +79,7 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 
 ---
 
-## 🚀 Upgrading to v2.6.0 (Beta)
+## Upgrading to v2.6.0 (Beta)
 
 > [!IMPORTANT]
 > **v2.6.0-beta.1** is a major feature update. While there are **no breaking changes** to your core bookmark sync, please review the migration steps below if you plan to use the new Linkwarden integration.
