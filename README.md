@@ -98,7 +98,10 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 - **Firefox**: [Install from AMO](https://addons.mozilla.org/en-US/firefox/addon/gitsyncmarks/).
 
 ### 2. GitHub Configuration
-1. Create a **Personal Access Token (PAT)** with specifically the `repo` scope.
+1. Create a **GitHub Token**:
+   - **Classic PAT**: Requires the `repo` scope.
+   - **Fine-grained PAT**: Requires `Contents: Read/Write` and `Metadata: Read`.
+   - **GitHub App**: Installation tokens are fully supported.
 2. Open extension settings, enter your token, owner, and repository name.
 3. Use the **Setup Wizard** (Help -> Getting Started) for a guided walkthrough.
 
@@ -123,7 +126,7 @@ Licensed under [MIT](LICENSE). Made with heart by developers, for developers.
 
 - Chrome, Chromium, Brave, Edge, or Firefox
 - GitHub account with a repository for bookmarks
-- Personal Access Token with the `repo` scope
+- GitHub Token (Classic `repo` scope or Fine-grained `Contents: R/W`)
 
 ## License
 
