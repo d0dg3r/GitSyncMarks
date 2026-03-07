@@ -21,34 +21,45 @@
 
 ---
 
-## Highlights
+---
 
-### Companion App
+## Features
+
+### 🚀 Core Sync & Workflow
+- **Bidirectional & Automatic**: Syncs bookmarks seamlessly between GitHub and your browsers (Chrome, Firefox, Edge, Brave).
+- **Three-Way Merge**: Industrial-grade reliability. Handles concurrent changes across multiple devices automatically.
+- **Guided Onboarding**: A step-by-Step wizard leads you from token creation to your first successful sync.
+- **Multiple Profiles**: Manage up to 10 separate profiles (e.g., Work, Personal, Research) with individual repositories.
+- **Native Integration**: Full support for native browser structures, including toolbars, menus, and context menus.
+
+### 🛡️ Privacy & Security
+- **Private-by-Design**: Direct communication with the GitHub API. No third-party servers, no analytics, no tracking.
+- **You Own the Data**: Your bookmarks are stored in *your* repository, under *your* control.
+- **Human-Readable Storage**: Every bookmark is a separate, editable JSON file—perfect for versioning and manual audits.
+
+### 🔗 Linkwarden Synergy
+Save any page or link directly to your **[Linkwarden](https://linkwarden.app/)** instance.
+- **Auto-Screenshots**: Automatically captures and uploads a viewport screenshot on save.
+- **Collection Sync**: Seamlessly pull Linkwarden collections into your browser and push them to Git.
+- **Tag Management**: Organize with pre-configured tags and collection targets.
+
+### 🔍 Smart Search Popup
+A dedicated, lightning-fast search interface accessible from anywhere via the extension icon or keyboard.
+- **Instant Results**: Supercharged search with immediate feedback.
+- **Theme Support**: Beautifully crafted light and dark modes.
+- **Keyboard Power**: Navigate and select results entirely from your keyboard.
+
+### 📱 Companion App
 Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/d0dg3r/GitSyncMarks-App)**.
-- **Cross-Platform**: Available for Android, iOS, Windows, macOS, and Linux.
-- **Direct Sync**: Connects directly to your GitHub repository.
-- **Mobile Power**: Browse, search, and manage your bookmarks on the go.
+- **Cross-Platform**: Native apps for **Android, iOS, Windows, macOS, and Linux**.
+- **Direct Access**: Connects directly to your GitHub repository for mobile management.
 
-### Linkwarden Synergy
-Save any page or link directly to your **Linkwarden** instance from the right-click menu.
-- **Auto-Screenshots**: Capture the viewport automatically on save.
-- **Default Tags**: Organise flawlessly with pre-configured tags.
-- **Collection Sync**: Pull your Linkwarden collections straight into your browser bookmarks and push them to Git.
-
-### Smart Search Popup
-A dedicated, lightning-fast search interface accessible from anywhere.
-- **Theme Support**: Beautiful light and dark modes.
-- **Keyboard Friendly**: Instant results with "Esc" to close.
-- **Visual Clarity**: Logo headers and clean result lists.
-
-### Three-Way Merge
-Industrial-grade reliability. If you change bookmarks on two devices at once, GitSyncMarks handles the merge automatically whenever possible—no manual "fixing" required.
-
-### Guided Onboarding Wizard
-Perfect for new users. GitSyncMarks walks you through the entire setup process.
-- **Zero to Sync**: Step-by-Step guidance for tokens, repository selection, and first sync.
-- **Auto-Validation**: Instant feedback on your GitHub connection and folder paths.
-- **Flexible Flow**: Restart the wizard any time from the help or connection settings.
+### 🛠️ Developer & Power User Tools
+- **Automation Ready**: Use provided GitHub Actions (`add-bookmark.yml`) or CLI tools to add bookmarks programmatically.
+- **GitHub Repos Folder**: Automatically keep a folder of all your own repositories synced as bookmarks.
+- **Auto-Generated Files**: Every sync generates a `README.md` (index), `bookmarks.html` (netscape), `feed.xml` (RSS), and `dashy-conf.yml`.
+- **Favicon Utilities**: Copy or download high-quality site favicons as PNGs directly from the context menu.
+- **I18n**: Professionally translated into **12 languages** (EN, DE, FR, ES, JA, and more).
 
 ---
 
@@ -63,28 +74,6 @@ Perfect for new users. GitSyncMarks walks you through the entire setup process.
 | :---: | :---: | :---: |
 | <img src="store-assets/en/chrome-1-connection.png" width="280"> | <img src="store-assets/en/chrome-6-popup.png" width="280"> | <img src="store-assets/en/chrome-7-linkwarden-save.png" width="280"> |
 | *Manage Profiles* | *Status at a Glance* | *Context Menu Power* |
-
----
-
-## Key Capabilities
-
-### Core — GitSyncMarks
-- **Private by Design**: Communicates directly with GitHub — no third-party servers see your data.
-- **Human Readable**: Every bookmark is a separate JSON file. Browse and edit them directly on GitHub.
-- **Zero Configuration Sync**: Once set up, it just works in the background.
-
-### Power User Tools
-- **Multiple Profiles**: Separate work, personal, and project bookmarks. Supports up to 10 profiles.
-- **Favicon Utilities**: Copy or download any site's favicon as high-quality PNG.
-- **Automation Ready**: Add bookmarks via CLI or GitHub Actions using the provided `add-bookmark.yml` workflow.
-- **GitHub Repos Folder**: Automatically keep a folder of all your own repositories synced as bookmarks.
-
-### File Exports & Formats
-Automatically generate and push these files to your repository on every sync:
-- `README.md`: A beautiful, browsable index of your bookmarks.
-- `bookmarks.html`: Netscape format for easy migration to other browsers.
-- `feed.xml`: An RSS 2.0 feed to follow your latest bookmarks in any reader.
-- `dashy-conf.yml`: Ready-to-use config for your Dashy dashboard.
 
 ---
 
@@ -117,10 +106,6 @@ Automatically generate and push these files to your repository on every sync:
 Licensed under [MIT](LICENSE). Made with heart by developers, for developers.
 
 ## Requirements
-
-- Chrome, Chromium, Brave, Edge, or Firefox
-- GitHub account with a repository for bookmarks
-- Personal Access Token with the `repo` scope
 
 - Chrome, Chromium, Brave, Edge, or Firefox
 - GitHub account with a repository for bookmarks
