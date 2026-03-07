@@ -1679,5 +1679,8 @@
   },
   "options_pleaseEnterLinkwardenConfig": {
     "message": "Bitte geben Sie zuerst die Linkwarden-URL und den Token ein."
+  },
+  "options_linkwardenSyncPushToGit": {
+    "message": "Linkwarden-Lesezeichen zu Git übertragen"
   }
 }

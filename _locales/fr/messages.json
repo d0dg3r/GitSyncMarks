@@ -1679,5 +1679,8 @@
   },
   "options_pleaseEnterLinkwardenConfig": {
     "message": "Veuillez d'abord saisir l'URL et le jeton Linkwarden."
+  },
+  "options_linkwardenSyncPushToGit": {
+    "message": "Pousser les signets Linkwarden vers Git"
   }
 }

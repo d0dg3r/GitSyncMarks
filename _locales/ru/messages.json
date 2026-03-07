@@ -1679,5 +1679,8 @@
   },
   "options_pleaseEnterLinkwardenConfig": {
     "message": "Сначала введите URL и токен Linkwarden."
+  },
+  "options_linkwardenSyncPushToGit": {
+    "message": "Отправлять закладки Linkwarden в Git"
   }
 }

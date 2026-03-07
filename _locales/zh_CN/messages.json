@@ -1679,5 +1679,8 @@
   },
   "options_pleaseEnterLinkwardenConfig": {
     "message": "请先输入 Linkwarden URL 和令牌。"
+  },
+  "options_linkwardenSyncPushToGit": {
+    "message": "将 Linkwarden 书签推送到 Git"
   }
 }

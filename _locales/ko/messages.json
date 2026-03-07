@@ -1679,5 +1679,8 @@
   },
   "options_pleaseEnterLinkwardenConfig": {
     "message": "먼저 Linkwarden URL과 토큰을 입력하세요."
+  },
+  "options_linkwardenSyncPushToGit": {
+    "message": "Linkwarden 북마크를 Git에 푸시"
   }
 }

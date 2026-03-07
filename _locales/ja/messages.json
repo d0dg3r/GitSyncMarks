@@ -1679,5 +1679,8 @@
   },
   "options_pleaseEnterLinkwardenConfig": {
     "message": "最初にLinkwardenのURLとトークンを入力してください。"
+  },
+  "options_linkwardenSyncPushToGit": {
+    "message": "LinkwardenのブックマークをGitにプッシュする"
   }
 }

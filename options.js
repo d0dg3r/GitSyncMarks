@@ -69,6 +69,7 @@ const STORAGE_KEYS = {
   LINKWARDEN_DEFAULT_SCREENSHOT: 'linkwardenDefaultScreenshot',
   LINKWARDEN_SYNC_ENABLED: 'linkwardenSyncEnabled',
   LINKWARDEN_SYNC_PARENT: 'linkwardenSyncParent',
+  LINKWARDEN_SYNC_PUSH_TO_GIT: 'linkwardenSyncPushToGit',
 };
 
 const LOCAL_STORAGE_KEYS = {
@@ -229,6 +230,7 @@ const linkwardenDefaultScreenshotInput = document.getElementById('linkwarden-def
 const linkwardenSyncEnabledInput = document.getElementById('linkwarden-sync-enabled');
 const linkwardenSyncOptions = document.getElementById('linkwarden-sync-options');
 const linkwardenSyncParentSelect = document.getElementById('linkwarden-sync-parent');
+const linkwardenSyncPushToGitInput = document.getElementById('linkwarden-sync-push-to-git');
 const linkwardenSyncRefreshBtn = document.getElementById('linkwarden-sync-refresh-btn');
 const linkwardenSyncSpinner = document.getElementById('linkwarden-sync-spinner');
 const linkwardenSyncResult = document.getElementById('linkwarden-sync-result');
@@ -761,6 +763,7 @@ async function loadSettings() {
     linkwardenDefaultScreenshot: false,
     linkwardenSyncEnabled: false,
     linkwardenSyncParent: 'other',
+    linkwardenSyncPushToGit: false,
   };
   const globals = { ...syncDefaults, ...(await chrome.storage.sync.get(syncDefaults)) };
 
@@ -788,6 +791,7 @@ async function loadSettings() {
   linkwardenSyncEnabledInput.checked = globals.linkwardenSyncEnabled === true;
   linkwardenSyncOptions.style.display = linkwardenSyncEnabledInput.checked ? 'block' : 'none';
   linkwardenSyncParentSelect.value = globals.linkwardenSyncParent || 'other';
+  linkwardenSyncPushToGitInput.checked = globals.linkwardenSyncPushToGit === true;
   linkwardenSettingsGroup.style.display = linkwardenEnabledInput.checked ? 'block' : 'none';
 
   // Attempt to fetch collections if configured
@@ -1765,6 +1769,7 @@ async function saveSettings() {
       [STORAGE_KEYS.LINKWARDEN_DEFAULT_SCREENSHOT]: linkwardenDefaultScreenshotInput.checked,
       [STORAGE_KEYS.LINKWARDEN_SYNC_ENABLED]: linkwardenSyncEnabledInput.checked,
       [STORAGE_KEYS.LINKWARDEN_SYNC_PARENT]: linkwardenSyncParentSelect.value,
+      [STORAGE_KEYS.LINKWARDEN_SYNC_PUSH_TO_GIT]: linkwardenSyncPushToGitInput.checked,
     });
 
 
@@ -2037,6 +2042,7 @@ linkwardenSyncEnabledInput.addEventListener('change', () => {
   saveSettings();
 });
 linkwardenSyncParentSelect.addEventListener('change', saveSettings);
+linkwardenSyncPushToGitInput.addEventListener('change', saveSettings);
 
 linkwardenSyncRefreshBtn.addEventListener('click', async () => {
   await saveSettings();

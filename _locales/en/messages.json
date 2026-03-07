@@ -1651,5 +1651,8 @@
   },
   "options_pleaseEnterLinkwardenConfig": {
     "message": "Please enter Linkwarden URL and Token first."
+  },
+  "options_linkwardenSyncPushToGit": {
+    "message": "Push Linkwarden Bookmarks to Git"
   }
 }

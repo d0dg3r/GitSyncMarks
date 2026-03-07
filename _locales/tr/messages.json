@@ -1679,5 +1679,8 @@
   },
   "options_pleaseEnterLinkwardenConfig": {
     "message": "Lütfen önce Linkwarden URL'sini ve Belgeyi girin."
+  },
+  "options_linkwardenSyncPushToGit": {
+    "message": "Linkwarden Yer İmlerini Git'e Gönder"
   }
 }

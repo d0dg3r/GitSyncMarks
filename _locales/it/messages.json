@@ -1679,5 +1679,8 @@
   },
   "options_pleaseEnterLinkwardenConfig": {
     "message": "Inserire prima l'URL e il token di Linkwarden."
+  },
+  "options_linkwardenSyncPushToGit": {
+    "message": "Invia i segnalibri di Linkwarden a Git"
   }
 }
