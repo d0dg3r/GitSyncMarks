@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "__MSG_extName__",
   "short_name": "GitSyncMarks",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "__MSG_extDescription__",
   "default_locale": "en",
   "homepage_url": "https://gitsyncmarks.com",
@@ -32,6 +32,10 @@
   ],
   "host_permissions": [
     "https://api.github.com/*"
+  ],
+  "optional_host_permissions": [
+    "https://*/*",
+    "http://*/*"
   ],
   "background": {
     "scripts": [

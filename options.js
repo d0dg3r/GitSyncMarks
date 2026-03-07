@@ -16,6 +16,8 @@ import { updateLinkwardenCollectionsFolder } from './lib/linkwarden-sync.js';
 import { LinkwardenAPI } from './lib/linkwarden-api.js';
 import { encryptToken, decryptToken, migrateTokenIfNeeded, encryptWithPassword, decryptWithPassword, PASSWORD_ENC_PREFIX } from './lib/crypto.js';
 
+const browserObj = typeof browser !== 'undefined' ? browser : chrome;
+
 import {
   isDebugLogEnabled,
   setDebugLogEnabled,
@@ -2094,7 +2096,7 @@ toggleLinkwardenTokenBtn.addEventListener('click', () => {
   toggleLinkwardenTokenBtn.querySelector('.icon-eye').textContent = isPassword ? '👁️‍🗨️' : '👁';
 });
 
-linkwardenTestBtn.addEventListener('click', async () => {
+linkwardenTestBtn.addEventListener('click', () => {
   const url = linkwardenUrlInput.value.trim();
   const token = linkwardenTokenInput.value.trim();
 
@@ -2113,18 +2115,16 @@ linkwardenTestBtn.addEventListener('click', async () => {
     return;
   }
 
-  chrome.permissions.contains({ origins: [origin] }, (hasPermission) => {
-    if (hasPermission) {
+  browserObj.permissions.request({ origins: [origin] }, (granted) => {
+    if (granted) {
       performLinkwardenTest(url, token);
     } else {
-      chrome.permissions.request({ origins: [origin] }, (granted) => {
-        if (granted) {
-          performLinkwardenTest(url, token);
-        } else {
-          linkwardenTestResult.textContent = 'Host permission denied. Cannot connect to Linkwarden.';
-          linkwardenTestResult.className = 'validation-result error';
-        }
-      });
+      const lastErr = chrome.runtime.lastError || (typeof browser !== 'undefined' ? browser.runtime.lastError : null);
+      const errorMsg = lastErr ? lastErr.message : 'Host permission denied. Please check your browser address bar/popup blocker.';
+      linkwardenTestBtn.disabled = false;
+      linkwardenTestSpinner.style.display = 'none';
+      linkwardenTestResult.textContent = errorMsg;
+      linkwardenTestResult.className = 'validation-result error';
     }
   });
 });
