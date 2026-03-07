@@ -16,6 +16,8 @@ import { updateLinkwardenCollectionsFolder } from './lib/linkwarden-sync.js';
 import { LinkwardenAPI } from './lib/linkwarden-api.js';
 import { encryptToken, decryptToken, migrateTokenIfNeeded, encryptWithPassword, decryptWithPassword, PASSWORD_ENC_PREFIX } from './lib/crypto.js';
 
+const browserObj = typeof browser !== 'undefined' ? browser : chrome;
+
 import {
   isDebugLogEnabled,
   setDebugLogEnabled,
@@ -2094,7 +2096,7 @@ toggleLinkwardenTokenBtn.addEventListener('click', () => {
   toggleLinkwardenTokenBtn.querySelector('.icon-eye').textContent = isPassword ? '👁️‍🗨️' : '👁';
 });
 
-linkwardenTestBtn.addEventListener('click', async () => {
+linkwardenTestBtn.addEventListener('click', () => {
   const url = linkwardenUrlInput.value.trim();
   const token = linkwardenTokenInput.value.trim();
 
@@ -2113,13 +2115,14 @@ linkwardenTestBtn.addEventListener('click', async () => {
     return;
   }
 
-  chrome.permissions.request({ origins: [origin] }, (granted) => {
+  browserObj.permissions.request({ origins: [origin] }, (granted) => {
     if (granted) {
       performLinkwardenTest(url, token);
     } else {
+      const errorMsg = chrome.runtime.lastError ? chrome.runtime.lastError.message : 'Host permission denied. Please ensure you allow the permission popup.';
       linkwardenTestBtn.disabled = false;
       linkwardenTestSpinner.style.display = 'none';
-      linkwardenTestResult.textContent = 'Host permission denied. Cannot connect to Linkwarden.';
+      linkwardenTestResult.textContent = errorMsg;
       linkwardenTestResult.className = 'validation-result error';
     }
   });
