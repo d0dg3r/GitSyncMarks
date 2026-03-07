@@ -174,7 +174,7 @@
     "message": "Keine Ordner gefunden"
   },
   "options_browseFolderLoading": {
-    "message": "Laden\u2026"
+    "message": "Laden…"
   },
   "options_browseFolderSelect": {
     "message": "Auswählen"
@@ -1406,9 +1406,180 @@
     "message": "Auf Standard zurücksetzen"
   },
   "options_contextMenuOpenAllThresholdLabel": {
-    "message": "Best\u00e4tigungs-Schutz f\u00fcr \u201eAlle \u00f6ffnen\u201c (Tabs)"
+    "message": "Bestätigungs-Schutz für „Alle öffnen“ (Tabs)"
   },
   "options_contextMenuOpenAllThresholdHint": {
-    "message": "Wenn ein Ordner mehr Lesezeichen als diesen Wert hat, musst du die Aktion doppelt anklicken. Das verhindert, dass versehentlich zu viele Tabs gleichzeitig ge\u00f6ffnet werden."
+    "message": "Wenn ein Ordner mehr Lesezeichen als diesen Wert hat, musst du die Aktion doppelt anklicken. Das verhindert, dass versehentlich zu viele Tabs gleichzeitig geöffnet werden."
+  },
+  "help_contextMenuToolsDesc": {
+    "message": "Unter Dateien → Einstellungen können Sie bis zu 3 Schnellzugriff-Ordner für Ein-Klick-Lesezeichen festlegen und den Schwellenwert für „Alle öffnen“ konfigurieren. Das Kontextmenü enthält auch eine Lesezeichen-Suche."
+  },
+  "help_contextMenuToolsTitle": {
+    "message": "Kontextmenü-Werkzeuge"
+  },
+  "help_website": {
+    "message": "Webseite"
+  },
+  "options_contextMenuFoldersRefreshed": {
+    "message": "Ordnerliste aktualisiert"
+  },
+  "options_contextMenuQuickFolder1": {
+    "message": "Schnellordner 1"
+  },
+  "options_contextMenuQuickFolder2": {
+    "message": "Schnellordner 2"
+  },
+  "options_contextMenuQuickFolder3": {
+    "message": "Schnellordner 3"
+  },
+  "options_contextMenuQuickFolderNone": {
+    "message": "(keiner)"
+  },
+  "options_contextMenuQuickFoldersHint": {
+    "message": "Wählen Sie bis zu drei Ordner, die als Ein-Klick-Einträge „Hinzufügen zu…“ im Kontextmenü erscheinen."
+  },
+  "options_contextMenuQuickFoldersLabel": {
+    "message": "Angepinnte Schnellordner"
+  },
+  "options_contextMenuRefreshFolders": {
+    "message": "Ordnerliste aktualisieren"
+  },
+  "options_contextMenuToolsDesc": {
+    "message": "Konfigurieren Sie angepinnte Ordneraktionen, Sicherheit beim Alle-Öffnen und die Sichtbarkeit von Menüeinträgen."
+  },
+  "options_contextMenuToolsTitle": {
+    "message": "Kontextmenü-Werkzeuge"
+  },
+  "options_githubConnection": {
+    "message": "GitHub-Verbindung"
+  },
+  "options_onboardingInitPathAlreadyExists": {
+    "message": "Pfad „$1“ enthält bereits Lesezeichen-Daten.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathBtn": {
+    "message": "Pfad erstellen und erste Synchronisierung starten"
+  },
+  "options_onboardingInitPathHint": {
+    "message": "Pfad „$1“ fehlt oder ist leer. Hiermit wird die Ordnerstruktur erstellt und Ihre aktuellen Lesezeichen als Ausgangsbasis hochgeladen.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathSuccess": {
+    "message": "Pfad „$1“ erstellt und erste Synchronisierung abgeschlossen.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingWizardFirstSyncHint": {
+    "message": "Die erste Synchronisierung kann etwas länger dauern, während Repository-Prüfungen, Pfad-Einrichtung und Initial-Sync laufen."
+  },
+  "options_onboardingWizardSyncInProgress": {
+    "message": "Arbeitet im Hintergrund, bitte warten…"
+  },
+  "options_onboardingWizardTokenHelpIntro": {
+    "message": "Ein Personal Access Token (PAT) ermöglicht GitSyncMarks den Zugriff auf Ihr GitHub-Repository zur Lesezeichen-Synchronisierung. Sie erstellen es in Ihren GitHub-Kontoeinstellungen."
+  },
+  "options_onboardingWizardTokenHelpScopes": {
+    "message": "Das Token benötigt den <code>repo</code>-Scope. Dies gewährt Lese-/Schreibzugriff auf Ihre Repositories (einschließlich privater) und erlaubt der Erweiterung, bei Bedarf ein Repository automatisch zu erstellen. Behandeln Sie das Token wie ein Passwort."
+  },
+  "options_onboardingWizardTokenStep1": {
+    "message": "Klicken Sie auf den Link unten, um GitHubs Token-Erstellungsseite zu öffnen."
+  },
+  "options_onboardingWizardTokenStep2": {
+    "message": "Geben Sie dem Token einen Namen (z. B. „GitSyncMarks“) und legen Sie optional ein Ablaufdatum fest."
+  },
+  "options_onboardingWizardTokenStep3": {
+    "message": "Aktivieren Sie unter „Scopes“ den Eintrag <code>repo</code> (volle Kontrolle über private Repositories)."
+  },
+  "options_onboardingWizardTokenStep4": {
+    "message": "Klicken Sie auf „Generate token“, kopieren Sie es und fügen Sie es im Feld unten ein."
+  },
+  "options_resetConfirmBtn": {
+    "message": "Ja, alle Daten löschen"
+  },
+  "options_settingsRegistryAliasNormalized": {
+    "message": "Neues Einstellungsprofil erstellt mit Alias: $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameConflict": {
+    "message": "Client-Name existiert bereits im Repository: $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameHint": {
+    "message": "Erforderlich. Dieser Name identifiziert Ihr Client-Einstellungsprofil im Repository."
+  },
+  "options_settingsSyncClientNameLabel": {
+    "message": "Client-Name"
+  },
+  "options_settingsSyncClientNamePlaceholder": {
+    "message": "mein-laptop"
+  },
+  "options_settingsSyncClientNameRequired": {
+    "message": "Bitte geben Sie zuerst einen Client-Namen ein."
+  },
+  "options_settingsSyncCreateOwnBtn": {
+    "message": "Eigene Client-Einstellung erstellen"
+  },
+  "options_settingsSyncMigrationDone": {
+    "message": "Veraltete Einstellungsprofile wurden zu lesbaren Client-Namen migriert."
+  },
+  "options_settingsSyncModeGlobalTemporarilyDisabled": {
+    "message": "Der globale Modus ist vorübergehend nicht verfügbar. Verwenden Sie profilbasierte Client-Einstellungen."
+  },
+  "popup_website": {
+    "message": "Webseite"
+  },
+  "search_clearBtn": {
+    "message": "Leeren"
+  },
+  "search_closeBtn": {
+    "message": "Schließen"
+  },
+  "search_inputPlaceholder": {
+    "message": "Titel oder URL eingeben…"
+  },
+  "search_openBtn": {
+    "message": "Öffnen"
+  },
+  "search_statusNoResults": {
+    "message": "Keine Lesezeichen gefunden"
+  },
+  "search_statusResultCount": {
+    "message": "$1 Ergebnis(se)",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "search_statusSearching": {
+    "message": "Suche läuft…"
+  },
+  "search_subtitle": {
+    "message": "Lokale Lesezeichen durchsuchen und Treffer in einem neuen Tab öffnen."
+  },
+  "search_title": {
+    "message": "Lesezeichen-Suche"
+  },
+  "search_windowTitle": {
+    "message": "GitSyncMarks – Lesezeichen-Suche"
   }
 }

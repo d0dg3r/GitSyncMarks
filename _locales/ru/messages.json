@@ -174,7 +174,7 @@
     "message": "Папки не найдены"
   },
   "options_browseFolderLoading": {
-    "message": "Загрузка\u2026"
+    "message": "Загрузка…"
   },
   "options_browseFolderSelect": {
     "message": "Выбрать"
@@ -1257,5 +1257,329 @@
         "content": "$1"
       }
     }
+  },
+  "contextMenu_addToQuickFolder": {
+    "message": "Добавить в $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "contextMenu_category_ADD": {
+    "message": "Добавить закладку"
+  },
+  "contextMenu_category_FAVICONS": {
+    "message": "Инструменты Favicon"
+  },
+  "contextMenu_category_LINKWARDEN": {
+    "message": "Linkwarden"
+  },
+  "contextMenu_category_TOOLS": {
+    "message": "Инструменты и Синхронизация"
+  },
+  "contextMenu_notifFolderMissing": {
+    "message": "Выбранная папка больше не существует. Обновите настройки быстрых папок."
+  },
+  "contextMenu_notifOpenAllEmpty": {
+    "message": "В выбранной папке нет закладок для открытия."
+  },
+  "contextMenu_notifOpenAllNeedsConfirm": {
+    "message": "Папка содержит $1 вкладок (порог: $2). Нажмите ещё раз в течение 15 секунд для подтверждения.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_notifOpenAllSuccess": {
+    "message": "Открыто $1 вкладок из $2",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_openAllFromFolder": {
+    "message": "Открыть все из папки"
+  },
+  "contextMenu_saveToLinkwarden": {
+    "message": "Сохранить в Linkwarden"
+  },
+  "contextMenu_saveToLinkwardenScreenshot": {
+    "message": "Сохранить со снимком экрана"
+  },
+  "contextMenu_searchBookmarks": {
+    "message": "Поиск закладок"
+  },
+  "options_contextMenuConfigDesc": {
+    "message": "Включайте или отключайте элементы контекстного меню. Перетаскивайте или используйте стрелки для изменения порядка."
+  },
+  "options_contextMenuConfigTitle": {
+    "message": "Видимость и порядок элементов"
+  },
+  "options_contextMenuItem_ADD_OTHER": {
+    "message": "Добавить в Другие закладки"
+  },
+  "options_contextMenuItem_ADD_TOOLBAR": {
+    "message": "Добавить на панель закладок"
+  },
+  "options_contextMenuItem_ADD_TO_FOLDER": {
+    "message": "Добавить в папку... (Меню)"
+  },
+  "options_contextMenuItem_COPY_FAVICON": {
+    "message": "Копировать URL Favicon"
+  },
+  "options_contextMenuItem_DOWNLOAD_FAVICON": {
+    "message": "Скачать Favicon"
+  },
+  "options_contextMenuItem_OPEN_ALL_FOLDER": {
+    "message": "Открыть все из папки"
+  },
+  "options_contextMenuItem_QUICK_FOLDERS": {
+    "message": "Закрепленные быстрые папки"
+  },
+  "options_contextMenuItem_SEARCH_BOOKMARKS": {
+    "message": "Поиск закладок"
+  },
+  "options_contextMenuItem_SWITCH_PROFILE": {
+    "message": "Сменить профиль"
+  },
+  "options_contextMenuItem_SYNC_NOW": {
+    "message": "Синхронизировать сейчас"
+  },
+  "options_contextMenuOpenAllThresholdHint": {
+    "message": "Если в папке больше закладок, чем этот лимит, потребуется подтверждение (двойной клик) перед открытием."
+  },
+  "options_contextMenuOpenAllThresholdLabel": {
+    "message": "Защита подтверждения для \"Открыть все\" (вкладки)"
+  },
+  "options_contextMenuResetBtn": {
+    "message": "Сбросить по умолчанию"
+  },
+  "options_linkwardenApiKey": {
+    "message": "API-ключ"
+  },
+  "options_linkwardenDefaultCollection": {
+    "message": "Коллекция по умолчанию"
+  },
+  "options_linkwardenDefaultTags": {
+    "message": "Теги по умолчанию"
+  },
+  "options_linkwardenEnabled": {
+    "message": "Включить Linkwarden"
+  },
+  "options_linkwardenInstanceUrl": {
+    "message": "URL экземпляра"
+  },
+  "options_linkwardenIntro": {
+    "message": "Настройте экземпляр Linkwarden для сохранения закладок напрямую из контекстного меню."
+  },
+  "options_linkwardenTestConnection": {
+    "message": "Проверить соединение"
+  },
+  "options_linkwardenTitle": {
+    "message": "Интеграция Linkwarden"
+  },
+  "options_menu_showAsSubmenu": {
+    "message": "Показать как подменю"
+  },
+  "options_mobileAppAlert": {
+    "message": "<strong>Примечание для пользователей Android:</strong> Firefox для Android не поддерживает прямую синхронизацию закладок через расширения. Используйте приложение-компаньон."
+  },
+  "options_subTabMenuAdvanced": {
+    "message": "Дополнительно и Безопасность"
+  },
+  "options_subTabMenuFolders": {
+    "message": "Закрепленные папки"
+  },
+  "options_subTabMenuItems": {
+    "message": "Видимость и порядок"
+  },
+  "options_subTabSync": {
+    "message": "Синхронизация"
+  },
+  "options_tabGit": {
+    "message": "Git"
+  },
+  "options_tabLinkwarden": {
+    "message": "Linkwarden"
+  },
+  "options_tabMenu": {
+    "message": "Меню"
+  },
+  "help_contextMenuToolsDesc": {
+    "message": "В Файлы → Настройки можно закрепить до 3 папок быстрого доступа и настроить порог подтверждения для Открыть все. Контекстное меню также включает Поиск закладок."
+  },
+  "help_contextMenuToolsTitle": {
+    "message": "Инструменты контекстного меню"
+  },
+  "help_website": {
+    "message": "Веб-сайт"
+  },
+  "options_contextMenuFoldersRefreshed": {
+    "message": "Список папок обновлён"
+  },
+  "options_contextMenuQuickFolder1": {
+    "message": "Быстрая папка 1"
+  },
+  "options_contextMenuQuickFolder2": {
+    "message": "Быстрая папка 2"
+  },
+  "options_contextMenuQuickFolder3": {
+    "message": "Быстрая папка 3"
+  },
+  "options_contextMenuQuickFolderNone": {
+    "message": "(нет)"
+  },
+  "options_contextMenuQuickFoldersHint": {
+    "message": "Выберите до трёх папок, отображаемых как пункты быстрого доступа в контекстном меню."
+  },
+  "options_contextMenuQuickFoldersLabel": {
+    "message": "Закрепленные быстрые папки"
+  },
+  "options_contextMenuRefreshFolders": {
+    "message": "Обновить список папок"
+  },
+  "options_contextMenuToolsDesc": {
+    "message": "Настройте действия закрепленных папок, безопасность открытия всех и видимость элементов меню."
+  },
+  "options_contextMenuToolsTitle": {
+    "message": "Инструменты контекстного меню"
+  },
+  "options_onboardingInitPathAlreadyExists": {
+    "message": "Путь \"$1\" уже содержит данные закладок.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathBtn": {
+    "message": "Создать путь и запустить первую синхронизацию"
+  },
+  "options_onboardingInitPathHint": {
+    "message": "Путь \"$1\" отсутствует или пуст. Будет создана структура папок и загружены текущие закладки как база.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathSuccess": {
+    "message": "Путь \"$1\" создан и первая синхронизация завершена.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingWizardFirstSyncHint": {
+    "message": "Первая синхронизация может занять больше времени из-за проверки репозитория и начальной настройки."
+  },
+  "options_onboardingWizardSyncInProgress": {
+    "message": "Работа в фоновом режиме, подождите..."
+  },
+  "options_onboardingWizardTokenHelpIntro": {
+    "message": "Персональный токен доступа (PAT) позволяет GitSyncMarks получить доступ к вашему репозиторию GitHub для синхронизации закладок. Создайте его в настройках аккаунта GitHub."
+  },
+  "options_onboardingWizardTokenHelpScopes": {
+    "message": "Токену нужна область <code>repo</code>. Это даёт доступ на чтение/запись к репозиториям (включая приватные). Обращайтесь с токеном как с паролем."
+  },
+  "options_onboardingWizardTokenStep1": {
+    "message": "Нажмите на ссылку ниже, чтобы открыть страницу создания токенов GitHub."
+  },
+  "options_onboardingWizardTokenStep2": {
+    "message": "Дайте токену имя (напр. \"GitSyncMarks\") и установите срок действия по желанию."
+  },
+  "options_onboardingWizardTokenStep3": {
+    "message": "В \"Scopes\" отметьте <code>repo</code> (полный контроль над приватными репозиториями)."
+  },
+  "options_onboardingWizardTokenStep4": {
+    "message": "Нажмите \"Generate token\", скопируйте и вставьте в поле ниже."
+  },
+  "options_resetConfirmBtn": {
+    "message": "Да, удалить все данные"
+  },
+  "options_settingsRegistryAliasNormalized": {
+    "message": "Создан новый профиль настроек с псевдонимом: $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameConflict": {
+    "message": "Имя клиента уже существует в репозитории: $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameHint": {
+    "message": "Обязательно. Это имя идентифицирует ваш профиль настроек клиента в репозитории."
+  },
+  "options_settingsSyncClientNameLabel": {
+    "message": "Имя клиента"
+  },
+  "options_settingsSyncClientNamePlaceholder": {
+    "message": "my-laptop"
+  },
+  "options_settingsSyncClientNameRequired": {
+    "message": "Сначала введите имя клиента."
+  },
+  "options_settingsSyncCreateOwnBtn": {
+    "message": "Создать мою настройку клиента"
+  },
+  "options_settingsSyncMigrationDone": {
+    "message": "Устаревшие профили настроек перенесены на читаемые имена клиентов."
+  },
+  "options_settingsSyncModeGlobalTemporarilyDisabled": {
+    "message": "Глобальный режим временно недоступен. Используйте настройки клиента на основе профилей."
+  },
+  "popup_website": {
+    "message": "Веб-сайт"
+  },
+  "search_clearBtn": {
+    "message": "Очистить"
+  },
+  "search_closeBtn": {
+    "message": "Закрыть"
+  },
+  "search_inputPlaceholder": {
+    "message": "Введите заголовок или URL..."
+  },
+  "search_openBtn": {
+    "message": "Открыть"
+  },
+  "search_statusNoResults": {
+    "message": "Закладки не найдены"
+  },
+  "search_statusResultCount": {
+    "message": "$1 результат(ов)",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "search_statusSearching": {
+    "message": "Поиск..."
+  },
+  "search_subtitle": {
+    "message": "Ищите локальные закладки и открывайте совпадения в новой вкладке."
+  },
+  "search_title": {
+    "message": "Поиск закладок"
+  },
+  "search_windowTitle": {
+    "message": "GitSyncMarks – Поиск закладок"
   }
 }

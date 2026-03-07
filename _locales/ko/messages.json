@@ -174,7 +174,7 @@
     "message": "폴더를 찾을 수 없습니다"
   },
   "options_browseFolderLoading": {
-    "message": "로딩 중\u2026"
+    "message": "로딩 중…"
   },
   "options_browseFolderSelect": {
     "message": "선택"
@@ -1257,5 +1257,329 @@
         "content": "$1"
       }
     }
+  },
+  "contextMenu_addToQuickFolder": {
+    "message": "$1에 추가",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "contextMenu_category_ADD": {
+    "message": "북마크 추가"
+  },
+  "contextMenu_category_FAVICONS": {
+    "message": "Favicon 도구"
+  },
+  "contextMenu_category_LINKWARDEN": {
+    "message": "Linkwarden"
+  },
+  "contextMenu_category_TOOLS": {
+    "message": "도구 및 동기화"
+  },
+  "contextMenu_notifFolderMissing": {
+    "message": "선택한 폴더가 더 이상 존재하지 않습니다. 빠른 폴더 설정을 업데이트하세요."
+  },
+  "contextMenu_notifOpenAllEmpty": {
+    "message": "선택한 폴더에 열 북마크가 없습니다."
+  },
+  "contextMenu_notifOpenAllNeedsConfirm": {
+    "message": "폴더에 $1개의 탭이 있습니다(임계값: $2). 15초 이내에 다시 클릭하여 확인하세요.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_notifOpenAllSuccess": {
+    "message": "$2에서 $1개의 탭을 열었습니다",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_openAllFromFolder": {
+    "message": "폴더에서 모두 열기"
+  },
+  "contextMenu_saveToLinkwarden": {
+    "message": "Linkwarden에 저장"
+  },
+  "contextMenu_saveToLinkwardenScreenshot": {
+    "message": "스크린샷과 함께 저장"
+  },
+  "contextMenu_searchBookmarks": {
+    "message": "북마크 검색"
+  },
+  "options_contextMenuConfigDesc": {
+    "message": "컨텍스트 메뉴에 표시할 항목을 토글합니다. 드래그 또는 화살표로 순서를 변경하세요."
+  },
+  "options_contextMenuConfigTitle": {
+    "message": "메뉴 항목 가시성 및 순서"
+  },
+  "options_contextMenuItem_ADD_OTHER": {
+    "message": "기타 북마크에 추가"
+  },
+  "options_contextMenuItem_ADD_TOOLBAR": {
+    "message": "북마크 바에 추가"
+  },
+  "options_contextMenuItem_ADD_TO_FOLDER": {
+    "message": "폴더에 추가... (메뉴)"
+  },
+  "options_contextMenuItem_COPY_FAVICON": {
+    "message": "Favicon URL 복사"
+  },
+  "options_contextMenuItem_DOWNLOAD_FAVICON": {
+    "message": "Favicon 다운로드"
+  },
+  "options_contextMenuItem_OPEN_ALL_FOLDER": {
+    "message": "폴더에서 모두 열기"
+  },
+  "options_contextMenuItem_QUICK_FOLDERS": {
+    "message": "고정된 빠른 폴더"
+  },
+  "options_contextMenuItem_SEARCH_BOOKMARKS": {
+    "message": "북마크 검색"
+  },
+  "options_contextMenuItem_SWITCH_PROFILE": {
+    "message": "프로필 전환"
+  },
+  "options_contextMenuItem_SYNC_NOW": {
+    "message": "지금 동기화"
+  },
+  "options_contextMenuOpenAllThresholdHint": {
+    "message": "폴더의 북마크 수가 이 제한을 초과하면 너무 많은 탭을 여는 것을 방지하기 위해 확인(더블 클릭)이 필요합니다."
+  },
+  "options_contextMenuOpenAllThresholdLabel": {
+    "message": "\"모두 열기\" 확인 안전 설정 (탭)"
+  },
+  "options_contextMenuResetBtn": {
+    "message": "기본값으로 재설정"
+  },
+  "options_linkwardenApiKey": {
+    "message": "API 키"
+  },
+  "options_linkwardenDefaultCollection": {
+    "message": "기본 컨렉션"
+  },
+  "options_linkwardenDefaultTags": {
+    "message": "기본 태그"
+  },
+  "options_linkwardenEnabled": {
+    "message": "Linkwarden 활성화"
+  },
+  "options_linkwardenInstanceUrl": {
+    "message": "인스턴스 URL"
+  },
+  "options_linkwardenIntro": {
+    "message": "Linkwarden 인스턴스를 구성하여 컨텍스트 메뉴에서 직접 북마크를 저장하세요."
+  },
+  "options_linkwardenTestConnection": {
+    "message": "연결 테스트"
+  },
+  "options_linkwardenTitle": {
+    "message": "Linkwarden 통합"
+  },
+  "options_menu_showAsSubmenu": {
+    "message": "하위 메뉴로 표시"
+  },
+  "options_mobileAppAlert": {
+    "message": "<strong>Android 사용자 참고:</strong> Android용 Firefox는 확장 프로그램을 통한 직접 북마크 동기화를 지원하지 않습니다. 컴패니언 앱을 사용하세요."
+  },
+  "options_subTabMenuAdvanced": {
+    "message": "고급 및 안전"
+  },
+  "options_subTabMenuFolders": {
+    "message": "고정된 폴더"
+  },
+  "options_subTabMenuItems": {
+    "message": "가시성 및 순서"
+  },
+  "options_subTabSync": {
+    "message": "동기화"
+  },
+  "options_tabGit": {
+    "message": "Git"
+  },
+  "options_tabLinkwarden": {
+    "message": "Linkwarden"
+  },
+  "options_tabMenu": {
+    "message": "메뉴"
+  },
+  "help_contextMenuToolsDesc": {
+    "message": "파일 → 설정에서 빠른 폴더를 최대 3개까지 고정하고 모두 열기 확인 임계값을 설정할 수 있습니다. 컨텍스트 메뉴에는 북마크 검색도 포함되어 있습니다."
+  },
+  "help_contextMenuToolsTitle": {
+    "message": "컨텍스트 메뉴 도구"
+  },
+  "help_website": {
+    "message": "웹사이트"
+  },
+  "options_contextMenuFoldersRefreshed": {
+    "message": "폴더 목록이 업데이트되었습니다"
+  },
+  "options_contextMenuQuickFolder1": {
+    "message": "빠른 폴더 1"
+  },
+  "options_contextMenuQuickFolder2": {
+    "message": "빠른 폴더 2"
+  },
+  "options_contextMenuQuickFolder3": {
+    "message": "빠른 폴더 3"
+  },
+  "options_contextMenuQuickFolderNone": {
+    "message": "(없음)"
+  },
+  "options_contextMenuQuickFoldersHint": {
+    "message": "컨텍스트 메뉴에 원클릭 항목으로 표시할 폴더를 최대 3개 선택하세요."
+  },
+  "options_contextMenuQuickFoldersLabel": {
+    "message": "고정된 빠른 폴더"
+  },
+  "options_contextMenuRefreshFolders": {
+    "message": "폴더 목록 업데이트"
+  },
+  "options_contextMenuToolsDesc": {
+    "message": "고정된 폴더 작업, 모두 열기 안전 설정, 메뉴 항목 가시성을 구성합니다."
+  },
+  "options_contextMenuToolsTitle": {
+    "message": "컨텍스트 메뉴 도구"
+  },
+  "options_onboardingInitPathAlreadyExists": {
+    "message": "경로 \"$1\"에 이미 북마크 데이터가 있습니다.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathBtn": {
+    "message": "경로 생성 및 최초 동기화 실행"
+  },
+  "options_onboardingInitPathHint": {
+    "message": "경로 \"$1\"이 없거나 비어 있습니다. 폴더 구조를 만들고 현재 북마크를 초기 기준으로 업로드합니다.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathSuccess": {
+    "message": "경로 \"$1\" 생성 및 최초 동기화 완료.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingWizardFirstSyncHint": {
+    "message": "최초 동기화는 리포지토리 확인 및 초기 설정으로 인해 시간이 더 걸릴 수 있습니다."
+  },
+  "options_onboardingWizardSyncInProgress": {
+    "message": "백그라운드에서 작업 중, 잠시 기다려주세요..."
+  },
+  "options_onboardingWizardTokenHelpIntro": {
+    "message": "개인 액세스 토큰(PAT)을 통해 GitSyncMarks가 GitHub 리포지토리에 액세스하여 북마크를 동기화할 수 있습니다. GitHub 계정 설정에서 생성합니다."
+  },
+  "options_onboardingWizardTokenHelpScopes": {
+    "message": "토큰에는 <code>repo</code> 범위가 필요합니다. 리포지토리(비공개 포함)에 대한 읽기/쓰기 액세스를 허용합니다. 토큰을 비밀번호처럼 취급하세요."
+  },
+  "options_onboardingWizardTokenStep1": {
+    "message": "아래 링크를 클릭하여 GitHub 토큰 생성 페이지를 여세요."
+  },
+  "options_onboardingWizardTokenStep2": {
+    "message": "토큰에 이름(예: \"GitSyncMarks\")을 부여하고 원하는 경우 만료 날짜를 설정하세요."
+  },
+  "options_onboardingWizardTokenStep3": {
+    "message": "\"Scopes\"에서 <code>repo</code>(비공개 리포지토리 전체 제어)를 체크하세요."
+  },
+  "options_onboardingWizardTokenStep4": {
+    "message": "\"Generate token\"을 클릭하고 복사하여 아래 필드에 붙여넣으세요."
+  },
+  "options_resetConfirmBtn": {
+    "message": "예, 모든 데이터 삭제"
+  },
+  "options_settingsRegistryAliasNormalized": {
+    "message": "새 설정 프로필이 에일리어스로 생성됨: $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameConflict": {
+    "message": "클라이언트 이름이 리포지토리에 이미 존재합니다: $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameHint": {
+    "message": "필수. 이 이름은 리포지토리의 클라이언트 설정 프로필을 식별합니다."
+  },
+  "options_settingsSyncClientNameLabel": {
+    "message": "클라이언트 이름"
+  },
+  "options_settingsSyncClientNamePlaceholder": {
+    "message": "my-laptop"
+  },
+  "options_settingsSyncClientNameRequired": {
+    "message": "먼저 클라이언트 이름을 입력하세요."
+  },
+  "options_settingsSyncCreateOwnBtn": {
+    "message": "내 클라이언트 설정 생성"
+  },
+  "options_settingsSyncMigrationDone": {
+    "message": "레거시 설정 프로필이 읽기 쉽운 클라이언트 이름으로 마이그레이션되었습니다."
+  },
+  "options_settingsSyncModeGlobalTemporarilyDisabled": {
+    "message": "글로벌 모드는 일시적으로 사용할 수 없습니다. 프로필 기반 클라이언트 설정을 사용하세요."
+  },
+  "popup_website": {
+    "message": "웹사이트"
+  },
+  "search_clearBtn": {
+    "message": "지우기"
+  },
+  "search_closeBtn": {
+    "message": "닫기"
+  },
+  "search_inputPlaceholder": {
+    "message": "제목 또는 URL 입력..."
+  },
+  "search_openBtn": {
+    "message": "열기"
+  },
+  "search_statusNoResults": {
+    "message": "북마크를 찾을 수 없습니다"
+  },
+  "search_statusResultCount": {
+    "message": "$1개 결과",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "search_statusSearching": {
+    "message": "검색 중..."
+  },
+  "search_subtitle": {
+    "message": "로컬 북마크를 검색하고 일치하는 항목을 새 탭에서 엽니다."
+  },
+  "search_title": {
+    "message": "북마크 검색"
+  },
+  "search_windowTitle": {
+    "message": "GitSyncMarks – 북마크 검색"
   }
 }

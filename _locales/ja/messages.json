@@ -174,7 +174,7 @@
     "message": "フォルダが見つかりません"
   },
   "options_browseFolderLoading": {
-    "message": "読み込み中\u2026"
+    "message": "読み込み中…"
   },
   "options_browseFolderSelect": {
     "message": "選択"
@@ -1257,5 +1257,329 @@
         "content": "$1"
       }
     }
+  },
+  "contextMenu_addToQuickFolder": {
+    "message": "$1 に追加",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "contextMenu_category_ADD": {
+    "message": "ブックマークを追加"
+  },
+  "contextMenu_category_FAVICONS": {
+    "message": "Favicon ツール"
+  },
+  "contextMenu_category_LINKWARDEN": {
+    "message": "Linkwarden"
+  },
+  "contextMenu_category_TOOLS": {
+    "message": "ツールと同期"
+  },
+  "contextMenu_notifFolderMissing": {
+    "message": "選択したフォルダーは存在しません。クイックフォルダー設定を更新してください。"
+  },
+  "contextMenu_notifOpenAllEmpty": {
+    "message": "選択したフォルダーに開くブックマークがありません。"
+  },
+  "contextMenu_notifOpenAllNeedsConfirm": {
+    "message": "フォルダーに $1 個のタブがあります（しきい値: $2）。15秒以内に再度クリックして確認してください。",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_notifOpenAllSuccess": {
+    "message": "$2 から $1 個のタブを開きました",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_openAllFromFolder": {
+    "message": "フォルダーからすべて開く"
+  },
+  "contextMenu_saveToLinkwarden": {
+    "message": "Linkwarden に保存"
+  },
+  "contextMenu_saveToLinkwardenScreenshot": {
+    "message": "スクリーンショット付きで保存"
+  },
+  "contextMenu_searchBookmarks": {
+    "message": "ブックマークを検索"
+  },
+  "options_contextMenuConfigDesc": {
+    "message": "コンテキストメニューに表示する項目を切り替えます。ドラッグまたは矢印で順序を変更できます。"
+  },
+  "options_contextMenuConfigTitle": {
+    "message": "メニュー項目の表示と順序"
+  },
+  "options_contextMenuItem_ADD_OTHER": {
+    "message": "その他のブックマークに追加"
+  },
+  "options_contextMenuItem_ADD_TOOLBAR": {
+    "message": "ブックマークバーに追加"
+  },
+  "options_contextMenuItem_ADD_TO_FOLDER": {
+    "message": "フォルダーに追加...（メニュー）"
+  },
+  "options_contextMenuItem_COPY_FAVICON": {
+    "message": "Favicon URL をコピー"
+  },
+  "options_contextMenuItem_DOWNLOAD_FAVICON": {
+    "message": "Favicon をダウンロード"
+  },
+  "options_contextMenuItem_OPEN_ALL_FOLDER": {
+    "message": "フォルダーからすべて開く"
+  },
+  "options_contextMenuItem_QUICK_FOLDERS": {
+    "message": "クイックフォルダー"
+  },
+  "options_contextMenuItem_SEARCH_BOOKMARKS": {
+    "message": "ブックマークを検索"
+  },
+  "options_contextMenuItem_SWITCH_PROFILE": {
+    "message": "プロファイルを切り替え"
+  },
+  "options_contextMenuItem_SYNC_NOW": {
+    "message": "今すぐ同期"
+  },
+  "options_contextMenuOpenAllThresholdHint": {
+    "message": "フォルダーのブックマーク数がこの制限を超える場合、タブを開きすぎないよう確認（ダブルクリック）が求められます。"
+  },
+  "options_contextMenuOpenAllThresholdLabel": {
+    "message": "\"すべて開く\"の確認安全設定（タブ）"
+  },
+  "options_contextMenuResetBtn": {
+    "message": "デフォルトにリセット"
+  },
+  "options_linkwardenApiKey": {
+    "message": "API キー"
+  },
+  "options_linkwardenDefaultCollection": {
+    "message": "デフォルトコレクション"
+  },
+  "options_linkwardenDefaultTags": {
+    "message": "デフォルトタグ"
+  },
+  "options_linkwardenEnabled": {
+    "message": "Linkwarden を有効にする"
+  },
+  "options_linkwardenInstanceUrl": {
+    "message": "インスタンス URL"
+  },
+  "options_linkwardenIntro": {
+    "message": "Linkwarden インスタンスを設定して、コンテキストメニューから直接ブックマークを保存できます。"
+  },
+  "options_linkwardenTestConnection": {
+    "message": "接続テスト"
+  },
+  "options_linkwardenTitle": {
+    "message": "Linkwarden 連携"
+  },
+  "options_menu_showAsSubmenu": {
+    "message": "サブメニューとして表示"
+  },
+  "options_mobileAppAlert": {
+    "message": "<strong>Android ユーザーへの注意:</strong> Android 版 Firefox は拡張機能によるブックマークの直接同期をサポートしていません。コンパニオンアプリをご利用ください。"
+  },
+  "options_subTabMenuAdvanced": {
+    "message": "詳細と安全性"
+  },
+  "options_subTabMenuFolders": {
+    "message": "固定フォルダー"
+  },
+  "options_subTabMenuItems": {
+    "message": "表示と順序"
+  },
+  "options_subTabSync": {
+    "message": "同期"
+  },
+  "options_tabGit": {
+    "message": "Git"
+  },
+  "options_tabLinkwarden": {
+    "message": "Linkwarden"
+  },
+  "options_tabMenu": {
+    "message": "メニュー"
+  },
+  "help_contextMenuToolsDesc": {
+    "message": "ファイル → 設定で、ワンクリック追加用のクイックフォルダーを最大3つ設定できます。コンテキストメニューにはブックマーク検索も含まれています。"
+  },
+  "help_contextMenuToolsTitle": {
+    "message": "コンテキストメニューツール"
+  },
+  "help_website": {
+    "message": "ウェブサイト"
+  },
+  "options_contextMenuFoldersRefreshed": {
+    "message": "フォルダーリストを更新しました"
+  },
+  "options_contextMenuQuickFolder1": {
+    "message": "クイックフォルダー 1"
+  },
+  "options_contextMenuQuickFolder2": {
+    "message": "クイックフォルダー 2"
+  },
+  "options_contextMenuQuickFolder3": {
+    "message": "クイックフォルダー 3"
+  },
+  "options_contextMenuQuickFolderNone": {
+    "message": "(なし)"
+  },
+  "options_contextMenuQuickFoldersHint": {
+    "message": "コンテキストメニューにワンクリックエントリーとして表示するフォルダーを最大3つ選択できます。"
+  },
+  "options_contextMenuQuickFoldersLabel": {
+    "message": "クイックフォルダー"
+  },
+  "options_contextMenuRefreshFolders": {
+    "message": "フォルダーリストを更新"
+  },
+  "options_contextMenuToolsDesc": {
+    "message": "固定フォルダーアクション、全開き安全設定、メニュー項目の表示を設定します。"
+  },
+  "options_contextMenuToolsTitle": {
+    "message": "コンテキストメニューツール"
+  },
+  "options_onboardingInitPathAlreadyExists": {
+    "message": "パス \"$1\" には既にブックマークデータがあります。",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathBtn": {
+    "message": "パスを作成して初回同期を実行"
+  },
+  "options_onboardingInitPathHint": {
+    "message": "パス \"$1\" が存在しないか空です。フォルダー構造を作成し、現在のブックマークを初期ベースラインとしてアップロードします。",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathSuccess": {
+    "message": "パス \"$1\" を作成し、初回同期が完了しました。",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingWizardFirstSyncHint": {
+    "message": "初回同期はリポジトリの確認や初期設定のため、少し時間がかかる場合があります。"
+  },
+  "options_onboardingWizardSyncInProgress": {
+    "message": "バックグラウンドで作業中、お待ちください..."
+  },
+  "options_onboardingWizardTokenHelpIntro": {
+    "message": "パーソナルアクセストークン（PAT）により、GitSyncMarks が GitHub リポジトリにアクセスしてブックマークを同期できます。GitHub アカウント設定で作成します。"
+  },
+  "options_onboardingWizardTokenHelpScopes": {
+    "message": "トークンには <code>repo</code> スコープが必要です。リポジトリ（プライベート含む）への読み書きアクセスを許可します。トークンはパスワードと同様に扱ってください。"
+  },
+  "options_onboardingWizardTokenStep1": {
+    "message": "下のリンクをクリックして GitHub のトークン作成ページを開いてください。"
+  },
+  "options_onboardingWizardTokenStep2": {
+    "message": "トークンに名前（例: \"GitSyncMarks\"）を付け、必要に応じて有効期限を設定してください。"
+  },
+  "options_onboardingWizardTokenStep3": {
+    "message": "\"Scopes\" で <code>repo</code>（プライベートリポジトリの完全制御）をチェックしてください。"
+  },
+  "options_onboardingWizardTokenStep4": {
+    "message": "\"Generate token\" をクリックし、コピーして下のフィールドに貼り付けてください。"
+  },
+  "options_resetConfirmBtn": {
+    "message": "はい、すべてのデータを削除"
+  },
+  "options_settingsRegistryAliasNormalized": {
+    "message": "新しい設定プロファイルをエイリアスで作成: $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameConflict": {
+    "message": "クライアント名はリポジトリに既に存在します: $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameHint": {
+    "message": "必須。この名前はリポジトリ内のクライアント設定プロファイルを識別します。"
+  },
+  "options_settingsSyncClientNameLabel": {
+    "message": "クライアント名"
+  },
+  "options_settingsSyncClientNamePlaceholder": {
+    "message": "my-laptop"
+  },
+  "options_settingsSyncClientNameRequired": {
+    "message": "最初にクライアント名を入力してください。"
+  },
+  "options_settingsSyncCreateOwnBtn": {
+    "message": "自分のクライアント設定を作成"
+  },
+  "options_settingsSyncMigrationDone": {
+    "message": "レガシー設定プロファイルが読みやすいクライアント名に移行されました。"
+  },
+  "options_settingsSyncModeGlobalTemporarilyDisabled": {
+    "message": "グローバルモードは一時的に利用できません。プロファイルベースのクライアント設定をご利用ください。"
+  },
+  "popup_website": {
+    "message": "ウェブサイト"
+  },
+  "search_clearBtn": {
+    "message": "クリア"
+  },
+  "search_closeBtn": {
+    "message": "閉じる"
+  },
+  "search_inputPlaceholder": {
+    "message": "タイトルまたはURLを入力..."
+  },
+  "search_openBtn": {
+    "message": "開く"
+  },
+  "search_statusNoResults": {
+    "message": "ブックマークが見つかりません"
+  },
+  "search_statusResultCount": {
+    "message": "$1 件の結果",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "search_statusSearching": {
+    "message": "検索中..."
+  },
+  "search_subtitle": {
+    "message": "ローカルブックマークを検索し、一致するものを新しいタブで開きます。"
+  },
+  "search_title": {
+    "message": "ブックマーク検索"
+  },
+  "search_windowTitle": {
+    "message": "GitSyncMarks – ブックマーク検索"
   }
 }

@@ -174,7 +174,7 @@
     "message": "未找到文件夹"
   },
   "options_browseFolderLoading": {
-    "message": "加载中\u2026"
+    "message": "加载中…"
   },
   "options_browseFolderSelect": {
     "message": "选择"
@@ -1257,5 +1257,329 @@
         "content": "$1"
       }
     }
+  },
+  "contextMenu_addToQuickFolder": {
+    "message": "添加到 $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "contextMenu_category_ADD": {
+    "message": "添加书签"
+  },
+  "contextMenu_category_FAVICONS": {
+    "message": "Favicon 工具"
+  },
+  "contextMenu_category_LINKWARDEN": {
+    "message": "Linkwarden"
+  },
+  "contextMenu_category_TOOLS": {
+    "message": "工具与同步"
+  },
+  "contextMenu_notifFolderMissing": {
+    "message": "所选文件夹已不存在。请更新快速文件夹设置。"
+  },
+  "contextMenu_notifOpenAllEmpty": {
+    "message": "所选文件夹没有可打开的书签。"
+  },
+  "contextMenu_notifOpenAllNeedsConfirm": {
+    "message": "文件夹包含 $1 个标签页（阈值：$2）。请15秒内再次点击以确认。",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_notifOpenAllSuccess": {
+    "message": "从 $2 打开了 $1 个标签页",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_openAllFromFolder": {
+    "message": "从文件夹打开全部"
+  },
+  "contextMenu_saveToLinkwarden": {
+    "message": "保存到 Linkwarden"
+  },
+  "contextMenu_saveToLinkwardenScreenshot": {
+    "message": "保存并截图"
+  },
+  "contextMenu_searchBookmarks": {
+    "message": "搜索书签"
+  },
+  "options_contextMenuConfigDesc": {
+    "message": "切换项目以在右键菜单中显示。拖动或使用箭头更改顺序。"
+  },
+  "options_contextMenuConfigTitle": {
+    "message": "菜单项可见性和顺序"
+  },
+  "options_contextMenuItem_ADD_OTHER": {
+    "message": "添加到其他书签"
+  },
+  "options_contextMenuItem_ADD_TOOLBAR": {
+    "message": "添加到书签栏"
+  },
+  "options_contextMenuItem_ADD_TO_FOLDER": {
+    "message": "添加到文件夹...（菜单）"
+  },
+  "options_contextMenuItem_COPY_FAVICON": {
+    "message": "复制 Favicon URL"
+  },
+  "options_contextMenuItem_DOWNLOAD_FAVICON": {
+    "message": "下载 Favicon"
+  },
+  "options_contextMenuItem_OPEN_ALL_FOLDER": {
+    "message": "从文件夹打开全部"
+  },
+  "options_contextMenuItem_QUICK_FOLDERS": {
+    "message": "固定快速文件夹"
+  },
+  "options_contextMenuItem_SEARCH_BOOKMARKS": {
+    "message": "搜索书签"
+  },
+  "options_contextMenuItem_SWITCH_PROFILE": {
+    "message": "切换配置文件"
+  },
+  "options_contextMenuItem_SYNC_NOW": {
+    "message": "立即同步"
+  },
+  "options_contextMenuOpenAllThresholdHint": {
+    "message": "如果文件夹的书签数超过此限制，打开前需要确认（双击）以防止打开太多标签页。"
+  },
+  "options_contextMenuOpenAllThresholdLabel": {
+    "message": "“打开全部”确认安全设置（标签页）"
+  },
+  "options_contextMenuResetBtn": {
+    "message": "重置为默认"
+  },
+  "options_linkwardenApiKey": {
+    "message": "API 密钥"
+  },
+  "options_linkwardenDefaultCollection": {
+    "message": "默认集合"
+  },
+  "options_linkwardenDefaultTags": {
+    "message": "默认标签"
+  },
+  "options_linkwardenEnabled": {
+    "message": "启用 Linkwarden"
+  },
+  "options_linkwardenInstanceUrl": {
+    "message": "实例 URL"
+  },
+  "options_linkwardenIntro": {
+    "message": "配置您的 Linkwarden 实例，以便直接从右键菜单保存书签。"
+  },
+  "options_linkwardenTestConnection": {
+    "message": "测试连接"
+  },
+  "options_linkwardenTitle": {
+    "message": "Linkwarden 集成"
+  },
+  "options_menu_showAsSubmenu": {
+    "message": "显示为子菜单"
+  },
+  "options_mobileAppAlert": {
+    "message": "<strong>Android 用户注意：</strong>Android 版 Firefox 不支持通过扩展直接同步书签。您必须使用配套应用。"
+  },
+  "options_subTabMenuAdvanced": {
+    "message": "高级与安全"
+  },
+  "options_subTabMenuFolders": {
+    "message": "固定文件夹"
+  },
+  "options_subTabMenuItems": {
+    "message": "可见性与顺序"
+  },
+  "options_subTabSync": {
+    "message": "同步"
+  },
+  "options_tabGit": {
+    "message": "Git"
+  },
+  "options_tabLinkwarden": {
+    "message": "Linkwarden"
+  },
+  "options_tabMenu": {
+    "message": "菜单"
+  },
+  "help_contextMenuToolsDesc": {
+    "message": "在文件 → 设置中，您可以固定最多3个快速文件夹用于一键添加，并配置打开全部的确认阈值。右键菜单还包含书签搜索功能。"
+  },
+  "help_contextMenuToolsTitle": {
+    "message": "右键菜单工具"
+  },
+  "help_website": {
+    "message": "网站"
+  },
+  "options_contextMenuFoldersRefreshed": {
+    "message": "文件夹列表已更新"
+  },
+  "options_contextMenuQuickFolder1": {
+    "message": "快速文件夹 1"
+  },
+  "options_contextMenuQuickFolder2": {
+    "message": "快速文件夹 2"
+  },
+  "options_contextMenuQuickFolder3": {
+    "message": "快速文件夹 3"
+  },
+  "options_contextMenuQuickFolderNone": {
+    "message": "（无）"
+  },
+  "options_contextMenuQuickFoldersHint": {
+    "message": "选择最多三个文件夹，作为右键菜单中的一键添加条目。"
+  },
+  "options_contextMenuQuickFoldersLabel": {
+    "message": "固定快速文件夹"
+  },
+  "options_contextMenuRefreshFolders": {
+    "message": "刷新文件夹列表"
+  },
+  "options_contextMenuToolsDesc": {
+    "message": "配置固定文件夹操作、打开全部安全设置和菜单项可见性。"
+  },
+  "options_contextMenuToolsTitle": {
+    "message": "右键菜单工具"
+  },
+  "options_onboardingInitPathAlreadyExists": {
+    "message": "路径“$1”已包含书签数据。",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathBtn": {
+    "message": "创建路径并运行首次同步"
+  },
+  "options_onboardingInitPathHint": {
+    "message": "路径“$1”缺失或为空。这将创建文件夹结构并上传您当前的书签作为初始基线。",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathSuccess": {
+    "message": "路径“$1”已创建，首次同步已完成。",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingWizardFirstSyncHint": {
+    "message": "首次同步可能需要更长时间，因为需要进行仓库检查和初始配置。"
+  },
+  "options_onboardingWizardSyncInProgress": {
+    "message": "正在后台工作，请稍候..."
+  },
+  "options_onboardingWizardTokenHelpIntro": {
+    "message": "个人访问令牌 (PAT) 允许 GitSyncMarks 访问您的 GitHub 仓库来同步书签。您可以在 GitHub 账户设置中创建它。"
+  },
+  "options_onboardingWizardTokenHelpScopes": {
+    "message": "令牌需要 <code>repo</code> 范围。这将授予对您的仓库（包括私有仓库）的读写访问权。请像对待密码一样保管令牌。"
+  },
+  "options_onboardingWizardTokenStep1": {
+    "message": "点击下方链接打开 GitHub 令牌创建页面。"
+  },
+  "options_onboardingWizardTokenStep2": {
+    "message": "为令牌起个名称（例如“GitSyncMarks”），并根据需要设置过期时间。"
+  },
+  "options_onboardingWizardTokenStep3": {
+    "message": "在“Scopes”下勾选 <code>repo</code>（完全控制私有仓库）。"
+  },
+  "options_onboardingWizardTokenStep4": {
+    "message": "点击“Generate token”，复制并粘贴到下方字段。"
+  },
+  "options_resetConfirmBtn": {
+    "message": "是的，删除所有数据"
+  },
+  "options_settingsRegistryAliasNormalized": {
+    "message": "已使用别名创建新设置配置文件：$1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameConflict": {
+    "message": "客户端名称已存在于仓库中：$1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameHint": {
+    "message": "必填。此名称用于识别您在仓库中的客户端设置配置文件。"
+  },
+  "options_settingsSyncClientNameLabel": {
+    "message": "客户端名称"
+  },
+  "options_settingsSyncClientNamePlaceholder": {
+    "message": "my-laptop"
+  },
+  "options_settingsSyncClientNameRequired": {
+    "message": "请先输入客户端名称。"
+  },
+  "options_settingsSyncCreateOwnBtn": {
+    "message": "创建我的客户端设置"
+  },
+  "options_settingsSyncMigrationDone": {
+    "message": "旧版设置配置文件已迁移到可读的客户端名称。"
+  },
+  "options_settingsSyncModeGlobalTemporarilyDisabled": {
+    "message": "全局模式暂时不可用。请使用基于配置文件的客户端设置。"
+  },
+  "popup_website": {
+    "message": "网站"
+  },
+  "search_clearBtn": {
+    "message": "清除"
+  },
+  "search_closeBtn": {
+    "message": "关闭"
+  },
+  "search_inputPlaceholder": {
+    "message": "输入标题或 URL..."
+  },
+  "search_openBtn": {
+    "message": "打开"
+  },
+  "search_statusNoResults": {
+    "message": "未找到书签"
+  },
+  "search_statusResultCount": {
+    "message": "$1 个结果",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "search_statusSearching": {
+    "message": "搜索中..."
+  },
+  "search_subtitle": {
+    "message": "搜索本地书签并在新标签页中打开匹配项。"
+  },
+  "search_title": {
+    "message": "书签搜索"
+  },
+  "search_windowTitle": {
+    "message": "GitSyncMarks – 书签搜索"
   }
 }

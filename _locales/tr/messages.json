@@ -174,7 +174,7 @@
     "message": "Klasör bulunamadı"
   },
   "options_browseFolderLoading": {
-    "message": "Yükleniyor\u2026"
+    "message": "Yükleniyor…"
   },
   "options_browseFolderSelect": {
     "message": "Seç"
@@ -1257,5 +1257,329 @@
         "content": "$1"
       }
     }
+  },
+  "contextMenu_addToQuickFolder": {
+    "message": "$1 klasörüne ekle",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "contextMenu_category_ADD": {
+    "message": "Yer İmi Ekle"
+  },
+  "contextMenu_category_FAVICONS": {
+    "message": "Favicon Araçları"
+  },
+  "contextMenu_category_LINKWARDEN": {
+    "message": "Linkwarden"
+  },
+  "contextMenu_category_TOOLS": {
+    "message": "Araçlar ve Senkronizasyon"
+  },
+  "contextMenu_notifFolderMissing": {
+    "message": "Seçilen klasör artık mevcut değil. Hızlı klasör ayarlarınızı güncelleyin."
+  },
+  "contextMenu_notifOpenAllEmpty": {
+    "message": "Seçilen klasörde açılacak yer imi yok."
+  },
+  "contextMenu_notifOpenAllNeedsConfirm": {
+    "message": "Klasör $1 sekme içeriyor (eşik: $2). Onaylamak için 15 saniye içinde tekrar tıklayın.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_notifOpenAllSuccess": {
+    "message": "$2 klasöründen $1 sekme açıldı",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_openAllFromFolder": {
+    "message": "Klasörden tümünü aç"
+  },
+  "contextMenu_saveToLinkwarden": {
+    "message": "Linkwarden'a kaydet"
+  },
+  "contextMenu_saveToLinkwardenScreenshot": {
+    "message": "Ekran görüntüsüyle kaydet"
+  },
+  "contextMenu_searchBookmarks": {
+    "message": "Yer imlerini ara"
+  },
+  "options_contextMenuConfigDesc": {
+    "message": "Bağlam menüsünde gösterilecek öğeleri açın/kapatın. Sırayı değiştirmek için sürükleyin veya okları kullanın."
+  },
+  "options_contextMenuConfigTitle": {
+    "message": "Menü öğesi görünürlüğü ve sırası"
+  },
+  "options_contextMenuItem_ADD_OTHER": {
+    "message": "Diğer yer imlerine ekle"
+  },
+  "options_contextMenuItem_ADD_TOOLBAR": {
+    "message": "Yer imi çubuğuna ekle"
+  },
+  "options_contextMenuItem_ADD_TO_FOLDER": {
+    "message": "Klasöre ekle... (Menü)"
+  },
+  "options_contextMenuItem_COPY_FAVICON": {
+    "message": "Favicon URL'sini kopyala"
+  },
+  "options_contextMenuItem_DOWNLOAD_FAVICON": {
+    "message": "Favicon'u indir"
+  },
+  "options_contextMenuItem_OPEN_ALL_FOLDER": {
+    "message": "Klasörden tümünü aç"
+  },
+  "options_contextMenuItem_QUICK_FOLDERS": {
+    "message": "Sabitlenmiş hızlı klasörler"
+  },
+  "options_contextMenuItem_SEARCH_BOOKMARKS": {
+    "message": "Yer imlerini ara"
+  },
+  "options_contextMenuItem_SWITCH_PROFILE": {
+    "message": "Profil değiştir"
+  },
+  "options_contextMenuItem_SYNC_NOW": {
+    "message": "Şimdi senkronize et"
+  },
+  "options_contextMenuOpenAllThresholdHint": {
+    "message": "Bir klasörde bu sınırdan fazla yer imi varsa, çok fazla sekme açmayı önlemek için açmadan önce onay (çift tıklama) istenecektir."
+  },
+  "options_contextMenuOpenAllThresholdLabel": {
+    "message": "\"Tümünü aç\" için onay güvenliği (sekmeler)"
+  },
+  "options_contextMenuResetBtn": {
+    "message": "Varsayılana sıfırla"
+  },
+  "options_linkwardenApiKey": {
+    "message": "API Anahtarı"
+  },
+  "options_linkwardenDefaultCollection": {
+    "message": "Varsayılan koleksiyon"
+  },
+  "options_linkwardenDefaultTags": {
+    "message": "Varsayılan etiketler"
+  },
+  "options_linkwardenEnabled": {
+    "message": "Linkwarden'ı etkinleştir"
+  },
+  "options_linkwardenInstanceUrl": {
+    "message": "Örnek URL"
+  },
+  "options_linkwardenIntro": {
+    "message": "Bağlam menüsünden doğrudan yer imi kaydetmek için Linkwarden örneğinizi yapılandırın."
+  },
+  "options_linkwardenTestConnection": {
+    "message": "Bağlantıyı test et"
+  },
+  "options_linkwardenTitle": {
+    "message": "Linkwarden Entegrasyonu"
+  },
+  "options_menu_showAsSubmenu": {
+    "message": "Alt menü olarak göster"
+  },
+  "options_mobileAppAlert": {
+    "message": "<strong>Android kullanıcıları için not:</strong> Android için Firefox, uzantılar aracılığıyla doğrudan yer imi senkronizasyonunu desteklemiyor. Yardımcı uygulamayı kullanmalısınız."
+  },
+  "options_subTabMenuAdvanced": {
+    "message": "Gelişmiş ve Güvenlik"
+  },
+  "options_subTabMenuFolders": {
+    "message": "Sabitlenmiş klasörler"
+  },
+  "options_subTabMenuItems": {
+    "message": "Görünürlük ve sıra"
+  },
+  "options_subTabSync": {
+    "message": "Senkronizasyon"
+  },
+  "options_tabGit": {
+    "message": "Git"
+  },
+  "options_tabLinkwarden": {
+    "message": "Linkwarden"
+  },
+  "options_tabMenu": {
+    "message": "Menü"
+  },
+  "help_contextMenuToolsDesc": {
+    "message": "Dosyalar → Ayarlar'da tek tıkla ekleme için 3 hızlı klasör sabitleyebilir ve Tümünü Aç onay eşiğini yapılandırabilirsiniz. Bağlam menüsü ayrıca Yer İmi Arama içerir."
+  },
+  "help_contextMenuToolsTitle": {
+    "message": "Bağlam menüsü araçları"
+  },
+  "help_website": {
+    "message": "Web sitesi"
+  },
+  "options_contextMenuFoldersRefreshed": {
+    "message": "Klasör listesi güncellendi"
+  },
+  "options_contextMenuQuickFolder1": {
+    "message": "Hızlı klasör 1"
+  },
+  "options_contextMenuQuickFolder2": {
+    "message": "Hızlı klasör 2"
+  },
+  "options_contextMenuQuickFolder3": {
+    "message": "Hızlı klasör 3"
+  },
+  "options_contextMenuQuickFolderNone": {
+    "message": "(yok)"
+  },
+  "options_contextMenuQuickFoldersHint": {
+    "message": "Bağlam menüsünde tek tıkla girdi olarak gösterilecek en fazla üç klasör seçin."
+  },
+  "options_contextMenuQuickFoldersLabel": {
+    "message": "Sabitlenmiş hızlı klasörler"
+  },
+  "options_contextMenuRefreshFolders": {
+    "message": "Klasör listesini yenile"
+  },
+  "options_contextMenuToolsDesc": {
+    "message": "Sabitlenmiş klasör eylemlerini, tümünü açma güvenliğini ve menü öğesi görünürlüğünü yapılandırın."
+  },
+  "options_contextMenuToolsTitle": {
+    "message": "Bağlam menüsü araçları"
+  },
+  "options_onboardingInitPathAlreadyExists": {
+    "message": "\"$1\" yolu zaten yer imi verisi içeriyor.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathBtn": {
+    "message": "Yol oluştur ve ilk senkronizasyonu başlat"
+  },
+  "options_onboardingInitPathHint": {
+    "message": "\"$1\" yolu eksik veya boş. Klasör yapısı oluşturulacak ve mevcut yer imleriniz temel olarak yüklenecek.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathSuccess": {
+    "message": "\"$1\" yolu oluşturuldu ve ilk senkronizasyon tamamlandı.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingWizardFirstSyncHint": {
+    "message": "İlk senkronizasyon, depo kontrolleri ve başlangıç kurulumu nedeniyle biraz daha uzun sürebilir."
+  },
+  "options_onboardingWizardSyncInProgress": {
+    "message": "Arka planda çalışılıyor, lütfen bekleyin..."
+  },
+  "options_onboardingWizardTokenHelpIntro": {
+    "message": "Kişisel Erişim Anahtarı (PAT), GitSyncMarks'ın yer imlerini senkronize etmek için GitHub deponuza erişmesini sağlar. GitHub hesap ayarlarınızda oluşturursunuz."
+  },
+  "options_onboardingWizardTokenHelpScopes": {
+    "message": "Anahtar <code>repo</code> kapsamına ihtiyaç duyar. Bu, depolarınıza (özel dahil) okuma/yazma erişimi verir. Anahtarı bir şifre gibi koruyun."
+  },
+  "options_onboardingWizardTokenStep1": {
+    "message": "GitHub anahtar oluşturma sayfasını açmak için aşağıdaki bağlantıya tıklayın."
+  },
+  "options_onboardingWizardTokenStep2": {
+    "message": "Anahtara bir ad verin (ör. \"GitSyncMarks\") ve isterseniz son kullanma tarihi belirleyin."
+  },
+  "options_onboardingWizardTokenStep3": {
+    "message": "\"Scopes\" altında <code>repo</code>'yu (özel depolar üzerinde tam kontrol) işaretleyin."
+  },
+  "options_onboardingWizardTokenStep4": {
+    "message": "\"Generate token\"a tıklayın, kopyalayın ve aşağıdaki alana yapıştırın."
+  },
+  "options_resetConfirmBtn": {
+    "message": "Evet, tüm verileri sil"
+  },
+  "options_settingsRegistryAliasNormalized": {
+    "message": "Yeni ayar profili takma adla oluşturuldu: $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameConflict": {
+    "message": "İstemci adı depoda zaten mevcut: $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameHint": {
+    "message": "Gerekli. Bu ad, depdaki istemci ayar profilinizi tanımlar."
+  },
+  "options_settingsSyncClientNameLabel": {
+    "message": "İstemci adı"
+  },
+  "options_settingsSyncClientNamePlaceholder": {
+    "message": "dizüstü-bilgisayarım"
+  },
+  "options_settingsSyncClientNameRequired": {
+    "message": "Lütfen önce bir istemci adı girin."
+  },
+  "options_settingsSyncCreateOwnBtn": {
+    "message": "İstemci ayarımı oluştur"
+  },
+  "options_settingsSyncMigrationDone": {
+    "message": "Eski ayar profilleri okunabilir istemci adlarına taşındı."
+  },
+  "options_settingsSyncModeGlobalTemporarilyDisabled": {
+    "message": "Genel mod geçici olarak kullanılamıyor. Profil tabanlı istemci ayarlarını kullanın."
+  },
+  "popup_website": {
+    "message": "Web sitesi"
+  },
+  "search_clearBtn": {
+    "message": "Temizle"
+  },
+  "search_closeBtn": {
+    "message": "Kapat"
+  },
+  "search_inputPlaceholder": {
+    "message": "Başlık veya URL yazın..."
+  },
+  "search_openBtn": {
+    "message": "Aç"
+  },
+  "search_statusNoResults": {
+    "message": "Yer imi bulunamadı"
+  },
+  "search_statusResultCount": {
+    "message": "$1 sonuç",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "search_statusSearching": {
+    "message": "Aranıyor..."
+  },
+  "search_subtitle": {
+    "message": "Yerel yer imlerini arayın ve eşleşmeleri yeni sekmede açın."
+  },
+  "search_title": {
+    "message": "Yer İmi Arama"
+  },
+  "search_windowTitle": {
+    "message": "GitSyncMarks – Yer İmi Arama"
   }
 }

@@ -174,7 +174,7 @@
     "message": "Aucun dossier trouvé"
   },
   "options_browseFolderLoading": {
-    "message": "Chargement\u2026"
+    "message": "Chargement…"
   },
   "options_browseFolderSelect": {
     "message": "Sélectionner"
@@ -1257,5 +1257,329 @@
         "content": "$1"
       }
     }
+  },
+  "contextMenu_addToQuickFolder": {
+    "message": "Ajouter à $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "contextMenu_category_ADD": {
+    "message": "Ajouter un marque-page"
+  },
+  "contextMenu_category_FAVICONS": {
+    "message": "Outils Favicon"
+  },
+  "contextMenu_category_LINKWARDEN": {
+    "message": "Linkwarden"
+  },
+  "contextMenu_category_TOOLS": {
+    "message": "Outils et Synchronisation"
+  },
+  "contextMenu_notifFolderMissing": {
+    "message": "Le dossier sélectionné n'existe plus. Actualisez vos paramètres de dossiers rapides."
+  },
+  "contextMenu_notifOpenAllEmpty": {
+    "message": "Le dossier sélectionné ne contient aucun marque-page."
+  },
+  "contextMenu_notifOpenAllNeedsConfirm": {
+    "message": "Le dossier contient $1 onglets (seuil : $2). Cliquez à nouveau dans les 15 secondes pour confirmer.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_notifOpenAllSuccess": {
+    "message": "$1 onglet(s) ouverts depuis $2",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_openAllFromFolder": {
+    "message": "Tout ouvrir depuis le dossier"
+  },
+  "contextMenu_saveToLinkwarden": {
+    "message": "Enregistrer dans Linkwarden"
+  },
+  "contextMenu_saveToLinkwardenScreenshot": {
+    "message": "Enregistrer avec capture d'écran"
+  },
+  "contextMenu_searchBookmarks": {
+    "message": "Rechercher des marque-pages"
+  },
+  "options_contextMenuConfigDesc": {
+    "message": "Activez ou désactivez les éléments du menu contextuel. Glissez ou utilisez les flèches pour modifier l'ordre."
+  },
+  "options_contextMenuConfigTitle": {
+    "message": "Visibilité et ordre des éléments"
+  },
+  "options_contextMenuItem_ADD_OTHER": {
+    "message": "Ajouter aux Autres marque-pages"
+  },
+  "options_contextMenuItem_ADD_TOOLBAR": {
+    "message": "Ajouter à la barre de marque-pages"
+  },
+  "options_contextMenuItem_ADD_TO_FOLDER": {
+    "message": "Ajouter au dossier... (Menu)"
+  },
+  "options_contextMenuItem_COPY_FAVICON": {
+    "message": "Copier l'URL du Favicon"
+  },
+  "options_contextMenuItem_DOWNLOAD_FAVICON": {
+    "message": "Télécharger le Favicon"
+  },
+  "options_contextMenuItem_OPEN_ALL_FOLDER": {
+    "message": "Tout ouvrir depuis le dossier"
+  },
+  "options_contextMenuItem_QUICK_FOLDERS": {
+    "message": "Dossiers rapides épinglés"
+  },
+  "options_contextMenuItem_SEARCH_BOOKMARKS": {
+    "message": "Rechercher des marque-pages"
+  },
+  "options_contextMenuItem_SWITCH_PROFILE": {
+    "message": "Changer de profil"
+  },
+  "options_contextMenuItem_SYNC_NOW": {
+    "message": "Synchroniser maintenant"
+  },
+  "options_contextMenuOpenAllThresholdHint": {
+    "message": "Si un dossier a plus de marque-pages que cette limite, vous devrez confirmer (double-clic) avant l'ouverture pour éviter d'ouvrir trop d'onglets."
+  },
+  "options_contextMenuOpenAllThresholdLabel": {
+    "message": "Sécurité de confirmation pour \"Tout ouvrir\" (onglets)"
+  },
+  "options_contextMenuResetBtn": {
+    "message": "Réinitialiser"
+  },
+  "options_linkwardenApiKey": {
+    "message": "Clé API"
+  },
+  "options_linkwardenDefaultCollection": {
+    "message": "Collection par défaut"
+  },
+  "options_linkwardenDefaultTags": {
+    "message": "Étiquettes par défaut"
+  },
+  "options_linkwardenEnabled": {
+    "message": "Activer Linkwarden"
+  },
+  "options_linkwardenInstanceUrl": {
+    "message": "URL de l'instance"
+  },
+  "options_linkwardenIntro": {
+    "message": "Configurez votre instance Linkwarden pour enregistrer des marque-pages directement depuis le menu contextuel."
+  },
+  "options_linkwardenTestConnection": {
+    "message": "Tester la connexion"
+  },
+  "options_linkwardenTitle": {
+    "message": "Intégration Linkwarden"
+  },
+  "options_menu_showAsSubmenu": {
+    "message": "Afficher comme sous-menu"
+  },
+  "options_mobileAppAlert": {
+    "message": "<strong>Note pour les utilisateurs Android :</strong> Firefox pour Android ne prend pas en charge la synchronisation directe des marque-pages via les extensions. Vous devez utiliser l'application compagnon."
+  },
+  "options_subTabMenuAdvanced": {
+    "message": "Avancé et Sécurité"
+  },
+  "options_subTabMenuFolders": {
+    "message": "Dossiers épinglés"
+  },
+  "options_subTabMenuItems": {
+    "message": "Visibilité et ordre"
+  },
+  "options_subTabSync": {
+    "message": "Synchronisation"
+  },
+  "options_tabGit": {
+    "message": "Git"
+  },
+  "options_tabLinkwarden": {
+    "message": "Linkwarden"
+  },
+  "options_tabMenu": {
+    "message": "Menu"
+  },
+  "help_contextMenuToolsDesc": {
+    "message": "Dans Fichiers → Paramètres, vous pouvez épingler jusqu'à 3 dossiers pour des ajouts en un clic et configurer le seuil de confirmation Tout ouvrir. Le menu contextuel inclut aussi la Recherche de marque-pages."
+  },
+  "help_contextMenuToolsTitle": {
+    "message": "Outils du menu contextuel"
+  },
+  "help_website": {
+    "message": "Site web"
+  },
+  "options_contextMenuFoldersRefreshed": {
+    "message": "Liste des dossiers actualisée"
+  },
+  "options_contextMenuQuickFolder1": {
+    "message": "Dossier rapide 1"
+  },
+  "options_contextMenuQuickFolder2": {
+    "message": "Dossier rapide 2"
+  },
+  "options_contextMenuQuickFolder3": {
+    "message": "Dossier rapide 3"
+  },
+  "options_contextMenuQuickFolderNone": {
+    "message": "(aucun)"
+  },
+  "options_contextMenuQuickFoldersHint": {
+    "message": "Choisissez jusqu'à trois dossiers affichés comme entrées en un clic dans le menu contextuel."
+  },
+  "options_contextMenuQuickFoldersLabel": {
+    "message": "Dossiers rapides épinglés"
+  },
+  "options_contextMenuRefreshFolders": {
+    "message": "Actualiser la liste des dossiers"
+  },
+  "options_contextMenuToolsDesc": {
+    "message": "Configurez les actions des dossiers épinglés, la sécurité Tout ouvrir et la visibilité des éléments du menu."
+  },
+  "options_contextMenuToolsTitle": {
+    "message": "Outils du menu contextuel"
+  },
+  "options_onboardingInitPathAlreadyExists": {
+    "message": "Le chemin \"$1\" contient déjà des données de marque-pages.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathBtn": {
+    "message": "Créer le chemin et lancer la première synchronisation"
+  },
+  "options_onboardingInitPathHint": {
+    "message": "Le chemin \"$1\" est manquant ou vide. Cela créera la structure des dossiers et téléchargera vos marque-pages actuels comme base.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathSuccess": {
+    "message": "Chemin \"$1\" créé et première synchronisation terminée.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingWizardFirstSyncHint": {
+    "message": "La première synchronisation peut prendre un peu plus de temps pendant les vérifications du dépôt et la configuration initiale."
+  },
+  "options_onboardingWizardSyncInProgress": {
+    "message": "Travail en arrière-plan, veuillez patienter..."
+  },
+  "options_onboardingWizardTokenHelpIntro": {
+    "message": "Un jeton d'accès personnel (PAT) permet à GitSyncMarks d'accéder à votre dépôt GitHub pour synchroniser les marque-pages. Vous le créez dans les paramètres de votre compte GitHub."
+  },
+  "options_onboardingWizardTokenHelpScopes": {
+    "message": "Le jeton a besoin de la portée <code>repo</code>. Cela accorde un accès en lecture/écriture à vos dépôts (y compris privés) et permet à l'extension de créer un dépôt automatiquement. Traitez le jeton comme un mot de passe."
+  },
+  "options_onboardingWizardTokenStep1": {
+    "message": "Cliquez sur le lien ci-dessous pour ouvrir la page de création de jetons GitHub."
+  },
+  "options_onboardingWizardTokenStep2": {
+    "message": "Donnez un nom au jeton (ex. \"GitSyncMarks\") et définissez une date d'expiration si vous le souhaitez."
+  },
+  "options_onboardingWizardTokenStep3": {
+    "message": "Sous \"Scopes\", cochez <code>repo</code> (contrôle total des dépôts privés)."
+  },
+  "options_onboardingWizardTokenStep4": {
+    "message": "Cliquez sur \"Generate token\", copiez-le et collez-le dans le champ ci-dessous."
+  },
+  "options_resetConfirmBtn": {
+    "message": "Oui, supprimer toutes les données"
+  },
+  "options_settingsRegistryAliasNormalized": {
+    "message": "Nouveau profil de paramètres créé avec l'alias : $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameConflict": {
+    "message": "Le nom du client existe déjà dans le dépôt : $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameHint": {
+    "message": "Obligatoire. Ce nom identifie votre profil de paramètres client dans le dépôt."
+  },
+  "options_settingsSyncClientNameLabel": {
+    "message": "Nom du client"
+  },
+  "options_settingsSyncClientNamePlaceholder": {
+    "message": "mon-portable"
+  },
+  "options_settingsSyncClientNameRequired": {
+    "message": "Veuillez d'abord saisir un nom de client."
+  },
+  "options_settingsSyncCreateOwnBtn": {
+    "message": "Créer mon paramètre client"
+  },
+  "options_settingsSyncMigrationDone": {
+    "message": "Les profils de paramètres hérités ont été migrés vers des noms de clients lisibles."
+  },
+  "options_settingsSyncModeGlobalTemporarilyDisabled": {
+    "message": "Le mode global est temporairement indisponible. Utilisez les paramètres clients par profil."
+  },
+  "popup_website": {
+    "message": "Site web"
+  },
+  "search_clearBtn": {
+    "message": "Effacer"
+  },
+  "search_closeBtn": {
+    "message": "Fermer"
+  },
+  "search_inputPlaceholder": {
+    "message": "Tapez un titre ou une URL..."
+  },
+  "search_openBtn": {
+    "message": "Ouvrir"
+  },
+  "search_statusNoResults": {
+    "message": "Aucun marque-page trouvé"
+  },
+  "search_statusResultCount": {
+    "message": "$1 résultat(s)",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "search_statusSearching": {
+    "message": "Recherche en cours..."
+  },
+  "search_subtitle": {
+    "message": "Recherchez des marque-pages locaux et ouvrez les résultats dans un nouvel onglet."
+  },
+  "search_title": {
+    "message": "Recherche de marque-pages"
+  },
+  "search_windowTitle": {
+    "message": "GitSyncMarks – Recherche de marque-pages"
   }
 }
