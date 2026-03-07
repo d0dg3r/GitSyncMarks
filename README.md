@@ -25,7 +25,7 @@
 
 ## Features
 
-### 🚀 Core Sync & Workflow
+### Core Sync & Workflow
 - **Bidirectional & Automatic**: Syncs bookmarks seamlessly between GitHub and your browsers (Chrome, Firefox, Edge, Brave).
 - **Three-Way Merge**: Industrial-grade reliability. Handles concurrent changes across multiple devices automatically.
 - **Guided Onboarding**: A step-by-Step wizard leads you from token creation to your first successful sync.
@@ -37,7 +37,7 @@
 - **You Own the Data**: Your bookmarks are stored in *your* repository, under *your* control.
 - **Human-Readable Storage**: Every bookmark is a separate, editable JSON file—perfect for versioning and manual audits.
 
-### 🔗 Linkwarden Synergy
+### Linkwarden Synergy
 Save any page or link directly to your **[Linkwarden](https://linkwarden.app/)** instance.
 - **Auto-Screenshots**: Automatically captures and uploads a viewport screenshot on save.
 - **Collection Sync**: Seamlessly pull Linkwarden collections into your browser and push them to Git.
@@ -49,12 +49,12 @@ A dedicated, lightning-fast search interface accessible from anywhere via the ex
 - **Theme Support**: Beautifully crafted light and dark modes.
 - **Keyboard Power**: Navigate and select results entirely from your keyboard.
 
-### 📱 Companion App
+### Companion App
 Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/d0dg3r/GitSyncMarks-App)**.
 - **Cross-Platform**: Native apps for **Android, iOS, Windows, macOS, and Linux**.
 - **Direct Access**: Connects directly to your GitHub repository for mobile management.
 
-### 🛠️ Developer & Power User Tools
+### Developer & Power User Tools
 - **Automation Ready**: Use provided GitHub Actions (`add-bookmark.yml`) or CLI tools to add bookmarks programmatically.
 - **GitHub Repos Folder**: Automatically keep a folder of all your own repositories synced as bookmarks.
 - **Auto-Generated Files**: Every sync generates a `README.md` (index), `bookmarks.html` (netscape), `feed.xml` (RSS), and `dashy-conf.yml`.
