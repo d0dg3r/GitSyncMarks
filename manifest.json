@@ -16,16 +16,11 @@
     "scripting",
     "downloads"
   ],
-  "optional_permissions": [
-    "https://*/*",
-    "http://*/*"
-  ],
   "host_permissions": [
     "https://api.github.com/*"
   ],
   "optional_host_permissions": [
-    "https://*/*",
-    "http://*/*"
+    "<all_urls>"
   ],
   "background": {
     "service_worker": "background.js",
