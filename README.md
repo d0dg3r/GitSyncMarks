@@ -99,9 +99,9 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 
 ### 2. GitHub Configuration
 1. Create a **GitHub Token**:
+   - **Fine-grained PAT (Recommended)**: For repository-specific access. Requires `Contents: Read/Write` and `Metadata: Read`. *Use this if you want "App-like" restricted permissions.*
    - **Classic PAT**: Requires the `repo` scope.
-   - **Fine-grained PAT**: Requires `Contents: Read/Write` and `Metadata: Read`.
-   - **GitHub App**: Installation tokens are fully supported.
+   - **GitHub App**: Installation tokens are supported (note: these typically expire after 1 hour).
 2. Open extension settings, enter your token, owner, and repository name.
 3. Use the **Setup Wizard** (Help -> Getting Started) for a guided walkthrough.
 
