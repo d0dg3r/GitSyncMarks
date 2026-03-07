@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="store-assets/marquee_promo_tile.png" width="960" alt="GitSyncMarks — Effortless Bookmark Sync via GitHub">
+  <img src="store-assets/marquee_promo_tile_linkwarden.png" width="960" alt="GitSyncMarks — Effortless Bookmark Sync via GitHub & Linkwarden Integration">
 </p>
 
 <p align="center">
@@ -34,19 +34,25 @@ A dedicated, lightning-fast search interface accessible from anywhere.
 ### 🔄 Three-Way Merge
 Industrial-grade reliability. If you change bookmarks on two devices at once, GitSyncMarks handles the merge automatically whenever possible—no manual "fixing" required.
 
+### 🚀 Guided Onboarding Wizard
+Perfect for new users. GitSyncMarks walks you through the entire setup process.
+- **Zero to Sync**: Step-by-step guidance for tokens, repository selection, and first sync.
+- **Auto-Validation**: Instant feedback on your GitHub connection and folder paths.
+- **Flexible Flow**: Restart the wizard any time from the help or connection settings.
+
 ---
 
 ## 📸 Visual Tour
 
-| **1. GitHub Connection** | **2. Smart Search** | **3. Linkwarden Tab** |
+| **1. Guided Onboarding** | **2. Smart Search** | **3. Linkwarden Tab** |
 | :---: | :---: | :---: |
-| <img src="store-assets/en/chrome-1-connection.png" width="280"> | <img src="store-assets/en/chrome-5-search.png" width="280"> | <img src="store-assets/en/chrome-4-linkwarden.png" width="280"> |
-| *Easy Onboarding* | *Lightning Fast Search* | *Deep Integration* |
+| <img src="store-assets/en/chrome-8-wizard-welcome.png" width="280"> | <img src="store-assets/en/chrome-5-search.png" width="280"> | <img src="store-assets/en/chrome-4-linkwarden.png" width="280"> |
+| *Easy Step-by-Step* | *Lightning Fast Search* | *Deep Integration* |
 
-| **4. Synchronization** | **5. Action Popup** | **6. Save to Linkwarden** |
+| **4. GitHub Connection** | **5. Action Popup** | **6. Save to Linkwarden** |
 | :---: | :---: | :---: |
-| <img src="store-assets/en/chrome-2-sync.png" width="280"> | <img src="store-assets/en/chrome-6-popup.png" width="280"> | <img src="store-assets/en/chrome-7-linkwarden-save.png" width="280"> |
-| *Real-time or Frequent* | *Status at a Glance* | *Context Menu Power* |
+| <img src="store-assets/en/chrome-1-connection.png" width="280"> | <img src="store-assets/en/chrome-6-popup.png" width="280"> | <img src="store-assets/en/chrome-7-linkwarden-save.png" width="280"> |
+| *Manage Profiles* | *Status at a Glance* | *Context Menu Power* |
 
 ---
 
