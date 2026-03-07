@@ -147,7 +147,7 @@
     "message": "Mostrar/ocultar token"
   },
   "options_tokenHint": {
-    "message": "Requiere el scope <code>repo</code>. <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Crear token</a>"
+    "message": "Requiere el scope <code>repo</code> (classic) o <code>Contents: Read/Write</code> y <code>Metadata: Read</code> (fine-grained). <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Crear token</a>"
   },
   "options_repoOwner": {
     "message": "Propietario del repositorio"
@@ -174,7 +174,7 @@
     "message": "No se encontraron carpetas"
   },
   "options_browseFolderLoading": {
-    "message": "Cargando\u2026"
+    "message": "Cargando…"
   },
   "options_browseFolderSelect": {
     "message": "Seleccionar"
@@ -846,7 +846,7 @@
     "message": "Primeros pasos"
   },
   "help_gettingStartedIntro": {
-    "message": "Crea un repositorio GitHub para tus marcadores y un Personal Access Token (PAT) con el scope <code>repo</code>. En la pestaña GitHub, introduce token, propietario, nombre del repositorio, rama (normalmente <code>main</code>) y la ruta del directorio (por defecto: <code>bookmarks</code>). Haz clic en <strong>Probar conexión</strong> para verificar."
+    "message": "Crea un repositorio GitHub para tus marcadores y un Personal Access Token (PAT) con el scope <code>repo</code> (classic) o <code>Contents: Read/Write</code> y <code>Metadata: Read</code> (fine-grained). En la pestaña GitHub, introduce token, propietario, nombre del repositorio, rama (normalmente <code>main</code>) y la ruta del directorio (por defecto: <code>bookmarks</code>). Haz clic en <strong>Probar conexión</strong> para verificar."
   },
   "help_onboarding": {
     "message": "Si la carpeta está vacía, puedes crear la estructura base (toolbar, other). Si ya hay marcadores en el repositorio, puedes importarlos a este navegador."
@@ -1257,5 +1257,448 @@
         "content": "$1"
       }
     }
+  },
+  "contextMenu_addToQuickFolder": {
+    "message": "Agregar a $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "contextMenu_category_ADD": {
+    "message": "Agregar marcador"
+  },
+  "contextMenu_category_FAVICONS": {
+    "message": "Herramientas de Favicon"
+  },
+  "contextMenu_category_LINKWARDEN": {
+    "message": "Linkwarden"
+  },
+  "contextMenu_category_TOOLS": {
+    "message": "Herramientas y Sincronización"
+  },
+  "contextMenu_notifFolderMissing": {
+    "message": "La carpeta seleccionada ya no existe. Actualice la configuración de carpetas rápidas."
+  },
+  "contextMenu_notifOpenAllEmpty": {
+    "message": "La carpeta seleccionada no tiene marcadores para abrir."
+  },
+  "contextMenu_notifOpenAllNeedsConfirm": {
+    "message": "La carpeta contiene $1 pestañas (límite: $2). Haga clic de nuevo en 15 segundos para confirmar.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_notifOpenAllSuccess": {
+    "message": "Se abrieron $1 pestaña(s) de $2",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_openAllFromFolder": {
+    "message": "Abrir todo desde carpeta"
+  },
+  "contextMenu_saveToLinkwarden": {
+    "message": "Guardar en Linkwarden..."
+  },
+  "contextMenu_searchBookmarks": {
+    "message": "Buscar marcadores"
+  },
+  "options_contextMenuConfigDesc": {
+    "message": "Active o desactive elementos para mostrarlos en el menú contextual. Arrastre o use las flechas para cambiar el orden."
+  },
+  "options_contextMenuConfigTitle": {
+    "message": "Visibilidad y orden de elementos"
+  },
+  "options_contextMenuItem_ADD_OTHER": {
+    "message": "Agregar a Otros marcadores"
+  },
+  "options_contextMenuItem_ADD_TOOLBAR": {
+    "message": "Agregar a barra de marcadores"
+  },
+  "options_contextMenuItem_ADD_TO_FOLDER": {
+    "message": "Agregar a carpeta... (Menú)"
+  },
+  "options_contextMenuItem_COPY_FAVICON": {
+    "message": "Copiar URL de Favicon"
+  },
+  "options_contextMenuItem_DOWNLOAD_FAVICON": {
+    "message": "Descargar Favicon"
+  },
+  "options_contextMenuItem_OPEN_ALL_FOLDER": {
+    "message": "Abrir todo desde carpeta"
+  },
+  "options_contextMenuItem_QUICK_FOLDERS": {
+    "message": "Carpetas rápidas fijadas"
+  },
+  "options_contextMenuItem_SEARCH_BOOKMARKS": {
+    "message": "Buscar marcadores"
+  },
+  "options_contextMenuItem_SWITCH_PROFILE": {
+    "message": "Cambiar perfil"
+  },
+  "options_contextMenuItem_SYNC_NOW": {
+    "message": "Sincronizar ahora"
+  },
+  "options_contextMenuOpenAllThresholdHint": {
+    "message": "Si una carpeta tiene más marcadores que este límite, se le pedirá confirmar (doble clic) antes de abrir para evitar abrir demasiadas pestañas."
+  },
+  "options_contextMenuOpenAllThresholdLabel": {
+    "message": "Seguridad de confirmación para \"Abrir todo\" (pestañas)"
+  },
+  "options_contextMenuResetBtn": {
+    "message": "Restablecer valores predeterminados"
+  },
+  "options_linkwardenApiKey": {
+    "message": "Clave API"
+  },
+  "options_linkwardenDefaultCollection": {
+    "message": "Colección predeterminada"
+  },
+  "options_linkwardenDefaultTags": {
+    "message": "Etiquetas predeterminadas"
+  },
+  "options_linkwardenEnabled": {
+    "message": "Habilitar Linkwarden"
+  },
+  "options_linkwardenInstanceUrl": {
+    "message": "URL de la instancia"
+  },
+  "options_linkwardenIntro": {
+    "message": "Configure su instancia de Linkwarden para guardar marcadores directamente desde el menú contextual."
+  },
+  "options_linkwardenTestConnection": {
+    "message": "Probar conexión"
+  },
+  "options_linkwardenTitle": {
+    "message": "Integración de Linkwarden"
+  },
+  "options_menu_showAsSubmenu": {
+    "message": "Mostrar como submenú"
+  },
+  "options_mobileAppAlert": {
+    "message": "<strong>Nota para usuarios de Android:</strong> Firefox para Android no admite la sincronización directa de marcadores a través de extensiones. Debe usar la aplicación complementaria."
+  },
+  "options_subTabMenuAdvanced": {
+    "message": "Avanzado y Seguridad"
+  },
+  "options_subTabMenuFolders": {
+    "message": "Carpetas fijadas"
+  },
+  "options_subTabMenuItems": {
+    "message": "Visibilidad y orden"
+  },
+  "options_subTabSync": {
+    "message": "Sincronización"
+  },
+  "options_tabGit": {
+    "message": "Git"
+  },
+  "options_tabLinkwarden": {
+    "message": "Linkwarden"
+  },
+  "options_tabMenu": {
+    "message": "Menú"
+  },
+  "help_contextMenuToolsDesc": {
+    "message": "En Archivos → Configuración, puede fijar hasta 3 carpetas de acceso rápido para acciones de un clic y configurar el umbral de confirmación de Abrir todo. El menú contextual también incluye Búsqueda de marcadores."
+  },
+  "help_contextMenuToolsTitle": {
+    "message": "Herramientas del menú contextual"
+  },
+  "help_website": {
+    "message": "Sitio web"
+  },
+  "options_contextMenuFoldersRefreshed": {
+    "message": "Lista de carpetas actualizada"
+  },
+  "options_contextMenuQuickFolder1": {
+    "message": "Carpeta rápida 1"
+  },
+  "options_contextMenuQuickFolder2": {
+    "message": "Carpeta rápida 2"
+  },
+  "options_contextMenuQuickFolder3": {
+    "message": "Carpeta rápida 3"
+  },
+  "options_contextMenuQuickFolderNone": {
+    "message": "(ninguna)"
+  },
+  "options_contextMenuQuickFoldersHint": {
+    "message": "Elija hasta tres carpetas que se muestran como entradas de un clic en el menú contextual."
+  },
+  "options_contextMenuQuickFoldersLabel": {
+    "message": "Carpetas rápidas fijadas"
+  },
+  "options_contextMenuRefreshFolders": {
+    "message": "Actualizar lista de carpetas"
+  },
+  "options_contextMenuToolsDesc": {
+    "message": "Configure acciones de carpetas fijadas, seguridad al abrir todo y visibilidad de elementos del menú."
+  },
+  "options_contextMenuToolsTitle": {
+    "message": "Herramientas del menú contextual"
+  },
+  "options_onboardingInitPathAlreadyExists": {
+    "message": "La ruta \"$1\" ya contiene datos de marcadores.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathBtn": {
+    "message": "Crear ruta y ejecutar primera sincronización"
+  },
+  "options_onboardingInitPathHint": {
+    "message": "La ruta \"$1\" falta o está vacía. Esto creará la estructura de carpetas y cargará sus marcadores actuales como línea base.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathSuccess": {
+    "message": "Ruta \"$1\" creada y primera sincronización completada.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingWizardFirstSyncHint": {
+    "message": "La primera sincronización puede tardar un poco más mientras se ejecutan las verificaciones del repositorio y la configuración inicial."
+  },
+  "options_onboardingWizardSyncInProgress": {
+    "message": "Trabajando en segundo plano, por favor espere..."
+  },
+  "options_onboardingWizardTokenHelpIntro": {
+    "message": "Un Token de Acceso Personal (PAT) permite a GitSyncMarks acceder a su repositorio de GitHub para sincronizar marcadores. Lo crea en la configuración de su cuenta de GitHub."
+  },
+  "options_onboardingWizardTokenHelpScopes": {
+    "message": "El token necesita el alcance <code>repo</code>. Esto otorga acceso de lectura/escritura a sus repositorios (incluidos los privados) y permite a la extensión crear un repositorio automáticamente. Trate el token como una contraseña."
+  },
+  "options_onboardingWizardTokenStep1": {
+    "message": "Haga clic en el enlace de abajo para abrir la página de creación de tokens de GitHub."
+  },
+  "options_onboardingWizardTokenStep2": {
+    "message": "Dé un nombre al token (ej. \"GitSyncMarks\") y establezca una fecha de expiración si lo prefiere."
+  },
+  "options_onboardingWizardTokenStep3": {
+    "message": "En \"Scopes\", marque <code>repo</code> (control total de repositorios privados)."
+  },
+  "options_onboardingWizardTokenStep4": {
+    "message": "Haga clic en \"Generate token\", cópielo y péguelo en el campo de abajo."
+  },
+  "options_resetConfirmBtn": {
+    "message": "Sí, eliminar todos los datos"
+  },
+  "options_settingsRegistryAliasNormalized": {
+    "message": "Nuevo perfil de configuración creado con alias: $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameConflict": {
+    "message": "El nombre del cliente ya existe en el repositorio: $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameHint": {
+    "message": "Obligatorio. Este nombre identifica su perfil de configuración de cliente en el repositorio."
+  },
+  "options_settingsSyncClientNameLabel": {
+    "message": "Nombre del cliente"
+  },
+  "options_settingsSyncClientNamePlaceholder": {
+    "message": "mi-laptop"
+  },
+  "options_settingsSyncClientNameRequired": {
+    "message": "Por favor, introduzca primero un nombre de cliente."
+  },
+  "options_settingsSyncCreateOwnBtn": {
+    "message": "Crear mi configuración de cliente"
+  },
+  "options_settingsSyncMigrationDone": {
+    "message": "Los perfiles de configuración heredados se migraron a nombres de cliente legibles."
+  },
+  "options_settingsSyncModeGlobalTemporarilyDisabled": {
+    "message": "El modo global no está disponible temporalmente. Use configuraciones de cliente basadas en perfiles."
+  },
+  "popup_website": {
+    "message": "Sitio web"
+  },
+  "search_clearBtn": {
+    "message": "Limpiar"
+  },
+  "search_closeBtn": {
+    "message": "Cerrar"
+  },
+  "search_inputPlaceholder": {
+    "message": "Escriba título o URL..."
+  },
+  "search_openBtn": {
+    "message": "Abrir"
+  },
+  "search_statusNoResults": {
+    "message": "No se encontraron marcadores"
+  },
+  "search_statusResultCount": {
+    "message": "$1 resultado(s)",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "search_statusSearching": {
+    "message": "Buscando..."
+  },
+  "search_subtitle": {
+    "message": "Buscar marcadores locales y abrir coincidencias en una nueva pestaña."
+  },
+  "search_title": {
+    "message": "Búsqueda de marcadores"
+  },
+  "search_windowTitle": {
+    "message": "GitSyncMarks – Búsqueda de marcadores"
+  },
+  "linkwardenSave_title": {
+    "message": "Guardar en Linkwarden"
+  },
+  "linkwardenSave_urlLabel": {
+    "message": "URL"
+  },
+  "linkwardenSave_titleLabel": {
+    "message": "Título"
+  },
+  "linkwardenSave_descriptionLabel": {
+    "message": "Descripción"
+  },
+  "linkwardenSave_descriptionPlaceholder": {
+    "message": "Descripción opcional..."
+  },
+  "linkwardenSave_collectionLabel": {
+    "message": "Colección"
+  },
+  "linkwardenSave_collectionNone": {
+    "message": "Sin organizar"
+  },
+  "linkwardenSave_collectionNew": {
+    "message": "Crear nueva colección"
+  },
+  "linkwardenSave_collectionNewPlaceholder": {
+    "message": "Nombre de la nueva colección..."
+  },
+  "linkwardenSave_tagsLabel": {
+    "message": "Etiquetas"
+  },
+  "linkwardenSave_tagsPlaceholder": {
+    "message": "Añadir etiquetas..."
+  },
+  "linkwardenSave_screenshotLabel": {
+    "message": "Incluir captura de pantalla"
+  },
+  "linkwardenSave_saveBtn": {
+    "message": "Guardar"
+  },
+  "linkwardenSave_cancelBtn": {
+    "message": "Cancelar"
+  },
+  "linkwardenSave_statusSaving": {
+    "message": "Guardando..."
+  },
+  "linkwardenSave_statusSaved": {
+    "message": "¡Guardado!"
+  },
+  "linkwardenSave_statusDuplicate": {
+    "message": "Ya guardado en Linkwarden"
+  },
+  "linkwardenSave_statusError": {
+    "message": "Error"
+  },
+  "linkwardenSave_quickSaveBtn": {
+    "message": "Guardado rápido"
+  },
+  "options_contextMenuItem_LINKWARDEN_SAVE": {
+    "message": "Guardar en Linkwarden..."
+  },
+  "options_linkwardenDefaultTagsHint": {
+    "message": "Haga clic para agregar etiquetas existentes o escriba para crear nuevas. Se aplican a cada guardado."
+  },
+  "options_linkwardenDefaultScreenshot": {
+    "message": "Capturas de pantalla por defecto"
+  },
+  "options_linkwardenDefaultScreenshotHint": {
+    "message": "Si las capturas de pantalla deben estar habilitadas por defecto en la ventana emergente de guardado."
+  },
+  "linkwardenSave_deleteBtn": {
+    "message": "Eliminar"
+  },
+  "linkwardenSave_deleteConfirm": {
+    "message": "¿Estás seguro de que quieres eliminar este enlace de Linkwarden?"
+  },
+  "linkwardenSave_statusDeleted": {
+    "message": "¡Enlace eliminado correctamente!"
+  },
+  "options_linkwardenSyncEnabled": {
+    "message": "Sincronizar colecciones con marcadores"
+  },
+  "options_linkwardenSyncParent": {
+    "message": "Carpeta superior"
+  },
+  "options_linkwardenSyncRefresh": {
+    "message": "Sincronizar ahora"
+  },
+  "options_linkwardenSyncSuccess": {
+    "message": "$1 colecciones y $2 enlaces sincronizados.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "options_pleaseEnterLinkwardenConfig": {
+    "message": "Por favor, introduce primero la URL y el token de Linkwarden."
+  },
+  "options_linkwardenSyncPushToGit": {
+    "message": "Enviar marcadores de Linkwarden a Git"
+  },
+  "options_subTabGeneral": {
+    "message": "General"
+  },
+  "help_linkwardenTitle": {
+    "message": "Linkwarden"
+  },
+  "help_linkwardenIntegrationTitle": {
+    "message": "Integration"
+  },
+  "help_linkwardenIntegrationDesc": {
+    "message": "Connect to your Linkwarden instance to save bookmarks directly from the context menu. You can specify default tags and auto-capture screenshots."
+  },
+  "help_linkwardenSyncTitle": {
+    "message": "Sync Collections"
+  },
+  "help_linkwardenSyncDesc": {
+    "message": "Sync your Linkwarden collections into your browser bookmark folders and optionally push them to your Git repository."
   }
 }

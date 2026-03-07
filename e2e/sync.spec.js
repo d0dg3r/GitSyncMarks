@@ -33,6 +33,7 @@ async function configureExtension(page, extensionId) {
   page.on('dialog', (d) => d.dismiss());
   await skipWizardIfVisible(page);
   await page.locator('.sub-tab-btn[data-subtab="github-connection"]').click();
+  await test.expect(page.locator('#subtab-github-connection')).toHaveClass(/active/);
 
   await page.locator('#token').fill(process.env.GITSYNCMARKS_TEST_PAT);
   await page.locator('#owner').fill(process.env.GITSYNCMARKS_TEST_REPO_OWNER);

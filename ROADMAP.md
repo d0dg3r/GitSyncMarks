@@ -21,6 +21,7 @@ See [docs/IDEAS-LINKWARDEN.md](docs/IDEAS-LINKWARDEN.md) for full specification 
 
 - **GitLab support** — GitLab API wrapper (different endpoints than GitHub), provider abstraction (`lib/git-provider.js`), GitLab CI/CD automation equivalent. Current `lib/github-api.js` is tightly coupled to `api.github.com`.
 - **Gitea / Forgejo support** — Self-hosted Git with GitHub-compatible API; point extension to own server (e.g. `https://gitea.example.com/api/v1/`) instead of GitHub. Enables sync without GitHub, including private/air-gapped setups.
+- **GitHub Enterprise & On-Premise Support** — Support for custom API endpoints (e.g., `https://github.company.com/api/v3`) and SAML SSO authorization flow for corporate environments.
 
 ---
 

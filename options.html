@@ -112,12 +112,14 @@
 
     <div id="settings-shell">
       <nav class="tab-bar">
-        <button class="tab-btn active" data-tab="github" data-i18n="options_tabGitHub">GitHub</button>
-        <button class="tab-btn" data-tab="sync" data-i18n="options_tabSynchronization">Sync</button>
+        <button class="tab-btn active" data-tab="github" data-i18n="options_tabGit">Git</button>
         <button class="tab-btn" data-tab="files" data-i18n="options_tabFiles">Files</button>
+        <button class="tab-btn" data-tab="menu" data-i18n="options_tabMenu">Menu</button>
+        <button class="tab-btn" data-tab="linkwarden" data-i18n="options_tabLinkwarden">Linkwarden</button>
         <button class="tab-btn" data-tab="help" data-i18n="options_tabHelp">Help</button>
         <button class="tab-btn" data-tab="about" data-i18n="options_tabAbout">About</button>
       </nav>
+
 
       <!-- ==================== GitHub Tab ==================== -->
       <div class="tab-content active" id="tab-github">
@@ -127,8 +129,10 @@
             data-i18n="options_subTabProfile">Profile</button>
           <button class="sub-tab-btn" data-subtab="github-connection"
             data-i18n="options_subTabConnection">Connection</button>
+          <button class="sub-tab-btn" data-subtab="github-sync" data-i18n="options_subTabSync">Synchronization</button>
           <button class="sub-tab-btn" data-subtab="github-repos" data-i18n="options_subTabRepos">GitHub Folder</button>
         </div>
+
 
         <div class="sub-tab-content active" id="subtab-github-profile">
           <section class="card profile-selector-card">
@@ -329,81 +333,208 @@
           </section>
         </div>
 
+        <div class="sub-tab-content" id="subtab-github-sync">
+          <section class="card">
+            <h2 data-i18n="options_synchronization">Synchronization</h2>
+
+            <div class="form-group toggle-group">
+              <label for="auto-sync" class="toggle-label">
+                <span data-i18n="options_autoSync">Automatic Synchronization</span>
+                <input type="checkbox" id="auto-sync" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label for="sync-profile" data-i18n="options_syncProfile">Sync profile</label>
+              <select id="sync-profile">
+                <option value="realtime" data-i18n="options_syncProfileRealtime">Real-time</option>
+                <option value="frequent" data-i18n="options_syncProfileFrequent">Frequent</option>
+                <option value="normal" data-i18n="options_syncProfileNormal">Normal</option>
+                <option value="powersave" data-i18n="options_syncProfilePowersave">Power save</option>
+                <option value="custom" data-i18n="options_syncProfileCustom">Custom</option>
+              </select>
+            </div>
+
+            <div id="sync-custom-fields" style="display: none;">
+              <div class="form-group">
+                <label for="sync-interval" data-i18n="options_syncInterval">Sync Interval (minutes)</label>
+                <input type="number" id="sync-interval" min="1" max="120" value="15">
+                <small data-i18n="options_syncIntervalHint">How often to check for remote changes.</small>
+              </div>
+              <div class="form-group">
+                <label for="debounce-delay" data-i18n="options_debounceDelay">Debounce delay (seconds)</label>
+                <input type="number" id="debounce-delay" min="1" max="60" value="5">
+                <small data-i18n="options_debounceDelayHint">Wait time before syncing after bookmark changes.</small>
+              </div>
+            </div>
+
+            <div class="form-group toggle-group">
+              <label for="sync-on-startup" class="toggle-label">
+                <span data-i18n="options_syncOnStartup">Sync on browser start</span>
+                <input type="checkbox" id="sync-on-startup">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="form-group toggle-group">
+              <label for="sync-on-focus" class="toggle-label">
+                <span data-i18n="options_syncOnFocus">Sync when browser gains focus</span>
+                <input type="checkbox" id="sync-on-focus">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label for="notifications-mode" data-i18n="options_notifications">Sync notifications</label>
+              <select id="notifications-mode">
+                <option value="off" data-i18n="options_notificationsOff">Off</option>
+                <option value="all" data-i18n="options_notificationsAll">All (success and failure)</option>
+                <option value="errorsOnly" data-i18n="options_notificationsErrorsOnly">Errors only</option>
+              </select>
+              <small data-i18n="options_notificationsHint">Choose when to show notifications.</small>
+            </div>
+
+            <div class="actions actions-in-card actions-sync-feedback">
+              <span id="save-sync-result" class="save-result"></span>
+            </div>
+          </section>
+        </div>
+
       </div>
     </div>
 
-    <!-- ==================== Sync Tab ==================== -->
-    <div class="tab-content" id="tab-sync">
+    <!-- ==================== Linkwarden Tab ==================== -->
+    <div class="tab-content" id="tab-linkwarden">
+      <div class="sub-tab-bar" id="linkwarden-subtab-bar" style="display: none;">
+        <button class="sub-tab-btn active" data-subtab="linkwarden-general"
+          data-i18n="options_subTabGeneral">General</button>
+        <button class="sub-tab-btn" data-subtab="linkwarden-sync"
+          data-i18n="options_subTabSync">Synchronization</button>
+      </div>
 
-      <section class="card">
-        <h2 data-i18n="options_synchronization">Synchronization</h2>
+      <div class="sub-tab-content active" id="subtab-linkwarden-general">
+        <section class="card">
+          <h2 data-i18n="options_linkwardenTitle">Linkwarden Integration</h2>
+          <p class="card-desc" data-i18n="options_linkwardenIntro">Configure your Linkwarden instance to save bookmarks
+            directly from the context menu.</p>
 
-        <div class="form-group toggle-group">
-          <label for="auto-sync" class="toggle-label">
-            <span data-i18n="options_autoSync">Automatic Synchronization</span>
-            <input type="checkbox" id="auto-sync" checked>
-            <span class="toggle-slider"></span>
-          </label>
-        </div>
-
-        <div class="form-group">
-          <label for="sync-profile" data-i18n="options_syncProfile">Sync profile</label>
-          <select id="sync-profile">
-            <option value="realtime" data-i18n="options_syncProfileRealtime">Real-time</option>
-            <option value="frequent" data-i18n="options_syncProfileFrequent">Frequent</option>
-            <option value="normal" data-i18n="options_syncProfileNormal">Normal</option>
-            <option value="powersave" data-i18n="options_syncProfilePowersave">Power save</option>
-            <option value="custom" data-i18n="options_syncProfileCustom">Custom</option>
-          </select>
-        </div>
-
-        <div id="sync-custom-fields" style="display: none;">
-          <div class="form-group">
-            <label for="sync-interval" data-i18n="options_syncInterval">Sync Interval (minutes)</label>
-            <input type="number" id="sync-interval" min="1" max="120" value="15">
-            <small data-i18n="options_syncIntervalHint">How often to check for remote changes.</small>
+          <div class="form-group toggle-group">
+            <label for="linkwarden-enabled" class="toggle-label">
+              <span data-i18n="options_linkwardenEnabled">Enable Linkwarden</span>
+              <input type="checkbox" id="linkwarden-enabled">
+              <span class="toggle-slider"></span>
+            </label>
           </div>
-          <div class="form-group">
-            <label for="debounce-delay" data-i18n="options_debounceDelay">Debounce delay (seconds)</label>
-            <input type="number" id="debounce-delay" min="1" max="60" value="5">
-            <small data-i18n="options_debounceDelayHint">Wait time before syncing after bookmark changes.</small>
+
+          <div id="linkwarden-settings" style="display: none;">
+            <div class="form-group">
+              <label for="linkwarden-url" data-i18n="options_linkwardenInstanceUrl">Instance URL</label>
+              <input type="text" id="linkwarden-url" placeholder="https://cloud.linkwarden.app">
+            </div>
+
+            <div class="form-group">
+              <label for="linkwarden-token" data-i18n="options_linkwardenApiKey">API Key</label>
+              <div class="input-row">
+                <input type="password" id="linkwarden-token" placeholder="your-api-key" autocomplete="off">
+                <button id="toggle-linkwarden-token" class="btn-icon" title="Show/hide token">
+                  <span class="icon-eye">👁</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="linkwarden-default-collection" data-i18n="options_linkwardenDefaultCollection">Default
+                Collection</label>
+              <select id="linkwarden-default-collection">
+                <option value="" data-i18n="options_none">None</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label data-i18n="options_linkwardenDefaultTags">Default Tags</label>
+              <div class="lw-options-tags-wrap" id="lw-options-tags-wrap">
+                <div id="lw-options-tag-chips" class="lw-options-tag-chips"></div>
+                <input type="text" id="lw-options-tag-input" placeholder="Add tags..." autocomplete="off"
+                  class="lw-options-tag-input">
+              </div>
+              <div id="lw-options-tag-cloud" class="lw-options-tag-cloud"></div>
+              <small data-i18n="options_linkwardenDefaultTagsHint">Click to add existing tags or type to create new
+                ones.
+                Applied to every save.</small>
+            </div>
+
+            <div class="form-group toggle-group">
+              <label for="linkwarden-default-screenshot" class="toggle-label">
+                <span data-i18n="options_linkwardenDefaultScreenshot">Default Screenshots</span>
+                <input type="checkbox" id="linkwarden-default-screenshot">
+                <span class="toggle-slider"></span>
+              </label>
+              <small data-i18n="options_linkwardenDefaultScreenshotHint">Whether screenshots should be enabled by
+                default
+                in the save popup.</small>
+            </div>
+
+            <div class="form-group">
+              <button id="linkwarden-test-btn" class="btn btn-secondary"
+                data-i18n="options_linkwardenTestConnection">Test
+                Connection</button>
+              <span id="linkwarden-test-spinner" class="spinner" style="display: none;"></span>
+              <span id="linkwarden-test-result" class="validation-result"></span>
+            </div>
           </div>
-        </div>
+        </section>
+      </div>
 
-        <div class="form-group toggle-group">
-          <label for="sync-on-startup" class="toggle-label">
-            <span data-i18n="options_syncOnStartup">Sync on browser start</span>
-            <input type="checkbox" id="sync-on-startup">
-            <span class="toggle-slider"></span>
-          </label>
-        </div>
+      <div class="sub-tab-content" id="subtab-linkwarden-sync">
+        <section class="card">
+          <h2 data-i18n="options_subTabSync">Synchronization</h2>
+          <p class="card-desc" data-i18n="options_linkwardenSyncDesc">Sync your Linkwarden collections directly to your
+            browser's bookmark folders.</p>
 
-        <div class="form-group toggle-group">
-          <label for="sync-on-focus" class="toggle-label">
-            <span data-i18n="options_syncOnFocus">Sync when browser gains focus</span>
-            <input type="checkbox" id="sync-on-focus">
-            <span class="toggle-slider"></span>
-          </label>
-        </div>
+          <div id="linkwarden-sync-enabled-group">
+            <div class="form-group toggle-group">
+              <label for="linkwarden-sync-enabled" class="toggle-label">
+                <span data-i18n="options_linkwardenSyncEnabled">Sync Collections to Bookmarks</span>
+                <input type="checkbox" id="linkwarden-sync-enabled">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
 
-        <div class="form-group">
-          <label for="notifications-mode" data-i18n="options_notifications">Sync notifications</label>
-          <select id="notifications-mode">
-            <option value="off" data-i18n="options_notificationsOff">Off</option>
-            <option value="all" data-i18n="options_notificationsAll">All (success and failure)</option>
-            <option value="errorsOnly" data-i18n="options_notificationsErrorsOnly">Errors only</option>
-          </select>
-          <small data-i18n="options_notificationsHint">Choose when to show notifications.</small>
-        </div>
+            <div id="linkwarden-sync-options" style="display: none;">
+              <div class="form-group">
+                <label for="linkwarden-sync-parent" data-i18n="options_linkwardenSyncParent">Parent Folder</label>
+                <select id="linkwarden-sync-parent">
+                  <option value="toolbar" data-i18n="options_parentToolbar">Bookmarks Bar</option>
+                  <option value="other" data-i18n="options_parentOther">Other Bookmarks</option>
+                </select>
+              </div>
 
-        <div class="actions actions-in-card actions-sync-feedback">
-          <span id="save-sync-result" class="save-result"></span>
-        </div>
-      </section>
+              <div class="form-group toggle-group">
+                <label for="linkwarden-sync-push-to-git" class="toggle-label">
+                  <span data-i18n="options_linkwardenSyncPushToGit">Push Linkwarden Bookmarks to Git</span>
+                  <input type="checkbox" id="linkwarden-sync-push-to-git">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
 
-
-
+              <div class="form-group">
+                <button id="linkwarden-sync-refresh-btn" class="btn btn-secondary"
+                  data-i18n="options_linkwardenSyncRefresh">Sync Now</button>
+                <span id="linkwarden-sync-spinner" class="spinner" style="display: none;"></span>
+                <span id="linkwarden-sync-result" class="validation-result"></span>
+              </div>
+            </div>
+          </div>
+          <div id="linkwarden-sync-disabled-msg" class="validation-result info"
+            style="display: none; margin-top: 1rem;">
+            <span data-i18n="options_linkwardenStatusDisabled">Linkwarden integration is disabled. Enable it in the
+              General tab to use sync.</span>
+          </div>
+        </section>
+      </div>
     </div>
+
 
     <!-- ==================== Files Tab ==================== -->
     <div class="tab-content" id="tab-files">
@@ -411,7 +542,8 @@
       <div class="sub-tab-bar">
         <button class="sub-tab-btn active" data-subtab="files-generated"
           data-i18n="options_subTabGenerated">Generated</button>
-        <button class="sub-tab-btn" data-subtab="files-settings" data-i18n="options_subTabSettings">Settings</button>
+        <button class="sub-tab-btn" data-subtab="files-settings" data-i18n="options_subTabSettings">Settings
+          Sync</button>
         <button class="sub-tab-btn" data-subtab="files-export-import" data-i18n="options_subTabExportImport">Export /
           Import</button>
         <button class="sub-tab-btn" data-subtab="files-git-add" data-i18n="options_subTabGitAdd">Git Add</button>
@@ -542,61 +674,6 @@
                   data-i18n="options_settingsRegistrySyncSelectedBtn" disabled>Sync current to selected</button>
               </div>
               <span id="settings-sync-import-result" class="validation-result"></span>
-            </div>
-          </div>
-        </section>
-
-        <section class="card" id="context-menu-card">
-          <h2 data-i18n="options_contextMenuToolsTitle">Context Menu Tools</h2>
-          <p class="card-desc" data-i18n="options_contextMenuToolsDesc">Configure quick folder actions, open-all safety,
-            and the Search Bookmarks popup shortcut.</p>
-
-          <div class="form-group">
-            <label data-i18n="options_contextMenuQuickFoldersLabel">Pinned Quick Folders</label>
-            <small data-i18n="options_contextMenuQuickFoldersHint">Choose up to three folders shown as one-click \"Add
-              to ...\" entries in the context menu.</small>
-          </div>
-          <div class="form-group">
-            <label for="quick-folder-1" data-i18n="options_contextMenuQuickFolder1">Quick folder 1</label>
-            <select id="quick-folder-1"></select>
-          </div>
-          <div class="form-group">
-            <label for="quick-folder-2" data-i18n="options_contextMenuQuickFolder2">Quick folder 2</label>
-            <select id="quick-folder-2"></select>
-          </div>
-          <div class="form-group">
-            <label for="quick-folder-3" data-i18n="options_contextMenuQuickFolder3">Quick folder 3</label>
-            <select id="quick-folder-3"></select>
-          </div>
-          <div class="form-group">
-            <button type="button" id="quick-folders-refresh-btn" class="btn btn-secondary btn-sm"
-              data-i18n="options_contextMenuRefreshFolders">Refresh folder list</button>
-            <span id="quick-folders-result" class="validation-result"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="open-all-threshold" data-i18n="options_contextMenuOpenAllThresholdLabel">Open-all confirmation
-              threshold (tabs)</label>
-            <input type="number" id="open-all-threshold" min="1" max="200" value="15">
-            <small data-i18n="options_contextMenuOpenAllThresholdHint">If a folder has more tabs than this value, click
-              the menu entry twice within 15 seconds to confirm.</small>
-          </div>
-        </section>
-
-        <section class="card danger-zone" id="reset-card">
-          <h2 data-i18n="options_resetTitle">Reset Extension</h2>
-          <p class="card-desc" data-i18n="options_resetDescription">Delete all profiles, tokens, and settings. Your
-            browser bookmarks will not be affected.</p>
-          <button type="button" class="btn btn-danger" id="btn-reset-extension" data-i18n="options_resetBtn">Reset all
-            data</button>
-          <div id="reset-confirm-dialog" class="reset-confirm-dialog" style="display: none;">
-            <p data-i18n="options_resetConfirm">Are you sure? This cannot be undone. All profiles and settings will be
-              permanently deleted.</p>
-            <div class="reset-confirm-actions">
-              <button type="button" class="btn btn-danger" id="btn-reset-confirm"
-                data-i18n="options_resetConfirmBtn">Yes, delete all data</button>
-              <button type="button" class="btn btn-secondary" id="btn-reset-cancel"
-                data-i18n="options_profileSwitchCancelBtn">Cancel</button>
             </div>
           </div>
         </section>
@@ -739,6 +816,79 @@
 
     </div>
 
+    <!-- ==================== Menu Tab ==================== -->
+    <div class="tab-content" id="tab-menu">
+      <div class="sub-tab-bar">
+        <button class="sub-tab-btn active" data-subtab="menu-items" data-i18n="options_subTabMenuItems">Visibility &
+          Order</button>
+        <button class="sub-tab-btn" data-subtab="menu-folders" data-i18n="options_subTabMenuFolders">Pinned
+          Folders</button>
+        <button class="sub-tab-btn" data-subtab="menu-advanced" data-i18n="options_subTabMenuAdvanced">Advanced &
+          Safety</button>
+      </div>
+
+      <div class="sub-tab-content active" id="subtab-menu-items">
+        <section class="card">
+          <h2 data-i18n="options_contextMenuConfigTitle">Menu Item Visibility & Order</h2>
+          <p class="card-desc" data-i18n="options_contextMenuConfigDesc">Toggle items to show them in the context menu.
+            Drag or use
+            arrows to change their order.</p>
+
+          <div id="context-menu-items-list" class="context-menu-items-list">
+            <!-- Populated dynamically -->
+          </div>
+
+          <button type="button" id="context-menu-reset-btn" class="btn btn-secondary btn-sm"
+            style="margin-top: 0.75rem;" data-i18n="options_contextMenuResetBtn">Reset to Default</button>
+        </section>
+      </div>
+
+      <div class="sub-tab-content" id="subtab-menu-folders">
+        <section class="card">
+          <h2 data-i18n="options_contextMenuQuickFoldersLabel">Pinned Quick Folders</h2>
+          <p class="card-desc" data-i18n="options_contextMenuQuickFoldersHint">Choose up to three folders shown as
+            one-click "Add
+            to ..." entries in the context menu.</p>
+
+          <div class="form-group">
+            <label for="quick-folder-1" data-i18n="options_contextMenuQuickFolder1">Quick folder 1</label>
+            <select id="quick-folder-1"></select>
+          </div>
+          <div class="form-group">
+            <label for="quick-folder-2" data-i18n="options_contextMenuQuickFolder2">Quick folder 2</label>
+            <select id="quick-folder-2"></select>
+          </div>
+          <div class="form-group">
+            <label for="quick-folder-3" data-i18n="options_contextMenuQuickFolder3">Quick folder 3</label>
+            <select id="quick-folder-3"></select>
+          </div>
+          <div class="form-group">
+            <button type="button" id="quick-folders-refresh-btn" class="btn btn-secondary btn-sm"
+              data-i18n="options_contextMenuRefreshFolders">Refresh folder list</button>
+            <span id="quick-folders-result" class="validation-result"></span>
+          </div>
+        </section>
+      </div>
+
+      <div class="sub-tab-content" id="subtab-menu-advanced">
+        <section class="card">
+          <h2 data-i18n="options_subTabMenuAdvanced">Advanced & Safety</h2>
+          <p class="card-desc" data-i18n="options_contextMenuToolsDesc">Configure open-all safety and other advanced
+            menu tools.</p>
+
+          <div class="form-group">
+            <label for="open-all-threshold" data-i18n="options_contextMenuOpenAllThresholdLabel">Confirmation safety for
+              "Open all" (tabs)</label>
+            <input type="number" id="open-all-threshold" min="1" max="200" value="15">
+            <small data-i18n="options_contextMenuOpenAllThresholdHint">If a folder has more bookmarks than this limit,
+              you will be asked to confirm (double-click) before opening to prevent accidentally opening too many
+              tabs.</small>
+          </div>
+        </section>
+      </div>
+    </div>
+
+
     <!-- ==================== Help Tab ==================== -->
     <div class="tab-content" id="tab-help">
 
@@ -871,6 +1021,34 @@
 
       <details class="help-details card">
         <summary>
+          <h2 data-i18n="help_menuTitle">Menu</h2>
+        </summary>
+        <div class="help-details-body">
+          <dl class="help-dl">
+            <dt data-i18n="help_contextMenuToolsTitle">Context menu tools</dt>
+            <dd data-i18n="help_contextMenuToolsDesc">In Files → Settings, you can pin up to 3 quick target folders for
+              one-click Add actions and configure the Open All confirmation threshold. The context menu also includes
+              Search Bookmarks, which opens a dedicated search popup.</dd>
+          </dl>
+        </div>
+      </details>
+
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_linkwardenTitle">Linkwarden</h2>
+        </summary>
+        <div class="help-details-body">
+          <dl class="help-dl">
+            <dt data-i18n="help_linkwardenIntegrationTitle">Integration</dt>
+            <dd data-i18n="help_linkwardenIntegrationDesc">Connect to your Linkwarden instance to save bookmarks directly from the context menu. You can specify default tags and auto-capture screenshots.</dd>
+            <dt data-i18n="help_linkwardenSyncTitle">Sync Collections</dt>
+            <dd data-i18n="help_linkwardenSyncDesc">Sync your Linkwarden collections into your browser bookmark folders and optionally push them to your Git repository.</dd>
+          </dl>
+        </div>
+      </details>
+
+      <details class="help-details card">
+        <summary>
           <h2 data-i18n="help_filesTitle">Files</h2>
         </summary>
         <div class="help-details-body">
@@ -882,10 +1060,6 @@
             <dd data-i18n="help_settingsSyncDesc">When enabled, extension settings are encrypted and stored in the repo
               as profile folders (profiles/&lt;alias&gt;/settings.enc). Import and sync explicit client profiles from
               the repository list.</dd>
-            <dt data-i18n="help_contextMenuToolsTitle">Context menu tools</dt>
-            <dd data-i18n="help_contextMenuToolsDesc">In Files → Settings, you can pin up to 3 quick target folders for
-              one-click Add actions and configure the Open All confirmation threshold. The context menu also includes
-              Search Bookmarks, which opens a dedicated search popup.</dd>
             <dt data-i18n="help_backupBookmarks">Export / Import</dt>
             <dd data-i18n="help_backupBookmarksDesc2">Export bookmarks (JSON), Dashy config (YAML), or settings (plain
               JSON / encrypted .enc). Import bookmarks or settings — encrypted files are decrypted with your password.
@@ -1007,7 +1181,25 @@
         </div>
       </section>
 
-      <section class="card" style="margin-top: 1rem;">
+      <section class="card danger-zone" id="reset-card">
+        <h2 data-i18n="options_resetTitle">Reset Extension</h2>
+        <p class="card-desc" data-i18n="options_resetDescription">Delete all profiles, tokens, and settings. Your
+          browser bookmarks will not be affected.</p>
+        <button type="button" class="btn btn-danger" id="btn-reset-extension" data-i18n="options_resetBtn">Reset all
+          data</button>
+        <div id="reset-confirm-dialog" class="reset-confirm-dialog" style="display: none;">
+          <p data-i18n="options_resetConfirm">Are you sure? This cannot be undone. All profiles and settings will be
+            permanently deleted.</p>
+          <div class="reset-confirm-actions">
+            <button type="button" class="btn btn-danger" id="btn-reset-confirm" data-i18n="options_resetConfirmBtn">Yes,
+              delete all data</button>
+            <button type="button" class="btn btn-secondary" id="btn-reset-cancel"
+              data-i18n="options_profileSwitchCancelBtn">Cancel</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
         <h2 data-i18n="options_debugLogTitle">Debug Log</h2>
         <p class="card-desc" data-i18n="options_debugLogDesc">Enable to record sync diagnostics (diffs, merge decisions,
           conflicts). Use when troubleshooting sync issues. Export and share the log for support.</p>

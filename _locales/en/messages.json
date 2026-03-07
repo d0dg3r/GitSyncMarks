@@ -147,7 +147,7 @@
     "message": "Show/hide token"
   },
   "options_tokenHint": {
-    "message": "Requires the <code>repo</code> scope. <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Create token</a>"
+    "message": "Requires the <code>repo</code> scope (classic) or <code>Contents: Read/Write</code> and <code>Metadata: Read</code> (fine-grained). <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Create token</a>"
   },
   "options_repoOwner": {
     "message": "Repository Owner"
@@ -174,7 +174,7 @@
     "message": "No folders found"
   },
   "options_browseFolderLoading": {
-    "message": "Loading\u2026"
+    "message": "Loading…"
   },
   "options_browseFolderSelect": {
     "message": "Select"
@@ -458,11 +458,29 @@
   "options_notificationsHint": {
     "message": "Choose when to show notifications."
   },
+  "options_menu_showAsSubmenu": {
+    "message": "Show as submenu"
+  },
   "notification_titleSuccess": {
     "message": "Sync successful"
   },
   "notification_titleFailure": {
     "message": "Sync failed"
+  },
+  "contextMenu_category_ADD": {
+    "message": "Add Bookmark"
+  },
+  "contextMenu_category_LINKWARDEN": {
+    "message": "Linkwarden"
+  },
+  "contextMenu_category_TOOLS": {
+    "message": "Tools & Sync"
+  },
+  "contextMenu_category_FAVICONS": {
+    "message": "Favicon Tools"
+  },
+  "contextMenu_saveToLinkwarden": {
+    "message": "Save to Linkwarden..."
   },
   "options_saveSettings": {
     "message": "Save Settings"
@@ -561,7 +579,7 @@
     "message": "Access token"
   },
   "options_onboardingWizardStepTokenText": {
-    "message": "Add a GitHub token with repo scope. Keep it private."
+    "message": "Add a GitHub token with repo scope (classic) or Contents: Read/Write (fine-grained). Keep it private."
   },
   "options_onboardingWizardStepValidateTitle": {
     "message": "Test connection"
@@ -630,7 +648,7 @@
     "message": "A Personal Access Token (PAT) lets GitSyncMarks access your GitHub repository to sync bookmarks. You create it in your GitHub account settings."
   },
   "options_onboardingWizardTokenHelpScopes": {
-    "message": "The token needs the <code>repo</code> scope. This gives read/write access to your repositories (including private ones) and lets the extension create a repo if you choose auto-create. Treat the token like a password and keep it private."
+    "message": "The token needs the <code>repo</code> scope (classic) or <code>Contents: Read/Write</code> and <code>Metadata: Read</code> (fine-grained). This gives access to your repositories and lets the extension create a repo if you choose auto-create. Keep it private."
   },
   "options_onboardingWizardTokenStep1": {
     "message": "Click the link below to open GitHub's token creation page."
@@ -639,7 +657,7 @@
     "message": "Give the token a name (e.g. \"GitSyncMarks\") and set an expiration if you prefer."
   },
   "options_onboardingWizardTokenStep3": {
-    "message": "Under \"Scopes\", check <code>repo</code> (full control of private repositories)."
+    "message": "Under \"Permissions\" or \"Scopes\", ensure you grant access to repository contents (Read/Write)."
   },
   "options_onboardingWizardTokenStep4": {
     "message": "Click \"Generate token\", copy it, and paste it in the field below."
@@ -854,8 +872,8 @@
   "options_debugLogExportEmpty": {
     "message": "Log is empty. Enable debug log and run a sync first."
   },
-  "options_tabGitHub": {
-    "message": "GitHub"
+  "options_tabGit": {
+    "message": "Git"
   },
   "options_tabSynchronization": {
     "message": "Sync"
@@ -869,6 +887,9 @@
   "options_tabAbout": {
     "message": "About"
   },
+  "options_tabMenu": {
+    "message": "Menu"
+  },
   "options_subTabProfile": {
     "message": "Profile"
   },
@@ -878,17 +899,56 @@
   "options_subTabRepos": {
     "message": "GitHub Folder"
   },
+  "options_subTabMenuItems": {
+    "message": "Visibility & Order"
+  },
+  "options_subTabMenuFolders": {
+    "message": "Pinned Folders"
+  },
+  "options_subTabMenuAdvanced": {
+    "message": "Advanced & Safety"
+  },
   "options_subTabGenerated": {
     "message": "Generated"
   },
   "options_subTabSettings": {
-    "message": "Settings"
+    "message": "Settings Sync"
   },
   "options_subTabExportImport": {
     "message": "Export / Import"
   },
   "options_subTabGitAdd": {
     "message": "Git Add"
+  },
+  "options_subTabSync": {
+    "message": "Synchronization"
+  },
+  "options_tabLinkwarden": {
+    "message": "Linkwarden"
+  },
+  "options_linkwardenTitle": {
+    "message": "Linkwarden Integration"
+  },
+  "options_linkwardenIntro": {
+    "message": "Configure your Linkwarden instance to save bookmarks directly from the context menu."
+  },
+  "options_linkwardenInstanceUrl": {
+    "message": "Instance URL"
+  },
+  "options_linkwardenApiKey": {
+    "message": "API Key"
+  },
+  "options_linkwardenDefaultCollection": {
+    "message": "Default Collection"
+  },
+  "options_linkwardenDefaultTags": {
+    "message": "Default Tags"
+  },
+  "options_linkwardenEnabled": {
+    "message": "Enable Linkwarden"
+  },
+  "options_linkwardenTestConnection": {
+    "message": "Test Connection"
   },
   "help_wizardRestartTitle": {
     "message": "Setup Wizard"
@@ -1087,6 +1147,24 @@
   },
   "help_whySlowIntro": {
     "message": "GitSyncMarks uses GitHub's Git Data API for atomic commits. Each changed or new bookmark file requires an API call. With many changes, this adds up."
+  },
+  "help_linkwardenTitle": {
+    "message": "Linkwarden"
+  },
+  "help_linkwardenIntegrationTitle": {
+    "message": "Integration"
+  },
+  "help_linkwardenIntegrationDesc": {
+    "message": "Connect to your Linkwarden instance to save bookmarks directly from the context menu. You can specify default tags and auto-capture screenshots."
+  },
+  "help_linkwardenSyncTitle": {
+    "message": "Sync Collections"
+  },
+  "help_linkwardenSyncDesc": {
+    "message": "Sync your Linkwarden collections into your browser bookmark folders and optionally push them to your Git repository."
+  },
+  "help_menuTitle": {
+    "message": "Menu"
   },
   "help_whyAtomic": {
     "message": "All changes are written in a single atomic commit: either everything succeeds or nothing does. This prevents partial or corrupted state if the sync is interrupted. One commit instead of many also avoids hitting API rate limits and keeps the Git history clean."
@@ -1290,10 +1368,49 @@
     "message": "Context Menu Tools"
   },
   "options_contextMenuToolsDesc": {
-    "message": "Configure quick folder actions, open-all safety, and the Search Bookmarks popup shortcut."
+    "message": "Configure pinned folder actions, open-all safety, and visibility of menu items."
   },
   "options_contextMenuQuickFoldersLabel": {
     "message": "Pinned Quick Folders"
+  },
+  "options_contextMenuConfigTitle": {
+    "message": "Menu Item Visibility & Order"
+  },
+  "options_contextMenuConfigDesc": {
+    "message": "Toggle items to show them in the context menu. Drag or use arrows to change their order."
+  },
+  "options_contextMenuItem_ADD_TOOLBAR": {
+    "message": "Add to Bookmarks Bar"
+  },
+  "options_contextMenuItem_ADD_OTHER": {
+    "message": "Add to Other Bookmarks"
+  },
+  "options_contextMenuItem_ADD_TO_FOLDER": {
+    "message": "Add to Folder... (Menu)"
+  },
+  "options_contextMenuItem_QUICK_FOLDERS": {
+    "message": "Pinned Quick Folders"
+  },
+  "options_contextMenuItem_SYNC_NOW": {
+    "message": "Sync Now"
+  },
+  "options_contextMenuItem_SEARCH_BOOKMARKS": {
+    "message": "Search Bookmarks"
+  },
+  "options_contextMenuItem_OPEN_ALL_FOLDER": {
+    "message": "Open All from Folder"
+  },
+  "options_contextMenuItem_COPY_FAVICON": {
+    "message": "Copy Favicon URL"
+  },
+  "options_contextMenuItem_DOWNLOAD_FAVICON": {
+    "message": "Download Favicon"
+  },
+  "options_contextMenuItem_SWITCH_PROFILE": {
+    "message": "Switch Profile"
+  },
+  "options_contextMenuResetBtn": {
+    "message": "Reset to Default"
   },
   "options_contextMenuQuickFoldersHint": {
     "message": "Choose up to three folders shown as one-click \"Add to ...\" entries in the context menu."
@@ -1317,10 +1434,10 @@
     "message": "Folder list refreshed"
   },
   "options_contextMenuOpenAllThresholdLabel": {
-    "message": "Open-all confirmation threshold (tabs)"
+    "message": "Confirmation safety for \"Open all\" (tabs)"
   },
   "options_contextMenuOpenAllThresholdHint": {
-    "message": "If a folder has more tabs than this value, click the menu entry twice within 15 seconds to confirm."
+    "message": "If a folder has more bookmarks than this limit, you will be asked to confirm (double-click) before opening to prevent accidentally opening too many tabs."
   },
   "search_title": {
     "message": "Bookmark Search"
@@ -1451,5 +1568,112 @@
         "content": "$1"
       }
     }
+  },
+  "linkwardenSave_title": {
+    "message": "Save to Linkwarden"
+  },
+  "linkwardenSave_urlLabel": {
+    "message": "URL"
+  },
+  "linkwardenSave_titleLabel": {
+    "message": "Title"
+  },
+  "linkwardenSave_descriptionLabel": {
+    "message": "Description"
+  },
+  "linkwardenSave_descriptionPlaceholder": {
+    "message": "Optional description..."
+  },
+  "linkwardenSave_collectionLabel": {
+    "message": "Collection"
+  },
+  "linkwardenSave_collectionNone": {
+    "message": "Unorganized"
+  },
+  "linkwardenSave_collectionNew": {
+    "message": "Create new collection"
+  },
+  "linkwardenSave_collectionNewPlaceholder": {
+    "message": "New collection name..."
+  },
+  "linkwardenSave_tagsLabel": {
+    "message": "Tags"
+  },
+  "linkwardenSave_tagsPlaceholder": {
+    "message": "Add tags..."
+  },
+  "linkwardenSave_screenshotLabel": {
+    "message": "Include screenshot"
+  },
+  "linkwardenSave_saveBtn": {
+    "message": "Save"
+  },
+  "linkwardenSave_cancelBtn": {
+    "message": "Cancel"
+  },
+  "linkwardenSave_statusSaving": {
+    "message": "Saving..."
+  },
+  "linkwardenSave_statusSaved": {
+    "message": "Saved!"
+  },
+  "linkwardenSave_statusDuplicate": {
+    "message": "Already saved in Linkwarden"
+  },
+  "linkwardenSave_statusError": {
+    "message": "Error"
+  },
+  "linkwardenSave_quickSaveBtn": {
+    "message": "Quick Save"
+  },
+  "options_contextMenuItem_LINKWARDEN_SAVE": {
+    "message": "Save to Linkwarden..."
+  },
+  "options_linkwardenDefaultTagsHint": {
+    "message": "Click to add existing tags or type to create new ones. Applied to every save."
+  },
+  "options_linkwardenDefaultScreenshot": {
+    "message": "Default Screenshots"
+  },
+  "options_linkwardenDefaultScreenshotHint": {
+    "message": "Whether screenshots should be enabled by default in the save popup."
+  },
+  "linkwardenSave_deleteBtn": {
+    "message": "Delete"
+  },
+  "linkwardenSave_deleteConfirm": {
+    "message": "Are you sure you want to delete this link from Linkwarden?"
+  },
+  "linkwardenSave_statusDeleted": {
+    "message": "Link deleted successfully!"
+  },
+  "options_linkwardenSyncEnabled": {
+    "message": "Sync Collections to Bookmarks"
+  },
+  "options_linkwardenSyncParent": {
+    "message": "Parent Folder"
+  },
+  "options_linkwardenSyncRefresh": {
+    "message": "Sync Now"
+  },
+  "options_linkwardenSyncSuccess": {
+    "message": "$1 collections and $2 links synced.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "options_pleaseEnterLinkwardenConfig": {
+    "message": "Please enter Linkwarden URL and Token first."
+  },
+  "options_linkwardenSyncPushToGit": {
+    "message": "Push Linkwarden Bookmarks to Git"
+  },
+  "options_subTabGeneral": {
+    "message": "General"
   }
 }

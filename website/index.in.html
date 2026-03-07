@@ -66,6 +66,14 @@
       <h2>Features</h2>
       <div class="feature-grid">
         <article class="feature-card">
+          <h3>Linkwarden Synergy</h3>
+          <p>Save any page or link directly to Linkwarden with automatic viewport screenshots, collection sync, and tag management.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Smart Search</h3>
+          <p>Dedicated lightning-fast search interface with theme support and full keyboard navigation. Find any bookmark in milliseconds.</p>
+        </article>
+        <article class="feature-card">
           <h3>No middleman</h3>
           <p>Communicates directly with the GitHub API. No third-party server, no backend. Your data stays between your browser and your GitHub repo.</p>
         </article>
@@ -87,19 +95,11 @@
         </article>
         <article class="feature-card">
           <h3>Multiple profiles</h3>
-          <p>Up to 10 profiles (work, personal, projects). Each has its own GitHub repo config and bookmark set. Switch replaces local bookmarks with the target profile.</p>
+          <p>Up to 10 profiles (work, personal, projects). Each has its own GitHub repo config and bookmark set.</p>
         </article>
         <article class="feature-card">
           <h3>Context menu</h3>
-          <p>Right-click on any page or link: Add to Toolbar, Add to Other Bookmarks, Sync Now, Switch Profile, Copy Favicon URL, Download Favicon.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Automation</h3>
-          <p>Add bookmarks via Git, CLI, or GitHub Actions. The extension picks them up automatically on the next sync.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Generated files</h3>
-          <p>README.md, bookmarks.html, feed.xml, dashy-conf.yml — each configurable as Off, Manual, or Auto.</p>
+          <p>Right-click power: Add to Toolbar, Add to Other Bookmarks, Sync Now, Save to Linkwarden, or manage site favicons.</p>
         </article>
       </div>
       <p class="wizard-hint"><strong>Setup wizard:</strong> After installation, a setup wizard opens automatically and guides you through token, repository, and first sync — no manual configuration needed.</p>
@@ -152,8 +152,8 @@
       <p class="wizard-intro"><strong>Prefer a guided setup?</strong> The built-in setup wizard opens on first install and walks you through token creation, repo setup (auto-create or existing), and your first sync. You can restart it anytime from Settings → GitHub → <strong>Start setup wizard</strong>.</p>
       <ol class="steps">
         <li>Create a GitHub repository for your bookmarks</li>
-        <li>Generate a <a href="https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks+Sync">Personal Access Token</a> with the <code>repo</code> scope</li>
-        <li>Install the extension and configure token, repo owner, repo name, branch, and file path</li>
+        <li>Generate a <a href="https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks+Sync">GitHub Token</a> (Classic <code>repo</code> scope or Fine-grained <code>Contents: R/W</code>)</li>
+        <li>Install the extension and configure token, repo owner, repo name, and branch</li>
         <li>Click <strong>Sync Now</strong> — your bookmarks are pushed as individual JSON files</li>
       </ol>
     </section>

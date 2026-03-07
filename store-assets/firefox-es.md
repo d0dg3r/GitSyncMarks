@@ -1,56 +1,42 @@
 # Firefox Add-ons (AMO) — GitSyncMarks (Español)
 <!-- See firefox-meta.md for Privacy, Test Instructions, and Distribution -->
 
-### Name
+### Nombre
 GitSyncMarks
 
-### Summary (max 250 characters)
-Sincroniza tus marcadores de Firefox con GitHub — bidireccional, sin conflictos. Almacenamiento JSON por archivo, fusión triple, auto-sync. Soporte completo para Barra de marcadores, Menú y Móvil. Añade marcadores vía Git, CLI o GitHub Actions. Open source, sin intermediarios.
+### Resumen (max 250 characters)
+Sincronización de marcadores vía GitHub. Sinergia con Linkwarden, Búsqueda Inteligente y asistente de configuración. Bidireccional, seguro y privado. Soporte completo de Firefox incluyendo estructura de menús nativa. Sin intermediarios.
 
-### Detailed Description
-GitSyncMarks sincroniza tus marcadores de Firefox con un repositorio GitHub — bidireccional, automáticamente y sin intermediarios.
+### Descripción Detallada
+GitSyncMarks es una extensión profesional para Firefox que sincroniza de forma bidireccional y automática sus marcadores con un repositorio de GitHub. Sin intermediarios, sin servidores de terceros: sus datos permanecen bajo su total control.
 
-Características:
-• Sin intermediarios: se comunica directamente con la API de GitHub — sin servidor de terceros, sin backend, tus datos permanecen entre tu navegador y GitHub
-• Almacenamiento por archivo: cada marcador es un archivo JSON individual — legible y apto para diff
-• Fusión triple: sincronización automática sin conflictos
-• Soporte completo Firefox incluyendo el Menú de marcadores
-• Auto-sync en cada cambio de marcador (retardo configurable por perfil)
-• Múltiples perfiles de marcadores: hasta 10 perfiles con repos GitHub separados
-• Menú contextual: clic derecho en página o enlace — Añadir a la barra de marcadores, Añadir a otros marcadores, Sincronizar ahora, Cambiar perfil, Copiar URL del favicon, Descargar favicon
-• Herramientas de favicon: copia la URL del favicon de cualquier sitio al portapapeles o descárgalo como PNG — usa el favicon del navegador con el servicio de Google como alternativa
-• Automatización: añadir marcadores vía Git, CLI o GitHub Actions — sin abrir el navegador
-• Carpeta Repos GitHub: carpeta opcional con marcadores a todos tus repositorios GitHub
-• Perfiles de sync: tiempo real, frecuente, normal o ahorro de energía
-• Sync al inicio / al foco: sync opcional al abrir el navegador o al volver a la ventana
-• Sync periódico para detectar cambios remotos (1–120 minutos, configurable)
-• Push, Pull y Sync completo manuales desde el popup
-• Detección de conflictos cuando la fusión automática no es posible
-• Archivos generados: README.md, bookmarks.html, feed.xml y dashy-conf.yml — cada uno configurable como Desactivado, Manual o Auto
-• Sync de ajustes con Git: copia cifrada en el repositorio — modo Global o Individual (por dispositivo)
-• Importar/Exportar: marcadores (JSON), configuración Dashy (YAML) o ajustes (JSON / .enc cifrado)
-• Restablecimiento total: « Restablecer todos los datos » en Archivos → Ajustes — borra todos los perfiles, tokens y ajustes (los marcadores del navegador se conservan); confirmación en dos pasos
-• Asistente de configuración: integración guiada en 8 pasos para token, repositorio y primera sincronización
-• Integración: explorador de carpetas para seleccionar la ruta de sync; crear carpeta o importar marcadores al configurar un nuevo perfil
-• Multilingüe: 12 idiomas — EN, DE, FR, ES, PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL
-• Atajos de teclado: sync rápido, configuración — personalizables
-• Tema: claro, oscuro o auto — botón cíclico (A → Oscuro → Claro → A)
-• Opciones: 5 pestañas (GitHub, Sync, Archivos, Ayuda, Acerca de) con sub-pestañas para GitHub y Archivos
-• Notificaciones: Todas (éxito + error), Solo errores o Desactivadas
-• Guardado automático: todos los ajustes se guardan al cambiar — sin botones Guardar
-• Registro de depuración: pestaña Sync — para diagnosticar la sincronización
-• Votación del backlog: encuesta comunitaria para priorizar las próximas funciones
-• App móvil: GitSyncMarks-App (iOS + Android)
+Highlights
 
-Cómo funciona:
-1. Crear un repositorio GitHub
-2. Generar un Personal Access Token con el scope « repo »
-3. Configurar GitSyncMarks
-4. Clic en « Sincronizar ahora » — ¡listo!
+- Sinergia con Linkwarden: Guarde páginas o enlaces directamente en su instancia de Linkwarden. Incluye capturas de pantalla automáticas, sincronización de colecciones y etiquetas predefinidas.
+- Búsqueda Inteligente: Una interfaz de búsqueda dedicada y ultrarrápida para sus marcadores. Soporta temas claro y oscuro y es totalmente accesible mediante teclado.
+- Asistente de Configuración Guiado: Un proceso de incorporación paso a paso guía a los nuevos usuarios desde la configuración del token y el repositorio hasta su primera sincronización exitosa.
+- Fusión de Tres Vías: Fiabilidad de nivel industrial mediante un algoritmo de fusión avanzado que combina de forma inteligente los cambios de varios dispositivos.
 
-GitSyncMarks es totalmente open source: https://github.com/d0dg3r/GitSyncMarks
+Capacidades Clave
 
-App móvil: GitSyncMarks-App (iOS + Android). https://github.com/d0dg3r/GitSyncMarks-App
+- Privado por Diseño: Comunicación directa con la API de GitHub. Ningún tercero ve sus datos.
+- Optimizado para Firefox: Soporta estructuras de marcadores nativas (Barra de herramientas, Menú, Otros).
+- Almacenamiento por Archivo: Cada marcador se almacena como un archivo JSON legible, ideal para el control de versiones y la edición manual en GitHub.
+- Perfiles Múltiples: Gestione hasta 10 perfiles independientes (ej. Trabajo/Personal) con repositorios individuales.
+- Automatización: Añada marcadores mediante la CLI o GitHub Actions; la extensión los integra automáticamente en la siguiente sincronización.
+- Archivos Generados: Crea automáticamente un README.md (vista previa), bookmarks.html (archivo de importación) o un feed RSS en su repositorio.
+
+Instalación y Configuración
+
+1. Instalación: Instale GitSyncMarks desde Complementos para Firefox (AMO).
+2. GitHub PAT: Cree un Token de Acceso Personal con el permiso "repo" (clásico) o "Contents: Read/Write" (fine-grained).
+3. Asistente de Configuración: Siga el proceso guiado en Ayuda -> Primeros pasos.
+4. Linkwarden (opcional): Configure su instancia en la pestaña de Linkwarden.
+
+Aplicación Complementaria
+Utilice la aplicación GitSyncMarks-App (Android, iOS, Desktop) para gestionar sus marcadores directamente desde su repositorio de GitHub en dispositivos móviles. (Nota: Firefox para Android no admite la sincronización directa de marcadores mediante extensiones; utilice la aplicación en su lugar).
+
+GitSyncMarks es de Código Abierto: https://github.com/d0dg3r/GitSyncMarks
 
 ### Categories
 Marcadores

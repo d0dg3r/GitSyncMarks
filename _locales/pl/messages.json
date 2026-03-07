@@ -147,7 +147,7 @@
     "message": "Pokaż/ukryj token"
   },
   "options_tokenHint": {
-    "message": "Wymaga zakresu <code>repo</code>. <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Utwórz token</a>"
+    "message": "Wymaga zakresu <code>repo</code> (classic) lub <code>Contents: Read/Write</code> i <code>Metadata: Read</code> (fine-grained). <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Utwórz token</a>"
   },
   "options_repoOwner": {
     "message": "Właściciel repozytorium"
@@ -174,7 +174,7 @@
     "message": "Nie znaleziono folderów"
   },
   "options_browseFolderLoading": {
-    "message": "Ładowanie\u2026"
+    "message": "Ładowanie…"
   },
   "options_browseFolderSelect": {
     "message": "Wybierz"
@@ -1257,5 +1257,448 @@
         "content": "$1"
       }
     }
+  },
+  "contextMenu_addToQuickFolder": {
+    "message": "Dodaj do $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "contextMenu_category_ADD": {
+    "message": "Dodaj zakładkę"
+  },
+  "contextMenu_category_FAVICONS": {
+    "message": "Narzędzia Favicon"
+  },
+  "contextMenu_category_LINKWARDEN": {
+    "message": "Linkwarden"
+  },
+  "contextMenu_category_TOOLS": {
+    "message": "Narzędzia i Synchronizacja"
+  },
+  "contextMenu_notifFolderMissing": {
+    "message": "Wybrany folder już nie istnieje. Odśwież ustawienia szybkich folderów."
+  },
+  "contextMenu_notifOpenAllEmpty": {
+    "message": "Wybrany folder nie ma zakładek do otwarcia."
+  },
+  "contextMenu_notifOpenAllNeedsConfirm": {
+    "message": "Folder zawiera $1 kart (próg: $2). Kliknij ponownie w ciągu 15 sekund, aby potwierdzić.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_notifOpenAllSuccess": {
+    "message": "Otwarto $1 kartę/y z $2",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_openAllFromFolder": {
+    "message": "Otwórz wszystko z folderu"
+  },
+  "contextMenu_saveToLinkwarden": {
+    "message": "Zapisz w Linkwarden..."
+  },
+  "contextMenu_searchBookmarks": {
+    "message": "Szukaj zakładek"
+  },
+  "options_contextMenuConfigDesc": {
+    "message": "Włącz lub wyłącz elementy, aby pokazać je w menu kontekstowym. Przeciągnij lub użyj strzałek, aby zmienić kolejność."
+  },
+  "options_contextMenuConfigTitle": {
+    "message": "Widoczność i kolejność elementów"
+  },
+  "options_contextMenuItem_ADD_OTHER": {
+    "message": "Dodaj do Innych zakładek"
+  },
+  "options_contextMenuItem_ADD_TOOLBAR": {
+    "message": "Dodaj do paska zakładek"
+  },
+  "options_contextMenuItem_ADD_TO_FOLDER": {
+    "message": "Dodaj do folderu... (Menu)"
+  },
+  "options_contextMenuItem_COPY_FAVICON": {
+    "message": "Kopiuj URL Favicon"
+  },
+  "options_contextMenuItem_DOWNLOAD_FAVICON": {
+    "message": "Pobierz Favicon"
+  },
+  "options_contextMenuItem_OPEN_ALL_FOLDER": {
+    "message": "Otwórz wszystko z folderu"
+  },
+  "options_contextMenuItem_QUICK_FOLDERS": {
+    "message": "Przypięte szybkie foldery"
+  },
+  "options_contextMenuItem_SEARCH_BOOKMARKS": {
+    "message": "Szukaj zakładek"
+  },
+  "options_contextMenuItem_SWITCH_PROFILE": {
+    "message": "Zmień profil"
+  },
+  "options_contextMenuItem_SYNC_NOW": {
+    "message": "Synchronizuj teraz"
+  },
+  "options_contextMenuOpenAllThresholdHint": {
+    "message": "Jeśli folder ma więcej zakładek niż ten limit, zostaniesz poproszony o potwierdzenie (podwójne kliknięcie) przed otwarciem, aby uniknąć otwarcia zbyt wielu kart."
+  },
+  "options_contextMenuOpenAllThresholdLabel": {
+    "message": "Zabezpieczenie potwierdzenia dla \"Otwórz wszystko\" (karty)"
+  },
+  "options_contextMenuResetBtn": {
+    "message": "Przywróć domyślne"
+  },
+  "options_linkwardenApiKey": {
+    "message": "Klucz API"
+  },
+  "options_linkwardenDefaultCollection": {
+    "message": "Domyślna kolekcja"
+  },
+  "options_linkwardenDefaultTags": {
+    "message": "Domyślne tagi"
+  },
+  "options_linkwardenEnabled": {
+    "message": "Włącz Linkwarden"
+  },
+  "options_linkwardenInstanceUrl": {
+    "message": "URL instancji"
+  },
+  "options_linkwardenIntro": {
+    "message": "Skonfiguruj instancję Linkwarden, aby zapisywać zakładki bezpośrednio z menu kontekstowego."
+  },
+  "options_linkwardenTestConnection": {
+    "message": "Testuj połączenie"
+  },
+  "options_linkwardenTitle": {
+    "message": "Integracja Linkwarden"
+  },
+  "options_menu_showAsSubmenu": {
+    "message": "Pokaż jako podmenu"
+  },
+  "options_mobileAppAlert": {
+    "message": "<strong>Uwaga dla użytkowników Androida:</strong> Firefox na Androidzie nie obsługuje bezpośredniej synchronizacji zakładek przez rozszerzenia. Musisz użyć aplikacji towarzyszącej."
+  },
+  "options_subTabMenuAdvanced": {
+    "message": "Zaawansowane i Bezpieczeństwo"
+  },
+  "options_subTabMenuFolders": {
+    "message": "Przypięte foldery"
+  },
+  "options_subTabMenuItems": {
+    "message": "Widoczność i kolejność"
+  },
+  "options_subTabSync": {
+    "message": "Synchronizacja"
+  },
+  "options_tabGit": {
+    "message": "Git"
+  },
+  "options_tabLinkwarden": {
+    "message": "Linkwarden"
+  },
+  "options_tabMenu": {
+    "message": "Menu"
+  },
+  "help_contextMenuToolsDesc": {
+    "message": "W Pliki → Ustawienia możesz przypiąć do 3 folderów szybkiego dostępu i skonfigurować próg potwierdzenia Otwórz wszystko. Menu kontekstowe zawiera również Szukaj zakładek."
+  },
+  "help_contextMenuToolsTitle": {
+    "message": "Narzędzia menu kontekstowego"
+  },
+  "help_website": {
+    "message": "Strona internetowa"
+  },
+  "options_contextMenuFoldersRefreshed": {
+    "message": "Lista folderów odświeżona"
+  },
+  "options_contextMenuQuickFolder1": {
+    "message": "Szybki folder 1"
+  },
+  "options_contextMenuQuickFolder2": {
+    "message": "Szybki folder 2"
+  },
+  "options_contextMenuQuickFolder3": {
+    "message": "Szybki folder 3"
+  },
+  "options_contextMenuQuickFolderNone": {
+    "message": "(żaden)"
+  },
+  "options_contextMenuQuickFoldersHint": {
+    "message": "Wybierz do trzech folderów wyświetlanych jako wpisy jednym kliknięciem w menu kontekstowym."
+  },
+  "options_contextMenuQuickFoldersLabel": {
+    "message": "Przypięte szybkie foldery"
+  },
+  "options_contextMenuRefreshFolders": {
+    "message": "Odśwież listę folderów"
+  },
+  "options_contextMenuToolsDesc": {
+    "message": "Skonfiguruj akcje przypiętych folderów, bezpieczeństwo otwierania wszystkich i widoczność elementów menu."
+  },
+  "options_contextMenuToolsTitle": {
+    "message": "Narzędzia menu kontekstowego"
+  },
+  "options_onboardingInitPathAlreadyExists": {
+    "message": "Ścieżka \"$1\" już zawiera dane zakładek.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathBtn": {
+    "message": "Utwórz ścieżkę i uruchom pierwszą synchronizację"
+  },
+  "options_onboardingInitPathHint": {
+    "message": "Ścieżka \"$1\" nie istnieje lub jest pusta. Zostanie utworzona struktura folderów i przesłane bieżące zakładki jako baza.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathSuccess": {
+    "message": "Ścieżka \"$1\" utworzona i pierwsza synchronizacja zakończona.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingWizardFirstSyncHint": {
+    "message": "Pierwsza synchronizacja może trwać dłużej ze względu na sprawdzanie repozytorium i konfigurację początkową."
+  },
+  "options_onboardingWizardSyncInProgress": {
+    "message": "Praca w tle, proszę czekać..."
+  },
+  "options_onboardingWizardTokenHelpIntro": {
+    "message": "Osobisty token dostępu (PAT) pozwala GitSyncMarks na dostęp do Twojego repozytorium GitHub w celu synchronizacji zakładek. Tworzysz go w ustawieniach konta GitHub."
+  },
+  "options_onboardingWizardTokenHelpScopes": {
+    "message": "Token wymaga zakresu <code>repo</code> (classic) lub <code>Contents: Read/Write</code> i <code>Metadata: Read</code> (fine-grained). Daje to dostęp do odczytu/zapisu do repozytoriów (w tym prywatnych) i pozwala rozszerzeniu automatycznie utworzyć repozytorium. Traktuj token jak hasło."
+  },
+  "options_onboardingWizardTokenStep1": {
+    "message": "Kliknij poniższy link, aby otworzyć stronę tworzenia tokenów GitHub."
+  },
+  "options_onboardingWizardTokenStep2": {
+    "message": "Nadaj tokenowi nazwę (np. \"GitSyncMarks\") i ustaw datę wygaśnięcia, jeśli chcesz."
+  },
+  "options_onboardingWizardTokenStep3": {
+    "message": "W \"Scopes\" zaznacz <code>repo</code> (pełna kontrola nad prywatnymi repozytoriami)."
+  },
+  "options_onboardingWizardTokenStep4": {
+    "message": "Kliknij \"Generate token\", skopiuj go i wklej w polu poniżej."
+  },
+  "options_resetConfirmBtn": {
+    "message": "Tak, usuń wszystkie dane"
+  },
+  "options_settingsRegistryAliasNormalized": {
+    "message": "Utworzono nowy profil ustawień z aliasem: $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameConflict": {
+    "message": "Nazwa klienta już istnieje w repozytorium: $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameHint": {
+    "message": "Wymagane. Ta nazwa identyfikuje Twój profil ustawień klienta w repozytorium."
+  },
+  "options_settingsSyncClientNameLabel": {
+    "message": "Nazwa klienta"
+  },
+  "options_settingsSyncClientNamePlaceholder": {
+    "message": "mój-laptop"
+  },
+  "options_settingsSyncClientNameRequired": {
+    "message": "Najpierw wprowadź nazwę klienta."
+  },
+  "options_settingsSyncCreateOwnBtn": {
+    "message": "Utwórz moje ustawienie klienta"
+  },
+  "options_settingsSyncMigrationDone": {
+    "message": "Starsze profile ustawień zostały zmigrowane do czytelnych nazw klientów."
+  },
+  "options_settingsSyncModeGlobalTemporarilyDisabled": {
+    "message": "Tryb globalny jest tymczasowo niedostępny. Użyj ustawień klienta opartych na profilach."
+  },
+  "popup_website": {
+    "message": "Strona internetowa"
+  },
+  "search_clearBtn": {
+    "message": "Wyczyść"
+  },
+  "search_closeBtn": {
+    "message": "Zamknij"
+  },
+  "search_inputPlaceholder": {
+    "message": "Wpisz tytuł lub URL..."
+  },
+  "search_openBtn": {
+    "message": "Otwórz"
+  },
+  "search_statusNoResults": {
+    "message": "Nie znaleziono zakładek"
+  },
+  "search_statusResultCount": {
+    "message": "$1 wynik(ów)",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "search_statusSearching": {
+    "message": "Wyszukiwanie..."
+  },
+  "search_subtitle": {
+    "message": "Wyszukuj lokalne zakładki i otwieraj dopasowania w nowej karcie."
+  },
+  "search_title": {
+    "message": "Wyszukiwanie zakładek"
+  },
+  "search_windowTitle": {
+    "message": "GitSyncMarks – Wyszukiwanie zakładek"
+  },
+  "linkwardenSave_title": {
+    "message": "Zapisz w Linkwarden"
+  },
+  "linkwardenSave_urlLabel": {
+    "message": "URL"
+  },
+  "linkwardenSave_titleLabel": {
+    "message": "Tytuł"
+  },
+  "linkwardenSave_descriptionLabel": {
+    "message": "Opis"
+  },
+  "linkwardenSave_descriptionPlaceholder": {
+    "message": "Opcjonalny opis..."
+  },
+  "linkwardenSave_collectionLabel": {
+    "message": "Kolekcja"
+  },
+  "linkwardenSave_collectionNone": {
+    "message": "Nieprzypisane"
+  },
+  "linkwardenSave_collectionNew": {
+    "message": "Utwórz nową kolekcję"
+  },
+  "linkwardenSave_collectionNewPlaceholder": {
+    "message": "Nazwa nowej kolekcji..."
+  },
+  "linkwardenSave_tagsLabel": {
+    "message": "Tagi"
+  },
+  "linkwardenSave_tagsPlaceholder": {
+    "message": "Dodaj tagi..."
+  },
+  "linkwardenSave_screenshotLabel": {
+    "message": "Dołącz zrzut ekranu"
+  },
+  "linkwardenSave_saveBtn": {
+    "message": "Zapisz"
+  },
+  "linkwardenSave_cancelBtn": {
+    "message": "Anuluj"
+  },
+  "linkwardenSave_statusSaving": {
+    "message": "Zapisywanie..."
+  },
+  "linkwardenSave_statusSaved": {
+    "message": "Zapisano!"
+  },
+  "linkwardenSave_statusDuplicate": {
+    "message": "Już zapisano w Linkwarden"
+  },
+  "linkwardenSave_statusError": {
+    "message": "Błąd"
+  },
+  "linkwardenSave_quickSaveBtn": {
+    "message": "Szybki zapis"
+  },
+  "options_contextMenuItem_LINKWARDEN_SAVE": {
+    "message": "Zapisz w Linkwarden..."
+  },
+  "options_linkwardenDefaultTagsHint": {
+    "message": "Kliknij, aby dodać istniejące tagi lub wpisz, aby utworzyć nowe. Stosowane przy każdym zapisie."
+  },
+  "options_linkwardenDefaultScreenshot": {
+    "message": "Domyślne zrzuty ekranu"
+  },
+  "options_linkwardenDefaultScreenshotHint": {
+    "message": "Czy zrzuty ekranu powinny być domyślnie włączone w oknie zapisu."
+  },
+  "linkwardenSave_deleteBtn": {
+    "message": "Usuń"
+  },
+  "linkwardenSave_deleteConfirm": {
+    "message": "Czy na pewno chcesz usunąć ten link z Linkwarden?"
+  },
+  "linkwardenSave_statusDeleted": {
+    "message": "Link został pomyślnie usunięty!"
+  },
+  "options_linkwardenSyncEnabled": {
+    "message": "Synchronizuj kolekcje z zakładkami"
+  },
+  "options_linkwardenSyncParent": {
+    "message": "Folder nadrzędny"
+  },
+  "options_linkwardenSyncRefresh": {
+    "message": "Synchronizuj teraz"
+  },
+  "options_linkwardenSyncSuccess": {
+    "message": "Zsynchronizowano $1 kolekcji i $2 linków.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "options_pleaseEnterLinkwardenConfig": {
+    "message": "Najpierw wprowadź adres URL i token Linkwarden."
+  },
+  "options_linkwardenSyncPushToGit": {
+    "message": "Prześlij zakładki Linkwarden do Git"
+  },
+  "options_subTabGeneral": {
+    "message": "Ogólne"
+  },
+  "help_linkwardenTitle": {
+    "message": "Linkwarden"
+  },
+  "help_linkwardenIntegrationTitle": {
+    "message": "Integration"
+  },
+  "help_linkwardenIntegrationDesc": {
+    "message": "Connect to your Linkwarden instance to save bookmarks directly from the context menu. You can specify default tags and auto-capture screenshots."
+  },
+  "help_linkwardenSyncTitle": {
+    "message": "Sync Collections"
+  },
+  "help_linkwardenSyncDesc": {
+    "message": "Sync your Linkwarden collections into your browser bookmark folders and optionally push them to your Git repository."
   }
 }

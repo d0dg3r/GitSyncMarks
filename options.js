@@ -12,7 +12,10 @@ import { initTheme, applyTheme } from './lib/theme.js';
 import { serializeToJson, deserializeFromJson, bookmarkTreeToFileMap, fileMapToDashyYaml } from './lib/bookmark-serializer.js';
 import { replaceLocalBookmarks, SYNC_PRESETS } from './lib/sync-engine.js';
 import { updateGitHubReposFolder } from './lib/github-repos.js';
+import { updateLinkwardenCollectionsFolder } from './lib/linkwarden-sync.js';
+import { LinkwardenAPI } from './lib/linkwarden-api.js';
 import { encryptToken, decryptToken, migrateTokenIfNeeded, encryptWithPassword, decryptWithPassword, PASSWORD_ENC_PREFIX } from './lib/crypto.js';
+
 import {
   isDebugLogEnabled,
   setDebugLogEnabled,
@@ -56,7 +59,19 @@ const STORAGE_KEYS = {
   ONBOARDING_WIZARD_COMPLETED: 'onboardingWizardCompleted',
   ONBOARDING_WIZARD_DISMISSED: 'onboardingWizardDismissed',
   CONTEXT_OPEN_ALL_THRESHOLD: 'contextOpenAllThreshold',
+  CONTEXT_MENU_ITEMS: 'contextMenuItems',
+  CONTEXT_MENU_SUBMENUS: 'contextMenuSubmenus',
+  LINKWARDEN_ENABLED: 'linkwardenEnabled',
+  LINKWARDEN_URL: 'linkwardenUrl',
+  LINKWARDEN_TOKEN: 'linkwardenToken',
+  LINKWARDEN_DEFAULT_COLLECTION: 'linkwardenDefaultCollection',
+  LINKWARDEN_DEFAULT_TAGS: 'linkwardenDefaultTags',
+  LINKWARDEN_DEFAULT_SCREENSHOT: 'linkwardenDefaultScreenshot',
+  LINKWARDEN_SYNC_ENABLED: 'linkwardenSyncEnabled',
+  LINKWARDEN_SYNC_PARENT: 'linkwardenSyncParent',
+  LINKWARDEN_SYNC_PUSH_TO_GIT: 'linkwardenSyncPushToGit',
 };
+
 const LOCAL_STORAGE_KEYS = {
   SETTINGS_SYNC_CLIENT_NAME: 'settingsSyncClientName',
 };
@@ -196,6 +211,37 @@ const quickFolderSelect3 = document.getElementById('quick-folder-3');
 const quickFoldersRefreshBtn = document.getElementById('quick-folders-refresh-btn');
 const quickFoldersResult = document.getElementById('quick-folders-result');
 const openAllThresholdInput = document.getElementById('open-all-threshold');
+const contextMenuItemsList = document.getElementById('context-menu-items-list');
+const contextMenuResetBtn = document.getElementById('context-menu-reset-btn');
+
+// ---- DOM elements: Linkwarden Tab ----
+const linkwardenEnabledInput = document.getElementById('linkwarden-enabled');
+const linkwardenSubtabBar = document.getElementById('linkwarden-subtab-bar');
+const linkwardenSettingsGroup = document.getElementById('linkwarden-settings');
+const linkwardenUrlInput = document.getElementById('linkwarden-url');
+const linkwardenTokenInput = document.getElementById('linkwarden-token');
+const toggleLinkwardenTokenBtn = document.getElementById('toggle-linkwarden-token');
+const linkwardenDefaultCollectionSelect = document.getElementById('linkwarden-default-collection');
+const lwOptionsTagChips = document.getElementById('lw-options-tag-chips');
+const lwOptionsTagInput = document.getElementById('lw-options-tag-input');
+const lwOptionsTagCloud = document.getElementById('lw-options-tag-cloud');
+let lwOptionsSelectedTags = [];
+let lwOptionsAllTags = [];
+const linkwardenDefaultScreenshotInput = document.getElementById('linkwarden-default-screenshot');
+const linkwardenSyncEnabledInput = document.getElementById('linkwarden-sync-enabled');
+const linkwardenSyncOptions = document.getElementById('linkwarden-sync-options');
+const linkwardenSyncParentSelect = document.getElementById('linkwarden-sync-parent');
+const linkwardenSyncPushToGitInput = document.getElementById('linkwarden-sync-push-to-git');
+const linkwardenSyncEnabledGroup = document.getElementById('linkwarden-sync-enabled-group');
+const linkwardenSyncDisabledMsg = document.getElementById('linkwarden-sync-disabled-msg');
+const linkwardenSyncRefreshBtn = document.getElementById('linkwarden-sync-refresh-btn');
+const linkwardenSyncSpinner = document.getElementById('linkwarden-sync-spinner');
+const linkwardenSyncResult = document.getElementById('linkwarden-sync-result');
+const linkwardenTestBtn = document.getElementById('linkwarden-test-btn');
+const linkwardenTestSpinner = document.getElementById('linkwarden-test-spinner');
+const linkwardenTestResult = document.getElementById('linkwarden-test-result');
+
+
 
 // ---- DOM elements: Export/Import (compact dropdown UI) ----
 const exportTypeSelect = document.getElementById('export-type-select');
@@ -710,9 +756,20 @@ async function loadSettings() {
     theme: 'auto',
     profileSwitchWithoutConfirm: false,
     debugLogEnabled: false,
-    contextOpenAllThreshold: 15,
+    contextMenuOpenAllThreshold: 15,
+    contextMenuItems: DEFAULT_CONTEXT_MENU_ITEMS,
+    linkwardenEnabled: false,
+    linkwardenUrl: '',
+    linkwardenToken: '',
+    linkwardenDefaultCollection: '',
+    linkwardenDefaultTags: '',
+    linkwardenDefaultScreenshot: false,
+    linkwardenSyncEnabled: false,
+    linkwardenSyncParent: 'other',
+    linkwardenSyncPushToGit: false,
   };
   const globals = { ...syncDefaults, ...(await chrome.storage.sync.get(syncDefaults)) };
+
 
   autoSyncInput.checked = globals.autoSync !== false;
   syncIntervalInput.value = globals.syncInterval ?? 15;
@@ -723,6 +780,64 @@ async function loadSettings() {
   syncOnStartupInput.checked = globals.syncOnStartup === true;
   syncOnFocusInput.checked = globals.syncOnFocus === true;
   generateReadmeMdSelect.value = normalizeGenMode(globals.generateReadmeMd);
+
+  // Linkwarden settings
+  linkwardenEnabledInput.checked = globals.linkwardenEnabled === true;
+  linkwardenUrlInput.value = globals.linkwardenUrl || '';
+  linkwardenTokenInput.value = globals.linkwardenToken ? await decryptToken(globals.linkwardenToken) : '';
+  linkwardenDefaultCollectionSelect.value = globals.linkwardenDefaultCollection || '';
+  // Parse saved default tags (comma-separated) into chip picker
+  lwOptionsSelectedTags = (globals.linkwardenDefaultTags || '').split(',').map(t => t.trim()).filter(Boolean);
+  renderLwOptionsTagChips();
+  renderLwOptionsTagCloud();
+  linkwardenDefaultScreenshotInput.checked = globals.linkwardenDefaultScreenshot === true;
+  linkwardenSyncEnabledInput.checked = globals.linkwardenSyncEnabled === true;
+  linkwardenSyncOptions.style.display = linkwardenSyncEnabledInput.checked ? 'block' : 'none';
+  linkwardenSyncParentSelect.value = globals.linkwardenSyncParent || 'other';
+  linkwardenSyncPushToGitInput.checked = globals.linkwardenSyncPushToGit === true;
+  linkwardenSettingsGroup.style.display = linkwardenEnabledInput.checked ? 'block' : 'none';
+  linkwardenSubtabBar.style.display = linkwardenEnabledInput.checked ? 'flex' : 'none';
+  linkwardenSyncEnabledGroup.style.display = linkwardenEnabledInput.checked ? 'block' : 'none';
+  linkwardenSyncDisabledMsg.style.display = linkwardenEnabledInput.checked ? 'none' : 'block';
+
+  // Attempt to fetch collections if configured
+  if (linkwardenEnabledInput.checked && linkwardenUrlInput.value && linkwardenTokenInput.value) {
+    let origin;
+    try {
+      origin = new URL(linkwardenUrlInput.value).origin + '/*';
+      chrome.permissions.contains({ origins: [origin] }, async (hasPermission) => {
+        if (hasPermission) {
+          try {
+            const api = new LinkwardenAPI(linkwardenUrlInput.value, linkwardenTokenInput.value);
+            const collections = await api.getCollections();
+            if (collections && collections.response && Array.isArray(collections.response)) {
+              const currentSelection = globals.linkwardenDefaultCollection || '';
+              linkwardenDefaultCollectionSelect.innerHTML = '<option value="" data-i18n="options_none">None</option>';
+              applyI18n();
+              collections.response.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id;
+                opt.textContent = c.name;
+                if (c.id.toString() === currentSelection) opt.selected = true;
+                linkwardenDefaultCollectionSelect.appendChild(opt);
+              });
+            }
+            // Also fetch tags for the cloud
+            const tags = await api.getTags().catch(() => null);
+            if (tags?.response) {
+              lwOptionsAllTags = tags.response.map(t => ({ id: t.id, name: t.name }));
+              renderLwOptionsTagCloud();
+            }
+          } catch (e) {
+            console.warn('[GitSyncMarks] Failed to auto-fetch Linkwarden collections on load', e);
+          }
+        }
+      });
+    } catch (e) {
+      // Invalid URL
+    }
+  }
+
   generateBookmarksHtmlSelect.value = normalizeGenMode(globals.generateBookmarksHtml);
   generateFeedXmlSelect.value = normalizeGenMode(globals.generateFeedXml);
   generateDashyYmlSelect.value = normalizeGenMode(globals.generateDashyYml);
@@ -764,6 +879,16 @@ async function loadSettings() {
   openAllThresholdInput.value = String(
     Math.max(1, parseInt(globals.contextOpenAllThreshold, 10) || 15)
   );
+
+  // Ensure default context menu items (like recently added Linkwarden) are present in the list
+  const existingMenuIds = new Set(globals.contextMenuItems.map(i => i.id));
+  for (const defItem of DEFAULT_CONTEXT_MENU_ITEMS) {
+    if (!existingMenuIds.has(defItem.id)) {
+      globals.contextMenuItems.push(defItem);
+    }
+  }
+
+  renderContextMenuConfig(globals.contextMenuItems);
   profileSwitchConfirm.style.display = 'none';
   profileDeleteConfirm.style.display = 'none';
   profileAddDialog.style.display = 'none';
@@ -1140,7 +1265,10 @@ async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
       return { ok: false };
     }
 
-    if (!tokenResult.scopes.includes('repo')) {
+    // Classic PATs return scopes. Fine-grained tokens/Apps don't return scopes 
+    // in the header. If scopes are missing (ambiguous), we skip the strict 'repo' check
+    // and let the following repo check verify access.
+    if (!tokenResult.ambiguous && !tokenResult.scopes.includes('repo')) {
       hideConnectionPathInitAction();
       showValidation(getMessage('options_tokenValidMissingScope', [tokenResult.username]), 'error');
       return { ok: false };
@@ -1277,7 +1405,7 @@ async function runWizardTokenValidation() {
     setWizardResult(getMessage('options_invalidToken'), 'error');
     return false;
   }
-  if (!tokenResult.scopes.includes('repo')) {
+  if (!tokenResult.ambiguous && !tokenResult.scopes.includes('repo')) {
     setWizardResult(getMessage('options_tokenValidMissingScope', [tokenResult.username]), 'error');
     return false;
   }
@@ -1642,7 +1770,17 @@ async function saveSettings() {
       [STORAGE_KEYS.LANGUAGE]: languageSelect.value,
       [STORAGE_KEYS.PROFILE_SWITCH_WITHOUT_CONFIRM]: profileSwitchWithoutConfirmInput.checked,
       [STORAGE_KEYS.CONTEXT_OPEN_ALL_THRESHOLD]: Math.max(1, parseInt(openAllThresholdInput.value, 10) || 15),
+      [STORAGE_KEYS.LINKWARDEN_ENABLED]: linkwardenEnabledInput.checked,
+      [STORAGE_KEYS.LINKWARDEN_URL]: linkwardenUrlInput.value.trim(),
+      [STORAGE_KEYS.LINKWARDEN_TOKEN]: linkwardenTokenInput.value.trim() ? await encryptToken(linkwardenTokenInput.value.trim()) : '',
+      [STORAGE_KEYS.LINKWARDEN_DEFAULT_COLLECTION]: linkwardenDefaultCollectionSelect.value,
+      [STORAGE_KEYS.LINKWARDEN_DEFAULT_TAGS]: lwOptionsSelectedTags.join(', '),
+      [STORAGE_KEYS.LINKWARDEN_DEFAULT_SCREENSHOT]: linkwardenDefaultScreenshotInput.checked,
+      [STORAGE_KEYS.LINKWARDEN_SYNC_ENABLED]: linkwardenSyncEnabledInput.checked,
+      [STORAGE_KEYS.LINKWARDEN_SYNC_PARENT]: linkwardenSyncParentSelect.value,
+      [STORAGE_KEYS.LINKWARDEN_SYNC_PUSH_TO_GIT]: linkwardenSyncPushToGitInput.checked,
     });
+
 
     try {
       await chrome.runtime.sendMessage({ action: 'settingsChanged' });
@@ -1805,8 +1943,239 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// Debug log: toggle saves immediately; export downloads log file
+// ==============================
+// Sync Tab Logic
+// ==============================
+
+autoSyncInput.addEventListener('change', saveSettings);
+syncProfileSelect.addEventListener('change', () => {
+  syncCustomFields.style.display = syncProfileSelect.value === 'custom' ? 'block' : 'none';
+  saveSettings();
+});
+syncIntervalInput.addEventListener('change', saveSettings);
+debounceDelayInput.addEventListener('change', saveSettings);
+syncOnStartupInput.addEventListener('change', saveSettings);
+syncOnFocusInput.addEventListener('change', saveSettings);
+notificationsModeSelect.addEventListener('change', saveSettings);
+
+// ==============================
+// Linkwarden Tab Logic
+// ==============================
+
+linkwardenEnabledInput.addEventListener('change', () => {
+  linkwardenSettingsGroup.style.display = linkwardenEnabledInput.checked ? 'block' : 'none';
+  linkwardenSubtabBar.style.display = linkwardenEnabledInput.checked ? 'flex' : 'none';
+  linkwardenSyncEnabledGroup.style.display = linkwardenEnabledInput.checked ? 'block' : 'none';
+  linkwardenSyncDisabledMsg.style.display = linkwardenEnabledInput.checked ? 'none' : 'block';
+  saveSettings();
+});
+
+linkwardenUrlInput.addEventListener('change', saveSettings);
+linkwardenTokenInput.addEventListener('change', saveSettings);
+linkwardenDefaultCollectionSelect.addEventListener('change', saveSettings);
+// Linkwarden options page tag picker
+function lwOptionsAddTag(name) {
+  const n = name.trim();
+  if (!n || lwOptionsSelectedTags.includes(n)) return;
+  lwOptionsSelectedTags.push(n);
+  renderLwOptionsTagChips();
+  renderLwOptionsTagCloud();
+  lwOptionsTagInput.value = '';
+  saveSettings();
+}
+
+function lwOptionsRemoveTag(name) {
+  lwOptionsSelectedTags = lwOptionsSelectedTags.filter(t => t !== name);
+  renderLwOptionsTagChips();
+  renderLwOptionsTagCloud();
+  saveSettings();
+}
+
+function renderLwOptionsTagChips() {
+  lwOptionsTagChips.innerHTML = '';
+  for (const tag of lwOptionsSelectedTags) {
+    const chip = document.createElement('span');
+    chip.className = 'lw-options-tag-chip';
+    chip.textContent = tag;
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.className = 'lw-options-tag-chip-remove';
+    removeBtn.textContent = '×';
+    removeBtn.addEventListener('click', () => lwOptionsRemoveTag(tag));
+    chip.appendChild(removeBtn);
+    lwOptionsTagChips.appendChild(chip);
+  }
+}
+
+function renderLwOptionsTagCloud(filter = '') {
+  lwOptionsTagCloud.innerHTML = '';
+  const q = filter.toLowerCase().trim();
+  const available = lwOptionsAllTags
+    .filter(t => !lwOptionsSelectedTags.includes(t.name))
+    .filter(t => !q || t.name.toLowerCase().includes(q));
+  for (const tag of available) {
+    const pill = document.createElement('span');
+    pill.className = 'lw-options-tag-cloud-item';
+    pill.textContent = tag.name;
+    pill.addEventListener('click', () => lwOptionsAddTag(tag.name));
+    lwOptionsTagCloud.appendChild(pill);
+  }
+  if (q && !lwOptionsAllTags.some(t => t.name.toLowerCase() === q) && !lwOptionsSelectedTags.some(t => t.toLowerCase() === q)) {
+    const createPill = document.createElement('span');
+    createPill.className = 'lw-options-tag-cloud-item lw-options-tag-cloud-new';
+    createPill.textContent = `+ "${filter.trim()}"`;
+    createPill.addEventListener('click', () => lwOptionsAddTag(filter.trim()));
+    lwOptionsTagCloud.appendChild(createPill);
+  }
+}
+
+lwOptionsTagInput.addEventListener('input', () => renderLwOptionsTagCloud(lwOptionsTagInput.value));
+lwOptionsTagInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ',' || e.key === 'Tab') {
+    if (lwOptionsTagInput.value.trim()) {
+      e.preventDefault();
+      lwOptionsAddTag(lwOptionsTagInput.value);
+    }
+  } else if (e.key === 'Backspace' && !lwOptionsTagInput.value && lwOptionsSelectedTags.length > 0) {
+    lwOptionsRemoveTag(lwOptionsSelectedTags[lwOptionsSelectedTags.length - 1]);
+  }
+});
+
+document.getElementById('lw-options-tags-wrap').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget || e.target === lwOptionsTagChips) {
+    lwOptionsTagInput.focus();
+  }
+});
+
+linkwardenDefaultScreenshotInput.addEventListener('change', saveSettings);
+
+linkwardenSyncEnabledInput.addEventListener('change', () => {
+  linkwardenSyncOptions.style.display = linkwardenSyncEnabledInput.checked ? 'block' : 'none';
+  saveSettings();
+});
+linkwardenSyncParentSelect.addEventListener('change', saveSettings);
+linkwardenSyncPushToGitInput.addEventListener('change', saveSettings);
+
+linkwardenSyncRefreshBtn.addEventListener('click', async () => {
+  await saveSettings();
+  const url = linkwardenUrlInput.value.trim();
+  const tokenEnc = linkwardenTokenInput.value.trim();
+
+  if (!url || !tokenEnc) {
+    linkwardenSyncResult.textContent = getMessage('options_pleaseEnterLinkwardenConfig') || 'Linkwarden URL and Token are required';
+    linkwardenSyncResult.className = 'validation-result error';
+    return;
+  }
+
+  try {
+    linkwardenSyncRefreshBtn.disabled = true;
+    linkwardenSyncSpinner.style.display = 'inline-block';
+    linkwardenSyncResult.textContent = '';
+
+    const token = await decryptToken(tokenEnc);
+    const parent = linkwardenSyncParentSelect.value || 'other';
+
+    const result = await updateLinkwardenCollectionsFolder(url, token, parent);
+
+    linkwardenSyncResult.textContent = getMessage('options_linkwardenSyncSuccess', [result.collections.toString(), result.links.toString()]) || `Synced ${result.collections} collections and ${result.links} links.`;
+    linkwardenSyncResult.className = 'validation-result success';
+  } catch (err) {
+    linkwardenSyncResult.textContent = getMessage('options_error', [err.message]);
+    linkwardenSyncResult.className = 'validation-result error';
+  } finally {
+    linkwardenSyncRefreshBtn.disabled = false;
+    linkwardenSyncSpinner.style.display = 'none';
+  }
+});
+
+toggleLinkwardenTokenBtn.addEventListener('click', () => {
+  const isPassword = linkwardenTokenInput.type === 'password';
+  linkwardenTokenInput.type = isPassword ? 'text' : 'password';
+  toggleLinkwardenTokenBtn.querySelector('.icon-eye').textContent = isPassword ? '👁️‍🗨️' : '👁';
+});
+
+linkwardenTestBtn.addEventListener('click', async () => {
+  const url = linkwardenUrlInput.value.trim();
+  const token = linkwardenTokenInput.value.trim();
+
+  if (!url || !token) {
+    linkwardenTestResult.textContent = 'URL and Token are required';
+    linkwardenTestResult.className = 'validation-result error';
+    return;
+  }
+
+  let origin;
+  try {
+    origin = new URL(url).origin + '/*';
+  } catch (e) {
+    linkwardenTestResult.textContent = 'Invalid URL format';
+    linkwardenTestResult.className = 'validation-result error';
+    return;
+  }
+
+  chrome.permissions.contains({ origins: [origin] }, (hasPermission) => {
+    if (hasPermission) {
+      performLinkwardenTest(url, token);
+    } else {
+      chrome.permissions.request({ origins: [origin] }, (granted) => {
+        if (granted) {
+          performLinkwardenTest(url, token);
+        } else {
+          linkwardenTestResult.textContent = 'Host permission denied. Cannot connect to Linkwarden.';
+          linkwardenTestResult.className = 'validation-result error';
+        }
+      });
+    }
+  });
+});
+
+async function performLinkwardenTest(url, token) {
+  linkwardenTestBtn.disabled = true;
+  linkwardenTestSpinner.style.display = 'inline-block';
+  linkwardenTestResult.textContent = '';
+
+  try {
+    const api = new LinkwardenAPI(url, token);
+    const collections = await api.getCollections();
+
+    // Attempt to populate the default collection select if it was successful
+    if (collections && collections.response && Array.isArray(collections.response)) {
+      const currentSelection = linkwardenDefaultCollectionSelect.value;
+      linkwardenDefaultCollectionSelect.innerHTML = '<option value="" data-i18n="options_none">None</option>';
+      applyI18n(); // Re-apply to the "None" option
+      collections.response.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = c.name;
+        if (c.id.toString() === currentSelection) opt.selected = true;
+        linkwardenDefaultCollectionSelect.appendChild(opt);
+      });
+    }
+
+    linkwardenTestResult.textContent = 'Connection successful!';
+    linkwardenTestResult.className = 'validation-result success';
+
+    // Also fetch tags for the cloud
+    try {
+      const tagsRes = await api.getTags();
+      if (tagsRes?.response) {
+        lwOptionsAllTags = tagsRes.response.map(t => ({ id: t.id, name: t.name }));
+        renderLwOptionsTagCloud();
+      }
+    } catch { /* tags optional */ }
+  } catch (err) {
+    linkwardenTestResult.textContent = `Connection failed: ${err.message}`;
+    linkwardenTestResult.className = 'validation-result error';
+  } finally {
+    linkwardenTestBtn.disabled = false;
+    linkwardenTestSpinner.style.display = 'none';
+  }
+}
+
+
+
 debugLogEnabledInput.addEventListener('change', async () => {
+
   await setDebugLogEnabled(debugLogEnabledInput.checked);
 });
 debugLogExportBtn.addEventListener('click', async () => {
@@ -2417,5 +2786,181 @@ function showResult(el, message, type) {
   el.className = `ie-result ${type}`;
   setTimeout(() => { el.textContent = ''; el.className = 'ie-result'; }, 4000);
 }
+
+const DEFAULT_CONTEXT_MENU_ITEMS = [
+  { id: 'ADD_TOOLBAR', enabled: true },
+  { id: 'ADD_OTHER', enabled: true },
+  { id: 'ADD_TO_FOLDER', enabled: true },
+  { id: 'QUICK_FOLDERS', enabled: true },
+  { id: 'LINKWARDEN_SAVE', enabled: true },
+  { id: 'SYNC_NOW', enabled: true },
+  { id: 'SEARCH_BOOKMARKS', enabled: true },
+  { id: 'OPEN_ALL_FOLDER', enabled: true },
+  { id: 'COPY_FAVICON', enabled: true },
+  { id: 'DOWNLOAD_FAVICON', enabled: true },
+  { id: 'SWITCH_PROFILE', enabled: true },
+];
+
+const CATEGORIES = {
+  ADD: 'ADD',
+  LINKWARDEN: 'LINKWARDEN',
+  TOOLS: 'TOOLS',
+  FAVICONS: 'FAVICONS',
+};
+
+const ITEM_CATEGORY_MAP = {
+  ADD_TOOLBAR: CATEGORIES.ADD,
+  ADD_OTHER: CATEGORIES.ADD,
+  ADD_TO_FOLDER: CATEGORIES.ADD,
+  QUICK_FOLDERS: CATEGORIES.ADD,
+  LINKWARDEN_SAVE: CATEGORIES.LINKWARDEN,
+  SYNC_NOW: CATEGORIES.TOOLS,
+  SEARCH_BOOKMARKS: CATEGORIES.TOOLS,
+  OPEN_ALL_FOLDER: CATEGORIES.TOOLS,
+  SWITCH_PROFILE: CATEGORIES.TOOLS,
+  COPY_FAVICON: CATEGORIES.FAVICONS,
+  DOWNLOAD_FAVICON: CATEGORIES.FAVICONS,
+};
+
+// ==============================
+// Context Menu configuration
+// ==============================
+
+async function renderContextMenuConfig(items) {
+  if (!contextMenuItemsList) return;
+  contextMenuItemsList.innerHTML = '';
+
+  const { contextMenuSubmenus = {} } = await chrome.storage.sync.get({ contextMenuSubmenus: {} });
+
+  const grouped = {};
+  items.forEach(item => {
+    const cat = ITEM_CATEGORY_MAP[item.id] || 'OTHER';
+    if (!grouped[cat]) grouped[cat] = [];
+    grouped[cat].push(item);
+  });
+
+  for (const [catKey, catItems] of Object.entries(grouped)) {
+    // Category Header
+    const header = document.createElement('div');
+    header.className = 'context-menu-category-header';
+
+    const title = document.createElement('span');
+    title.className = 'category-title';
+    title.textContent = getMessage(`contextMenu_category_${catKey}`);
+    header.appendChild(title);
+
+    const submenuToggleWrap = document.createElement('div');
+    submenuToggleWrap.className = 'submenu-toggle-wrap';
+
+    const submenuLabel = document.createElement('span');
+    submenuLabel.textContent = getMessage('options_menu_showAsSubmenu');
+    submenuToggleWrap.appendChild(submenuLabel);
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = contextMenuSubmenus[catKey] !== false; // Default true
+    checkbox.addEventListener('change', () => toggleCategorySubmenu(catKey, checkbox.checked));
+
+    const toggleLabel = document.createElement('label');
+    toggleLabel.className = 'toggle-label';
+    const slider = document.createElement('span');
+    slider.className = 'toggle-slider toggle-slider-sm';
+    toggleLabel.appendChild(checkbox);
+    toggleLabel.appendChild(slider);
+
+    submenuToggleWrap.appendChild(toggleLabel);
+    header.appendChild(submenuToggleWrap);
+    contextMenuItemsList.appendChild(header);
+
+    catItems.forEach((item) => {
+      const globalIndex = items.findIndex(i => i.id === item.id);
+      const row = document.createElement('div');
+      row.className = 'context-menu-item-row';
+      row.dataset.id = item.id;
+
+      const label = document.createElement('span');
+      label.className = 'context-menu-item-label';
+      label.textContent = getMessage(`options_contextMenuItem_${item.id}`) || item.id;
+      row.appendChild(label);
+
+      const actions = document.createElement('div');
+      actions.className = 'context-menu-item-actions';
+
+      const upBtn = document.createElement('button');
+      upBtn.className = 'context-menu-item-reorder-btn';
+      upBtn.textContent = '↑';
+      upBtn.disabled = globalIndex === 0;
+      upBtn.addEventListener('click', () => moveContextMenuItem(globalIndex, -1));
+      actions.appendChild(upBtn);
+
+      const downBtn = document.createElement('button');
+      downBtn.className = 'context-menu-item-reorder-btn';
+      downBtn.textContent = '↓';
+      downBtn.disabled = globalIndex === items.length - 1;
+      downBtn.addEventListener('click', () => moveContextMenuItem(globalIndex, 1));
+      actions.appendChild(downBtn);
+
+      row.appendChild(actions);
+
+      const toggleWrap = document.createElement('label');
+      toggleWrap.className = 'toggle-label context-menu-item-toggle';
+
+      const itemCheckbox = document.createElement('input');
+      itemCheckbox.type = 'checkbox';
+      itemCheckbox.checked = item.enabled !== false;
+      itemCheckbox.addEventListener('change', () => toggleContextMenuItem(item.id, itemCheckbox.checked));
+
+      const itemSlider = document.createElement('span');
+      itemSlider.className = 'toggle-slider toggle-slider-sm';
+
+      toggleWrap.appendChild(itemCheckbox);
+      toggleWrap.appendChild(itemSlider);
+      row.appendChild(toggleWrap);
+
+      contextMenuItemsList.appendChild(row);
+    });
+  }
+}
+
+async function toggleCategorySubmenu(catKey, enabled) {
+  const { contextMenuSubmenus = {} } = await chrome.storage.sync.get({ contextMenuSubmenus: {} });
+  contextMenuSubmenus[catKey] = enabled;
+  await chrome.storage.sync.set({ [STORAGE_KEYS.CONTEXT_MENU_SUBMENUS]: contextMenuSubmenus });
+  chrome.runtime.sendMessage({ action: 'refreshContextMenus' });
+}
+
+async function moveContextMenuItem(index, direction) {
+  const { contextMenuItems } = await chrome.storage.sync.get({ contextMenuItems: DEFAULT_CONTEXT_MENU_ITEMS });
+  const newItems = [...contextMenuItems];
+  const targetIndex = index + direction;
+
+  if (targetIndex >= 0 && targetIndex < newItems.length) {
+    [newItems[index], newItems[targetIndex]] = [newItems[targetIndex], newItems[index]];
+    await chrome.storage.sync.set({ [STORAGE_KEYS.CONTEXT_MENU_ITEMS]: newItems });
+    renderContextMenuConfig(newItems);
+    chrome.runtime.sendMessage({ action: 'refreshContextMenus' });
+  }
+}
+
+async function toggleContextMenuItem(id, enabled) {
+  const { contextMenuItems } = await chrome.storage.sync.get({ contextMenuItems: DEFAULT_CONTEXT_MENU_ITEMS });
+  const newItems = contextMenuItems.map(item =>
+    item.id === id ? { ...item, enabled } : item
+  );
+  await chrome.storage.sync.set({ [STORAGE_KEYS.CONTEXT_MENU_ITEMS]: newItems });
+  renderContextMenuConfig(newItems);
+  chrome.runtime.sendMessage({ action: 'refreshContextMenus' });
+}
+
+contextMenuResetBtn?.addEventListener('click', async () => {
+  await chrome.storage.sync.set({ [STORAGE_KEYS.CONTEXT_MENU_ITEMS]: DEFAULT_CONTEXT_MENU_ITEMS });
+  renderContextMenuConfig(DEFAULT_CONTEXT_MENU_ITEMS);
+  chrome.runtime.sendMessage({ action: 'refreshContextMenus' });
+});
+
+openAllThresholdInput?.addEventListener('change', async () => {
+  const val = Math.max(1, parseInt(openAllThresholdInput.value, 10) || 15);
+  await chrome.storage.sync.set({ [STORAGE_KEYS.CONTEXT_OPEN_ALL_THRESHOLD]: val });
+});
 
 // replaceLocalBookmarks is imported from lib/sync-engine.js (single source of truth)

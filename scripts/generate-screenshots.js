@@ -28,19 +28,18 @@ const LANGUAGES = [
 ];
 
 const OPTIONS_TABS = [
-  { id: 'github', subtab: null, file: '1-github' },
-  { id: 'github', subtab: 'github-connection', file: '2-connection' },
-  { id: 'sync', subtab: null, file: '3-sync' },
-  { id: 'files', subtab: null, file: '4-files' },
-  { id: 'files', subtab: 'files-export-import', file: '5-export-import' },
+  { id: 'github', subtab: 'github-connection', file: '1-connection' },
+  { id: 'github', subtab: 'github-sync', file: '2-sync' },
+  { id: 'menu', subtab: 'menu-items', file: '3-menu' },
+  { id: 'linkwarden', subtab: 'linkwarden-general', file: '4-linkwarden' },
 ];
 
-const FIREFOX_FILES = ['1-github', '2-connection', '3-sync', '4-files', '5-export-import', '6-popup', '7-wizard-welcome', '8-wizard-token', '9-wizard-repo'];
+const FIREFOX_FILES = ['1-connection', '2-sync', '3-menu', '4-linkwarden', '5-search', '6-popup', '7-linkwarden-save', '8-wizard-welcome', '9-wizard-token', '10-wizard-repo'];
 
 const WIZARD_STEPS_FOR_SCREENSHOTS = [
-  { step: 0, file: '7-wizard-welcome' },
-  { step: 1, file: '8-wizard-token' },
-  { step: 5, file: '9-wizard-repo' },
+  { step: 0, file: '8-wizard-welcome' },
+  { step: 1, file: '9-wizard-token' },
+  { step: 5, file: '10-wizard-repo' },
 ];
 
 async function ensureDir(dir) {
@@ -65,12 +64,13 @@ async function compositeLightDark(lightBuffer, darkBuffer, outPath) {
     .toFile(outPath);
 }
 
-/** Popup composite (crop): rechte Hälfte wegschneiden (leer), linke Hälften light|dark zusammensetzen. */
-async function compositePopupLightDarkCrop(lightBuffer, darkBuffer, outPath) {
+/** Popup composite (crop): rect centered, linke Hälften light|dark zusammensetzen. */
+async function compositePopupLightDarkCrop(lightBuffer, darkBuffer, outPath, cropLeft = 0) {
   const halfWidth = VIEWPORT.width / 2;
+
   const [lightLeft, darkLeft] = await Promise.all([
-    sharp(lightBuffer).extract({ left: 0, top: 0, width: halfWidth, height: VIEWPORT.height }).toBuffer(),
-    sharp(darkBuffer).extract({ left: 0, top: 0, width: halfWidth, height: VIEWPORT.height }).toBuffer(),
+    sharp(lightBuffer).extract({ left: cropLeft, top: 0, width: halfWidth, height: VIEWPORT.height }).toBuffer(),
+    sharp(darkBuffer).extract({ left: cropLeft, top: 0, width: halfWidth, height: VIEWPORT.height }).toBuffer(),
   ]);
   await sharp({
     create: { width: VIEWPORT.width, height: VIEWPORT.height, channels: 3, background: { r: 255, g: 255, b: 255 } },
@@ -93,10 +93,11 @@ async function main() {
 
   await ensureDir(STORE_ASSETS);
 
-  // Remove old screenshot files from previous layouts
   const OLD_FILES = [
     'github', 'synchronization', 'backup', 'automation', 'help', 'about', 'popup',
     '1-github', '2-synchronization', '3-backup', '4-automation', '5-help', '6-about', '7-popup',
+    '2-connection', '3-sync', '4-files', '5-export-import', '6-popup', '7-wizard-welcome', '8-wizard-token', '9-wizard-repo',
+    '1-connection', '3-menu', '4-linkwarden', '5-search', '7-linkwarden-save', '10-wizard-repo'
   ];
   for (const code of LANGUAGES.map((l) => l.code)) {
     const langDir = path.join(STORE_ASSETS, code);
@@ -155,26 +156,30 @@ async function main() {
 
     for (const { id, subtab, file } of OPTIONS_TABS) {
       const tabBtn = page.locator(`.tab-btn[data-tab="${id}"]`);
-      await tabBtn.click();
+      await tabBtn.waitFor({ state: 'attached', timeout: 5000 });
+      await tabBtn.click({ force: true });
       await page.waitForTimeout(300);
+
+      if (id === 'linkwarden') {
+        const lwCb = page.locator('#linkwarden-enabled');
+        if (!(await lwCb.isChecked())) {
+          await lwCb.evaluate(node => node.click());
+          await page.waitForTimeout(300);
+        }
+      }
 
       if (subtab) {
         const subTabBtn = page.locator(`.sub-tab-btn[data-subtab="${subtab}"]`);
-        await subTabBtn.click();
+        await subTabBtn.waitFor({ state: 'attached', timeout: 5000 });
+        await subTabBtn.click({ force: true });
         await page.waitForTimeout(300);
       }
 
-      await page.evaluate(async (theme) => {
-        await chrome.storage.sync.set({ theme });
-        document.documentElement.classList.toggle('dark', theme === 'dark');
-      }, 'light');
+      await page.evaluate(() => document.documentElement.classList.remove('dark'));
       await page.waitForTimeout(200);
       const lightBuf = await page.screenshot();
 
-      await page.evaluate(async (theme) => {
-        await chrome.storage.sync.set({ theme });
-        document.documentElement.classList.toggle('dark', theme === 'dark');
-      }, 'dark');
+      await page.evaluate(() => document.documentElement.classList.add('dark'));
       await page.waitForTimeout(200);
       const darkBuf = await page.screenshot();
 
@@ -184,10 +189,68 @@ async function main() {
     }
     await page.close();
 
+    console.log(`\nChrome (${code.toUpperCase()}) search:`);
+    const searchUrl = `chrome-extension://${extensionId}/search.html`;
+    const searchPage = await context.newPage();
+    await searchPage.addInitScript(() => {
+      document.documentElement.style.cssText = 'display:flex;justify-content:center;align-items:center;min-height:100vh;background:#f5f5f7;';
+      document.body.style.cssText = 'margin:0;width:100%;';
+    });
+    await searchPage.goto(searchUrl);
+    await searchPage.setViewportSize(VIEWPORT);
+    await searchPage.waitForLoadState('networkidle');
+    await searchPage.waitForTimeout(code === 'en' ? 300 : 500);
+
+    // Inject fake results for the screenshot
+    await searchPage.evaluate(() => {
+      document.getElementById('search-input').value = 'git';
+      document.getElementById('search-clear-btn').classList.remove('hidden');
+      document.getElementById('search-status').textContent = '2 results found';
+      document.getElementById('search-status').className = 'search-status success';
+      document.getElementById('search-results').innerHTML = `
+        <li class="search-result-item">
+          <div class="search-result-info">
+            <div class="search-result-title"><mark>Git</mark>Hub</div>
+            <div class="search-result-url">https://<mark>git</mark>hub.com</div>
+          </div>
+          <button type="button" class="search-open-btn">Open</button>
+        </li>
+        <li class="search-result-item">
+          <div class="search-result-info">
+            <div class="search-result-title"><mark>Git</mark>SyncMarks</div>
+            <div class="search-result-url">https://<mark>git</mark>syncmarks.com</div>
+          </div>
+          <button type="button" class="search-open-btn">Open</button>
+        </li>
+      `;
+    });
+
+    await searchPage.evaluate(() => document.documentElement.classList.remove('dark'));
+    await searchPage.waitForTimeout(150);
+    const searchLightBuf = await searchPage.screenshot();
+
+    await searchPage.evaluate(() => document.documentElement.classList.add('dark'));
+    await searchPage.waitForTimeout(150);
+    const searchDarkBuf = await searchPage.screenshot();
+
+    const centerLeft = Math.floor((VIEWPORT.width - (VIEWPORT.width / 2)) / 2); // 320
+
+    const searchPath = path.join(langDir, 'chrome-5-search.png');
+    await compositePopupLightDarkCrop(searchLightBuf, searchDarkBuf, searchPath, centerLeft);
+    console.log('  ', `${code}/chrome-5-search.png (light | dark)`);
+    await searchPage.close();
+
     console.log(`\nChrome (${code.toUpperCase()}) popup:`);
     const popupPage = await context.newPage();
     await popupPage.addInitScript(() => {
-      document.body.style.cssText = 'display:flex;justify-content:center;align-items:center;min-height:100vh;background:#f5f5f7;';
+      // Force demo mode and clean state for screenshots
+      document.documentElement.style.cssText = 'background:#f5f5f7;';
+      document.body.style.cssText = 'width:360px;margin:0;';
+      
+      // Override any error states and ensure "Synced" is shown
+      const style = document.createElement('style');
+      style.textContent = '.status-error { background: transparent !important; padding: 0 !important; }';
+      document.head.appendChild(style);
     });
     await popupPage.goto(popupUrl);
     await popupPage.setViewportSize(VIEWPORT);
@@ -203,9 +266,44 @@ async function main() {
     const popupDarkBuf = await popupPage.screenshot();
 
     const popupPath = path.join(langDir, 'chrome-6-popup.png');
-    await compositePopupLightDarkCrop(popupLightBuf, popupDarkBuf, popupPath);
+    await compositePopupLightDarkCrop(popupLightBuf, popupDarkBuf, popupPath, 0); // Left-aligned crop
     console.log('  ', `${code}/chrome-6-popup.png (light | dark)`);
     await popupPage.close();
+
+    console.log(`\nChrome (${code.toUpperCase()}) linkwarden save:`);
+    const lwSaveUrl = `chrome-extension://${extensionId}/linkwarden-save.html?demo=1`;
+    const lwSavePage = await context.newPage();
+    await lwSavePage.addInitScript(() => {
+      document.documentElement.style.cssText = 'display:flex;justify-content:center;align-items:center;min-height:100vh;background:#f5f5f7;';
+      document.body.style.cssText = 'width:480px;margin:0;flex-shrink:0;';
+    });
+    await lwSavePage.goto(lwSaveUrl);
+    await lwSavePage.setViewportSize(VIEWPORT);
+    await lwSavePage.waitForLoadState('networkidle');
+    await lwSavePage.waitForTimeout(code === 'en' ? 300 : 500);
+
+    // Mock some data if needed
+    await lwSavePage.evaluate(() => {
+      document.getElementById('lw-url').value = 'https://github.com/d0dg3r/GitSyncMarks';
+      document.getElementById('lw-title').value = 'd0dg3r/GitSyncMarks';
+      document.getElementById('lw-description').value = 'Synchronize your bookmarks using a GitHub repository.';
+      document.getElementById('lw-collection').innerHTML = '<option value="">Unorganized</option><option value="1" selected>Tools</option>';
+      document.getElementById('lw-tag-chips').innerHTML = '<div class="lw-tag-chip">github <button class="lw-tag-chip-remove">×</button></div><div class="lw-tag-chip">bookmarks <button class="lw-tag-chip-remove">×</button></div>';
+      document.getElementById('lw-screenshot').checked = true;
+    });
+
+    await lwSavePage.evaluate(() => document.documentElement.classList.remove('dark'));
+    await lwSavePage.waitForTimeout(150);
+    const lwSaveLightBuf = await lwSavePage.screenshot();
+
+    await lwSavePage.evaluate(() => document.documentElement.classList.add('dark'));
+    await lwSavePage.waitForTimeout(150);
+    const lwSaveDarkBuf = await lwSavePage.screenshot();
+
+    const lwSavePath = path.join(langDir, 'chrome-7-linkwarden-save.png');
+    await compositePopupLightDarkCrop(lwSaveLightBuf, lwSaveDarkBuf, lwSavePath, centerLeft);
+    console.log('  ', `${code}/chrome-7-linkwarden-save.png (light | dark)`);
+    await lwSavePage.close();
 
     console.log(`\nChrome (${code.toUpperCase()}) wizard:`);
     for (const { step, file } of WIZARD_STEPS_FOR_SCREENSHOTS) {
@@ -218,17 +316,11 @@ async function main() {
       await wizardPage.locator('#language-select').selectOption(code);
       await wizardPage.waitForTimeout(600);
 
-      await wizardPage.evaluate(async (theme) => {
-        await chrome.storage.sync.set({ theme });
-        document.documentElement.classList.toggle('dark', theme === 'dark');
-      }, 'light');
+      await wizardPage.evaluate(() => document.documentElement.classList.remove('dark'));
       await wizardPage.waitForTimeout(200);
       const lightBuf = await wizardPage.screenshot();
 
-      await wizardPage.evaluate(async (theme) => {
-        await chrome.storage.sync.set({ theme });
-        document.documentElement.classList.toggle('dark', theme === 'dark');
-      }, 'dark');
+      await wizardPage.evaluate(() => document.documentElement.classList.add('dark'));
       await wizardPage.waitForTimeout(200);
       const darkBuf = await wizardPage.screenshot();
 

@@ -5,46 +5,42 @@
 GitSyncMarks
 
 ### Summary (max 250 characters)
-Sincronize seus favoritos do Firefox com o GitHub — bidirecional, sem conflitos. JSON por arquivo, merge triplo, auto-sync. Suporte para Barra de Favoritos, Menu e Mobile. Adicione favoritos via Git, CLI ou GitHub Actions. Open source, sem intermediários.
+Sincronização de favoritos via GitHub. Sinergia com Linkwarden, Busca Inteligente e App Companion. Bidirecional, seguro e privado. Suporte completo para Firefox, incluindo estrutura nativa de menus. Sem intermediários.
 
 ### Detailed Description
-GitSyncMarks sincroniza seus favoritos do Firefox com um repositório GitHub — bidirecional, automaticamente e sem intermediários.
+GitSyncMarks é uma extensão profissional para Firefox que sincroniza seus favoritos de forma automática e bidirecional com um repositório GitHub. Sem intermediários, sem servidores de terceiros – controle total e privacidade.
 
-Recursos:
-• Sem intermediários: comunica diretamente com a API do GitHub — sem servidor de terceiros, sem backend, seus dados ficam entre seu navegador e o GitHub
-• Armazenamento por arquivo: cada favorito é um arquivo JSON individual — legível e amigável para diff
-• Merge triplo: sincronização automática sem conflitos quando há alterações em ambos os lados
-• Suporte completo ao Firefox incluindo a pasta Menu de Favoritos
-• Auto-sync a cada alteração de favorito (atraso configurável por perfil)
-• Múltiplos perfis de favoritos: até 10 perfis com repositórios GitHub separados; a troca substitui os favoritos locais
-• Menu de contexto: clique direito na página ou link — Adicionar à barra de favoritos, Adicionar a outros favoritos, Sincronizar agora, Trocar perfil, Copiar URL do favicon, Baixar favicon
-• Ferramentas de favicon: copie a URL do favicon de qualquer site para a área de transferência ou baixe como PNG — usa o favicon do navegador com o serviço do Google como alternativa
-• Automatização: adicionar favoritos via Git, CLI ou GitHub Actions — sem abrir o navegador
-• Pasta Repos GitHub: pasta opcional com favoritos para todos os seus repositórios GitHub (públicos e privados)
-• Perfis de sync: tempo real, frequente, normal ou economia de energia
-• Sync ao iniciar / ao focar: sync opcional ao iniciar o navegador ou ao focar a janela (com cooldown)
-• Sync periódico para detectar alterações remotas (1–120 minutos, configurável)
-• Push, Pull e Sync completo manuais pelo popup
-• Detecção de conflitos quando o merge automático não é possível
-• Arquivos gerados: README.md (visão geral), bookmarks.html (importação do navegador), feed.xml (feed RSS 2.0) e dashy-conf.yml (painel Dashy) — cada um configurável como Desativado, Manual ou Auto
-• Sync de configurações com Git: backup criptografado das configurações da extensão no repositório — modo Global (compartilhado) ou Individual (por dispositivo); importar configurações de outros dispositivos; mesma senha em todos os dispositivos, sincronizado automaticamente
-• Importar/Exportar: favoritos (JSON), configuração Dashy (YAML) ou configurações (JSON / .enc criptografado); importação com detecção automática de formato
-• Redefinição total: « Redefinir todos os dados » em Arquivos → Configurações — limpa todos os perfis, tokens e configurações (os favoritos do navegador são preservados); confirmação em duas etapas
-• Assistente de configuração: integração guiada em 8 passos para token, repositório e primeira sincronização
-• Onboarding: navegador de pastas para selecionar o caminho de sync; criar pasta ou importar favoritos ao configurar um novo perfil
-• Multilíngue: 12 idiomas — EN, DE, FR, ES, PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL; seleção manual ou auto-detecção
-• Atalhos de teclado: sync rápido (Ctrl+Shift+.), abrir configurações (Ctrl+Shift+,) — personalizáveis
-• Tema: claro, escuro ou auto — botão de ciclo (A → Escuro → Claro → A) nas opções e popup
-• Opções: 5 abas (GitHub, Sync, Arquivos, Ajuda, Sobre) com sub-abas para GitHub e Arquivos — interface organizada
-• Notificações: Todas (sucesso + erro), Somente erros ou Desativadas
-• Auto-save: todas as configurações são salvas automaticamente ao alterar — sem botões Salvar
-• Log de depuração: aba Sync — ativar para diagnósticos de sync, exportar para solução de problemas
-• Votação do backlog: enquete comunitária para priorizar próximos recursos
-• App móvel: GitSyncMarks-App (iOS + Android) — visualize seus favoritos em qualquer lugar, sync somente leitura do seu repositório
+Highlights
+
+- Sinergia com Linkwarden: Salve páginas ou links diretamente em sua instância Linkwarden. Inclui capturas de tela automáticas, sincronização de coleções e tags predefinidas.
+- Busca Inteligente: Uma interface de busca dedicada e ultrarrápida para seus favoritos. Suporta temas claro e escuro e é totalmente acessível via teclado.
+- Assistente de Configuração Guiado: Um processo de integração passo a passo guia novos usuários desde a configuração do token e repositório até o primeiro sync com sucesso.
+- Merge de Três Vias: Confiabilidade de nível industrial através de um algoritmo de merge avançado que combina inteligentemente alterações de múltiplos dispositivos.
+
+Capacidades Chave
+
+- Privado por Design: Comunicação direta com a API do GitHub. Nenhum terceiro vê seus dados.
+- Otimizado para Firefox: Suporta estruturas nativas de favoritos (Barra de ferramentas, Menu, Outros).
+- Armazenamento por Arquivo: Cada favorito é armazenado como um arquivo JSON legível – ideal para controle de versão e edição manual no GitHub.
+- Múltiplos Perfis: Gerencie até 10 perfis separados (ex: Trabalho/Pessoal) com repositórios individuais.
+- Automação: Adicione favoritos via CLI ou GitHub Actions; a extensão os integra automaticamente no próximo sync.
+- Arquivos Gerados: Cria automaticamente um README.md (visão geral), bookmarks.html (arquivo de importação) ou feed RSS em seu repositório.
+
+Instalação e Configuração
+
+1. Instalação: Instale o GitSyncMarks a partir do Firefox Add-ons (AMO).
+2. GitHub PAT: Crie um Token de Acesso Pessoal com escopo "repo" (clássico) ou "Contents: Read/Write" (fine-grained).
+3. Assistente de Configuração: Siga o processo guiado em Ajuda -> Primeiros Passos.
+4. Linkwarden (opcional): Configure sua instância na aba dedicada do Linkwarden.
+
+App Companion
+Use o GitSyncMarks-App (Android, iOS, Desktop) para gerenciar seus favoritos diretamente do seu repositório GitHub em dispositivos móveis. (Nota: O Firefox para Android não suporta sincronização direta de favoritos por extensões – use o app em vez disso).
+
+GitSyncMarks é Open Source: https://github.com/d0dg3r/GitSyncMarks
 
 Como funciona:
 1. Crie um repositório GitHub para seus favoritos
-2. Gere um Personal Access Token com o escopo "repo"
+2. Gere um Personal Access Token com o escopo "repo" (clássico) ou "Contents: Read/Write" (fine-grained)
 3. Configure o GitSyncMarks com seu token e repositório
 4. Clique em "Sincronizar agora" — pronto!
 

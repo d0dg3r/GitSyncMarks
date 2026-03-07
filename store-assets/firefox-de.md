@@ -5,52 +5,38 @@
 GitSyncMarks
 
 ### Summary (max 250 characters)
-Synchronisiere deine Firefox-Lesezeichen mit GitHub — bidirektional, konfliktfrei. Einzeldatei-JSON, Drei-Wege-Merge, Auto-Sync. Volle Unterstützung für Lesezeichen-Symbolleiste, -Menü und -Mobil. Lesezeichen über Git, CLI oder GitHub Actions hinzufügen. Open Source, kein Mittelsmann.
+Lesezeichen-Sync via GitHub. Linkwarden-Synergie, Smart Search und geführter Setup-Wizard. Bidirektional, sicher und privat. Volle Firefox-Unterstützung inklusive nativer Menü-Struktur. Kein Mittelsmann.
 
 ### Detailed Description
-GitSyncMarks synchronisiert deine Firefox-Lesezeichen mit einem GitHub-Repository — bidirektional, automatisch und ohne Mittelsmann.
+GitSyncMarks ist eine professionelle Erweiterung für Firefox, die Ihre Lesezeichen bidirektional und automatisch mit einem GitHub-Repository synchronisiert. Ohne Mittelsmann, ohne Drittserver – Ihre Daten bleiben vollständig unter Ihrer Kontrolle.
 
-Funktionen:
-• Kein Mittelsmann: kommuniziert direkt mit der GitHub API — kein Drittanbieter-Server, kein Backend, deine Daten bleiben zwischen deinem Browser und GitHub
-• Einzeldatei-Speicherung: Jedes Lesezeichen ist eine eigene JSON-Datei — lesbar und diff-freundlich
-• Drei-Wege-Merge: automatische konfliktfreie Synchronisierung bei Änderungen auf beiden Seiten
-• Volle Firefox-Unterstützung inkl. Lesezeichen-Menü
-• Auto-Sync bei jeder Lesezeichen-Änderung (Verzögerung pro Profil konfigurierbar)
-• Mehrere Lesezeichen-Profile: bis zu 10 Profile mit getrennten GitHub-Repos; Wechsel ersetzt lokale Lesezeichen
-• Kontextmenü: Rechtsklick auf Seite oder Link — Zur Lesezeichenleiste hinzufügen, Zu Andere Lesezeichen, Jetzt synchronisieren, Profil wechseln, Favicon-URL kopieren, Favicon herunterladen
-• Favicon-Tools: Favicon-URL einer Webseite in die Zwischenablage kopieren oder als PNG herunterladen — nutzt das Browser-Favicon mit Google-Favicon-Dienst als Fallback
-• Automatisierung: Lesezeichen über Git, CLI oder GitHub Actions hinzufügen — ohne Browser
-• GitHub-Repos-Ordner: optionaler Ordner mit Lesezeichen zu allen deinen GitHub-Repositories
-• Sync-Profile: Echtzeit, häufig, normal oder Stromsparen
-• Sync bei Start / Fokus: optionaler Sync beim Browserstart oder Fensterfokus (mit Cooldown)
-• Periodischer Sync zur Erkennung von Remote-Änderungen (1–120 Min., konfigurierbar)
-• Manuelles Push, Pull und Sync über das Popup
-• Konflikterkennung, wenn automatisches Mergen nicht möglich ist
-• Generierte Dateien: README.md, bookmarks.html, feed.xml und dashy-conf.yml — einzeln als Aus, Manuell oder Auto
-• Einstellungen-Sync mit Git: verschlüsseltes Backup im Repo — Global oder Individuell (pro Gerät)
-• Import/Export: Lesezeichen (JSON), Dashy (YAML) oder Einstellungen (JSON / verschlüsselt .enc)
-• Factory reset: „Alle Daten zurücksetzen" in Dateien → Einstellungen — löscht alle Profile, Token und Einstellungen (Browser-Lesezeichen bleiben erhalten); zweistufige Bestätigung
-• Setup-Wizard: geführtes 8-Schritte-Onboarding für Token, Repository und ersten Sync
-• Onboarding: Ordner-Browser zur Auswahl des Sync-Pfads; Ordner anlegen oder Lesezeichen laden beim Konfigurieren eines neuen Profils
-• Mehrsprachig: 12 Sprachen — EN, DE, FR, ES, PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL
-• Tastenkürzel: Schnell-Sync (Strg+Umschalt+.), Einstellungen öffnen (Strg+Umschalt+,)
-• Design: Hell, Dunkel oder Auto — Wechsel-Button (A → Dunkel → Hell → A)
-• Optionen: 5 Tabs (GitHub, Sync, Dateien, Hilfe, Über) mit Sub-Tabs für GitHub und Dateien
-• Benachrichtigungen: Alle (Erfolg + Fehler), Nur Fehler oder Aus
-• Auto-Save: alle Einstellungen speichern sich automatisch — keine Speichern-Buttons
-• Debug-Log: Sync-Tab — für Sync-Diagnostik aktivierbar, exportierbar
-• Backlog-Voting: Community-Abstimmung für Feature-Priorisierung
-• Mobile-Begleiter: GitSyncMarks-App (iOS + Android)
+Highlights
 
-So funktioniert es:
-1. GitHub-Repository erstellen
-2. Personal Access Token mit Scope „repo" erzeugen
-3. GitSyncMarks mit Token und Repository konfigurieren
-4. „Jetzt synchronisieren" klicken — fertig!
+- Linkwarden-Synergie: Speichern Sie Seiten oder Links direkt in Ihrer Linkwarden-Instanz. Inklusive automatischer Viewport-Screenshots, Kollektions-Synchronisation und vordefinierten Tags.
+- Smart Search: Ein dediziertes, blitzschnelles Such-Interface für Ihre Lesezeichen. Unterstützt Themes (Hell/Dunkel) und ist vollständig tastaturbedienbar.
+- Geführter Setup-Wizard: Ein schrittweiser Onboarding-Prozess führt neue Nutzer sicher durch die Konfiguration von Token und Repository bis zum ersten erfolgreichen Sync.
+- Drei-Wege-Merge: Industrielle Zuverlässigkeit durch einen fortschrittlichen Merge-Algorithmus, der Änderungen auf verschiedenen Geräten intelligent zusammenführt.
 
-GitSyncMarks ist vollständig Open Source: https://github.com/d0dg3r/GitSyncMarks
+Kernfunktionen
 
-Mobile-App: GitSyncMarks-App (iOS + Android) — Lesezeichen unterwegs. https://github.com/d0dg3r/GitSyncMarks-App
+- Private-by-Design: Direkte Kommunikation mit der GitHub API. Keine Drittanbieter sehen Ihre Daten.
+- Firefox-optimiert: Unterstützt native Lesezeichen-Strukturen (Symbolleiste, Menü, Andere).
+- Einzeldatei-Speicherung: Jedes Lesezeichen wird als lesbare JSON-Datei gespeichert – ideal für Versionierung und manuelle Bearbeitung auf GitHub.
+- Multiple Profile: Verwalten Sie bis zu 10 getrennte Profile (z. B. Beruf/Privat) mit jeweils eigenen Repositories.
+- Automatisierung: Fügen Sie Lesezeichen über CLI oder GitHub Actions hinzu; die Erweiterung integriert diese beim nächsten Sync automatisch.
+- Generierte Dateien: Erstellt automatisch eine README.md (Übersicht), bookmarks.html (Import-Datei) oder einen RSS-Feed in Ihrem Repository.
+
+Installation und Einrichtung
+
+1. Installation: GitSyncMarks aus Firefox Add-ons (AMO) laden.
+2. GitHub PAT: Erstellen Sie einen Personal Access Token mit klassische "repo"-Berechtigung oder "Contents: Read/Write" (fine-grained).
+3. Setup-Wizard: Folgen Sie dem geführten Prozess unter Hilfe -> Erste Schritte.
+4. Linkwarden (optional): Konfigurieren Sie Ihre Instanz im Linkwarden-Tab.
+
+Begleit-App
+Nutzen Sie die GitSyncMarks-App (Android, iOS, Desktop), um Ihre Lesezeichen direkt aus dem GitHub-Repository auf mobilen Geräten zu verwalten. (Hinweis: Firefox für Android unterstützt keinen direkten Lesezeichen-Sync durch Erweiterungen – nutzen Sie hierfür die App).
+
+GitSyncMarks ist Open Source: https://github.com/d0dg3r/GitSyncMarks
 
 ### Categories
 Lesezeichen

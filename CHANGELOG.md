@@ -4,8 +4,20 @@ All notable changes to GitSyncMarks are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [2.6.0] - 2026-03-07 (*Link*)
+
+### Migration
+- **No breaking changes**: Core bookmark sync remains fully compatible with existing v2.5.x repositories.
+- **Linkwarden**: New integration requires manual configuration in the Linkwarden settings tab (URL & API Key).
+
+### Added
+- Linkwarden integration — context menu Save to Linkwarden, options tab, tags, screenshots
+- Smart Search — lightning-fast search interface with theme support and keyboard navigation
+- Setup Wizard — guided onboarding for tokens and repository configuration
+- Enhanced README.md — comprehensive feature documentation and visual tour
 
 ## [2.5.4] - 2026-03-06 (*Cortana*)
+
 
 ### Fixed
 
@@ -277,8 +289,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release: bookmark sync with GitHub
 
-[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.4...HEAD
+[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.6.0...HEAD
+[2.6.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.4...v2.6.0
 [2.5.4]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.3...v2.5.4
+
 [2.5.3]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.2...v2.5.3
 [2.5.2]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.1...v2.5.2
 [2.5.1]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.0...v2.5.1

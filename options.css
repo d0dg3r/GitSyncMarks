@@ -248,37 +248,73 @@ html.dark .theme-cycle-btn {
   margin-bottom: 0;
 }
 
-/* ---- GitHub Tab: compact to match Backup/Automation/Help ---- */
-#tab-github .card {
+/* ---- Major Tabs: Unified Compact Layout ---- */
+#tab-github .card,
+#tab-sync .card,
+#tab-files .card,
+#tab-menu .card,
+#tab-help .card,
+#tab-about .card,
+#tab-linkwarden .card {
   padding: 16px 20px;
   margin-bottom: 12px;
 }
 
-#tab-github .card h2 {
+#tab-github .card h2,
+#tab-sync .card h2,
+#tab-files .card h2,
+#tab-menu .card h2,
+#tab-help .card h2,
+#tab-about .card h2,
+#tab-linkwarden .card h2 {
   margin-bottom: 14px;
   padding-bottom: 8px;
   font-size: 16px;
 }
 
-#tab-github .card h2:has(+ .card-desc) {
+#tab-github .card h2:has(+ .card-desc),
+#tab-sync .card h2:has(+ .card-desc),
+#tab-files .card h2:has(+ .card-desc),
+#tab-menu .card h2:has(+ .card-desc),
+#tab-help .card h2:has(+ .card-desc),
+#tab-about .card h2:has(+ .card-desc),
+#tab-linkwarden .card h2:has(+ .card-desc) {
   margin-bottom: 4px;
   padding-bottom: 0;
 }
 
-#tab-github .card-desc {
+#tab-github .card-desc,
+#tab-sync .card-desc,
+#tab-files .card-desc,
+#tab-menu .card-desc,
+#tab-help .card-desc,
+#tab-about .card-desc,
+#tab-linkwarden .card-desc {
   margin-bottom: 12px;
   font-size: 13px;
 }
 
-#tab-github .form-group {
+#tab-github .form-group,
+#tab-sync .form-group,
+#tab-files .form-group,
+#tab-menu .form-group,
+#tab-linkwarden .form-group {
   margin-bottom: 12px;
 }
 
-#tab-github .form-group small {
+#tab-github .form-group small,
+#tab-sync .form-group small,
+#tab-files .form-group small,
+#tab-menu .form-group small,
+#tab-linkwarden .form-group small {
   margin-top: 4px;
 }
 
-#tab-github .form-group label {
+#tab-github .form-group label,
+#tab-sync .form-group label,
+#tab-files .form-group label,
+#tab-menu .form-group label,
+#tab-linkwarden .form-group label {
   font-size: 13px;
 }
 
@@ -308,72 +344,11 @@ html.dark .theme-cycle-btn {
   margin-bottom: 10px;
 }
 
-/* ---- Sync Tab: compact to match GitHub ---- */
-#tab-sync .card {
-  padding: 16px 20px;
-  margin-bottom: 12px;
-}
-
-#tab-sync .card h2 {
-  margin-bottom: 14px;
-  padding-bottom: 8px;
-  font-size: 16px;
-}
-
-#tab-sync .card h2:has(+ .card-desc) {
-  margin-bottom: 4px;
-  padding-bottom: 0;
-}
-
-#tab-sync .form-group {
-  margin-bottom: 12px;
-}
-
-#tab-sync .form-group small {
-  margin-top: 4px;
-}
-
-#tab-sync .form-group label {
-  font-size: 13px;
-}
 
 #tab-sync #sync-custom-fields .form-group {
   margin-bottom: 12px;
 }
 
-/* ---- Files Tab: compact to match GitHub/Sync ---- */
-#tab-files .card {
-  padding: 16px 20px;
-  margin-bottom: 12px;
-}
-
-#tab-files .card h2 {
-  margin-bottom: 14px;
-  padding-bottom: 8px;
-  font-size: 16px;
-}
-
-#tab-files .card h2:has(+ .card-desc) {
-  margin-bottom: 4px;
-  padding-bottom: 0;
-}
-
-#tab-files .card-desc {
-  margin-bottom: 12px;
-  font-size: 13px;
-}
-
-#tab-files .form-group {
-  margin-bottom: 12px;
-}
-
-#tab-files .form-group small {
-  margin-top: 4px;
-}
-
-#tab-files .form-group label {
-  font-size: 13px;
-}
 
 .export-import-row {
   display: flex;
@@ -404,11 +379,6 @@ html.dark .theme-cycle-btn {
   margin-top: 8px;
 }
 
-/* ---- About Tab: compact ---- */
-#tab-about .about-card.card {
-  padding: 16px 20px;
-  margin-bottom: 0;
-}
 
 #tab-about .about-header {
   margin-bottom: 14px;
@@ -636,6 +606,7 @@ html.dark .theme-cycle-btn {
   flex-wrap: wrap;
 }
 
+
 /* Unified wizard status area — one box for loading, success, and error */
 .wizard-status {
   display: flex;
@@ -650,6 +621,7 @@ html.dark .theme-cycle-btn {
   font-size: 0.875rem;
   color: var(--color-text);
 }
+
 
 .wizard-status.success {
   border-left-color: var(--color-success, #22863a);
@@ -1612,6 +1584,7 @@ a.help-link-btn:focus-visible {
   border-top: none;
 }
 
+
 /* Prominent wizard restart card */
 .wizard-restart-card {
   padding: 14px 18px !important;
@@ -1652,6 +1625,7 @@ a.help-link-btn:focus-visible {
   padding: 16px 20px;
   margin-bottom: 12px;
 }
+
 
 #tab-help .help-details:last-child {
   margin-bottom: 0;
@@ -1846,4 +1820,262 @@ a.help-link-btn:focus-visible {
     font-size: 12px;
     padding: 10px 12px;
   }
+
+}
+
+/* Context Menu Configuration */
+.context-menu-config-separator {
+  height: 1px;
+  background: var(--color-border);
+  margin: 1.5rem 0;
+}
+
+.context-menu-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.context-menu-item-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+}
+
+.context-menu-item-row:hover {
+  border-color: var(--color-primary);
+}
+
+.context-menu-item-drag-handle {
+  cursor: grab;
+  color: var(--color-text-secondary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+}
+
+.context-menu-item-label {
+  flex: 1;
+  font-size: 13px;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.context-menu-item-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.context-menu-item-reorder-btn {
+  padding: 4px 8px;
+  font-size: 14px;
+  line-height: 1;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--color-text);
+}
+
+.context-menu-item-reorder-btn:hover:not(:disabled) {
+  background: var(--color-btn-secondary-hover);
+}
+
+.context-menu-item-reorder-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.context-menu-item-toggle {
+  display: flex;
+  align-items: center;
+}
+
+/* Light/Dark specific tweaks if needed */
+html.dark .context-menu-item-reorder-btn {
+  background: var(--color-btn-secondary);
+}
+
+/* Context Menu Categories in Options */
+.context-menu-category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0 8px;
+  margin-top: 16px;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.context-menu-category-header:first-child {
+  margin-top: 0;
+}
+
+.category-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.submenu-toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+
+.context-menu-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-sm);
+  margin-top: 8px;
+}
+
+/* ---- Linkwarden Options Tag Picker ---- */
+.lw-options-tags-wrap {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  padding: 4px 8px;
+  min-height: 36px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  transition: border-color 0.15s ease;
+}
+
+.lw-options-tags-wrap:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.15);
+}
+
+.lw-options-tag-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.lw-options-tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: #e8f0fe;
+  color: #1a56db;
+  border-radius: 12px;
+  padding: 2px 6px 2px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+html.dark .lw-options-tag-chip {
+  background: #1c3a5f;
+  color: #5eaeff;
+}
+
+.lw-options-tag-chip-remove {
+  width: 16px;
+  height: 16px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.lw-options-tag-chip-remove:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+html.dark .lw-options-tag-chip-remove:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.lw-options-tag-input {
+  border: none !important;
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  font-size: 13px !important;
+  color: var(--color-text) !important;
+  width: auto !important;
+  min-width: 100px;
+  flex: 1;
+  padding: 4px 2px !important;
+}
+
+.lw-options-tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-height: 80px;
+  overflow-y: auto;
+  padding: 2px 0;
+  margin-top: 4px;
+}
+
+.lw-options-tag-cloud:empty {
+  display: none;
+}
+
+.lw-options-tag-cloud-item {
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  border-radius: 12px;
+  padding: 2px 10px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.lw-options-tag-cloud-item:hover {
+  border-color: #1a56db;
+  color: #1a56db;
+  background: #e8f0fe;
+}
+
+html.dark .lw-options-tag-cloud-item:hover {
+  border-color: #5eaeff;
+  color: #5eaeff;
+  background: #1c3a5f;
+}
+
+.lw-options-tag-cloud-new {
+  border-style: dashed;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.lw-options-tag-cloud-new:hover {
+  background: #e8f0fe;
+}
+
+html.dark .lw-options-tag-cloud-new:hover {
+  background: #1c3a5f;
 }

@@ -147,7 +147,7 @@
     "message": "Mostra/nascondi token"
   },
   "options_tokenHint": {
-    "message": "Richiede lo scope <code>repo</code>. <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Crea token</a>"
+    "message": "Richiede lo scope <code>repo</code> (classic) o <code>Contents: Read/Write</code> e <code>Metadata: Read</code> (fine-grained). <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Crea token</a>"
   },
   "options_repoOwner": {
     "message": "Proprietario del repository"
@@ -174,7 +174,7 @@
     "message": "Nessuna cartella trovata"
   },
   "options_browseFolderLoading": {
-    "message": "Caricamento\u2026"
+    "message": "Caricamento…"
   },
   "options_browseFolderSelect": {
     "message": "Seleziona"
@@ -846,7 +846,7 @@
     "message": "Guida introduttiva"
   },
   "help_gettingStartedIntro": {
-    "message": "Crea un repository GitHub per i tuoi segnalibri, poi crea un Personal Access Token (PAT) con lo scope <code>repo</code>. Nella scheda GitHub, inserisci token, proprietario del repository, nome, branch (di solito <code>main</code>) e il percorso della cartella (predefinito: <code>bookmarks</code>). Clicca <strong>Testa connessione</strong> per verificare."
+    "message": "Crea un repository GitHub per i tuoi segnalibri, poi crea un Personal Access Token (PAT) con lo scope <code>repo</code> (classic) o <code>Contents: Read/Write</code> e <code>Metadata: Read</code> (fine-grained). Nella scheda GitHub, inserisci token, proprietario del repository, nome, branch (di solito <code>main</code>) e il percorso della cartella (predefinito: <code>bookmarks</code>). Clicca <strong>Testa connessione</strong> per verificare."
   },
   "help_onboarding": {
     "message": "Se la cartella è vuota, puoi creare la struttura di base (toolbar, other). Se nel repository esistono già dei segnalibri, puoi scaricarli in questo browser."
@@ -1257,5 +1257,448 @@
         "content": "$1"
       }
     }
+  },
+  "contextMenu_addToQuickFolder": {
+    "message": "Aggiungi a $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "contextMenu_category_ADD": {
+    "message": "Aggiungi segnalibro"
+  },
+  "contextMenu_category_FAVICONS": {
+    "message": "Strumenti Favicon"
+  },
+  "contextMenu_category_LINKWARDEN": {
+    "message": "Linkwarden"
+  },
+  "contextMenu_category_TOOLS": {
+    "message": "Strumenti e Sincronizzazione"
+  },
+  "contextMenu_notifFolderMissing": {
+    "message": "La cartella selezionata non esiste più. Aggiorna le impostazioni delle cartelle rapide."
+  },
+  "contextMenu_notifOpenAllEmpty": {
+    "message": "La cartella selezionata non contiene segnalibri da aprire."
+  },
+  "contextMenu_notifOpenAllNeedsConfirm": {
+    "message": "La cartella contiene $1 schede (soglia: $2). Clicca di nuovo entro 15 secondi per confermare.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_notifOpenAllSuccess": {
+    "message": "Aperte $1 scheda/e da $2",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "contextMenu_openAllFromFolder": {
+    "message": "Apri tutto dalla cartella"
+  },
+  "contextMenu_saveToLinkwarden": {
+    "message": "Salva su Linkwarden..."
+  },
+  "contextMenu_searchBookmarks": {
+    "message": "Cerca segnalibri"
+  },
+  "options_contextMenuConfigDesc": {
+    "message": "Attiva o disattiva gli elementi per mostrarli nel menu contestuale. Trascina o usa le frecce per cambiare l'ordine."
+  },
+  "options_contextMenuConfigTitle": {
+    "message": "Visibilità e ordine degli elementi"
+  },
+  "options_contextMenuItem_ADD_OTHER": {
+    "message": "Aggiungi ad Altri segnalibri"
+  },
+  "options_contextMenuItem_ADD_TOOLBAR": {
+    "message": "Aggiungi alla barra dei segnalibri"
+  },
+  "options_contextMenuItem_ADD_TO_FOLDER": {
+    "message": "Aggiungi alla cartella... (Menu)"
+  },
+  "options_contextMenuItem_COPY_FAVICON": {
+    "message": "Copia URL Favicon"
+  },
+  "options_contextMenuItem_DOWNLOAD_FAVICON": {
+    "message": "Scarica Favicon"
+  },
+  "options_contextMenuItem_OPEN_ALL_FOLDER": {
+    "message": "Apri tutto dalla cartella"
+  },
+  "options_contextMenuItem_QUICK_FOLDERS": {
+    "message": "Cartelle rapide fissate"
+  },
+  "options_contextMenuItem_SEARCH_BOOKMARKS": {
+    "message": "Cerca segnalibri"
+  },
+  "options_contextMenuItem_SWITCH_PROFILE": {
+    "message": "Cambia profilo"
+  },
+  "options_contextMenuItem_SYNC_NOW": {
+    "message": "Sincronizza ora"
+  },
+  "options_contextMenuOpenAllThresholdHint": {
+    "message": "Se una cartella ha più segnalibri di questo limite, ti verrà chiesto di confermare (doppio clic) prima di aprire per evitare di aprire troppe schede."
+  },
+  "options_contextMenuOpenAllThresholdLabel": {
+    "message": "Sicurezza di conferma per \"Apri tutto\" (schede)"
+  },
+  "options_contextMenuResetBtn": {
+    "message": "Ripristina predefiniti"
+  },
+  "options_linkwardenApiKey": {
+    "message": "Chiave API"
+  },
+  "options_linkwardenDefaultCollection": {
+    "message": "Collezione predefinita"
+  },
+  "options_linkwardenDefaultTags": {
+    "message": "Tag predefiniti"
+  },
+  "options_linkwardenEnabled": {
+    "message": "Abilita Linkwarden"
+  },
+  "options_linkwardenInstanceUrl": {
+    "message": "URL dell'istanza"
+  },
+  "options_linkwardenIntro": {
+    "message": "Configura la tua istanza Linkwarden per salvare segnalibri direttamente dal menu contestuale."
+  },
+  "options_linkwardenTestConnection": {
+    "message": "Testa connessione"
+  },
+  "options_linkwardenTitle": {
+    "message": "Integrazione Linkwarden"
+  },
+  "options_menu_showAsSubmenu": {
+    "message": "Mostra come sottomenu"
+  },
+  "options_mobileAppAlert": {
+    "message": "<strong>Nota per utenti Android:</strong> Firefox per Android non supporta la sincronizzazione diretta dei segnalibri tramite estensioni. Devi usare l'app companion."
+  },
+  "options_subTabMenuAdvanced": {
+    "message": "Avanzato e Sicurezza"
+  },
+  "options_subTabMenuFolders": {
+    "message": "Cartelle fissate"
+  },
+  "options_subTabMenuItems": {
+    "message": "Visibilità e ordine"
+  },
+  "options_subTabSync": {
+    "message": "Sincronizzazione"
+  },
+  "options_tabGit": {
+    "message": "Git"
+  },
+  "options_tabLinkwarden": {
+    "message": "Linkwarden"
+  },
+  "options_tabMenu": {
+    "message": "Menu"
+  },
+  "help_contextMenuToolsDesc": {
+    "message": "In File → Impostazioni, puoi fissare fino a 3 cartelle per azioni di aggiunta rapida e configurare la soglia di conferma per Apri tutto. Il menu contestuale include anche la Ricerca segnalibri."
+  },
+  "help_contextMenuToolsTitle": {
+    "message": "Strumenti del menu contestuale"
+  },
+  "help_website": {
+    "message": "Sito web"
+  },
+  "options_contextMenuFoldersRefreshed": {
+    "message": "Elenco cartelle aggiornato"
+  },
+  "options_contextMenuQuickFolder1": {
+    "message": "Cartella rapida 1"
+  },
+  "options_contextMenuQuickFolder2": {
+    "message": "Cartella rapida 2"
+  },
+  "options_contextMenuQuickFolder3": {
+    "message": "Cartella rapida 3"
+  },
+  "options_contextMenuQuickFolderNone": {
+    "message": "(nessuna)"
+  },
+  "options_contextMenuQuickFoldersHint": {
+    "message": "Scegli fino a tre cartelle mostrate come voci di aggiunta rapida nel menu contestuale."
+  },
+  "options_contextMenuQuickFoldersLabel": {
+    "message": "Cartelle rapide fissate"
+  },
+  "options_contextMenuRefreshFolders": {
+    "message": "Aggiorna elenco cartelle"
+  },
+  "options_contextMenuToolsDesc": {
+    "message": "Configura le azioni delle cartelle fissate, la sicurezza Apri tutto e la visibilità degli elementi del menu."
+  },
+  "options_contextMenuToolsTitle": {
+    "message": "Strumenti del menu contestuale"
+  },
+  "options_onboardingInitPathAlreadyExists": {
+    "message": "Il percorso \"$1\" contiene già dati dei segnalibri.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathBtn": {
+    "message": "Crea percorso e avvia la prima sincronizzazione"
+  },
+  "options_onboardingInitPathHint": {
+    "message": "Il percorso \"$1\" manca o è vuoto. Verrà creata la struttura delle cartelle e caricati i segnalibri attuali come base.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingInitPathSuccess": {
+    "message": "Percorso \"$1\" creato e prima sincronizzazione completata.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_onboardingWizardFirstSyncHint": {
+    "message": "La prima sincronizzazione può richiedere più tempo durante le verifiche del repository e la configurazione iniziale."
+  },
+  "options_onboardingWizardSyncInProgress": {
+    "message": "Lavoro in corso in background, attendere..."
+  },
+  "options_onboardingWizardTokenHelpIntro": {
+    "message": "Un Personal Access Token (PAT) consente a GitSyncMarks di accedere al tuo repository GitHub per sincronizzare i segnalibri. Lo crei nelle impostazioni del tuo account GitHub."
+  },
+  "options_onboardingWizardTokenHelpScopes": {
+    "message": "Il token necessita dell'ambito <code>repo</code>. Questo concede l'accesso in lettura/scrittura ai tuoi repository (inclusi quelli privati) e consente all'estensione di creare automaticamente un repository. Tratta il token come una password."
+  },
+  "options_onboardingWizardTokenStep1": {
+    "message": "Clicca il link qui sotto per aprire la pagina di creazione token di GitHub."
+  },
+  "options_onboardingWizardTokenStep2": {
+    "message": "Dai un nome al token (es. \"GitSyncMarks\") e imposta una scadenza se preferisci."
+  },
+  "options_onboardingWizardTokenStep3": {
+    "message": "In \"Scopes\", seleziona <code>repo</code> (controllo completo dei repository privati)."
+  },
+  "options_onboardingWizardTokenStep4": {
+    "message": "Clicca \"Generate token\", copialo e incollalo nel campo qui sotto."
+  },
+  "options_resetConfirmBtn": {
+    "message": "Sì, elimina tutti i dati"
+  },
+  "options_settingsRegistryAliasNormalized": {
+    "message": "Nuovo profilo impostazioni creato con alias: $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameConflict": {
+    "message": "Il nome client esiste già nel repository: $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_settingsSyncClientNameHint": {
+    "message": "Obbligatorio. Questo nome identifica il tuo profilo impostazioni client nel repository."
+  },
+  "options_settingsSyncClientNameLabel": {
+    "message": "Nome client"
+  },
+  "options_settingsSyncClientNamePlaceholder": {
+    "message": "mio-laptop"
+  },
+  "options_settingsSyncClientNameRequired": {
+    "message": "Inserisci prima un nome client."
+  },
+  "options_settingsSyncCreateOwnBtn": {
+    "message": "Crea la mia impostazione client"
+  },
+  "options_settingsSyncMigrationDone": {
+    "message": "I profili impostazioni legacy sono stati migrati a nomi client leggibili."
+  },
+  "options_settingsSyncModeGlobalTemporarilyDisabled": {
+    "message": "La modalità globale è temporaneamente non disponibile. Usa le impostazioni client basate su profilo."
+  },
+  "popup_website": {
+    "message": "Sito web"
+  },
+  "search_clearBtn": {
+    "message": "Cancella"
+  },
+  "search_closeBtn": {
+    "message": "Chiudi"
+  },
+  "search_inputPlaceholder": {
+    "message": "Digita titolo o URL..."
+  },
+  "search_openBtn": {
+    "message": "Apri"
+  },
+  "search_statusNoResults": {
+    "message": "Nessun segnalibro trovato"
+  },
+  "search_statusResultCount": {
+    "message": "$1 risultato/i",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "search_statusSearching": {
+    "message": "Ricerca in corso..."
+  },
+  "search_subtitle": {
+    "message": "Cerca segnalibri locali e apri le corrispondenze in una nuova scheda."
+  },
+  "search_title": {
+    "message": "Ricerca segnalibri"
+  },
+  "search_windowTitle": {
+    "message": "GitSyncMarks – Ricerca segnalibri"
+  },
+  "linkwardenSave_title": {
+    "message": "Salva su Linkwarden"
+  },
+  "linkwardenSave_urlLabel": {
+    "message": "URL"
+  },
+  "linkwardenSave_titleLabel": {
+    "message": "Titolo"
+  },
+  "linkwardenSave_descriptionLabel": {
+    "message": "Descrizione"
+  },
+  "linkwardenSave_descriptionPlaceholder": {
+    "message": "Descrizione opzionale..."
+  },
+  "linkwardenSave_collectionLabel": {
+    "message": "Collezione"
+  },
+  "linkwardenSave_collectionNone": {
+    "message": "Non organizzato"
+  },
+  "linkwardenSave_collectionNew": {
+    "message": "Crea nuova collezione"
+  },
+  "linkwardenSave_collectionNewPlaceholder": {
+    "message": "Nome della nuova collezione..."
+  },
+  "linkwardenSave_tagsLabel": {
+    "message": "Tag"
+  },
+  "linkwardenSave_tagsPlaceholder": {
+    "message": "Aggiungi tag..."
+  },
+  "linkwardenSave_screenshotLabel": {
+    "message": "Includi screenshot"
+  },
+  "linkwardenSave_saveBtn": {
+    "message": "Salva"
+  },
+  "linkwardenSave_cancelBtn": {
+    "message": "Annulla"
+  },
+  "linkwardenSave_statusSaving": {
+    "message": "Salvataggio..."
+  },
+  "linkwardenSave_statusSaved": {
+    "message": "Salvato!"
+  },
+  "linkwardenSave_statusDuplicate": {
+    "message": "Già salvato in Linkwarden"
+  },
+  "linkwardenSave_statusError": {
+    "message": "Errore"
+  },
+  "linkwardenSave_quickSaveBtn": {
+    "message": "Salvataggio rapido"
+  },
+  "options_contextMenuItem_LINKWARDEN_SAVE": {
+    "message": "Salva su Linkwarden..."
+  },
+  "options_linkwardenDefaultTagsHint": {
+    "message": "Clicca per aggiungere tag esistenti o digita per crearne di nuovi. Applicato ad ogni salvataggio."
+  },
+  "options_linkwardenDefaultScreenshot": {
+    "message": "Screenshot predefiniti"
+  },
+  "options_linkwardenDefaultScreenshotHint": {
+    "message": "Se gli screenshot debbano essere abilitati di default nel popup di salvataggio."
+  },
+  "linkwardenSave_deleteBtn": {
+    "message": "Elimina"
+  },
+  "linkwardenSave_deleteConfirm": {
+    "message": "Sei sicuro di voler eliminare questo link da Linkwarden?"
+  },
+  "linkwardenSave_statusDeleted": {
+    "message": "Link eliminato con successo!"
+  },
+  "options_linkwardenSyncEnabled": {
+    "message": "Sincronizza collezioni con i segnalibri"
+  },
+  "options_linkwardenSyncParent": {
+    "message": "Cartella genitore"
+  },
+  "options_linkwardenSyncRefresh": {
+    "message": "Sincronizza ora"
+  },
+  "options_linkwardenSyncSuccess": {
+    "message": "$1 collezioni e $2 link sincronizzati.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "options_pleaseEnterLinkwardenConfig": {
+    "message": "Inserire prima l'URL e il token di Linkwarden."
+  },
+  "options_linkwardenSyncPushToGit": {
+    "message": "Invia i segnalibri di Linkwarden a Git"
+  },
+  "options_subTabGeneral": {
+    "message": "Generale"
+  },
+  "help_linkwardenTitle": {
+    "message": "Linkwarden"
+  },
+  "help_linkwardenIntegrationTitle": {
+    "message": "Integration"
+  },
+  "help_linkwardenIntegrationDesc": {
+    "message": "Connect to your Linkwarden instance to save bookmarks directly from the context menu. You can specify default tags and auto-capture screenshots."
+  },
+  "help_linkwardenSyncTitle": {
+    "message": "Sync Collections"
+  },
+  "help_linkwardenSyncDesc": {
+    "message": "Sync your Linkwarden collections into your browser bookmark folders and optionally push them to your Git repository."
   }
 }

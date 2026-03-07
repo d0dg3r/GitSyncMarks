@@ -267,7 +267,7 @@ GitSyncMarks/
 | Background | Service Worker (Chrome) / Background Script (Firefox) |
 | Browser APIs | `chrome.bookmarks`, `chrome.storage`, `chrome.alarms`, `chrome.contextMenus`, `chrome.scripting`, `chrome.downloads` |
 | Remote Storage | GitHub Git Data API (atomic multi-file commits) |
-| Authentication | Personal Access Token (PAT) with `repo` scope |
+| Authentication | Bearer Auth (Classic PAT `repo`, Fine-grained PAT `Contents: R/W`, or GitHub App) |
 | Sync Algorithm | Three-way merge (base vs local vs remote, per-file diff) |
 | i18n | Custom runtime system + Chrome `_locales/` |
 | Build | Shell script (`build.sh`), separate Chrome/Firefox packages |

@@ -4,62 +4,39 @@
 ### Name
 GitSyncMarks
 
-### Summary (max 132 characters)
-Vos favoris, en sécurité sur GitHub — stockage par fichier, synchronisation à fusion triple, Chrome et Firefox. Sans intermédiaire.
+### Résumé (max 132 caractères)
+Synchronisation des favoris via GitHub. Synergie Linkwarden, Recherche Intelligente et App Compagnon. Direct, sûr, privé.
 
-### Detailed Description
-GitSyncMarks synchronise vos favoris de navigateur avec un dépôt GitHub — bidirectionnel, automatique et sans intermédiaire.
+### Description Détaillée
+GitSyncMarks est une solution professionnelle pour synchroniser automatiquement et de manière bidirectionnelle vos favoris avec un dépôt GitHub. Gérez vos données sur bureau via Chrome et Firefox, ou en déplacement avec l'App Compagnon GitSyncMarks. Sans intermédiaire, sans serveurs tiers – contrôle total et confidentialité.
 
-Fonctionnalités :
-• Sans intermédiaire : communique directement avec l'API GitHub — pas de serveur tiers, pas de backend, vos données restent entre votre navigateur et GitHub
-• Stockage par fichier : chaque favori est un fichier JSON individuel — lisible et adapté au diff
-• Fusion triple : synchronisation automatique sans conflit lorsque des changements surviennent des deux côtés
-• Multi-navigateur : fonctionne avec Chrome, Chromium, Brave, Edge et Firefox
-• Auto-sync à chaque modification de favori (délai configurable par profil)
-• Plusieurs profils de favoris : jusqu'à 10 profils avec des dépôts GitHub séparés ; le changement remplace les favoris locaux
-• Menu contextuel : clic droit sur une page ou un lien — Ajouter à la barre de favoris, Ajouter aux autres favoris, Synchroniser maintenant, Changer de profil, Copier l'URL du favicon, Télécharger le favicon
-• Outils favicon : copiez l'URL du favicon d'un site dans le presse-papiers ou téléchargez-le en PNG — utilise le favicon du navigateur avec le service Google comme solution de repli
-• Automatisation : ajouter des favoris via Git, CLI ou GitHub Actions — sans ouvrir le navigateur
-• Dossier Repos GitHub : dossier optionnel avec des favoris vers tous vos dépôts GitHub (publics et privés)
-• Profils de sync : temps réel, fréquent, normal ou économie d'énergie (intervalles prédéfinis)
-• Sync au démarrage / au focus : sync optionnel au lancement du navigateur ou au retour à la fenêtre (avec délai)
-• Sync périodique pour détecter les changements distants (1–120 minutes, configurable)
-• Push, Pull et Sync complet manuels via le popup
-• Détection des conflits lorsque la fusion automatique est impossible
-• Fichiers générés : README.md (aperçu), bookmarks.html (import navigateur), feed.xml (flux RSS 2.0) et dashy-conf.yml (tableau de bord Dashy) — chacun configurable comme Désactivé, Manuel ou Auto
-• Sync des paramètres avec Git : sauvegarde chiffrée des paramètres de l'extension dans le dépôt — mode Global (partagé) ou Individuel (par appareil) ; import depuis d'autres appareils ; même mot de passe, synchronisé automatiquement
-• Import/Export : favoris (JSON), configuration Dashy (YAML) ou paramètres (JSON / .enc chiffré) ; import avec détection automatique du format
-• Réinitialisation complète : « Réinitialiser toutes les données » dans Fichiers → Paramètres — efface tous les profils, jetons et paramètres (les favoris du navigateur sont conservés) ; confirmation en deux étapes
-• Assistant de configuration : intégration guidée en 8 étapes pour le token, le dépôt et la première synchronisation
-• Intégration : navigateur de dossiers pour sélectionner le chemin de sync ; créer le dossier ou récupérer les favoris lors de la configuration d'un nouveau profil
-• Multilingue : 12 langues — EN, DE, FR, ES, PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL ; sélection manuelle ou auto-détection
-• Raccourcis clavier : sync rapide, paramètres — personnalisables
-• Thème : clair, sombre ou auto — bouton cycle (A → Sombre → Clair → A) dans les options et le popup
-• Options : 5 onglets (GitHub, Sync, Fichiers, Aide, À propos) avec sous-onglets pour GitHub et Fichiers
-• Notifications : Tout (succès + erreur), Erreurs uniquement, ou Désactivé
-• Enregistrement automatique : tous les paramètres se sauvegardent à la modification — pas de bouton Enregistrer
-• Journal de débogage : onglet Sync — pour le dépannage de sync
-• Vote backlog : sondage communautaire pour prioriser les prochaines fonctionnalités
-• Application mobile : GitSyncMarks-App (iOS + Android) — consultez vos favoris en déplacement
+Highlights
 
-Comment ça marche :
-1. Créez un dépôt GitHub pour vos favoris
-2. Générez un Personal Access Token avec le scope « repo »
-3. Configurez GitSyncMarks avec votre token et le dépôt
-4. Cliquez sur « Synchroniser maintenant » — terminé !
+- Synergie Linkwarden : Enregistrez des pages ou des liens directement dans votre instance Linkwarden. Inclut des captures d'écran automatiques du viewport, la synchronisation des collections et des étiquettes prédéfinies.
+- Recherche Intelligente : Une interface de recherche dédiée et ultra-rapide pour vos favoris. Prend en charge les thèmes clair et sombre et est entièrement accessible au clavier.
+- Assistant de Configuration Guidé : Un processus d'intégration étape par étape guide les nouveaux utilisateurs de la configuration du jeton et du dépôt jusqu'à leur première synchronisation réussie.
+- Fusion à Trois Voies : Une fiabilité de niveau industriel via un algorithme de fusion avancé qui combine intelligemment les modifications provenant de plusieurs appareils.
 
-Chaque favori est stocké comme un fichier JSON individuel dans votre dépôt, organisé en dossiers qui reflètent la hiérarchie de vos favoris. Un README.md vous donne une vue d'ensemble directement sur GitHub ; un bookmarks.html permet l'import dans n'importe quel navigateur ; un feed.xml RSS permet de s'abonner ou d'automatiser ; un dashy-conf.yml fournit des sections pour le tableau de bord Dashy.
+Capacités Clés
 
-Automatisation :
-Vous pouvez ajouter des favoris sans ouvrir le navigateur. GitSyncMarks inclut un workflow GitHub Actions (add-bookmark.yml) pour ajouter des favoris via l'interface web GitHub ou la ligne de commande :
+- Privé par Conception : Communication directe avec l'API GitHub. Aucun tiers ne voit vos données.
+- Stockage par Fichier : Chaque favori est stocké sous forme de fichier JSON lisible – idéal pour le versionnage et l'édition manuelle sur GitHub.
+- Profils Multiples : Gérez jusqu'à 10 profils distincts (ex: Travail/Personnel) avec des dépôts individuels.
+- Automatisation : Ajoutez des favoris via CLI ou GitHub Actions ; l'extension les intègre automatiquement lors de la prochaine synchronisation.
+- Fichiers Générés : Crée automatiquement un README.md (aperçu), bookmarks.html (importation navigateur) ou un flux RSS dans votre dépôt.
+- Design & i18n : Thèmes clair et sombre professionnels avec prise en charge de 12 langues.
 
-  gh workflow run add-bookmark.yml -f url="https://example.com" -f title="Exemple" -f folder="toolbar"
+Installation et Configuration
 
-Vous pouvez aussi créer des fichiers de favoris directement dans le dépôt — ajoutez simplement un fichier JSON avec « title » et « url » dans un dossier de favoris. L'extension détecte les nouveaux fichiers au prochain sync et les normalise.
+1. Installation : Téléchargez le ZIP depuis GitHub (Chrome/Edge) ou installez depuis le web store.
+2. PAT GitHub : Créez un jeton d'accès personnel avec le scope classic "repo" ou fine-grained "Contents: Read/Write".
+3. Assistant de Configuration : Suivez le processus guidé sous Aide -> Prise en main.
+4. Linkwarden (optionnel) : Configurez votre instance dans l'onglet Linkwarden dédié.
 
-GitSyncMarks est entièrement open source : https://github.com/d0dg3r/GitSyncMarks
+Application Compagnon
+Utilisez l'application GitSyncMarks-App (Android, iOS, Desktop) pour gérer vos favoris directement depuis votre dépôt GitHub sur vos appareils mobiles.
 
-Application mobile : GitSyncMarks-App (iOS + Android) — favoris en déplacement. Lecture seule ; F-Droid et Google Play bientôt. https://github.com/d0dg3r/GitSyncMarks-App
+GitSyncMarks est Open Source : https://github.com/d0dg3r/GitSyncMarks
 
 ### Category
 Productivité
