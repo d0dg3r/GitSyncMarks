@@ -1,45 +1,38 @@
 # Firefox Add-ons (AMO) — GitSyncMarks (한국어)
 <!-- See firefox-meta.md for Privacy, Test Instructions, and Distribution -->
 
-### 이름
+### Name
 GitSyncMarks
 
-### 요약 (최대 250자)
-GitHub 기반 북마크 동기화. Linkwarden 협업, 스마트 검색 및 컴패니언 앱. 양방향, 안전, 프라이버시 보호. 기본 메뉴 구조를 포함한 Firefox 완벽 지원. 중개 서버 없음.
+### Summary (max 250 characters)
+GitHub 북마크 동기화. Linkwarden 연동, 스마트 검색 및 설정 마법사. 중간 서버 없이 완벽하게 독립적으로 Firefox 지원.
 
-### 상세 설명
-GitSyncMarks는 북마크를 GitHub 저장소와 자동 및 양방향으로 동기화하는 Firefox용 전문가용 확장 프로그램입니다. GitSyncMarks 컴패니언 앱을 통해 데스크톱(Firefox 등)이나 모바일에서 편리하게 데이터를 관리하세요. 중개 서버나 제3자 서버가 없으므로 완벽한 제어권과 프라이버시를 보장합니다.
+### Detailed Description
+GitSyncMarks는 Firefox 북마크를 GitHub 저장소와 안전하게 연동하는 확장 프로그램입니다. 데이터를 다른 곳을 경유하지 않고 온전히 통제할 수 있습니다.
 
-주요 특징
+주요 강조 사항
 
-- Linkwarden 시너지: 페이지나 링크를 Linkwarden 인스턴스에 직접 저장하세요. 자동 뷰포트 스크린샷, 컬렉션 동기화, 미리 정의된 태그 기능이 포함되어 있습니다.
-- 스마트 검색: 북마크 전용 초고속 검색 인터페이스를 제공합니다. 라이트 및 다크 테마를 지원하며 키보드만으로도 완벽하게 조작 가능합니다.
-- 가이드 기반 설정 마법사: 단계별 온보딩 프로세스를 통해 토큰 설정부터 첫 동기화 성공까지 초보 사용자도 쉽게 안내합니다.
-- 3-Way 병합: 여러 장치의 변경 사항을 지능적으로 결합하는 고급 병합 알고리즘으로 산업 수준의 안정성을 제공합니다.
+- Linkwarden 시너지: Linkwarden 인스턴스에 직접 페이지를 저장합니다. 자동 스크린샷, 컬렉션 동기화, 태그를 지원합니다.
+- 스마트 검색 (Smart Search): 빛의 속도로 작동하는 독립적인 검색 인터페이스입니다. 다크모드 및 완벽한 키보드 접근성을 제공합니다.
+- 설정 마법사 안내: 토큰 발급부터 저장소 세팅 및 첫 동기화까지 초보자도 안심하고 진행할 수 있는 단계별 마법사를 적용했습니다.
+- 3-Way Merge (3방향 병합): 여러 기기에서 발생한 북마크 편집 충돌을 똑똑하게 자동으로 결합하는 안정적인 알고리즘 채택.
 
 핵심 기능
 
-- 프라이버시 설계: GitHub API와 직접 통신합니다. 제3자는 사용자의 데이터를 볼 수 없습니다.
-- Firefox 최적화: 기본 북마크 구조(도구 모음, 메뉴, 기타)를 지원합니다.
-- 파일 기반 저장: 각 북마크는 사람이 읽을 수 있는 JSON 파일로 저장됩니다. 버전 관리 및 수동 편집에 최적화되어 있습니다.
-- 멀티 프로필: 별도의 저장소를 통해 최대 10개의 독립적인 프로필(예: 업무용/개인용)을 관리할 수 있습니다.
-- 자동화: CLI 또는 GitHub Actions를 통해 북마크를 추가하면 다음 동기화 시 자동으로 통합됩니다.
-- 자동 생성 파일: 저장소에 README.md(개요), bookmarks.html(가져오기용), RSS 피드를 자동으로 생성합니다.
+- 설계 단계부터 고려된 보안: 오로지 GitHub API만 직접 통신하므로 타사에서 데이터를 들여다보지 못합니다.
+- Firefox 맞춤화: 도구 모음 및 기타 메뉴 북마크 계층 구조를 반영합니다.
+- 개별 파일 저장: 각각의 북마크는 구조화된 JSON 형태로 관리됩니다.
+- 멀티 프로필 지원: 직장, 개인 용도 등 최대 10개의 독립된 프로필과 저장소를 관리할 수 있습니다.
+- 자동화 호환: CLI 등을 통해 추가된 링크 변동사항도, 확장 프로그램 구동 시 알아서 분석하여 병합됩니다.
+- 파일 생성기: 원한다면 README.md, HTML, RSS 피드를 저장소에 자동으로 게시합니다.
 
-설치 및 설정
-
-1. 설치: Firefox Add-ons (AMO)에서 GitSyncMarks를 설치하세요.
-2. GitHub PAT: classic 'repo' 또는 fine-grained 'Contents: Read/Write' 권한이 있는 개인 액세스 토큰을 생성하세요.
-3. 설정 마법사: 도움말 -> 시작하기의 안내를 따르세요.
-4. Linkwarden (선택): Linkwarden 탭에서 인스턴스를 설정하세요.
-
-컴패니언 앱
-GitSyncMarks-App(Android, iOS, Desktop)을 사용하여 모바일에서도 GitHub 저장소의 북마크를 직접 관리할 수 있습니다. (참고: Android용 Firefox는 확장 프로그램을 통한 북마크 직접 동기화를 지원하지 않으므로 대신 본 앱을 사용하십시오).
+보조 모바일 앱
+GitSyncMarks-App (Android, iOS)을 사용하여 모바일에서 제어하세요. (참고: Firefox 모바일은 API가 지원되지 않으므로 개별 앱을 사용해야 합니다).
 
 GitSyncMarks는 오픈 소스입니다: https://github.com/d0dg3r/GitSyncMarks
 
 ### Categories
-북마크
+Bookmarks
 
 ### Tags
 bookmarks, sync, github, backup, automation

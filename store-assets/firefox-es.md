@@ -1,45 +1,38 @@
 # Firefox Add-ons (AMO) — GitSyncMarks (Español)
 <!-- See firefox-meta.md for Privacy, Test Instructions, and Distribution -->
 
-### Nombre
+### Name
 GitSyncMarks
 
-### Resumen (max 250 characters)
-Sincronización de marcadores vía GitHub. Sinergia con Linkwarden, Búsqueda Inteligente y asistente de configuración. Bidireccional, seguro y privado. Soporte completo de Firefox incluyendo estructura de menús nativa. Sin intermediarios.
+### Summary (max 250 characters)
+Sincronización de marcadores vía GitHub. Sinergia Linkwarden, búsqueda inteligente y asistente de configuración. Bidireccional y seguro. Soporte nativo de Firefox.
 
-### Descripción Detallada
-GitSyncMarks es una extensión profesional para Firefox que sincroniza de forma bidireccional y automática sus marcadores con un repositorio de GitHub. Sin intermediarios, sin servidores de terceros: sus datos permanecen bajo su total control.
+### Detailed Description
+GitSyncMarks es una extensión profesional para Firefox que sincroniza bidireccional y automáticamente sus marcadores con un repositorio de GitHub. Sin intermediarios, sin servidores de terceros: sus datos permanecen completamente bajo su control.
 
-Highlights
+Aspectos Destacados
 
-- Sinergia con Linkwarden: Guarde páginas o enlaces directamente en su instancia de Linkwarden. Incluye capturas de pantalla automáticas, sincronización de colecciones y etiquetas predefinidas.
-- Búsqueda Inteligente: Una interfaz de búsqueda dedicada y ultrarrápida para sus marcadores. Soporta temas claro y oscuro y es totalmente accesible mediante teclado.
-- Asistente de Configuración Guiado: Un proceso de incorporación paso a paso guía a los nuevos usuarios desde la configuración del token y el repositorio hasta su primera sincronización exitosa.
-- Fusión de Tres Vías: Fiabilidad de nivel industrial mediante un algoritmo de fusión avanzado que combina de forma inteligente los cambios de varios dispositivos.
+- Sinergia con Linkwarden: Guarde páginas o enlaces directamente en su instancia de Linkwarden. Incluye capturas de pantalla automáticas, sincronización de colecciones y etiquetas.
+- Búsqueda Inteligente (Smart Search): Una interfaz de búsqueda rápida y dedicada para sus marcadores. Soporta temas (claro/oscuro) y es accesible por teclado.
+- Asistente de Configuración: Un asistente paso a paso guía a los nuevos usuarios en la configuración del token y el repositorio hasta su primera sincronización exitosa.
+- Fusión a tres vías (Three-Way Merge): Fiabilidad industrial mediante un avanzado algoritmo que combina de forma inteligente los cambios en diferentes dispositivos.
 
-Capacidades Clave
+Características Principales
 
-- Privado por Diseño: Comunicación directa con la API de GitHub. Ningún tercero ve sus datos.
-- Optimizado para Firefox: Soporta estructuras de marcadores nativas (Barra de herramientas, Menú, Otros).
-- Almacenamiento por Archivo: Cada marcador se almacena como un archivo JSON legible, ideal para el control de versiones y la edición manual en GitHub.
-- Perfiles Múltiples: Gestione hasta 10 perfiles independientes (ej. Trabajo/Personal) con repositorios individuales.
-- Automatización: Añada marcadores mediante la CLI o GitHub Actions; la extensión los integra automáticamente en la siguiente sincronización.
-- Archivos Generados: Crea automáticamente un README.md (vista previa), bookmarks.html (archivo de importación) o un feed RSS en su repositorio.
-
-Instalación y Configuración
-
-1. Instalación: Instale GitSyncMarks desde Complementos para Firefox (AMO).
-2. GitHub PAT: Cree un Token de Acceso Personal con el permiso "repo" (clásico) o "Contents: Read/Write" (fine-grained).
-3. Asistente de Configuración: Siga el proceso guiado en Ayuda -> Primeros pasos.
-4. Linkwarden (opcional): Configure su instancia en la pestaña de Linkwarden.
+- Privacidad desde el Diseño: Comunicación directa con la API de GitHub. Ningún tercero ve sus datos.
+- Optimizado para Firefox: Soporta estructuras nativas de marcadores.
+- Almacenamiento en archivos individuales: Cada marcador se guarda como un archivo JSON legible, ideal para el control de versiones en GitHub.
+- Múltiples Perfiles: Gestione hasta 10 perfiles separados para trabajo, vida personal, etc. con sus propios repositorios.
+- Automatización: Añada marcadores vía CLI o GitHub Actions; la extensión los integra automáticamente.
+- Archivos Generados: Crea automáticamente un README.md, bookmarks.html (archivo de importación) o Feed RSS en su repositorio.
 
 Aplicación Complementaria
-Utilice la aplicación GitSyncMarks-App (Android, iOS, Desktop) para gestionar sus marcadores directamente desde su repositorio de GitHub en dispositivos móviles. (Nota: Firefox para Android no admite la sincronización directa de marcadores mediante extensiones; utilice la aplicación en su lugar).
+Use GitSyncMarks-App (Android, iOS, Escritorio) para gestionar sus marcadores directamente desde GitHub en sus dispositivos móviles. (Nota: Firefox para Android no soporta sincronización directa de extensiones).
 
-GitSyncMarks es de Código Abierto: https://github.com/d0dg3r/GitSyncMarks
+GitSyncMarks es de código abierto (Open Source): https://github.com/d0dg3r/GitSyncMarks
 
 ### Categories
-Marcadores
+Bookmarks
 
 ### Tags
 bookmarks, sync, github, backup, automation

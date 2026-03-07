@@ -1,45 +1,38 @@
 # Chrome Web Store — GitSyncMarks (Italiano)
 <!-- See chrome-meta.md for Privacy, Test Instructions, and Distribution -->
-### Nome
+
+### Name
 GitSyncMarks
 
-### Riepilogo (max 132 caratteri)
-Sincronizzazione preferiti via GitHub. Sinergia Linkwarden, Smart Search e App Complementare. Diretto, sicuro, privato.
+### Summary (max 132 characters)
+Sincronizzazione segnalibri via GitHub. Sinergia Linkwarden, ricerca intelligente e Companion App. Diretto, sicuro, privato.
 
-### Descrizione Dettagliata
-GitSyncMarks è una soluzione professionale per sincronizzare bidirezionalmente e automaticamente i tuoi preferiti con un repository GitHub. Gestisci i tuoi dati su desktop tramite Chrome e Firefox, o in movimento con l'App Complementare GitSyncMarks. Nessun intermediario, nessun server di terze parti: controllo totale e privacy.
+### Detailed Description
+GitSyncMarks è una soluzione professionale per sincronizzare in modo bidirezionale e automatico i tuoi segnalibri con un repository GitHub. Nessun intermediario, nessun server di terze parti: controllo totale e privacy.
 
-Highlights
+Caratteristiche Principali
 
-- Sinergia Linkwarden: Salva pagine o link direttamente nella tua istanza Linkwarden. Include screenshot automatici del viewport, sincronizzazione delle collezioni e tag predefiniti.
-- Smart Search: Un'interfaccia di ricerca dedicata e velocissima per i tuoi preferiti. Supporta le modalità chiara e scura ed è completamente accessibile da tastiera.
-- Procedura Guidata di Onboarding: Un processo passo per passo guida i nuovi utenti dalla configurazione del token e del repository fino alla prima sincronizzazione riuscita.
-- Fusione a Tre Vie: Affidabilità di livello industriale grazie a un algoritmo di fusione avanzato che combina in modo intelligente le modifiche da più dispositivi.
+- Sinergia Linkwarden: Salva pagine o link direttamente sulla tua istanza di Linkwarden. Include screenshot automatici, sincronizzazione collezioni e tag.
+- Ricerca Intelligente: Un'interfaccia dedicata e velocissima per i segnalibri. Supporta temi (chiaro/scuro) ed è accessibile da tastiera.
+- Installazione Guidata: Un processo passo-passo che guida l'utente nella configurazione di token e repository per il primo avvio.
+- Unione a Tre Vie (Three-Way Merge): Affidabilità industriale grazie a un algoritmo che combina intelligentemente i cambiamenti su più dispositivi.
 
-Capacità Chiave
+Funzionalità Chiave
 
-- Privato per Design: Comunicazione diretta con le API di GitHub. Nessuna terza parte vede i tuoi dati.
-- Archiviazione su File: Ogni preferito è memorizzato come un file JSON leggibile – ideale per il versioning e l'editing manuale su GitHub.
-- Profili Multipli: Gestisci fino a 10 profili separati (es. Lavoro/Personale) con repository individuali.
-- Automazione: Aggiungi preferiti tramite CLI o GitHub Actions; l'estensione li integra automaticamente durante la sincronizzazione successiva.
-- File Generati: Crea automaticamente un file README.md (panoramica), bookmarks.html (importazione browser) o un feed RSS nel tuo repository.
-- Design e i18n: Temi chiaro e scuro professionali con supporto per 12 lingue.
-
-Installazione e Configurazione
-
-1. Installazione: Scarica lo ZIP da GitHub (Chrome/Edge) o installalo dal web store.
-2. GitHub PAT: Crea un Personal Access Token con l'ambito "repo".
-3. Procedura Guidata: Segui il processo guidato in Guida -> Per iniziare.
-4. Linkwarden (opzionale): Configura la tua istanza nella scheda Linkwarden dedicata.
+- Privacy by Design: Comunicazione diretta con le API di GitHub. Nessun terzo accede ai tuoi dati.
+- Archiviazione in File Singoli: Ogni segnalibro è un file JSON leggibile, perfetto per il versionamento manuale su GitHub.
+- Profili Multipli: Gestisci fino a 10 profili separati con repository propri.
+- Automazione: Aggiungi segnalibri via CLI o GitHub Actions; l'estensione li integra automaticamente.
+- File Generati: Crea automaticamente un README.md, bookmarks.html o feed RSS nel tuo repository.
+- Design e i18n: Temi chiaro/scuro e supporto a 12 lingue.
 
 App Complementare
-Usa GitSyncMarks-App (Android, iOS, Desktop) per gestire i tuoi preferiti direttamente dal tuo repository GitHub su dispositivi mobili.
+Usa GitSyncMarks-App (Android, iOS, Desktop) per gestire i segnalibri dal repository sui dispositivi mobili.
 
 GitSyncMarks è Open Source: https://github.com/d0dg3r/GitSyncMarks
-App mobile: GitSyncMarks-App (iOS + Android) — i tuoi segnalibri ovunque. Sola lettura; F-Droid e Google Play in arrivo. https://github.com/d0dg3r/GitSyncMarks-App
 
 ### Category
-Produttività
+Productivity
 
 ### Language
 Italiano

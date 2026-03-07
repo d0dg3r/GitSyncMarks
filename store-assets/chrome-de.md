@@ -26,12 +26,6 @@ Kernfunktionen
 - Generierte Dateien: Erstellt auf Wunsch automatisch eine README.md (Übersicht), bookmarks.html (Browser-Import) oder einen RSS-Feed in Ihrem Repository.
 - Design & i18n: Professionelle Light- und Dark-Themes plus Unterstützung für 12 Sprachen.
 
-Installation und Einrichtung
-
-1. Installation: ZIP von GitHub laden (Chrome/Edge) oder aus dem Web Store beziehen.
-2. GitHub PAT: Erstellen Sie einen Personal Access Token mit klassische "repo"-Berechtigung oder "Contents: Read/Write" (fine-grained).
-3. Setup-Wizard: Folgen Sie dem geführten Prozess unter Hilfe -> Erste Schritte.
-4. Linkwarden (optional): Konfigurieren Sie Ihre Instanz im dedizierten Linkwarden-Tab.
 
 Begleit-App
 Nutzen Sie die GitSyncMarks-App (Android, iOS, Desktop), um Ihre Lesezeichen direkt aus dem GitHub-Repository auf mobilen Geräten zu verwalten.

@@ -1,34 +1,38 @@
 # Firefox Add-ons (AMO) — GitSyncMarks (Polski)
 <!-- See firefox-meta.md for Privacy, Test Instructions, and Distribution -->
-### Nazwa
+
+### Name
 GitSyncMarks
 
-• Dziennik debugowania: karta Sync — włącz dla diagnostyki synchronizacji, eksportuj do rozwiązywania problemów
-• Aplikacja mobilna: GitSyncMarks-App (iOS + Android) — przeglądaj zakładki w podróży, synchronizacja tylko do odczytu z repozytorium
-• Automatyczny zapis: wszystkie ustawienia zapisują się automatycznie po zmianie — bez przycisków Zapisz
-• Powiadomienia: Wszystkie (sukces + błąd), Tylko błędy lub Wyłączone
+### Summary (max 250 characters)
+Synchronizacja zakładek przez GitHub. Synergia Linkwarden, wyszukiwanie i kreator konfiguracji. Bezpośrednio, bezpiecznie. Wsparcie dla Firefox.
 
-Jak to działa:
-1. Utwórz repozytorium GitHub na swoje zakładki
-2. Wygeneruj Personal Access Token z uprawnieniem "repo" (classic) lub "Contents: Read/Write" (fine-grained)
-3. Skonfiguruj GitSyncMarks z tokenem i repozytorium
-4. Kliknij „Synchronizuj teraz" — gotowe!
+### Detailed Description
+GitSyncMarks to profesjonalne rozszerzenie dla Firefox, które automatycznie synchronizuje zakładki z repozytorium GitHub. Brak pośredników – twoje dane pozostają w pełni pod Twoją kontrolą.
 
-Każda zakładka jest przechowywana jako osobny plik JSON w Twoim repozytorium, zorganizowany w foldery odzwierciedlające hierarchię zakładek Firefoksa (Pasek zakładek, Menu zakładek, Inne zakładki). README.md zapewnia przejrzysty przegląd bezpośrednio na GitHubie; bookmarks.html umożliwia import do dowolnej przeglądarki; feed.xml RSS umożliwia subskrypcję lub automatyzację; dashy-conf.yml dostarcza sekcje dla panelu Dashy.
+Najważniejsze Funkcje
 
-Automatyzacja:
-Możesz dodawać zakładki bez otwierania Firefoksa. GitSyncMarks zawiera workflow GitHub Actions (add-bookmark.yml), który pozwala dodawać zakładki przez interfejs webowy GitHub lub wiersz poleceń:
+- Synergia z Linkwarden: Zapisuj strony bezpośrednio do swojej instancji Linkwarden. Obejmuje m.in. automatyczne zrzuty ekranu, synchronizację kolekcji i tagów.
+- Inteligentne Wyszukiwanie: Dedykowany, błyskawiczny interfejs wyszukiwania zakładek (jasny/ciemny motyw), w pełni obsługiwany z klawiatury.
+- Kreator Konfiguracji: Proces, który prowadzi nowych użytkowników przez wybór tokena i repozytorium aż do rzetelnej synchronizacji.
+- Algorytm Three-Way Merge: Przemysłowa niezawodność dzięki zaawansowanemu łączeniu zmian z różnych urządzeń.
 
-  gh workflow run add-bookmark.yml -f url="https://example.com" -f title="Example" -f folder="toolbar"
+Kluczowe Możliwości
 
-Możesz także tworzyć pliki zakładek bezpośrednio w repozytorium — po prostu dodaj plik JSON z "title" i "url" do dowolnego folderu zakładek. Rozszerzenie automatycznie wykryje nowe pliki przy następnej synchronizacji.
+- Prywatność z Założenia: Bezpośrednia komunikacja z API GitHub. Nikt inny nie widzi Twoich danych.
+- Zoptymalizowany dla Firefox: Obsługuje natywną strukturę zakładek.
+- Zapis do Pojedynczych Plików: Każda zakładka to jeden plik JSON, idealny do historii zmian na GitHubie.
+- Wiele Profili: Nawet do 10 odrębnych profili posiadających oddzielne wyznaczone repozytoria.
+- Automatyzacja: Dodawaj zakładki z CLI lub GitHub Actions; rozszerzenie scali je przy następnej synchronizacji.
+- Generowane Pliki: Automatycznie tworzy README.md, bookmarks.html lub feed RSS w Twoim repozytorium.
 
-GitSyncMarks jest w pełni open source: https://github.com/d0dg3r/GitSyncMarks
+Aplikacja Pokrewna (Companion)
+Za pomocą GitSyncMarks-App dla Android, iOS i komputerów, w prosty sposób obsłużysz zakładki ze swojego telefonu. (Uwaga: Przeglądarka Firefox na urządzenia przenośne nie obsługuje tego sposobu synchronizacji za pomocą rozszerzeń).
 
-Aplikacja mobilna: GitSyncMarks-App (iOS + Android) — przeglądaj zakładki w podróży. Towarzysz tylko do odczytu; F-Droid i Google Play wkrótce. https://github.com/d0dg3r/GitSyncMarks-App
+GitSyncMarks to projekt Open Source: https://github.com/d0dg3r/GitSyncMarks
 
 ### Categories
-Zakładki
+Bookmarks
 
 ### Tags
 bookmarks, sync, github, backup, automation
