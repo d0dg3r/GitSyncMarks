@@ -17,24 +17,24 @@
 
 ---
 
-## 📋 Highlights
+## Highlights
 
-### 🔒 Linkwarden Synergy
+### Linkwarden Synergy
 Save any page or link directly to your **Linkwarden** instance from the right-click menu.
 - **Auto-Screenshots**: Capture the viewport automatically on save.
 - **Default Tags**: Organise flawlessly with pre-configured tags.
 - **Collection Sync**: Pull your Linkwarden collections straight into your browser bookmarks and push them to Git.
 
-### 🔎 Smart Search Popup
+### Smart Search Popup
 A dedicated, lightning-fast search interface accessible from anywhere.
 - **Theme Support**: Beautiful light and dark modes.
 - **Keyboard Friendly**: Instant results with "Esc" to close.
 - **Visual Clarity**: Logo headers and clean result lists.
 
-### 🔃 Three-Way Merge
+### Three-Way Merge
 Industrial-grade reliability. If you change bookmarks on two devices at once, GitSyncMarks handles the merge automatically whenever possible—no manual "fixing" required.
 
-### ⚙️ Guided Onboarding Wizard
+### Guided Onboarding Wizard
 Perfect for new users. GitSyncMarks walks you through the entire setup process.
 - **Zero to Sync**: Step-by-step guidance for tokens, repository selection, and first sync.
 - **Auto-Validation**: Instant feedback on your GitHub connection and folder paths.
@@ -56,7 +56,7 @@ Perfect for new users. GitSyncMarks walks you through the entire setup process.
 
 ---
 
-## 🚀 Key Capabilities
+## Key Capabilities
 
 ### Core — GitSyncMarks
 - **Private by Design**: Communicates directly with GitHub — no third-party servers see your data.
@@ -78,7 +78,7 @@ Automatically generate and push these files to your repository on every sync:
 
 ---
 
-## 🛠️ Setup & Installation
+## Setup & Installation
 
 ### 1. Installation
 - **Chrome/Edge/Brave**: [Download ZIP](https://github.com/d0dg3r/GitSyncMarks/releases), Extract, and Load Unpacked in `chrome://extensions/` (Developer Mode).
@@ -87,7 +87,7 @@ Automatically generate and push these files to your repository on every sync:
 ### 2. GitHub Configuration
 1. Create a **Personal Access Token (PAT)** with specifically the `repo` scope.
 2. Open extension settings, enter your token, owner, and repository name.
-3. Use the **Setup Wizard** (Help → Getting Started) for a guided walkthrough.
+3. Use the **Setup Wizard** (Help -> Getting Started) for a guided walkthrough.
 
 ### 3. Linkwarden Integration
 1. Go to the **Linkwarden** tab in settings.
@@ -103,14 +103,14 @@ Available for **Android, iOS, Windows, macOS, and Linux**. It syncs directly fro
 
 ---
 
-## 🤝 Community & Support
+## Community & Support
 
 - **[Website](https://gitsyncmarks.com/)**: Official landing page.
 - **[Discussions](https://github.com/d0dg3r/GitSyncMarks/discussions)**: Q&A, ideas, and show-and-tell.
 - **[Backlog Voting](https://github.com/d0dg3r/GitSyncMarks/discussions/37)**: Vote on the next feature we build!
 - **[Changelog](CHANGELOG.md)**: Stay up to date with the latest releases.
 
-Licensed under [MIT](LICENSE). Made with ❤️ by developers, for developers.
+Licensed under [MIT](LICENSE). Made with heart by developers, for developers.
 
 ## Requirements
 
