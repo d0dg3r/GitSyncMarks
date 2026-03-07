@@ -5,10 +5,10 @@
 GitSyncMarks
 
 ### Summary (max 132 characters)
-Lesezeichen-Sync via GitHub. Linkwarden-Synergie, Smart Search und geführter Setup-Wizard. Direkt, sicher, privat.
+Lesezeichen-Sync via GitHub. Linkwarden-Synergie, Smart Search und Companion App. Direkt, sicher, privat.
 
 ### Detailed Description
-GitSyncMarks ist eine professionelle Browser-Erweiterung, die Ihre Lesezeichen bidirektional und automatisch mit einem GitHub-Repository synchronisiert. Ohne Mittelsmann, ohne Drittserver – Ihre Daten bleiben vollständig unter Ihrer Kontrolle.
+GitSyncMarks ist eine professionelle Lösung, um Ihre Lesezeichen bidirektional und automatisch mit einem GitHub-Repository zu synchronisieren. Verwalten Sie Ihre Daten am Desktop via Chrome und Firefox oder unterwegs mit der GitSyncMarks Companion App. Ohne Mittelsmann, ohne Drittserver – totale Kontrolle und Privatsphäre.
 
 Highlights
 

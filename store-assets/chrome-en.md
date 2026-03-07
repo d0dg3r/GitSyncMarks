@@ -4,10 +4,10 @@
 GitSyncMarks
 
 ### Summary (max 132 characters)
-Bookmark sync via GitHub. Linkwarden synergy, Smart Search, and guided onboarding wizard. Direct, secure, private.
+Bookmark sync via GitHub. Linkwarden synergy, Smart Search, and Companion App. Direct, secure, private.
 
 ### Detailed Description
-GitSyncMarks is a professional browser extension that bidirectionally and automatically synchronizes your bookmarks with a GitHub repository. No middleman, no third-party servers – your data remains entirely under your control.
+GitSyncMarks is a professional solution to bidirectionally and automatically synchronize your bookmarks with a GitHub repository. Manage your data on desktop via Chrome and Firefox, or on the go with the GitSyncMarks Companion App. No middleman, no third-party servers – total control and privacy.
 
 Highlights
 

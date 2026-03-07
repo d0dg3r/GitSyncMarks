@@ -5,10 +5,10 @@
 GitSyncMarks
 
 ### Résumé (max 132 caractères)
-Synchronisation des favoris via GitHub. Synergie Linkwarden, Recherche Intelligente et Assistant de Configuration. Direct, sûr, privé.
+Synchronisation des favoris via GitHub. Synergie Linkwarden, Recherche Intelligente et App Compagnon. Direct, sûr, privé.
 
 ### Description Détaillée
-GitSyncMarks est une extension de navigateur professionnelle qui synchronise automatiquement et de manière bidirectionnelle vos favoris avec un dépôt GitHub. Sans intermédiaire, sans serveurs tiers – vos données restent entièrement sous votre contrôle.
+GitSyncMarks est une solution professionnelle pour synchroniser automatiquement et de manière bidirectionnelle vos favoris avec un dépôt GitHub. Gérez vos données sur bureau via Chrome et Firefox, ou en déplacement avec l'App Compagnon GitSyncMarks. Sans intermédiaire, sans serveurs tiers – contrôle total et confidentialité.
 
 Highlights
 
