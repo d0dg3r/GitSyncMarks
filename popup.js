@@ -93,6 +93,9 @@ function updateUI(status) {
   if (status.hasConflict) {
     setStatus('⚠️', getMessage('popup_conflictDetected'), 'status-warning');
     conflictBox.style.display = 'block';
+  } else if (status.lastError) {
+    setStatus('❌', status.lastError, 'status-error');
+    conflictBox.style.display = 'none';
   } else if (status.lastSyncTime) {
     setStatus('✅', getMessage('popup_synced'), 'status-ok');
     conflictBox.style.display = 'none';
