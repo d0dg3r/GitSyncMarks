@@ -80,10 +80,10 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 
 ---
 
-## Upgrading to v2.6.0 (Beta)
+## Upgrading to v2.6.2
 
 > [!IMPORTANT]
-> **v2.6.0-beta.1** is a major feature update. While there are **no breaking changes** to your core bookmark sync, please review the migration steps below if you plan to use the new Linkwarden integration.
+> **v2.6.2** is a maintenance and stability update. While there are **no breaking changes** to your core bookmark sync, please review the notes below if you are upgrading from v2.5.x.
 
 ### Migration Steps
 - **No Action Needed**: Your current GitHub bookmark sync will continue to work perfectly after the update.
