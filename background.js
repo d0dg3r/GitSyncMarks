@@ -38,6 +38,7 @@ import {
   handleContextMenuClick,
   refreshProfileMenuItems,
   refreshContextMenuDynamicItems,
+  refreshContextMenuDynamicItemsDebounced,
 } from './lib/context-menu.js';
 
 const ALARM_NAME = 'bookmarkSyncPull';
@@ -79,25 +80,25 @@ browserObj.contextMenus.onClicked.addListener(handleContextMenuClick);
 
 chrome.bookmarks.onCreated.addListener((id, bookmark) => {
   console.log('[GitSyncMarks] Bookmark created:', bookmark.title);
-  refreshContextMenuDynamicItems();
+  refreshContextMenuDynamicItemsDebounced();
   triggerAutoSync();
 });
 
 chrome.bookmarks.onRemoved.addListener((id, removeInfo) => {
   console.log('[GitSyncMarks] Bookmark removed:', id);
-  refreshContextMenuDynamicItems();
+  refreshContextMenuDynamicItemsDebounced();
   triggerAutoSync();
 });
 
 chrome.bookmarks.onChanged.addListener((id, changeInfo) => {
   console.log('[GitSyncMarks] Bookmark changed:', id, changeInfo);
-  refreshContextMenuDynamicItems();
+  refreshContextMenuDynamicItemsDebounced();
   triggerAutoSync();
 });
 
 chrome.bookmarks.onMoved.addListener((id, moveInfo) => {
   console.log('[GitSyncMarks] Bookmark moved:', id);
-  refreshContextMenuDynamicItems();
+  refreshContextMenuDynamicItemsDebounced();
   triggerAutoSync();
 });
 
