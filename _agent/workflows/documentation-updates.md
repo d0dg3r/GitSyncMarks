@@ -22,7 +22,8 @@ Every time mission-critical code (Sync Engine, Context Menu, Storage, API) is mo
 4. **Version Manifests**:
    - Bump version in `package.json`.
    - Bump version in `manifest.json`.
-   - Ensure versions are synchronized across both files.
+   - Bump version in `manifest.firefox.json`.
+   - Ensure versions are synchronized across all three files.
 
 5. **Website Docs**:
    - Run `node scripts/build-docs.js` to propagate markdown changes to the `_site/` directory.
