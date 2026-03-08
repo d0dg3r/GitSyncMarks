@@ -4,6 +4,15 @@ All notable changes to GitSyncMarks are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [2.6.2] - 2026-03-08
+
+### Fixed
+- **Context menu rejections**: Fixed unhandled promise rejections in `chrome.contextMenus.remove` by properly awaiting the removal of old menu items during dynamic refreshes.
+
+### Improved
+- **Sync error visibility**: Sync failures are now persisted in the extension state and displayed directly in the popup UI when the red error badge appears, providing immediate diagnostic feedback.
+
 ## [2.6.1] - 2026-03-07 (*Link*)
 
 ### Fixed
@@ -299,7 +308,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release: bookmark sync with GitHub
 
-[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.6.1...HEAD
+[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.6.2...HEAD
+[2.6.2]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.6.1...v2.6.2
 [2.6.1]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.6.0...v2.6.1
 [2.6.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.4...v2.6.0
 [2.5.4]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.3...v2.5.4
