@@ -28,6 +28,7 @@ flowchart TB
             Theme["theme.js"]
             Crypto["crypto.js"]
             CM["context-menu.js"]
+            LW["linkwarden-api.js"]
             Polyfill["browser-polyfill.js"]
         end
     end
@@ -142,6 +143,12 @@ Converts between browser bookmark trees and the per-file format. All generators 
 
 AES-256-GCM encryption for the GitHub PAT at rest (non-extractable CryptoKey in IndexedDB, token in `chrome.storage.local`). Also provides password-based encryption (`encryptWithPassword` / `decryptWithPassword` using PBKDF2 + AES-256-GCM) for settings export (.enc files) and settings sync to Git.
 
+### `lib/linkwarden-api.js` — Linkwarden API
+
+Minimal wrapper for the Linkwarden REST API:
+- `saveLink(data)`: Create a new link in a collection with tags.
+- `uploadScreenshot(linkId, blob)`: Upload a PNG screenshot to an existing link.
+
 ### `lib/i18n.js` — Internationalization
 
 Custom runtime i18n with manual language selection. Loads `_locales/{lang}/messages.json`, translates DOM via `data-i18n` attributes. English fallback.
@@ -193,11 +200,17 @@ Fetches the authenticated user's repos via GitHub REST API and maintains a "GitH
 
 Right-click menu registered via `chrome.contextMenus` under a parent "GitSyncMarks" item:
 
+- **Categories**: Added grouping into `ADD`, `LINKWARDEN`, `TOOLS`, and `FAVICONS` for better UX. Support for nested submenus via `contextMenuSubmenus` setting.
+- **Concurrency Protection**: Implemented a lockout mechanism (`isRefreshing`, `refreshPending`) to prevent overlapping rebuilds of dynamic menu items (folders/profiles).
+- **Debouncing**: High-frequency bookmark events trigger a debounced rebuild (`refreshContextMenuDynamicItemsDebounced`) with a 500ms delay and 5s max-wait cap to ensure responsiveness without flooding the browser's menu API.
+
 | Menu Item | Context | Action |
 |---|---|---|
 | Add to Toolbar | page, link | Creates bookmark in toolbar root via `chrome.bookmarks.create()`; auto-syncs via existing `onCreated` listener |
 | Add to Other Bookmarks | page, link | Creates bookmark in other root; auto-syncs |
+| Save to Linkwarden | page, link | Saves URL to Linkwarden instance; supports auto-screenshots via `captureVisibleTab` |
 | Sync Now | page, link | Calls `sync()` from sync-engine.js directly |
+| Search Bookmarks | page, link | Opens dedicated search popup window |
 | Copy Favicon URL | page | Copies `tab.favIconUrl` to clipboard via `chrome.scripting.executeScript()` |
 | Download Favicon | page | Downloads favicon via `chrome.downloads.download()` |
 | Switch Profile | page, link | Submenu with radio items for each profile; active profile checked; calls `switchProfile(targetId)` and refreshes menu |
