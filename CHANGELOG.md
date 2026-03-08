@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Context Menu reliability**: Fixed unhandled promise rejections in context menu action handlers by adding proper error boundaries and debug logging.
 
 ### Improved
-- **Sync Error Visibility**: Added a persistent red badge `!` to the extension icon whenever a synchronization fails (periodic sync, focus-triggered sync, or manual sync), clearing it only on success.
+- **Enhanced Sync Visibility**: Replaced the red `!` badge with an orange one and added a descriptive tooltip on hover (e.g., "Sync Error: [message]") to avoid confusion with browser permission warnings ("Wants access to this site").
 
 ## [2.6.1] - 2026-03-07 (*Link*)
 

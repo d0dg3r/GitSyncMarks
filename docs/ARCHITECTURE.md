@@ -73,6 +73,7 @@ The central coordinator:
 - **Context menu** — `contextMenus.onClicked` listener (top-level for SW persistence); `setupContextMenus()` called from `onInstalled`
 - **Periodic sync alarm** — `chrome.alarms` for periodic three-way merge sync
 - **Message handler** — Receives `sync`, `push`, `pull`, `generateFilesNow`, `getStatus`, `switchProfile`, `settingsChanged`, `setSettingsSyncPassword`, `clearSettingsSyncPassword`, `listDeviceConfigs`, `importDeviceConfig`, `getDebugLog` from popup/options
+- **Badge & Error Visibility** — Uses a centralized `updateSyncStatusBadge` helper to set an orange `!` badge and a descriptive tooltip (via `chrome.action.setTitle`) on sync failure, ensuring it clears reliably on success across all triggers.
 - **Migration** — Checks for and migrates legacy `bookmarks.json` format on startup
 
 ### `popup.html` / `popup.js` — Popup UI
