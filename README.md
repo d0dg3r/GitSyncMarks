@@ -7,6 +7,7 @@
   <a href="https://github.com/d0dg3r/GitSyncMarks/releases?q=pre"><img src="https://img.shields.io/github/v/release/d0dg3r/GitSyncMarks?include_prereleases&label=pre-release&logo=github&style=flat-square" alt="Pre-release"></a>
   <a href="https://chromewebstore.google.com/detail/kogijidhfkoibgihpiaiippajhgdgmif"><img src="https://img.shields.io/badge/Chrome_Web_Store-4285F4?style=flat-square&logo=googlechrome&logoColor=white" alt="Chrome Web Store"></a>
   <a href="https://addons.mozilla.org/en-US/firefox/addon/gitsyncmarks/"><img src="https://img.shields.io/badge/Firefox_Add-on-FF7139?style=flat-square&logo=firefoxbrowser&logoColor=white" alt="Firefox Add-on"></a>
+  <a href="https://github.com/sponsors/d0dg3r"><img src="https://img.shields.io/badge/Sponsor-EA4AAA?style=flat-square&logo=githubsponsors&logoColor=white" alt="Sponsor"></a>
 </p>
 
 <p align="center">
@@ -131,3 +132,13 @@ Licensed under [MIT](LICENSE). Made with heart by developers, for developers.
 ## License
 
 [MIT](LICENSE)
+
+---
+
+## Support the Project
+
+If you find **GitSyncMarks** helpful, consider supporting its development:
+
+- **[Sponsor on GitHub](https://github.com/sponsors/d0dg3r)**: Directly support the developer.
+- **Star the Repository**: Help others discover the project.
+- **[Contribute](CONTRIBUTING.md)**: Submit bug reports, feature ideas, or pull requests.
