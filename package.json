@@ -24,7 +24,7 @@
     "dotenv": "^17.3.1",
     "marked": "^17.0.4",
     "playwright": "^1.58.2",
-    "png-to-ico": "^2.1.0",
+    "png-to-ico": "^3.0.1",
     "sharp": "^0.33.0"
   }
 }
