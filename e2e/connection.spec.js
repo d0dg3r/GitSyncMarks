@@ -94,8 +94,7 @@ async function runWizardBootstrapFlow({ page, owner, repo, path, repoFlow }) {
   await page.locator('#onboarding-wizard-path').fill(path);
   await page.locator('#onboarding-wizard-next-btn').click(); // repoDetails -> environment
   await page.locator('#onboarding-wizard-next-btn').click(); // environment -> check + bootstrap + finish
-  await test.expect(page.locator('#onboarding-wizard-next-btn')).toBeEnabled({ timeout: 60000 });
-  await test.expect(page.locator('#onboarding-wizard-step-title')).toContainText(/all set|fertig|ready|finish/i);
+  await test.expect(page.locator('#onboarding-wizard-step-title')).toContainText(/all set|fertig|ready|finish/i, { timeout: 60000 });
 }
 
 async function disableAutoSync(page) {
@@ -234,16 +233,8 @@ test.describe('Connection', () => {
         await page.locator('#onboarding-wizard-branch').fill('main');
         await page.locator('#onboarding-wizard-path').fill(basePath);
         await page.locator('#onboarding-wizard-next-btn').click(); // repoDetails -> environment
-        await page.locator('#onboarding-wizard-next-btn').click(); // environment -> bootstrap
-
-        const wizardStatus = String(await page.locator('#onboarding-wizard-hint').textContent() || '');
-        test.skip(
-          /cannot create repositories|auto-create supports only|could not be created/i.test(wizardStatus),
-          'Current test credentials do not allow auto-create repository bootstrap.'
-        );
-
-        await test.expect(page.locator('#onboarding-wizard-next-btn')).toBeEnabled({ timeout: 60000 });
-        await test.expect(page.locator('#onboarding-wizard-step-title')).toContainText(/all set|fertig|ready|finish/i);
+        await page.locator('#onboarding-wizard-next-btn').click(); // environment -> (processing) -> finish
+        await test.expect(page.locator('#onboarding-wizard-step-title')).toContainText(/all set|fertig|ready|finish/i, { timeout: 60000 });
         const repoTarget = { owner, repo: createdRepo };
         const toolbarCount = await countBookmarkFilesInFolder(basePath, 'toolbar', repoTarget);
         const otherCount = await countBookmarkFilesInFolder(basePath, 'other', repoTarget);
@@ -352,8 +343,8 @@ test.describe('Connection', () => {
     test('Sync tab auto-saves on change', async ({ page, extensionId }) => {
       await configureExtension(page, extensionId);
 
-      await page.locator('.tab-btn[data-tab="sync"]').click();
-      await test.expect(page.locator('#tab-sync')).toHaveClass(/active/);
+      await page.locator('.sub-tab-btn[data-subtab="github-sync"]').click();
+      await test.expect(page.locator('#subtab-github-sync')).toHaveClass(/active/);
 
       await page.locator('#notifications-mode').selectOption('errorsOnly');
 
