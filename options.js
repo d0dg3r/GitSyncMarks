@@ -1505,7 +1505,6 @@ async function runWizardEnvironmentCheck() {
     setWizardResult(getMessage('options_onboardingWizardEnvironmentChecked'), 'success');
   }
   wizardState.environmentChecked = true;
-  renderOnboardingWizardStep();
   return true;
 }
 
@@ -1553,7 +1552,7 @@ async function runWizardSyncAction() {
   const basePath = onboardingWizardPathInput.value.trim() || 'bookmarks';
   const api = new GitHubAPI(token, owner, repo, branch);
 
-  // renderOnboardingWizardStep() (called inside runWizardEnvironmentCheck) hides
+  // renderOnboardingWizardStep() hides
   // the status area. Re-show it so the user sees feedback during sync.
   wizardStatusEl.style.display = 'flex';
 
