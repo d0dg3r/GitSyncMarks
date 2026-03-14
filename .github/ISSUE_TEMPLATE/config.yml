@@ -3,3 +3,6 @@ contact_links:
   - name: GitHub Discussions
     url: https://github.com/d0dg3r/GitSyncMarks/discussions
     about: Please ask questions and look for help in our forum.
+  - name: 🛡️ Security Policy
+    url: https://github.com/d0dg3r/GitSyncMarks/security/policy
+    about: If you found a security vulnerability, please report it privately here.
