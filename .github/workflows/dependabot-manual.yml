@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       package_ecosystem:
-        description: 'Package ecosystem to check'
+        description: 'Label used for logging/commit messages only (does not control which ecosystem Dependabot checks)'
         required: true
         default: 'npm'
         type: choice
