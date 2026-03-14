@@ -1,0 +1,49 @@
+name: Dependabot Manual Trigger
+
+on:
+  workflow_dispatch:
+    inputs:
+      package_ecosystem:
+        description: 'Package ecosystem to check'
+        required: true
+        default: 'npm'
+        type: choice
+        options:
+          - 'npm'
+          - 'github-actions'
+      force_rerun:
+        description: 'Force a rerun by adding a dummy comment (experimental)'
+        required: true
+        default: false
+        type: boolean
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        if: ${{ inputs.force_rerun == true }}
+
+      - name: Provide Manual Trigger Link
+        run: |
+          echo "### 🤖 Dependabot Manual Trigger" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "GitHub does not provide a direct API to trigger Dependabot version updates, but you can do it manually in the UI:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "1. Go to **Insights** > **Dependency graph** > **Dependabot**" >> $GITHUB_STEP_SUMMARY
+          echo "2. Click **'Check for updates'** for the desired ecosystem." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "[Direct link to Dependabot UI](https://github.com/${{ github.repository }}/network/updates)" >> $GITHUB_STEP_SUMMARY
+
+      - name: Force Rerun (Dummy Commit)
+        if: ${{ inputs.force_rerun == true }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          echo "# Last manual trigger check: $(date)" >> .github/dependabot.yml
+          git add .github/dependabot.yml
+          git commit -m "chore: manual dependabot check for ${{ inputs.package_ecosystem }} [skip ci]"
+          git push
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ **Force Rerun**: A dummy comment was added to `.github/dependabot.yml`. This should trigger Dependabot to start a new update check." >> $GITHUB_STEP_SUMMARY
