@@ -1633,6 +1633,29 @@
   "contextMenu_notifError": {
     "message": "Action failed — please try again"
   },
+  "contextMenu_notifLinkwardenNotConfigured": {
+    "message": "Linkwarden not configured"
+  },
+  "contextMenu_notifLinkwardenUrlInvalid": {
+    "message": "Linkwarden URL is invalid"
+  },
+  "contextMenu_notifLinkwardenGrantPermissions": {
+    "message": "Please grant permissions via \"Test Connection\" in Options"
+  },
+  "contextMenu_notifLinkwardenSaved": {
+    "message": "Link saved to Linkwarden"
+  },
+  "contextMenu_notifLinkwardenSavedWithScreenshot": {
+    "message": "Link & Screenshot saved to Linkwarden"
+  },
+  "contextMenu_notifLinkwardenError": {
+    "message": "Linkwarden Error: $1",
+    "placeholders": {
+      "errorMessage": {
+        "content": "$1"
+      }
+    }
+  },
   "contextMenu_switchProfile": {
     "message": "Switch Profile"
   },

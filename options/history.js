@@ -38,10 +38,14 @@ function renderHistoryList(commits) {
     sha.className = 'history-sha';
     sha.textContent = c.sha ? c.sha.substring(0, 7) : '';
 
+    const msg = document.createElement('span');
+    msg.className = 'history-msg';
+    msg.textContent = c.message || '';
+
     const spacer = document.createElement('span');
     spacer.className = 'history-spacer';
 
-    row.append(date, sha, spacer);
+    row.append(date, sha, msg, spacer);
 
     const diffSlot = document.createElement('div');
     diffSlot.className = 'history-item-diff';

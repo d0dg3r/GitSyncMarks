@@ -4,7 +4,7 @@
  * and automation clipboard helpers.
  */
 
-import { getMessage, applyI18n } from '../lib/i18n.js';
+import { getMessage } from '../lib/i18n.js';
 import { serializeToJson, deserializeFromJson, bookmarkTreeToFileMap, fileMapToDashyYaml } from '../lib/bookmark-serializer.js';
 import { replaceLocalBookmarks } from '../lib/sync-engine.js';
 import { encryptToken, decryptToken, encryptWithPassword, decryptWithPassword, PASSWORD_ENC_PREFIX } from '../lib/crypto.js';
