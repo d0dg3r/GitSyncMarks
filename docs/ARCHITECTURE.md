@@ -82,7 +82,7 @@ Toolbar popup with header (icon, title, profile dropdown when 2+ profiles), stat
 
 ### `options.html` / `options.js` — Settings Page
 
-Full-page settings (opens in tab) with five tabs. Header: language dropdown, theme cycle button (A → Dark → Light → A). All settings auto-save on change; no Save buttons.
+Full-page settings (opens in tab) with five tabs. `options.js` is the entry point that imports and orchestrates focused sub-modules in `options/`.
 
 1. **GitHub** (sub-tabs: Profile, Connection, Repos) — Profile selector (multiple profiles with separate repos); token, repository, connection test, onboarding (create folder or pull when path empty/has bookmarks); GitHub Repos folder (optional, position toolbar/other)
 2. **Sync** — Sync profile, auto-sync, sync on start/focus, notifications; Debug Log
@@ -90,24 +90,23 @@ Full-page settings (opens in tab) with five tabs. Header: language dropdown, the
 4. **Help** — Quick links (Vote on backlog, Documentation, Discussions, Report Issue) as pill buttons; collapsible feature sections (Getting Started with Start setup wizard button, Profiles, GitHub Repos, Popup, Sync, Files, Notifications, Conflicts, Keyboard Shortcuts)
 5. **About** — Version, links, license, mobile app
 
-### `lib/sync-engine.js` — Sync Engine
+Sub-modules (`options/`):
 
-Core synchronization with three-way merge:
+- **`wizard.js`** — Onboarding wizard flow (token validation, repo setup, environment check, first sync)
+- **`profiles.js`** — Profile switching, add/rename/delete with confirmation dialogs
+- **`linkwarden.js`** — Linkwarden tab: connection test, tag picker, sync, debug log export
+- **`history.js`** — Sync history listing, diff preview, bookmark restore, undo
+- **`context-menu-config.js`** — Context menu item ordering, toggling, category submenu configuration
+- **`settings.js`** — Settings sync to Git, file export/import, generated files toggles, automation clipboard
 
-| Function | Description |
-|---|---|
-| `sync()` | Three-way merge: base vs local vs remote, auto-merge or conflict |
-| `push()` | Full push of local bookmarks as individual files |
-| `pull()` | Full pull from remote, replace local bookmarks |
-| `computeDiff(base, current)` | Compute added/removed/modified files between two states |
-| `mergeDiffs(localDiff, remoteDiff)` | Merge two diffs into push/pull/conflict actions |
-| `debouncedSync()` | Debounced auto-sync (5s default) |
-| `getSyncStatus()` | Return current sync state for the popup |
-| `listSyncHistory()` | List recent commits touching the bookmark path |
-| `restoreFromCommit(sha)` | Restore local bookmarks from a specific commit |
-| `getPreviousCommitSha()` | Get the commit SHA saved before the last sync apply |
-| `getCommitDiffPreview(sha)` | Compare a target commit against local bookmarks and return a structured diff (added/removed/changed) |
-| `migrateFromLegacyFormat()` | Migrate from old `bookmarks.json` to per-file format |
+### `lib/sync-engine.js` — Sync Engine (barrel)
+
+Barrel module re-exporting from focused sub-modules:
+
+- **`lib/sync-settings.js`** — Storage keys (`STORAGE_KEYS`, `SYNC_PRESETS`), settings accessors (`getSettings`, `isConfigured`, `createApi`, `getDeviceId`), local bookmark access (`getLocalFileMap`), file map filtering (`filterForDiff`, `addGeneratedFiles`), and encrypted settings sync (`buildEncryptedSettings`, `applyEncryptedSettings`, profile CRUD)
+- **`lib/sync-core.js`** — Core sync operations (`push`, `pull`, `sync`), three-way merge (`computeDiff`, `mergeDiffs`, `mergeOrderJson`), sync state management (`saveSyncState`, `getSyncStatus`, `isSyncInProgress`), debounced auto-sync (`debouncedSync`, `bootstrapFirstSync`), and Linkwarden mirroring
+- **`lib/sync-history.js`** — Commit history listing (`listSyncHistory`), bookmark restore (`restoreFromCommit`), undo support (`getPreviousCommitSha`), and diff preview (`getCommitDiffPreview`)
+- **`lib/sync-migration.js`** — Legacy single-file format migration (`migrateFromLegacyFormat`)
 
 State is stored as `LAST_SYNC_FILES` (path → {sha, content}) and `LAST_COMMIT_SHA`.
 
@@ -203,28 +202,27 @@ Fetches the authenticated user's repos via GitHub REST API and maintains a "GitH
 | `fetchRemoteFileMap(api, basePath, baseFiles)` | Fetch bookmark files from GitHub via Git Data API; returns `{ shaMap, fileMap, commitSha }` or `null` for empty repo |
 | `fetchRemoteFileMapAtCommit(api, basePath, commitSha, options?)` | Fetch file map at a specific commit SHA (history restore/preview); batched `getBlob` (concurrency 5); optional short-lived in-memory cache per owner/repo/path/commit |
 
-### `lib/context-menu.js` — Context Menu
+### `lib/context-menu.js` — Context Menu (barrel)
 
-Right-click menu registered via `chrome.contextMenus` under a parent "GitSyncMarks" item:
+Barrel module re-exporting from focused sub-modules:
 
-- **Categories**: Added grouping into `ADD`, `LINKWARDEN`, `TOOLS`, and `FAVICONS` for better UX. Support for nested submenus via `contextMenuSubmenus` setting.
-- **Concurrency Protection**: Implemented a lockout mechanism (`isRefreshing`, `refreshPending`) to prevent overlapping rebuilds of dynamic menu items (folders/profiles).
-- **Debouncing**: High-frequency bookmark events trigger a debounced rebuild (`refreshContextMenuDynamicItemsDebounced`) with a 500ms delay and 5s max-wait cap to ensure responsiveness without flooding the browser's menu API.
+- **`lib/context-menu-constants.js`** — Menu IDs (`MENU_IDS`), categories (`CATEGORIES`), ID prefixes, popup dimensions, and other shared constants
+- **`lib/context-menu-setup.js`** — Static menu creation (`setupContextMenus`), called from `chrome.runtime.onInstalled`
+- **`lib/context-menu-dynamic.js`** — Dynamic menu management: profile submenus, quick folders, folder tree, open-all-from-folder items; concurrency protection (`isRefreshing`/`refreshPending`) and debounced rebuild (`refreshContextMenuDynamicItemsDebounced`, 500ms delay, 5s max-wait)
+- **`lib/context-menu-handlers.js`** — Click event dispatch (`handleContextMenuClick`) and all action handlers (add bookmark, sync, Linkwarden save, search, favicon, profile switch)
 
 | Menu Item | Context | Action |
 |---|---|---|
-| Add to Toolbar | page, link | Creates bookmark in toolbar root via `chrome.bookmarks.create()`; auto-syncs via existing `onCreated` listener |
-| Add to Other Bookmarks | page, link | Creates bookmark in other root; auto-syncs |
+| Add to Toolbar | page, link | Creates bookmark in toolbar root via `chrome.bookmarks.create()` |
+| Add to Other Bookmarks | page, link | Creates bookmark in other root |
 | Save to Linkwarden | page, link | Saves URL to Linkwarden instance; supports auto-screenshots via `captureVisibleTab` |
 | Sync Now | page, link | Calls `sync()` from sync-engine.js directly |
 | Search Bookmarks | page, link | Opens dedicated search popup window |
 | Copy Favicon URL | page | Copies `tab.favIconUrl` to clipboard via `chrome.scripting.executeScript()` |
 | Download Favicon | page | Downloads favicon via `chrome.downloads.download()` |
-| Switch Profile | page, link | Submenu with radio items for each profile; active profile checked; calls `switchProfile(targetId)` and refreshes menu |
+| Switch Profile | page, link | Submenu with radio items for each profile; active profile checked |
 
-`setupContextMenus()` is called from `onInstalled`; `handleContextMenuClick()` is wired to a top-level `contextMenus.onClicked` listener for MV3 service worker persistence. `refreshProfileMenuItems()` rebuilds the profile submenu dynamically — called on install, startup, and whenever profiles or active profile change (via `chrome.storage.onChanged` listener in background.js).
-
-Favicon source logic: `getFaviconUrl(tab)` returns `tab.favIconUrl` if available, otherwise falls back to Google's favicon service (`https://www.google.com/s2/favicons?domain={domain}&sz=64`).
+`setupContextMenus()` is called from `onInstalled`; `handleContextMenuClick()` is wired to a top-level `contextMenus.onClicked` listener for MV3 service worker persistence.
 
 ### `lib/browser-polyfill.js` — Browser Detection
 
@@ -239,40 +237,56 @@ GitSyncMarks/
 ├── background.js                 # Background script
 ├── popup.html / popup.js / popup.css
 ├── options.html / options.js / options.css
+├── options/                      # Options page sub-modules
+│   ├── wizard.js                 # Onboarding wizard flow
+│   ├── profiles.js               # Profile management UI
+│   ├── linkwarden.js             # Linkwarden tab UI
+│   ├── history.js                # Sync history & restore
+│   ├── context-menu-config.js    # Context menu configuration
+│   └── settings.js               # Settings sync, export/import, file generation
 ├── lib/
-│   ├── sync-engine.js            # Three-way merge sync
+│   ├── sync-engine.js            # Barrel: re-exports sync sub-modules
+│   ├── sync-settings.js          # Storage keys, settings, encrypted settings sync
+│   ├── sync-core.js              # Push/pull/sync, three-way merge, auto-sync
+│   ├── sync-history.js           # Commit history, restore, diff preview
+│   ├── sync-migration.js         # Legacy format migration
 │   ├── github-api.js             # GitHub REST + Git Data API
 │   ├── bookmark-serializer.js    # Per-file bookmark conversion
-│   ├── bookmark-replace.js       # Replace local bookmarks (used by sync + profile switch)
-│   ├── github-repos.js          # GitHub Repos folder (user repos as bookmarks)
-│   ├── profile-manager.js       # Multiple profiles, switchProfile, migration
-│   ├── onboarding.js            # checkPathSetup, initializeRemoteFolder
+│   ├── bookmark-replace.js       # Replace local bookmarks
+│   ├── github-repos.js           # GitHub Repos folder
+│   ├── profile-manager.js        # Multiple profiles, switchProfile
+│   ├── onboarding.js             # checkPathSetup, initializeRemoteFolder
 │   ├── remote-fetch.js           # fetchRemoteFileMap
 │   ├── crypto.js                 # Token encryption (AES-256-GCM)
-│   ├── context-menu.js            # Right-click context menu (Add, Sync, Favicon)
+│   ├── context-menu.js           # Barrel: re-exports context menu sub-modules
+│   ├── context-menu-constants.js # Menu IDs, categories, prefixes
+│   ├── context-menu-setup.js     # Static menu creation (onInstalled)
+│   ├── context-menu-dynamic.js   # Dynamic profile/folder menus
+│   ├── context-menu-handlers.js  # Click event dispatch & actions
+│   ├── linkwarden-api.js         # Linkwarden REST API wrapper
 │   ├── debug-log.js              # Debug log for sync diagnostics
 │   ├── i18n.js                   # Internationalization
-│   ├── theme.js                  # Light/dark/auto theme (cycle button)
-│   └── browser-polyfill.js      # Browser detection
-├── _locales/                     # 12 languages (en, de, fr, es, pt_BR, it, ja, zh_CN, ko, ru, tr, pl)
+│   ├── theme.js                  # Light/dark/auto theme
+│   └── browser-polyfill.js       # Browser detection
+├── _locales/                     # 12 languages
 │   ├── en/messages.json
 │   ├── de/messages.json
 │   └── .../messages.json
 ├── icons/
 ├── scripts/
 │   ├── build.sh                  # Build Chrome + Firefox packages
-│   ├── generate-screenshots.js   # Auto-generate store screenshots (Playwright + Sharp)
-│   ├── fetch-app-content.sh      # Fetch App README, assets from GitSyncMarks-App repo
+│   ├── generate-screenshots.js   # Auto-generate store screenshots
+│   ├── fetch-app-content.sh      # Fetch App README, assets
 │   ├── build-docs.js             # Markdown → HTML for docs/
-│   └── build-index.js            # Build index.html with Extension | App tabs
+│   └── build-index.js            # Build index.html
 ├── package.json                  # npm scripts for building
 ├── .github/workflows/
-│   ├── test-e2e.yml              # E2E tests (manual trigger only; CI disabled)
+│   ├── test-e2e.yml              # E2E tests (manual trigger only)
 │   ├── release.yml               # Build ZIPs, create release on tag
-│   ├── screenshots.yml           # Generate store screenshots (manual trigger)
+│   ├── screenshots.yml           # Generate store screenshots
 │   └── add-bookmark.yml          # Automation: add bookmark via dispatch
 ├── docs/                         # Architecture documentation
-├── website/                      # GitHub Pages site (index, docs, styles)
+├── website/                      # GitHub Pages site
 ├── store-assets/                 # Store listings & screenshots (12 languages)
 ├── LICENSE
 ├── PRIVACY.md

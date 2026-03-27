@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 ## Environment
-- **Extension Version:** e.g., v2.6.2
+- **Extension Version:** e.g., v2.7.0
 - **Browser:** e.g., Chrome, Firefox, Brave
 - **Browser Version:** e.g., 122.0.x
 - **Operating System:** e.g., Windows 10, macOS Sonoma, Linux (Ubuntu)

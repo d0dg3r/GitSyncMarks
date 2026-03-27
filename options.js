@@ -1,38 +1,33 @@
 /**
- * Options Page Logic
- * Handles tab navigation, settings, token validation, language selection,
- * and bookmark/settings import/export.
+ * Options Page Logic – Entry Point
+ * Orchestrates sub-modules and hosts shared functions (loadSettings, saveSettings).
  */
 
 import { DISPLAY_VERSION } from './lib/display-version.js';
 import { GitHubAPI } from './lib/github-api.js';
-import { checkPathSetup, waitForRemoteBaseline } from './lib/onboarding.js';
-import { initI18n, applyI18n, getMessage, reloadI18n, getLanguage, SUPPORTED_LANGUAGES } from './lib/i18n.js';
+import { initI18n, applyI18n, getMessage, reloadI18n, SUPPORTED_LANGUAGES } from './lib/i18n.js';
 import { initTheme, applyTheme } from './lib/theme.js';
-import { serializeToJson, deserializeFromJson, bookmarkTreeToFileMap, fileMapToDashyYaml } from './lib/bookmark-serializer.js';
-import { replaceLocalBookmarks, SYNC_PRESETS } from './lib/sync-engine.js';
+import { SYNC_PRESETS } from './lib/sync-engine.js';
 import { updateGitHubReposFolder } from './lib/github-repos.js';
-import { updateLinkwardenCollectionsFolder } from './lib/linkwarden-sync.js';
 import { LinkwardenAPI } from './lib/linkwarden-api.js';
-import { encryptToken, decryptToken, migrateTokenIfNeeded, encryptWithPassword, decryptWithPassword, PASSWORD_ENC_PREFIX } from './lib/crypto.js';
-
-const browserObj = typeof browser !== 'undefined' ? browser : chrome;
-
-import {
-  isDebugLogEnabled,
-  setDebugLogEnabled,
-} from './lib/debug-log.js';
+import { encryptToken, decryptToken, migrateTokenIfNeeded } from './lib/crypto.js';
 import {
   getProfiles,
   getActiveProfileId,
   getProfileSettings,
   saveProfile,
-  addProfile,
-  deleteProfile,
-  switchProfile,
   migrateToProfiles,
   MAX_PROFILES,
 } from './lib/profile-manager.js';
+
+import { initWizard, wizardState, startOnboardingWizard, renderOnboardingWizardStep, hideConnectionPathInitAction, showOnboardingConfirm, hideOnboardingConfirm, showValidation } from './options/wizard.js';
+import { initProfiles } from './options/profiles.js';
+import { initLinkwarden, renderLwOptionsTagChips, renderLwOptionsTagCloud, setLwOptionsSelectedTags, setLwOptionsAllTags, getLwOptionsSelectedTags } from './options/linkwarden.js';
+import { initHistory } from './options/history.js';
+import { initContextMenuConfig, renderContextMenuConfig, DEFAULT_CONTEXT_MENU_ITEMS } from './options/context-menu-config.js';
+import { initSettings, downloadFile, updateGenerateFilesBtn, updateSettingsSyncVisibility, updateSettingsSyncButtonsState, renderSettingsProfiles, refreshSettingsProfiles } from './options/settings.js';
+
+const browserObj = typeof browser !== 'undefined' ? browser : chrome;
 
 const STORAGE_KEYS = {
   GITHUB_TOKEN: 'githubToken',
@@ -46,7 +41,7 @@ const STORAGE_KEYS = {
   SYNC_ON_FOCUS: 'syncOnFocus',
   SYNC_PROFILE: 'syncProfile',
   NOTIFICATIONS_MODE: 'notificationsMode',
-  NOTIFICATIONS_ENABLED: 'notificationsEnabled', // legacy, for migration
+  NOTIFICATIONS_ENABLED: 'notificationsEnabled',
   DEBOUNCE_DELAY: 'debounceDelay',
   LANGUAGE: 'language',
   THEME: 'theme',
@@ -91,27 +86,12 @@ const profileAddBtn = document.getElementById('profile-add-btn');
 const profileRenameBtn = document.getElementById('profile-rename-btn');
 const profileDeleteBtn = document.getElementById('profile-delete-btn');
 const profileLimitEl = document.getElementById('profile-limit');
-const profileSpinner = document.getElementById('profile-spinner');
-const profileSwitchingMsg = document.getElementById('profile-switching-msg');
 const profileSwitchWithoutConfirmInput = document.getElementById('profile-switch-without-confirm');
 const profileSwitchConfirm = document.getElementById('profile-switch-confirm');
-const profileSwitchConfirmText = document.getElementById('profile-switch-confirm-text');
-const profileSwitchConfirmBtn = document.getElementById('profile-switch-confirm-btn');
 const profileDeleteConfirm = document.getElementById('profile-delete-confirm');
-const profileDeleteConfirmText = document.getElementById('profile-delete-confirm-text');
-const profileDeleteConfirmBtn = document.getElementById('profile-delete-confirm-btn');
-const profileDeleteCancelBtn = document.getElementById('profile-delete-cancel-btn');
 const profileAddDialog = document.getElementById('profile-add-dialog');
-const profileAddNameInput = document.getElementById('profile-add-name-input');
-const profileAddConfirmBtn = document.getElementById('profile-add-confirm-btn');
-const profileAddCancelBtn = document.getElementById('profile-add-cancel-btn');
 const profileRenameDialog = document.getElementById('profile-rename-dialog');
-const profileRenameInput = document.getElementById('profile-rename-input');
-const profileRenameConfirmBtn = document.getElementById('profile-rename-confirm-btn');
-const profileRenameCancelBtn = document.getElementById('profile-rename-cancel-btn');
 const profileMessage = document.getElementById('profile-message');
-const profileSwitchCancelBtn = document.getElementById('profile-switch-cancel-btn');
-const validationSpinner = document.getElementById('validation-spinner');
 const tokenInput = document.getElementById('token');
 const toggleTokenBtn = document.getElementById('toggle-token');
 const ownerInput = document.getElementById('owner');
@@ -136,60 +116,9 @@ const generateReadmeMdSelect = document.getElementById('generate-readme-md');
 const generateBookmarksHtmlSelect = document.getElementById('generate-bookmarks-html');
 const generateFeedXmlSelect = document.getElementById('generate-feed-xml');
 const generateDashyYmlSelect = document.getElementById('generate-dashy-yml');
-const generateFilesBtn = document.getElementById('generate-files-btn');
 const syncSettingsToGitInput = document.getElementById('sync-settings-to-git');
-const settingsSyncOptionsGroup = document.getElementById('settings-sync-options-group');
-const settingsSyncModeSelect = document.getElementById('settings-sync-mode');
-const settingsSyncGlobalWriteGroup = document.getElementById('settings-sync-global-write-group');
-const settingsSyncGlobalWriteEnabledInput = document.getElementById('settings-sync-global-write-enabled');
-const settingsSyncPasswordInput = document.getElementById('settings-sync-password');
-const settingsSyncSavePwBtn = document.getElementById('settings-sync-save-pw-btn');
-const settingsSyncResult = document.getElementById('settings-sync-result');
-const settingsSyncImportGroup = document.getElementById('settings-sync-import-group');
 const settingsSyncClientNameInput = document.getElementById('settings-sync-client-name');
-const settingsSyncLoadBtn = document.getElementById('settings-sync-load-btn');
-const settingsSyncDeviceList = document.getElementById('settings-sync-device-list');
-const settingsSyncImportBtn = document.getElementById('settings-sync-import-btn');
-const settingsSyncPushSelectedBtn = document.getElementById('settings-sync-push-selected-btn');
-const settingsSyncCreateBtn = document.getElementById('settings-sync-create-btn');
-const settingsSyncImportResult = document.getElementById('settings-sync-import-result');
 const notificationsModeSelect = document.getElementById('notifications-mode');
-const validateBtn = document.getElementById('validate-btn');
-const validationResult = document.getElementById('validation-result');
-const connectionPathInitGroup = document.getElementById('connection-path-init-group');
-const connectionPathInitBtn = document.getElementById('connection-path-init-btn');
-const connectionPathInitHint = document.getElementById('connection-path-init-hint');
-const onboardingConfirm = document.getElementById('onboarding-confirm');
-const onboardingConfirmText = document.getElementById('onboarding-confirm-text');
-const onboardingConfirmYesBtn = document.getElementById('onboarding-confirm-yes-btn');
-const onboardingConfirmNoBtn = document.getElementById('onboarding-confirm-no-btn');
-const onboardingWizardScreen = document.getElementById('onboarding-wizard-screen');
-const settingsShell = document.getElementById('settings-shell');
-const onboardingWizardProgress = document.getElementById('onboarding-wizard-progress');
-const onboardingWizardStepTitle = document.getElementById('onboarding-wizard-step-title');
-const onboardingWizardStepText = document.getElementById('onboarding-wizard-step-text');
-const onboardingWizardResult = document.getElementById('onboarding-wizard-result'); // hidden; not used for display
-const wizardStatusEl = document.getElementById('wizard-status');
-const onboardingWizardSpinner = document.getElementById('onboarding-wizard-spinner');
-const onboardingWizardHint = document.getElementById('onboarding-wizard-hint');
-const onboardingWizardElapsed = document.getElementById('onboarding-wizard-elapsed');
-const onboardingWizardActionBtn = document.getElementById('onboarding-wizard-action-btn');
-const onboardingWizardBackBtn = document.getElementById('onboarding-wizard-back-btn');
-const onboardingWizardNextBtn = document.getElementById('onboarding-wizard-next-btn');
-const onboardingWizardSkipBtn = document.getElementById('onboarding-wizard-skip-btn');
-const onboardingWizardStartBtn = document.getElementById('onboarding-wizard-start-btn');
-const onboardingWizardTokenHelp = document.getElementById('onboarding-wizard-token-help');
-const onboardingWizardHasTokenGroup = document.getElementById('onboarding-wizard-has-token-group');
-const onboardingWizardHasTokenSelect = document.getElementById('onboarding-wizard-has-token');
-const onboardingWizardTokenGroup = document.getElementById('onboarding-wizard-token-group');
-const onboardingWizardTokenInput = document.getElementById('onboarding-wizard-token');
-const onboardingWizardRepoFlowGroup = document.getElementById('onboarding-wizard-repo-flow-group');
-const onboardingWizardRepoFlowSelect = document.getElementById('onboarding-wizard-repo-flow');
-const onboardingWizardRepoGroup = document.getElementById('onboarding-wizard-repo-group');
-const onboardingWizardOwnerInput = document.getElementById('onboarding-wizard-owner');
-const onboardingWizardRepoInput = document.getElementById('onboarding-wizard-repo');
-const onboardingWizardBranchInput = document.getElementById('onboarding-wizard-branch');
-const onboardingWizardPathInput = document.getElementById('onboarding-wizard-path');
 const saveGitHubResult = document.getElementById('save-github-result');
 const saveSyncResult = document.getElementById('save-sync-result');
 const githubReposCard = document.getElementById('github-repos-card');
@@ -205,16 +134,16 @@ const THEME_CYCLE = ['auto', 'dark', 'light'];
 const THEME_ICONS = { auto: 'A', dark: '☽', light: '☀' };
 const THEME_TITLES = { auto: 'options_themeAuto', dark: 'options_themeDark', light: 'options_themeLight' };
 const debugLogEnabledInput = document.getElementById('debug-log-enabled');
-const debugLogExportBtn = document.getElementById('debug-log-export-btn');
-const debugLogResult = document.getElementById('debug-log-result');
+const onboardingWizardStartBtn = document.getElementById('onboarding-wizard-start-btn');
+const onboardingConfirm = document.getElementById('onboarding-confirm');
+const resetConfirmDialog = document.getElementById('reset-confirm-dialog');
+const resetBtn = document.getElementById('btn-reset-extension');
 const quickFolderSelect1 = document.getElementById('quick-folder-1');
 const quickFolderSelect2 = document.getElementById('quick-folder-2');
 const quickFolderSelect3 = document.getElementById('quick-folder-3');
 const quickFoldersRefreshBtn = document.getElementById('quick-folders-refresh-btn');
 const quickFoldersResult = document.getElementById('quick-folders-result');
 const openAllThresholdInput = document.getElementById('open-all-threshold');
-const contextMenuItemsList = document.getElementById('context-menu-items-list');
-const contextMenuResetBtn = document.getElementById('context-menu-reset-btn');
 
 // ---- DOM elements: Linkwarden Tab ----
 const linkwardenEnabledInput = document.getElementById('linkwarden-enabled');
@@ -222,13 +151,7 @@ const linkwardenSubtabBar = document.getElementById('linkwarden-subtab-bar');
 const linkwardenSettingsGroup = document.getElementById('linkwarden-settings');
 const linkwardenUrlInput = document.getElementById('linkwarden-url');
 const linkwardenTokenInput = document.getElementById('linkwarden-token');
-const toggleLinkwardenTokenBtn = document.getElementById('toggle-linkwarden-token');
 const linkwardenDefaultCollectionSelect = document.getElementById('linkwarden-default-collection');
-const lwOptionsTagChips = document.getElementById('lw-options-tag-chips');
-const lwOptionsTagInput = document.getElementById('lw-options-tag-input');
-const lwOptionsTagCloud = document.getElementById('lw-options-tag-cloud');
-let lwOptionsSelectedTags = [];
-let lwOptionsAllTags = [];
 const linkwardenDefaultScreenshotInput = document.getElementById('linkwarden-default-screenshot');
 const linkwardenSyncEnabledInput = document.getElementById('linkwarden-sync-enabled');
 const linkwardenSyncOptions = document.getElementById('linkwarden-sync-options');
@@ -236,31 +159,6 @@ const linkwardenSyncParentSelect = document.getElementById('linkwarden-sync-pare
 const linkwardenSyncPushToGitInput = document.getElementById('linkwarden-sync-push-to-git');
 const linkwardenSyncEnabledGroup = document.getElementById('linkwarden-sync-enabled-group');
 const linkwardenSyncDisabledMsg = document.getElementById('linkwarden-sync-disabled-msg');
-const linkwardenSyncRefreshBtn = document.getElementById('linkwarden-sync-refresh-btn');
-const linkwardenSyncSpinner = document.getElementById('linkwarden-sync-spinner');
-const linkwardenSyncResult = document.getElementById('linkwarden-sync-result');
-const linkwardenTestBtn = document.getElementById('linkwarden-test-btn');
-const linkwardenTestSpinner = document.getElementById('linkwarden-test-spinner');
-const linkwardenTestResult = document.getElementById('linkwarden-test-result');
-
-
-
-// ---- DOM elements: Export/Import (compact dropdown UI) ----
-const exportTypeSelect = document.getElementById('export-type-select');
-const exportBtn = document.getElementById('export-btn');
-const exportResult = document.getElementById('export-result');
-const importTypeSelect = document.getElementById('import-type-select');
-const importWarning = document.getElementById('import-warning');
-const importFile = document.getElementById('import-file');
-const importFileTrigger = document.getElementById('import-file-trigger');
-const importFilename = document.getElementById('import-filename');
-const importBtn = document.getElementById('import-btn');
-const importResult = document.getElementById('import-result');
-const passwordDialog = document.getElementById('password-dialog');
-const passwordDialogPrompt = document.getElementById('password-dialog-prompt');
-const passwordDialogInput = document.getElementById('password-dialog-input');
-const passwordDialogConfirmBtn = document.getElementById('password-dialog-confirm-btn');
-const passwordDialogCancelBtn = document.getElementById('password-dialog-cancel-btn');
 
 // ==============================
 // Tab Navigation
@@ -299,23 +197,29 @@ document.addEventListener('DOMContentLoaded', async () => {
   applyI18n();
   document.title = `GitSyncMarks – ${getMessage('options_subtitle')}`;
 
-  // Screenshot demo mode: show wizard at specific step without API calls
   const params = new URLSearchParams(window.location.search);
   if (params.get('screenshot') === 'wizard') {
     const stepParam = params.get('step');
     const stepIndex = stepParam !== null ? Math.max(0, Math.min(7, parseInt(stepParam, 10) || 0)) : 0;
     wizardState.active = true;
     wizardState.stepIndex = stepIndex;
-    onboardingWizardScreen.style.display = '';
-    settingsShell.style.display = 'none';
+    document.getElementById('onboarding-wizard-screen').style.display = '';
+    document.getElementById('settings-shell').style.display = 'none';
     renderOnboardingWizardStep();
     return;
   }
 
+  // Initialize all sub-modules with shared callbacks
+  initWizard({ saveSettings, loadSettings });
+  initProfiles({ loadSettings, saveSettings, showSaveResult });
+  initLinkwarden({ saveSettings, downloadFile });
+  initHistory();
+  initContextMenuConfig();
+  initSettings({ saveSettings, loadSettings, showOnboardingConfirm, hideOnboardingConfirm });
+
   await loadSettings();
   loadShortcuts();
 
-  // Show version: pre-release display or manifest
   const versionEl = document.getElementById('app-version');
   if (versionEl) {
     const version = DISPLAY_VERSION ?? chrome.runtime.getManifest().version;
@@ -362,8 +266,6 @@ document.getElementById('btn-customize-shortcuts')?.addEventListener('click', ()
 // Files Tab: Factory Reset
 // ==============================
 
-const resetBtn = document.getElementById('btn-reset-extension');
-const resetConfirmDialog = document.getElementById('reset-confirm-dialog');
 const resetConfirmBtn = document.getElementById('btn-reset-confirm');
 const resetCancelBtn = document.getElementById('btn-reset-cancel');
 
@@ -394,7 +296,7 @@ resetConfirmBtn?.addEventListener('click', async () => {
 });
 
 // ==============================
-// Settings Tab: Language
+// Settings Helpers
 // ==============================
 
 function detectSyncProfile(interval, debounceMs) {
@@ -421,211 +323,12 @@ function getEffectiveDebounceMs() {
   return preset?.debounceMs ?? 5000;
 }
 
-function updateSettingsSyncVisibility() {
-  settingsSyncOptionsGroup.style.display = syncSettingsToGitInput.checked ? '' : 'none';
-  // Global mode is temporarily unavailable; keep UI visible but fixed to individual.
-  settingsSyncModeSelect.value = 'individual';
-  settingsSyncModeSelect.disabled = true;
-  settingsSyncImportGroup.style.display = syncSettingsToGitInput.checked ? '' : 'none';
-  settingsSyncGlobalWriteGroup.style.display = 'none';
-}
-
-let settingsProfiles = [];
-
-function settingsSyncClientAlias() {
-  const raw = String(settingsSyncClientNameInput?.value || '').trim().toLowerCase();
-  return raw.replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 48);
-}
-
-function updateSettingsSyncButtonsState() {
-  const hasName = !!settingsSyncClientAlias();
-  const hasProfiles = settingsProfiles.length > 0;
-  settingsSyncDeviceList.disabled = !hasName || !hasProfiles;
-  settingsSyncImportBtn.disabled = !hasName || !hasProfiles;
-  settingsSyncPushSelectedBtn.disabled = !hasName || !hasProfiles;
-  settingsSyncCreateBtn.disabled = !hasName;
-}
-
-async function saveSettingsSyncPasswordAndUpdateUI(password) {
-  await chrome.runtime.sendMessage({ action: 'setSettingsSyncPassword', password });
-  settingsSyncPasswordInput.value = '********';
-  settingsSyncPasswordInput.dataset.hasPassword = 'true';
-}
-const WIZARD_STEPS = ['welcome', 'tokenHelp', 'hasToken', 'tokenInput', 'repoDecision', 'repoDetails', 'environment', 'finish'];
-const wizardState = {
-  active: false,
-  stepIndex: 0,
-  tokenValidated: false,
-  environmentChecked: false,
-  pathStatus: null,
-  username: '',
-  repoRef: '',
-  firstSyncDone: false,
-  repoFlow: 'manual',
-};
-
-function resetWizardState() {
-  wizardState.stepIndex = 0;
-  wizardState.tokenValidated = false;
-  wizardState.environmentChecked = false;
-  wizardState.pathStatus = null;
-  wizardState.username = '';
-  wizardState.repoRef = '';
-  wizardState.firstSyncDone = false;
-  wizardState.repoFlow = 'manual';
-}
-
-async function persistWizardState(completed, dismissed) {
-  await chrome.storage.sync.set({
-    [STORAGE_KEYS.ONBOARDING_WIZARD_COMPLETED]: completed === true,
-    [STORAGE_KEYS.ONBOARDING_WIZARD_DISMISSED]: dismissed === true,
-  });
-}
-
-async function startOnboardingWizard({ manual = false } = {}) {
-  resetWizardState();
-  onboardingWizardTokenInput.value = tokenInput.value || '';
-  onboardingWizardOwnerInput.value = ownerInput.value || '';
-  onboardingWizardRepoInput.value = repoInput.value || '';
-  onboardingWizardBranchInput.value = branchInput.value || 'main';
-  onboardingWizardPathInput.value = filepathInput.value || 'bookmarks';
-  onboardingWizardHasTokenSelect.value = 'yes';
-  onboardingWizardRepoFlowSelect.value = 'manual';
-  wizardState.active = true;
-  onboardingWizardScreen.style.display = '';
-  settingsShell.style.display = 'none';
-  onboardingWizardResult.textContent = '';
-  onboardingWizardResult.className = 'validation-result';
-  if (manual) {
-    await persistWizardState(false, false);
-  }
-  renderOnboardingWizardStep();
-}
-
-async function completeOnboardingWizard() {
-  wizardState.active = false;
-  onboardingWizardScreen.style.display = 'none';
-  settingsShell.style.display = '';
-  await persistWizardState(true, false);
-}
-
-async function dismissOnboardingWizard() {
-  wizardState.active = false;
-  onboardingWizardScreen.style.display = 'none';
-  settingsShell.style.display = '';
-  await persistWizardState(false, true);
-  showValidation(getMessage('options_onboardingWizardDismissed'), 'success');
-}
-
-function setWizardResult(message, type = 'success') {
-  onboardingWizardSpinner.style.display = 'none';
-  onboardingWizardHint.textContent = message;
-  onboardingWizardElapsed.textContent = '';
-  wizardStatusEl.className = `wizard-status ${type}`;
-  wizardStatusEl.style.display = 'flex';
-}
-
-function setWizardBusy(isBusy, loadingMessage = '') {
-  onboardingWizardBackBtn.disabled = isBusy || wizardState.stepIndex === 0;
-  onboardingWizardNextBtn.disabled = isBusy;
-  onboardingWizardSkipBtn.disabled = isBusy;
-  onboardingWizardActionBtn.disabled = isBusy;
-  if (isBusy) {
-    onboardingWizardSpinner.style.display = 'inline-block';
-    onboardingWizardHint.textContent = loadingMessage || '';
-    onboardingWizardElapsed.textContent = '';
-    wizardStatusEl.className = 'wizard-status';
-    wizardStatusEl.style.display = 'flex';
-  } else {
-    wizardStatusEl.style.display = 'none';
-    onboardingWizardHint.textContent = '';
-    onboardingWizardElapsed.textContent = '';
-  }
-}
-
-function wizardStepText(stepKey) {
-  switch (stepKey) {
-    case 'welcome':
-      return {
-        title: getMessage('options_onboardingWizardStepWelcomeTitle'),
-        text: getMessage('options_onboardingWizardStepWelcomeText'),
-      };
-    case 'tokenHelp':
-      return {
-        title: getMessage('options_onboardingWizardStepTokenHelpTitle'),
-        text: getMessage('options_onboardingWizardStepTokenHelpText'),
-      };
-    case 'hasToken':
-      return {
-        title: getMessage('options_onboardingWizardStepHasTokenTitle'),
-        text: getMessage('options_onboardingWizardStepHasTokenText'),
-      };
-    case 'tokenInput':
-      return {
-        title: getMessage('options_onboardingWizardStepTokenTitle'),
-        text: getMessage('options_onboardingWizardStepTokenText'),
-      };
-    case 'repoDecision':
-      return {
-        title: getMessage('options_onboardingWizardStepRepoDecisionTitle'),
-        text: getMessage('options_onboardingWizardStepRepoDecisionText'),
-      };
-    case 'repoDetails':
-      return {
-        title: getMessage('options_onboardingWizardStepRepoTitle'),
-        text: getMessage('options_onboardingWizardStepRepoText'),
-      };
-    case 'environment':
-      return {
-        title: getMessage('options_onboardingWizardStepValidateTitle'),
-        text: wizardState.environmentChecked
-          ? (wizardState.pathStatus === 'hasBookmarks'
-            ? getMessage('options_onboardingWizardStepSyncTextExisting')
-            : getMessage('options_onboardingWizardStepSyncTextEmpty'))
-          : getMessage('options_onboardingWizardStepValidateText'),
-      };
-    default:
-      return {
-        title: getMessage('options_onboardingWizardStepFinishTitle'),
-        text: getMessage('options_onboardingWizardStepFinishText'),
-      };
-  }
-}
-
-function renderOnboardingWizardStep() {
-  if (!wizardState.active) return;
-  const stepKey = WIZARD_STEPS[wizardState.stepIndex];
-  const step = wizardStepText(stepKey);
-  onboardingWizardProgress.textContent = `${wizardState.stepIndex + 1} / ${WIZARD_STEPS.length}`;
-  onboardingWizardStepTitle.textContent = step.title;
-  onboardingWizardStepText.textContent = step.text;
-
-  onboardingWizardBackBtn.disabled = wizardState.stepIndex === 0;
-  onboardingWizardSkipBtn.style.display = stepKey === 'finish' ? 'none' : '';
-  onboardingWizardNextBtn.textContent = stepKey === 'finish'
-    ? getMessage('options_onboardingWizardFinish')
-    : getMessage('options_onboardingWizardNext');
-
-  onboardingWizardTokenHelp.style.display = stepKey === 'tokenHelp' ? '' : 'none';
-  onboardingWizardHasTokenGroup.style.display = stepKey === 'hasToken' ? '' : 'none';
-  onboardingWizardTokenGroup.style.display = stepKey === 'tokenInput' ? '' : 'none';
-  onboardingWizardRepoFlowGroup.style.display = stepKey === 'repoDecision' ? '' : 'none';
-  onboardingWizardRepoGroup.style.display = stepKey === 'repoDetails' ? '' : 'none';
-  // Unified status area: hidden between steps; setWizardBusy/setWizardResult show it as needed.
-  wizardStatusEl.style.display = 'none';
-
-  // Next now drives validation and bootstrap flow; keep action button hidden.
-  onboardingWizardActionBtn.style.display = 'none';
-}
-
 function populateLanguageDropdown() {
   languageSelect.innerHTML = '';
-
   const autoOption = document.createElement('option');
   autoOption.value = 'auto';
   autoOption.textContent = getMessage('options_langAuto');
   languageSelect.appendChild(autoOption);
-
   for (const lang of SUPPORTED_LANGUAGES) {
     const option = document.createElement('option');
     option.value = lang.code;
@@ -633,6 +336,8 @@ function populateLanguageDropdown() {
     languageSelect.appendChild(option);
   }
 }
+
+// ---- Bookmark folder helpers ----
 
 let cachedBookmarkFolders = [];
 
@@ -671,7 +376,6 @@ function populateQuickFolderSelect(selectEl, selectedId) {
   noneOpt.value = '';
   noneOpt.textContent = getMessage('options_contextMenuQuickFolderNone');
   selectEl.appendChild(noneOpt);
-
   for (const folder of cachedBookmarkFolders) {
     const opt = document.createElement('option');
     opt.value = folder.id;
@@ -681,6 +385,10 @@ function populateQuickFolderSelect(selectEl, selectedId) {
   }
 }
 
+// ==============================
+// Load Settings
+// ==============================
+
 async function loadSettings() {
   await migrateTokenIfNeeded();
   await migrateToProfiles();
@@ -688,7 +396,6 @@ async function loadSettings() {
   const profiles = await getProfiles();
   const activeId = await getActiveProfileId();
 
-  // Populate profile dropdown
   profileSelect.innerHTML = '';
   for (const [id, p] of Object.entries(profiles)) {
     const opt = document.createElement('option');
@@ -705,7 +412,6 @@ async function loadSettings() {
   profileLimitEl.textContent = getMessage('options_profilesLimit', [String(profileCount), String(MAX_PROFILES)]);
   profileAddBtn.disabled = profileCount >= MAX_PROFILES;
 
-  // Load active profile's GitHub settings
   const profileSettings = await getProfileSettings(activeId);
   const activeProfile = profiles[activeId];
   if (profileSettings) {
@@ -730,12 +436,10 @@ async function loadSettings() {
   populateQuickFolderSelect(quickFolderSelect2, quickFolderIds[1] || '');
   populateQuickFolderSelect(quickFolderSelect3, quickFolderIds[2] || '');
 
-  // Show GitHub Repos card only when token is configured
   const isConfigured = !!(tokenInput.value.trim() && ownerInput.value.trim() && repoInput.value.trim());
   githubReposCard.style.display = isConfigured ? 'block' : 'none';
   githubReposOptions.style.display = githubReposEnabledInput.checked ? 'block' : 'none';
 
-  // Load global sync settings
   const syncDefaults = {
     autoSync: true,
     syncInterval: 15,
@@ -772,7 +476,6 @@ async function loadSettings() {
   };
   const globals = { ...syncDefaults, ...(await chrome.storage.sync.get(syncDefaults)) };
 
-
   autoSyncInput.checked = globals.autoSync !== false;
   syncIntervalInput.value = globals.syncInterval ?? 15;
   debounceDelayInput.value = Math.round((globals.debounceDelay ?? 5000) / 1000);
@@ -788,8 +491,7 @@ async function loadSettings() {
   linkwardenUrlInput.value = globals.linkwardenUrl || '';
   linkwardenTokenInput.value = globals.linkwardenToken ? await decryptToken(globals.linkwardenToken) : '';
   linkwardenDefaultCollectionSelect.value = globals.linkwardenDefaultCollection || '';
-  // Parse saved default tags (comma-separated) into chip picker
-  lwOptionsSelectedTags = (globals.linkwardenDefaultTags || '').split(',').map(t => t.trim()).filter(Boolean);
+  setLwOptionsSelectedTags((globals.linkwardenDefaultTags || '').split(',').map(t => t.trim()).filter(Boolean));
   renderLwOptionsTagChips();
   renderLwOptionsTagCloud();
   linkwardenDefaultScreenshotInput.checked = globals.linkwardenDefaultScreenshot === true;
@@ -802,7 +504,6 @@ async function loadSettings() {
   linkwardenSyncEnabledGroup.style.display = linkwardenEnabledInput.checked ? 'block' : 'none';
   linkwardenSyncDisabledMsg.style.display = linkwardenEnabledInput.checked ? 'none' : 'block';
 
-  // Attempt to fetch collections if configured
   if (linkwardenEnabledInput.checked && linkwardenUrlInput.value && linkwardenTokenInput.value) {
     let origin;
     try {
@@ -824,10 +525,9 @@ async function loadSettings() {
                 linkwardenDefaultCollectionSelect.appendChild(opt);
               });
             }
-            // Also fetch tags for the cloud
             const tags = await api.getTags().catch(() => null);
             if (tags?.response) {
-              lwOptionsAllTags = tags.response.map(t => ({ id: t.id, name: t.name }));
+              setLwOptionsAllTags(tags.response.map(t => ({ id: t.id, name: t.name })));
               renderLwOptionsTagCloud();
             }
           } catch (e) {
@@ -844,8 +544,6 @@ async function loadSettings() {
   generateFeedXmlSelect.value = normalizeGenMode(globals.generateFeedXml);
   generateDashyYmlSelect.value = normalizeGenMode(globals.generateDashyYml);
   syncSettingsToGitInput.checked = globals.syncSettingsToGit === true;
-  settingsSyncModeSelect.value = 'individual';
-  settingsSyncGlobalWriteEnabledInput.checked = false;
   updateSettingsSyncVisibility();
   if (globals.syncSettingsToGit === true) {
     await refreshSettingsProfiles();
@@ -854,11 +552,16 @@ async function loadSettings() {
   }
   const localPwState = await chrome.storage.local.get({ settingsSyncPassword: '' });
   if (localPwState.settingsSyncPassword) {
-    settingsSyncPasswordInput.value = '********';
-    settingsSyncPasswordInput.dataset.hasPassword = 'true';
+    const settingsSyncPasswordInput = document.getElementById('settings-sync-password');
+    if (settingsSyncPasswordInput) {
+      settingsSyncPasswordInput.value = '********';
+      settingsSyncPasswordInput.dataset.hasPassword = 'true';
+    }
   }
   const localNameState = await chrome.storage.local.get({ [LOCAL_STORAGE_KEYS.SETTINGS_SYNC_CLIENT_NAME]: '' });
-  settingsSyncClientNameInput.value = localNameState[LOCAL_STORAGE_KEYS.SETTINGS_SYNC_CLIENT_NAME] || '';
+  if (settingsSyncClientNameInput) {
+    settingsSyncClientNameInput.value = localNameState[LOCAL_STORAGE_KEYS.SETTINGS_SYNC_CLIENT_NAME] || '';
+  }
   updateSettingsSyncButtonsState();
   updateGenerateFilesBtn();
   const mode = globals.notificationsMode;
@@ -879,10 +582,9 @@ async function loadSettings() {
   }
   profileSwitchWithoutConfirmInput.checked = globals.profileSwitchWithoutConfirm === true;
   openAllThresholdInput.value = String(
-    Math.max(1, parseInt(globals.contextOpenAllThreshold, 10) || 15)
+    Math.max(1, parseInt(globals.contextMenuOpenAllThreshold, 10) || 15)
   );
 
-  // Ensure default context menu items (like recently added Linkwarden) are present in the list
   const existingMenuIds = new Set(globals.contextMenuItems.map(i => i.id));
   for (const defItem of DEFAULT_CONTEXT_MENU_ITEMS) {
     if (!existingMenuIds.has(defItem.id)) {
@@ -908,823 +610,8 @@ async function loadSettings() {
   }
 }
 
-// Profile selector: switching profiles replaces bookmarks
-let pendingProfileSwitchId = null;
-
-function setProfileButtonsEnabled(enabled) {
-  profileSelect.disabled = !enabled;
-  profileAddBtn.disabled = !enabled;
-  profileRenameBtn.disabled = !enabled;
-  profileDeleteBtn.disabled = !enabled;
-}
-
-async function doProfileSwitch(targetId) {
-  const activeId = await getActiveProfileId();
-  if (targetId === activeId) return;
-  profileSwitchConfirm.style.display = 'none';
-  pendingProfileSwitchId = null;
-
-  try {
-    setProfileButtonsEnabled(false);
-    profileSpinner.style.display = 'inline-block';
-    profileSwitchingMsg.textContent = getMessage('options_profileSwitching');
-    profileSwitchingMsg.style.display = '';
-    await switchProfile(targetId);
-    await loadSettings();
-  } catch (err) {
-    showProfileMessage(getMessage('options_error', [err.message]));
-    profileSelect.value = activeId;
-  } finally {
-    setProfileButtonsEnabled(true);
-    profileSpinner.style.display = 'none';
-    profileSwitchingMsg.style.display = 'none';
-  }
-}
-
-profileSelect.addEventListener('change', async (e) => {
-  const targetId = e.target.value;
-  const activeId = await getActiveProfileId();
-  if (targetId === activeId) return;
-
-  const profiles = await getProfiles();
-  const targetProfile = profiles[targetId];
-  if (!targetProfile) return;
-
-  if (profileSwitchWithoutConfirmInput.checked) {
-    await doProfileSwitch(targetId);
-    return;
-  }
-
-  pendingProfileSwitchId = targetId;
-  profileSwitchConfirmText.textContent = getMessage('options_profileSwitchConfirm', [targetProfile.name || targetId]);
-  profileSwitchConfirm.style.display = '';
-});
-
-profileSwitchConfirmBtn.addEventListener('click', async () => {
-  if (pendingProfileSwitchId) {
-    await doProfileSwitch(pendingProfileSwitchId);
-  }
-});
-
-profileSwitchCancelBtn.addEventListener('click', async () => {
-  const activeId = await getActiveProfileId();
-  profileSelect.value = activeId;
-  profileSwitchConfirm.style.display = 'none';
-  pendingProfileSwitchId = null;
-});
-
-function showProfileMessage(message, isError = true) {
-  profileMessage.textContent = message;
-  profileMessage.style.display = '';
-  profileMessage.className = 'profile-message' + (isError ? ' error' : '');
-  setTimeout(() => {
-    profileMessage.style.display = 'none';
-  }, 5000);
-}
-
-async function hideProfileDialogs() {
-  profileSwitchConfirm.style.display = 'none';
-  profileDeleteConfirm.style.display = 'none';
-  profileAddDialog.style.display = 'none';
-  profileRenameDialog.style.display = 'none';
-  pendingProfileSwitchId = null;
-  const activeId = await getActiveProfileId();
-  profileSelect.value = activeId;
-}
-
-profileSwitchWithoutConfirmInput.addEventListener('change', async () => {
-  if (profileSwitchWithoutConfirmInput.checked) {
-    profileSwitchConfirm.style.display = 'none';
-    pendingProfileSwitchId = null;
-    const activeId = await getActiveProfileId();
-    profileSelect.value = activeId;
-  }
-  await saveSettings();
-});
-
-profileAddBtn.addEventListener('click', async () => {
-  await hideProfileDialogs();
-  profileAddNameInput.value = '';
-  profileAddDialog.style.display = 'flex';
-  profileAddNameInput.focus();
-});
-
-profileAddNameInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') profileAddConfirmBtn.click();
-});
-
-profileRenameInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') profileRenameConfirmBtn.click();
-});
-
-profileAddConfirmBtn.addEventListener('click', async () => {
-  const name = profileAddNameInput.value?.trim();
-  if (!name) return;
-  profileAddDialog.style.display = 'none';
-  try {
-    const newId = await addProfile(name);
-    setProfileButtonsEnabled(false);
-    profileSpinner.style.display = 'inline-block';
-    profileSwitchingMsg.textContent = getMessage('options_profileSwitching');
-    profileSwitchingMsg.style.display = '';
-    try {
-      await switchProfile(newId, { skipConfirm: true });
-      await loadSettings();
-    } finally {
-      setProfileButtonsEnabled(true);
-      profileSpinner.style.display = 'none';
-      profileSwitchingMsg.style.display = 'none';
-    }
-  } catch (err) {
-    setProfileButtonsEnabled(true);
-    profileSpinner.style.display = 'none';
-    profileSwitchingMsg.style.display = 'none';
-    showProfileMessage(getMessage('options_error', [err.message]));
-  }
-});
-
-profileAddCancelBtn.addEventListener('click', () => {
-  profileAddDialog.style.display = 'none';
-});
-
-profileDeleteBtn.addEventListener('click', async () => {
-  const selectedId = profileSelect.value;
-  const profiles = await getProfiles();
-  const profile = profiles[selectedId];
-  if (!profile || Object.keys(profiles).length <= 1) return;
-
-  await hideProfileDialogs();
-  profileDeleteConfirmText.textContent = getMessage('options_profileDeleteConfirm', [profile.name || selectedId]);
-  profileDeleteConfirm.style.display = 'flex';
-  profileDeleteConfirm.dataset.pendingId = selectedId;
-});
-
-profileDeleteConfirmBtn.addEventListener('click', async () => {
-  const selectedId = profileDeleteConfirm.dataset.pendingId;
-  profileDeleteConfirm.style.display = 'none';
-  delete profileDeleteConfirm.dataset.pendingId;
-  if (!selectedId) return;
-
-  try {
-    await deleteProfile(selectedId);
-    await loadSettings();
-  } catch (err) {
-    showProfileMessage(getMessage('options_error', [err.message]));
-  }
-});
-
-profileDeleteCancelBtn.addEventListener('click', () => {
-  profileDeleteConfirm.style.display = 'none';
-  delete profileDeleteConfirm.dataset.pendingId;
-});
-
-profileRenameBtn.addEventListener('click', async () => {
-  const selectedId = profileSelect.value;
-  const profiles = await getProfiles();
-  const profile = profiles[selectedId];
-  if (!profile) return;
-
-  await hideProfileDialogs();
-  profileRenameInput.value = profile.name || selectedId;
-  profileRenameDialog.style.display = 'flex';
-  profileRenameInput.focus();
-  profileRenameDialog.dataset.pendingId = selectedId;
-});
-
-profileRenameConfirmBtn.addEventListener('click', async () => {
-  const selectedId = profileRenameDialog.dataset.pendingId;
-  const newName = profileRenameInput.value?.trim();
-  profileRenameDialog.style.display = 'none';
-  delete profileRenameDialog.dataset.pendingId;
-  if (!selectedId || !newName) return;
-
-  try {
-    await saveProfile(selectedId, { name: newName });
-    await loadSettings();
-    showSaveResult(getMessage('options_settingsSaved'), 'success');
-  } catch (err) {
-    showProfileMessage(getMessage('options_error', [err.message]));
-  }
-});
-
-profileRenameCancelBtn.addEventListener('click', () => {
-  profileRenameDialog.style.display = 'none';
-  delete profileRenameDialog.dataset.pendingId;
-});
-
-syncProfileSelect.addEventListener('change', () => {
-  const isCustom = syncProfileSelect.value === 'custom';
-  syncCustomFields.style.display = isCustom ? 'block' : 'none';
-  if (!isCustom) {
-    const preset = SYNC_PRESETS[syncProfileSelect.value];
-    if (preset) {
-      syncIntervalInput.value = preset.interval;
-      debounceDelayInput.value = Math.round(preset.debounceMs / 1000);
-    }
-  }
-  saveSettings();
-});
-
-if (themeCycleBtn) {
-  themeCycleBtn.addEventListener('click', async () => {
-    const current = await chrome.storage.sync.get({ [STORAGE_KEYS.THEME]: 'auto' }).then(r => r[STORAGE_KEYS.THEME] || 'auto');
-    const idx = THEME_CYCLE.indexOf(current);
-    const nextTheme = THEME_CYCLE[(idx + 1) % THEME_CYCLE.length];
-    await chrome.storage.sync.set({ [STORAGE_KEYS.THEME]: nextTheme });
-    applyTheme(nextTheme);
-    themeCycleBtn.textContent = THEME_ICONS[nextTheme];
-    themeCycleBtn.title = getMessage(THEME_TITLES[nextTheme]);
-  });
-}
-
-languageSelect.addEventListener('change', async () => {
-  const newLang = languageSelect.value;
-  await chrome.storage.sync.set({ [STORAGE_KEYS.LANGUAGE]: newLang });
-  await reloadI18n();
-  populateLanguageDropdown();
-  languageSelect.value = newLang;
-  applyI18n();
-  document.title = `GitSyncMarks – ${getMessage('options_subtitle')}`;
-  if (wizardState.active) renderOnboardingWizardStep();
-});
-
 // ==============================
-// Settings Tab: Token Validation
-// ==============================
-
-toggleTokenBtn.addEventListener('click', () => {
-  tokenInput.type = tokenInput.type === 'password' ? 'text' : 'password';
-});
-
-// GitHub Repos: toggle options visibility + auto-save on change
-githubReposEnabledInput.addEventListener('change', () => {
-  githubReposOptions.style.display = githubReposEnabledInput.checked ? 'block' : 'none';
-  saveSettings();
-});
-githubReposParentSelect.addEventListener('change', saveSettings);
-
-// GitHub Repos: refresh button (saves first so current form state is persisted)
-githubReposRefreshBtn.addEventListener('click', async () => {
-  await saveSettings();
-  const token = tokenInput.value.trim();
-  const activeId = await getActiveProfileId();
-  const profiles = await getProfiles();
-  const profile = profiles[activeId];
-  if (!token) {
-    githubReposResult.textContent = getMessage('options_pleaseEnterToken');
-    githubReposResult.className = 'validation-result error';
-    return;
-  }
-  try {
-    githubReposRefreshBtn.disabled = true;
-    githubReposSpinner.style.display = 'inline-block';
-    githubReposResult.textContent = '';
-    const parent = githubReposParentSelect.value || 'other';
-    const result = await updateGitHubReposFolder(token, parent, profile?.githubReposUsername || '', async (username) => {
-      await saveProfile(activeId, { githubReposUsername: username });
-    });
-    githubReposResult.textContent = getMessage('options_githubReposRefreshSuccess', [result.count.toString(), result.username || '']);
-    githubReposResult.className = 'validation-result success';
-    await loadSettings();
-  } catch (err) {
-    githubReposResult.textContent = getMessage('options_error', [err.message]);
-    githubReposResult.className = 'validation-result error';
-  } finally {
-    githubReposRefreshBtn.disabled = false;
-    githubReposSpinner.style.display = 'none';
-  }
-});
-
-function showOnboardingConfirm(message, yesButtonLabel) {
-  return new Promise((resolve) => {
-    onboardingConfirmText.textContent = message;
-    onboardingConfirmYesBtn.textContent = yesButtonLabel;
-    onboardingConfirm.style.display = 'flex';
-    validationSpinner.style.display = 'none';
-
-    const handleYes = () => {
-      onboardingConfirmYesBtn.removeEventListener('click', handleYes);
-      onboardingConfirmNoBtn.removeEventListener('click', handleNo);
-      resolve(true);
-    };
-    const handleNo = () => {
-      onboardingConfirmYesBtn.removeEventListener('click', handleYes);
-      onboardingConfirmNoBtn.removeEventListener('click', handleNo);
-      resolve(false);
-    };
-    onboardingConfirmYesBtn.addEventListener('click', handleYes);
-    onboardingConfirmNoBtn.addEventListener('click', handleNo);
-  });
-}
-
-function hideOnboardingConfirm() {
-  onboardingConfirm.style.display = 'none';
-}
-
-function hideConnectionPathInitAction() {
-  connectionPathInitGroup.style.display = 'none';
-  connectionPathInitGroup.dataset.path = '';
-  connectionPathInitHint.textContent = '';
-}
-
-function showConnectionPathInitAction(basePath) {
-  connectionPathInitGroup.dataset.path = basePath;
-  connectionPathInitHint.textContent = getMessage('options_onboardingInitPathHint', [basePath]);
-  connectionPathInitGroup.style.display = '';
-}
-
-async function initializePathAndRunFirstPush() {
-  try {
-    // Deterministic bootstrap entry: uses sync merge path instead of push-loop retries.
-    const result = await chrome.runtime.sendMessage({ action: 'bootstrapFirstSync' });
-    if (result?.success) return;
-    throw new Error(result?.message || 'Push failed');
-  } catch (err) {
-    throw err;
-  }
-}
-
-async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
-  await saveSettings();
-  const token = tokenInput.value.trim();
-  const owner = ownerInput.value.trim();
-  const repo = repoInput.value.trim();
-  const branch = branchInput.value.trim() || 'main';
-
-  if (!token) {
-    showValidation(getMessage('options_pleaseEnterToken'), 'error');
-    return { ok: false };
-  }
-
-  showValidation(getMessage('options_checking'), 'loading');
-
-  try {
-    const api = new GitHubAPI(token, owner, repo, branch);
-
-    const tokenResult = await api.validateToken();
-    if (!tokenResult.valid) {
-      showValidation(getMessage('options_invalidToken'), 'error');
-      return { ok: false };
-    }
-
-    // Classic PATs return scopes. Fine-grained tokens/Apps don't return scopes 
-    // in the header. If scopes are missing (ambiguous), we skip the strict 'repo' check
-    // and let the following repo check verify access.
-    if (!tokenResult.ambiguous && !tokenResult.scopes.includes('repo')) {
-      hideConnectionPathInitAction();
-      showValidation(getMessage('options_tokenValidMissingScope', [tokenResult.username]), 'error');
-      return { ok: false };
-    }
-
-    if (owner && repo) {
-      const repoExists = await api.checkRepo();
-      if (!repoExists) {
-        hideConnectionPathInitAction();
-        showValidation(getMessage('options_tokenValidRepoNotFound', [tokenResult.username, `${owner}/${repo}`]), 'error');
-        return { ok: false };
-      }
-      const basePath = filepathInput.value.trim() || 'bookmarks';
-      const pathCheck = await checkPathSetup(api, basePath);
-      if (offerInteractiveActions && (pathCheck.status === 'unreachable' || pathCheck.status === 'empty')) {
-        showConnectionPathInitAction(basePath);
-        showValidation(getMessage('options_connectionOk', [tokenResult.username, `${owner}/${repo}`]), 'success');
-        return {
-          ok: true,
-          username: tokenResult.username,
-          repoRef: `${owner}/${repo}`,
-          pathStatus: pathCheck.status,
-        };
-      }
-      hideConnectionPathInitAction();
-      if (offerInteractiveActions && pathCheck.status === 'hasBookmarks') {
-        const confirmed = await showOnboardingConfirm(
-          getMessage('options_onboardingPullNow'),
-          getMessage('options_onboardingPullBtn')
-        );
-        hideOnboardingConfirm();
-        if (confirmed) {
-          try {
-            await saveSettings();
-            await chrome.runtime.sendMessage({ action: 'pull' });
-            showValidation(getMessage('options_onboardingPullSuccess'), 'success');
-          } catch (pullErr) {
-            showValidation(getMessage('options_error', [pullErr.message]), 'error');
-          }
-        } else {
-          showValidation(getMessage('options_connectionOk', [tokenResult.username, `${owner}/${repo}`]), 'success');
-        }
-        return;
-      }
-      showValidation(getMessage('options_connectionOk', [tokenResult.username, `${owner}/${repo}`]), 'success');
-      return {
-        ok: true,
-        username: tokenResult.username,
-        repoRef: `${owner}/${repo}`,
-        pathStatus: pathCheck.status,
-      };
-    } else {
-      hideConnectionPathInitAction();
-      showValidation(getMessage('options_tokenValidSpecifyRepo', [tokenResult.username]), 'success');
-      return {
-        ok: true,
-        username: tokenResult.username,
-        repoRef: '',
-        pathStatus: 'empty',
-      };
-    }
-  } catch (err) {
-    hideConnectionPathInitAction();
-    showValidation(getMessage('options_error', [err.message]), 'error');
-    return { ok: false, error: err };
-  }
-}
-
-validateBtn.addEventListener('click', async () => {
-  await validateAndInspectRepo({ offerInteractiveActions: true });
-});
-
-connectionPathInitBtn.addEventListener('click', async () => {
-  const token = tokenInput.value.trim();
-  const owner = ownerInput.value.trim();
-  const repo = repoInput.value.trim();
-  const branch = branchInput.value.trim() || 'main';
-  const basePath = connectionPathInitGroup.dataset.path || filepathInput.value.trim() || 'bookmarks';
-  if (!token || !owner || !repo) {
-    showValidation(getMessage('options_browseFolderNotConfigured'), 'error');
-    return;
-  }
-
-  connectionPathInitBtn.disabled = true;
-  showValidation(getMessage('options_checking'), 'loading');
-  try {
-    const api = new GitHubAPI(token, owner, repo, branch);
-    const pathCheck = await checkPathSetup(api, basePath);
-    if (pathCheck.status === 'hasBookmarks') {
-      hideConnectionPathInitAction();
-      showValidation(getMessage('options_onboardingInitPathAlreadyExists', [basePath]), 'success');
-      return;
-    }
-    await saveSettings();
-    await initializePathAndRunFirstPush();
-    hideConnectionPathInitAction();
-    showValidation(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
-  } catch (err) {
-    showValidation(getMessage('options_error', [err.message]), 'error');
-  } finally {
-    connectionPathInitBtn.disabled = false;
-  }
-});
-
-onboardingWizardStartBtn.addEventListener('click', async () => {
-  await startOnboardingWizard({ manual: true });
-});
-
-const helpWizardBtn = document.getElementById('help-wizard-btn');
-if (helpWizardBtn) {
-  helpWizardBtn.addEventListener('click', async () => {
-    await startOnboardingWizard({ manual: true });
-  });
-}
-
-function syncWizardFieldsToConnectionForm() {
-  tokenInput.value = onboardingWizardTokenInput.value.trim();
-  ownerInput.value = onboardingWizardOwnerInput.value.trim();
-  repoInput.value = onboardingWizardRepoInput.value.trim();
-  branchInput.value = onboardingWizardBranchInput.value.trim() || 'main';
-  filepathInput.value = onboardingWizardPathInput.value.trim() || 'bookmarks';
-}
-
-async function runWizardTokenValidation() {
-  onboardingWizardResult.textContent = '';
-  const token = onboardingWizardTokenInput.value.trim();
-  if (!token) {
-    setWizardResult(getMessage('options_pleaseEnterToken'), 'error');
-    return false;
-  }
-  const api = new GitHubAPI(token, 'x', 'x', 'main');
-  const tokenResult = await api.validateToken();
-  if (!tokenResult.valid) {
-    setWizardResult(getMessage('options_invalidToken'), 'error');
-    return false;
-  }
-  if (!tokenResult.ambiguous && !tokenResult.scopes.includes('repo')) {
-    setWizardResult(getMessage('options_tokenValidMissingScope', [tokenResult.username]), 'error');
-    return false;
-  }
-  wizardState.username = tokenResult.username;
-  wizardState.tokenValidated = true;
-  if (!onboardingWizardOwnerInput.value.trim()) onboardingWizardOwnerInput.value = tokenResult.username;
-  setWizardResult(getMessage('options_onboardingWizardTokenValidated'), 'success');
-  return true;
-}
-
-async function runWizardEnvironmentCheck() {
-  if (!wizardState.tokenValidated) {
-    setWizardResult(getMessage('options_onboardingWizardNeedConnection'), 'error');
-    return false;
-  }
-
-  syncWizardFieldsToConnectionForm();
-  await saveSettings();
-
-  const token = onboardingWizardTokenInput.value.trim();
-  const owner = onboardingWizardOwnerInput.value.trim();
-  const repo = onboardingWizardRepoInput.value.trim();
-  const branch = onboardingWizardBranchInput.value.trim() || 'main';
-  const basePath = onboardingWizardPathInput.value.trim() || 'bookmarks';
-  if (!owner || !repo) {
-    setWizardResult(getMessage('options_onboardingWizardRepoRequired'), 'error');
-    return false;
-  }
-
-  if (onboardingWizardRepoFlowSelect.value === 'autoCreate') {
-    const normalizedOwner = owner.toLowerCase();
-    const normalizedUser = String(wizardState.username || '').toLowerCase();
-    if (!normalizedUser || normalizedOwner !== normalizedUser) {
-      setWizardResult(
-        `${getMessage('options_onboardingWizardRepoOwnerMismatch', [wizardState.username || ''])} ${getMessage('options_onboardingWizardRepoUserOnlyHint')}`,
-        'error'
-      );
-      return false;
-    }
-    const createResp = await chrome.runtime.sendMessage({
-      action: 'createRepository',
-      token,
-      owner,
-      repo,
-      branch,
-    });
-    if (!createResp?.success && !String(createResp?.message || '').includes('name already exists')) {
-      const message = createResp?.message || getMessage('options_onboardingWizardRepoCreateFailed');
-      const denied = /permission|forbidden|denied|access/i.test(message);
-      setWizardResult(
-        denied ? getMessage('options_onboardingWizardRepoCreatePermissionDenied') : message,
-        'error'
-      );
-      return false;
-    }
-  }
-
-  const api = new GitHubAPI(token, owner, repo, branch);
-  const repoExists = await api.checkRepo();
-  if (!repoExists) {
-    setWizardResult(getMessage('options_tokenValidRepoNotFound', [wizardState.username || owner, `${owner}/${repo}`]), 'error');
-    return false;
-  }
-
-  const stopPathPulse = startProgressPulse([
-    'Checking repository path',
-    'Inspecting remote folder structure',
-  ], 2500);
-  let pathCheck;
-  try {
-    pathCheck = await checkPathSetup(api, basePath);
-  } finally {
-    stopPathPulse();
-  }
-
-  wizardState.repoRef = `${owner}/${repo}`;
-  wizardState.pathStatus = pathCheck.status;
-  wizardState.firstSyncDone = false;
-  if (onboardingWizardRepoFlowSelect.value === 'autoCreate' && pathCheck.status !== 'hasBookmarks') {
-    const stopInitPulse = startProgressPulse([
-      'Waiting for repository to be ready',
-      'Setting up initial folder structure',
-      'Uploading bookmarks to GitHub',
-      'Creating first commit',
-    ]);
-    try {
-      await waitForRemoteBaseline(api);
-      await initializePathAndRunFirstPush();
-    } finally {
-      stopInitPulse();
-    }
-    wizardState.firstSyncDone = true;
-    setWizardResult(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
-  } else {
-    setWizardResult(getMessage('options_onboardingWizardEnvironmentChecked'), 'success');
-  }
-  wizardState.environmentChecked = true;
-  return true;
-}
-
-/**
- * Show animated progress messages while a long async operation runs.
- * Cycles through the provided messages with animated dots.
- * Returns a stop function — call it when done.
- * @param {string[]} messages - Ordered list of status messages to cycle through
- * @param {number} msPerStep - How long to show each message before advancing
- * @returns {() => void} stop function
- */
-function startProgressPulse(messages, msPerStep = 3000) {
-  let msgIndex = 0;
-  let dotCount = 1;
-  const intervalMs = 600;
-  const startTime = Date.now();
-
-  const tick = () => {
-    const elapsed = Math.round((Date.now() - startTime) / 1000);
-    const dots = '.'.repeat(dotCount);
-    onboardingWizardHint.textContent = `${messages[msgIndex]}${dots}`;
-    onboardingWizardElapsed.textContent = elapsed > 0 ? `${elapsed}s` : '';
-    dotCount = (dotCount % 3) + 1;
-    if (Date.now() - phaseStart >= msPerStep && msgIndex < messages.length - 1) {
-      msgIndex++;
-      phaseStart = Date.now();
-    }
-  };
-
-  let phaseStart = Date.now();
-  tick();
-  const id = setInterval(tick, intervalMs);
-  return () => clearInterval(id);
-}
-
-async function runWizardSyncAction() {
-  if (!wizardState.environmentChecked) {
-    setWizardResult(getMessage('options_onboardingWizardNeedAction'), 'error');
-    return false;
-  }
-  const token = onboardingWizardTokenInput.value.trim();
-  const owner = onboardingWizardOwnerInput.value.trim();
-  const repo = onboardingWizardRepoInput.value.trim();
-  const branch = onboardingWizardBranchInput.value.trim() || 'main';
-  const basePath = onboardingWizardPathInput.value.trim() || 'bookmarks';
-  const api = new GitHubAPI(token, owner, repo, branch);
-
-  // renderOnboardingWizardStep() hides
-  // the status area. Re-show it so the user sees feedback during sync.
-  wizardStatusEl.style.display = 'flex';
-
-  if (wizardState.pathStatus === 'hasBookmarks') {
-    const stopPulse = startProgressPulse([
-      getMessage('options_onboardingWizardPhaseDownloading') || 'Downloading bookmarks',
-      getMessage('options_onboardingWizardPhaseApplying') || 'Applying bookmarks to browser',
-      getMessage('options_onboardingWizardPhaseSaving') || 'Saving sync state',
-    ]);
-    try {
-      const pullResult = await chrome.runtime.sendMessage({ action: 'pull' });
-      stopPulse();
-      if (!pullResult?.success) {
-        setWizardResult(pullResult?.message || 'Pull failed', 'error');
-        return false;
-      }
-      setWizardResult(getMessage('options_onboardingPullSuccess'), 'success');
-      wizardState.firstSyncDone = true;
-      return true;
-    } catch (err) {
-      stopPulse();
-      throw err;
-    }
-  }
-
-  const stopPulse = startProgressPulse([
-    getMessage('options_onboardingWizardPhasePreparing') || 'Preparing bookmark data',
-    getMessage('options_onboardingWizardPhaseUploading') || 'Uploading bookmarks to GitHub',
-    getMessage('options_onboardingWizardPhaseCommit') || 'Creating repository commit',
-    getMessage('options_onboardingWizardPhaseSaving') || 'Saving sync state',
-  ]);
-
-  // Count bookmarks for estimated time (logged to debug log only, not shown in UI)
-  let bookmarkCount = 0;
-  let estSec = null;
-  try {
-    const tree = await chrome.bookmarks.getTree();
-    const countNodes = (nodes) => nodes.reduce((n, node) =>
-      n + (node.url ? 1 : 0) + (node.children ? countNodes(node.children) : 0), 0);
-    bookmarkCount = countNodes(tree);
-    // ~5 blobs/s with concurrency=5 + ~5s overhead (tree/commit/ref)
-    estSec = Math.round(bookmarkCount / 5) + 5;
-  } catch (_) { /* non-fatal */ }
-
-  const syncStart = Date.now();
-  try {
-    await initializePathAndRunFirstPush();
-    stopPulse();
-    const actualSec = ((Date.now() - syncStart) / 1000).toFixed(1);
-    console.log(
-      `[GitSyncMarks] Onboarding sync done — bookmarks: ${bookmarkCount}, ` +
-      `estimated: ${estSec != null ? estSec + 's' : 'n/a'}, actual: ${actualSec}s`
-    );
-    setWizardResult(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
-    wizardState.firstSyncDone = true;
-    return true;
-  } catch (err) {
-    stopPulse();
-    throw err;
-  }
-}
-
-onboardingWizardBackBtn.addEventListener('click', () => {
-  if (!wizardState.active) return;
-  if (wizardState.stepIndex > 0) {
-    wizardState.stepIndex -= 1;
-    renderOnboardingWizardStep();
-  }
-});
-
-onboardingWizardSkipBtn.addEventListener('click', async () => {
-  if (!wizardState.active) return;
-  await dismissOnboardingWizard();
-});
-
-onboardingWizardActionBtn.addEventListener('click', async () => {
-  if (!wizardState.active) return;
-  const stepKey = WIZARD_STEPS[wizardState.stepIndex];
-  const shouldShowBusy = stepKey === 'tokenInput' || stepKey === 'environment';
-  if (shouldShowBusy) {
-    const loadingMsg = stepKey === 'environment'
-      ? getMessage('options_onboardingWizardSyncInProgress')
-      : getMessage('options_checking');
-    setWizardBusy(true, loadingMsg);
-  } else {
-    onboardingWizardActionBtn.disabled = true;
-  }
-  try {
-    if (stepKey === 'tokenInput') {
-      await runWizardTokenValidation();
-      return;
-    }
-    if (stepKey === 'environment') {
-      if (!wizardState.environmentChecked) {
-        await runWizardEnvironmentCheck();
-      } else {
-        await runWizardSyncAction();
-      }
-      return;
-    }
-  } catch (err) {
-    setWizardResult(getMessage('options_error', [err.message]), 'error');
-  } finally {
-    if (shouldShowBusy) {
-      setWizardBusy(false);
-    } else {
-      onboardingWizardActionBtn.disabled = false;
-    }
-  }
-});
-
-onboardingWizardNextBtn.addEventListener('click', async () => {
-  if (!wizardState.active) return;
-  const stepKey = WIZARD_STEPS[wizardState.stepIndex];
-  const shouldShowBusy = stepKey === 'tokenInput' || stepKey === 'environment';
-  if (shouldShowBusy) {
-    const loadingMsg = stepKey === 'environment'
-      ? getMessage('options_onboardingWizardSyncInProgress')
-      : getMessage('options_checking');
-    setWizardBusy(true, loadingMsg);
-  } else {
-    onboardingWizardNextBtn.disabled = true;
-  }
-  try {
-    if (stepKey === 'hasToken' && onboardingWizardHasTokenSelect.value === 'no') {
-      wizardState.stepIndex = WIZARD_STEPS.indexOf('tokenHelp');
-      renderOnboardingWizardStep();
-      return;
-    }
-    if (stepKey === 'tokenInput') {
-      const ok = await runWizardTokenValidation();
-      if (!ok) return;
-    }
-    if (stepKey === 'repoDecision') {
-      wizardState.repoFlow = onboardingWizardRepoFlowSelect.value;
-    }
-    if (stepKey === 'environment') {
-      if (!wizardState.environmentChecked) {
-        const checked = await runWizardEnvironmentCheck();
-        if (!checked) return;
-      }
-      if (!wizardState.firstSyncDone) {
-        const synced = await runWizardSyncAction();
-        if (!synced) return;
-      }
-    }
-    if (stepKey === 'finish') {
-      await completeOnboardingWizard();
-      showValidation(getMessage('options_onboardingWizardCompleted'), 'success');
-      return;
-    }
-    wizardState.stepIndex = Math.min(wizardState.stepIndex + 1, WIZARD_STEPS.length - 1);
-    renderOnboardingWizardStep();
-  } catch (err) {
-    setWizardResult(getMessage('options_error', [err.message]), 'error');
-  } finally {
-    if (shouldShowBusy) {
-      setWizardBusy(false);
-    } else {
-      onboardingWizardNextBtn.disabled = false;
-    }
-  }
-});
-
-function showValidation(message, type) {
-  validationResult.textContent = message;
-  validationResult.className = `validation-result ${type}`;
-  validationSpinner.style.display = type === 'loading' ? 'inline-block' : 'none';
-}
-
-// ==============================
-// Save Settings (shared by GitHub and Sync tabs)
+// Save Settings
 // ==============================
 
 async function saveSettings() {
@@ -1736,7 +623,6 @@ async function saveSettings() {
     const newPath = (filepathInput.value.trim() || 'bookmarks').replace(/\/+$/, '');
     const pathChanged = newPath !== oldPath;
 
-    // Save profile-specific GitHub settings
     await saveProfile(activeId, {
       owner: ownerInput.value.trim(),
       repo: repoInput.value.trim(),
@@ -1752,7 +638,6 @@ async function saveSettings() {
       ].filter(Boolean),
     });
 
-    // Save global sync settings
     await chrome.storage.sync.set({
       [STORAGE_KEYS.AUTO_SYNC]: autoSyncInput.checked,
       [STORAGE_KEYS.SYNC_INTERVAL]: getEffectiveSyncInterval(),
@@ -1775,19 +660,17 @@ async function saveSettings() {
       [STORAGE_KEYS.LINKWARDEN_URL]: linkwardenUrlInput.value.trim(),
       [STORAGE_KEYS.LINKWARDEN_TOKEN]: linkwardenTokenInput.value.trim() ? await encryptToken(linkwardenTokenInput.value.trim()) : '',
       [STORAGE_KEYS.LINKWARDEN_DEFAULT_COLLECTION]: linkwardenDefaultCollectionSelect.value,
-      [STORAGE_KEYS.LINKWARDEN_DEFAULT_TAGS]: lwOptionsSelectedTags.join(', '),
+      [STORAGE_KEYS.LINKWARDEN_DEFAULT_TAGS]: getLwOptionsSelectedTags().join(', '),
       [STORAGE_KEYS.LINKWARDEN_DEFAULT_SCREENSHOT]: linkwardenDefaultScreenshotInput.checked,
       [STORAGE_KEYS.LINKWARDEN_SYNC_ENABLED]: linkwardenSyncEnabledInput.checked,
       [STORAGE_KEYS.LINKWARDEN_SYNC_PARENT]: linkwardenSyncParentSelect.value,
       [STORAGE_KEYS.LINKWARDEN_SYNC_PUSH_TO_GIT]: linkwardenSyncPushToGitInput.checked,
     });
 
-
     try {
       await chrome.runtime.sendMessage({ action: 'settingsChanged' });
     } catch (msgErr) {
-      // Background may be terminated (e.g. Firefox Android). Settings are saved;
-      // alarm will update when background runs again (next sync, popup open).
+      // Background may be terminated
     }
 
     const successMsg = pathChanged
@@ -1795,15 +678,10 @@ async function saveSettings() {
       : getMessage('options_settingsSaved');
     showSaveResult(successMsg, 'success');
 
-    const isConfigured = !!(tokenInput.value.trim() && ownerInput.value.trim() && repoInput.value.trim());
-    githubReposCard.style.display = isConfigured ? 'block' : 'none';
-
-    setTimeout(() => {
-      saveGitHubResult.textContent = '';
-      saveSyncResult.textContent = '';
-    }, pathChanged ? 8000 : 3000);
+    const isConf = !!(tokenInput.value.trim() && ownerInput.value.trim() && repoInput.value.trim());
+    githubReposCard.style.display = isConf ? 'block' : 'none';
   } catch (err) {
-    showSaveResult(getMessage('options_errorSaving', [err.message]), 'error');
+    showSaveResult(getMessage('options_error', [err.message]), 'error');
   }
 }
 
@@ -1814,13 +692,15 @@ function showSaveResult(message, type) {
   saveSyncResult.className = `save-result ${type}`;
 }
 
-// GitHub tab: auto-save on change (no Save button)
+// ==============================
+// Settings Tab: Input Change Handlers
+// ==============================
+
 tokenInput.addEventListener('change', saveSettings);
 ownerInput.addEventListener('change', saveSettings);
 repoInput.addEventListener('change', saveSettings);
 branchInput.addEventListener('change', saveSettings);
 filepathInput.addEventListener('change', saveSettings);
-profileSwitchWithoutConfirmInput.addEventListener('change', saveSettings);
 quickFolderSelect1.addEventListener('change', saveSettings);
 quickFolderSelect2.addEventListener('change', saveSettings);
 quickFolderSelect3.addEventListener('change', saveSettings);
@@ -1847,7 +727,8 @@ quickFoldersRefreshBtn.addEventListener('click', async () => {
   }
 });
 
-// Folder browser
+// ---- Folder browser ----
+
 let _folderBrowserCurrentPath = '';
 
 function closeFolderBrowser() {
@@ -1945,12 +826,65 @@ document.addEventListener('click', (e) => {
 });
 
 // ==============================
-// Sync Tab Logic
+// Settings Tab: Token & GitHub Repos
+// ==============================
+
+toggleTokenBtn.addEventListener('click', () => {
+  tokenInput.type = tokenInput.type === 'password' ? 'text' : 'password';
+});
+
+githubReposEnabledInput.addEventListener('change', () => {
+  githubReposOptions.style.display = githubReposEnabledInput.checked ? 'block' : 'none';
+  saveSettings();
+});
+githubReposParentSelect.addEventListener('change', saveSettings);
+
+githubReposRefreshBtn.addEventListener('click', async () => {
+  await saveSettings();
+  const token = tokenInput.value.trim();
+  const activeId = await getActiveProfileId();
+  const profiles = await getProfiles();
+  const currentProfile = profiles[activeId];
+  if (!token) {
+    githubReposResult.textContent = getMessage('options_pleaseEnterToken');
+    githubReposResult.className = 'validation-result error';
+    return;
+  }
+  try {
+    githubReposRefreshBtn.disabled = true;
+    githubReposSpinner.style.display = 'inline-block';
+    githubReposResult.textContent = '';
+    const parent = githubReposParentSelect.value || 'other';
+    const result = await updateGitHubReposFolder(token, parent, currentProfile?.githubReposUsername || '', async (username) => {
+      await saveProfile(activeId, { githubReposUsername: username });
+    });
+    githubReposResult.textContent = getMessage('options_githubReposRefreshSuccess', [result.count.toString(), result.username || '']);
+    githubReposResult.className = 'validation-result success';
+    await loadSettings();
+  } catch (err) {
+    githubReposResult.textContent = getMessage('options_error', [err.message]);
+    githubReposResult.className = 'validation-result error';
+  } finally {
+    githubReposRefreshBtn.disabled = false;
+    githubReposSpinner.style.display = 'none';
+  }
+});
+
+// ==============================
+// Sync Tab Event Listeners
 // ==============================
 
 autoSyncInput.addEventListener('change', saveSettings);
 syncProfileSelect.addEventListener('change', () => {
-  syncCustomFields.style.display = syncProfileSelect.value === 'custom' ? 'block' : 'none';
+  const isCustom = syncProfileSelect.value === 'custom';
+  syncCustomFields.style.display = isCustom ? 'block' : 'none';
+  if (!isCustom) {
+    const preset = SYNC_PRESETS[syncProfileSelect.value];
+    if (preset) {
+      syncIntervalInput.value = preset.interval;
+      debounceDelayInput.value = Math.round(preset.debounceMs / 1000);
+    }
+  }
   saveSettings();
 });
 syncIntervalInput.addEventListener('change', saveSettings);
@@ -1960,1443 +894,28 @@ syncOnFocusInput.addEventListener('change', saveSettings);
 notificationsModeSelect.addEventListener('change', saveSettings);
 
 // ==============================
-// Linkwarden Tab Logic
+// Theme & Language
 // ==============================
 
-linkwardenEnabledInput.addEventListener('change', () => {
-  linkwardenSettingsGroup.style.display = linkwardenEnabledInput.checked ? 'block' : 'none';
-  linkwardenSubtabBar.style.display = linkwardenEnabledInput.checked ? 'flex' : 'none';
-  linkwardenSyncEnabledGroup.style.display = linkwardenEnabledInput.checked ? 'block' : 'none';
-  linkwardenSyncDisabledMsg.style.display = linkwardenEnabledInput.checked ? 'none' : 'block';
-  saveSettings();
-});
-
-linkwardenUrlInput.addEventListener('change', saveSettings);
-linkwardenTokenInput.addEventListener('change', saveSettings);
-linkwardenDefaultCollectionSelect.addEventListener('change', saveSettings);
-// Linkwarden options page tag picker
-function lwOptionsAddTag(name) {
-  const n = name.trim();
-  if (!n || lwOptionsSelectedTags.includes(n)) return;
-  lwOptionsSelectedTags.push(n);
-  renderLwOptionsTagChips();
-  renderLwOptionsTagCloud();
-  lwOptionsTagInput.value = '';
-  saveSettings();
-}
-
-function lwOptionsRemoveTag(name) {
-  lwOptionsSelectedTags = lwOptionsSelectedTags.filter(t => t !== name);
-  renderLwOptionsTagChips();
-  renderLwOptionsTagCloud();
-  saveSettings();
-}
-
-function renderLwOptionsTagChips() {
-  lwOptionsTagChips.innerHTML = '';
-  for (const tag of lwOptionsSelectedTags) {
-    const chip = document.createElement('span');
-    chip.className = 'lw-options-tag-chip';
-    chip.textContent = tag;
-    const removeBtn = document.createElement('button');
-    removeBtn.type = 'button';
-    removeBtn.className = 'lw-options-tag-chip-remove';
-    removeBtn.textContent = '×';
-    removeBtn.addEventListener('click', () => lwOptionsRemoveTag(tag));
-    chip.appendChild(removeBtn);
-    lwOptionsTagChips.appendChild(chip);
-  }
-}
-
-function renderLwOptionsTagCloud(filter = '') {
-  lwOptionsTagCloud.innerHTML = '';
-  const q = filter.toLowerCase().trim();
-  const available = lwOptionsAllTags
-    .filter(t => !lwOptionsSelectedTags.includes(t.name))
-    .filter(t => !q || t.name.toLowerCase().includes(q));
-  for (const tag of available) {
-    const pill = document.createElement('span');
-    pill.className = 'lw-options-tag-cloud-item';
-    pill.textContent = tag.name;
-    pill.addEventListener('click', () => lwOptionsAddTag(tag.name));
-    lwOptionsTagCloud.appendChild(pill);
-  }
-  if (q && !lwOptionsAllTags.some(t => t.name.toLowerCase() === q) && !lwOptionsSelectedTags.some(t => t.toLowerCase() === q)) {
-    const createPill = document.createElement('span');
-    createPill.className = 'lw-options-tag-cloud-item lw-options-tag-cloud-new';
-    createPill.textContent = `+ "${filter.trim()}"`;
-    createPill.addEventListener('click', () => lwOptionsAddTag(filter.trim()));
-    lwOptionsTagCloud.appendChild(createPill);
-  }
-}
-
-lwOptionsTagInput.addEventListener('input', () => renderLwOptionsTagCloud(lwOptionsTagInput.value));
-lwOptionsTagInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' || e.key === ',' || e.key === 'Tab') {
-    if (lwOptionsTagInput.value.trim()) {
-      e.preventDefault();
-      lwOptionsAddTag(lwOptionsTagInput.value);
-    }
-  } else if (e.key === 'Backspace' && !lwOptionsTagInput.value && lwOptionsSelectedTags.length > 0) {
-    lwOptionsRemoveTag(lwOptionsSelectedTags[lwOptionsSelectedTags.length - 1]);
-  }
-});
-
-document.getElementById('lw-options-tags-wrap').addEventListener('click', (e) => {
-  if (e.target === e.currentTarget || e.target === lwOptionsTagChips) {
-    lwOptionsTagInput.focus();
-  }
-});
-
-linkwardenDefaultScreenshotInput.addEventListener('change', saveSettings);
-
-linkwardenSyncEnabledInput.addEventListener('change', () => {
-  linkwardenSyncOptions.style.display = linkwardenSyncEnabledInput.checked ? 'block' : 'none';
-  saveSettings();
-});
-linkwardenSyncParentSelect.addEventListener('change', saveSettings);
-linkwardenSyncPushToGitInput.addEventListener('change', saveSettings);
-
-linkwardenSyncRefreshBtn.addEventListener('click', async () => {
-  await saveSettings();
-  const url = linkwardenUrlInput.value.trim();
-  const tokenEnc = linkwardenTokenInput.value.trim();
-
-  if (!url || !tokenEnc) {
-    linkwardenSyncResult.textContent = getMessage('options_pleaseEnterLinkwardenConfig') || 'Linkwarden URL and Token are required';
-    linkwardenSyncResult.className = 'validation-result error';
-    return;
-  }
-
-  try {
-    linkwardenSyncRefreshBtn.disabled = true;
-    linkwardenSyncSpinner.style.display = 'inline-block';
-    linkwardenSyncResult.textContent = '';
-
-    const token = await decryptToken(tokenEnc);
-    const parent = linkwardenSyncParentSelect.value || 'other';
-
-    const result = await updateLinkwardenCollectionsFolder(url, token, parent);
-
-    linkwardenSyncResult.textContent = getMessage('options_linkwardenSyncSuccess', [result.collections.toString(), result.links.toString()]) || `Synced ${result.collections} collections and ${result.links} links.`;
-    linkwardenSyncResult.className = 'validation-result success';
-  } catch (err) {
-    linkwardenSyncResult.textContent = getMessage('options_error', [err.message]);
-    linkwardenSyncResult.className = 'validation-result error';
-  } finally {
-    linkwardenSyncRefreshBtn.disabled = false;
-    linkwardenSyncSpinner.style.display = 'none';
-  }
-});
-
-toggleLinkwardenTokenBtn.addEventListener('click', () => {
-  const isPassword = linkwardenTokenInput.type === 'password';
-  linkwardenTokenInput.type = isPassword ? 'text' : 'password';
-  toggleLinkwardenTokenBtn.querySelector('.icon-eye').textContent = isPassword ? '👁️‍🗨️' : '👁';
-});
-
-linkwardenTestBtn.addEventListener('click', () => {
-  const url = linkwardenUrlInput.value.trim();
-  const token = linkwardenTokenInput.value.trim();
-
-  if (!url || !token) {
-    linkwardenTestResult.textContent = 'URL and Token are required';
-    linkwardenTestResult.className = 'validation-result error';
-    return;
-  }
-
-  let origin;
-  try {
-    origin = new URL(url).origin + '/*';
-  } catch (e) {
-    linkwardenTestResult.textContent = 'Invalid URL format';
-    linkwardenTestResult.className = 'validation-result error';
-    return;
-  }
-
-  browserObj.permissions.request({ origins: [origin] }, (granted) => {
-    if (granted) {
-      performLinkwardenTest(url, token);
-    } else {
-      const lastErr = chrome.runtime.lastError || (typeof browser !== 'undefined' ? browser.runtime.lastError : null);
-      const errorMsg = lastErr ? lastErr.message : 'Host permission denied. Please check your browser address bar/popup blocker.';
-      linkwardenTestBtn.disabled = false;
-      linkwardenTestSpinner.style.display = 'none';
-      linkwardenTestResult.textContent = errorMsg;
-      linkwardenTestResult.className = 'validation-result error';
-    }
-  });
-});
-
-async function performLinkwardenTest(url, token) {
-  linkwardenTestBtn.disabled = true;
-  linkwardenTestSpinner.style.display = 'inline-block';
-  linkwardenTestResult.textContent = '';
-
-  try {
-    const api = new LinkwardenAPI(url, token);
-    const collections = await api.getCollections();
-
-    // Attempt to populate the default collection select if it was successful
-    if (collections && collections.response && Array.isArray(collections.response)) {
-      const currentSelection = linkwardenDefaultCollectionSelect.value;
-      linkwardenDefaultCollectionSelect.innerHTML = '<option value="" data-i18n="options_none">None</option>';
-      applyI18n(); // Re-apply to the "None" option
-      collections.response.forEach(c => {
-        const opt = document.createElement('option');
-        opt.value = c.id;
-        opt.textContent = c.name;
-        if (c.id.toString() === currentSelection) opt.selected = true;
-        linkwardenDefaultCollectionSelect.appendChild(opt);
-      });
-    }
-
-    linkwardenTestResult.textContent = 'Connection successful!';
-    linkwardenTestResult.className = 'validation-result success';
-
-    // Also fetch tags for the cloud
-    try {
-      const tagsRes = await api.getTags();
-      if (tagsRes?.response) {
-        lwOptionsAllTags = tagsRes.response.map(t => ({ id: t.id, name: t.name }));
-        renderLwOptionsTagCloud();
-      }
-    } catch { /* tags optional */ }
-  } catch (err) {
-    linkwardenTestResult.textContent = `Connection failed: ${err.message}`;
-    linkwardenTestResult.className = 'validation-result error';
-  } finally {
-    linkwardenTestBtn.disabled = false;
-    linkwardenTestSpinner.style.display = 'none';
-  }
-}
-
-
-
-debugLogEnabledInput.addEventListener('change', async () => {
-
-  await setDebugLogEnabled(debugLogEnabledInput.checked);
-});
-debugLogExportBtn.addEventListener('click', async () => {
-  let content = '';
-  try {
-    const res = await chrome.runtime.sendMessage({ action: 'getDebugLogExport' });
-    content = res?.content ?? '';
-  } catch {
-    content = '';
-  }
-  if (!content) {
-    debugLogResult.textContent = getMessage('options_debugLogExportEmpty');
-    debugLogResult.className = 'validation-result';
-    setTimeout(() => { debugLogResult.textContent = ''; }, 3000);
-    return;
-  }
-  const date = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
-  downloadFile(`gitsyncmarks-debug-${date}.txt`, content, 'text/plain;charset=utf-8');
-  debugLogResult.textContent = getMessage('options_exportSuccess');
-  debugLogResult.className = 'validation-result success';
-  setTimeout(() => { debugLogResult.textContent = ''; }, 3000);
-});
-
-// Files → Git Add: copy JSON or gh command to clipboard
-const automationCopyJsonBtn = document.getElementById('automation-copy-json-btn');
-const automationCopyGhBtn = document.getElementById('automation-copy-gh-btn');
-const automationJsonBlock = document.getElementById('automation-json-block');
-const automationGhBlock = document.getElementById('automation-gh-block');
-
-async function copyAutomationToClipboard(preEl, btn) {
-  const text = preEl?.textContent?.trim() ?? '';
-  if (!text) return;
-  try {
-    await navigator.clipboard.writeText(text);
-    const orig = btn.textContent;
-    btn.textContent = '✓';
-    setTimeout(() => { btn.textContent = orig; }, 1200);
-  } catch (err) {
-    console.warn('Clipboard copy failed:', err);
-  }
-}
-
-if (automationCopyJsonBtn) {
-  automationCopyJsonBtn.addEventListener('click', () => copyAutomationToClipboard(automationJsonBlock, automationCopyJsonBtn));
-}
-if (automationCopyGhBtn) {
-  automationCopyGhBtn.addEventListener('click', () => copyAutomationToClipboard(automationGhBlock, automationCopyGhBtn));
-}
-
-// Generate files: debounced sync when toggling ON to avoid conflicts when enabling both quickly
-let generateFilesSyncTimer = null;
-const GENERATE_FILES_DEBOUNCE_MS = 2000;
-const GENERATE_FILES_RETRY_DELAY_MS = 2500;
-
-function scheduleGenerateFilesSync(isRetry = false) {
-  if (generateFilesSyncTimer) clearTimeout(generateFilesSyncTimer);
-  const delayMs = isRetry ? GENERATE_FILES_RETRY_DELAY_MS : GENERATE_FILES_DEBOUNCE_MS;
-  generateFilesSyncTimer = setTimeout(async () => {
-    generateFilesSyncTimer = null;
-    try {
-      const result = await chrome.runtime.sendMessage({ action: 'push' });
-      if (result?.alreadyInProgress === true && !isRetry) {
-        scheduleGenerateFilesSync(true);
-      }
-    } catch (e) { /* Background may be terminated (e.g. Firefox) */ }
-  }, delayMs);
-}
-
-function updateGenerateFilesBtn() {
-  const anyEnabled = generateReadmeMdSelect.value !== 'off' ||
-    generateBookmarksHtmlSelect.value !== 'off' ||
-    generateFeedXmlSelect.value !== 'off' ||
-    generateDashyYmlSelect.value !== 'off';
-  generateFilesBtn.style.display = anyEnabled ? '' : 'none';
-}
-
-async function onGenerateFilesToggleChange() {
-  updateGenerateFilesBtn();
-  await saveSettings();
-  if (generateReadmeMdSelect.value === 'auto' ||
-    generateBookmarksHtmlSelect.value === 'auto' ||
-    generateFeedXmlSelect.value === 'auto' ||
-    generateDashyYmlSelect.value === 'auto') {
-    scheduleGenerateFilesSync();
-  }
-}
-
-generateFilesBtn.addEventListener('click', async () => {
-  generateFilesBtn.disabled = true;
-  try {
-    await chrome.runtime.sendMessage({ action: 'generateFilesNow' });
-  } catch (e) { /* Background may be terminated */ }
-  generateFilesBtn.disabled = false;
-});
-
-// Sync tab: auto-save on change (no Save button)
-autoSyncInput.addEventListener('change', saveSettings);
-syncOnStartupInput.addEventListener('change', saveSettings);
-syncOnFocusInput.addEventListener('change', saveSettings);
-notificationsModeSelect.addEventListener('change', saveSettings);
-syncIntervalInput.addEventListener('change', saveSettings);
-debounceDelayInput.addEventListener('change', saveSettings);
-generateReadmeMdSelect.addEventListener('change', onGenerateFilesToggleChange);
-generateBookmarksHtmlSelect.addEventListener('change', onGenerateFilesToggleChange);
-generateFeedXmlSelect.addEventListener('change', onGenerateFilesToggleChange);
-generateDashyYmlSelect.addEventListener('change', onGenerateFilesToggleChange);
-
-// Settings sync to Git
-syncSettingsToGitInput.addEventListener('change', async () => {
-  updateSettingsSyncVisibility();
-  await saveSettings();
-  if (!syncSettingsToGitInput.checked) {
-    try {
-      await chrome.runtime.sendMessage({ action: 'clearSettingsSyncPassword' });
-    } catch { /* ignored */ }
-    settingsSyncPasswordInput.value = '';
-    settingsSyncPasswordInput.dataset.hasPassword = '';
-    settingsSyncResult.textContent = '';
-    renderSettingsProfiles([]);
-  } else {
-    await refreshSettingsProfiles();
-  }
-});
-
-settingsSyncModeSelect.addEventListener('change', async () => {
-  settingsSyncModeSelect.value = 'individual';
-  updateSettingsSyncVisibility();
-  await saveSettings();
-});
-settingsSyncGlobalWriteEnabledInput.addEventListener('change', async () => {
-  settingsSyncGlobalWriteEnabledInput.checked = false;
-  await saveSettings();
-});
-
-settingsSyncClientNameInput.addEventListener('change', async () => {
-  await chrome.storage.local.set({
-    [LOCAL_STORAGE_KEYS.SETTINGS_SYNC_CLIENT_NAME]: settingsSyncClientNameInput.value.trim(),
-  });
-  updateSettingsSyncButtonsState();
-});
-settingsSyncClientNameInput.addEventListener('input', updateSettingsSyncButtonsState);
-
-settingsSyncSavePwBtn.addEventListener('click', async () => {
-  const pw = settingsSyncPasswordInput.value.trim();
-  if (!pw || pw === '********') {
-    settingsSyncResult.textContent = getMessage('options_settingsSyncPasswordMissing');
-    settingsSyncResult.className = 'validation-result error';
-    return;
-  }
-  settingsSyncSavePwBtn.disabled = true;
-  try {
-    const result = await chrome.runtime.sendMessage({
-      action: 'setSettingsSyncPassword',
-      password: pw,
-      triggerPush: true,
-    });
-    settingsSyncPasswordInput.value = '********';
-    settingsSyncPasswordInput.dataset.hasPassword = 'true';
-    settingsSyncResult.textContent = getMessage('options_settingsSyncActive');
-    settingsSyncResult.className = 'validation-result success';
-  } catch (e) {
-    settingsSyncResult.textContent = e.message || 'Error';
-    settingsSyncResult.className = 'validation-result error';
-  }
-  settingsSyncSavePwBtn.disabled = false;
-});
-
-function selectedSettingsProfile() {
-  const ref = settingsSyncDeviceList.value;
-  return settingsProfiles.find((p) => (p.path || p.filename) === ref) || null;
-}
-
-function renderSettingsProfiles(configs) {
-  settingsProfiles = Array.isArray(configs) ? configs : [];
-  settingsSyncDeviceList.innerHTML = '';
-  if (settingsProfiles.length === 0) {
-    const opt = document.createElement('option');
-    opt.textContent = getMessage('options_settingsSyncImportEmpty');
-    settingsSyncDeviceList.appendChild(opt);
-  } else {
-    for (const cfg of settingsProfiles) {
-      const opt = document.createElement('option');
-      opt.value = cfg.path || cfg.filename;
-      const datePart = cfg.updatedAt ? ` · ${new Date(cfg.updatedAt).toLocaleString()}` : '';
-      const alias = cfg.alias || cfg.name || cfg.filename;
-      opt.textContent = `${alias}${datePart}`;
-      settingsSyncDeviceList.appendChild(opt);
-    }
-    const ownAlias = settingsSyncClientAlias();
-    if (ownAlias) {
-      const ownPath = `profiles/${ownAlias}/settings.enc`;
-      const ownOption = Array.from(settingsSyncDeviceList.options).find((o) => o.value === ownPath);
-      if (ownOption) settingsSyncDeviceList.value = ownPath;
-    }
-  }
-  updateSettingsSyncButtonsState();
-}
-
-async function refreshSettingsProfiles() {
-  settingsSyncLoadBtn.disabled = true;
-  settingsSyncImportResult.textContent = '';
-  try {
-    const resp = await chrome.runtime.sendMessage({ action: 'listSettingsProfiles' });
-    renderSettingsProfiles(resp?.success ? resp.configs : []);
-    if (!resp?.success) {
-      settingsSyncImportResult.textContent = resp?.message || 'Error';
-      settingsSyncImportResult.className = 'validation-result error';
-    }
-  } catch (e) {
-    settingsSyncImportResult.textContent = e.message || 'Error';
-    settingsSyncImportResult.className = 'validation-result error';
-  }
-  settingsSyncLoadBtn.disabled = false;
-}
-
-settingsSyncLoadBtn.addEventListener('click', refreshSettingsProfiles);
-
-settingsSyncImportBtn.addEventListener('click', async () => {
-  if (!settingsSyncClientAlias()) {
-    settingsSyncImportResult.textContent = getMessage('options_settingsSyncClientNameRequired');
-    settingsSyncImportResult.className = 'validation-result error';
-    return;
-  }
-  const selected = selectedSettingsProfile();
-  const filename = selected?.path || selected?.filename || settingsSyncDeviceList.value;
-  if (!filename) return;
-  settingsSyncImportBtn.disabled = true;
-  settingsSyncImportResult.textContent = '';
-  try {
-    const password = await showPasswordDialog('options_settingsRegistryActionPasswordPrompt', 'options_settingsRegistryImportApplyBtn');
-    if (!password) return;
-    const resp = await chrome.runtime.sendMessage({ action: 'importSettingsProfile', filename, password });
-    if (resp.success) {
-      await saveSettingsSyncPasswordAndUpdateUI(password);
-      settingsSyncImportResult.textContent = getMessage('options_settingsRegistryImportSuccess');
-      settingsSyncImportResult.className = 'validation-result success';
-      await loadSettings();
-      await confirmReloadAfterImport();
-    } else {
-      settingsSyncImportResult.textContent = resp.message || 'Error';
-      settingsSyncImportResult.className = 'validation-result error';
-    }
-  } catch (e) {
-    settingsSyncImportResult.textContent = e.message || 'Error';
-    settingsSyncImportResult.className = 'validation-result error';
-  }
-  settingsSyncImportBtn.disabled = false;
-});
-
-settingsSyncPushSelectedBtn.addEventListener('click', async () => {
-  if (!settingsSyncClientAlias()) {
-    settingsSyncImportResult.textContent = getMessage('options_settingsSyncClientNameRequired');
-    settingsSyncImportResult.className = 'validation-result error';
-    return;
-  }
-  const selected = selectedSettingsProfile();
-  if (!(selected?.path || selected?.filename)) return;
-  settingsSyncPushSelectedBtn.disabled = true;
-  settingsSyncImportResult.textContent = '';
-  try {
-    const password = await showPasswordDialog('options_settingsRegistryActionPasswordPrompt', 'options_settingsRegistrySyncSelectedBtn');
-    if (!password) return;
-    const resp = await chrome.runtime.sendMessage({
-      action: 'syncSettingsToProfile',
-      filename: selected.path || selected.filename,
-      name: selected.alias || selected.name || '',
-      password,
-    });
-    if (resp?.success) {
-      await saveSettingsSyncPasswordAndUpdateUI(password);
-      settingsSyncImportResult.textContent = getMessage('options_settingsRegistrySyncSuccess');
-      settingsSyncImportResult.className = 'validation-result success';
-      await refreshSettingsProfiles();
-    } else {
-      settingsSyncImportResult.textContent = resp?.message || 'Error';
-      settingsSyncImportResult.className = 'validation-result error';
-    }
-  } catch (e) {
-    settingsSyncImportResult.textContent = e.message || 'Error';
-    settingsSyncImportResult.className = 'validation-result error';
-  }
-  settingsSyncPushSelectedBtn.disabled = false;
-});
-
-settingsSyncCreateBtn.addEventListener('click', async () => {
-  const name = settingsSyncClientNameInput.value.trim();
-  if (!name) {
-    settingsSyncImportResult.textContent = getMessage('options_settingsSyncClientNameRequired');
-    settingsSyncImportResult.className = 'validation-result error';
-    return;
-  }
-  settingsSyncCreateBtn.disabled = true;
-  settingsSyncImportResult.textContent = '';
-  try {
-    const password = await showPasswordDialog('options_settingsRegistryActionPasswordPrompt', 'options_settingsSyncCreateOwnBtn');
-    if (!password) return;
-    await chrome.storage.local.set({
-      [LOCAL_STORAGE_KEYS.SETTINGS_SYNC_CLIENT_NAME]: name,
-    });
-    const resp = await chrome.runtime.sendMessage({ action: 'createSettingsProfile', name, password });
-    if (resp?.success) {
-      await saveSettingsSyncPasswordAndUpdateUI(password);
-      if (resp.alias && resp.normalizedFrom) {
-        settingsSyncImportResult.textContent = getMessage('options_settingsRegistryAliasNormalized', [resp.alias]);
-      } else if (resp.alias) {
-        settingsSyncImportResult.textContent = `${getMessage('options_settingsRegistryCreateSuccess')} (${resp.alias})`;
-      } else {
-        settingsSyncImportResult.textContent = getMessage('options_settingsRegistryCreateSuccess');
-      }
-      settingsSyncImportResult.className = 'validation-result success';
-      await refreshSettingsProfiles();
-    } else {
-      if (resp?.code === 'CLIENT_NAME_CONFLICT') {
-        settingsSyncImportResult.textContent = getMessage('options_settingsSyncClientNameConflict', [name]);
-      } else {
-        settingsSyncImportResult.textContent = resp?.message || 'Error';
-      }
-      settingsSyncImportResult.className = 'validation-result error';
-    }
-  } catch (e) {
-    settingsSyncImportResult.textContent = e.message || 'Error';
-    settingsSyncImportResult.className = 'validation-result error';
-  }
-  settingsSyncCreateBtn.disabled = false;
-});
-
-// ==============================
-// Export / Import (compact dropdown UI)
-// ==============================
-
-importFileTrigger.addEventListener('click', () => importFile.click());
-
-importFile.addEventListener('change', () => {
-  const hasFile = !!importFile.files.length;
-  importBtn.disabled = !hasFile;
-  importFilename.textContent = hasFile ? importFile.files[0].name : '';
-});
-
-importTypeSelect.addEventListener('change', () => {
-  importFile.value = '';
-  importBtn.disabled = true;
-  importFilename.textContent = '';
-  const isSettings = importTypeSelect.value === 'settings';
-  importFile.accept = isSettings ? '.json,.enc' : '.json';
-  importWarning.setAttribute('data-i18n', isSettings ? 'options_importSettingsWarning' : 'options_importBookmarksWarning');
-  importWarning.textContent = getMessage(isSettings ? 'options_importSettingsWarning' : 'options_importBookmarksWarning');
-});
-
-async function buildSettingsExportData() {
-  const syncSettings = await chrome.storage.sync.get(null);
-  const localData = await chrome.storage.local.get({ profileTokens: {}, syncState: {} });
-  const profiles = syncSettings.profiles || {};
-  const profileTokens = localData.profileTokens || {};
-  const exportedProfiles = {};
-  for (const [id, p] of Object.entries(profiles)) {
-    let token = '';
-    try {
-      token = profileTokens[id] ? await decryptToken(profileTokens[id]) : '';
-    } catch { /* ignore */ }
-    exportedProfiles[id] = { ...p, token };
-  }
-  return { ...syncSettings, profiles: exportedProfiles };
-}
-
-function showPasswordDialog(promptKey, confirmKey) {
-  return new Promise((resolve) => {
-    passwordDialogPrompt.textContent = getMessage(promptKey);
-    passwordDialogConfirmBtn.textContent = getMessage(confirmKey);
-    passwordDialogInput.value = '';
-    passwordDialog.style.display = '';
-    passwordDialogInput.focus();
-
-    const finish = (password) => {
-      passwordDialog.style.display = 'none';
-      passwordDialogInput.value = '';
-      passwordDialogConfirmBtn.removeEventListener('click', onConfirm);
-      passwordDialogCancelBtn.removeEventListener('click', onCancel);
-      passwordDialogInput.removeEventListener('keydown', onKeyDown);
-      resolve(password);
-    };
-
-    const onConfirm = () => {
-      const pwd = passwordDialogInput.value;
-      if (!pwd.trim()) return;
-      finish(pwd);
-    };
-
-    const onCancel = () => finish(null);
-
-    const onKeyDown = (e) => {
-      if (e.key === 'Enter') onConfirm();
-      if (e.key === 'Escape') onCancel();
-    };
-
-    passwordDialogConfirmBtn.addEventListener('click', onConfirm);
-    passwordDialogCancelBtn.addEventListener('click', onCancel);
-    passwordDialogInput.addEventListener('keydown', onKeyDown);
+if (themeCycleBtn) {
+  themeCycleBtn.addEventListener('click', async () => {
+    const current = await chrome.storage.sync.get({ [STORAGE_KEYS.THEME]: 'auto' }).then(r => r[STORAGE_KEYS.THEME] || 'auto');
+    const idx = THEME_CYCLE.indexOf(current);
+    const nextTheme = THEME_CYCLE[(idx + 1) % THEME_CYCLE.length];
+    await chrome.storage.sync.set({ [STORAGE_KEYS.THEME]: nextTheme });
+    applyTheme(nextTheme);
+    themeCycleBtn.textContent = THEME_ICONS[nextTheme];
+    themeCycleBtn.title = getMessage(THEME_TITLES[nextTheme]);
   });
 }
 
-/**
- * Reload extension runtime after settings import so profile changes are
- * immediately reflected across popup/background/options in all browsers.
- */
-function reloadAfterSettingsImport(delayMs = 800) {
-  setTimeout(() => {
-    try {
-      if (chrome?.runtime?.reload) {
-        chrome.runtime.reload();
-        return;
-      }
-    } catch {
-      // Fallback below when runtime reload is unavailable.
-    }
-    location.reload();
-  }, delayMs);
-}
-
-async function confirmReloadAfterImport() {
-  const shouldReload = await showOnboardingConfirm(
-    getMessage('options_settingsSyncImportReloadConfirm'),
-    getMessage('options_settingsSyncImportReloadConfirmBtn')
-  );
-  hideOnboardingConfirm();
-  if (shouldReload) reloadAfterSettingsImport();
-}
-
-exportBtn.addEventListener('click', async () => {
-  const type = exportTypeSelect.value;
-  const date = new Date().toISOString().slice(0, 10);
-  try {
-    if (type === 'bookmarks') {
-      const tree = await chrome.bookmarks.getTree();
-      const deviceId = crypto.randomUUID();
-      const data = serializeToJson(tree, deviceId);
-      downloadFile(`bookmarks-export-${date}.json`, JSON.stringify(data, null, 2), 'application/json');
-      showResult(exportResult, getMessage('options_exportSuccess'), 'success');
-    } else if (type === 'dashy') {
-      const tree = await chrome.bookmarks.getTree();
-      const fileMap = bookmarkTreeToFileMap(tree, 'bookmarks');
-      const yaml = fileMapToDashyYaml(fileMap, 'bookmarks');
-      downloadFile(`dashy-conf-${date}.yml`, yaml, 'text/yaml');
-      showResult(exportResult, getMessage('options_exportSuccess'), 'success');
-    } else if (type === 'settings-plain') {
-      const exportData = await buildSettingsExportData();
-      downloadFile(`gitsyncmarks-settings-${date}.json`, JSON.stringify(exportData, null, 2), 'application/json');
-      showResult(exportResult, getMessage('options_exportSuccess'), 'success');
-    } else if (type === 'settings-encrypted') {
-      const password = await showPasswordDialog('options_exportPasswordPrompt', 'options_exportBtn');
-      if (!password) return;
-      const exportData = await buildSettingsExportData();
-      const json = JSON.stringify(exportData, null, 2);
-      const encrypted = await encryptWithPassword(json, password);
-      downloadFile(`gitsyncmarks-settings-${date}.enc`, encrypted, 'application/octet-stream');
-      showResult(exportResult, getMessage('options_exportEncryptedSuccess'), 'success');
-    }
-  } catch (err) {
-    showResult(exportResult, getMessage('options_importError', [err.message]), 'error');
-  }
+languageSelect.addEventListener('change', async () => {
+  const newLang = languageSelect.value;
+  await chrome.storage.sync.set({ [STORAGE_KEYS.LANGUAGE]: newLang });
+  await reloadI18n();
+  populateLanguageDropdown();
+  languageSelect.value = newLang;
+  applyI18n();
+  document.title = `GitSyncMarks – ${getMessage('options_subtitle')}`;
+  if (wizardState.active) renderOnboardingWizardStep();
 });
-
-async function applyImportedSettings(settings) {
-  if (settings.profiles && Object.keys(settings.profiles).length > 0) {
-    const profileTokens = {};
-    const profilesToSave = {};
-    for (const [id, p] of Object.entries(settings.profiles)) {
-      profilesToSave[id] = {
-        id: p.id || id,
-        name: p.name || 'Default',
-        owner: p.owner || '',
-        repo: p.repo || '',
-        branch: p.branch || 'main',
-        filePath: p.filePath || 'bookmarks',
-        githubReposEnabled: p.githubReposEnabled ?? false,
-        githubReposParent: p.githubReposParent ?? 'other',
-        githubReposUsername: p.githubReposUsername ?? '',
-      };
-      if (p.token) {
-        profileTokens[id] = await encryptToken(p.token);
-      }
-    }
-    await chrome.storage.sync.set({
-      profiles: profilesToSave,
-      activeProfileId: settings.activeProfileId || Object.keys(profilesToSave)[0],
-      autoSync: settings.autoSync !== false,
-      syncInterval: settings.syncInterval ?? 15,
-      syncOnStartup: settings.syncOnStartup || false,
-      syncOnFocus: settings.syncOnFocus || false,
-      syncProfile: settings.syncProfile || 'normal',
-      debounceDelay: settings.debounceDelay ?? 5000,
-      notificationsMode: settings.notificationsMode || 'all',
-      language: settings.language || 'auto',
-      theme: settings.theme || 'auto',
-      profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
-      generateReadmeMd: settings.generateReadmeMd !== false,
-      generateBookmarksHtml: settings.generateBookmarksHtml !== false,
-      generateFeedXml: settings.generateFeedXml ?? 'auto',
-      generateDashyYml: settings.generateDashyYml ?? 'off',
-      settingsSyncGlobalWriteEnabled: settings.settingsSyncGlobalWriteEnabled === true,
-    });
-    await chrome.storage.local.set({ profileTokens });
-  } else {
-    const defaultProfile = {
-      id: 'default',
-      name: 'Default',
-      owner: settings.repoOwner || '',
-      repo: settings.repoName || '',
-      branch: settings.branch || 'main',
-      filePath: settings.filePath || 'bookmarks',
-    };
-    const profileTokens = {};
-    if (settings.githubToken) {
-      profileTokens.default = await encryptToken(settings.githubToken);
-    }
-    await chrome.storage.sync.set({
-      profiles: { default: defaultProfile },
-      activeProfileId: 'default',
-      autoSync: settings.autoSync !== false,
-      syncInterval: settings.syncInterval ?? 15,
-      syncOnStartup: settings.syncOnStartup || false,
-      syncOnFocus: settings.syncOnFocus || false,
-      syncProfile: settings.syncProfile || 'normal',
-      debounceDelay: settings.debounceDelay ?? 5000,
-      notificationsMode: settings.notificationsMode || 'all',
-      language: settings.language || 'auto',
-      theme: settings.theme || 'auto',
-      profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
-      generateReadmeMd: settings.generateReadmeMd !== false,
-      generateBookmarksHtml: settings.generateBookmarksHtml !== false,
-      generateFeedXml: settings.generateFeedXml ?? 'auto',
-      generateDashyYml: settings.generateDashyYml ?? 'off',
-      settingsSyncGlobalWriteEnabled: settings.settingsSyncGlobalWriteEnabled === true,
-    });
-    await chrome.storage.local.set({ profileTokens });
-  }
-  await chrome.runtime.sendMessage({ action: 'settingsChanged' });
-}
-
-importBtn.addEventListener('click', async () => {
-  const file = importFile.files[0];
-  if (!file) return;
-  const isSettings = importTypeSelect.value === 'settings';
-
-  try {
-    let text = await file.text();
-
-    if (isSettings) {
-      if (text.trim().startsWith(PASSWORD_ENC_PREFIX)) {
-        const password = await showPasswordDialog('options_importPasswordPrompt', 'options_importBtn');
-        if (!password) return;
-        text = await decryptWithPassword(text, password);
-      }
-      const settings = JSON.parse(text);
-      if (typeof settings !== 'object' || Array.isArray(settings)) {
-        throw new Error('Invalid settings format.');
-      }
-      await applyImportedSettings(settings);
-      showResult(importResult, getMessage('options_importSuccess'), 'success');
-      await loadSettings();
-      importFile.value = '';
-      importBtn.disabled = true;
-      importFilename.textContent = '';
-      await confirmReloadAfterImport();
-    } else {
-      const data = JSON.parse(text);
-      const bookmarks = deserializeFromJson(data);
-      const roleMap = {};
-      for (const node of bookmarks) {
-        const role = node.role || 'other';
-        roleMap[role] = { title: role, children: node.children || [] };
-      }
-      await replaceLocalBookmarks(roleMap);
-      showResult(importResult, getMessage('options_importSuccess'), 'success');
-      importFile.value = '';
-      importBtn.disabled = true;
-      importFilename.textContent = '';
-    }
-  } catch (err) {
-    const msg = (isSettings && err.message?.includes('Wrong password'))
-      ? getMessage('options_decryptError')
-      : getMessage('options_importError', [err.message]);
-    showResult(importResult, msg, 'error');
-  }
-});
-
-// ==============================
-// Helpers
-// ==============================
-
-/**
- * Trigger a file download in the browser.
- */
-function downloadFile(filename, content, mimeType) {
-  const blob = new Blob([content], { type: mimeType });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-/**
- * Show a result message next to an import/export button.
- */
-function showResult(el, message, type) {
-  el.textContent = message;
-  el.className = `ie-result ${type}`;
-  setTimeout(() => { el.textContent = ''; el.className = 'ie-result'; }, 4000);
-}
-
-const DEFAULT_CONTEXT_MENU_ITEMS = [
-  { id: 'ADD_TOOLBAR', enabled: true },
-  { id: 'ADD_OTHER', enabled: true },
-  { id: 'ADD_TO_FOLDER', enabled: true },
-  { id: 'QUICK_FOLDERS', enabled: true },
-  { id: 'LINKWARDEN_SAVE', enabled: true },
-  { id: 'SYNC_NOW', enabled: true },
-  { id: 'SEARCH_BOOKMARKS', enabled: true },
-  { id: 'OPEN_ALL_FOLDER', enabled: true },
-  { id: 'COPY_FAVICON', enabled: true },
-  { id: 'DOWNLOAD_FAVICON', enabled: true },
-  { id: 'SWITCH_PROFILE', enabled: true },
-];
-
-const CATEGORIES = {
-  ADD: 'ADD',
-  LINKWARDEN: 'LINKWARDEN',
-  TOOLS: 'TOOLS',
-  FAVICONS: 'FAVICONS',
-};
-
-const ITEM_CATEGORY_MAP = {
-  ADD_TOOLBAR: CATEGORIES.ADD,
-  ADD_OTHER: CATEGORIES.ADD,
-  ADD_TO_FOLDER: CATEGORIES.ADD,
-  QUICK_FOLDERS: CATEGORIES.ADD,
-  LINKWARDEN_SAVE: CATEGORIES.LINKWARDEN,
-  SYNC_NOW: CATEGORIES.TOOLS,
-  SEARCH_BOOKMARKS: CATEGORIES.TOOLS,
-  OPEN_ALL_FOLDER: CATEGORIES.TOOLS,
-  SWITCH_PROFILE: CATEGORIES.TOOLS,
-  COPY_FAVICON: CATEGORIES.FAVICONS,
-  DOWNLOAD_FAVICON: CATEGORIES.FAVICONS,
-};
-
-// ==============================
-// Context Menu configuration
-// ==============================
-
-async function renderContextMenuConfig(items) {
-  if (!contextMenuItemsList) return;
-  contextMenuItemsList.innerHTML = '';
-
-  const { contextMenuSubmenus = {} } = await chrome.storage.sync.get({ contextMenuSubmenus: {} });
-
-  const grouped = {};
-  items.forEach(item => {
-    const cat = ITEM_CATEGORY_MAP[item.id] || 'OTHER';
-    if (!grouped[cat]) grouped[cat] = [];
-    grouped[cat].push(item);
-  });
-
-  for (const [catKey, catItems] of Object.entries(grouped)) {
-    // Category Header
-    const header = document.createElement('div');
-    header.className = 'context-menu-category-header';
-
-    const title = document.createElement('span');
-    title.className = 'category-title';
-    title.textContent = getMessage(`contextMenu_category_${catKey}`);
-    header.appendChild(title);
-
-    const submenuToggleWrap = document.createElement('div');
-    submenuToggleWrap.className = 'submenu-toggle-wrap';
-
-    const submenuLabel = document.createElement('span');
-    submenuLabel.textContent = getMessage('options_menu_showAsSubmenu');
-    submenuToggleWrap.appendChild(submenuLabel);
-
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.checked = contextMenuSubmenus[catKey] !== false; // Default true
-    checkbox.addEventListener('change', () => toggleCategorySubmenu(catKey, checkbox.checked));
-
-    const toggleLabel = document.createElement('label');
-    toggleLabel.className = 'toggle-label';
-    const slider = document.createElement('span');
-    slider.className = 'toggle-slider toggle-slider-sm';
-    toggleLabel.appendChild(checkbox);
-    toggleLabel.appendChild(slider);
-
-    submenuToggleWrap.appendChild(toggleLabel);
-    header.appendChild(submenuToggleWrap);
-    contextMenuItemsList.appendChild(header);
-
-    catItems.forEach((item) => {
-      const globalIndex = items.findIndex(i => i.id === item.id);
-      const row = document.createElement('div');
-      row.className = 'context-menu-item-row';
-      row.dataset.id = item.id;
-
-      const label = document.createElement('span');
-      label.className = 'context-menu-item-label';
-      label.textContent = getMessage(`options_contextMenuItem_${item.id}`) || item.id;
-      row.appendChild(label);
-
-      const actions = document.createElement('div');
-      actions.className = 'context-menu-item-actions';
-
-      const upBtn = document.createElement('button');
-      upBtn.className = 'context-menu-item-reorder-btn';
-      upBtn.textContent = '↑';
-      upBtn.disabled = globalIndex === 0;
-      upBtn.addEventListener('click', () => moveContextMenuItem(globalIndex, -1));
-      actions.appendChild(upBtn);
-
-      const downBtn = document.createElement('button');
-      downBtn.className = 'context-menu-item-reorder-btn';
-      downBtn.textContent = '↓';
-      downBtn.disabled = globalIndex === items.length - 1;
-      downBtn.addEventListener('click', () => moveContextMenuItem(globalIndex, 1));
-      actions.appendChild(downBtn);
-
-      row.appendChild(actions);
-
-      const toggleWrap = document.createElement('label');
-      toggleWrap.className = 'toggle-label context-menu-item-toggle';
-
-      const itemCheckbox = document.createElement('input');
-      itemCheckbox.type = 'checkbox';
-      itemCheckbox.checked = item.enabled !== false;
-      itemCheckbox.addEventListener('change', () => toggleContextMenuItem(item.id, itemCheckbox.checked));
-
-      const itemSlider = document.createElement('span');
-      itemSlider.className = 'toggle-slider toggle-slider-sm';
-
-      toggleWrap.appendChild(itemCheckbox);
-      toggleWrap.appendChild(itemSlider);
-      row.appendChild(toggleWrap);
-
-      contextMenuItemsList.appendChild(row);
-    });
-  }
-}
-
-async function toggleCategorySubmenu(catKey, enabled) {
-  const { contextMenuSubmenus = {} } = await chrome.storage.sync.get({ contextMenuSubmenus: {} });
-  contextMenuSubmenus[catKey] = enabled;
-  await chrome.storage.sync.set({ [STORAGE_KEYS.CONTEXT_MENU_SUBMENUS]: contextMenuSubmenus });
-  chrome.runtime.sendMessage({ action: 'refreshContextMenus' });
-}
-
-async function moveContextMenuItem(index, direction) {
-  const { contextMenuItems } = await chrome.storage.sync.get({ contextMenuItems: DEFAULT_CONTEXT_MENU_ITEMS });
-  const newItems = [...contextMenuItems];
-  const targetIndex = index + direction;
-
-  if (targetIndex >= 0 && targetIndex < newItems.length) {
-    [newItems[index], newItems[targetIndex]] = [newItems[targetIndex], newItems[index]];
-    await chrome.storage.sync.set({ [STORAGE_KEYS.CONTEXT_MENU_ITEMS]: newItems });
-    renderContextMenuConfig(newItems);
-    chrome.runtime.sendMessage({ action: 'refreshContextMenus' });
-  }
-}
-
-async function toggleContextMenuItem(id, enabled) {
-  const { contextMenuItems } = await chrome.storage.sync.get({ contextMenuItems: DEFAULT_CONTEXT_MENU_ITEMS });
-  const newItems = contextMenuItems.map(item =>
-    item.id === id ? { ...item, enabled } : item
-  );
-  await chrome.storage.sync.set({ [STORAGE_KEYS.CONTEXT_MENU_ITEMS]: newItems });
-  renderContextMenuConfig(newItems);
-  chrome.runtime.sendMessage({ action: 'refreshContextMenus' });
-}
-
-contextMenuResetBtn?.addEventListener('click', async () => {
-  await chrome.storage.sync.set({ [STORAGE_KEYS.CONTEXT_MENU_ITEMS]: DEFAULT_CONTEXT_MENU_ITEMS });
-  renderContextMenuConfig(DEFAULT_CONTEXT_MENU_ITEMS);
-  chrome.runtime.sendMessage({ action: 'refreshContextMenus' });
-});
-
-openAllThresholdInput?.addEventListener('change', async () => {
-  const val = Math.max(1, parseInt(openAllThresholdInput.value, 10) || 15);
-  await chrome.storage.sync.set({ [STORAGE_KEYS.CONTEXT_OPEN_ALL_THRESHOLD]: val });
-});
-
-// ==============================
-// Sync History / Restore
-// ==============================
-
-const historyLoadBtn = document.getElementById('history-load-btn');
-const historyUndoBtn = document.getElementById('history-undo-btn');
-const historyStatus = document.getElementById('history-status');
-const historyList = document.getElementById('history-list');
-
-let currentCommitSha = null;
-
-historyLoadBtn?.addEventListener('click', async () => {
-  historyStatus.textContent = '';
-  historyLoadBtn.disabled = true;
-  closeAllInlineDiffPanels();
-  try {
-    const [historyResp, statusResp] = await Promise.all([
-      chrome.runtime.sendMessage({ action: 'listSyncHistory', perPage: 20 }),
-      chrome.runtime.sendMessage({ action: 'getStatus' }),
-    ]);
-    if (!historyResp.success) {
-      historyStatus.textContent = historyResp.message || 'Failed to load history';
-      return;
-    }
-    currentCommitSha = statusResp?.lastCommitSha || null;
-    renderHistoryList(historyResp.commits || []);
-    updateUndoButton(historyResp.commits || []);
-  } catch (err) {
-    historyStatus.textContent = err.message;
-  } finally {
-    historyLoadBtn.disabled = false;
-  }
-});
-
-function renderHistoryList(commits) {
-  historyList.innerHTML = '';
-  if (commits.length === 0) {
-    historyList.style.display = 'none';
-    historyStatus.textContent = getMessage('options_historyEmpty') || 'No commits found.';
-    return;
-  }
-  historyList.style.display = '';
-  for (const c of commits) {
-    const wrap = document.createElement('div');
-    wrap.className = 'history-item-wrap';
-    wrap.dataset.commitSha = c.sha || '';
-
-    const row = document.createElement('div');
-    row.className = 'history-item';
-
-    const date = document.createElement('span');
-    date.className = 'history-date';
-    date.textContent = c.date ? new Date(c.date).toLocaleString() : '—';
-
-    const sha = document.createElement('code');
-    sha.className = 'history-sha';
-    sha.textContent = c.sha ? c.sha.substring(0, 7) : '';
-
-    const spacer = document.createElement('span');
-    spacer.className = 'history-spacer';
-
-    row.append(date, sha, spacer);
-
-    const diffSlot = document.createElement('div');
-    diffSlot.className = 'history-item-diff';
-    diffSlot.style.display = 'none';
-    diffSlot.setAttribute('aria-hidden', 'true');
-
-    const isCurrent = currentCommitSha && c.sha === currentCommitSha;
-    if (isCurrent) {
-      const badge = document.createElement('span');
-      badge.className = 'history-current';
-      badge.textContent = getMessage('options_historyCurrent') || 'current';
-      row.appendChild(badge);
-    } else {
-      const actions = document.createElement('div');
-      actions.className = 'history-item-actions';
-
-      const restoreRowBtn = document.createElement('button');
-      restoreRowBtn.type = 'button';
-      restoreRowBtn.className = 'btn btn-primary btn-sm';
-      restoreRowBtn.textContent = getMessage('options_historyRestoreBtn') || 'Restore';
-      bindTwoStepRestore(restoreRowBtn, async () => runRestoreFromCommit(c.sha, wrap));
-
-      const previewBtn = document.createElement('button');
-      previewBtn.type = 'button';
-      previewBtn.className = 'btn btn-secondary btn-sm';
-      previewBtn.textContent = getMessage('options_historyPreviewBtn') || 'Preview';
-      previewBtn.addEventListener('click', () => {
-        restoreRowBtn._historyRestoreReset?.();
-        loadDiffPreview(c.sha, wrap);
-      });
-
-      actions.append(previewBtn, restoreRowBtn);
-      row.appendChild(actions);
-    }
-
-    wrap.append(row, diffSlot);
-    historyList.appendChild(wrap);
-  }
-}
-
-// ---- Diff Preview (inline under each history row) ----
-
-const HISTORY_RESTORE_ARM_MS = 10000;
-
-/**
- * Two-step confirm on the same Restore button: first click arms, second click runs executeRestore.
- */
-function bindTwoStepRestore(button, executeRestore) {
-  let armed = false;
-  let resetTimer = null;
-  const labelRestore = getMessage('options_historyRestoreBtn') || 'Restore';
-  const labelConfirm = getMessage('options_historyRestoreConfirmBtn') || 'Click again to confirm';
-
-  function reset() {
-    armed = false;
-    if (resetTimer) {
-      clearTimeout(resetTimer);
-      resetTimer = null;
-    }
-    button.textContent = labelRestore;
-    button.classList.remove('history-restore-armed');
-  }
-
-  button._historyRestoreReset = reset;
-
-  button.addEventListener('click', async () => {
-    if (button.disabled) return;
-    if (!armed) {
-      armed = true;
-      button.textContent = labelConfirm;
-      button.classList.add('history-restore-armed');
-      resetTimer = setTimeout(reset, HISTORY_RESTORE_ARM_MS);
-      return;
-    }
-    reset();
-    button.disabled = true;
-    try {
-      await executeRestore();
-    } finally {
-      button.disabled = false;
-    }
-  });
-}
-
-/**
- * Restore local bookmarks from a commit (after two-step button confirm).
- */
-async function runRestoreFromCommit(sha, wrap) {
-  closeOtherDiffPanels(wrap);
-  const diffSlot = wrap?.querySelector('.history-item-diff');
-  if (diffSlot) {
-    diffSlot.style.display = 'none';
-    diffSlot.innerHTML = '';
-    diffSlot.setAttribute('aria-hidden', 'true');
-  }
-
-  historyStatus.textContent = getMessage('options_historyRestoring') || 'Restoring…';
-  try {
-    const resp = await chrome.runtime.sendMessage({ action: 'restoreFromCommit', commitSha: sha });
-    historyStatus.textContent = resp.message || '';
-    if (resp.success) closeAllInlineDiffPanels();
-  } catch (err) {
-    historyStatus.textContent = err.message;
-  }
-}
-
-function closeOtherDiffPanels(activeWrap) {
-  historyList?.querySelectorAll('.history-item-wrap').forEach((w) => {
-    if (w === activeWrap) return;
-    const slot = w.querySelector('.history-item-diff');
-    if (slot) {
-      slot.style.display = 'none';
-      slot.innerHTML = '';
-      slot.setAttribute('aria-hidden', 'true');
-    }
-  });
-}
-
-function closeAllInlineDiffPanels() {
-  historyList?.querySelectorAll('.history-item-diff').forEach((el) => {
-    el.style.display = 'none';
-    el.innerHTML = '';
-    el.setAttribute('aria-hidden', 'true');
-  });
-}
-
-function hideInlineDiff(wrap) {
-  const slot = wrap?.querySelector('.history-item-diff');
-  if (!slot) return;
-  slot.style.display = 'none';
-  slot.innerHTML = '';
-  slot.setAttribute('aria-hidden', 'true');
-}
-
-async function loadDiffPreview(sha, wrap) {
-  closeOtherDiffPanels(wrap);
-
-  const diffSlot = wrap.querySelector('.history-item-diff');
-  if (!diffSlot) return;
-
-  historyStatus.textContent = getMessage('options_historyDiffLoading') || 'Loading preview…';
-  diffSlot.style.display = '';
-  diffSlot.setAttribute('aria-hidden', 'false');
-  const loading = document.createElement('p');
-  loading.className = 'history-diff-loading';
-  loading.textContent = getMessage('options_historyDiffLoading') || 'Loading preview…';
-  diffSlot.innerHTML = '';
-  diffSlot.appendChild(loading);
-
-  try {
-    const resp = await chrome.runtime.sendMessage({ action: 'previewCommitDiff', commitSha: sha });
-    historyStatus.textContent = '';
-    if (!resp.success) {
-      historyStatus.textContent = resp.message || 'Preview failed';
-      hideInlineDiff(wrap);
-      return;
-    }
-    renderDiffInto(diffSlot, wrap, resp, sha);
-  } catch (err) {
-    historyStatus.textContent = err.message;
-    hideInlineDiff(wrap);
-  }
-}
-
-function renderDiffInto(diffSlot, wrap, diff, sha) {
-  const { summary, added, removed, changed } = diff;
-  const total = summary.added + summary.removed + summary.changed;
-
-  diffSlot.innerHTML = '';
-  const inner = document.createElement('div');
-  inner.className = 'history-item-diff-inner';
-
-  if (total === 0) {
-    const noChanges = document.createElement('p');
-    noChanges.className = 'history-diff-no-changes';
-    noChanges.textContent = getMessage('options_historyDiffNoChanges') || 'No differences — this commit matches your current bookmarks.';
-    inner.appendChild(noChanges);
-
-    const actions = document.createElement('div');
-    actions.className = 'history-diff-actions';
-    const restoreBtn = document.createElement('button');
-    restoreBtn.type = 'button';
-    restoreBtn.className = 'btn btn-primary btn-sm';
-    restoreBtn.textContent = getMessage('options_historyRestoreBtn') || 'Restore';
-    bindTwoStepRestore(restoreBtn, async () => runRestoreFromCommit(sha, wrap));
-    const closeBtn = document.createElement('button');
-    closeBtn.type = 'button';
-    closeBtn.className = 'btn btn-secondary btn-sm';
-    closeBtn.textContent = getMessage('options_historyDiffClose') || 'Close';
-    closeBtn.addEventListener('click', () => hideInlineDiff(wrap));
-    actions.append(restoreBtn, closeBtn);
-    inner.appendChild(actions);
-
-    diffSlot.appendChild(inner);
-    return;
-  }
-
-  const summaryRow = document.createElement('div');
-  summaryRow.className = 'history-diff-summary';
-  if (summary.added > 0) {
-    summaryRow.appendChild(makeBadge('added', `+${summary.added} ${getMessage('options_historyDiffAdded') || 'Added'}`));
-  }
-  if (summary.removed > 0) {
-    summaryRow.appendChild(makeBadge('removed', `−${summary.removed} ${getMessage('options_historyDiffRemoved') || 'Removed'}`));
-  }
-  if (summary.changed > 0) {
-    summaryRow.appendChild(makeBadge('changed', `~${summary.changed} ${getMessage('options_historyDiffChanged') || 'Changed'}`));
-  }
-  inner.appendChild(summaryRow);
-
-  const hasAdded = added.length > 0;
-  const hasRemoved = removed.length > 0;
-  if (hasAdded || hasRemoved) {
-    const columns = document.createElement('div');
-    columns.className = 'history-diff-columns';
-    if (hasAdded) {
-      const col = document.createElement('div');
-      col.className = 'history-diff-col';
-      col.appendChild(makeDiffGroup(getMessage('options_historyDiffAdded') || 'Added', added, 'added'));
-      columns.appendChild(col);
-    }
-    if (hasRemoved) {
-      const col = document.createElement('div');
-      col.className = 'history-diff-col';
-      col.appendChild(makeDiffGroup(getMessage('options_historyDiffRemoved') || 'Removed', removed, 'removed'));
-      columns.appendChild(col);
-    }
-    inner.appendChild(columns);
-  }
-
-  if (changed.length > 0) {
-    const changedWrap = document.createElement('div');
-    changedWrap.className = 'history-diff-changed-block';
-    changedWrap.appendChild(makeChangedGroup(getMessage('options_historyDiffChanged') || 'Changed', changed));
-    inner.appendChild(changedWrap);
-  }
-
-  const actions = document.createElement('div');
-  actions.className = 'history-diff-actions';
-  const restoreBtn = document.createElement('button');
-  restoreBtn.type = 'button';
-  restoreBtn.className = 'btn btn-primary btn-sm';
-  restoreBtn.textContent = getMessage('options_historyRestoreBtn') || 'Restore';
-  bindTwoStepRestore(restoreBtn, async () => runRestoreFromCommit(sha, wrap));
-  const closeBtn = document.createElement('button');
-  closeBtn.type = 'button';
-  closeBtn.className = 'btn btn-secondary btn-sm';
-  closeBtn.textContent = getMessage('options_historyDiffClose') || 'Close';
-  closeBtn.addEventListener('click', () => {
-    restoreBtn._historyRestoreReset?.();
-    hideInlineDiff(wrap);
-  });
-  actions.append(restoreBtn, closeBtn);
-  inner.appendChild(actions);
-
-  diffSlot.appendChild(inner);
-}
-
-function makeBadge(type, text) {
-  const span = document.createElement('span');
-  span.className = `history-diff-badge ${type}`;
-  span.textContent = text;
-  return span;
-}
-
-function makeDiffGroup(label, entries, type) {
-  const details = document.createElement('details');
-  details.className = 'history-diff-group';
-  details.open = false;
-  const summary = document.createElement('summary');
-  summary.textContent = `${label} (${entries.length})`;
-  details.appendChild(summary);
-
-  for (const entry of entries) {
-    const row = document.createElement('div');
-    row.className = 'history-diff-entry';
-    const title = document.createElement('span');
-    title.className = 'history-diff-entry-title';
-    title.textContent = entry.title || entry.path;
-    row.appendChild(title);
-    if (entry.url) {
-      const url = document.createElement('span');
-      url.className = 'history-diff-entry-url';
-      url.textContent = entry.url;
-      row.appendChild(url);
-    }
-    details.appendChild(row);
-  }
-  return details;
-}
-
-function makeChangedGroup(label, entries) {
-  const details = document.createElement('details');
-  details.className = 'history-diff-group';
-  details.open = false;
-  const summary = document.createElement('summary');
-  summary.textContent = `${label} (${entries.length})`;
-  details.appendChild(summary);
-
-  for (const entry of entries) {
-    const row = document.createElement('div');
-    row.className = 'history-diff-entry';
-
-    const title = document.createElement('span');
-    title.className = 'history-diff-entry-title';
-    title.textContent = entry.title || entry.path;
-    row.appendChild(title);
-
-    if (entry.url) {
-      const url = document.createElement('span');
-      url.className = 'history-diff-entry-url';
-      url.textContent = entry.url;
-      row.appendChild(url);
-    }
-
-    if (entry.oldTitle && entry.oldTitle !== entry.title) {
-      const old = document.createElement('span');
-      old.className = 'history-diff-entry-old';
-      old.textContent = entry.oldTitle;
-      row.appendChild(old);
-    }
-    if (entry.oldUrl && entry.oldUrl !== entry.url) {
-      const old = document.createElement('span');
-      old.className = 'history-diff-entry-old';
-      old.textContent = entry.oldUrl;
-      row.appendChild(old);
-    }
-
-    details.appendChild(row);
-  }
-  return details;
-}
-
-// ---- Undo ----
-
-function updateUndoButton(commits) {
-  if (!historyUndoBtn) return;
-  if (commits.length >= 2) {
-    historyUndoBtn.disabled = false;
-    historyUndoBtn.dataset.sha = commits[1].sha;
-  } else {
-    historyUndoBtn.disabled = true;
-    delete historyUndoBtn.dataset.sha;
-  }
-}
-
-historyUndoBtn?.addEventListener('click', async () => {
-  let sha = historyUndoBtn.dataset.sha;
-  if (!sha) {
-    const resp = await chrome.runtime.sendMessage({ action: 'getPreviousCommitSha' });
-    sha = resp?.sha;
-  }
-  if (!sha) return;
-  historyUndoBtn.disabled = true;
-  historyStatus.textContent = getMessage('options_historyRestoring') || 'Restoring…';
-  try {
-    const resp = await chrome.runtime.sendMessage({ action: 'restoreFromCommit', commitSha: sha });
-    historyStatus.textContent = resp.message || '';
-  } catch (err) {
-    historyStatus.textContent = err.message;
-  } finally {
-    historyUndoBtn.disabled = false;
-  }
-});
-
-(async () => {
-  try {
-    const resp = await chrome.runtime.sendMessage({ action: 'getPreviousCommitSha' });
-    if (resp?.sha && historyUndoBtn) {
-      historyUndoBtn.disabled = false;
-      historyUndoBtn.dataset.sha = resp.sha;
-    }
-  } catch { /* ignore */ }
-})();
-
-// replaceLocalBookmarks is imported from lib/sync-engine.js (single source of truth)

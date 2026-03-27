@@ -250,7 +250,6 @@ html.dark .theme-cycle-btn {
 
 /* ---- Major Tabs: Unified Compact Layout ---- */
 #tab-github .card,
-#tab-sync .card,
 #tab-files .card,
 #tab-menu .card,
 #tab-help .card,
@@ -261,7 +260,6 @@ html.dark .theme-cycle-btn {
 }
 
 #tab-github .card h2,
-#tab-sync .card h2,
 #tab-files .card h2,
 #tab-menu .card h2,
 #tab-help .card h2,
@@ -273,7 +271,6 @@ html.dark .theme-cycle-btn {
 }
 
 #tab-github .card h2:has(+ .card-desc),
-#tab-sync .card h2:has(+ .card-desc),
 #tab-files .card h2:has(+ .card-desc),
 #tab-menu .card h2:has(+ .card-desc),
 #tab-help .card h2:has(+ .card-desc),
@@ -284,7 +281,6 @@ html.dark .theme-cycle-btn {
 }
 
 #tab-github .card-desc,
-#tab-sync .card-desc,
 #tab-files .card-desc,
 #tab-menu .card-desc,
 #tab-help .card-desc,
@@ -295,7 +291,6 @@ html.dark .theme-cycle-btn {
 }
 
 #tab-github .form-group,
-#tab-sync .form-group,
 #tab-files .form-group,
 #tab-menu .form-group,
 #tab-linkwarden .form-group {
@@ -303,7 +298,6 @@ html.dark .theme-cycle-btn {
 }
 
 #tab-github .form-group small,
-#tab-sync .form-group small,
 #tab-files .form-group small,
 #tab-menu .form-group small,
 #tab-linkwarden .form-group small {
@@ -311,7 +305,6 @@ html.dark .theme-cycle-btn {
 }
 
 #tab-github .form-group label,
-#tab-sync .form-group label,
 #tab-files .form-group label,
 #tab-menu .form-group label,
 #tab-linkwarden .form-group label {
@@ -343,12 +336,6 @@ html.dark .theme-cycle-btn {
 #tab-github #github-repos-options .form-group {
   margin-bottom: 10px;
 }
-
-
-#tab-sync #sync-custom-fields .form-group {
-  margin-bottom: 12px;
-}
-
 
 .export-import-row {
   display: flex;
@@ -745,7 +732,7 @@ html.dark .theme-cycle-btn {
   border: none;
 }
 
-.btn-danger:hover {
+.btn-danger:hover:not(:disabled) {
   opacity: 0.9;
 }
 
@@ -886,15 +873,6 @@ code {
 
 .btn-secondary:hover:not(:disabled) {
   background: var(--color-btn-secondary-hover);
-}
-
-.btn-danger {
-  background: #dc3545;
-  color: #fff;
-}
-
-.btn-danger:hover:not(:disabled) {
-  background: #bb2d3b;
 }
 
 .danger-zone {
@@ -1839,12 +1817,14 @@ a.help-link-btn:focus-visible {
 
 .context-menu-item-row {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 12px;
-  padding: 8px 12px;
+  padding: 10px 12px;
   background: var(--color-bg-tertiary);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
+  margin-top: 8px;
   transition: all 0.2s;
 }
 
@@ -1931,16 +1911,6 @@ html.dark .context-menu-item-reorder-btn {
   font-weight: 400;
   font-size: 11px;
   color: var(--color-text-secondary);
-}
-
-.context-menu-item-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 12px;
-  background: var(--color-bg-tertiary);
-  border-radius: var(--radius-sm);
-  margin-top: 8px;
 }
 
 /* ---- Linkwarden Options Tag Picker ---- */

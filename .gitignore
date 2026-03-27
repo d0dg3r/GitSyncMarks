@@ -17,6 +17,9 @@ Desktop.ini
 .vscode/
 .idea/
 
+# Cursor IDE (local debug session logs)
+.cursor/debug*.log
+
 # Drafts (not for version control)
 docs/ANNOUNCEMENT_v2.2.0.md
 

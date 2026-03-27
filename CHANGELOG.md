@@ -4,16 +4,34 @@ All notable changes to GitSyncMarks are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
 ## [Unreleased]
+
+## [2.7.0] - 2026-03-27 (*Spock*)
 
 ### Fixed
 - **Duplicate bookmark prevention**: Hardened `_order.json` deserialization, three-way merge, and serialization to prevent doubled bookmark entries when the order file contains repeated keys — addresses intermittent "whole tree doubled" issue.
 - **GitHub API rate limits on large repos**: Blob downloads for pull, history preview, and restore now run in batches of five concurrent `getBlob` calls (instead of unbounded parallelism) to avoid secondary rate-limit errors. `fetchRemoteFileMapAtCommit` also caches the result briefly when the same commit is requested again. HTTP **429** responses map to the same user-facing rate-limit message as **403** rate limits.
+- **Linkwarden auto-mirroring**: `mirrorToLinkwarden` was never executing because it referenced undefined `STORAGE_KEYS` constants. Rewrote to fetch Linkwarden settings directly from storage.
+- **Duplicate event listeners in options**: Eight controls had their `change` listeners registered twice, causing `saveSettings()` to fire redundantly on every change. Removed duplicate registrations.
+- **push() error handling**: Removed dead `settings` reference in the `catch` block (variable was scoped to `try`).
+
+### Improved
+- **Debug log performance**: Cached the debug-log enable flag in memory with a `storage.onChanged` listener, eliminating an async storage read on every `log()` call.
+- **Code deduplication**: Extracted shared `getRootFolderIdForRole` and `findOrCreateFolder` into `lib/bookmark-helpers.js` (previously duplicated in `github-repos.js` and `linkwarden-sync.js`). Consolidated repeated orphan-subfolder scanning and generated-file filter logic in the serializer and sync engine.
+- **Architecture modularization**: Split large modules into focused files — `sync-engine.js`, `context-menu.js`, and `options.js` use barrel re-exports; options UI logic lives under `options/` (wizard, profiles, Linkwarden, history, settings, context-menu config). See `docs/ARCHITECTURE.md`.
+- **Linkwarden screenshot delay**: Reduced the fixed 10-second screenshot upload delay to 5 seconds; now configurable via `screenshotDelayMs` constructor option.
+- **Theme listener cleanup**: Replaced deprecated `MediaQueryList.removeListener` with standard `removeEventListener`.
+- **CSS cleanup**: Removed dead `#tab-sync` selectors, merged duplicate `.context-menu-item-row` and `.btn-danger` rule blocks.
+
+### Removed
+- **Debug telemetry**: Removed `postAgentDebugLog` function and all call sites from `background.js` (hardcoded localhost POST leftover from debugging).
+- **Dead code**: Removed unused `debounce` from the context-menu handler path, unused `getLanguage` import from `options.js`, and redundant `catch(err) { throw err }` in `bootstrapFirstSync`.
 
 ### Added
 - **Sync history / rollback**: Browse recent sync commits in the Backup tab and restore bookmarks from any previous version. One-click "Undo last sync" reverts to the pre-sync state without navigating commit history.
 - **Diff preview**: "Preview" button on each history entry shows a structured diff (added, removed, changed bookmarks) before restoring, so users can make informed decisions. The preview opens inline under that commit; Added and Removed are shown side by side with collapsed sections by default. Each row also offers **Restore** using a two-click confirmation on the same button (label switches to “Click again to confirm”) instead of a browser dialog.
-- **Unit tests**: New `test/` directory with Node.js built-in test runner (`npm run test:unit`) covering dedupe and merge logic.
+- **Unit tests**: Expanded `test/` directory with `serializer.test.js` (slugify, shortHash, generateFilename, contentHash, bookmarkTreeToFileMap, fileMapToBookmarkTree, fileMapToMarkdown, fileMapToNetscapeHtml) and `sync-diff.test.js` (computeDiff, mergeDiffs). Total 54 tests covering serialization, deserialization, export, diff, and merge logic.
 
 ## [2.6.2] - 2026-03-08 (*Link*)
 
@@ -88,7 +106,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Search highlighting**: The search text is now visually highlighted within titles and URLs in the search popup results.
 - **Context menu refresh behavior**: Dynamic sections (quick folders, open-all folder list, profile entries) now refresh when bookmarks or active profile data changes.
 - **Bookmark search popup polish**: Search popup now follows the extension theme (`auto/light/dark`), uses improved dark-mode button contrast, moves close to a compact top-right icon control, closes via both button and `Esc`, and replaces the old clear button with an inline `X` control in the search field.
-- **Bookmark search popup polish**: Search popup now follows the extension theme (`auto/light/dark`), uses improved dark-mode button contrast, moves close to a compact top-right icon control, closes via both button and `Esc`, and replaces the old clear button with an inline `X` control in the search field
 - **E2E smoke test robustness**: Settings-sync smoke test now validates disabled/enabled button states around client-name requirement instead of clicking disabled actions
 
 ## [2.5.2] - 2026-02-27 (*Cortana*)
@@ -319,7 +336,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release: bookmark sync with GitHub
 
-[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.6.2...HEAD
+[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.7.0...HEAD
+[2.7.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.6.2...v2.7.0
 [2.6.2]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.6.1...v2.6.2
 [2.6.1]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.6.0...v2.6.1
 [2.6.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.5.4...v2.6.0

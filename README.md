@@ -80,14 +80,15 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 
 ---
 
-## Upgrading to v2.6.2
+## Upgrading to v2.7.0
 
 > [!IMPORTANT]
-> **v2.6.2** is a maintenance and stability update. While there are **no breaking changes** to your core bookmark sync, please review the notes below if you are upgrading from v2.5.x.
+> **v2.7.0** adds **sync history and restore** in the Backup tab, plus stability fixes and internal modularization. There are **no breaking changes** to your core bookmark sync; please review the notes below if you are upgrading from v2.5.x or earlier.
 
 ### Migration Steps
 - **No Action Needed**: Your current GitHub bookmark sync will continue to work perfectly after the update.
-- **Linkwarden Setup**: To use the new "Save to Linkwarden" feature, visit the new **Linkwarden tab** in settings and enter your instance URL and API key.
+- **Backup / History**: Open the **Backup** tab to load recent commits, preview diffs, and restore bookmarks from a previous sync when needed.
+- **Linkwarden Setup**: To use the "Save to Linkwarden" feature, visit the **Linkwarden tab** in settings and enter your instance URL and API key.
 - **Wizard Access**: If you want to re-verify your connection, use the **Restart Wizard** button in the **Help** tab.
 
 ---

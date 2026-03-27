@@ -50,10 +50,6 @@ const NOTIFICATION_ID = 'gitsyncmarks-sync';
 const ONBOARDING_WIZARD_COMPLETED = 'onboardingWizardCompleted';
 const ONBOARDING_WIZARD_DISMISSED = 'onboardingWizardDismissed';
 
-function postAgentDebugLog({ runId, hypothesisId, location, message, data = {} }) {
-  fetch('http://127.0.0.1:7246/ingest/1b416a88-d62d-415a-a55c-29910a80e72b',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'9f5e04'},body:JSON.stringify({sessionId:'9f5e04',runId,hypothesisId,location,message,data,timestamp:Date.now()})}).catch(()=>{});
-}
-
 async function shouldAutoOpenOnboardingWizard() {
   const state = await chrome.storage.sync.get({
     [ONBOARDING_WIZARD_COMPLETED]: false,
@@ -473,17 +469,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area === 'sync' && (changes.profiles || changes.activeProfileId || changes.contextMenuItems)) {
-    // #region agent log
-    postAgentDebugLog({
-      runId: 'pre-fix-storage-onChanged',
-      hypothesisId: 'H3',
-      location: 'background.js:storage.onChanged',
-      message: 'setupContextMenus triggered by storage change',
-      data: {
-        changedKeys: Object.keys(changes || {}),
-      },
-    });
-    // #endregion
     setupContextMenus();
   }
 });
@@ -506,15 +491,6 @@ chrome.commands?.onCommand?.addListener?.((command) => {
 // ---- Extension install/startup ----
 
 chrome.runtime.onInstalled.addListener(async (details) => {
-  // #region agent log
-  postAgentDebugLog({
-    runId: 'pre-fix-onInstalled',
-    hypothesisId: 'H3',
-    location: 'background.js:onInstalled',
-    message: 'onInstalled called setupContextMenus',
-    data: { reason: details?.reason || null },
-  });
-  // #endregion
   console.log('[GitSyncMarks] Extension installed/updated:', details.reason);
   await migrateTokenIfNeeded();
   await migrateToProfiles();
@@ -528,15 +504,6 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 });
 
 chrome.runtime.onStartup.addListener(async () => {
-  // #region agent log
-  postAgentDebugLog({
-    runId: 'pre-fix-onStartup',
-    hypothesisId: 'H1',
-    location: 'background.js:onStartup',
-    message: 'onStartup refreshes dynamic/profile without setupContextMenus',
-    data: {},
-  });
-  // #endregion
   console.log('[GitSyncMarks] Browser started');
   await migrateTokenIfNeeded();
   await migrateToProfiles();
