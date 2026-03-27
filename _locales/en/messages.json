@@ -1773,5 +1773,25 @@
   },
   "options_subTabGeneral": {
     "message": "General"
+  },
+  "options_linkwardenConnectionOk": {
+    "message": "Connection successful!"
+  },
+  "options_linkwardenConnectionFailed": {
+    "message": "Connection failed: $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "options_linkwardenUrlTokenRequired": {
+    "message": "URL and Token are required"
+  },
+  "options_linkwardenInvalidUrlFormat": {
+    "message": "Invalid URL format"
+  },
+  "options_linkwardenHostPermissionDenied": {
+    "message": "Host permission denied. Please check your browser address bar/popup blocker."
   }
 }

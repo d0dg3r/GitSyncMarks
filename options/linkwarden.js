@@ -131,7 +131,7 @@ async function performLinkwardenTest(url, token) {
       });
     }
 
-    linkwardenTestResult.textContent = 'Connection successful!';
+    linkwardenTestResult.textContent = getMessage('options_linkwardenConnectionOk');
     linkwardenTestResult.className = 'validation-result success';
 
     try {
@@ -142,7 +142,7 @@ async function performLinkwardenTest(url, token) {
       }
     } catch { /* tags optional */ }
   } catch (err) {
-    linkwardenTestResult.textContent = `Connection failed: ${err.message}`;
+    linkwardenTestResult.textContent = getMessage('options_linkwardenConnectionFailed', [err.message]);
     linkwardenTestResult.className = 'validation-result error';
   } finally {
     linkwardenTestBtn.disabled = false;
@@ -238,7 +238,7 @@ export function initLinkwarden({ saveSettings, downloadFile }) {
     const token = linkwardenTokenInput.value.trim();
 
     if (!url || !token) {
-      linkwardenTestResult.textContent = 'URL and Token are required';
+      linkwardenTestResult.textContent = getMessage('options_linkwardenUrlTokenRequired');
       linkwardenTestResult.className = 'validation-result error';
       return;
     }
@@ -247,7 +247,7 @@ export function initLinkwarden({ saveSettings, downloadFile }) {
     try {
       origin = new URL(url).origin + '/*';
     } catch (e) {
-      linkwardenTestResult.textContent = 'Invalid URL format';
+      linkwardenTestResult.textContent = getMessage('options_linkwardenInvalidUrlFormat');
       linkwardenTestResult.className = 'validation-result error';
       return;
     }
@@ -257,7 +257,7 @@ export function initLinkwarden({ saveSettings, downloadFile }) {
         performLinkwardenTest(url, token);
       } else {
         const lastErr = chrome.runtime.lastError || (typeof browser !== 'undefined' ? browser.runtime.lastError : null);
-        const errorMsg = lastErr ? lastErr.message : 'Host permission denied. Please check your browser address bar/popup blocker.';
+        const errorMsg = lastErr ? lastErr.message : getMessage('options_linkwardenHostPermissionDenied');
         linkwardenTestBtn.disabled = false;
         linkwardenTestSpinner.style.display = 'none';
         linkwardenTestResult.textContent = errorMsg;
