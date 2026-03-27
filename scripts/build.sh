@@ -72,6 +72,7 @@ SHARED_FILES=(
 
 SHARED_DIRS=(
   lib
+  options
   icons
   _locales
 )

@@ -171,18 +171,23 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 
     btn.classList.add('active');
     const tabId = `tab-${btn.dataset.tab}`;
-    document.getElementById(tabId).classList.add('active');
+    const panel = document.getElementById(tabId);
+    if (panel) panel.classList.add('active');
   });
 });
 
 document.querySelectorAll('.sub-tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
+    const subtab = btn.dataset.subtab;
+    if (!subtab) return;
     const parent = btn.closest('.tab-content');
+    if (!parent) return;
     parent.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
     parent.querySelectorAll('.sub-tab-content').forEach(c => c.classList.remove('active'));
 
     btn.classList.add('active');
-    document.getElementById(`subtab-${btn.dataset.subtab}`).classList.add('active');
+    const target = document.getElementById(`subtab-${subtab}`);
+    if (target) target.classList.add('active');
   });
 });
 
@@ -191,39 +196,42 @@ document.querySelectorAll('.sub-tab-btn').forEach(btn => {
 // ==============================
 
 document.addEventListener('DOMContentLoaded', async () => {
-  await initTheme();
-  await initI18n();
-  populateLanguageDropdown();
-  applyI18n();
-  document.title = `GitSyncMarks – ${getMessage('options_subtitle')}`;
+  try {
+    await initTheme();
+    await initI18n();
+    populateLanguageDropdown();
+    applyI18n();
+    document.title = `GitSyncMarks – ${getMessage('options_subtitle')}`;
 
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('screenshot') === 'wizard') {
-    const stepParam = params.get('step');
-    const stepIndex = stepParam !== null ? Math.max(0, Math.min(7, parseInt(stepParam, 10) || 0)) : 0;
-    wizardState.active = true;
-    wizardState.stepIndex = stepIndex;
-    document.getElementById('onboarding-wizard-screen').style.display = '';
-    document.getElementById('settings-shell').style.display = 'none';
-    renderOnboardingWizardStep();
-    return;
-  }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('screenshot') === 'wizard') {
+      const stepParam = params.get('step');
+      const stepIndex = stepParam !== null ? Math.max(0, Math.min(7, parseInt(stepParam, 10) || 0)) : 0;
+      wizardState.active = true;
+      wizardState.stepIndex = stepIndex;
+      document.getElementById('onboarding-wizard-screen').style.display = '';
+      document.getElementById('settings-shell').style.display = 'none';
+      renderOnboardingWizardStep();
+      return;
+    }
 
-  // Initialize all sub-modules with shared callbacks
-  initWizard({ saveSettings, loadSettings });
-  initProfiles({ loadSettings, saveSettings, showSaveResult });
-  initLinkwarden({ saveSettings, downloadFile });
-  initHistory();
-  initContextMenuConfig();
-  initSettings({ saveSettings, loadSettings, showOnboardingConfirm, hideOnboardingConfirm });
+    initWizard({ saveSettings, loadSettings });
+    initProfiles({ loadSettings, saveSettings, showSaveResult });
+    initLinkwarden({ saveSettings, downloadFile });
+    initHistory();
+    initContextMenuConfig();
+    initSettings({ saveSettings, loadSettings, showOnboardingConfirm, hideOnboardingConfirm });
 
-  await loadSettings();
-  loadShortcuts();
+    await loadSettings();
+    loadShortcuts();
 
-  const versionEl = document.getElementById('app-version');
-  if (versionEl) {
-    const version = DISPLAY_VERSION ?? chrome.runtime.getManifest().version;
-    versionEl.textContent = version;
+    const versionEl = document.getElementById('app-version');
+    if (versionEl) {
+      const version = DISPLAY_VERSION ?? chrome.runtime.getManifest().version;
+      versionEl.textContent = version;
+    }
+  } catch (err) {
+    console.error('[GitSyncMarks] options init failed:', err);
   }
 });
 
@@ -324,16 +332,18 @@ function getEffectiveDebounceMs() {
 }
 
 function populateLanguageDropdown() {
-  languageSelect.innerHTML = '';
+  const sel = languageSelect ?? document.getElementById('language-select');
+  if (!sel) return;
+  sel.innerHTML = '';
   const autoOption = document.createElement('option');
   autoOption.value = 'auto';
   autoOption.textContent = getMessage('options_langAuto');
-  languageSelect.appendChild(autoOption);
+  sel.appendChild(autoOption);
   for (const lang of SUPPORTED_LANGUAGES) {
     const option = document.createElement('option');
     option.value = lang.code;
     option.textContent = lang.name;
-    languageSelect.appendChild(option);
+    sel.appendChild(option);
   }
 }
 
@@ -574,7 +584,7 @@ async function loadSettings() {
     await chrome.storage.sync.set({ [STORAGE_KEYS.NOTIFICATIONS_MODE]: displayMode });
     await chrome.storage.sync.remove(STORAGE_KEYS.NOTIFICATIONS_ENABLED);
   }
-  languageSelect.value = globals.language || 'auto';
+  if (languageSelect) languageSelect.value = globals.language || 'auto';
   const theme = globals.theme || 'auto';
   if (themeCycleBtn) {
     themeCycleBtn.textContent = THEME_ICONS[theme] ?? 'A';
@@ -653,7 +663,7 @@ async function saveSettings() {
       [STORAGE_KEYS.SYNC_SETTINGS_TO_GIT]: syncSettingsToGitInput.checked,
       [STORAGE_KEYS.SETTINGS_SYNC_MODE]: 'individual',
       [STORAGE_KEYS.SETTINGS_SYNC_GLOBAL_WRITE_ENABLED]: false,
-      [STORAGE_KEYS.LANGUAGE]: languageSelect.value,
+      [STORAGE_KEYS.LANGUAGE]: languageSelect?.value ?? 'auto',
       [STORAGE_KEYS.PROFILE_SWITCH_WITHOUT_CONFIRM]: profileSwitchWithoutConfirmInput.checked,
       [STORAGE_KEYS.CONTEXT_OPEN_ALL_THRESHOLD]: Math.max(1, parseInt(openAllThresholdInput.value, 10) || 15),
       [STORAGE_KEYS.LINKWARDEN_ENABLED]: linkwardenEnabledInput.checked,
@@ -696,17 +706,17 @@ function showSaveResult(message, type) {
 // Settings Tab: Input Change Handlers
 // ==============================
 
-tokenInput.addEventListener('change', saveSettings);
-ownerInput.addEventListener('change', saveSettings);
-repoInput.addEventListener('change', saveSettings);
-branchInput.addEventListener('change', saveSettings);
-filepathInput.addEventListener('change', saveSettings);
-quickFolderSelect1.addEventListener('change', saveSettings);
-quickFolderSelect2.addEventListener('change', saveSettings);
-quickFolderSelect3.addEventListener('change', saveSettings);
-openAllThresholdInput.addEventListener('change', saveSettings);
+tokenInput?.addEventListener('change', saveSettings);
+ownerInput?.addEventListener('change', saveSettings);
+repoInput?.addEventListener('change', saveSettings);
+branchInput?.addEventListener('change', saveSettings);
+filepathInput?.addEventListener('change', saveSettings);
+quickFolderSelect1?.addEventListener('change', saveSettings);
+quickFolderSelect2?.addEventListener('change', saveSettings);
+quickFolderSelect3?.addEventListener('change', saveSettings);
+openAllThresholdInput?.addEventListener('change', saveSettings);
 
-quickFoldersRefreshBtn.addEventListener('click', async () => {
+quickFoldersRefreshBtn?.addEventListener('click', async () => {
   try {
     const selected = [
       quickFolderSelect1.value,
@@ -732,10 +742,12 @@ quickFoldersRefreshBtn.addEventListener('click', async () => {
 let _folderBrowserCurrentPath = '';
 
 function closeFolderBrowser() {
+  if (!folderBrowser) return;
   folderBrowser.classList.add('hidden');
 }
 
 async function loadFolderBrowserContents(path) {
+  if (!folderBrowserList || !folderBrowserEmpty || !folderBrowserLoading || !folderBrowserPath || !btnFolderUp) return;
   folderBrowserList.innerHTML = '';
   folderBrowserEmpty.classList.add('hidden');
   folderBrowserLoading.classList.remove('hidden');
@@ -744,10 +756,10 @@ async function loadFolderBrowserContents(path) {
   btnFolderUp.disabled = !path;
 
   try {
-    const token = tokenInput.value.trim();
-    const owner = ownerInput.value.trim();
-    const repo = repoInput.value.trim();
-    const branch = branchInput.value.trim() || 'main';
+    const token = tokenInput?.value?.trim() ?? '';
+    const owner = ownerInput?.value?.trim() ?? '';
+    const repo = repoInput?.value?.trim() ?? '';
+    const branch = branchInput?.value?.trim() || 'main';
     const api = new GitHubAPI(token, owner, repo, branch);
     const dirs = await api.listContents(path);
 
@@ -777,7 +789,7 @@ async function loadFolderBrowserContents(path) {
       selectBtn.className = 'folder-select-btn';
       selectBtn.textContent = getMessage('options_browseFolderSelect') || 'Select';
       selectBtn.addEventListener('click', () => {
-        filepathInput.value = dir.path;
+        if (filepathInput) filepathInput.value = dir.path;
         closeFolderBrowser();
         saveSettings();
       });
@@ -792,15 +804,16 @@ async function loadFolderBrowserContents(path) {
   }
 }
 
-btnBrowseFolder.addEventListener('click', () => {
+btnBrowseFolder?.addEventListener('click', () => {
+  if (!folderBrowser) return;
   if (!folderBrowser.classList.contains('hidden')) {
     closeFolderBrowser();
     return;
   }
 
-  const token = tokenInput.value.trim();
-  const owner = ownerInput.value.trim();
-  const repo = repoInput.value.trim();
+  const token = tokenInput?.value?.trim() ?? '';
+  const owner = ownerInput?.value?.trim() ?? '';
+  const repo = repoInput?.value?.trim() ?? '';
   if (!token || !owner || !repo) {
     showValidation(getMessage('options_browseFolderNotConfigured') || 'Please configure token, owner, and repo first', 'error');
     return;
@@ -810,13 +823,14 @@ btnBrowseFolder.addEventListener('click', () => {
   loadFolderBrowserContents('');
 });
 
-btnFolderUp.addEventListener('click', () => {
+btnFolderUp?.addEventListener('click', () => {
   const parts = _folderBrowserCurrentPath.split('/').filter(Boolean);
   parts.pop();
   loadFolderBrowserContents(parts.join('/'));
 });
 
 document.addEventListener('click', (e) => {
+  if (!folderBrowser || !btnBrowseFolder) return;
   if (!folderBrowser.classList.contains('hidden') &&
     !folderBrowser.contains(e.target) &&
     e.target !== btnBrowseFolder &&
@@ -829,19 +843,20 @@ document.addEventListener('click', (e) => {
 // Settings Tab: Token & GitHub Repos
 // ==============================
 
-toggleTokenBtn.addEventListener('click', () => {
+toggleTokenBtn?.addEventListener('click', () => {
+  if (!tokenInput) return;
   tokenInput.type = tokenInput.type === 'password' ? 'text' : 'password';
 });
 
-githubReposEnabledInput.addEventListener('change', () => {
-  githubReposOptions.style.display = githubReposEnabledInput.checked ? 'block' : 'none';
+githubReposEnabledInput?.addEventListener('change', () => {
+  if (githubReposOptions) githubReposOptions.style.display = githubReposEnabledInput.checked ? 'block' : 'none';
   saveSettings();
 });
-githubReposParentSelect.addEventListener('change', saveSettings);
+githubReposParentSelect?.addEventListener('change', saveSettings);
 
-githubReposRefreshBtn.addEventListener('click', async () => {
+githubReposRefreshBtn?.addEventListener('click', async () => {
   await saveSettings();
-  const token = tokenInput.value.trim();
+  const token = tokenInput?.value?.trim() ?? '';
   const activeId = await getActiveProfileId();
   const profiles = await getProfiles();
   const currentProfile = profiles[activeId];
@@ -874,24 +889,24 @@ githubReposRefreshBtn.addEventListener('click', async () => {
 // Sync Tab Event Listeners
 // ==============================
 
-autoSyncInput.addEventListener('change', saveSettings);
-syncProfileSelect.addEventListener('change', () => {
+autoSyncInput?.addEventListener('change', saveSettings);
+syncProfileSelect?.addEventListener('change', () => {
   const isCustom = syncProfileSelect.value === 'custom';
-  syncCustomFields.style.display = isCustom ? 'block' : 'none';
+  if (syncCustomFields) syncCustomFields.style.display = isCustom ? 'block' : 'none';
   if (!isCustom) {
     const preset = SYNC_PRESETS[syncProfileSelect.value];
     if (preset) {
-      syncIntervalInput.value = preset.interval;
-      debounceDelayInput.value = Math.round(preset.debounceMs / 1000);
+      if (syncIntervalInput) syncIntervalInput.value = preset.interval;
+      if (debounceDelayInput) debounceDelayInput.value = Math.round(preset.debounceMs / 1000);
     }
   }
   saveSettings();
 });
-syncIntervalInput.addEventListener('change', saveSettings);
-debounceDelayInput.addEventListener('change', saveSettings);
-syncOnStartupInput.addEventListener('change', saveSettings);
-syncOnFocusInput.addEventListener('change', saveSettings);
-notificationsModeSelect.addEventListener('change', saveSettings);
+syncIntervalInput?.addEventListener('change', saveSettings);
+debounceDelayInput?.addEventListener('change', saveSettings);
+syncOnStartupInput?.addEventListener('change', saveSettings);
+syncOnFocusInput?.addEventListener('change', saveSettings);
+notificationsModeSelect?.addEventListener('change', saveSettings);
 
 // ==============================
 // Theme & Language
@@ -909,7 +924,8 @@ if (themeCycleBtn) {
   });
 }
 
-languageSelect.addEventListener('change', async () => {
+languageSelect?.addEventListener('change', async () => {
+  if (!languageSelect) return;
   const newLang = languageSelect.value;
   await chrome.storage.sync.set({ [STORAGE_KEYS.LANGUAGE]: newLang });
   await reloadI18n();

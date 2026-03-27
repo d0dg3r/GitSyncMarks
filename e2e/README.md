@@ -5,7 +5,8 @@ Automated end-to-end tests for the GitSyncMarks browser extension. Runs on **Chr
 **Note:** The extension fixture uses headed Chromium (no headless) because the service worker does not start reliably in headless mode. On machines without a display (e.g. SSH), use `xvfb-run -a npm run test:e2e:smoke`.
 
 ```bash
-npm run test:e2e:smoke   # Smoke tests (no credentials)
+npm run test:e2e:smoke    # Smoke tests (no credentials)
+npm run test:e2e:options  # Options page UI only: tabs, language dropdown, Help links, sub-tabs (no credentials)
 ```
 
 ## Sync Tests (Connection, Push, Pull)

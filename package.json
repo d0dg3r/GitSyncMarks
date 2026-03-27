@@ -13,6 +13,7 @@
     "test:unit": "node --test 'test/*.test.js'",
     "test:e2e": "npm run build:chrome && npx playwright test",
     "test:e2e:smoke": "npm run build:chrome && npx playwright test e2e/smoke.spec.js",
+    "test:e2e:options": "npm run build:chrome && npx playwright test e2e/options-ui.spec.js",
     "test:e2e:sync": "npm run build:chrome && npx playwright test e2e/connection.spec.js e2e/sync.spec.js",
     "test:e2e:report": "npx playwright show-report",
     "cleanup:e2e-repos": "node scripts/cleanup-e2e-repos.js",

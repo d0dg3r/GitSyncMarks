@@ -11,6 +11,7 @@ GitSyncMarks uses Playwright for automated end-to-end tests. **Chrome only** —
 ```bash
 npm run test:e2e           # All tests (smoke + connection + sync)
 npm run test:e2e:smoke    # Smoke tests only (no GitHub config)
+npm run test:e2e:options  # Options page UI only (tabs, language, Help; no GitHub config)
 npm run test:e2e:sync     # Connection and sync tests
 npm run test:e2e:report   # Open HTML report after a run
 ```

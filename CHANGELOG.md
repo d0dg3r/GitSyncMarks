@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Options page**: Sub-tab clicks no longer throw when the target has no `data-subtab` (Help quick links and “Customize shortcuts” reused `sub-tab-btn` without a matching `subtab-*` panel). `applyI18n()` skips `<select>` nodes for plain `data-i18n` text updates so option lists are never cleared by mistake.
+- **Options page robustness**: Main tab switching guards missing `#tab-*` panels. The document-level folder-browser dismiss listener and folder UI no longer assume non-null nodes (avoids a throw on every click if a node is missing). Module-level `change`/`click` listeners use optional chaining so a missing control does not abort the rest of the options script.
+
 ## [2.7.0] - 2026-03-27 (*Spock*)
 
 ### Fixed

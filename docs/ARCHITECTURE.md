@@ -156,7 +156,7 @@ Minimal wrapper for the Linkwarden REST API:
 
 ### `lib/i18n.js` — Internationalization
 
-Custom runtime i18n with manual language selection. Loads `_locales/{lang}/messages.json`, translates DOM via `data-i18n` attributes. English fallback.
+Custom runtime i18n with manual language selection. Loads `_locales/{lang}/messages.json`, translates DOM via `data-i18n` attributes. Plain `data-i18n` sets `textContent` on each match except `<select>` elements (so `<option data-i18n>` still translates; `<select data-i18n>` is not used). English fallback.
 
 ### `lib/theme.js` — Theme
 
