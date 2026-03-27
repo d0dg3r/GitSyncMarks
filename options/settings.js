@@ -90,7 +90,7 @@ export function downloadFile(filename, content, mimeType) {
   a.href = url;
   a.download = filename;
   a.click();
-  URL.revokeObjectURL(url);
+  setTimeout(() => URL.revokeObjectURL(url), 100);
 }
 
 export function showResult(el, message, type) {
