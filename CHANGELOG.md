@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **CI**: CodeQL workflow uses `github/codeql-action` v4, runs JavaScript actions on Node 24 (`FORCE_JAVASCRIPT_ACTIONS_TO_NODE24`), and sets `CODEQL_ACTION_FILE_COVERAGE_ON_PRS` so PR analyses keep file coverage after GitHub’s April 2026 default change. The main CI workflow sets the same Node 24 opt-in for checkout/setup-node.
+
 ### Fixed
 - **Options page**: Sub-tab clicks no longer throw when the target has no `data-subtab` (Help quick links and “Customize shortcuts” reused `sub-tab-btn` without a matching `subtab-*` panel). `applyI18n()` skips `<select>` nodes for plain `data-i18n` text updates so option lists are never cleared by mistake.
 - **Options page robustness**: Main tab switching guards missing `#tab-*` panels. The document-level folder-browser dismiss listener and folder UI no longer assume non-null nodes (avoids a throw on every click if a node is missing). Module-level `change`/`click` listeners use optional chaining so a missing control does not abort the rest of the options script.
