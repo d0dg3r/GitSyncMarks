@@ -103,6 +103,10 @@ Core synchronization with three-way merge:
 | `mergeDiffs(localDiff, remoteDiff)` | Merge two diffs into push/pull/conflict actions |
 | `debouncedSync()` | Debounced auto-sync (5s default) |
 | `getSyncStatus()` | Return current sync state for the popup |
+| `listSyncHistory()` | List recent commits touching the bookmark path |
+| `restoreFromCommit(sha)` | Restore local bookmarks from a specific commit |
+| `getPreviousCommitSha()` | Get the commit SHA saved before the last sync apply |
+| `getCommitDiffPreview(sha)` | Compare a target commit against local bookmarks and return a structured diff (added/removed/changed) |
 | `migrateFromLegacyFormat()` | Migrate from old `bookmarks.json` to per-file format |
 
 State is stored as `LAST_SYNC_FILES` (path → {sha, content}) and `LAST_COMMIT_SHA`.
@@ -122,6 +126,7 @@ Wraps both the **Contents API** (legacy, used for migration/validation) and the 
 | `createBlob()` / `createTree()` / `createCommit()` | Git Data | Build new commit |
 | `updateRef()` / `createRef()` | Git Data | Update or create branch |
 | `atomicCommit(message, fileChanges)` | Git Data | All-in-one: atomic multi-file commit |
+| `listCommits({ path, perPage })` | REST | List recent commits, optionally filtered by path |
 
 ### `lib/bookmark-serializer.js` — Serializer
 
@@ -196,6 +201,7 @@ Fetches the authenticated user's repos via GitHub REST API and maintains a "GitH
 | Function | Description |
 |---|---|
 | `fetchRemoteFileMap(api, basePath, baseFiles)` | Fetch bookmark files from GitHub via Git Data API; returns `{ shaMap, fileMap, commitSha }` or `null` for empty repo |
+| `fetchRemoteFileMapAtCommit(api, basePath, commitSha, options?)` | Fetch file map at a specific commit SHA (history restore/preview); batched `getBlob` (concurrency 5); optional short-lived in-memory cache per owner/repo/path/commit |
 
 ### `lib/context-menu.js` — Context Menu
 

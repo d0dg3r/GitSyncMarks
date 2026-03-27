@@ -920,6 +920,57 @@
   "options_subTabGitAdd": {
     "message": "Git Add"
   },
+  "options_subTabHistory": {
+    "message": "History"
+  },
+  "options_historyTitle": {
+    "message": "Sync History"
+  },
+  "options_historyDesc": {
+    "message": "Browse recent sync commits and restore bookmarks from a previous version. Restoring only changes local bookmarks — it does not rewrite the remote branch."
+  },
+  "options_historyLoadBtn": {
+    "message": "Load history"
+  },
+  "options_historyUndoBtn": {
+    "message": "Undo last sync"
+  },
+  "options_historyCurrent": {
+    "message": "current"
+  },
+  "options_historyRestoreBtn": {
+    "message": "Restore"
+  },
+  "options_historyRestoreConfirmBtn": {
+    "message": "Click again to confirm"
+  },
+  "options_historyRestoring": {
+    "message": "Restoring…"
+  },
+  "options_historyEmpty": {
+    "message": "No commits found."
+  },
+  "options_historyPreviewBtn": {
+    "message": "Preview"
+  },
+  "options_historyDiffLoading": {
+    "message": "Loading preview…"
+  },
+  "options_historyDiffAdded": {
+    "message": "Added"
+  },
+  "options_historyDiffRemoved": {
+    "message": "Removed"
+  },
+  "options_historyDiffChanged": {
+    "message": "Changed"
+  },
+  "options_historyDiffNoChanges": {
+    "message": "No differences — this commit matches your current bookmarks."
+  },
+  "options_historyDiffClose": {
+    "message": "Close"
+  },
   "options_subTabSync": {
     "message": "Synchronization"
   },
@@ -1003,6 +1054,30 @@
   },
   "help_profilesNote": {
     "message": "Profiles work reliably. With multiple profiles, sync conflicts can occasionally occur — trying Push or Pull 2–3 times usually resolves them. This feature is still evolving. If you encounter reproducible bugs, please open an issue on GitHub."
+  },
+  "help_historyTitle": {
+    "message": "Sync History & Undo"
+  },
+  "help_historyIntro": {
+    "message": "Every sync creates a Git commit. You can browse recent commits in the History sub-tab (under Files) and restore bookmarks from any previous version."
+  },
+  "help_historyLoadLabel": {
+    "message": "Load history"
+  },
+  "help_historyLoadDesc": {
+    "message": "Fetches the last 20 commits that touched your bookmark path. Each row shows the date, commit message, and a short SHA."
+  },
+  "help_historyRestoreLabel": {
+    "message": "Restore"
+  },
+  "help_historyRestoreDesc": {
+    "message": "Replaces all local bookmarks with the state from that commit. Click Restore, then click again while the button shows “Click again to confirm” to proceed. This does not rewrite the remote branch — your current remote data remains untouched. The next sync will push local state back."
+  },
+  "help_historyUndoLabel": {
+    "message": "Undo last sync"
+  },
+  "help_historyUndoDesc": {
+    "message": "One-click rollback to the commit before the most recent sync applied remote changes. Available after any pull or merge that modified local bookmarks."
   },
   "help_githubReposTitle": {
     "message": "GitHub Repos Folder"

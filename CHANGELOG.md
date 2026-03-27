@@ -4,6 +4,17 @@ All notable changes to GitSyncMarks are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [Unreleased]
+
+### Fixed
+- **Duplicate bookmark prevention**: Hardened `_order.json` deserialization, three-way merge, and serialization to prevent doubled bookmark entries when the order file contains repeated keys — addresses intermittent "whole tree doubled" issue.
+- **GitHub API rate limits on large repos**: Blob downloads for pull, history preview, and restore now run in batches of five concurrent `getBlob` calls (instead of unbounded parallelism) to avoid secondary rate-limit errors. `fetchRemoteFileMapAtCommit` also caches the result briefly when the same commit is requested again. HTTP **429** responses map to the same user-facing rate-limit message as **403** rate limits.
+
+### Added
+- **Sync history / rollback**: Browse recent sync commits in the Backup tab and restore bookmarks from any previous version. One-click "Undo last sync" reverts to the pre-sync state without navigating commit history.
+- **Diff preview**: "Preview" button on each history entry shows a structured diff (added, removed, changed bookmarks) before restoring, so users can make informed decisions. The preview opens inline under that commit; Added and Removed are shown side by side with collapsed sections by default. Each row also offers **Restore** using a two-click confirmation on the same button (label switches to “Click again to confirm”) instead of a browser dialog.
+- **Unit tests**: New `test/` directory with Node.js built-in test runner (`npm run test:unit`) covering dedupe and merge logic.
+
 ## [2.6.2] - 2026-03-08 (*Link*)
 
 ### Fixed

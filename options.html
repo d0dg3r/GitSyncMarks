@@ -547,6 +547,7 @@
         <button class="sub-tab-btn" data-subtab="files-export-import" data-i18n="options_subTabExportImport">Export /
           Import</button>
         <button class="sub-tab-btn" data-subtab="files-git-add" data-i18n="options_subTabGitAdd">Git Add</button>
+        <button class="sub-tab-btn" data-subtab="files-history" data-i18n="options_subTabHistory">History</button>
       </div>
 
       <div class="sub-tab-content active" id="subtab-files-generated">
@@ -799,6 +800,21 @@
         </section>
       </div>
 
+      <div class="sub-tab-content" id="subtab-files-history">
+        <section class="card">
+          <h2 data-i18n="options_historyTitle">Sync History</h2>
+          <p class="card-desc" data-i18n="options_historyDesc">Browse recent sync commits and restore bookmarks from a previous version. Restoring only changes local bookmarks — it does not rewrite the remote branch.</p>
+
+          <div class="history-actions">
+            <button id="history-load-btn" class="btn btn-secondary" data-i18n="options_historyLoadBtn">Load history</button>
+            <button id="history-undo-btn" class="btn btn-secondary" disabled data-i18n="options_historyUndoBtn">Undo last sync</button>
+            <span id="history-status" class="validation-result"></span>
+          </div>
+
+          <div id="history-list" style="display: none;"></div>
+        </section>
+      </div>
+
       <div id="password-dialog" class="profile-inline-dialog" style="display: none;">
         <div class="profile-inline-dialog-body">
           <p id="password-dialog-prompt" class="profile-inline-dialog-text"></p>
@@ -964,6 +980,23 @@
           <p class="help-note" data-i18n="help_profilesNote">Profiles work reliably. With multiple profiles, sync
             conflicts can occasionally occur — trying Push or Pull 2–3 times usually resolves them. This feature is
             still evolving. If you encounter reproducible bugs, please open an issue on GitHub.</p>
+        </div>
+      </details>
+
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_historyTitle">Sync History & Undo</h2>
+        </summary>
+        <div class="help-details-body">
+          <p data-i18n="help_historyIntro">Every sync creates a Git commit. You can browse recent commits in the History sub-tab (under Files) and restore bookmarks from any previous version.</p>
+          <dl class="help-dl">
+            <dt data-i18n="help_historyLoadLabel">Load history</dt>
+            <dd data-i18n="help_historyLoadDesc">Fetches the last 20 commits that touched your bookmark path. Each row shows the date, commit message, and a short SHA.</dd>
+            <dt data-i18n="help_historyRestoreLabel">Restore</dt>
+            <dd data-i18n="help_historyRestoreDesc">Replaces all local bookmarks with the state from that commit. This does not rewrite the remote branch — your current remote data remains untouched. The next sync will push local state back.</dd>
+            <dt data-i18n="help_historyUndoLabel">Undo last sync</dt>
+            <dd data-i18n="help_historyUndoDesc">One-click rollback to the commit before the most recent sync applied remote changes. Available after any pull or merge that modified local bookmarks.</dd>
+          </dl>
         </div>
       </details>
 

@@ -10,6 +10,7 @@
     "generate-icons": "node scripts/generate-icons.js",
     "generate-screenshots": "node scripts/generate-screenshots.js",
     "screenshots": "npm run build:chrome && npm run generate-screenshots",
+    "test:unit": "node --test 'test/*.test.js'",
     "test:e2e": "npm run build:chrome && npx playwright test",
     "test:e2e:smoke": "npm run build:chrome && npx playwright test e2e/smoke.spec.js",
     "test:e2e:sync": "npm run build:chrome && npx playwright test e2e/connection.spec.js e2e/sync.spec.js",
