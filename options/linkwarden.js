@@ -23,7 +23,6 @@ let _saveSettings = null;
 let _downloadFile = null;
 
 // ---- DOM element lookups ----
-const browserObj = typeof browser !== 'undefined' ? browser : chrome;
 const linkwardenEnabledInput = document.getElementById('linkwarden-enabled');
 const linkwardenSubtabBar = document.getElementById('linkwarden-subtab-bar');
 const linkwardenSettingsGroup = document.getElementById('linkwarden-settings');
@@ -253,7 +252,7 @@ export function initLinkwarden({ saveSettings, downloadFile }) {
       return;
     }
 
-    browserObj.permissions.request({ origins: [origin] }, (granted) => {
+    chrome.permissions.request({ origins: [origin] }, (granted) => {
       if (granted) {
         performLinkwardenTest(url, token);
       } else {
