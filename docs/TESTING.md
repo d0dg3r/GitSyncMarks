@@ -20,7 +20,7 @@ npm run test:e2e:report   # Open HTML report after a run
 
 **Sync tests** require a private test repo and credentials — see [e2e/README.md](../e2e/README.md) if present, or `.env.example`.
 
-**CI (GitHub Actions):** E2E in CI is currently disabled (see [ROADMAP.md](../ROADMAP.md) backlog). Run tests locally with `npm run test:e2e`. The E2E workflow can be triggered manually via Actions → E2E Tests → Run workflow.
+**CI (GitHub Actions):** Smoke and options-UI E2E tests run automatically on every push/PR to `main` (in the `ci.yml` workflow). These tests require no secrets. Full E2E tests (connection + sync) require a PAT and test repo and can be triggered manually via Actions → E2E Tests → Run workflow.
 
 ---
 

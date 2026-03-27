@@ -25,7 +25,7 @@ export default [
       'no-useless-assignment': 'warn',
       'no-useless-catch': 'warn',
       'no-unreachable': 'warn',
-      'no-undef': 'warn',
+      'no-undef': 'error',
       'preserve-caught-error': 'warn',
     },
   },

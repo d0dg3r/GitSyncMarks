@@ -21,14 +21,17 @@ Use [GitHub Issues](https://github.com/d0dg3r/GitSyncMarks/issues).
 
 1. Create a branch from `main`: `feature/xyz` or `fix/xyz`
 2. Implement your changes
-3. Test on Chrome and Firefox (see [docs/TESTING.md](docs/TESTING.md))
-4. Open a pull request to `main`
+3. Run `npm run lint` and `npm run test:unit` before opening a PR
+4. Test on Chrome and Firefox (see [docs/TESTING.md](docs/TESTING.md))
+5. Open a pull request to `main`
+
+CI runs the same lint, unit tests, npm audit, and smoke E2E checks automatically on every PR.
 
 For the full release process (versioning, tagging, store assets), see [docs/RELEASE.md](docs/RELEASE.md).
 
 ### Code style
 
-Follow the existing code style. Keep changes focused and small where possible.
+Follow the existing code style. Keep changes focused and small where possible. ESLint with `eslint-plugin-security` enforces basic quality and security rules — run `npm run lint` locally to catch issues early.
 
 ### Translations
 
