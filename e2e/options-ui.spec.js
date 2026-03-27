@@ -51,7 +51,7 @@ extTest.describe('Options page UI', () => {
     await page.locator('.tab-btn[data-tab="help"]').click();
 
     const website = page.locator('.help-quick-links a.help-link-btn').first();
-    await expect(website).toHaveAttribute('href', /gitsyncmarks\.com/);
+    await expect(website).toHaveAttribute('href', /^https?:\/\/gitsyncmarks\.com(\/|$)/);
     await website.click();
 
     await expect(page.locator('#language-select')).toBeVisible();
