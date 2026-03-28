@@ -20,15 +20,14 @@ extTest.describe('Options page UI', () => {
     expect(optionCount).toBeGreaterThanOrEqual(2);
   });
 
-  extTest('theme selector control is present', async ({ page, extensionId }) => {
+  extTest('theme selector is present', async ({ page, extensionId }) => {
     await openOptionsPage(page, extensionId);
-    const themeSelector = page.locator('#theme-selector');
-    await expect(themeSelector).toBeVisible();
-    const themeButtons = themeSelector.locator('button');
-    const themeButtonCount = await themeButtons.count();
-    expect(themeButtonCount).toBeGreaterThanOrEqual(2);
-    await themeButtons.nth(0).click();
-    await themeButtons.nth(themeButtonCount - 1).click();
+    const selector = page.locator('#theme-selector');
+    await expect(selector).toBeVisible();
+    const btns = selector.locator('.seg-btn');
+    await expect(btns).toHaveCount(3);
+    await btns.nth(1).click();
+    await expect(btns.nth(1)).toHaveClass(/active/);
   });
 
   extTest('main tabs activate matching panels', async ({ page, extensionId }) => {

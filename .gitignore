@@ -32,3 +32,6 @@ node_modules/
 # Playwright E2E (generated)
 playwright-report/
 test-results/
+
+# Log files
+*.log
