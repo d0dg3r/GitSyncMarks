@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - **Firefox — Sync History layout**: History rows use a single-row four-column grid (date, SHA, message, and an actions column with Preview + Restore or the “current” badge, right-aligned). A previous layout attempt let the actions column’s min-content width exceed the card so the Restore button could paint outside the card; card and list still use horizontal overflow containment as a safeguard.
+- **Options — Sync History SVG icons**: Preview, Restore, and current-commit SVG icons are now mounted via `DOMParser` + `replaceChildren` instead of `innerHTML`, eliminating security-linter warnings.
+
+### Changed
+- **package.json description**: Aligned with `extDescription` wording — uses “No server needed.” instead of “No middleman.” for consistency with all 12 locale files.
 
 ### Added
 - **UI Density**: Three-level density setting (Compact / Medium / Large) via S / M / L selector in the options header. Applies to all extension surfaces (options, popup, search, Linkwarden save). Stored in `chrome.storage.sync` and synced across devices. CSS tokens in `ui-density.css` control typography, spacing, and control sizes globally.
