@@ -40,6 +40,7 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 
 | Version | Codename | Description |
 |---|---|---|
+| `2.7.1` | *Spock* | Fix: layered tree uploads with inline content for atomicCommit — avoids secondary rate limits on large first pushes (e.g. 5 000 bookmarks); onboarding diagnostic tooling (test:onboarding-scale, verify-test-repo) |
 | `2.7.0` | *Spock* | Sync history & rollback + diff preview; duplicate folder merge; options modularization + Sync History layout/SVG hardening; UI density (S/M/L) + shared CSS; What’s new (popup + copy); store listings/screenshots refresh; `extDescription` aligned with Chrome store summaries (12 locales) and `extDescriptionFirefox` with AMO summaries; package.json description match; CI CodeQL v4 / Node 24; 65 unit tests |
 | `2.6.0` | *Link* | Linkwarden integration; Smart Search; Onboarding Wizard; switched to Bearer authentication; support for Fine-grained PATs and GitHub Apps |
 | `2.5.3` | *Cortana* | Context menu productivity update: pinned quick folders (up to 3), Search Bookmarks entry opens a dedicated search popup, Open All from Folder with safety confirmation threshold; Files -> Settings adds context-menu tools |
