@@ -7,6 +7,7 @@ import { DISPLAY_VERSION } from './lib/display-version.js';
 import { GitHubAPI } from './lib/github-api.js';
 import { initI18n, applyI18n, getMessage, reloadI18n, SUPPORTED_LANGUAGES } from './lib/i18n.js';
 import { initTheme, applyTheme } from './lib/theme.js';
+import { initUiDensity, applyUiDensity } from './lib/ui-density.js';
 import { SYNC_PRESETS } from './lib/sync-engine.js';
 import { updateGitHubReposFolder } from './lib/github-repos.js';
 import { LinkwardenAPI } from './lib/linkwarden-api.js';
@@ -46,6 +47,7 @@ const STORAGE_KEYS = {
   DEBOUNCE_DELAY: 'debounceDelay',
   LANGUAGE: 'language',
   THEME: 'theme',
+  UI_DENSITY: 'uiDensity',
   PROFILE_SWITCH_WITHOUT_CONFIRM: 'profileSwitchWithoutConfirm',
   GENERATE_README_MD: 'generateReadmeMd',
   GENERATE_BOOKMARKS_HTML: 'generateBookmarksHtml',
@@ -130,10 +132,9 @@ const githubReposRefreshBtn = document.getElementById('github-repos-refresh-btn'
 const githubReposSpinner = document.getElementById('github-repos-spinner');
 const githubReposResult = document.getElementById('github-repos-result');
 const languageSelect = document.getElementById('language-select');
-const themeCycleBtn = document.getElementById('theme-cycle-btn');
-const THEME_CYCLE = ['auto', 'dark', 'light'];
-const THEME_ICONS = { auto: 'A', dark: '☽', light: '☀' };
+const themeSelector = document.getElementById('theme-selector');
 const THEME_TITLES = { auto: 'options_themeAuto', dark: 'options_themeDark', light: 'options_themeLight' };
+const densitySelector = document.getElementById('density-selector');
 const debugLogEnabledInput = document.getElementById('debug-log-enabled');
 const onboardingWizardStartBtn = document.getElementById('onboarding-wizard-start-btn');
 const onboardingConfirm = document.getElementById('onboarding-confirm');
@@ -229,6 +230,7 @@ async function scheduleWhatsNewWhenWizardHidden() {
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     await initTheme();
+    await initUiDensity();
     await initI18n();
     populateLanguageDropdown();
     applyI18n();
@@ -370,12 +372,14 @@ function populateLanguageDropdown() {
   sel.innerHTML = '';
   const autoOption = document.createElement('option');
   autoOption.value = 'auto';
-  autoOption.textContent = getMessage('options_langAuto');
+  autoOption.textContent = 'Auto';
+  autoOption.title = getMessage('options_langAuto');
   sel.appendChild(autoOption);
   for (const lang of SUPPORTED_LANGUAGES) {
     const option = document.createElement('option');
     option.value = lang.code;
-    option.textContent = lang.name;
+    option.textContent = lang.short || lang.code.toUpperCase();
+    option.title = lang.name;
     sel.appendChild(option);
   }
 }
@@ -619,9 +623,8 @@ async function loadSettings() {
   }
   if (languageSelect) languageSelect.value = globals.language || 'auto';
   const theme = globals.theme || 'auto';
-  if (themeCycleBtn) {
-    themeCycleBtn.textContent = THEME_ICONS[theme] ?? 'A';
-    themeCycleBtn.title = getMessage(THEME_TITLES[theme] ?? 'options_themeAuto');
+  if (themeSelector) {
+    updateThemeButtons(theme);
   }
   profileSwitchWithoutConfirmInput.checked = globals.profileSwitchWithoutConfirm === true;
   openAllThresholdInput.value = String(
@@ -945,15 +948,53 @@ notificationsModeSelect?.addEventListener('change', saveSettings);
 // Theme & Language
 // ==============================
 
-if (themeCycleBtn) {
-  themeCycleBtn.addEventListener('click', async () => {
-    const current = await chrome.storage.sync.get({ [STORAGE_KEYS.THEME]: 'auto' }).then(r => r[STORAGE_KEYS.THEME] || 'auto');
-    const idx = THEME_CYCLE.indexOf(current);
-    const nextTheme = THEME_CYCLE[(idx + 1) % THEME_CYCLE.length];
-    await chrome.storage.sync.set({ [STORAGE_KEYS.THEME]: nextTheme });
-    applyTheme(nextTheme);
-    themeCycleBtn.textContent = THEME_ICONS[nextTheme];
-    themeCycleBtn.title = getMessage(THEME_TITLES[nextTheme]);
+function updateThemeButtons(active) {
+  if (!themeSelector) return;
+  themeSelector.querySelectorAll('.seg-btn').forEach(btn => {
+    const t = btn.dataset.theme;
+    btn.classList.toggle('active', t === active);
+    btn.title = getMessage(THEME_TITLES[t]) || t;
+    btn.setAttribute('aria-label', getMessage(THEME_TITLES[t]) || t);
+  });
+}
+
+if (themeSelector) {
+  themeSelector.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.seg-btn');
+    if (!btn) return;
+    const t = btn.dataset.theme;
+    await chrome.storage.sync.set({ [STORAGE_KEYS.THEME]: t });
+    applyTheme(t);
+    updateThemeButtons(t);
+  });
+
+  chrome.storage.sync.get({ [STORAGE_KEYS.THEME]: 'auto' }).then(r => {
+    updateThemeButtons(r[STORAGE_KEYS.THEME] || 'auto');
+  });
+}
+
+if (densitySelector) {
+  const DENSITY_LABELS = { compact: 'options_densityCompact', medium: 'options_densityMedium', large: 'options_densityLarge' };
+
+  function updateDensityButtons(active) {
+    densitySelector.querySelectorAll('.seg-btn').forEach(btn => {
+      const d = btn.dataset.density;
+      btn.classList.toggle('active', d === active);
+      btn.title = getMessage(DENSITY_LABELS[d]) || d;
+      btn.setAttribute('aria-label', getMessage(DENSITY_LABELS[d]) || d);
+    });
+  }
+
+  densitySelector.addEventListener('click', (e) => {
+    const btn = e.target.closest('.seg-btn');
+    if (!btn) return;
+    const d = btn.dataset.density;
+    applyUiDensity(d);
+    updateDensityButtons(d);
+  });
+
+  chrome.storage.sync.get({ [STORAGE_KEYS.UI_DENSITY]: 'medium' }).then(r => {
+    updateDensityButtons(r[STORAGE_KEYS.UI_DENSITY] || 'medium');
   });
 }
 

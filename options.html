@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GitSyncMarks – Settings</title>
+  <link rel="stylesheet" href="ui-density.css">
   <link rel="stylesheet" href="options.css">
   <link rel="stylesheet" href="whats-new.css">
 </head>
@@ -20,7 +21,16 @@
         <select id="language-select">
           <!-- Populated dynamically -->
         </select>
-        <button type="button" id="theme-cycle-btn" class="theme-cycle-btn" role="button" aria-label="Theme">A</button>
+        <div id="density-selector" class="header-segmented" role="radiogroup" aria-label="UI density">
+          <button type="button" class="seg-btn" data-density="compact" aria-label="Compact" title="Compact">S</button>
+          <button type="button" class="seg-btn active" data-density="medium" aria-label="Medium" title="Medium">M</button>
+          <button type="button" class="seg-btn" data-density="large" aria-label="Large" title="Large">L</button>
+        </div>
+        <div id="theme-selector" class="header-segmented" role="radiogroup" aria-label="Theme">
+          <button type="button" class="seg-btn" data-theme="auto" aria-label="Auto" title="Auto"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"/><path d="M16 12a4 4 0 01-4 4" fill="currentColor" opacity=".4"/></svg></button>
+          <button type="button" class="seg-btn" data-theme="dark" aria-label="Dark" title="Dark"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg></button>
+          <button type="button" class="seg-btn" data-theme="light" aria-label="Light" title="Light"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42m12.72-12.72l1.42-1.42"/></svg></button>
+        </div>
       </div>
     </header>
 
@@ -1153,6 +1163,9 @@
             <dt data-i18n="help_themeCycleTitle">Theme</dt>
             <dd data-i18n="help_themeCycleDesc">Click the button in the header to cycle: Auto (system) → Dark → Light →
               Auto. The icon shows the current mode. Works in options and popup.</dd>
+            <dt data-i18n="help_densityTitle">UI Density</dt>
+            <dd data-i18n="help_densityDesc">Use the S / M / L buttons in the header to switch between Compact, Medium,
+              and Large density. The setting applies to all extension surfaces and syncs across devices.</dd>
             <dt data-i18n="help_autoSaveTitle">Auto-save</dt>
             <dd data-i18n="help_autoSaveDesc">All settings save automatically when you change them — there are no Save
               buttons. Changes take effect immediately.</dd>

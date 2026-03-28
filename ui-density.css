@@ -1,0 +1,106 @@
+/*
+ * UI Density Tokens
+ * Three density levels: compact, medium (default), large.
+ * Applied via data-ui-density attribute on <html>.
+ * Loaded before all page-specific stylesheets so tokens are available everywhere.
+ */
+
+/* ---- Default: medium ---- */
+:root {
+  /* Typography */
+  --ui-font-base: 14px;
+  --ui-font-sm: 13px;
+  --ui-font-xs: 12px;
+  --ui-font-xxs: 11px;
+  --ui-font-lg: 16px;
+  --ui-font-xl: 18px;
+  --ui-font-title: 28px;
+  --ui-line-height: 1.5;
+
+  /* Spacing */
+  --ui-space-page: 40px 24px;
+  --ui-space-card: 16px 20px;
+  --ui-space-card-gap: 12px;
+  --ui-space-section: 14px;
+  --ui-space-group: 12px;
+  --ui-space-inline: 8px;
+
+  /* Controls */
+  --ui-control-pad: 10px 14px;
+  --ui-control-pad-sm: 6px 12px;
+  --ui-btn-pad: 10px 20px;
+  --ui-btn-pad-sm: 6px 12px;
+  --ui-tab-pad: 10px 20px;
+  --ui-subtab-pad: 6px 14px;
+
+  /* Misc */
+  --ui-label-size: 14px;
+  --ui-label-gap: 6px;
+  --ui-card-title: 16px;
+  --ui-card-desc: 13px;
+  --ui-container-max: 640px;
+}
+
+/* ---- Compact ---- */
+html[data-ui-density="compact"] {
+  --ui-font-base: 13px;
+  --ui-font-sm: 12px;
+  --ui-font-xs: 11px;
+  --ui-font-xxs: 10px;
+  --ui-font-lg: 14px;
+  --ui-font-xl: 16px;
+  --ui-font-title: 24px;
+  --ui-line-height: 1.4;
+
+  --ui-space-page: 28px 20px;
+  --ui-space-card: 12px 16px;
+  --ui-space-card-gap: 8px;
+  --ui-space-section: 10px;
+  --ui-space-group: 8px;
+  --ui-space-inline: 6px;
+
+  --ui-control-pad: 7px 10px;
+  --ui-control-pad-sm: 4px 8px;
+  --ui-btn-pad: 7px 14px;
+  --ui-btn-pad-sm: 4px 10px;
+  --ui-tab-pad: 8px 14px;
+  --ui-subtab-pad: 4px 10px;
+
+  --ui-label-size: 13px;
+  --ui-label-gap: 4px;
+  --ui-card-title: 14px;
+  --ui-card-desc: 12px;
+  --ui-container-max: 600px;
+}
+
+/* ---- Large ---- */
+html[data-ui-density="large"] {
+  --ui-font-base: 15px;
+  --ui-font-sm: 14px;
+  --ui-font-xs: 13px;
+  --ui-font-xxs: 12px;
+  --ui-font-lg: 18px;
+  --ui-font-xl: 20px;
+  --ui-font-title: 32px;
+  --ui-line-height: 1.6;
+
+  --ui-space-page: 48px 28px;
+  --ui-space-card: 20px 24px;
+  --ui-space-card-gap: 16px;
+  --ui-space-section: 18px;
+  --ui-space-group: 16px;
+  --ui-space-inline: 10px;
+
+  --ui-control-pad: 12px 16px;
+  --ui-control-pad-sm: 8px 14px;
+  --ui-btn-pad: 12px 24px;
+  --ui-btn-pad-sm: 8px 14px;
+  --ui-tab-pad: 12px 24px;
+  --ui-subtab-pad: 8px 18px;
+
+  --ui-label-size: 15px;
+  --ui-label-gap: 8px;
+  --ui-card-title: 18px;
+  --ui-card-desc: 14px;
+  --ui-container-max: 700px;
+}

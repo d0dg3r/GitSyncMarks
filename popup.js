@@ -5,6 +5,7 @@
 
 import { initI18n, applyI18n, getMessage } from './lib/i18n.js';
 import { initTheme } from './lib/theme.js';
+import { initUiDensity } from './lib/ui-density.js';
 import { mountWhatsNewIfPending } from './lib/whats-new-ui.js';
 
 // DOM elements
@@ -44,6 +45,7 @@ const isDemoMode = () =>
 // Initialize on load
 document.addEventListener('DOMContentLoaded', async () => {
   await initTheme();
+  await initUiDensity();
   await initI18n();
   applyI18n();
   if (isDemoMode()) {

@@ -26,6 +26,7 @@ flowchart TB
             RF["remote-fetch.js"]
             I18N["i18n.js"]
             Theme["theme.js"]
+            UiDensity["ui-density.js"]
             Crypto["crypto.js"]
             CM["context-menu.js"]
             LW["linkwarden-api.js"]
@@ -163,6 +164,14 @@ Custom runtime i18n with manual language selection. Loads `_locales/{lang}/messa
 
 Light, dark, or auto (system) theme. Single cycle button in options header switches A → Dark → Light → A. Stores preference in `chrome.storage.sync`, applies `html.dark` class when dark mode is active. Used by options page and popup.
 
+### `lib/ui-density.js` — UI Density
+
+Three density levels (compact / medium / large). Stores the choice in `chrome.storage.sync` (`uiDensity` key) and sets `data-ui-density` on `<html>`. CSS tokens in `ui-density.css` respond to the attribute; `initUiDensity()` is called early in every entry point (options, popup, search, linkwarden-save). A segmented S / M / L selector in the options header controls the setting.
+
+### `ui-density.css` — Density Tokens
+
+Root-level CSS custom properties for typography, spacing, padding, and control sizing across three density levels. Loaded before all page-specific stylesheets. Page CSS references these tokens instead of hard-coded values.
+
 ### `lib/whats-new.js` / `lib/whats-new-ui.js` — Post-update release notes
 
 On `chrome.runtime.onInstalled` with `reason === 'update'`, [background.js](../background.js) writes `showWhatsNewForVersion` (manifest version string) to `chrome.storage.local`. [popup.js](../popup.js) and [options.js](../options.js) call `mountWhatsNewIfPending()` from `whats-new-ui.js`, which shows a dismissible overlay (styled by [whats-new.css](../whats-new.css)) when the pending version matches the manifest and `whats-new.js` has copy for that version. If `.popup` is present, the overlay gets `whats-new-overlay--popup` for a compact, no-scroll layout; the options page uses the default larger panel. Closing the overlay removes the storage key. New installs do not set the flag, so onboarding stays first. Options defers the overlay until the onboarding wizard is hidden (MutationObserver on `#onboarding-wizard-screen` style).
@@ -274,6 +283,7 @@ GitSyncMarks/
 │   ├── debug-log.js              # Debug log for sync diagnostics
 │   ├── i18n.js                   # Internationalization
 │   ├── theme.js                  # Light/dark/auto theme
+│   ├── ui-density.js             # Compact/medium/large density
 │   ├── whats-new.js              # Per-version bullets, storage helpers
 │   ├── whats-new-ui.js           # Dismissible overlay DOM
 │   └── browser-polyfill.js       # Browser detection

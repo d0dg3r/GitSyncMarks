@@ -488,6 +488,15 @@
   "options_theme": {
     "message": "Design"
   },
+  "options_densityCompact": {
+    "message": "Kompakt"
+  },
+  "options_densityMedium": {
+    "message": "Mittel"
+  },
+  "options_densityLarge": {
+    "message": "Groß"
+  },
   "options_themeAuto": {
     "message": "A Auto (System)"
   },

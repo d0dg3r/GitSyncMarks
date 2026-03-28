@@ -494,6 +494,15 @@
   "options_theme": {
     "message": "Theme"
   },
+  "options_densityCompact": {
+    "message": "Compact"
+  },
+  "options_densityMedium": {
+    "message": "Medium"
+  },
+  "options_densityLarge": {
+    "message": "Large"
+  },
   "options_themeAuto": {
     "message": "A Auto (system)"
   },
@@ -1233,6 +1242,12 @@
   },
   "help_themeCycleDesc": {
     "message": "Click the button in the header to cycle: Auto (system) → Dark → Light → Auto. The icon shows the current mode. Works in options and popup."
+  },
+  "help_densityTitle": {
+    "message": "UI Density"
+  },
+  "help_densityDesc": {
+    "message": "Use the S / M / L buttons in the header to switch between Compact, Medium, and Large density. The setting applies to all extension surfaces (options, popup, search, Linkwarden save) and syncs across devices."
   },
   "help_autoSaveTitle": {
     "message": "Auto-save"

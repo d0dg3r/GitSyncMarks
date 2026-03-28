@@ -1,5 +1,6 @@
 import { initI18n, applyI18n, getMessage } from './lib/i18n.js';
 import { initTheme } from './lib/theme.js';
+import { initUiDensity } from './lib/ui-density.js';
 
 const searchInput = document.getElementById('search-input');
 const searchClearBtn = document.getElementById('search-clear-btn');
@@ -112,6 +113,7 @@ function runSearch(query) {
 
 document.addEventListener('DOMContentLoaded', async () => {
   await initTheme();
+  await initUiDensity();
   await initI18n();
   applyI18n();
   document.title = getMessage('search_windowTitle');

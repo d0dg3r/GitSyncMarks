@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - **Firefox — Sync History layout**: History rows use a two-row grid (date / SHA / message on the first row; Preview + Restore or the “current” badge on a full-width second row, right-aligned). A single-row four-column grid let the actions column’s min-content width exceed the card so the Restore button could paint outside the card; card and list still use horizontal overflow containment as a safeguard.
 
+### Added
+- **UI Density**: Three-level density setting (Compact / Medium / Large) via S / M / L selector in the options header. Applies to all extension surfaces (options, popup, search, Linkwarden save). Stored in `chrome.storage.sync` and synced across devices. CSS tokens in `ui-density.css` control typography, spacing, and control sizes globally.
+
 ### Improved
 - **Menu tab (visibility & order)**: Tighter list layout — smaller row padding, reduced gaps between rows and category headers, no extra row margin stacking with flex `gap`, slightly smaller labels/toggles/reorder buttons, and a smaller reset button top margin.
 - **Sync History (Settings)**: Column headers for date, commit hash, **Client** (device id parsed from GitSyncMarks commit subjects; full subject on hover), and a screen-reader **Actions** column. One grid row per commit so values align under headers; preview/restore icons sit in the last column. The active commit shows a checkmark icon plus the “current” label.

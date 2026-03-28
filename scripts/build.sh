@@ -56,6 +56,7 @@ SHARED_FILES=(
   popup.html
   popup.js
   popup.css
+  ui-density.css
   whats-new.css
   search.html
   search.js
