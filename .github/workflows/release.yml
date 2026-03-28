@@ -96,6 +96,6 @@ jobs:
             ${{ steps.changelog.outputs.release_notes }}
 
             [Release](https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}) · [Changelog](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)
-          repository-id: R_kgDORLqm_w
-          category-id: DIC_kwDORLqm_84C2fI-
+          repository-id: R_kgDORLqm_w # GraphQL node ID of this repository (github.repository); retrieve via `gh api graphql -f query='query { repository(owner:"<owner>", name:"<name>"){ id } }'`
+          category-id: DIC_kwDORLqm_84C2fI- # GraphQL node ID of the Discussions category used for releases; retrieve via `gh api graphql -f query='query { repository(owner:"<owner>", name:"<name>"){ discussionCategories(first:50){ nodes{ id, name } } } }'`
           github-token: ${{ secrets.GITHUB_TOKEN }}
