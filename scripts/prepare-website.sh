@@ -20,11 +20,12 @@ cp store-assets/en/chrome-1-connection.png \
    store-assets/en/chrome-2-sync.png \
    store-assets/en/chrome-3-menu.png \
    store-assets/en/chrome-4-linkwarden.png \
-   store-assets/en/chrome-5-search.png \
-   store-assets/en/chrome-6-popup.png \
-   store-assets/en/chrome-7-linkwarden-save.png \
-   store-assets/en/chrome-8-wizard-welcome.png \
-   store-assets/en/chrome-9-wizard-token.png \
-   store-assets/en/chrome-10-wizard-repo.png _site/assets/screenshots/
+   store-assets/en/chrome-5-history.png \
+   store-assets/en/chrome-6-search.png \
+   store-assets/en/chrome-7-popup.png \
+   store-assets/en/chrome-8-linkwarden-save.png \
+   store-assets/en/chrome-9-wizard-welcome.png \
+   store-assets/en/chrome-10-wizard-token.png \
+   store-assets/en/chrome-11-wizard-repo.png _site/assets/screenshots/
 
 echo "Website prepared in _site/"
