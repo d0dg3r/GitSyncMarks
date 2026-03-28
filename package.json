@@ -1,6 +1,6 @@
 {
   "name": "gitsyncmarks",
-  "version": "2.7.0",
+  "version": "2.7.1",
   "private": true,
   "description": "Bookmark sync via GitHub. Linkwarden synergy, Smart Search, and Companion App. Direct, secure, private.",
   "scripts": {
@@ -20,6 +20,8 @@
     "cleanup:e2e-repos": "node scripts/cleanup-e2e-repos.js",
     "test:rate-limit": "node scripts/test-onboarding-rate-limit.js",
     "test:rate-limit:reset": "node scripts/test-onboarding-rate-limit.js --reset",
+    "test:onboarding-scale": "node scripts/test-onboarding-rate-limit.js --ensure-repo",
+    "verify-test-repo": "node scripts/verify-test-repo.js",
     "website:preview": "bash scripts/prepare-website.sh && npx --yes serve _site -p 3000"
   },
   "devDependencies": {

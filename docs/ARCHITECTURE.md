@@ -127,7 +127,7 @@ Wraps both the **Contents API** (legacy, used for migration/validation) and the 
 | `getCommit()` / `getTree()` / `getBlob()` | Git Data | Read commit, tree, file content |
 | `createBlob()` / `createTree()` / `createCommit()` | Git Data | Build new commit |
 | `updateRef()` / `createRef()` | Git Data | Update or create branch |
-| `atomicCommit(message, fileChanges)` | Git Data | All-in-one: atomic multi-file commit |
+| `atomicCommit(message, fileChanges)` | Git Data | Atomic multi-file commit via layered `POST /git/trees` with inline `content` (`lib/github-tree-batch.js`) |
 | `listCommits({ path, perPage })` | REST | List recent commits, optionally filtered by path |
 
 ### `lib/bookmark-serializer.js` — Serializer
@@ -276,6 +276,7 @@ GitSyncMarks/
 │   ├── sync-commit-message.js    # Parse commit subject → client id (history UI)
 │   ├── sync-migration.js         # Legacy format migration
 │   ├── github-api.js             # GitHub REST + Git Data API
+│   ├── github-tree-batch.js      # Chunk file changes for tree API (inline blob content)
 │   ├── bookmark-serializer.js    # Per-file bookmark conversion
 │   ├── bookmark-replace.js       # Replace local bookmarks
 │   ├── github-repos.js           # GitHub Repos folder
@@ -306,7 +307,8 @@ GitSyncMarks/
 │   ├── generate-screenshots.js   # Auto-generate store screenshots
 │   ├── fetch-app-content.sh      # Fetch App README, assets
 │   ├── build-docs.js             # Markdown → HTML for docs/
-│   └── build-index.js            # Build index.html
+│   ├── build-index.js            # Build index.html
+│   └── verify-test-repo.js       # Verify bookmark files in GitHub test repo (API)
 ├── package.json                  # npm scripts for building
 ├── .github/workflows/
 │   ├── test-e2e.yml              # E2E tests (manual trigger only)

@@ -15,24 +15,36 @@
  *   node scripts/test-onboarding-rate-limit.js [--bookmark-count 50] [--reset]
  *
  * OPTIONS:
+ *   --ensure-repo        DELETE the repo if it exists, then CREATE it (npm run test:onboarding-scale passes this by default)
+ *   --no-ensure-repo     Skip delete/create even when the npm script adds --ensure-repo
  *   --bookmark-count N   Number of synthetic bookmarks to simulate (default: 50)
  *   --reset              Delete all content from the repo before the test (fresh start)
+ *   --parallel-only      Run only the extension-style path: layered POST /git/trees with inline file content (~few calls per 400 files)
+ *   --sequential-only    Run only the sequential POST /git/blobs strategy (reproduces pre-#51 bottleneck)
  *   --no-color           Disable color output
  *
+ * Large collections (e.g. 5000 bookmarks ≈ 5003 files → ~5006 API calls per pass):
+ *   Use --parallel-only (or --sequential-only) so you do not run two full passes and burn ~10k calls
+ *   against the hourly REST limit (5000 for standard PAT).
+ *
  * WHAT IT DOES:
+ *   0. With --ensure-repo: DELETE repo if it exists, then CREATE a fresh private repo (same name as GITSYNCMARKS_TEST_REPO)
  *   1. Checks current rate-limit headroom
- *   2. Optionally resets the repo to empty (--reset)
+ *   2. Optionally resets the repo to empty (--reset; one commit to Git’s canonical empty tree)
  *   3. Simulates generating N bookmark files (like the onboarding push would)
- *   4. Runs the atomic commit flow (createBlob × N, createTree, createCommit, updateRef/createRef)
+ *   4. Runs the atomic commit flow (sequential: createBlob × N; extension-style: layered createTree + content, commit, ref)
  *   5. Reports: calls made, rate-limit consumed, time taken, success/failure
  *
  * REQUIREMENTS:
  *   - Node.js 18+ (native fetch)
- *   - PAT with `repo` scope
- *   - The repo must already exist (create with: node scripts/create-test-repo.js)
+ *   - PAT with `repo` scope; `--ensure-repo` also needs **`delete_repo`** on classic PATs (or equivalent on fine-grained tokens)
+ *   - Without `--ensure-repo`, the repo must already exist (see node scripts/create-test-repo.js)
  */
 
 'use strict';
+
+const path = require('path');
+const { pathToFileURL } = require('url');
 
 const API_BASE = 'https://api.github.com';
 
@@ -43,7 +55,15 @@ const bookmarkCount = (() => {
     return idx !== -1 ? parseInt(args[idx + 1], 10) || 50 : 50;
 })();
 const doReset = args.includes('--reset');
+const ensureRepo = args.includes('--ensure-repo') && !args.includes('--no-ensure-repo');
 const noColor = args.includes('--no-color');
+const parallelOnly = args.includes('--parallel-only');
+const sequentialOnly = args.includes('--sequential-only');
+if (parallelOnly && sequentialOnly) {
+    console.error('Use only one of --parallel-only or --sequential-only.');
+    process.exit(1);
+}
+const strategy = sequentialOnly ? 'sequential' : parallelOnly ? 'parallel' : 'both';
 
 // ---- Color helpers ----
 const c = {
@@ -80,27 +100,32 @@ function getEnv() {
             '  GITSYNCMARKS_TEST_REPO_OWNER=your-username\n' +
             '  GITSYNCMARKS_TEST_REPO=empty-repo-name\n\n' +
             'Create the repo first:\n' +
-            '  node scripts/create-test-repo.js\n'
+            '  node scripts/create-test-repo.js\n' +
+            'Or run with --ensure-repo (needs delete_repo on the PAT).\n'
         );
         process.exit(1);
     }
     return { token, owner, repo };
 }
 
-async function ghFetch(url, options = {}) {
+async function githubCountedFetch(url, options = {}) {
     const { token } = getEnv();
     const label = `${options.method || 'GET'} ${url.replace(API_BASE, '')}`;
     const t0 = Date.now();
 
+    const headers = {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+        ...options.headers,
+    };
+    if (options.body !== undefined) {
+        headers['Content-Type'] = 'application/json';
+    }
+
     const res = await fetch(url, {
         ...options,
-        headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: 'application/vnd.github+json',
-            'Content-Type': 'application/json',
-            'X-GitHub-Api-Version': '2022-11-28',
-            ...options.headers,
-        },
+        headers,
     });
 
     totalCalls++;
@@ -144,6 +169,71 @@ async function ghFetch(url, options = {}) {
     return res.json();
 }
 
+async function ghFetch(url, options = {}) {
+    return githubCountedFetch(url, options);
+}
+
+function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/**
+ * Delete GITSYNCMARKS_TEST_REPO if present, then create it (private, auto_init).
+ * Requires PAT scope delete_repo for user-owned repos (classic PAT).
+ */
+async function ensureFreshTestRepository() {
+    step('Provisioning repository (--ensure-repo): delete if exists, then create...');
+
+    const meta = await githubCountedFetch(repoUrl(''));
+    if (meta?._status === 404) {
+        info('Repository does not exist yet.');
+    } else {
+        info(`Deleting existing ${getEnv().owner}/${getEnv().repo}...`);
+        await githubCountedFetch(repoUrl(''), { method: 'DELETE' });
+        ok('Repository deleted.');
+        await sleep(2500);
+    }
+
+    const { owner, repo } = getEnv();
+    const user = await githubCountedFetch(`${API_BASE}/user`);
+    const createUrl =
+        user.login.toLowerCase() === owner.toLowerCase()
+            ? `${API_BASE}/user/repos`
+            : `${API_BASE}/orgs/${encodeURIComponent(owner)}/repos`;
+
+    const createBody = JSON.stringify({
+        name: repo,
+        private: true,
+        description: 'Disposable test repo for GitSyncMarks onboarding-scale / E2E',
+        auto_init: true,
+    });
+
+    let lastErr;
+    for (let attempt = 0; attempt < 6; attempt++) {
+        try {
+            const created = await githubCountedFetch(createUrl, {
+                method: 'POST',
+                body: createBody,
+            });
+            ok(`Created repository: ${created.full_name || `${owner}/${repo}`}`);
+            return;
+        } catch (err) {
+            lastErr = err;
+            const msg = err.message || '';
+            const nameStillInUse =
+                msg.includes('422') &&
+                (msg.includes('already exists') || msg.includes('name already'));
+            if (nameStillInUse && attempt < 5) {
+                warn(`Create failed (name may still be reserved); waiting ${2 * (attempt + 1)}s before retry...`);
+                await sleep(2000 * (attempt + 1));
+                continue;
+            }
+            throw err;
+        }
+    }
+    throw lastErr;
+}
+
 // ---- Repo helpers ----
 function repoUrl(path = '') {
     const { owner, repo } = getEnv();
@@ -156,7 +246,6 @@ async function getRateLimit() {
 }
 
 async function getLatestCommitSha() {
-    const { repo: repoBranch } = getEnv();
     const data = await ghFetch(repoUrl(`/git/ref/heads/main`));
     if (data?._status === 404 || data?._status === 409) return null;
     return data.object.sha;
@@ -211,7 +300,10 @@ async function createRef(commitSha) {
     });
 }
 
-// ---- Reset repo to empty (delete all files via API) ----
+/** Canonical empty tree object in Git (no files). One commit wipes all paths; avoids huge POST /git/trees bodies (422 BadObjectState). */
+const EMPTY_TREE_SHA = '4b825dc642cb6eb9a060e54bf8d69288fbee4904';
+
+// ---- Reset repo to empty (single commit to empty tree) ----
 async function resetRepoToEmpty() {
     step('Resetting repo to empty state...');
 
@@ -222,23 +314,19 @@ async function resetRepoToEmpty() {
     }
 
     const commit = await getCommit(commitSha);
-    const treeData = await ghFetch(repoUrl(`/git/trees/${commit.treeSha}?recursive=1`));
-    const items = (treeData.tree || []).filter(e => e.type === 'blob');
-
-    if (items.length === 0) {
+    if (commit.treeSha === EMPTY_TREE_SHA) {
         info('Repo tree is already empty.');
         return;
     }
 
-    info(`Found ${items.length} file(s) to delete.`);
-
-    // Delete all blobs by creating a tree with sha=null for each
-    const deleteItems = items.map(e => ({ path: e.path, mode: '100644', type: 'blob', sha: null }));
-    const newTreeSha = await createTree(null, deleteItems);
-    const newCommitSha = await createCommit('Reset: empty repo for onboarding test', newTreeSha, commitSha);
+    const newCommitSha = await createCommit(
+        'Reset: empty repo for onboarding test',
+        EMPTY_TREE_SHA,
+        commitSha
+    );
     await updateRef(newCommitSha);
 
-    ok(`Repo reset to empty. All ${items.length} file(s) deleted.`);
+    ok('Repo reset to empty (empty-tree commit).');
 }
 
 // ---- Generate synthetic bookmarks (simulating a user's bookmarks) ----
@@ -271,9 +359,9 @@ function generateSyntheticBookmarks(count, basePath = 'bookmarks') {
     return files;
 }
 
-// ---- SEQUENTIAL blob creation (current behavior — the bug) ----
+// ---- SEQUENTIAL blob creation (legacy — reproduces #51-style pressure) ----
 async function atomicCommitSequential(fileChanges, commitSha, treeSha) {
-    step('Strategy A: SEQUENTIAL blob creation (current behavior)');
+    step('Strategy A: SEQUENTIAL blob creation (legacy)');
     info(`Creating ${Object.keys(fileChanges).length} blobs one by one...`);
 
     const t0 = Date.now();
@@ -286,7 +374,7 @@ async function atomicCommitSequential(fileChanges, commitSha, treeSha) {
 
     const newTreeSha = await createTree(treeSha, treeItems);
     const newCommitSha = await createCommit(
-        `[TEST-SEQUENTIAL] Onboarding push — ${new Date().toISOString()}`,
+        `[TEST-SEQUENTIAL] Onboarding push (legacy) — ${new Date().toISOString()}`,
         newTreeSha,
         commitSha
     );
@@ -301,30 +389,27 @@ async function atomicCommitSequential(fileChanges, commitSha, treeSha) {
     return { elapsed, commitSha: newCommitSha };
 }
 
-// ---- PARALLEL blob creation (proposed fix) ----
-async function atomicCommitParallel(fileChanges, commitSha, treeSha, concurrency = 5) {
-    step(`Strategy B: PARALLEL blob creation (proposed fix, concurrency=${concurrency})`);
-    info(`Creating ${Object.keys(fileChanges).length} blobs in batches of ${concurrency}...`);
+// ---- Layered tree + inline content (matches lib/github-api.js atomicCommit) ----
+async function atomicCommitLayeredTrees(fileChanges, commitSha, treeSha, chunkAtomicCommitTreeBatches) {
+    const n = Object.keys(fileChanges).length;
+    const uploads = [];
+    for (const [p, content] of Object.entries(fileChanges)) {
+        if (content !== null) uploads.push({ path: p, content });
+    }
+    const batches = chunkAtomicCommitTreeBatches([], uploads);
+    step(
+        `Strategy B: Layered trees (extension-style, ${batches.length}× POST /git/trees, inline content)`
+    );
+    info(`Uploading ${n} files via tree API (GitHub creates blobs server-side)...`);
 
     const t0 = Date.now();
-    const entries = Object.entries(fileChanges);
-    const treeItems = [];
-
-    for (let i = 0; i < entries.length; i += concurrency) {
-        const batch = entries.slice(i, i + concurrency);
-        const settled = await Promise.all(
-            batch.map(async ([path, content]) => {
-                const blobSha = await createBlob(content);
-                return { path, mode: '100644', type: 'blob', sha: blobSha };
-            })
-        );
-        treeItems.push(...settled);
+    let nextTreeSha = treeSha;
+    for (const batch of batches) {
+        nextTreeSha = await createTree(nextTreeSha, batch);
     }
-
-    const newTreeSha = await createTree(treeSha, treeItems);
     const newCommitSha = await createCommit(
-        `[TEST-PARALLEL] Onboarding push — ${new Date().toISOString()}`,
-        newTreeSha,
+        `[TEST-LAYERED-TREE] Onboarding push — ${new Date().toISOString()}`,
+        nextTreeSha,
         commitSha
     );
 
@@ -359,11 +444,19 @@ function printSummary(label, { callsBefore, callsAfter, rateBefore, rateAfter, e
 
 // ---- Main ----
 async function main() {
+    const { chunkAtomicCommitTreeBatches } = await import(
+        pathToFileURL(path.join(__dirname, '..', 'lib', 'github-tree-batch.js')).href
+    );
+
     console.log(`\n${c.bold}GitSyncMarks Onboarding Rate-Limit Test${c.reset}`);
     console.log(`Simulating onboarding with ${c.bold}${bookmarkCount}${c.reset} bookmarks\n`);
 
     const { owner, repo } = getEnv();
     info(`Repo: ${owner}/${repo}`);
+
+    if (ensureRepo) {
+        await ensureFreshTestRepository();
+    }
 
     // 1. Check initial rate limit
     step('Checking initial rate limit...');
@@ -392,6 +485,26 @@ async function main() {
     const fileCount = Object.keys(bookmarkFiles).length;
     ok(`Generated ${fileCount} files (${bookmarkCount} bookmarks + structure files)`);
 
+    const treeLayers = Math.max(1, Math.ceil(fileCount / 400));
+    const approxCallsLayered = treeLayers + 4; // tree POSTs + commit + ref + overhead
+    const approxCallsSequential = fileCount + 3;
+    if (strategy === 'both' && bookmarkCount > 1500) {
+        warn(
+            `Default mode runs sequential blobs then layered trees (~${approxCallsSequential + approxCallsLayered} API calls). ` +
+                `For large repos use --parallel-only (extension behavior) or --sequential-only.`
+        );
+    }
+    const needRemaining =
+        strategy === 'sequential' || strategy === 'both'
+            ? approxCallsSequential + (strategy === 'both' ? approxCallsLayered : 0)
+            : approxCallsLayered;
+    if (initialRate.remaining < needRemaining + 20) {
+        warn(
+            `Roughly ${needRemaining} calls may be needed; only ${initialRate.remaining} remaining. ` +
+                `Test may fail with rate limit or 403.`
+        );
+    }
+
     // 4. Get current repo state
     step('Getting current repo state...');
     let currentCommitSha = null;
@@ -406,57 +519,84 @@ async function main() {
         info(`Current commit: ${currentCommitSha.substring(0, 12)}`);
     }
 
-    // 5. Run SEQUENTIAL test (current behavior)
-    const callsBefore_seq = totalCalls;
-    const rateBefore_seq = rateLimitEnd ?? initialRate.remaining;
     let seqResult;
-    try {
-        seqResult = await atomicCommitSequential(bookmarkFiles, currentCommitSha, currentTreeSha);
-        const rateAfter_seq = rateLimitEnd;
-        printSummary('Sequential (current behavior)', {
-            callsBefore: callsBefore_seq,
-            callsAfter: totalCalls,
-            rateBefore: rateBefore_seq,
-            rateAfter: rateAfter_seq,
-            elapsed: seqResult.elapsed,
-            commitSha: seqResult.commitSha,
-        });
-        // Update state for next test
-        currentCommitSha = seqResult.commitSha;
-        const updatedCommit = await getCommit(currentCommitSha);
-        currentTreeSha = updatedCommit.treeSha;
-    } catch (err) {
-        fail(`Sequential test FAILED: ${err.message}`);
-    }
-
-    // 6. Run PARALLEL test (proposed fix) — push on top of what we just created
-    console.log(`\n${c.gray}(Generating a fresh set of modified bookmarks for parallel test...)${c.reset}`);
-    const modifiedFiles = generateSyntheticBookmarks(bookmarkCount, basePath);
-    // Slightly modify content so blobs are different (forces re-upload)
-    for (const key of Object.keys(modifiedFiles)) {
-        if (key.endsWith('.json') && !key.endsWith('_index.json') && !key.endsWith('_order.json')) {
-            const obj = JSON.parse(modifiedFiles[key]);
-            obj.title = obj.title + ' (v2)';
-            modifiedFiles[key] = JSON.stringify(obj, null, 2);
-        }
-    }
-
-    const callsBefore_par = totalCalls;
-    const rateBefore_par = rateLimitEnd ?? initialRate.remaining;
     let parResult;
-    try {
-        parResult = await atomicCommitParallel(modifiedFiles, currentCommitSha, currentTreeSha, 5);
-        const rateAfter_par = rateLimitEnd;
-        printSummary('Parallel (proposed fix, concurrency=5)', {
-            callsBefore: callsBefore_par,
-            callsAfter: totalCalls,
-            rateBefore: rateBefore_par,
-            rateAfter: rateAfter_par,
-            elapsed: parResult.elapsed,
-            commitSha: parResult.commitSha,
-        });
-    } catch (err) {
-        fail(`Parallel test FAILED: ${err.message}`);
+    let hadFailure = false;
+
+    const runSequential = async () => {
+        const callsBefore_seq = totalCalls;
+        const rateBefore_seq = rateLimitEnd ?? initialRate.remaining;
+        try {
+            seqResult = await atomicCommitSequential(bookmarkFiles, currentCommitSha, currentTreeSha);
+            printSummary('Sequential (legacy / pre-#51 style)', {
+                callsBefore: callsBefore_seq,
+                callsAfter: totalCalls,
+                rateBefore: rateBefore_seq,
+                rateAfter: rateLimitEnd,
+                elapsed: seqResult.elapsed,
+                commitSha: seqResult.commitSha,
+            });
+            currentCommitSha = seqResult.commitSha;
+            const updatedCommit = await getCommit(currentCommitSha);
+            currentTreeSha = updatedCommit.treeSha;
+        } catch (err) {
+            hadFailure = true;
+            fail(`Sequential test FAILED: ${err.message}`);
+        }
+    };
+
+    const runParallel = async (files, label) => {
+        const callsBefore_par = totalCalls;
+        const rateBefore_par = rateLimitEnd ?? initialRate.remaining;
+        try {
+            parResult = await atomicCommitLayeredTrees(
+                files,
+                currentCommitSha,
+                currentTreeSha,
+                chunkAtomicCommitTreeBatches
+            );
+            printSummary(label, {
+                callsBefore: callsBefore_par,
+                callsAfter: totalCalls,
+                rateBefore: rateBefore_par,
+                rateAfter: rateLimitEnd,
+                elapsed: parResult.elapsed,
+                commitSha: parResult.commitSha,
+            });
+            currentCommitSha = parResult.commitSha;
+            const updatedCommit = await getCommit(currentCommitSha);
+            currentTreeSha = updatedCommit.treeSha;
+        } catch (err) {
+            hadFailure = true;
+            fail(`Parallel test FAILED: ${err.message}`);
+        }
+    };
+
+    info(`Strategy: ${c.bold}${strategy}${c.reset}`);
+
+    // 5–6. Run selected strategy(ies)
+    if (strategy === 'sequential' || strategy === 'both') {
+        await runSequential();
+    }
+
+    if (strategy === 'both' && hadFailure) {
+        fail('Skipping parallel pass because sequential run failed.');
+        process.exit(1);
+    }
+
+    if (strategy === 'parallel') {
+        await runParallel(bookmarkFiles, 'Layered trees (extension-style)');
+    } else if (strategy === 'both') {
+        console.log(`\n${c.gray}(Generating modified bookmarks for second pass — parallel comparison...)${c.reset}`);
+        const modifiedFiles = generateSyntheticBookmarks(bookmarkCount, basePath);
+        for (const key of Object.keys(modifiedFiles)) {
+            if (key.endsWith('.json') && !key.endsWith('_index.json') && !key.endsWith('_order.json')) {
+                const obj = JSON.parse(modifiedFiles[key]);
+                obj.title = `${obj.title} (v2)`;
+                modifiedFiles[key] = JSON.stringify(obj, null, 2);
+            }
+        }
+        await runParallel(modifiedFiles, 'Layered trees (extension-style)');
     }
 
     // 7. Final summary
@@ -464,14 +604,16 @@ async function main() {
     console.log(`${c.bold}TOTAL API CALLS: ${totalCalls}${c.reset}`);
     console.log(`${c.bold}TOTAL RATE LIMIT CONSUMED: ${initialRate.remaining - rateLimitEnd}${c.reset}`);
 
-    if (seqResult && parResult) {
+    if (seqResult && parResult && strategy === 'both') {
         const speedup = (seqResult.elapsed / parResult.elapsed).toFixed(2);
         console.log(`\n${c.bold}Comparison:${c.reset}`);
         console.log(`  Sequential time: ${(seqResult.elapsed / 1000).toFixed(2)}s`);
-        console.log(`  Parallel time:   ${(parResult.elapsed / 1000).toFixed(2)}s`);
-        console.log(`  Speedup:         ${c.green}${speedup}×${c.reset} faster`);
+        console.log(`  Layered-tree time: ${(parResult.elapsed / 1000).toFixed(2)}s`);
+        console.log(`  Speedup:           ${c.green}${speedup}×${c.reset} faster`);
     }
     console.log(`${'═'.repeat(60)}\n`);
+
+    if (hadFailure) process.exit(1);
 }
 
 main().catch((err) => {

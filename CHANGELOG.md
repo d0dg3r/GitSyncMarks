@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.7.1] - 2026-03-28 (*Spock*)
+
+### Improved
+- **Onboarding / large-repo diagnostic**: `scripts/test-onboarding-rate-limit.js` adds `--parallel-only` and `--sequential-only` (single API pass). Default two-pass mode warns when simulating very large bookmark counts. New `npm run test:onboarding-scale` entry point; `e2e/README.md` documents simulating ~5000 bookmarks against a disposable GitHub repo.
+- **`npm run test:onboarding-scale` provisions the repo**: passes `--ensure-repo` — **DELETE** `GITSYNCMARKS_TEST_REPO` if it exists, then **POST /user/repos** (or org equivalent) to recreate it. Override with `--no-ensure-repo`. Classic PATs need **`delete_repo`**; see `.env.example` and `e2e/README.md`.
+- **`npm run verify-test-repo`**: reads `main`’s recursive git tree via the GitHub API, prints blob count, checks required `bookmarks/` layout, optional `--min-bookmarks N` and `--verbose` (`scripts/verify-test-repo.js`, `e2e/README.md`).
+
+### Fixed
+- **`test-onboarding-rate-limit.js --reset`**: Repo reset uses a single commit whose tree is Git’s canonical empty tree (`4b825dc642cb6eb9a060e54bf8d69288fbee4904`), avoiding `422 GitRPC::BadObjectState` and failed chunked deletes on large bookmark trees.
+- **Large pushes / onboarding speed & secondary rate limits**: `atomicCommit` no longer issues one `POST /git/blobs` per file. New/changed files are sent as **`content` on `POST /git/trees`** in layered batches (`lib/github-tree-batch.js`, max ~400 entries or ~28 MiB per request). GitHub creates blobs server-side, so a ~5000-file first push is ~13 tree calls plus commit/ref instead of ~5000 blob calls — much faster and far less likely to hit secondary limits. The onboarding diagnostic script’s `--parallel-only` path matches this behavior (`docs/SYNC-LOGIC.md`, `e2e/README.md`, `docs/ARCHITECTURE.md`).
+
 ## [2.7.0] - 2026-03-28 (*Spock*)
 
 ### Changed

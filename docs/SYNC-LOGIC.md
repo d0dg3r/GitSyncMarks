@@ -227,7 +227,9 @@ GitHub API requests use `cache: no-store` to reduce cache-related staleness.
 
 In the common case (few files changed), this is 3 + N calls where N is the number of changed files.
 
-**Blob GET concurrency:** `getBlob` requests run in batches of five parallel calls (not all at once). Large repositories (hundreds of bookmarks) previously issued one concurrent request per file; GitHub’s secondary rate limits treat that as abusive. Batching matches the upload-side concurrency used in `atomicCommit`.
+**Blob GET concurrency:** `getBlob` requests run in batches of five parallel calls (not all at once). Large repositories (hundreds of bookmarks) previously issued one concurrent request per file; GitHub’s secondary rate limits treat that as abusive.
+
+**Blob POST (upload) via trees:** `atomicCommit` does **not** call `POST /git/blobs` per file. Each changed file is included in `POST /git/trees` with a `content` field; GitHub creates blobs server-side. Batches are split by entry count (~400) and approximate JSON size (`lib/github-tree-batch.js`) so each tree request stays within GitHub payload limits; multiple tree calls are chained with `base_tree` until the full change set is applied, then one commit and ref update.
 
 **History / pinned commit:** `fetchRemoteFileMapAtCommit()` uses the same batched blob fetch. A small in-memory cache (few entries, short TTL) deduplicates work when preview and restore target the same commit SHA in quick succession.
 
