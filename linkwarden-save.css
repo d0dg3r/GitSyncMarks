@@ -1,47 +1,16 @@
-/* Linkwarden Save Popup – reuses search.css design tokens */
+/* Linkwarden Save Popup */
+
 :root {
-  --color-bg: #f5f5f7;
-  --color-surface: #ffffff;
-  --color-text: #1d1d1f;
-  --color-text-secondary: #6e6e73;
-  --color-border: #d2d2d7;
-  --color-primary: #0071e3;
-  --color-primary-hover: #0077ed;
   --color-success: #22863a;
   --color-error: #b42318;
-  --color-btn-hover: #ececf1;
-  --color-btn-active: #e3e3e8;
   --color-warning: #d29922;
-  --color-tag-bg: #e8f0fe;
-  --color-tag-text: #1a56db;
 }
 
 html.dark {
-  --color-bg: #1d1d1f;
-  --color-surface: #2c2c2e;
-  --color-text: #f5f5f7;
-  --color-text-secondary: #a1a1a6;
-  --color-border: #3a3a3c;
-  --color-primary: #0a84ff;
-  --color-primary-hover: #409cff;
-  --color-success: #30d158;
-  --color-error: #ff453a;
-  --color-btn-hover: #3a3a3c;
-  --color-btn-active: #444446;
   --color-warning: #ffd60a;
-  --color-tag-bg: #1c3a5f;
-  --color-tag-text: #5eaeff;
 }
 
-html,
 body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  font-size: var(--ui-font-base);
-  line-height: var(--ui-line-height);
-  background: var(--color-bg);
-  color: var(--color-text);
   min-height: 100vh;
 }
 
@@ -187,7 +156,7 @@ body {
 .lw-field select:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.15);
+  box-shadow: var(--focus-ring);
 }
 
 .lw-url-input {
@@ -269,7 +238,7 @@ body {
 
 .lw-tags-wrap:focus-within {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.15);
+  box-shadow: var(--focus-ring);
 }
 
 .lw-tag-chips {
@@ -571,11 +540,5 @@ html.dark .lw-tag-chip-remove:hover {
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-top-color: #fff;
   border-radius: 50%;
-  animation: spinner 0.6s linear infinite;
-}
-
-@keyframes spinner {
-  to {
-    transform: rotate(360deg);
-  }
+  animation: spin 0.6s linear infinite;
 }

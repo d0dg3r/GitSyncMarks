@@ -1,65 +1,6 @@
 /* Options Page Styles */
 
-:root {
-  --color-bg: #f5f5f7;
-  --color-surface: #ffffff;
-  --color-text: #1d1d1f;
-  --color-text-secondary: #6e6e73;
-  --color-primary: #0071e3;
-  --color-primary-hover: #0077ed;
-  --color-border: #d2d2d7;
-  --color-success: #34c759;
-  --color-error: #ff3b30;
-  --color-warning: #ff9500;
-  --color-warning-bg: #fff8ec;
-  --color-btn-secondary: #e8e8ed;
-  --color-btn-secondary-hover: #d2d2d7;
-  --color-btn-icon-hover: #f0f0f2;
-  --color-code-bg: #f0f0f2;
-  --color-toggle-track: #ccc;
-  --color-toggle-thumb: #ffffff;
-  --color-bg-tertiary: #f0f0f0;
-  --color-border-secondary: #ddd;
-  --radius: 12px;
-  --radius-sm: 8px;
-  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
-}
-
-html.dark {
-  --color-bg: #1d1d1f;
-  --color-surface: #2c2c2e;
-  --color-text: #f5f5f7;
-  --color-text-secondary: #a1a1a6;
-  --color-primary: #0a84ff;
-  --color-primary-hover: #409cff;
-  --color-border: #38383a;
-  --color-success: #30d158;
-  --color-error: #ff453a;
-  --color-warning: #ff9f0a;
-  --color-warning-bg: #3a2e1e;
-  --color-btn-secondary: #3a3a3c;
-  --color-btn-secondary-hover: #48484a;
-  --color-btn-icon-hover: #3a3a3c;
-  --color-code-bg: #3a3a3c;
-  --color-toggle-track: #48484a;
-  --color-toggle-thumb: #ffffff;
-  --color-bg-tertiary: #2c2c2e;
-  --color-border-secondary: #38383a;
-  --shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  font-size: var(--ui-font-base);
-  background: var(--color-bg);
-  color: var(--color-text);
-  line-height: var(--ui-line-height);
   min-height: 100vh;
 }
 
@@ -824,7 +765,7 @@ input[type="password"]:focus,
 input[type="number"]:focus,
 select:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
+  box-shadow: var(--focus-ring);
 }
 
 input[type="number"] {
@@ -864,45 +805,7 @@ code {
   font-size: var(--ui-font-xs);
 }
 
-/* Buttons */
-
-.btn {
-  padding: var(--ui-btn-pad);
-  font-size: var(--ui-font-base);
-  font-weight: 500;
-  border: none;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-}
-
-.btn:active {
-  transform: scale(0.98);
-}
-
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.btn-primary {
-  background: var(--color-primary);
-  color: white;
-}
-
-.btn-primary:hover:not(:disabled) {
-  background: var(--color-primary-hover);
-}
-
-.btn-secondary {
-  background: var(--color-btn-secondary);
-  color: var(--color-text);
-}
-
-.btn-secondary:hover:not(:disabled) {
-  background: var(--color-btn-secondary-hover);
-}
+/* Buttons (base in shared.css) */
 
 .danger-zone {
   border: 1px solid #dc354540;
@@ -1118,21 +1021,8 @@ input[type="checkbox"]:checked+.toggle-slider::after {
 }
 
 .spinner {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
   margin-right: 6px;
   vertical-align: middle;
-  border: 2px solid var(--color-text-secondary);
-  border-top-color: var(--color-text);
-  border-radius: 50%;
-  animation: spin 0.6s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 /* Actions */
@@ -1985,7 +1875,7 @@ html.dark .context-menu-item-reorder-btn {
 
 .lw-options-tags-wrap:focus-within {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.15);
+  box-shadow: var(--focus-ring);
 }
 
 .lw-options-tag-chips {

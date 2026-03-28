@@ -1237,11 +1237,17 @@
   "help_themeAutoSaveTitle": {
     "message": "Theme & Auto-save"
   },
+  "help_headerLangTitle": {
+    "message": "Language"
+  },
+  "help_headerLangDesc": {
+    "message": "The menu shows short codes (e.g. EN, DE). Hover an option to see the full language name. “Auto” follows the browser UI language when supported."
+  },
   "help_themeCycleTitle": {
     "message": "Theme"
   },
   "help_themeCycleDesc": {
-    "message": "Click the button in the header to cycle: Auto (system) → Dark → Light → Auto. The icon shows the current mode. Works in options and popup."
+    "message": "Use the three icons in the header: Auto (follows system light/dark), Dark, or Light. The active choice is highlighted like the density buttons. The toolbar popup still follows the same saved theme from storage."
   },
   "help_densityTitle": {
     "message": "UI Density"

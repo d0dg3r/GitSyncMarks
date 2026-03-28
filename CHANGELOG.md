@@ -14,9 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **UI Density**: Three-level density setting (Compact / Medium / Large) via S / M / L selector in the options header. Applies to all extension surfaces (options, popup, search, Linkwarden save). Stored in `chrome.storage.sync` and synced across devices. CSS tokens in `ui-density.css` control typography, spacing, and control sizes globally.
 
 ### Improved
+- **CSS architecture**: New root-level [`shared.css`](shared.css) holds the shared light/dark color palette (`--color-*`), universal reset, base `body` typography, `.btn` / `.btn-primary` / `.btn-secondary`, `@keyframes spin`, and `--focus-ring`. Extension pages load `ui-density.css` → `shared.css` → their page stylesheet to avoid duplicating theme tokens and button rules across options, popup, search, and Linkwarden save.
+- **Options header**: Language dropdown uses short codes (EN, DE, …) with full names on hover; density (S/M/L) and theme (Auto / Dark / Light) use matching segmented controls and uniform control height; theme uses inline SVG icons instead of a single cycle letter.
 - **Menu tab (visibility & order)**: Tighter list layout — smaller row padding, reduced gaps between rows and category headers, no extra row margin stacking with flex `gap`, slightly smaller labels/toggles/reorder buttons, and a smaller reset button top margin.
 - **Sync History (Settings)**: Column headers for date, commit hash, **Client** (device id parsed from GitSyncMarks commit subjects; full subject on hover), and a screen-reader **Actions** column. One grid row per commit so values align under headers; preview/restore icons sit in the last column. The active commit shows a checkmark icon plus the “current” label.
 - **What’s new (toolbar popup)**: Detects popup context (`whats-new-overlay--popup`), uses compact typography and four short bullets so the dialog usually fits without scrolling; Settings page keeps the larger panel.
+- **What’s new copy**: v2.7.0 bullets now focus on user-visible improvements (Sync History, restore/diff preview, duplicate fix, UI density & theme) and no longer mention CI internals.
+- **Store listings & screenshots**: All 12-language Chrome and Firefox store descriptions highlight Sync History, restore, and the duplicate fix. Screenshots regenerated with a new Sync History panel (slot 5, renumbering search through wizard to 6–11); meta checklists and README Visual Tour updated to match.
 
 ## [2.7.0] - 2026-03-28 (*Spock*)
 

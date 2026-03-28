@@ -61,6 +61,7 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 - **Auto-Generated Files**: Every sync generates a `README.md` (index), `bookmarks.html` (netscape), `feed.xml` (RSS), and `dashy-conf.yml`.
 - **Favicon Utilities**: Copy or download high-quality site favicons as PNGs directly from the context menu.
 - **I18n**: Professionally translated into **12 languages** (EN, DE, FR, ES, JA, and more).
+- **Appearance**: **UI density** (compact / medium / large) scales typography and spacing across Settings, the toolbar popup, Smart Search, and the Linkwarden save dialog; **theme** supports light, dark, or system auto. Both sync via `chrome.storage.sync`.
 
 ---
 
@@ -68,13 +69,18 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 
 | **1. Guided Onboarding** | **2. Smart Search** | **3. Linkwarden Tab** |
 | :---: | :---: | :---: |
-| <img src="store-assets/en/chrome-8-wizard-welcome.png" width="280"> | <img src="store-assets/en/chrome-5-search.png" width="280"> | <img src="store-assets/en/chrome-4-linkwarden.png" width="280"> |
+| <img src="store-assets/en/chrome-9-wizard-welcome.png" width="280"> | <img src="store-assets/en/chrome-6-search.png" width="280"> | <img src="store-assets/en/chrome-4-linkwarden.png" width="280"> |
 | *Easy Step-by-Step* | *Lightning Fast Search* | *Deep Integration* |
 
 | **4. GitHub Connection** | **5. Action Popup** | **6. Save to Linkwarden** |
 | :---: | :---: | :---: |
-| <img src="store-assets/en/chrome-1-connection.png" width="280"> | <img src="store-assets/en/chrome-6-popup.png" width="280"> | <img src="store-assets/en/chrome-7-linkwarden-save.png" width="280"> |
+| <img src="store-assets/en/chrome-1-connection.png" width="280"> | <img src="store-assets/en/chrome-7-popup.png" width="280"> | <img src="store-assets/en/chrome-8-linkwarden-save.png" width="280"> |
 | *Manage Profiles* | *Status at a Glance* | *Context Menu Power* |
+
+| **7. Sync History** | | |
+| :---: | :---: | :---: |
+| <img src="store-assets/en/chrome-5-history.png" width="280"> | | |
+| *Backup tab — review & restore* | | |
 
 ---
 

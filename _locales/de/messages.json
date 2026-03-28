@@ -1082,11 +1082,17 @@
   "help_themeAutoSaveTitle": {
     "message": "Design & Auto-Save"
   },
+  "help_headerLangTitle": {
+    "message": "Sprache"
+  },
+  "help_headerLangDesc": {
+    "message": "Das Menü zeigt Kurzcodes (z. B. EN, DE). Mit der Maus über eine Option fahren, um den vollen Namen zu sehen. „Auto“ nutzt die Browsersprache, wenn unterstützt."
+  },
   "help_themeCycleTitle": {
     "message": "Design"
   },
   "help_themeCycleDesc": {
-    "message": "Klicke den Button im Header zum Wechseln: Auto (System) → Dunkel → Hell → Auto. Das Icon zeigt den aktuellen Modus. Funktioniert in Optionen und Popup."
+    "message": "Die drei Symbole im Header: Auto (folgt System Hell/Dunkel), Dunkel oder Hell. Die aktive Wahl ist wie bei der Dichte hervorgehoben. Das Toolbar-Popup nutzt dieselbe gespeicherte Einstellung."
   },
   "help_autoSaveTitle": {
     "message": "Auto-Save"

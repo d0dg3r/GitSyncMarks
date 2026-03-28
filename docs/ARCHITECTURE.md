@@ -158,11 +158,11 @@ Minimal wrapper for the Linkwarden REST API:
 
 ### `lib/i18n.js` — Internationalization
 
-Custom runtime i18n with manual language selection. Loads `_locales/{lang}/messages.json`, translates DOM via `data-i18n` attributes. Plain `data-i18n` sets `textContent` on each match except `<select>` elements (so `<option data-i18n>` still translates; `<select data-i18n>` is not used). English fallback.
+Custom runtime i18n with manual language selection. `SUPPORTED_LANGUAGES` in `lib/i18n.js` lists each locale with `code`, `name`, and `short` (e.g. `EN`, `DE`); the options language `<select>` shows `short` in the label and `name` in each option’s `title`. Loads `_locales/{lang}/messages.json`, translates DOM via `data-i18n` attributes. Plain `data-i18n` sets `textContent` on each match except `<select>` elements (so `<option data-i18n>` still translates; `<select data-i18n>` is not used). English fallback.
 
 ### `lib/theme.js` — Theme
 
-Light, dark, or auto (system) theme. Single cycle button in options header switches A → Dark → Light → A. Stores preference in `chrome.storage.sync`, applies `html.dark` class when dark mode is active. Used by options page and popup.
+Light, dark, or auto (system) theme. `initTheme()` / `applyTheme()` read `chrome.storage.sync` (`theme` key), resolve dark vs light (including `prefers-color-scheme` when `auto`), and toggle `html.dark` on `<html>`. On the options page, `#theme-selector` is a three-segment control (Auto / Dark / Light) with SVG icons; `options.js` persists the choice and calls `applyTheme()`. The toolbar popup uses the same storage key via `initTheme()` (no segment UI there).
 
 ### `lib/ui-density.js` — UI Density
 
@@ -171,6 +171,10 @@ Three density levels (compact / medium / large). Stores the choice in `chrome.st
 ### `ui-density.css` — Density Tokens
 
 Root-level CSS custom properties for typography, spacing, padding, and control sizing across three density levels. Loaded before all page-specific stylesheets. Page CSS references these tokens instead of hard-coded values.
+
+### `shared.css` — Shared Theme & Base Components
+
+Loaded after `ui-density.css` and before each page stylesheet on options, popup, search, and Linkwarden save. Defines the extension-wide `--color-*` palette for light and `html.dark`, `*` box-sizing reset, default `body` font stack and `font-size` / `line-height` from density tokens, shared `.btn` variants, `.spinner` + `@keyframes spin`, and `--focus-ring`. Page CSS may override a small subset (e.g. popup `--color-bg` and `--radius`).
 
 ### `lib/whats-new.js` / `lib/whats-new-ui.js` — Post-update release notes
 
@@ -250,7 +254,11 @@ GitSyncMarks/
 ├── manifest.firefox.json         # Firefox manifest
 ├── background.js                 # Background script
 ├── popup.html / popup.js / popup.css
+├── ui-density.css                # Density tokens (compact / medium / large)
+├── shared.css                    # Shared --color-* palette, reset, .btn, spinner
 ├── whats-new.css                 # Shared overlay styles (popup + options)
+├── search.html / search.js / search.css
+├── linkwarden-save.html / .js / .css
 ├── options.html / options.js / options.css
 ├── options/                      # Options page sub-modules
 │   ├── wizard.js                 # Onboarding wizard flow

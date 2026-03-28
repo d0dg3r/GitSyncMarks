@@ -20,15 +20,9 @@
   padding: 16px 18px;
   border-radius: 10px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-  background: var(--surface-elevated, #fff);
-  color: var(--text-primary, #1a1a1a);
-  border: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.12));
-}
-
-html.dark .whats-new-panel {
-  background: #2a2a2e;
-  color: #f0f0f0;
-  border-color: rgba(255, 255, 255, 0.12);
+  background: var(--color-surface, #fff);
+  color: var(--color-text, #1a1a1a);
+  border: 1px solid var(--color-border, rgba(0, 0, 0, 0.12));
 }
 
 .whats-new-title {

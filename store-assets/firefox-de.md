@@ -12,10 +12,11 @@ GitSyncMarks ist eine professionelle Erweiterung für Firefox, die Ihre Lesezeic
 
 Highlights
 
+- Sync-Verlauf & Wiederherstellung: Vergangene Commits durchsuchen, Änderungen per Diff-Vorschau prüfen und jeden früheren Lesezeichen-Stand mit einem Klick wiederherstellen.
+- Duplikat-Fix: Gleichnamige Ordner vervielfachen sich nicht mehr bei der Synchronisation — Duplikate werden automatisch zusammengeführt.
 - Linkwarden-Synergie: Speichern Sie Seiten oder Links direkt in Ihrer Linkwarden-Instanz. Inklusive automatischer Viewport-Screenshots, Kollektions-Synchronisation und vordefinierten Tags.
 - Smart Search: Ein dediziertes, blitzschnelles Such-Interface für Ihre Lesezeichen. Unterstützt Themes (Hell/Dunkel) und ist vollständig tastaturbedienbar.
 - Geführter Setup-Wizard: Ein schrittweiser Onboarding-Prozess führt neue Nutzer sicher durch die Konfiguration von Token und Repository bis zum ersten erfolgreichen Sync.
-- Drei-Wege-Merge: Industrielle Zuverlässigkeit durch einen fortschrittlichen Merge-Algorithmus, der Änderungen auf verschiedenen Geräten intelligent zusammenführt.
 
 Kernfunktionen
 

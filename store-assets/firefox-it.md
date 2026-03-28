@@ -12,10 +12,11 @@ GitSyncMarks è un'estensione professionale per Firefox che sincronizza automati
 
 Caratteristiche Principali
 
+- Cronologia Sync e Ripristino: Sfoglia i commit passati, anteprima delle modifiche con diff e ripristina qualsiasi stato precedente dei segnalibri con un clic.
+- Correzione Duplicati: Le cartelle con lo stesso nome non si moltiplicano più durante la sincronizzazione — i duplicati vengono uniti automaticamente.
 - Sinergia Linkwarden: Salva pagine o link direttamente sulla tua istanza di Linkwarden. Include screenshot automatici, sincronizzazione collezioni e tag.
 - Ricerca Intelligente: Un'interfaccia dedicata e velocissima per i segnalibri. Supporta temi (chiaro/scuro) ed è accessibile da tastiera.
 - Installazione Guidata: Un processo passo-passo che guida l'utente nella configurazione di token e repository per il primo avvio.
-- Unione a Tre Vie (Three-Way Merge): Affidabilità industriale grazie a un algoritmo che combina intelligentemente i cambiamenti su più dispositivi.
 
 Funzionalità Chiave
 

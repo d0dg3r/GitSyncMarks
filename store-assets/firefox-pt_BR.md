@@ -12,10 +12,11 @@ GitSyncMarks é uma extensão profissional para Firefox que sincroniza os favori
 
 Destaques
 
+- Histórico de Sync e Restauração: Navegue pelos commits passados, visualize mudanças com diff e restaure qualquer estado anterior dos seus favoritos com um clique.
+- Correção de Duplicatas: Pastas com o mesmo nome não se multiplicam mais durante a sincronização — duplicatas são automaticamente mescladas.
 - Sinergia com Linkwarden: Salve páginas diretas para seu Linkwarden, gerando capturas de tela e sincronizando coleções automaticamente.
 - Smart Search: Interface super rápida dedicada a encontrar seus links. Suporta modo claro/escuro e navegação pelo teclado.
 - Assistente Guiado: Um assistente simples demonstra em poucos passos a criação e o fluxo da sincronização inicial com Tokens.
-- Fusão em Três Vias (Three-Way Merge): Algoritmo de classe empresarial que evita conflitos durante o mesclado provenientes de múltiplos locais.
 
 Principais Funções
 

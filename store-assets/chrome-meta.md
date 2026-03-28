@@ -80,141 +80,153 @@ All regions
 - [x] `en/chrome-2-sync.png` — Sync
 - [x] `en/chrome-3-menu.png` — Menu
 - [x] `en/chrome-4-linkwarden.png` — Linkwarden
-- [x] `en/chrome-5-search.png` — Search
-- [x] `en/chrome-6-popup.png` — Popup
-- [x] `en/chrome-7-linkwarden-save.png` — Save to Linkwarden
-- [x] `en/chrome-8-wizard-welcome.png` — Wizard (Welcome)
-- [x] `en/chrome-9-wizard-token.png` — Wizard (Token)
-- [x] `en/chrome-10-wizard-repo.png` — Wizard (Repository)
+- [x] `en/chrome-5-history.png` — Sync History
+- [x] `en/chrome-6-search.png` — Search
+- [x] `en/chrome-7-popup.png` — Popup
+- [x] `en/chrome-8-linkwarden-save.png` — Save to Linkwarden
+- [x] `en/chrome-9-wizard-welcome.png` — Wizard (Welcome)
+- [x] `en/chrome-10-wizard-token.png` — Wizard (Token)
+- [x] `en/chrome-11-wizard-repo.png` — Wizard (Repository)
 
 ### Deutsch (DE)
 - [x] `de/chrome-1-connection.png` — Connection
 - [x] `de/chrome-2-sync.png` — Sync
 - [x] `de/chrome-3-menu.png` — Menu
 - [x] `de/chrome-4-linkwarden.png` — Linkwarden
-- [x] `de/chrome-5-search.png` — Search
-- [x] `de/chrome-6-popup.png` — Popup
-- [x] `de/chrome-7-linkwarden-save.png` — Save to Linkwarden
-- [x] `de/chrome-8-wizard-welcome.png` — Wizard (Welcome)
-- [x] `de/chrome-9-wizard-token.png` — Wizard (Token)
-- [x] `de/chrome-10-wizard-repo.png` — Wizard (Repository)
+- [x] `de/chrome-5-history.png` — Sync History
+- [x] `de/chrome-6-search.png` — Search
+- [x] `de/chrome-7-popup.png` — Popup
+- [x] `de/chrome-8-linkwarden-save.png` — Save to Linkwarden
+- [x] `de/chrome-9-wizard-welcome.png` — Wizard (Welcome)
+- [x] `de/chrome-10-wizard-token.png` — Wizard (Token)
+- [x] `de/chrome-11-wizard-repo.png` — Wizard (Repository)
 
 ### Français (FR)
 - [x] `fr/chrome-1-connection.png` — Connection
 - [x] `fr/chrome-2-sync.png` — Sync
 - [x] `fr/chrome-3-menu.png` — Menu
 - [x] `fr/chrome-4-linkwarden.png` — Linkwarden
-- [x] `fr/chrome-5-search.png` — Search
-- [x] `fr/chrome-6-popup.png` — Popup
-- [x] `fr/chrome-7-linkwarden-save.png` — Save to Linkwarden
-- [x] `fr/chrome-8-wizard-welcome.png` — Wizard (Welcome)
-- [x] `fr/chrome-9-wizard-token.png` — Wizard (Token)
-- [x] `fr/chrome-10-wizard-repo.png` — Wizard (Repository)
+- [x] `fr/chrome-5-history.png` — Sync History
+- [x] `fr/chrome-6-search.png` — Search
+- [x] `fr/chrome-7-popup.png` — Popup
+- [x] `fr/chrome-8-linkwarden-save.png` — Save to Linkwarden
+- [x] `fr/chrome-9-wizard-welcome.png` — Wizard (Welcome)
+- [x] `fr/chrome-10-wizard-token.png` — Wizard (Token)
+- [x] `fr/chrome-11-wizard-repo.png` — Wizard (Repository)
 
 ### Español (ES)
 - [x] `es/chrome-1-connection.png` — Connection
 - [x] `es/chrome-2-sync.png` — Sync
 - [x] `es/chrome-3-menu.png` — Menu
 - [x] `es/chrome-4-linkwarden.png` — Linkwarden
-- [x] `es/chrome-5-search.png` — Search
-- [x] `es/chrome-6-popup.png` — Popup
-- [x] `es/chrome-7-linkwarden-save.png` — Save to Linkwarden
-- [x] `es/chrome-8-wizard-welcome.png` — Wizard (Welcome)
-- [x] `es/chrome-9-wizard-token.png` — Wizard (Token)
-- [x] `es/chrome-10-wizard-repo.png` — Wizard (Repository)
+- [x] `es/chrome-5-history.png` — Sync History
+- [x] `es/chrome-6-search.png` — Search
+- [x] `es/chrome-7-popup.png` — Popup
+- [x] `es/chrome-8-linkwarden-save.png` — Save to Linkwarden
+- [x] `es/chrome-9-wizard-welcome.png` — Wizard (Welcome)
+- [x] `es/chrome-10-wizard-token.png` — Wizard (Token)
+- [x] `es/chrome-11-wizard-repo.png` — Wizard (Repository)
 
 ### Português Brasil (PT-BR)
 - [x] `pt_BR/chrome-1-connection.png` — Connection
 - [x] `pt_BR/chrome-2-sync.png` — Sync
 - [x] `pt_BR/chrome-3-menu.png` — Menu
 - [x] `pt_BR/chrome-4-linkwarden.png` — Linkwarden
-- [x] `pt_BR/chrome-5-search.png` — Search
-- [x] `pt_BR/chrome-6-popup.png` — Popup
-- [x] `pt_BR/chrome-7-linkwarden-save.png` — Save to Linkwarden
-- [x] `pt_BR/chrome-8-wizard-welcome.png` — Wizard (Welcome)
-- [x] `pt_BR/chrome-9-wizard-token.png` — Wizard (Token)
-- [x] `pt_BR/chrome-10-wizard-repo.png` — Wizard (Repository)
+- [x] `pt_BR/chrome-5-history.png` — Sync History
+- [x] `pt_BR/chrome-6-search.png` — Search
+- [x] `pt_BR/chrome-7-popup.png` — Popup
+- [x] `pt_BR/chrome-8-linkwarden-save.png` — Save to Linkwarden
+- [x] `pt_BR/chrome-9-wizard-welcome.png` — Wizard (Welcome)
+- [x] `pt_BR/chrome-10-wizard-token.png` — Wizard (Token)
+- [x] `pt_BR/chrome-11-wizard-repo.png` — Wizard (Repository)
 
 ### Italiano (IT)
 - [x] `it/chrome-1-connection.png` — Connection
 - [x] `it/chrome-2-sync.png` — Sync
 - [x] `it/chrome-3-menu.png` — Menu
 - [x] `it/chrome-4-linkwarden.png` — Linkwarden
-- [x] `it/chrome-5-search.png` — Search
-- [x] `it/chrome-6-popup.png` — Popup
-- [x] `it/chrome-7-linkwarden-save.png` — Save to Linkwarden
-- [x] `it/chrome-8-wizard-welcome.png` — Wizard (Welcome)
-- [x] `it/chrome-9-wizard-token.png` — Wizard (Token)
-- [x] `it/chrome-10-wizard-repo.png` — Wizard (Repository)
+- [x] `it/chrome-5-history.png` — Sync History
+- [x] `it/chrome-6-search.png` — Search
+- [x] `it/chrome-7-popup.png` — Popup
+- [x] `it/chrome-8-linkwarden-save.png` — Save to Linkwarden
+- [x] `it/chrome-9-wizard-welcome.png` — Wizard (Welcome)
+- [x] `it/chrome-10-wizard-token.png` — Wizard (Token)
+- [x] `it/chrome-11-wizard-repo.png` — Wizard (Repository)
 
 ### 日本語 (JA)
 - [x] `ja/chrome-1-connection.png` — Connection
 - [x] `ja/chrome-2-sync.png` — Sync
 - [x] `ja/chrome-3-menu.png` — Menu
 - [x] `ja/chrome-4-linkwarden.png` — Linkwarden
-- [x] `ja/chrome-5-search.png` — Search
-- [x] `ja/chrome-6-popup.png` — Popup
-- [x] `ja/chrome-7-linkwarden-save.png` — Save to Linkwarden
-- [x] `ja/chrome-8-wizard-welcome.png` — Wizard (Welcome)
-- [x] `ja/chrome-9-wizard-token.png` — Wizard (Token)
-- [x] `ja/chrome-10-wizard-repo.png` — Wizard (Repository)
+- [x] `ja/chrome-5-history.png` — Sync History
+- [x] `ja/chrome-6-search.png` — Search
+- [x] `ja/chrome-7-popup.png` — Popup
+- [x] `ja/chrome-8-linkwarden-save.png` — Save to Linkwarden
+- [x] `ja/chrome-9-wizard-welcome.png` — Wizard (Welcome)
+- [x] `ja/chrome-10-wizard-token.png` — Wizard (Token)
+- [x] `ja/chrome-11-wizard-repo.png` — Wizard (Repository)
 
 ### 中文简体 (ZH-CN)
 - [x] `zh_CN/chrome-1-connection.png` — Connection
 - [x] `zh_CN/chrome-2-sync.png` — Sync
 - [x] `zh_CN/chrome-3-menu.png` — Menu
 - [x] `zh_CN/chrome-4-linkwarden.png` — Linkwarden
-- [x] `zh_CN/chrome-5-search.png` — Search
-- [x] `zh_CN/chrome-6-popup.png` — Popup
-- [x] `zh_CN/chrome-7-linkwarden-save.png` — Save to Linkwarden
-- [x] `zh_CN/chrome-8-wizard-welcome.png` — Wizard (Welcome)
-- [x] `zh_CN/chrome-9-wizard-token.png` — Wizard (Token)
-- [x] `zh_CN/chrome-10-wizard-repo.png` — Wizard (Repository)
+- [x] `zh_CN/chrome-5-history.png` — Sync History
+- [x] `zh_CN/chrome-6-search.png` — Search
+- [x] `zh_CN/chrome-7-popup.png` — Popup
+- [x] `zh_CN/chrome-8-linkwarden-save.png` — Save to Linkwarden
+- [x] `zh_CN/chrome-9-wizard-welcome.png` — Wizard (Welcome)
+- [x] `zh_CN/chrome-10-wizard-token.png` — Wizard (Token)
+- [x] `zh_CN/chrome-11-wizard-repo.png` — Wizard (Repository)
 
 ### 한국어 (KO)
 - [x] `ko/chrome-1-connection.png` — Connection
 - [x] `ko/chrome-2-sync.png` — Sync
 - [x] `ko/chrome-3-menu.png` — Menu
 - [x] `ko/chrome-4-linkwarden.png` — Linkwarden
-- [x] `ko/chrome-5-search.png` — Search
-- [x] `ko/chrome-6-popup.png` — Popup
-- [x] `ko/chrome-7-linkwarden-save.png` — Save to Linkwarden
-- [x] `ko/chrome-8-wizard-welcome.png` — Wizard (Welcome)
-- [x] `ko/chrome-9-wizard-token.png` — Wizard (Token)
-- [x] `ko/chrome-10-wizard-repo.png` — Wizard (Repository)
+- [x] `ko/chrome-5-history.png` — Sync History
+- [x] `ko/chrome-6-search.png` — Search
+- [x] `ko/chrome-7-popup.png` — Popup
+- [x] `ko/chrome-8-linkwarden-save.png` — Save to Linkwarden
+- [x] `ko/chrome-9-wizard-welcome.png` — Wizard (Welcome)
+- [x] `ko/chrome-10-wizard-token.png` — Wizard (Token)
+- [x] `ko/chrome-11-wizard-repo.png` — Wizard (Repository)
 
 ### Русский (RU)
 - [x] `ru/chrome-1-connection.png` — Connection
 - [x] `ru/chrome-2-sync.png` — Sync
 - [x] `ru/chrome-3-menu.png` — Menu
 - [x] `ru/chrome-4-linkwarden.png` — Linkwarden
-- [x] `ru/chrome-5-search.png` — Search
-- [x] `ru/chrome-6-popup.png` — Popup
-- [x] `ru/chrome-7-linkwarden-save.png` — Save to Linkwarden
-- [x] `ru/chrome-8-wizard-welcome.png` — Wizard (Welcome)
-- [x] `ru/chrome-9-wizard-token.png` — Wizard (Token)
-- [x] `ru/chrome-10-wizard-repo.png` — Wizard (Repository)
+- [x] `ru/chrome-5-history.png` — Sync History
+- [x] `ru/chrome-6-search.png` — Search
+- [x] `ru/chrome-7-popup.png` — Popup
+- [x] `ru/chrome-8-linkwarden-save.png` — Save to Linkwarden
+- [x] `ru/chrome-9-wizard-welcome.png` — Wizard (Welcome)
+- [x] `ru/chrome-10-wizard-token.png` — Wizard (Token)
+- [x] `ru/chrome-11-wizard-repo.png` — Wizard (Repository)
 
 ### Türkçe (TR)
 - [x] `tr/chrome-1-connection.png` — Connection
 - [x] `tr/chrome-2-sync.png` — Sync
 - [x] `tr/chrome-3-menu.png` — Menu
 - [x] `tr/chrome-4-linkwarden.png` — Linkwarden
-- [x] `tr/chrome-5-search.png` — Search
-- [x] `tr/chrome-6-popup.png` — Popup
-- [x] `tr/chrome-7-linkwarden-save.png` — Save to Linkwarden
-- [x] `tr/chrome-8-wizard-welcome.png` — Wizard (Welcome)
-- [x] `tr/chrome-9-wizard-token.png` — Wizard (Token)
-- [x] `tr/chrome-10-wizard-repo.png` — Wizard (Repository)
+- [x] `tr/chrome-5-history.png` — Sync History
+- [x] `tr/chrome-6-search.png` — Search
+- [x] `tr/chrome-7-popup.png` — Popup
+- [x] `tr/chrome-8-linkwarden-save.png` — Save to Linkwarden
+- [x] `tr/chrome-9-wizard-welcome.png` — Wizard (Welcome)
+- [x] `tr/chrome-10-wizard-token.png` — Wizard (Token)
+- [x] `tr/chrome-11-wizard-repo.png` — Wizard (Repository)
 
 ### Polski (PL)
 - [x] `pl/chrome-1-connection.png` — Connection
 - [x] `pl/chrome-2-sync.png` — Sync
 - [x] `pl/chrome-3-menu.png` — Menu
 - [x] `pl/chrome-4-linkwarden.png` — Linkwarden
-- [x] `pl/chrome-5-search.png` — Search
-- [x] `pl/chrome-6-popup.png` — Popup
-- [x] `pl/chrome-7-linkwarden-save.png` — Save to Linkwarden
-- [x] `pl/chrome-8-wizard-welcome.png` — Wizard (Welcome)
-- [x] `pl/chrome-9-wizard-token.png` — Wizard (Token)
-- [x] `pl/chrome-10-wizard-repo.png` — Wizard (Repository)
+- [x] `pl/chrome-5-history.png` — Sync History
+- [x] `pl/chrome-6-search.png` — Search
+- [x] `pl/chrome-7-popup.png` — Popup
+- [x] `pl/chrome-8-linkwarden-save.png` — Save to Linkwarden
+- [x] `pl/chrome-9-wizard-welcome.png` — Wizard (Welcome)
+- [x] `pl/chrome-10-wizard-token.png` — Wizard (Token)
+- [x] `pl/chrome-11-wizard-repo.png` — Wizard (Repository)
