@@ -3,7 +3,10 @@
     "message": "GitSyncMarks"
   },
   "extDescription": {
-    "message": "북마크를 GitHub에 안전하게 보관 — 파일별 저장, 3방향 병합 동기화, Chrome 및 Firefox 지원. 서버 불필요."
+    "message": "GitHub를 통한 북마크 동기화. Linkwarden 연동, 스마트 검색 및 모바일 앱 제공. 매우 안전하고 프라이빗합니다."
+  },
+  "extDescriptionFirefox": {
+    "message": "GitHub 북마크 동기화. Linkwarden 연동, 스마트 검색 및 설정 마법사. 중간 서버 없이 완벽하게 독립적으로 Firefox 지원."
   },
   "commands_quickSync": {
     "message": "북마크 빠른 동기화"

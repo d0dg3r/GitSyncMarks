@@ -5,7 +5,7 @@
 GitSyncMarks
 
 ### Summary (max 132 characters)
-Sincronización de marcadores vía GitHub. Sinergia con Linkwarden, búsqueda inteligente y app complementaria. Directo, seguro y privado.
+Sincronización de marcadores vía GitHub. Sinergia Linkwarden, búsqueda inteligente y app complementaria. Directo, seguro y privado.
 
 ### Detailed Description
 GitSyncMarks es una solución profesional para sincronizar bidireccional y automáticamente sus marcadores con un repositorio de GitHub. Gestione sus datos en el escritorio con Chrome y Firefox, o dispositivos móviles con la aplicación complementaria. Sin intermediarios, sin servidores de terceros: control total y privacidad.

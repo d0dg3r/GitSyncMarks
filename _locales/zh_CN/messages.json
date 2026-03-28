@@ -3,7 +3,10 @@
     "message": "GitSyncMarks"
   },
   "extDescription": {
-    "message": "书签安全存储在 GitHub — 按文件存储、三方合并同步，支持 Chrome 和 Firefox。无需服务器。"
+    "message": "通过GitHub同步书签。支持Linkwarden、智能搜索和配套应用。双向、安全且绝对私密。"
+  },
+  "extDescriptionFirefox": {
+    "message": "通过GitHub同步书签。支持Linkwarden、智能搜索与设置向导。无第三方服务器中转，原生支持Firefox结构。"
   },
   "commands_quickSync": {
     "message": "快速同步书签"

@@ -3,7 +3,10 @@
     "message": "GitSyncMarks"
   },
   "extDescription": {
-    "message": "ブックマークをGitHubに安全に保存 — ファイル単位の保存、三方向マージ同期、Chrome・Firefox対応。サーバー不要。"
+    "message": "GitHub経由のブックマーク同期。Linkwarden連携、スマート検索、コンパニオンアプリ付。直接、安全、プライベート。"
+  },
+  "extDescriptionFirefox": {
+    "message": "GitHub経由のブックマーク同期。Linkwarden連携、スマート検索、セットアップウィザード。双方向同期可能でFirefoxメニューにもネイティブ対応。"
   },
   "commands_quickSync": {
     "message": "ブックマークをクイック同期"

@@ -3,7 +3,10 @@
     "message": "GitSyncMarks"
   },
   "extDescription": {
-    "message": "Vos favoris en sécurité sur GitHub — stockage par fichier, synchronisation à fusion triple, fonctionne avec Chrome et Firefox. Pas de serveur requis."
+    "message": "Synchro de favoris via GitHub. Synergie Linkwarden, recherche intelligente et application mobile. Direct, sécurisé, privé."
+  },
+  "extDescriptionFirefox": {
+    "message": "Synchro de favoris via GitHub. Synergie Linkwarden, recherche intelligente et assistant de config. Bidirectionnel, sécurisé, privé. Support Firefox natif."
   },
   "commands_quickSync": {
     "message": "Synchroniser les favoris rapidement"

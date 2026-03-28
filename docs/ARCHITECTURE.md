@@ -61,6 +61,7 @@ Extension metadata. Two manifests for browser-specific differences:
 
 | Field | Chrome | Firefox |
 |---|---|---|
+| `description` | `__MSG_extDescription__` | `__MSG_extDescriptionFirefox__` |
 | Background | `service_worker: "background.js"` | `scripts: ["background.js"]` |
 | Browser-specific | — | `browser_specific_settings.gecko` |
 

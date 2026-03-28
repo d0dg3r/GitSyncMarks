@@ -3,7 +3,10 @@
     "message": "GitSyncMarks"
   },
   "extDescription": {
-    "message": "Ваши закладки в безопасности на GitHub — хранение по файлам, трёхсторонняя синхронизация с объединением, работает в Chrome и Firefox. Сервер не нужен."
+    "message": "Синхронизация закладок через GitHub. Интеграция с Linkwarden, Smart Search и приложение-компаньон. Напрямую, безопасно, приватно."
+  },
+  "extDescriptionFirefox": {
+    "message": "Синхронизация закладок через GitHub. Интеграция Linkwarden, умный поиск и мастер настройки. Безопасно, приватно. Полная поддержка Firefox."
   },
   "commands_quickSync": {
     "message": "Быстрая синхронизация закладок"

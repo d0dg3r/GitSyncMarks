@@ -3,7 +3,10 @@
     "message": "GitSyncMarks"
   },
   "extDescription": {
-    "message": "Twoje zakładki, bezpiecznie na GitHub — przechowywanie w osobnych plikach, trójstronne scalanie, działa w Chrome i Firefox. Bez serwera."
+    "message": "Synchronizacja zakładek przez GitHub. Synergia z Linkwarden, inteligentne wyszukiwanie i app. Bezpośrednio i bezpiecznie."
+  },
+  "extDescriptionFirefox": {
+    "message": "Synchronizacja zakładek przez GitHub. Synergia Linkwarden, wyszukiwanie i kreator konfiguracji. Bezpośrednio, bezpiecznie. Wsparcie dla Firefox."
   },
   "commands_quickSync": {
     "message": "Szybka synchronizacja zakładek"

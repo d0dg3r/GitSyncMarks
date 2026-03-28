@@ -3,7 +3,10 @@
     "message": "GitSyncMarks"
   },
   "extDescription": {
-    "message": "Your bookmarks, safe on GitHub — per-file storage, three-way merge sync, works on Chrome & Firefox. No server needed."
+    "message": "Bookmark sync via GitHub. Linkwarden synergy, Smart Search, and Companion App. Direct, secure, private."
+  },
+  "extDescriptionFirefox": {
+    "message": "Bookmark sync via GitHub. Linkwarden synergy, Smart Search, and guided setup wizard. Bidirectional, secure, and private. Full Firefox support. No middleman."
   },
   "commands_quickSync": {
     "message": "Quick sync bookmarks"
