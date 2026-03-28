@@ -26,6 +26,21 @@ const SVG_RESTORE_HTML =
 const SVG_CURRENT_HTML =
   '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 12 2 2 4-4"/></svg>';
 
+/**
+ * Mounts a trusted static full-document SVG string without using innerHTML.
+ * @param {HTMLElement} container
+ * @param {string} svgMarkup `<svg>...</svg>` (compile-time constant only)
+ */
+function mountStaticSvg(container, svgMarkup) {
+  const parsed = new DOMParser().parseFromString(svgMarkup, 'image/svg+xml');
+  const root = parsed.documentElement;
+  if (!root || root.localName === 'parsererror') {
+    container.replaceChildren();
+    return;
+  }
+  container.replaceChildren(root);
+}
+
 function renderHistoryListHeader() {
   const header = document.createElement('div');
   header.className = 'history-list-header';
@@ -58,7 +73,7 @@ function setPreviewIconButton(button) {
   button.replaceChildren();
   const inner = document.createElement('span');
   inner.className = 'history-btn-icon-inner';
-  inner.innerHTML = SVG_PREVIEW_HTML;
+  mountStaticSvg(inner, SVG_PREVIEW_HTML);
   const sr = document.createElement('span');
   sr.className = 'sr-only';
   sr.textContent = label;
@@ -71,7 +86,7 @@ function setRestoreIconButtonIdle(button, labelRestore) {
   button.replaceChildren();
   const inner = document.createElement('span');
   inner.className = 'history-btn-icon-inner';
-  inner.innerHTML = SVG_RESTORE_HTML;
+  mountStaticSvg(inner, SVG_RESTORE_HTML);
   const sr = document.createElement('span');
   sr.className = 'sr-only';
   sr.textContent = labelRestore;
@@ -137,7 +152,7 @@ function renderHistoryList(commits) {
       badge.setAttribute('title', curLabel);
       const iconWrap = document.createElement('span');
       iconWrap.className = 'history-current-icon';
-      iconWrap.innerHTML = SVG_CURRENT_HTML;
+      mountStaticSvg(iconWrap, SVG_CURRENT_HTML);
       const labelEl = document.createElement('span');
       labelEl.className = 'history-current-label';
       labelEl.textContent = curLabel;
@@ -406,7 +421,7 @@ function makeBadge(type, text) {
   return span;
 }
 
-function makeDiffGroup(label, entries, type) {
+function makeDiffGroup(label, entries, _type) {
   const details = document.createElement('details');
   details.className = 'history-diff-group';
   details.open = false;
