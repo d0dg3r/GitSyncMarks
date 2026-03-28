@@ -3,7 +3,10 @@
     "message": "GitSyncMarks"
   },
   "extDescription": {
-    "message": "I tuoi segnalibri, al sicuro su GitHub — archiviazione per file, sincronizzazione con merge a tre vie, funziona su Chrome e Firefox. Nessun server necessario."
+    "message": "Sincronizzazione segnalibri via GitHub. Sinergia Linkwarden, ricerca intelligente e Companion App. Diretto, sicuro, privato."
+  },
+  "extDescriptionFirefox": {
+    "message": "Sincronizzazione segnalibri via GitHub. Sinergia Linkwarden, ricerca veloce e configurazione guidata. Sicuro e privato. Supporto Firefox nativo."
   },
   "commands_quickSync": {
     "message": "Sincronizzazione rapida segnalibri"

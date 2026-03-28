@@ -3,7 +3,10 @@
     "message": "GitSyncMarks"
   },
   "extDescription": {
-    "message": "Deine Lesezeichen, sicher auf GitHub — Einzeldatei-Speicherung, Drei-Wege-Merge, funktioniert mit Chrome & Firefox. Kein Server nötig."
+    "message": "Lesezeichen-Sync via GitHub. Linkwarden-Synergie, Smart Search und Companion App. Direkt, sicher, privat."
+  },
+  "extDescriptionFirefox": {
+    "message": "Lesezeichen-Sync via GitHub. Linkwarden-Synergie, Smart Search und geführter Setup-Wizard. Bidirektional, sicher und privat. Volle Firefox-Unterstützung inklusive nativer Menü-Struktur. Kein Mittelsmann."
   },
   "commands_quickSync": {
     "message": "Lesezeichen sofort synchronisieren"

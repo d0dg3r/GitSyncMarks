@@ -5,7 +5,7 @@
 GitSyncMarks
 
 ### Summary (max 132 characters)
-Synchronizacja zakładek przez GitHub. Synergia z Linkwarden, inteligentne wyszukiwanie i aplikacja mobilna. Bezpośrednio i bezpiecznie.
+Synchronizacja zakładek przez GitHub. Synergia z Linkwarden, inteligentne wyszukiwanie i app. Bezpośrednio i bezpiecznie.
 
 ### Detailed Description
 GitSyncMarks to profesjonalne rozwiązanie do dwukierunkowej i automatycznej synchronizacji zakładek z repozytorium GitHub. Pełna kontrola nad danymi i całkowita prywatność – bez pośredników i bez serwerów stron trzecich.

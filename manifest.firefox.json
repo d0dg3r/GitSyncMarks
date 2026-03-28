@@ -3,7 +3,7 @@
   "name": "__MSG_extName__",
   "short_name": "GitSyncMarks",
   "version": "2.7.0",
-  "description": "__MSG_extDescription__",
+  "description": "__MSG_extDescriptionFirefox__",
   "default_locale": "en",
   "homepage_url": "https://gitsyncmarks.com",
   "browser_specific_settings": {

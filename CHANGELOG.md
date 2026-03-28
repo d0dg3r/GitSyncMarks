@@ -7,29 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Fixed
-- **Firefox — Sync History layout**: History rows use a single-row four-column grid (date, SHA, message, and an actions column with Preview + Restore or the “current” badge, right-aligned). A previous layout attempt let the actions column’s min-content width exceed the card so the Restore button could paint outside the card; card and list still use horizontal overflow containment as a safeguard.
-- **Options — Sync History SVG icons**: Preview, Restore, and current-commit SVG icons are now mounted via `DOMParser` + `replaceChildren` instead of `innerHTML`, eliminating security-linter warnings.
-
-### Changed
-- **package.json description**: Aligned with `extDescription` wording — uses “No server needed.” instead of “No middleman.” for consistency with all 12 locale files.
-
-### Added
-- **UI Density**: Three-level density setting (Compact / Medium / Large) via S / M / L selector in the options header. Applies to all extension surfaces (options, popup, search, Linkwarden save). Stored in `chrome.storage.sync` and synced across devices. CSS tokens in `ui-density.css` control typography, spacing, and control sizes globally.
-
-### Improved
-- **CSS architecture**: New root-level [`shared.css`](shared.css) holds the shared light/dark color palette (`--color-*`), universal reset, base `body` typography, `.btn` / `.btn-primary` / `.btn-secondary`, `@keyframes spin`, and `--focus-ring`. Extension pages load `ui-density.css` → `shared.css` → their page stylesheet to avoid duplicating theme tokens and button rules across options, popup, search, and Linkwarden save.
-- **Options header**: Language dropdown uses short codes (EN, DE, …) with full names on hover; density (S/M/L) and theme (Auto / Dark / Light) use matching segmented controls and uniform control height; theme uses inline SVG icons instead of a single cycle letter.
-- **Menu tab (visibility & order)**: Tighter list layout — smaller row padding, reduced gaps between rows and category headers, no extra row margin stacking with flex `gap`, slightly smaller labels/toggles/reorder buttons, and a smaller reset button top margin.
-- **Sync History (Settings)**: Column headers for date, commit hash, **Client** (device id parsed from GitSyncMarks commit subjects; full subject on hover), and a screen-reader **Actions** column. One grid row per commit so values align under headers; preview/restore icons sit in the last column. The active commit shows a checkmark icon plus the “current” label.
-- **What’s new (toolbar popup)**: Detects popup context (`whats-new-overlay--popup`), uses compact typography and four short bullets so the dialog usually fits without scrolling; Settings page keeps the larger panel.
-- **What’s new copy**: v2.7.0 bullets now focus on user-visible improvements (Sync History, restore/diff preview, duplicate fix, UI density & theme) and no longer mention CI internals.
-- **Store listings & screenshots**: All 12-language Chrome and Firefox store descriptions highlight Sync History, restore, and the duplicate fix. Screenshots regenerated with a new Sync History panel (slot 5, renumbering search through wizard to 6–11); meta checklists and README Visual Tour updated to match.
-
 ## [2.7.0] - 2026-03-28 (*Spock*)
 
 ### Changed
 - **CI**: CodeQL workflow uses `github/codeql-action` v4, runs JavaScript actions on Node 24 (`FORCE_JAVASCRIPT_ACTIONS_TO_NODE24`), and sets `CODEQL_ACTION_FILE_COVERAGE_ON_PRS` so PR analyses keep file coverage after GitHub’s April 2026 default change. The main CI workflow sets the same Node 24 opt-in for checkout/setup-node; optional Playwright jobs run smoke and options UI tests on push/PR to `main`.
+- **Extension short description (`extDescription`)**: Matches the ≤132-character Chrome Web Store summary from `store-assets/chrome-*.md` in all 12 locales; `package.json` `description` uses the English line so npm metadata stays aligned. Spanish and Polish store summaries were tightened by one word each (“Sinergia Linkwarden…”, “…i app…”) so the string stays within the 132-character store limit.
+- **Firefox manifest description**: `manifest.firefox.json` uses `__MSG_extDescriptionFirefox__`; each locale adds `extDescriptionFirefox` with the AMO summary from `store-assets/firefox-*.md` (up to 250 characters), separate from the Chrome-oriented `extDescription`.
 
 ### Fixed
 - **Duplicate folders (GitHub / toolbar)**: When the repo or browser had multiple sibling folders with the same display title (e.g. several “GitHubRepos (user)” or “Development” trees), serialization and `fileMapToBookmarkTree` now merge them into one logical folder so suffix paths (`development-2`, `githubrepos-user-3`, …) stop multiplying across syncs.
@@ -41,6 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Options page robustness**: Main tab switching guards missing `#tab-*` panels. The document-level folder-browser dismiss listener and folder UI no longer assume non-null nodes. Module-level `change`/`click` listeners use optional chaining so a missing control does not abort the rest of the options script.
 - **Build**: Unpacked Chrome/Firefox packages copy the `options/` directory so modular Settings scripts load correctly.
 - **push() / sync() error handling**: Removed dead `settings` reference in `push()` `catch`; hoisted `profileId` in `pull()`/`sync()` so `catch` can call `setSyncState` without `ReferenceError`.
+- **Firefox — Sync History layout**: History rows use a single-row four-column grid (date, SHA, message, and an actions column with Preview + Restore or the “current” badge, right-aligned). A previous layout attempt let the actions column’s min-content width exceed the card so the Restore button could paint outside the card; card and list still use horizontal overflow containment as a safeguard.
+- **Options — Sync History SVG icons**: Preview, Restore, and current-commit SVG icons are now mounted via `DOMParser` + `replaceChildren` instead of `innerHTML`, eliminating security-linter warnings.
 
 ### Improved
 - **Debug log performance**: Cached the debug-log enable flag in memory with a `storage.onChanged` listener, eliminating an async storage read on every `log()` call.
@@ -49,6 +34,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Linkwarden screenshot delay**: Reduced the fixed 10-second screenshot upload delay to 5 seconds; now configurable via `screenshotDelayMs` constructor option.
 - **Theme listener cleanup**: Replaced deprecated `MediaQueryList.removeListener` with standard `removeEventListener`.
 - **CSS cleanup**: Removed dead `#tab-sync` selectors, merged duplicate `.context-menu-item-row` and `.btn-danger` rule blocks.
+- **CSS architecture**: New root-level [`shared.css`](shared.css) holds the shared light/dark color palette (`--color-*`), universal reset, base `body` typography, `.btn` / `.btn-primary` / `.btn-secondary`, `@keyframes spin`, and `--focus-ring`. Extension pages load `ui-density.css` → `shared.css` → their page stylesheet to avoid duplicating theme tokens and button rules across options, popup, search, and Linkwarden save.
+- **Options header**: Language dropdown uses short codes (EN, DE, …) with full names on hover; density (S/M/L) and theme (Auto / Dark / Light) use matching segmented controls and uniform control height; theme uses inline SVG icons instead of a single cycle letter.
+- **Menu tab (visibility & order)**: Tighter list layout — smaller row padding, reduced gaps between rows and category headers, no extra row margin stacking with flex `gap`, slightly smaller labels/toggles/reorder buttons, and a smaller reset button top margin.
+- **Sync History (Settings)**: Column headers for date, commit hash, **Client** (device id parsed from GitSyncMarks commit subjects; full subject on hover), and a screen-reader **Actions** column. One grid row per commit so values align under headers; preview/restore icons sit in the last column. The active commit shows a checkmark icon plus the “current” label.
+- **What’s new (toolbar popup)**: Detects popup context (`whats-new-overlay--popup`), uses compact typography and four short bullets so the dialog usually fits without scrolling; Settings page keeps the larger panel.
+- **What’s new copy**: v2.7.0 bullets now focus on user-visible improvements (Sync History, restore/diff preview, duplicate fix, UI density & theme) and no longer mention CI internals.
+- **Store listings & screenshots**: All 12-language Chrome and Firefox store descriptions highlight Sync History, restore, and the duplicate fix. Screenshots regenerated with a new Sync History panel (slot 5, renumbering search through wizard to 6–11); meta checklists and README Visual Tour updated to match.
 
 ### Removed
 - **Debug telemetry**: Removed `postAgentDebugLog` function and all call sites from `background.js` (hardcoded localhost POST leftover from debugging).
@@ -58,7 +50,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **What's new after update**: After an extension update, a dismissible “What’s new” panel appears once when you open the toolbar popup or Settings (skipped on brand-new install so onboarding stays first).
 - **Sync history / rollback**: Browse recent sync commits in the Backup tab and restore bookmarks from any previous version. One-click "Undo last sync" reverts to the pre-sync state without navigating commit history.
 - **Diff preview**: "Preview" button on each history entry shows a structured diff (added, removed, changed bookmarks) before restoring, so users can make informed decisions. The preview opens inline under that commit; Added and Removed are shown side by side with collapsed sections by default. Each row also offers **Restore** using a two-click confirmation on the same button (label switches to “Click again to confirm”) instead of a browser dialog.
-- **Unit tests**: Expanded `test/` directory with `serializer.test.js` (slugify, shortHash, generateFilename, contentHash, bookmarkTreeToFileMap, fileMapToBookmarkTree, fileMapToMarkdown, fileMapToNetscapeHtml) and `sync-diff.test.js` (computeDiff, mergeDiffs). Total 54 tests covering serialization, deserialization, export, diff, and merge logic.
+- **Unit tests**: Expanded `test/` directory with `serializer.test.js` (slugify, shortHash, generateFilename, contentHash, bookmarkTreeToFileMap, fileMapToBookmarkTree, fileMapToMarkdown, fileMapToNetscapeHtml) and `sync-diff.test.js` (computeDiff, mergeDiffs), plus additional suites (`sync-commit-message`, `merge-order`, `dedupe`, `whats-new`). Total 65 tests covering serialization, deserialization, export, diff, merge, and related helpers.
+- **UI Density**: Three-level density setting (Compact / Medium / Large) via S / M / L selector in the options header. Applies to all extension surfaces (options, popup, search, Linkwarden save). Stored in `chrome.storage.sync` and synced across devices. CSS tokens in `ui-density.css` control typography, spacing, and control sizes globally.
 
 ## [2.6.2] - 2026-03-08 (*Link*)
 

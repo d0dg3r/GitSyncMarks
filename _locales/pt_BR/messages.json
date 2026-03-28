@@ -3,7 +3,10 @@
     "message": "GitSyncMarks"
   },
   "extDescription": {
-    "message": "Seus favoritos, seguros no GitHub — armazenamento por arquivo, sincronização com merge de três vias, funciona no Chrome e Firefox. Sem necessidade de servidor."
+    "message": "Sincronização de favoritos via GitHub. Sinergia com Linkwarden, Smart Search e app complementar. Direto, seguro, privado."
+  },
+  "extDescriptionFirefox": {
+    "message": "Sincronização de favoritos via GitHub. Sinergia Linkwarden, Smart Search e assistente de configuração. Seguro e privado. Suporte nativo ao Firefox."
   },
   "commands_quickSync": {
     "message": "Sincronização rápida dos favoritos"

@@ -3,7 +3,10 @@
     "message": "GitSyncMarks"
   },
   "extDescription": {
-    "message": "Yer işaretleriniz GitHub'da güvende — dosya bazlı depolama, üç yönlü birleştirme senkronizasyonu, Chrome ve Firefox'ta çalışır. Sunucu gerekmez."
+    "message": "GitHub üzerinden yer imi senkronizasyonu. Linkwarden sinerjisi, Akıllı Arama ve Yardımcı Uygulama. Doğrudan, güvenli ve özel."
+  },
+  "extDescriptionFirefox": {
+    "message": "GitHub üzerinden yer imi senkronizasyonu. Linkwarden sinerjisi, Akıllı Arama ve rehberli kurulum. Tamamen özel. Özgün Firefox desteği."
   },
   "commands_quickSync": {
     "message": "Yer işaretlerini hızlı senkronize et"

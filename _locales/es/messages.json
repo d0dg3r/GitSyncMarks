@@ -3,7 +3,10 @@
     "message": "GitSyncMarks"
   },
   "extDescription": {
-    "message": "Tus marcadores seguros en GitHub — almacenamiento por archivo, sincronización de fusión triple, funciona con Chrome y Firefox. Sin servidor."
+    "message": "Sincronización de marcadores vía GitHub. Sinergia Linkwarden, búsqueda inteligente y app complementaria. Directo, seguro y privado."
+  },
+  "extDescriptionFirefox": {
+    "message": "Sincronización de marcadores vía GitHub. Sinergia Linkwarden, búsqueda inteligente y asistente de configuración. Bidireccional y seguro. Soporte nativo de Firefox."
   },
   "commands_quickSync": {
     "message": "Sincronizar marcadores rápidamente"
