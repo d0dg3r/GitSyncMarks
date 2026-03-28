@@ -26,6 +26,45 @@ Please **do not** report security vulnerabilities in public GitHub issues.
 - We will acknowledge your report and keep you updated on the fix
 - Coordinated disclosure: we will credit you in the advisory unless you prefer to remain anonymous
 
+## Automated Security Scanning
+
+The following tools run automatically in CI:
+
+| Tool | Workflow | Trigger | Purpose |
+|------|----------|---------|---------|
+| **CodeQL** | `codeql.yml` | Push/PR to `main`, weekly schedule | JavaScript/TypeScript SAST (XSS, injection, prototype pollution) |
+| **Dependency Review** | `dependency-review.yml` | PRs to `main` | Blocks PRs that introduce known-vulnerable dependencies |
+| **npm audit** | `ci.yml` | Push/PR to `main` | Checks lockfile for published advisories |
+| **ESLint + eslint-plugin-security** | `ci.yml` | Push/PR to `main` | Detects dangerous patterns (`eval`, `innerHTML`, non-literal `require`) |
+| **Dependabot** | `dependabot.yml` | Weekly schedule | Opens PRs for outdated npm and GitHub Actions dependencies |
+
+GitHub **secret scanning** is enabled at the repository level (default for public repos).
+
+## Content Security Policy
+
+Both `manifest.json` and `manifest.firefox.json` declare an explicit CSP for extension pages:
+
+```
+script-src 'self'; object-src 'none'
+```
+
+This prevents `eval()`, inline scripts, and remote script loading on all extension pages (options, popup).
+
+## Permissions
+
+| Permission | Justification |
+|------------|---------------|
+| `bookmarks` | Read/write bookmarks for sync |
+| `storage` | Store settings and encrypted token |
+| `alarms` | Schedule periodic auto-sync |
+| `notifications` | Show sync status notifications |
+| `contextMenus` | Right-click bookmark actions |
+| `activeTab` | Save current tab as bookmark |
+| `scripting` | Inject content scripts for bookmark actions |
+| `downloads` | Export bookmarks as file |
+| **host_permissions** `https://api.github.com/*` | GitHub API access for sync |
+| **optional_host_permissions** `<all_urls>` (Chrome) / `https://*/* http://*/*` (Firefox) | Required only when Linkwarden integration is enabled; granted at runtime by user consent |
+
 ## Security Considerations
 
 GitSyncMarks handles sensitive data:

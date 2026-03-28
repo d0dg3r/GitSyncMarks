@@ -12,10 +12,11 @@ GitSyncMarks, yer imlerinizi bir GitHub deposuyla otomatik olarak senkronize ede
 
 Öne Çıkanlar
 
+- Senkronizasyon Geçmişi ve Geri Yükleme: Geçmiş commit'leri göz atın, diff önizlemesiyle değişiklikleri kontrol edin ve herhangi bir önceki yer imi durumunu tek tıklamayla geri yükleyin.
+- Kopya Düzeltme: Aynı adlı klasörler senkronizasyonlarda artık çoğalmıyor — kopyalar otomatik olarak birleştiriliyor.
 - Linkwarden Sinerjisi: Sayfaları doğrudan Linkwarden'a kaydedin. Otomatik ekran görüntüleri, koleksiyon senkronizasyonu ve etiketler dahildir.
 - Akıllı Arama (Smart Search): Yıldırım hızında arama arayüzü. Açık/koyu tema ve klavye destekli.
 - Rehberli Kurulum: Yeni kullanıcıları token ve depo yapılandırmasından senkronizasyona kadar yönlendiren basit sihirbaz.
-- Üç Yönlü Birleştirme (Three-Way Merge): Birden fazla cihazdan gelen değişiklikleri akıllıca birleştiren gelişmiş algoritma sayesinde mutlak güvenilirlik.
 
 Temel Özellikler
 

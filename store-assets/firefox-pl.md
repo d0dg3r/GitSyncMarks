@@ -12,10 +12,11 @@ GitSyncMarks to profesjonalne rozszerzenie dla Firefox, które automatycznie syn
 
 Najważniejsze Funkcje
 
+- Historia synchronizacji i przywracanie: Przeglądaj poprzednie commity, sprawdź zmiany w podglądzie diff i przywróć dowolny wcześniejszy stan zakładek jednym kliknięciem.
+- Naprawa duplikatów: Foldery o tej samej nazwie nie mnożą się już podczas synchronizacji — duplikaty są automatycznie scalane.
 - Synergia z Linkwarden: Zapisuj strony bezpośrednio do swojej instancji Linkwarden. Obejmuje m.in. automatyczne zrzuty ekranu, synchronizację kolekcji i tagów.
 - Inteligentne Wyszukiwanie: Dedykowany, błyskawiczny interfejs wyszukiwania zakładek (jasny/ciemny motyw), w pełni obsługiwany z klawiatury.
 - Kreator Konfiguracji: Proces, który prowadzi nowych użytkowników przez wybór tokena i repozytorium aż do rzetelnej synchronizacji.
-- Algorytm Three-Way Merge: Przemysłowa niezawodność dzięki zaawansowanemu łączeniu zmian z różnych urządzeń.
 
 Kluczowe Możliwości
 

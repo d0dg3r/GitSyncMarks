@@ -1,45 +1,16 @@
-/* Linkwarden Save Popup – reuses search.css design tokens */
+/* Linkwarden Save Popup */
+
 :root {
-  --color-bg: #f5f5f7;
-  --color-surface: #ffffff;
-  --color-text: #1d1d1f;
-  --color-text-secondary: #6e6e73;
-  --color-border: #d2d2d7;
-  --color-primary: #0071e3;
-  --color-primary-hover: #0077ed;
   --color-success: #22863a;
   --color-error: #b42318;
-  --color-btn-hover: #ececf1;
-  --color-btn-active: #e3e3e8;
   --color-warning: #d29922;
-  --color-tag-bg: #e8f0fe;
-  --color-tag-text: #1a56db;
 }
 
 html.dark {
-  --color-bg: #1d1d1f;
-  --color-surface: #2c2c2e;
-  --color-text: #f5f5f7;
-  --color-text-secondary: #a1a1a6;
-  --color-border: #3a3a3c;
-  --color-primary: #0a84ff;
-  --color-primary-hover: #409cff;
-  --color-success: #30d158;
-  --color-error: #ff453a;
-  --color-btn-hover: #3a3a3c;
-  --color-btn-active: #444446;
   --color-warning: #ffd60a;
-  --color-tag-bg: #1c3a5f;
-  --color-tag-text: #5eaeff;
 }
 
-html,
 body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background: var(--color-bg);
-  color: var(--color-text);
   min-height: 100vh;
 }
 
@@ -71,7 +42,7 @@ body {
 
 .lw-header h1 {
   margin: 0;
-  font-size: 18px;
+  font-size: var(--ui-font-xl);
   font-weight: 600;
 }
 
@@ -82,7 +53,7 @@ body {
   border-radius: 8px;
   background: var(--color-surface);
   color: var(--color-text-secondary);
-  font-size: 18px;
+  font-size: var(--ui-font-xl);
   line-height: 1;
   cursor: pointer;
   display: flex;
@@ -107,7 +78,7 @@ body {
   background: rgba(210, 153, 34, 0.12);
   border: 1px solid var(--color-warning);
   color: var(--color-warning);
-  font-size: 13px;
+  font-size: var(--ui-font-sm);
   font-weight: 500;
   margin-bottom: 12px;
 }
@@ -115,7 +86,7 @@ body {
 .lw-delete-btn-compact {
   margin-left: auto;
   padding: 2px 10px;
-  font-size: 11px;
+  font-size: var(--ui-font-xxs);
   background: var(--color-error);
   color: white;
   border: none;
@@ -136,7 +107,7 @@ body {
 }
 
 .lw-badge-icon {
-  font-size: 15px;
+  font-size: var(--ui-font-lg);
 }
 
 .hidden {
@@ -157,7 +128,7 @@ body {
 }
 
 .lw-field label {
-  font-size: 12px;
+  font-size: var(--ui-font-xs);
   font-weight: 600;
   color: var(--color-text-secondary);
   text-transform: uppercase;
@@ -171,8 +142,8 @@ body {
   width: 100%;
   border: 1px solid var(--color-border);
   border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 14px;
+  padding: var(--ui-control-pad);
+  font-size: var(--ui-font-base);
   background: var(--color-surface);
   color: var(--color-text);
   font-family: inherit;
@@ -185,13 +156,13 @@ body {
 .lw-field select:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.15);
+  box-shadow: var(--focus-ring);
 }
 
 .lw-url-input {
   opacity: 0.7;
   cursor: default;
-  font-size: 13px !important;
+  font-size: var(--ui-font-sm) !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -220,7 +191,7 @@ body {
   border-radius: 8px;
   background: var(--color-surface);
   color: var(--color-text-secondary);
-  font-size: 18px;
+  font-size: var(--ui-font-xl);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -245,7 +216,7 @@ body {
   border: 1px solid var(--color-primary);
   border-radius: 8px;
   padding: 6px 10px;
-  font-size: 13px;
+  font-size: var(--ui-font-sm);
   background: var(--color-surface);
   color: var(--color-text);
 }
@@ -267,7 +238,7 @@ body {
 
 .lw-tags-wrap:focus-within {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.15);
+  box-shadow: var(--focus-ring);
 }
 
 .lw-tag-chips {
@@ -284,7 +255,7 @@ body {
   color: var(--color-tag-text);
   border-radius: 12px;
   padding: 2px 6px 2px 10px;
-  font-size: 12px;
+  font-size: var(--ui-font-xs);
   font-weight: 500;
   white-space: nowrap;
   animation: chip-in 0.15s ease;
@@ -309,7 +280,7 @@ body {
   background: transparent;
   color: var(--color-tag-text);
   cursor: pointer;
-  font-size: 14px;
+  font-size: var(--ui-font-base);
   line-height: 1;
   padding: 0;
   display: flex;
@@ -339,7 +310,7 @@ html.dark .lw-tag-chip-remove:hover {
   border: none;
   background: transparent;
   outline: none;
-  font-size: 13px;
+  font-size: var(--ui-font-sm);
   color: var(--color-text);
   width: 100%;
   padding: 4px 2px;
@@ -368,7 +339,7 @@ html.dark .lw-tag-chip-remove:hover {
   color: var(--color-text-secondary);
   border-radius: 12px;
   padding: 3px 10px;
-  font-size: 11px;
+  font-size: var(--ui-font-xxs);
   cursor: pointer;
   transition: all 0.12s ease;
   white-space: nowrap;
@@ -406,7 +377,7 @@ html.dark .lw-tag-chip-remove:hover {
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  font-size: 14px !important;
+  font-size: var(--ui-font-base) !important;
   font-weight: 400 !important;
   color: var(--color-text) !important;
   text-transform: none !important;
@@ -461,7 +432,7 @@ html.dark .lw-tag-chip-remove:hover {
 }
 
 .lw-status {
-  font-size: 13px;
+  font-size: var(--ui-font-sm);
   color: var(--color-text-secondary);
   flex: 1;
   min-width: 0;
@@ -487,8 +458,8 @@ html.dark .lw-tag-chip-remove:hover {
 .lw-btn {
   border: 1px solid var(--color-border);
   border-radius: 8px;
-  padding: 8px 16px;
-  font-size: 14px;
+  padding: var(--ui-btn-pad);
+  font-size: var(--ui-font-base);
   font-weight: 500;
   cursor: pointer;
   background: var(--color-surface);
@@ -533,8 +504,8 @@ html.dark .lw-tag-chip-remove:hover {
 .lw-btn-small {
   border: 1px solid var(--color-border);
   border-radius: 6px;
-  padding: 4px 10px;
-  font-size: 13px;
+  padding: var(--ui-btn-pad-sm);
+  font-size: var(--ui-font-sm);
   cursor: pointer;
   background: var(--color-surface);
   color: var(--color-text);
@@ -569,11 +540,5 @@ html.dark .lw-tag-chip-remove:hover {
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-top-color: #fff;
   border-radius: 50%;
-  animation: spinner 0.6s linear infinite;
-}
-
-@keyframes spinner {
-  to {
-    transform: rotate(360deg);
-  }
+  animation: spin 0.6s linear infinite;
 }

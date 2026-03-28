@@ -44,7 +44,7 @@ See [docs/IDEAS-LINKWARDEN.md](docs/IDEAS-LINKWARDEN.md) for full specification 
 
 | Idea | Description | Effort |
 |------|-------------|--------|
-| **CI E2E Tests** | E2E-Workflow in GitHub Actions reaktivieren (xvfb/headed, Service-Worker-Start). Aktuell lokal mit `npm run test:e2e`. | Medium |
+| **CI E2E Tests** | Smoke + options-UI E2E run automatically in `ci.yml` (no secrets). Full sync E2E (connection + sync specs) still manual via `test-e2e.yml` (requires PAT + test repo). | Medium |
 | **Open tabs sync** | Save open tabs to Git; full history in repo for restore/jump-back; default tabs per profile. | Large |
 | **Tab-Profile** | Named sets of URLs (from bookmark folder, current tabs, or manual). Open in current window (replace/append) or new window. Stored in repo (`tab-profiles.json`). See [docs/IDEAS-TAB-PROFILES.md](docs/IDEAS-TAB-PROFILES.md). | Large |
 | **Additional sync sources (read-only)** | Add extra folders from centrally maintained repos (e.g. team bookmarks). Your personal bookmarks stay in your repo; the shared folder is merged in read-only. Assemble bookmarks from multiple sources in one place | Medium |

@@ -5,7 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GitSyncMarks – Settings</title>
+  <link rel="stylesheet" href="ui-density.css">
+  <link rel="stylesheet" href="shared.css">
   <link rel="stylesheet" href="options.css">
+  <link rel="stylesheet" href="whats-new.css">
 </head>
 
 <body>
@@ -19,7 +22,16 @@
         <select id="language-select">
           <!-- Populated dynamically -->
         </select>
-        <button type="button" id="theme-cycle-btn" class="theme-cycle-btn" role="button" aria-label="Theme">A</button>
+        <div id="density-selector" class="header-segmented" role="radiogroup" aria-label="UI density">
+          <button type="button" role="radio" aria-checked="false" class="seg-btn" data-density="compact" aria-label="Compact" title="Compact">S</button>
+          <button type="button" role="radio" aria-checked="true" class="seg-btn active" data-density="medium" aria-label="Medium" title="Medium">M</button>
+          <button type="button" role="radio" aria-checked="false" class="seg-btn" data-density="large" aria-label="Large" title="Large">L</button>
+        </div>
+        <div id="theme-selector" class="header-segmented" role="radiogroup" aria-label="Theme">
+          <button type="button" role="radio" aria-checked="false" class="seg-btn" data-theme="auto" aria-label="Auto" title="Auto"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"/><path d="M16 12a4 4 0 01-4 4" fill="currentColor" opacity=".4"/></svg></button>
+          <button type="button" role="radio" aria-checked="false" class="seg-btn" data-theme="dark" aria-label="Dark" title="Dark"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg></button>
+          <button type="button" role="radio" aria-checked="false" class="seg-btn" data-theme="light" aria-label="Light" title="Light"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42m12.72-12.72l1.42-1.42"/></svg></button>
+        </div>
       </div>
     </header>
 
@@ -547,6 +559,7 @@
         <button class="sub-tab-btn" data-subtab="files-export-import" data-i18n="options_subTabExportImport">Export /
           Import</button>
         <button class="sub-tab-btn" data-subtab="files-git-add" data-i18n="options_subTabGitAdd">Git Add</button>
+        <button class="sub-tab-btn" data-subtab="files-history" data-i18n="options_subTabHistory">History</button>
       </div>
 
       <div class="sub-tab-content active" id="subtab-files-generated">
@@ -799,6 +812,21 @@
         </section>
       </div>
 
+      <div class="sub-tab-content" id="subtab-files-history">
+        <section class="card">
+          <h2 data-i18n="options_historyTitle">Sync History</h2>
+          <p class="card-desc" data-i18n="options_historyDesc">Browse recent sync commits and restore bookmarks from a previous version. Restoring only changes local bookmarks — it does not rewrite the remote branch.</p>
+
+          <div class="history-actions">
+            <button id="history-load-btn" class="btn btn-secondary" data-i18n="options_historyLoadBtn">Load history</button>
+            <button id="history-undo-btn" class="btn btn-secondary" disabled data-i18n="options_historyUndoBtn">Undo last sync</button>
+            <span id="history-status" class="validation-result"></span>
+          </div>
+
+          <div id="history-list" style="display: none;"></div>
+        </section>
+      </div>
+
       <div id="password-dialog" class="profile-inline-dialog" style="display: none;">
         <div class="profile-inline-dialog-body">
           <p id="password-dialog-prompt" class="profile-inline-dialog-text"></p>
@@ -838,8 +866,8 @@
             <!-- Populated dynamically -->
           </div>
 
-          <button type="button" id="context-menu-reset-btn" class="btn btn-secondary btn-sm"
-            style="margin-top: 0.75rem;" data-i18n="options_contextMenuResetBtn">Reset to Default</button>
+          <button type="button" id="context-menu-reset-btn" class="btn btn-secondary btn-sm context-menu-reset-btn"
+            data-i18n="options_contextMenuResetBtn">Reset to Default</button>
         </section>
       </div>
 
@@ -964,6 +992,23 @@
           <p class="help-note" data-i18n="help_profilesNote">Profiles work reliably. With multiple profiles, sync
             conflicts can occasionally occur — trying Push or Pull 2–3 times usually resolves them. This feature is
             still evolving. If you encounter reproducible bugs, please open an issue on GitHub.</p>
+        </div>
+      </details>
+
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_historyTitle">Sync History & Undo</h2>
+        </summary>
+        <div class="help-details-body">
+          <p data-i18n="help_historyIntro">Every sync creates a Git commit. You can browse recent commits in the History sub-tab (under Files) and restore bookmarks from any previous version.</p>
+          <dl class="help-dl">
+            <dt data-i18n="help_historyLoadLabel">Load history</dt>
+            <dd data-i18n="help_historyLoadDesc">Fetches the last 20 commits that touched your bookmark path. Each row shows the date, commit message, and a short SHA.</dd>
+            <dt data-i18n="help_historyRestoreLabel">Restore</dt>
+            <dd data-i18n="help_historyRestoreDesc">Replaces all local bookmarks with the state from that commit. This does not rewrite the remote branch — your current remote data remains untouched. The next sync will push local state back.</dd>
+            <dt data-i18n="help_historyUndoLabel">Undo last sync</dt>
+            <dd data-i18n="help_historyUndoDesc">One-click rollback to the commit before the most recent sync applied remote changes. Available after any pull or merge that modified local bookmarks.</dd>
+          </dl>
         </div>
       </details>
 
@@ -1116,9 +1161,15 @@
         </summary>
         <div class="help-details-body">
           <dl class="help-dl">
+            <dt data-i18n="help_headerLangTitle">Language</dt>
+            <dd data-i18n="help_headerLangDesc">The menu shows short codes (e.g. EN, DE). Hover an option for the full
+              language name.</dd>
             <dt data-i18n="help_themeCycleTitle">Theme</dt>
-            <dd data-i18n="help_themeCycleDesc">Click the button in the header to cycle: Auto (system) → Dark → Light →
-              Auto. The icon shows the current mode. Works in options and popup.</dd>
+            <dd data-i18n="help_themeCycleDesc">Use the three icons in the header: Auto (system), Dark, or Light. The
+              active choice is highlighted like the density buttons.</dd>
+            <dt data-i18n="help_densityTitle">UI Density</dt>
+            <dd data-i18n="help_densityDesc">Use the S / M / L buttons in the header to switch between Compact, Medium,
+              and Large density. The setting applies to all extension surfaces and syncs across devices.</dd>
             <dt data-i18n="help_autoSaveTitle">Auto-save</dt>
             <dd data-i18n="help_autoSaveDesc">All settings save automatically when you change them — there are no Save
               buttons. Changes take effect immediately.</dd>

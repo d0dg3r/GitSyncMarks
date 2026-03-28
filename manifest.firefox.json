@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "__MSG_extName__",
   "short_name": "GitSyncMarks",
-  "version": "2.6.2",
+  "version": "2.7.0",
   "description": "__MSG_extDescription__",
   "default_locale": "en",
   "homepage_url": "https://gitsyncmarks.com",
@@ -37,6 +37,9 @@
     "https://*/*",
     "http://*/*"
   ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'"
+  },
   "background": {
     "scripts": [
       "background.js"

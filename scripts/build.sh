@@ -56,6 +56,9 @@ SHARED_FILES=(
   popup.html
   popup.js
   popup.css
+  ui-density.css
+  shared.css
+  whats-new.css
   search.html
   search.js
   search.css
@@ -72,6 +75,7 @@ SHARED_FILES=(
 
 SHARED_DIRS=(
   lib
+  options
   icons
   _locales
 )

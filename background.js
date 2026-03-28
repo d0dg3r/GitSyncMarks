@@ -7,6 +7,7 @@
 const browserObj = typeof browser !== 'undefined' ? browser : chrome;
 
 import { initI18n, getMessage } from './lib/i18n.js';
+import { WHATS_NEW_STORAGE_KEY } from './lib/whats-new.js';
 import {
   debouncedSync,
   sync,
@@ -27,6 +28,10 @@ import {
   syncCurrentSettingsToProfile,
   createSettingsProfile,
   deleteSettingsProfile,
+  listSyncHistory,
+  restoreFromCommit,
+  getPreviousCommitSha,
+  getCommitDiffPreview,
   STORAGE_KEYS,
 } from './lib/sync-engine.js';
 import { log as debugLog, getLogAsString, getDebugLogExportContent } from './lib/debug-log.js';
@@ -394,6 +399,34 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       .catch(err => sendResponse({ success: false, message: err.message }));
     return true;
   }
+  if (message.action === 'getPreviousCommitSha') {
+    getPreviousCommitSha()
+      .then(sha => sendResponse({ success: true, sha }))
+      .catch(err => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'listSyncHistory') {
+    listSyncHistory({ perPage: message.perPage || 20 })
+      .then(commits => sendResponse({ success: true, commits }))
+      .catch(err => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'previewCommitDiff') {
+    getCommitDiffPreview(message.commitSha)
+      .then(result => sendResponse(result))
+      .catch(err => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'restoreFromCommit') {
+    restoreFromCommit(message.commitSha)
+      .then(async (result) => {
+        await updateSyncStatusBadge(result);
+        await showNotificationIfEnabled(result);
+        sendResponse(result);
+      })
+      .catch(err => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
   if (message.action === 'settingsChanged') {
     setupAlarm().then(() => sendResponse({ ok: true }));
     return true;
@@ -468,6 +501,10 @@ chrome.runtime.onInstalled.addListener(async (details) => {
   await checkAndMigrate();
   if (details.reason === 'install' && await shouldAutoOpenOnboardingWizard()) {
     chrome.runtime.openOptionsPage();
+  }
+  if (details.reason === 'update') {
+    const v = chrome.runtime.getManifest().version;
+    await chrome.storage.local.set({ [WHATS_NEW_STORAGE_KEY]: v });
   }
 });
 

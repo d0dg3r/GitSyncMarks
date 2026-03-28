@@ -12,10 +12,11 @@ GitSyncMarks est une solution professionnelle pour synchroniser de manière bidi
 
 Points Forts
 
+- Historique de Sync & Restauration : Parcourez les commits passés, prévisualisez les changements via diff et restaurez tout état antérieur de vos favoris en un clic.
+- Correction des Doublons : Les dossiers homonymes ne se multiplient plus lors de la synchronisation — les doublons sont automatiquement fusionnés.
 - Synergie Linkwarden : Sauvegardez pages ou liens directement vers votre instance Linkwarden. Inclut captures d'écran auto, synchro des collections et tags.
 - Recherche Intelligente : Une interface de recherche dédiée et ultra-rapide pour vos favoris. Supporte thèmes clair/sombre et accessible au clavier.
 - Assistant de Configuration : Guide pas à pas les nouveaux utilisateurs dans la configuration du token et du dépôt jusqu'à la première synchro réussie.
-- Fusion à trois voies (Three-Way Merge) : Fiabilité industrielle via un algorithme avancé qui combine intelligemment les modifications sur divers appareils.
 
 Fonctionnalités Clés
 
@@ -24,7 +25,7 @@ Fonctionnalités Clés
 - Profils Multiples : Gérez jusqu'à 10 profils distincts (travail, perso) avec leurs propres dépôts.
 - Automatisation : Ajoutez des favoris via CLI ou GitHub Actions ; l'extension les intègre automatiquement.
 - Fichiers Générés : Crée automatiquement un README.md, bookmarks.html ou flux RSS dans votre dépôt.
-- Design & i18n : Thèmes clair/sombre professionnels et support de 12 langues.
+- Design & i18n : Thèmes clair, sombre et auto-système ; densité ajustable (compact / moyen / large) dans Paramètres, popup, recherche et sauvegarde Linkwarden ; 12 langues.
 
 Application Mobile
 Utilisez GitSyncMarks-App (Android, iOS, Bureau) pour gérer vos favoris directement depuis votre dépôt GitHub sur mobile.

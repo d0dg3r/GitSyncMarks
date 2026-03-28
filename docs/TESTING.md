@@ -11,6 +11,7 @@ GitSyncMarks uses Playwright for automated end-to-end tests. **Chrome only** —
 ```bash
 npm run test:e2e           # All tests (smoke + connection + sync)
 npm run test:e2e:smoke    # Smoke tests only (no GitHub config)
+npm run test:e2e:options  # Options page UI only (tabs, language, Help; no GitHub config)
 npm run test:e2e:sync     # Connection and sync tests
 npm run test:e2e:report   # Open HTML report after a run
 ```
@@ -19,7 +20,7 @@ npm run test:e2e:report   # Open HTML report after a run
 
 **Sync tests** require a private test repo and credentials — see [e2e/README.md](../e2e/README.md) if present, or `.env.example`.
 
-**CI (GitHub Actions):** E2E in CI is currently disabled (see [ROADMAP.md](../ROADMAP.md) backlog). Run tests locally with `npm run test:e2e`. The E2E workflow can be triggered manually via Actions → E2E Tests → Run workflow.
+**CI (GitHub Actions):** Smoke and options-UI E2E tests run automatically on every push/PR to `main` (in the `ci.yml` workflow). These tests require no secrets. Full E2E tests (connection + sync) require a PAT and test repo and can be triggered manually via Actions → E2E Tests → Run workflow.
 
 ---
 
@@ -33,6 +34,14 @@ Automated E2E tests run only on Chrome. **Test Firefox manually** before each re
 4. Verify: popup, options tabs, sync status, conflict handling
 
 The extension code is shared; Chrome E2E validates core logic. Firefox-specific checks: manifest differences, storage, background script (non–service-worker).
+
+---
+
+## “What’s new” overlay (manual)
+
+After an **update** (not a fresh install), the background script sets `showWhatsNewForVersion` in `chrome.storage.local`. The next time the user opens the **toolbar popup** or **Settings**, a dismissible overlay appears if the stored version matches the manifest and release notes exist for that version.
+
+**Manual check:** Load a dev build, open the service worker console, run `chrome.storage.local.set({ showWhatsNewForVersion: chrome.runtime.getManifest().version })`, then open the popup or Settings — the overlay should appear once; **Close** clears the key.
 
 ---
 

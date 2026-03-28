@@ -32,15 +32,58 @@ const OPTIONS_TABS = [
   { id: 'github', subtab: 'github-sync', file: '2-sync' },
   { id: 'menu', subtab: 'menu-items', file: '3-menu' },
   { id: 'linkwarden', subtab: 'linkwarden-general', file: '4-linkwarden' },
+  { id: 'files', subtab: 'files-history', file: '5-history', injectHistory: true },
 ];
 
-const FIREFOX_FILES = ['1-connection', '2-sync', '3-menu', '4-linkwarden', '5-search', '6-popup', '7-linkwarden-save', '8-wizard-welcome', '9-wizard-token', '10-wizard-repo'];
+const FIREFOX_FILES = ['1-connection', '2-sync', '3-menu', '4-linkwarden', '5-history', '6-search', '7-popup', '8-linkwarden-save', '9-wizard-welcome', '10-wizard-token', '11-wizard-repo'];
 
 const WIZARD_STEPS_FOR_SCREENSHOTS = [
-  { step: 0, file: '8-wizard-welcome' },
-  { step: 1, file: '9-wizard-token' },
-  { step: 5, file: '10-wizard-repo' },
+  { step: 0, file: '9-wizard-welcome' },
+  { step: 1, file: '10-wizard-token' },
+  { step: 5, file: '11-wizard-repo' },
 ];
+
+const HISTORY_DEMO_HTML = `
+<div class="history-list-header">
+  <span class="history-col-head history-col-date">Date</span>
+  <span class="history-col-head history-col-commit">Commit</span>
+  <span class="history-col-head history-col-client">Client</span>
+  <span class="history-col-head history-col-actions"><span class="sr-only">Actions</span></span>
+</div>
+<div class="history-item-wrap" style="border-bottom:1px solid var(--color-border-secondary)">
+  <div class="history-item">
+    <span class="history-date">3/28/2026, 2:14:30 PM</span>
+    <code class="history-sha">a3f8c12</code>
+    <span class="history-msg" title="Bookmark sync from 3a9b2ca8 — push (3 changes)">3a9b2ca8</span>
+    <span class="history-current" title="current">
+      <span class="history-current-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 12 2 2 4-4"/></svg></span>
+      <span class="history-current-label">current</span>
+    </span>
+  </div>
+</div>
+<div class="history-item-wrap" style="border-bottom:1px solid var(--color-border-secondary)">
+  <div class="history-item">
+    <span class="history-date">3/28/2026, 10:05:12 AM</span>
+    <code class="history-sha">e7b4d09</code>
+    <span class="history-msg" title="Bookmark sync from f1c92e45 — merge (1 change)">f1c92e45</span>
+    <div class="history-item-actions">
+      <button type="button" class="btn btn-secondary btn-sm history-icon-btn"><span class="history-btn-icon-inner"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span></button>
+      <button type="button" class="btn btn-primary btn-sm history-icon-btn"><span class="history-btn-icon-inner"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></span></button>
+    </div>
+  </div>
+</div>
+<div class="history-item-wrap">
+  <div class="history-item">
+    <span class="history-date">3/27/2026, 5:42:08 PM</span>
+    <code class="history-sha">1d9fe3a</code>
+    <span class="history-msg" title="Bookmark sync from 3a9b2ca8 — push (7 changes)">3a9b2ca8</span>
+    <div class="history-item-actions">
+      <button type="button" class="btn btn-secondary btn-sm history-icon-btn"><span class="history-btn-icon-inner"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span></button>
+      <button type="button" class="btn btn-primary btn-sm history-icon-btn"><span class="history-btn-icon-inner"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></span></button>
+    </div>
+  </div>
+</div>
+`;
 
 async function ensureDir(dir) {
   await fs.promises.mkdir(dir, { recursive: true });
@@ -97,7 +140,7 @@ async function main() {
     'github', 'synchronization', 'backup', 'automation', 'help', 'about', 'popup',
     '1-github', '2-synchronization', '3-backup', '4-automation', '5-help', '6-about', '7-popup',
     '2-connection', '3-sync', '4-files', '5-export-import', '6-popup', '7-wizard-welcome', '8-wizard-token', '9-wizard-repo',
-    '1-connection', '3-menu', '4-linkwarden', '5-search', '7-linkwarden-save', '10-wizard-repo'
+    '1-connection', '3-menu', '4-linkwarden', '5-search', '6-popup', '7-linkwarden-save', '8-wizard-welcome', '9-wizard-token', '10-wizard-repo'
   ];
   for (const code of LANGUAGES.map((l) => l.code)) {
     const langDir = path.join(STORE_ASSETS, code);
@@ -154,7 +197,7 @@ async function main() {
     await page.locator('#language-select').selectOption(code);
     await page.waitForTimeout(600);
 
-    for (const { id, subtab, file } of OPTIONS_TABS) {
+    for (const { id, subtab, file, injectHistory } of OPTIONS_TABS) {
       const tabBtn = page.locator(`.tab-btn[data-tab="${id}"]`);
       await tabBtn.waitFor({ state: 'attached', timeout: 5000 });
       await tabBtn.click({ force: true });
@@ -173,6 +216,14 @@ async function main() {
         await subTabBtn.waitFor({ state: 'attached', timeout: 5000 });
         await subTabBtn.click({ force: true });
         await page.waitForTimeout(300);
+      }
+
+      if (injectHistory) {
+        await page.evaluate((html) => {
+          const list = document.getElementById('history-list');
+          if (list) { list.style.display = ''; list.innerHTML = html; }
+        }, HISTORY_DEMO_HTML);
+        await page.waitForTimeout(200);
       }
 
       await page.evaluate(() => document.documentElement.classList.remove('dark'));
@@ -235,9 +286,9 @@ async function main() {
 
     const centerLeft = Math.floor((VIEWPORT.width - (VIEWPORT.width / 2)) / 2); // 320
 
-    const searchPath = path.join(langDir, 'chrome-5-search.png');
+    const searchPath = path.join(langDir, 'chrome-6-search.png');
     await compositePopupLightDarkCrop(searchLightBuf, searchDarkBuf, searchPath, centerLeft);
-    console.log('  ', `${code}/chrome-5-search.png (light | dark)`);
+    console.log('  ', `${code}/chrome-6-search.png (light | dark)`);
     await searchPage.close();
 
     console.log(`\nChrome (${code.toUpperCase()}) popup:`);
@@ -265,9 +316,9 @@ async function main() {
     await popupPage.waitForTimeout(150);
     const popupDarkBuf = await popupPage.screenshot();
 
-    const popupPath = path.join(langDir, 'chrome-6-popup.png');
+    const popupPath = path.join(langDir, 'chrome-7-popup.png');
     await compositePopupLightDarkCrop(popupLightBuf, popupDarkBuf, popupPath, 0); // Left-aligned crop
-    console.log('  ', `${code}/chrome-6-popup.png (light | dark)`);
+    console.log('  ', `${code}/chrome-7-popup.png (light | dark)`);
     await popupPage.close();
 
     console.log(`\nChrome (${code.toUpperCase()}) linkwarden save:`);
@@ -300,9 +351,9 @@ async function main() {
     await lwSavePage.waitForTimeout(150);
     const lwSaveDarkBuf = await lwSavePage.screenshot();
 
-    const lwSavePath = path.join(langDir, 'chrome-7-linkwarden-save.png');
+    const lwSavePath = path.join(langDir, 'chrome-8-linkwarden-save.png');
     await compositePopupLightDarkCrop(lwSaveLightBuf, lwSaveDarkBuf, lwSavePath, centerLeft);
-    console.log('  ', `${code}/chrome-7-linkwarden-save.png (light | dark)`);
+    console.log('  ', `${code}/chrome-8-linkwarden-save.png (light | dark)`);
     await lwSavePage.close();
 
     console.log(`\nChrome (${code.toUpperCase()}) wizard:`);

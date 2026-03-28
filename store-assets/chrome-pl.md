@@ -12,10 +12,11 @@ GitSyncMarks to profesjonalne rozwiązanie do dwukierunkowej i automatycznej syn
 
 Najważniejsze Funkcje
 
+- Historia synchronizacji i przywracanie: Przeglądaj poprzednie commity, sprawdź zmiany w podglądzie diff i przywróć dowolny wcześniejszy stan zakładek jednym kliknięciem.
+- Naprawa duplikatów: Foldery o tej samej nazwie nie mnożą się już podczas synchronizacji — duplikaty są automatycznie scalane.
 - Synergia z Linkwarden: Zapisuj strony bezpośrednio do swojej instancji Linkwarden. Obejmuje m.in. automatyczne zrzuty ekranu, synchronizację kolekcji i tagów.
 - Inteligentne Wyszukiwanie: Dedykowany, błyskawiczny interfejs wyszukiwania zakładek (jasny/ciemny motyw), w pełni obsługiwany z klawiatury.
 - Kreator Konfiguracji: Proces, który prowadzi nowych użytkowników przez wybór tokena i repozytorium aż do rzetelnej synchronizacji.
-- Algorytm Three-Way Merge: Przemysłowa niezawodność dzięki zaawansowanemu łączeniu zmian z różnych urządzeń.
 
 Kluczowe Możliwości
 
@@ -24,7 +25,7 @@ Kluczowe Możliwości
 - Wiele Profili: Nawet do 10 odrębnych profili posiadających oddzielne wyznaczone repozytoria.
 - Automatyzacja: Dodawaj zakładki z CLI lub GitHub Actions; rozszerzenie scali je przy następnej synchronizacji.
 - Generowane Pliki: Automatycznie tworzy README.md, bookmarks.html lub feed RSS w Twoim repozytorium.
-- Design & i18n: 12 wersji językowych i piękny ciemny/jasny motyw.
+- Design & i18n: Jasny, ciemny i systemowy motyw; regulowana gęstość UI (kompaktowy / średni / duży) w ustawieniach, popup, wyszukiwaniu i zapisywaniu Linkwarden; 12 języków.
 
 Aplikacja Pokrewna (Companion)
 Za pomocą GitSyncMarks-App dla Android, iOS i komputerów, w prosty sposób obsłużysz zakładki ze swojego telefonu.

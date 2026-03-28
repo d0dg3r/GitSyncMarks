@@ -12,10 +12,11 @@ GitSyncMarks ist eine professionelle Lösung, um Ihre Lesezeichen bidirektional 
 
 Highlights
 
+- Sync-Verlauf & Wiederherstellung: Vergangene Commits durchsuchen, Änderungen per Diff-Vorschau prüfen und jeden früheren Lesezeichen-Stand mit einem Klick wiederherstellen.
+- Duplikat-Fix: Gleichnamige Ordner vervielfachen sich nicht mehr bei der Synchronisation — Duplikate werden automatisch zusammengeführt.
 - Linkwarden-Synergie: Speichern Sie Seiten oder Links direkt in Ihrer Linkwarden-Instanz. Inklusive automatischer Viewport-Screenshots, Kollektions-Synchronisation und vordefinierten Tags.
 - Smart Search: Ein dediziertes, blitzschnelles Such-Interface für Ihre Lesezeichen. Unterstützt Themes (Hell/Dunkel) und ist vollständig tastaturbedienbar.
 - Geführter Setup-Wizard: Ein schrittweiser Onboarding-Prozess führt neue Nutzer sicher durch die Konfiguration von Token und Repository bis zum ersten erfolgreichen Sync.
-- Drei-Wege-Merge: Industrielle Zuverlässigkeit durch einen fortschrittlichen Merge-Algorithmus, der Änderungen auf verschiedenen Geräten intelligent zusammenführt.
 
 Kernfunktionen
 
@@ -24,7 +25,7 @@ Kernfunktionen
 - Multiple Profile: Verwalten Sie bis zu 10 getrennte Profile für Beruf, Privatleben oder Projekte mit jeweils eigenen Repositories.
 - Automatisierung: Fügen Sie Lesezeichen über CLI oder GitHub Actions hinzu; die Erweiterung integriert diese beim nächsten Sync automatisch.
 - Generierte Dateien: Erstellt auf Wunsch automatisch eine README.md (Übersicht), bookmarks.html (Browser-Import) oder einen RSS-Feed in Ihrem Repository.
-- Design & i18n: Professionelle Light- und Dark-Themes plus Unterstützung für 12 Sprachen.
+- Design & i18n: Light-, Dark- und Auto-Themes; einstellbare UI-Dichte (kompakt / mittel / groß) in Einstellungen, Popup, Suche und Linkwarden-Speichern; 12 Sprachen.
 
 
 Begleit-App

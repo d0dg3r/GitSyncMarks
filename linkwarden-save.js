@@ -8,6 +8,7 @@
 
 import { initI18n, applyI18n, getMessage } from './lib/i18n.js';
 import { initTheme } from './lib/theme.js';
+import { initUiDensity } from './lib/ui-density.js';
 import { LinkwardenAPI } from './lib/linkwarden-api.js';
 import { decryptToken } from './lib/crypto.js';
 
@@ -46,6 +47,7 @@ let duplicateLinkId = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
     await initTheme();
+    await initUiDensity();
     await initI18n();
     applyI18n();
     document.title = getMessage('linkwardenSave_title') || 'Save to Linkwarden';

@@ -61,6 +61,7 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 - **Auto-Generated Files**: Every sync generates a `README.md` (index), `bookmarks.html` (netscape), `feed.xml` (RSS), and `dashy-conf.yml`.
 - **Favicon Utilities**: Copy or download high-quality site favicons as PNGs directly from the context menu.
 - **I18n**: Professionally translated into **12 languages** (EN, DE, FR, ES, JA, and more).
+- **Appearance**: **UI density** (compact / medium / large) scales typography and spacing across Settings, the toolbar popup, Smart Search, and the Linkwarden save dialog; **theme** supports light, dark, or system auto. Both sync via `chrome.storage.sync`.
 
 ---
 
@@ -68,26 +69,32 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 
 | **1. Guided Onboarding** | **2. Smart Search** | **3. Linkwarden Tab** |
 | :---: | :---: | :---: |
-| <img src="store-assets/en/chrome-8-wizard-welcome.png" width="280"> | <img src="store-assets/en/chrome-5-search.png" width="280"> | <img src="store-assets/en/chrome-4-linkwarden.png" width="280"> |
+| <img src="store-assets/en/chrome-9-wizard-welcome.png" width="280"> | <img src="store-assets/en/chrome-6-search.png" width="280"> | <img src="store-assets/en/chrome-4-linkwarden.png" width="280"> |
 | *Easy Step-by-Step* | *Lightning Fast Search* | *Deep Integration* |
 
 | **4. GitHub Connection** | **5. Action Popup** | **6. Save to Linkwarden** |
 | :---: | :---: | :---: |
-| <img src="store-assets/en/chrome-1-connection.png" width="280"> | <img src="store-assets/en/chrome-6-popup.png" width="280"> | <img src="store-assets/en/chrome-7-linkwarden-save.png" width="280"> |
+| <img src="store-assets/en/chrome-1-connection.png" width="280"> | <img src="store-assets/en/chrome-7-popup.png" width="280"> | <img src="store-assets/en/chrome-8-linkwarden-save.png" width="280"> |
 | *Manage Profiles* | *Status at a Glance* | *Context Menu Power* |
 
----
+| **7. Sync History** | | |
+| :---: | :---: | :---: |
+| <img src="store-assets/en/chrome-5-history.png" width="280"> | | |
+| *Backup tab — review & restore* | | |
 
 ---
 
-## Upgrading to v2.6.2
+---
+
+## Upgrading to v2.7.0
 
 > [!IMPORTANT]
-> **v2.6.2** is a maintenance and stability update. While there are **no breaking changes** to your core bookmark sync, please review the notes below if you are upgrading from v2.5.x.
+> **v2.7.0** adds **sync history and restore** in the Backup tab, plus stability fixes and internal modularization. There are **no breaking changes** to your core bookmark sync; please review the notes below if you are upgrading from v2.5.x or earlier.
 
 ### Migration Steps
 - **No Action Needed**: Your current GitHub bookmark sync will continue to work perfectly after the update.
-- **Linkwarden Setup**: To use the new "Save to Linkwarden" feature, visit the new **Linkwarden tab** in settings and enter your instance URL and API key.
+- **Backup / History**: Open the **Backup** tab to load recent commits, preview diffs, and restore bookmarks from a previous sync when needed.
+- **Linkwarden Setup**: To use the "Save to Linkwarden" feature, visit the **Linkwarden tab** in settings and enter your instance URL and API key.
 - **Wizard Access**: If you want to re-verify your connection, use the **Restart Wizard** button in the **Help** tab.
 
 ---

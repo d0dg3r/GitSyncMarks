@@ -4,14 +4,7 @@
  */
 
 const { test } = require('./fixtures/extension.js');
-
-async function skipWizardIfVisible(page) {
-  const wizard = page.locator('#onboarding-wizard-screen');
-  if (await wizard.isVisible()) {
-    await page.locator('#onboarding-wizard-skip-btn').click();
-    await test.expect(wizard).toBeHidden({ timeout: 3000 });
-  }
-}
+const { skipWizardIfVisible } = require('./helpers/options-page.js');
 
 test.describe('Smoke', () => {
   test('Popup loads with header and main content', async ({

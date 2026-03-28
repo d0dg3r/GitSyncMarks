@@ -144,6 +144,18 @@ Generated/meta files (`README.md`, `_index.json`, `bookmarks.html`, `feed.xml`, 
 | Different change | Different change | **Conflict** |
 | Removed | Removed | No action needed |
 
+## Duplicate Entry Prevention
+
+Duplicate entries in `_order.json` (the same bookmark filename or folder key listed more than once) can cause the reconstructed bookmark tree to contain doubled siblings. Three layers prevent this:
+
+1. **Deserialization** (`buildFolderChildren`): Tracks seen `orderEntryKey` values while walking `_order.json`. The first occurrence of a key is emitted; subsequent duplicates are silently skipped.
+
+2. **Three-way merge** (`mergeOrderJson`): After merging local and remote additions/removals, a stable dedupe pass collapses any remaining duplicate keys in the result. This handles cases where the local `_order.json` itself already contained duplicates before the merge.
+
+3. **Serialization** (`processFolder`): When converting the browser bookmark tree to files, a bookmark whose deterministic filename (`{slug}_{hash}.json`) was already emitted in the same folder is skipped. This guards against unusual browser states where the same URL appears as duplicate siblings.
+
+Deduplication uses the `orderEntryKey` function: bookmark filenames are keyed by the string itself; folder entries are keyed by `dir:{name}`. Two different files with the same URL but different titles (producing different filenames) are **not** collapsed — they are distinct entries from the sync engine's perspective.
+
 ## Conflict Detection and Resolution
 
 When `mergeDiffs` finds conflicts (same file changed differently on both sides):
@@ -214,3 +226,25 @@ GitHub API requests use `cache: no-store` to reduce cache-related staleness.
    - **SHA differs** → `getBlob()` (1 call per changed file)
 
 In the common case (few files changed), this is 3 + N calls where N is the number of changed files.
+
+**Blob GET concurrency:** `getBlob` requests run in batches of five parallel calls (not all at once). Large repositories (hundreds of bookmarks) previously issued one concurrent request per file; GitHub’s secondary rate limits treat that as abusive. Batching matches the upload-side concurrency used in `atomicCommit`.
+
+**History / pinned commit:** `fetchRemoteFileMapAtCommit()` uses the same batched blob fetch. A small in-memory cache (few entries, short TTL) deduplicates work when preview and restore target the same commit SHA in quick succession.
+
+## Sync History and Restore
+
+### Commit History
+
+`listSyncHistory()` calls `GitHubAPI.listCommits({ path })` (the REST [List Commits](https://docs.github.com/en/rest/commits/commits#list-commits) endpoint filtered by the bookmark base path). Returns the last 20 commits with SHA, message, date, and author. GitSyncMarks-generated subjects follow `… from <deviceId> — <ISO8601>` (em dash); `lib/sync-commit-message.js` extracts `<deviceId>` for the Settings **Client** column (full subject remains available on hover). Commits from other tools keep the raw message string but may not parse.
+
+### Restore from Commit
+
+`restoreFromCommit(commitSha)` fetches the full file map at a specific commit via `fetchRemoteFileMapAtCommit()` — the same tree-walking logic as regular pull but pinned to a chosen commit SHA instead of the branch tip. The result is applied locally via `replaceLocalBookmarks()`. This only changes local bookmarks; it does not force-push or rewrite the remote branch. The next sync will detect the divergence and push the restored state.
+
+### Diff Preview
+
+`getCommitDiffPreview(commitSha)` fetches both the target commit's file map and the current local bookmarks, filters out internal files (`_order.json`, `_index.json`, generated files, settings), then computes a structured diff. Each bookmark JSON file is parsed to extract `{ title, url }` for user-friendly display. Returns lists of added (in target but not local), removed (in local but not target), and changed entries. The options UI renders the preview inline under the selected history row: summary badges, then Added and Removed in two columns (collapsed `<details>` by default), then Changed full width below, then Restore/Close. The history table uses one grid row per commit: headers and cells share the same four columns (date, short SHA, client id, actions). Preview and restore are icon buttons in the last column; the row matching `lastCommitSha` shows a checkmark icon plus a “current” label. Restore uses a two-step confirmation on the same control (first click arms, second click runs `restoreFromCommit`) without a browser `confirm()` dialog. The same pattern applies to Restore inside an open diff preview (text buttons there).
+
+### Undo Last Sync
+
+Before any operation that applies remote changes locally (`pull()`, sync path 8, sync path 9 merge), the current `lastCommitSha` is saved as `previousCommitSha` in the profile's sync state. The "Undo last sync" button in the UI calls `restoreFromCommit(previousCommitSha)` to revert to the pre-sync state.

@@ -26,6 +26,7 @@ flowchart TB
             RF["remote-fetch.js"]
             I18N["i18n.js"]
             Theme["theme.js"]
+            UiDensity["ui-density.js"]
             Crypto["crypto.js"]
             CM["context-menu.js"]
             LW["linkwarden-api.js"]
@@ -82,7 +83,7 @@ Toolbar popup with header (icon, title, profile dropdown when 2+ profiles), stat
 
 ### `options.html` / `options.js` — Settings Page
 
-Full-page settings (opens in tab) with five tabs. Header: language dropdown, theme cycle button (A → Dark → Light → A). All settings auto-save on change; no Save buttons.
+Full-page settings (opens in tab) with five tabs. `options.js` is the entry point that imports and orchestrates focused sub-modules in `options/`.
 
 1. **GitHub** (sub-tabs: Profile, Connection, Repos) — Profile selector (multiple profiles with separate repos); token, repository, connection test, onboarding (create folder or pull when path empty/has bookmarks); GitHub Repos folder (optional, position toolbar/other)
 2. **Sync** — Sync profile, auto-sync, sync on start/focus, notifications; Debug Log
@@ -90,20 +91,24 @@ Full-page settings (opens in tab) with five tabs. Header: language dropdown, the
 4. **Help** — Quick links (Vote on backlog, Documentation, Discussions, Report Issue) as pill buttons; collapsible feature sections (Getting Started with Start setup wizard button, Profiles, GitHub Repos, Popup, Sync, Files, Notifications, Conflicts, Keyboard Shortcuts)
 5. **About** — Version, links, license, mobile app
 
-### `lib/sync-engine.js` — Sync Engine
+Sub-modules (`options/`):
 
-Core synchronization with three-way merge:
+- **`wizard.js`** — Onboarding wizard flow (token validation, repo setup, environment check, first sync)
+- **`profiles.js`** — Profile switching, add/rename/delete with confirmation dialogs
+- **`linkwarden.js`** — Linkwarden tab: connection test, tag picker, sync, debug log export
+- **`history.js`** — Sync history listing (four-column header + rows: date, SHA, client id, actions; checkmark + “current” for `lastCommitSha`), diff preview, bookmark restore, undo
+- **`context-menu-config.js`** — Context menu item ordering, toggling, category submenu configuration
+- **`settings.js`** — Settings sync to Git, file export/import, generated files toggles, automation clipboard
 
-| Function | Description |
-|---|---|
-| `sync()` | Three-way merge: base vs local vs remote, auto-merge or conflict |
-| `push()` | Full push of local bookmarks as individual files |
-| `pull()` | Full pull from remote, replace local bookmarks |
-| `computeDiff(base, current)` | Compute added/removed/modified files between two states |
-| `mergeDiffs(localDiff, remoteDiff)` | Merge two diffs into push/pull/conflict actions |
-| `debouncedSync()` | Debounced auto-sync (5s default) |
-| `getSyncStatus()` | Return current sync state for the popup |
-| `migrateFromLegacyFormat()` | Migrate from old `bookmarks.json` to per-file format |
+### `lib/sync-engine.js` — Sync Engine (barrel)
+
+Barrel module re-exporting from focused sub-modules:
+
+- **`lib/sync-settings.js`** — Storage keys (`STORAGE_KEYS`, `SYNC_PRESETS`), settings accessors (`getSettings`, `isConfigured`, `createApi`, `getDeviceId`), local bookmark access (`getLocalFileMap`), file map filtering (`filterForDiff`, `addGeneratedFiles`), and encrypted settings sync (`buildEncryptedSettings`, `applyEncryptedSettings`, profile CRUD)
+- **`lib/sync-core.js`** — Core sync operations (`push`, `pull`, `sync`), three-way merge (`computeDiff`, `mergeDiffs`, `mergeOrderJson`), sync state management (`saveSyncState`, `getSyncStatus`, `isSyncInProgress`), debounced auto-sync (`debouncedSync`, `bootstrapFirstSync`), and Linkwarden mirroring
+- **`lib/sync-history.js`** — Commit history listing (`listSyncHistory`), bookmark restore (`restoreFromCommit`), undo support (`getPreviousCommitSha`), and diff preview (`getCommitDiffPreview`)
+- **`lib/sync-commit-message.js`** — Parses standard GitSyncMarks commit subjects to extract the device/client id (`extractClientIdFromCommitMessage`) for Sync History display
+- **`lib/sync-migration.js`** — Legacy single-file format migration (`migrateFromLegacyFormat`)
 
 State is stored as `LAST_SYNC_FILES` (path → {sha, content}) and `LAST_COMMIT_SHA`.
 
@@ -122,6 +127,7 @@ Wraps both the **Contents API** (legacy, used for migration/validation) and the 
 | `createBlob()` / `createTree()` / `createCommit()` | Git Data | Build new commit |
 | `updateRef()` / `createRef()` | Git Data | Update or create branch |
 | `atomicCommit(message, fileChanges)` | Git Data | All-in-one: atomic multi-file commit |
+| `listCommits({ path, perPage })` | REST | List recent commits, optionally filtered by path |
 
 ### `lib/bookmark-serializer.js` — Serializer
 
@@ -152,11 +158,27 @@ Minimal wrapper for the Linkwarden REST API:
 
 ### `lib/i18n.js` — Internationalization
 
-Custom runtime i18n with manual language selection. Loads `_locales/{lang}/messages.json`, translates DOM via `data-i18n` attributes. English fallback.
+Custom runtime i18n with manual language selection. `SUPPORTED_LANGUAGES` in `lib/i18n.js` lists each locale with `code`, `name`, and `short` (e.g. `EN`, `DE`); the options language `<select>` shows `short` in the label and `name` in each option’s `title`. Loads `_locales/{lang}/messages.json`, translates DOM via `data-i18n` attributes. Plain `data-i18n` sets `textContent` on each match except `<select>` elements (so `<option data-i18n>` still translates; `<select data-i18n>` is not used). English fallback.
 
 ### `lib/theme.js` — Theme
 
-Light, dark, or auto (system) theme. Single cycle button in options header switches A → Dark → Light → A. Stores preference in `chrome.storage.sync`, applies `html.dark` class when dark mode is active. Used by options page and popup.
+Light, dark, or auto (system) theme. `initTheme()` / `applyTheme()` read `chrome.storage.sync` (`theme` key), resolve dark vs light (including `prefers-color-scheme` when `auto`), and toggle `html.dark` on `<html>`. On the options page, `#theme-selector` is a three-segment control (Auto / Dark / Light) with SVG icons; `options.js` persists the choice and calls `applyTheme()`. The toolbar popup uses the same storage key via `initTheme()` (no segment UI there).
+
+### `lib/ui-density.js` — UI Density
+
+Three density levels (compact / medium / large). Stores the choice in `chrome.storage.sync` (`uiDensity` key) and sets `data-ui-density` on `<html>`. CSS tokens in `ui-density.css` respond to the attribute; `initUiDensity()` is called early in every entry point (options, popup, search, linkwarden-save). A segmented S / M / L selector in the options header controls the setting.
+
+### `ui-density.css` — Density Tokens
+
+Root-level CSS custom properties for typography, spacing, padding, and control sizing across three density levels. Loaded before all page-specific stylesheets. Page CSS references these tokens instead of hard-coded values.
+
+### `shared.css` — Shared Theme & Base Components
+
+Loaded after `ui-density.css` and before each page stylesheet on options, popup, search, and Linkwarden save. Defines the extension-wide `--color-*` palette for light and `html.dark`, `*` box-sizing reset, default `body` font stack and `font-size` / `line-height` from density tokens, shared `.btn` variants, `.spinner` + `@keyframes spin`, and `--focus-ring`. Page CSS may override a small subset (e.g. popup `--color-bg` and `--radius`).
+
+### `lib/whats-new.js` / `lib/whats-new-ui.js` — Post-update release notes
+
+On `chrome.runtime.onInstalled` with `reason === 'update'`, [background.js](../background.js) writes `showWhatsNewForVersion` (manifest version string) to `chrome.storage.local`. [popup.js](../popup.js) and [options.js](../options.js) call `mountWhatsNewIfPending()` from `whats-new-ui.js`, which shows a dismissible overlay (styled by [whats-new.css](../whats-new.css)) when the pending version matches the manifest and `whats-new.js` has copy for that version. If `.popup` is present, the overlay gets `whats-new-overlay--popup` for a compact, no-scroll layout; the options page uses the default larger panel. Closing the overlay removes the storage key. New installs do not set the flag, so onboarding stays first. Options defers the overlay until the onboarding wizard is hidden (MutationObserver on `#onboarding-wizard-screen` style).
 
 ### `lib/profile-manager.js` — Profile Manager
 
@@ -196,29 +218,29 @@ Fetches the authenticated user's repos via GitHub REST API and maintains a "GitH
 | Function | Description |
 |---|---|
 | `fetchRemoteFileMap(api, basePath, baseFiles)` | Fetch bookmark files from GitHub via Git Data API; returns `{ shaMap, fileMap, commitSha }` or `null` for empty repo |
+| `fetchRemoteFileMapAtCommit(api, basePath, commitSha, options?)` | Fetch file map at a specific commit SHA (history restore/preview); batched `getBlob` (concurrency 5); optional short-lived in-memory cache per owner/repo/path/commit |
 
-### `lib/context-menu.js` — Context Menu
+### `lib/context-menu.js` — Context Menu (barrel)
 
-Right-click menu registered via `chrome.contextMenus` under a parent "GitSyncMarks" item:
+Barrel module re-exporting from focused sub-modules:
 
-- **Categories**: Added grouping into `ADD`, `LINKWARDEN`, `TOOLS`, and `FAVICONS` for better UX. Support for nested submenus via `contextMenuSubmenus` setting.
-- **Concurrency Protection**: Implemented a lockout mechanism (`isRefreshing`, `refreshPending`) to prevent overlapping rebuilds of dynamic menu items (folders/profiles).
-- **Debouncing**: High-frequency bookmark events trigger a debounced rebuild (`refreshContextMenuDynamicItemsDebounced`) with a 500ms delay and 5s max-wait cap to ensure responsiveness without flooding the browser's menu API.
+- **`lib/context-menu-constants.js`** — Menu IDs (`MENU_IDS`), categories (`CATEGORIES`), ID prefixes, popup dimensions, and other shared constants
+- **`lib/context-menu-setup.js`** — Static menu creation (`setupContextMenus`), called from `chrome.runtime.onInstalled`
+- **`lib/context-menu-dynamic.js`** — Dynamic menu management: profile submenus, quick folders, folder tree, open-all-from-folder items; concurrency protection (`isRefreshing`/`refreshPending`) and debounced rebuild (`refreshContextMenuDynamicItemsDebounced`, 500ms delay, 5s max-wait)
+- **`lib/context-menu-handlers.js`** — Click event dispatch (`handleContextMenuClick`) and all action handlers (add bookmark, sync, Linkwarden save, search, favicon, profile switch)
 
 | Menu Item | Context | Action |
 |---|---|---|
-| Add to Toolbar | page, link | Creates bookmark in toolbar root via `chrome.bookmarks.create()`; auto-syncs via existing `onCreated` listener |
-| Add to Other Bookmarks | page, link | Creates bookmark in other root; auto-syncs |
+| Add to Toolbar | page, link | Creates bookmark in toolbar root via `chrome.bookmarks.create()` |
+| Add to Other Bookmarks | page, link | Creates bookmark in other root |
 | Save to Linkwarden | page, link | Saves URL to Linkwarden instance; supports auto-screenshots via `captureVisibleTab` |
 | Sync Now | page, link | Calls `sync()` from sync-engine.js directly |
 | Search Bookmarks | page, link | Opens dedicated search popup window |
 | Copy Favicon URL | page | Copies `tab.favIconUrl` to clipboard via `chrome.scripting.executeScript()` |
 | Download Favicon | page | Downloads favicon via `chrome.downloads.download()` |
-| Switch Profile | page, link | Submenu with radio items for each profile; active profile checked; calls `switchProfile(targetId)` and refreshes menu |
+| Switch Profile | page, link | Submenu with radio items for each profile; active profile checked |
 
-`setupContextMenus()` is called from `onInstalled`; `handleContextMenuClick()` is wired to a top-level `contextMenus.onClicked` listener for MV3 service worker persistence. `refreshProfileMenuItems()` rebuilds the profile submenu dynamically — called on install, startup, and whenever profiles or active profile change (via `chrome.storage.onChanged` listener in background.js).
-
-Favicon source logic: `getFaviconUrl(tab)` returns `tab.favIconUrl` if available, otherwise falls back to Google's favicon service (`https://www.google.com/s2/favicons?domain={domain}&sz=64`).
+`setupContextMenus()` is called from `onInstalled`; `handleContextMenuClick()` is wired to a top-level `contextMenus.onClicked` listener for MV3 service worker persistence.
 
 ### `lib/browser-polyfill.js` — Browser Detection
 
@@ -232,41 +254,66 @@ GitSyncMarks/
 ├── manifest.firefox.json         # Firefox manifest
 ├── background.js                 # Background script
 ├── popup.html / popup.js / popup.css
+├── ui-density.css                # Density tokens (compact / medium / large)
+├── shared.css                    # Shared --color-* palette, reset, .btn, spinner
+├── whats-new.css                 # Shared overlay styles (popup + options)
+├── search.html / search.js / search.css
+├── linkwarden-save.html / .js / .css
 ├── options.html / options.js / options.css
+├── options/                      # Options page sub-modules
+│   ├── wizard.js                 # Onboarding wizard flow
+│   ├── profiles.js               # Profile management UI
+│   ├── linkwarden.js             # Linkwarden tab UI
+│   ├── history.js                # Sync history & restore
+│   ├── context-menu-config.js    # Context menu configuration
+│   └── settings.js               # Settings sync, export/import, file generation
 ├── lib/
-│   ├── sync-engine.js            # Three-way merge sync
+│   ├── sync-engine.js            # Barrel: re-exports sync sub-modules
+│   ├── sync-settings.js          # Storage keys, settings, encrypted settings sync
+│   ├── sync-core.js              # Push/pull/sync, three-way merge, auto-sync
+│   ├── sync-history.js           # Commit history, restore, diff preview
+│   ├── sync-commit-message.js    # Parse commit subject → client id (history UI)
+│   ├── sync-migration.js         # Legacy format migration
 │   ├── github-api.js             # GitHub REST + Git Data API
 │   ├── bookmark-serializer.js    # Per-file bookmark conversion
-│   ├── bookmark-replace.js       # Replace local bookmarks (used by sync + profile switch)
-│   ├── github-repos.js          # GitHub Repos folder (user repos as bookmarks)
-│   ├── profile-manager.js       # Multiple profiles, switchProfile, migration
-│   ├── onboarding.js            # checkPathSetup, initializeRemoteFolder
+│   ├── bookmark-replace.js       # Replace local bookmarks
+│   ├── github-repos.js           # GitHub Repos folder
+│   ├── profile-manager.js        # Multiple profiles, switchProfile
+│   ├── onboarding.js             # checkPathSetup, initializeRemoteFolder
 │   ├── remote-fetch.js           # fetchRemoteFileMap
 │   ├── crypto.js                 # Token encryption (AES-256-GCM)
-│   ├── context-menu.js            # Right-click context menu (Add, Sync, Favicon)
+│   ├── context-menu.js           # Barrel: re-exports context menu sub-modules
+│   ├── context-menu-constants.js # Menu IDs, categories, prefixes
+│   ├── context-menu-setup.js     # Static menu creation (onInstalled)
+│   ├── context-menu-dynamic.js   # Dynamic profile/folder menus
+│   ├── context-menu-handlers.js  # Click event dispatch & actions
+│   ├── linkwarden-api.js         # Linkwarden REST API wrapper
 │   ├── debug-log.js              # Debug log for sync diagnostics
 │   ├── i18n.js                   # Internationalization
-│   ├── theme.js                  # Light/dark/auto theme (cycle button)
-│   └── browser-polyfill.js      # Browser detection
-├── _locales/                     # 12 languages (en, de, fr, es, pt_BR, it, ja, zh_CN, ko, ru, tr, pl)
+│   ├── theme.js                  # Light/dark/auto theme
+│   ├── ui-density.js             # Compact/medium/large density
+│   ├── whats-new.js              # Per-version bullets, storage helpers
+│   ├── whats-new-ui.js           # Dismissible overlay DOM
+│   └── browser-polyfill.js       # Browser detection
+├── _locales/                     # 12 languages
 │   ├── en/messages.json
 │   ├── de/messages.json
 │   └── .../messages.json
 ├── icons/
 ├── scripts/
 │   ├── build.sh                  # Build Chrome + Firefox packages
-│   ├── generate-screenshots.js   # Auto-generate store screenshots (Playwright + Sharp)
-│   ├── fetch-app-content.sh      # Fetch App README, assets from GitSyncMarks-App repo
+│   ├── generate-screenshots.js   # Auto-generate store screenshots
+│   ├── fetch-app-content.sh      # Fetch App README, assets
 │   ├── build-docs.js             # Markdown → HTML for docs/
-│   └── build-index.js            # Build index.html with Extension | App tabs
+│   └── build-index.js            # Build index.html
 ├── package.json                  # npm scripts for building
 ├── .github/workflows/
-│   ├── test-e2e.yml              # E2E tests (manual trigger only; CI disabled)
+│   ├── test-e2e.yml              # E2E tests (manual trigger only)
 │   ├── release.yml               # Build ZIPs, create release on tag
-│   ├── screenshots.yml           # Generate store screenshots (manual trigger)
+│   ├── screenshots.yml           # Generate store screenshots
 │   └── add-bookmark.yml          # Automation: add bookmark via dispatch
 ├── docs/                         # Architecture documentation
-├── website/                      # GitHub Pages site (index, docs, styles)
+├── website/                      # GitHub Pages site
 ├── store-assets/                 # Store listings & screenshots (12 languages)
 ├── LICENSE
 ├── PRIVACY.md
