@@ -7,6 +7,7 @@
 const browserObj = typeof browser !== 'undefined' ? browser : chrome;
 
 import { initI18n, getMessage } from './lib/i18n.js';
+import { WHATS_NEW_STORAGE_KEY } from './lib/whats-new.js';
 import {
   debouncedSync,
   sync,
@@ -438,6 +439,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     getDebugLogExportContent().then((content) => sendResponse({ content }));
     return true; // keep channel open for async response
   }
+  if (message.action === '__debugSessionIngest') {
+    const { endpoint, headers, body } = message;
+    if (!endpoint || typeof body !== 'string') {
+      sendResponse({ ok: false });
+      return false;
+    }
+    fetch(endpoint, { method: 'POST', headers: headers || { 'Content-Type': 'application/json' }, body })
+      .then(() => sendResponse({ ok: true }))
+      .catch(() => sendResponse({ ok: false }));
+    return true;
+  }
   if (message.action === 'captureScreenshot') {
     const { windowId } = message;
     const targetWindowId = windowId ? parseInt(windowId, 10) : null;
@@ -500,6 +512,10 @@ chrome.runtime.onInstalled.addListener(async (details) => {
   await checkAndMigrate();
   if (details.reason === 'install' && await shouldAutoOpenOnboardingWizard()) {
     chrome.runtime.openOptionsPage();
+  }
+  if (details.reason === 'update') {
+    const v = chrome.runtime.getManifest().version;
+    await chrome.storage.local.set({ [WHATS_NEW_STORAGE_KEY]: v });
   }
 });
 

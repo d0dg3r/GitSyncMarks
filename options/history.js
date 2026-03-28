@@ -4,6 +4,7 @@
  */
 
 import { getMessage } from '../lib/i18n.js';
+import { extractClientIdFromCommitMessage } from '../lib/sync-commit-message.js';
 
 const historyLoadBtn = document.getElementById('history-load-btn');
 const historyUndoBtn = document.getElementById('history-undo-btn');
@@ -12,7 +13,164 @@ const historyList = document.getElementById('history-list');
 
 let currentCommitSha = null;
 
+// #region agent log
+const DEBUG_INGEST = 'http://127.0.0.1:7246/ingest/1b416a88-d62d-415a-a55c-29910a80e72b';
+const DEBUG_SESSION = 'f0a9cb';
+
+function emitHistoryLayoutDebug(reason) {
+  try {
+    const html = document.documentElement;
+    const body = document.body;
+    const card = document.querySelector('#subtab-files-history .card');
+    const list = document.getElementById('history-list');
+    const lastWrap = list?.querySelector('.history-item-wrap:last-child');
+    const pickRect = (el) => {
+      if (!el) return null;
+      const r = el.getBoundingClientRect();
+      return { top: r.top, bottom: r.bottom, left: r.left, right: r.right, h: r.height, w: r.width };
+    };
+    const firstWrap = list?.querySelector('.history-item-wrap');
+    const firstActions = firstWrap?.querySelector('.history-item-actions');
+    const firstRestoreBtn = firstActions?.querySelector('.btn-primary');
+    const cardR = card ? pickRect(card) : null;
+    const restoreR = firstRestoreBtn ? pickRect(firstRestoreBtn) : null;
+    const outflowX =
+      cardR && restoreR && Number.isFinite(cardR.right) && Number.isFinite(restoreR.right)
+        ? Math.round((restoreR.right - cardR.right) * 100) / 100
+        : null;
+
+    const payload = {
+      sessionId: DEBUG_SESSION,
+      runId: 'post-fix',
+      hypothesisId: 'H-hoverflow',
+      location: 'options/history.js:emitHistoryLayoutDebug',
+      message: String(reason),
+      timestamp: Date.now(),
+      data: {
+        reason,
+        innerH: window.innerHeight,
+        innerW: window.innerWidth,
+        scrollY: window.scrollY,
+        maxScrollY: html.scrollHeight - html.clientHeight,
+        docClientH: html.clientHeight,
+        docScrollH: html.scrollHeight,
+        bodyClientH: body.clientHeight,
+        bodyScrollH: body.scrollHeight,
+        overflowHtml: getComputedStyle(html).overflowY,
+        overflowBody: getComputedStyle(body).overflowY,
+        card: card
+          ? {
+              overflowX: getComputedStyle(card).overflowX,
+              overflowY: getComputedStyle(card).overflowY,
+              maxHeight: getComputedStyle(card).maxHeight,
+              rect: cardR,
+            }
+          : null,
+        list: list
+          ? {
+              overflowX: getComputedStyle(list).overflowX,
+              overflowY: getComputedStyle(list).overflowY,
+              maxHeight: getComputedStyle(list).maxHeight,
+              rect: pickRect(list),
+            }
+          : null,
+        lastWrapRect: pickRect(lastWrap),
+        firstActionsRect: pickRect(firstActions),
+        firstRestoreRect: restoreR,
+        outflowX,
+      },
+    };
+    chrome.runtime.sendMessage(
+      {
+        action: '__debugSessionIngest',
+        endpoint: DEBUG_INGEST,
+        headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': DEBUG_SESSION },
+        body: JSON.stringify(payload),
+      },
+      () => void chrome.runtime.lastError
+    );
+  } catch {
+    /* ignore */
+  }
+}
+// #endregion
+
 const HISTORY_RESTORE_ARM_MS = 10000;
+
+/** Inline SVG (static); injected into icon buttons only. */
+const SVG_PREVIEW_HTML =
+  '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>';
+
+const SVG_RESTORE_HTML =
+  '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>';
+
+/** Active / current commit indicator (same row as data). */
+const SVG_CURRENT_HTML =
+  '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 12 2 2 4-4"/></svg>';
+
+function renderHistoryListHeader() {
+  const header = document.createElement('div');
+  header.className = 'history-list-header';
+
+  const hDate = document.createElement('span');
+  hDate.className = 'history-col-head history-col-date';
+  hDate.textContent = getMessage('options_historyColDate') || 'Date';
+
+  const hCommit = document.createElement('span');
+  hCommit.className = 'history-col-head history-col-commit';
+  hCommit.textContent = getMessage('options_historyColCommit') || 'Commit';
+
+  const hClient = document.createElement('span');
+  hClient.className = 'history-col-head history-col-client';
+  hClient.textContent = getMessage('options_historyColClient') || 'Client';
+
+  const hActions = document.createElement('span');
+  hActions.className = 'history-col-head history-col-actions';
+  const hActionsSr = document.createElement('span');
+  hActionsSr.className = 'sr-only';
+  hActionsSr.textContent = getMessage('options_historyColActions') || 'Actions';
+  hActions.appendChild(hActionsSr);
+
+  header.append(hDate, hCommit, hClient, hActions);
+  return header;
+}
+
+function setPreviewIconButton(button) {
+  const label = getMessage('options_historyPreviewBtn') || 'Preview';
+  button.replaceChildren();
+  const inner = document.createElement('span');
+  inner.className = 'history-btn-icon-inner';
+  inner.innerHTML = SVG_PREVIEW_HTML;
+  const sr = document.createElement('span');
+  sr.className = 'sr-only';
+  sr.textContent = label;
+  button.append(inner, sr);
+  button.setAttribute('aria-label', label);
+  button.setAttribute('title', label);
+}
+
+function setRestoreIconButtonIdle(button, labelRestore) {
+  button.replaceChildren();
+  const inner = document.createElement('span');
+  inner.className = 'history-btn-icon-inner';
+  inner.innerHTML = SVG_RESTORE_HTML;
+  const sr = document.createElement('span');
+  sr.className = 'sr-only';
+  sr.textContent = labelRestore;
+  button.append(inner, sr);
+  button.setAttribute('aria-label', labelRestore);
+  button.setAttribute('title', labelRestore);
+}
+
+function setRestoreIconButtonArmed(button, shortLabel, fullAriaLabel) {
+  button.replaceChildren();
+  const span = document.createElement('span');
+  span.className = 'history-restore-armed-label';
+  span.textContent = shortLabel;
+  button.appendChild(span);
+  button.setAttribute('aria-label', fullAriaLabel);
+  button.setAttribute('title', fullAriaLabel);
+}
 
 function renderHistoryList(commits) {
   historyList.innerHTML = '';
@@ -22,6 +180,7 @@ function renderHistoryList(commits) {
     return;
   }
   historyList.style.display = '';
+  historyList.appendChild(renderHistoryListHeader());
   for (const c of commits) {
     const wrap = document.createElement('div');
     wrap.className = 'history-item-wrap';
@@ -40,12 +199,12 @@ function renderHistoryList(commits) {
 
     const msg = document.createElement('span');
     msg.className = 'history-msg';
-    msg.textContent = c.message || '';
+    const rawMessage = c.message || '';
+    const clientId = extractClientIdFromCommitMessage(rawMessage);
+    msg.textContent = clientId || '—';
+    if (rawMessage) msg.title = rawMessage;
 
-    const spacer = document.createElement('span');
-    spacer.className = 'history-spacer';
-
-    row.append(date, sha, msg, spacer);
+    row.append(date, sha, msg);
 
     const diffSlot = document.createElement('div');
     diffSlot.className = 'history-item-diff';
@@ -54,9 +213,17 @@ function renderHistoryList(commits) {
 
     const isCurrent = currentCommitSha && c.sha === currentCommitSha;
     if (isCurrent) {
+      const curLabel = getMessage('options_historyCurrent') || 'current';
       const badge = document.createElement('span');
       badge.className = 'history-current';
-      badge.textContent = getMessage('options_historyCurrent') || 'current';
+      badge.setAttribute('title', curLabel);
+      const iconWrap = document.createElement('span');
+      iconWrap.className = 'history-current-icon';
+      iconWrap.innerHTML = SVG_CURRENT_HTML;
+      const labelEl = document.createElement('span');
+      labelEl.className = 'history-current-label';
+      labelEl.textContent = curLabel;
+      badge.append(iconWrap, labelEl);
       row.appendChild(badge);
     } else {
       const actions = document.createElement('div');
@@ -64,14 +231,13 @@ function renderHistoryList(commits) {
 
       const restoreRowBtn = document.createElement('button');
       restoreRowBtn.type = 'button';
-      restoreRowBtn.className = 'btn btn-primary btn-sm';
-      restoreRowBtn.textContent = getMessage('options_historyRestoreBtn') || 'Restore';
-      bindTwoStepRestore(restoreRowBtn, async () => runRestoreFromCommit(c.sha, wrap));
+      restoreRowBtn.className = 'btn btn-primary btn-sm history-icon-btn';
+      bindTwoStepRestore(restoreRowBtn, async () => runRestoreFromCommit(c.sha, wrap), { icon: true });
 
       const previewBtn = document.createElement('button');
       previewBtn.type = 'button';
-      previewBtn.className = 'btn btn-secondary btn-sm';
-      previewBtn.textContent = getMessage('options_historyPreviewBtn') || 'Preview';
+      previewBtn.className = 'btn btn-secondary btn-sm history-icon-btn';
+      setPreviewIconButton(previewBtn);
       previewBtn.addEventListener('click', () => {
         restoreRowBtn._historyRestoreReset?.();
         loadDiffPreview(c.sha, wrap);
@@ -84,16 +250,26 @@ function renderHistoryList(commits) {
     wrap.append(row, diffSlot);
     historyList.appendChild(wrap);
   }
+  // #region agent log
+  if (commits.length > 0) {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => emitHistoryLayoutDebug('renderHistoryList'));
+    });
+  }
+  // #endregion
 }
 
 /**
  * Two-step confirm on the same Restore button: first click arms, second click runs executeRestore.
+ * @param {{ icon?: boolean }} [opts] — icon row uses magnifying-glass / restore SVG; diff panel uses plain text.
  */
-function bindTwoStepRestore(button, executeRestore) {
+function bindTwoStepRestore(button, executeRestore, opts = {}) {
+  const icon = Boolean(opts.icon);
   let armed = false;
   let resetTimer = null;
   const labelRestore = getMessage('options_historyRestoreBtn') || 'Restore';
   const labelConfirm = getMessage('options_historyRestoreConfirmBtn') || 'Click again to confirm';
+  const labelConfirmShort = getMessage('options_historyRestoreConfirmShort') || 'Confirm';
 
   function reset() {
     armed = false;
@@ -101,17 +277,29 @@ function bindTwoStepRestore(button, executeRestore) {
       clearTimeout(resetTimer);
       resetTimer = null;
     }
-    button.textContent = labelRestore;
+    if (icon) {
+      setRestoreIconButtonIdle(button, labelRestore);
+    } else {
+      button.textContent = labelRestore;
+    }
     button.classList.remove('history-restore-armed');
   }
 
   button._historyRestoreReset = reset;
 
+  if (icon) {
+    setRestoreIconButtonIdle(button, labelRestore);
+  }
+
   button.addEventListener('click', async () => {
     if (button.disabled) return;
     if (!armed) {
       armed = true;
-      button.textContent = labelConfirm;
+      if (icon) {
+        setRestoreIconButtonArmed(button, labelConfirmShort, labelConfirm);
+      } else {
+        button.textContent = labelConfirm;
+      }
       button.classList.add('history-restore-armed');
       resetTimer = setTimeout(reset, HISTORY_RESTORE_ARM_MS);
       return;

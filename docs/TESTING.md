@@ -37,6 +37,14 @@ The extension code is shared; Chrome E2E validates core logic. Firefox-specific 
 
 ---
 
+## “What’s new” overlay (manual)
+
+After an **update** (not a fresh install), the background script sets `showWhatsNewForVersion` in `chrome.storage.local`. The next time the user opens the **toolbar popup** or **Settings**, a dismissible overlay appears if the stored version matches the manifest and release notes exist for that version.
+
+**Manual check:** Load a dev build, open the service worker console, run `chrome.storage.local.set({ showWhatsNewForVersion: chrome.runtime.getManifest().version })`, then open the popup or Settings — the overlay should appear once; **Close** clears the key.
+
+---
+
 ## Store Screenshots
 
 Screenshots for Chrome Web Store and Firefox AMO are generated automatically. Run after building the Chrome extension:

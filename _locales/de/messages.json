@@ -881,6 +881,24 @@
   "options_subTabGitAdd": {
     "message": "Git Add"
   },
+  "options_subTabHistory": {
+    "message": "Verlauf"
+  },
+  "options_historyColDate": {
+    "message": "Datum"
+  },
+  "options_historyColCommit": {
+    "message": "Commit"
+  },
+  "options_historyColClient": {
+    "message": "Client"
+  },
+  "options_historyColActions": {
+    "message": "Aktionen"
+  },
+  "options_historyRestoreConfirmShort": {
+    "message": "Bestätigen"
+  },
   "help_wizardRestartTitle": {
     "message": "Setup-Assistent"
   },

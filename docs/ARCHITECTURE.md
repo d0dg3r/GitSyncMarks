@@ -95,7 +95,7 @@ Sub-modules (`options/`):
 - **`wizard.js`** — Onboarding wizard flow (token validation, repo setup, environment check, first sync)
 - **`profiles.js`** — Profile switching, add/rename/delete with confirmation dialogs
 - **`linkwarden.js`** — Linkwarden tab: connection test, tag picker, sync, debug log export
-- **`history.js`** — Sync history listing, diff preview, bookmark restore, undo
+- **`history.js`** — Sync history listing (four-column header + rows: date, SHA, client id, actions; checkmark + “current” for `lastCommitSha`), diff preview, bookmark restore, undo
 - **`context-menu-config.js`** — Context menu item ordering, toggling, category submenu configuration
 - **`settings.js`** — Settings sync to Git, file export/import, generated files toggles, automation clipboard
 
@@ -106,6 +106,7 @@ Barrel module re-exporting from focused sub-modules:
 - **`lib/sync-settings.js`** — Storage keys (`STORAGE_KEYS`, `SYNC_PRESETS`), settings accessors (`getSettings`, `isConfigured`, `createApi`, `getDeviceId`), local bookmark access (`getLocalFileMap`), file map filtering (`filterForDiff`, `addGeneratedFiles`), and encrypted settings sync (`buildEncryptedSettings`, `applyEncryptedSettings`, profile CRUD)
 - **`lib/sync-core.js`** — Core sync operations (`push`, `pull`, `sync`), three-way merge (`computeDiff`, `mergeDiffs`, `mergeOrderJson`), sync state management (`saveSyncState`, `getSyncStatus`, `isSyncInProgress`), debounced auto-sync (`debouncedSync`, `bootstrapFirstSync`), and Linkwarden mirroring
 - **`lib/sync-history.js`** — Commit history listing (`listSyncHistory`), bookmark restore (`restoreFromCommit`), undo support (`getPreviousCommitSha`), and diff preview (`getCommitDiffPreview`)
+- **`lib/sync-commit-message.js`** — Parses standard GitSyncMarks commit subjects to extract the device/client id (`extractClientIdFromCommitMessage`) for Sync History display
 - **`lib/sync-migration.js`** — Legacy single-file format migration (`migrateFromLegacyFormat`)
 
 State is stored as `LAST_SYNC_FILES` (path → {sha, content}) and `LAST_COMMIT_SHA`.
@@ -161,6 +162,10 @@ Custom runtime i18n with manual language selection. Loads `_locales/{lang}/messa
 ### `lib/theme.js` — Theme
 
 Light, dark, or auto (system) theme. Single cycle button in options header switches A → Dark → Light → A. Stores preference in `chrome.storage.sync`, applies `html.dark` class when dark mode is active. Used by options page and popup.
+
+### `lib/whats-new.js` / `lib/whats-new-ui.js` — Post-update release notes
+
+On `chrome.runtime.onInstalled` with `reason === 'update'`, [background.js](../background.js) writes `showWhatsNewForVersion` (manifest version string) to `chrome.storage.local`. [popup.js](../popup.js) and [options.js](../options.js) call `mountWhatsNewIfPending()` from `whats-new-ui.js`, which shows a dismissible overlay (styled by [whats-new.css](../whats-new.css)) when the pending version matches the manifest and `whats-new.js` has copy for that version. If `.popup` is present, the overlay gets `whats-new-overlay--popup` for a compact, no-scroll layout; the options page uses the default larger panel. Closing the overlay removes the storage key. New installs do not set the flag, so onboarding stays first. Options defers the overlay until the onboarding wizard is hidden (MutationObserver on `#onboarding-wizard-screen` style).
 
 ### `lib/profile-manager.js` — Profile Manager
 
@@ -236,6 +241,7 @@ GitSyncMarks/
 ├── manifest.firefox.json         # Firefox manifest
 ├── background.js                 # Background script
 ├── popup.html / popup.js / popup.css
+├── whats-new.css                 # Shared overlay styles (popup + options)
 ├── options.html / options.js / options.css
 ├── options/                      # Options page sub-modules
 │   ├── wizard.js                 # Onboarding wizard flow
@@ -249,6 +255,7 @@ GitSyncMarks/
 │   ├── sync-settings.js          # Storage keys, settings, encrypted settings sync
 │   ├── sync-core.js              # Push/pull/sync, three-way merge, auto-sync
 │   ├── sync-history.js           # Commit history, restore, diff preview
+│   ├── sync-commit-message.js    # Parse commit subject → client id (history UI)
 │   ├── sync-migration.js         # Legacy format migration
 │   ├── github-api.js             # GitHub REST + Git Data API
 │   ├── bookmark-serializer.js    # Per-file bookmark conversion
@@ -267,6 +274,8 @@ GitSyncMarks/
 │   ├── debug-log.js              # Debug log for sync diagnostics
 │   ├── i18n.js                   # Internationalization
 │   ├── theme.js                  # Light/dark/auto theme
+│   ├── whats-new.js              # Per-version bullets, storage helpers
+│   ├── whats-new-ui.js           # Dismissible overlay DOM
 │   └── browser-polyfill.js       # Browser detection
 ├── _locales/                     # 12 languages
 │   ├── en/messages.json

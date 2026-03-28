@@ -40,7 +40,7 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 
 | Version | Codename | Description |
 |---|---|---|
-| `2.7.0` | *Spock* | Sync history & rollback with inline diff preview in Backup tab; GitHub API batching for blobs; Linkwarden mirror fix; duplicate bookmark hardening; modular codebase (`sync-engine`, context menu, options split); 54 unit tests |
+| `2.7.0` | *Spock* | Sync history & rollback + diff preview; duplicate folder merge (serializer + tree restore); options UI/i18n/build fixes; What’s new panel after update; CI CodeQL v4 / Node 24, lint + E2E smoke; modular options + 54 unit tests |
 | `2.6.0` | *Link* | Linkwarden integration; Smart Search; Onboarding Wizard; switched to Bearer authentication; support for Fine-grained PATs and GitHub Apps |
 | `2.5.3` | *Cortana* | Context menu productivity update: pinned quick folders (up to 3), Search Bookmarks entry opens a dedicated search popup, Open All from Folder with safety confirmation threshold; Files -> Settings adds context-menu tools |
 | `2.5.2` | *Cortana* | Fix: orphan subfolders in generated files (README, bookmarks.html, feed.xml, dashy-conf.yml); website layout unified; Docs removed from quick-nav; README load-from-source section; Settings sync UI: buttons disabled until client name set, password saved after Import/Sync/Create, layout (Client name + Create in one row; Refresh + Dropdown + Import + Sync in one row); Help Getting Started: Start setup wizard button |

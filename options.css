@@ -1811,21 +1811,20 @@ a.help-link-btn:focus-visible {
 .context-menu-items-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-top: 12px;
+  gap: 4px;
+  margin-top: 8px;
 }
 
 .context-menu-item-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  padding: 10px 12px;
+  gap: 8px;
+  padding: 5px 10px;
   background: var(--color-bg-tertiary);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  margin-top: 8px;
-  transition: all 0.2s;
+  transition: border-color 0.15s ease, background 0.15s ease;
 }
 
 .context-menu-item-row:hover {
@@ -1842,7 +1841,8 @@ a.help-link-btn:focus-visible {
 
 .context-menu-item-label {
   flex: 1;
-  font-size: 13px;
+  font-size: 12.5px;
+  line-height: 1.3;
   color: var(--color-text);
   font-weight: 500;
 }
@@ -1853,9 +1853,10 @@ a.help-link-btn:focus-visible {
 }
 
 .context-menu-item-reorder-btn {
-  padding: 4px 8px;
-  font-size: 14px;
-  line-height: 1;
+  padding: 2px 6px;
+  font-size: 12px;
+  line-height: 1.2;
+  min-height: 26px;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 4px;
@@ -1887,8 +1888,8 @@ html.dark .context-menu-item-reorder-btn {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0 8px;
-  margin-top: 16px;
+  padding: 6px 0 4px;
+  margin-top: 10px;
   border-bottom: 2px solid var(--color-border);
 }
 
@@ -1898,19 +1899,45 @@ html.dark .context-menu-item-reorder-btn {
 
 .category-title {
   font-weight: 700;
-  font-size: 14px;
+  font-size: 12px;
   color: var(--color-text);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  line-height: 1.25;
+}
+
+.context-menu-reset-btn {
+  margin-top: 0.5rem;
 }
 
 .submenu-toggle-wrap {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   font-weight: 400;
   font-size: 11px;
   color: var(--color-text-secondary);
+}
+
+/* Slightly smaller toggles in menu config (category + rows) — less vertical bulk */
+.context-menu-category-header .toggle-slider-sm,
+.context-menu-item-row .toggle-slider-sm {
+  width: 32px;
+  height: 18px;
+  border-radius: 9px;
+}
+
+.context-menu-category-header .toggle-slider-sm::after,
+.context-menu-item-row .toggle-slider-sm::after {
+  width: 14px;
+  height: 14px;
+  top: 2px;
+  left: 2px;
+}
+
+.context-menu-category-header input[type="checkbox"]:checked + .toggle-slider-sm::after,
+.context-menu-item-row input[type="checkbox"]:checked + .toggle-slider-sm::after {
+  transform: translateX(14px);
 }
 
 /* ---- Linkwarden Options Tag Picker ---- */
@@ -2052,6 +2079,79 @@ html.dark .lw-options-tag-cloud-new:hover {
 
 /* ---- Sync History ---- */
 
+/* Contain rows: Firefox often mis-resolves flex + margin-left:auto + min-width:0; grid keeps actions inside card. */
+#subtab-files-history .card {
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+#history-list {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Same 4-column tracks as .history-item so headers align with values (date | commit | client | actions). */
+.history-list-header {
+  display: grid;
+  grid-template-columns: 9rem minmax(4.5rem, max-content) minmax(0, 1fr) auto;
+  column-gap: 0.75rem;
+  align-items: end;
+  padding: 0 0 0.4rem;
+  margin-bottom: 0.15rem;
+  border-bottom: 2px solid var(--color-border);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.history-col-head {
+  min-width: 0;
+}
+
+.history-col-head.history-col-commit {
+  padding-inline: 0.4rem;
+  box-sizing: border-box;
+}
+
+.history-col-head.history-col-actions {
+  justify-self: end;
+  min-width: 0;
+}
+
+.history-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.25rem;
+  padding: 0.35rem 0.5rem;
+  line-height: 0;
+}
+
+.history-icon-btn .history-btn-icon-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.history-icon-btn svg {
+  display: block;
+}
+
+.history-restore-armed-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.25;
+  max-width: 7rem;
+  text-align: center;
+  white-space: normal;
+}
+
 .history-actions {
   display: flex;
   gap: 0.5rem;
@@ -2059,26 +2159,32 @@ html.dark .lw-options-tag-cloud-new:hover {
   margin-bottom: 1rem;
 }
 
+/* Single-row grid: icons stay on the same line as data; col 3 shrinks (ellipsis) before col 4. */
 .history-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: 9rem minmax(4.5rem, max-content) minmax(0, 1fr) auto;
+  column-gap: 0.75rem;
   align-items: center;
-  gap: 0.75rem;
   padding: 0.5rem 0;
-  border-bottom: 1px solid var(--color-border-secondary);
-}
-
-.history-item:last-child {
-  border-bottom: none;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .history-date {
-  min-width: 9rem;
+  grid-column: 1;
+  min-width: 0;
   font-size: 0.85rem;
   color: var(--color-text-secondary);
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .history-sha {
+  grid-column: 2;
+  justify-self: start;
   font-family: var(--font-mono, 'SFMono-Regular', 'Consolas', monospace);
   font-size: 0.8rem;
   background: var(--color-bg-secondary, #f0f0f0);
@@ -2092,15 +2198,26 @@ html.dark .history-sha {
   background: #2a2a2e;
 }
 
-.history-spacer {
-  flex: 1;
+/* Client id; minmax(0,1fr) column + ellipsis (grid + Firefox). */
+.history-msg {
+  grid-column: 3;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .history-item-actions {
+  grid-column: 4;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.5rem;
   align-items: center;
+  justify-self: end;
+  min-width: 0;
+}
+
+.history-item-actions .btn {
   flex-shrink: 0;
 }
 
@@ -2125,14 +2242,40 @@ html.dark .btn-primary.history-restore-armed:hover:not(:disabled) {
 }
 
 .history-current {
-  font-size: 0.75rem;
+  grid-column: 4;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.35rem;
+  justify-self: end;
+  justify-content: flex-end;
+  min-width: 0;
   color: var(--color-primary);
   font-weight: 600;
   white-space: nowrap;
 }
 
+.history-current-icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  line-height: 0;
+  color: var(--color-primary);
+}
+
+.history-current-icon svg {
+  display: block;
+}
+
+.history-current-label {
+  font-size: 0.75rem;
+  line-height: 1.2;
+}
+
 .history-item-wrap {
   border-bottom: 1px solid var(--color-border-secondary);
+  min-width: 0;
+  max-width: 100%;
 }
 
 .history-item-wrap:last-child {

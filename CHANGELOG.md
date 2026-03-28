@@ -7,21 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Firefox — Sync History layout**: History rows use a two-row grid (date / SHA / message on the first row; Preview + Restore or the “current” badge on a full-width second row, right-aligned). A single-row four-column grid let the actions column’s min-content width exceed the card so the Restore button could paint outside the card; card and list still use horizontal overflow containment as a safeguard.
+
+### Improved
+- **Menu tab (visibility & order)**: Tighter list layout — smaller row padding, reduced gaps between rows and category headers, no extra row margin stacking with flex `gap`, slightly smaller labels/toggles/reorder buttons, and a smaller reset button top margin.
+- **Sync History (Settings)**: Column headers for date, commit hash, **Client** (device id parsed from GitSyncMarks commit subjects; full subject on hover), and a screen-reader **Actions** column. One grid row per commit so values align under headers; preview/restore icons sit in the last column. The active commit shows a checkmark icon plus the “current” label.
+- **What’s new (toolbar popup)**: Detects popup context (`whats-new-overlay--popup`), uses compact typography and four short bullets so the dialog usually fits without scrolling; Settings page keeps the larger panel.
+
+## [2.7.0] - 2026-03-28 (*Spock*)
+
 ### Changed
-- **CI**: CodeQL workflow uses `github/codeql-action` v4, runs JavaScript actions on Node 24 (`FORCE_JAVASCRIPT_ACTIONS_TO_NODE24`), and sets `CODEQL_ACTION_FILE_COVERAGE_ON_PRS` so PR analyses keep file coverage after GitHub’s April 2026 default change. The main CI workflow sets the same Node 24 opt-in for checkout/setup-node.
+- **CI**: CodeQL workflow uses `github/codeql-action` v4, runs JavaScript actions on Node 24 (`FORCE_JAVASCRIPT_ACTIONS_TO_NODE24`), and sets `CODEQL_ACTION_FILE_COVERAGE_ON_PRS` so PR analyses keep file coverage after GitHub’s April 2026 default change. The main CI workflow sets the same Node 24 opt-in for checkout/setup-node; optional Playwright jobs run smoke and options UI tests on push/PR to `main`.
 
 ### Fixed
-- **Options page**: Sub-tab clicks no longer throw when the target has no `data-subtab` (Help quick links and “Customize shortcuts” reused `sub-tab-btn` without a matching `subtab-*` panel). `applyI18n()` skips `<select>` nodes for plain `data-i18n` text updates so option lists are never cleared by mistake.
-- **Options page robustness**: Main tab switching guards missing `#tab-*` panels. The document-level folder-browser dismiss listener and folder UI no longer assume non-null nodes (avoids a throw on every click if a node is missing). Module-level `change`/`click` listeners use optional chaining so a missing control does not abort the rest of the options script.
-
-## [2.7.0] - 2026-03-27 (*Spock*)
-
-### Fixed
+- **Duplicate folders (GitHub / toolbar)**: When the repo or browser had multiple sibling folders with the same display title (e.g. several “GitHubRepos (user)” or “Development” trees), serialization and `fileMapToBookmarkTree` now merge them into one logical folder so suffix paths (`development-2`, `githubrepos-user-3`, …) stop multiplying across syncs.
 - **Duplicate bookmark prevention**: Hardened `_order.json` deserialization, three-way merge, and serialization to prevent doubled bookmark entries when the order file contains repeated keys — addresses intermittent "whole tree doubled" issue.
 - **GitHub API rate limits on large repos**: Blob downloads for pull, history preview, and restore now run in batches of five concurrent `getBlob` calls (instead of unbounded parallelism) to avoid secondary rate-limit errors. `fetchRemoteFileMapAtCommit` also caches the result briefly when the same commit is requested again. HTTP **429** responses map to the same user-facing rate-limit message as **403** rate limits.
 - **Linkwarden auto-mirroring**: `mirrorToLinkwarden` was never executing because it referenced undefined `STORAGE_KEYS` constants. Rewrote to fetch Linkwarden settings directly from storage.
 - **Duplicate event listeners in options**: Eight controls had their `change` listeners registered twice, causing `saveSettings()` to fire redundantly on every change. Removed duplicate registrations.
-- **push() error handling**: Removed dead `settings` reference in the `catch` block (variable was scoped to `try`).
+- **Options page**: Sub-tab clicks no longer throw when the target has no `data-subtab` (Help quick links and “Customize shortcuts” reused `sub-tab-btn` without a matching `subtab-*` panel). `applyI18n()` skips `<select>` nodes for plain `data-i18n` text updates so option lists are never cleared by mistake.
+- **Options page robustness**: Main tab switching guards missing `#tab-*` panels. The document-level folder-browser dismiss listener and folder UI no longer assume non-null nodes. Module-level `change`/`click` listeners use optional chaining so a missing control does not abort the rest of the options script.
+- **Build**: Unpacked Chrome/Firefox packages copy the `options/` directory so modular Settings scripts load correctly.
+- **push() / sync() error handling**: Removed dead `settings` reference in `push()` `catch`; hoisted `profileId` in `pull()`/`sync()` so `catch` can call `setSyncState` without `ReferenceError`.
 
 ### Improved
 - **Debug log performance**: Cached the debug-log enable flag in memory with a `storage.onChanged` listener, eliminating an async storage read on every `log()` call.
@@ -36,6 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dead code**: Removed unused `debounce` from the context-menu handler path, unused `getLanguage` import from `options.js`, and redundant `catch(err) { throw err }` in `bootstrapFirstSync`.
 
 ### Added
+- **What's new after update**: After an extension update, a dismissible “What’s new” panel appears once when you open the toolbar popup or Settings (skipped on brand-new install so onboarding stays first).
 - **Sync history / rollback**: Browse recent sync commits in the Backup tab and restore bookmarks from any previous version. One-click "Undo last sync" reverts to the pre-sync state without navigating commit history.
 - **Diff preview**: "Preview" button on each history entry shows a structured diff (added, removed, changed bookmarks) before restoring, so users can make informed decisions. The preview opens inline under that commit; Added and Removed are shown side by side with collapsed sections by default. Each row also offers **Restore** using a two-click confirmation on the same button (label switches to “Click again to confirm”) instead of a browser dialog.
 - **Unit tests**: Expanded `test/` directory with `serializer.test.js` (slugify, shortHash, generateFilename, contentHash, bookmarkTreeToFileMap, fileMapToBookmarkTree, fileMapToMarkdown, fileMapToNetscapeHtml) and `sync-diff.test.js` (computeDiff, mergeDiffs). Total 54 tests covering serialization, deserialization, export, diff, and merge logic.

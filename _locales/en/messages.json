@@ -11,6 +11,12 @@
   "commands_openOptions": {
     "message": "Open extension settings"
   },
+  "whatsnew_title": {
+    "message": "What's new in GitSyncMarks $1"
+  },
+  "whatsnew_close": {
+    "message": "Close"
+  },
   "popup_configureFirst": {
     "message": "Please configure the extension first."
   },
@@ -923,6 +929,23 @@
   "options_subTabHistory": {
     "message": "History"
   },
+  "options_historyColDate": {
+    "message": "Date"
+  },
+  "options_historyColCommit": {
+    "message": "Commit"
+  },
+  "options_historyColClient": {
+    "message": "Client"
+  },
+  "options_historyColActions": {
+    "message": "Actions",
+    "description": "Screen-reader label for the Sync History table column that contains preview/restore icons."
+  },
+  "options_historyRestoreConfirmShort": {
+    "message": "Confirm",
+    "description": "Short label on the restore icon button after first click (two-step confirm)."
+  },
   "options_historyTitle": {
     "message": "Sync History"
   },
@@ -1065,13 +1088,13 @@
     "message": "Load history"
   },
   "help_historyLoadDesc": {
-    "message": "Fetches the last 20 commits that touched your bookmark path. Each row shows the date, commit message, and a short SHA."
+    "message": "Fetches the last 20 commits that touched your bookmark path. The table header labels the columns (date, short commit hash, client id parsed from the commit message). Hover the client cell to see the full message. Each row has a preview icon (magnifying glass) to load a diff and a restore icon to replace local bookmarks with that commit."
   },
   "help_historyRestoreLabel": {
     "message": "Restore"
   },
   "help_historyRestoreDesc": {
-    "message": "Replaces all local bookmarks with the state from that commit. Click Restore, then click again while the button shows “Click again to confirm” to proceed. This does not rewrite the remote branch — your current remote data remains untouched. The next sync will push local state back."
+    "message": "Replaces all local bookmarks with the state from that commit. In the list, click the restore icon, then click again while it shows a short confirm label (or the full “Click again to confirm” text in the diff panel). This does not rewrite the remote branch — your current remote data remains untouched. The next sync will push local state back."
   },
   "help_historyUndoLabel": {
     "message": "Undo last sync"

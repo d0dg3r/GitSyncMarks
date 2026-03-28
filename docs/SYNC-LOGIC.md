@@ -235,7 +235,7 @@ In the common case (few files changed), this is 3 + N calls where N is the numbe
 
 ### Commit History
 
-`listSyncHistory()` calls `GitHubAPI.listCommits({ path })` (the REST [List Commits](https://docs.github.com/en/rest/commits/commits#list-commits) endpoint filtered by the bookmark base path). Returns the last 20 commits with SHA, message, date, and author.
+`listSyncHistory()` calls `GitHubAPI.listCommits({ path })` (the REST [List Commits](https://docs.github.com/en/rest/commits/commits#list-commits) endpoint filtered by the bookmark base path). Returns the last 20 commits with SHA, message, date, and author. GitSyncMarks-generated subjects follow `… from <deviceId> — <ISO8601>` (em dash); `lib/sync-commit-message.js` extracts `<deviceId>` for the Settings **Client** column (full subject remains available on hover). Commits from other tools keep the raw message string but may not parse.
 
 ### Restore from Commit
 
@@ -243,7 +243,7 @@ In the common case (few files changed), this is 3 + N calls where N is the numbe
 
 ### Diff Preview
 
-`getCommitDiffPreview(commitSha)` fetches both the target commit's file map and the current local bookmarks, filters out internal files (`_order.json`, `_index.json`, generated files, settings), then computes a structured diff. Each bookmark JSON file is parsed to extract `{ title, url }` for user-friendly display. Returns lists of added (in target but not local), removed (in local but not target), and changed entries. The options UI renders the preview inline under the selected history row: summary badges, then Added and Removed in two columns (collapsed `<details>` by default), then Changed full width below, then Restore/Close. Each row also shows Preview and Restore: Restore uses a two-step confirmation on the same button (first click arms, second click runs `restoreFromCommit`) without a browser `confirm()` dialog. The same pattern applies to Restore inside an open diff preview.
+`getCommitDiffPreview(commitSha)` fetches both the target commit's file map and the current local bookmarks, filters out internal files (`_order.json`, `_index.json`, generated files, settings), then computes a structured diff. Each bookmark JSON file is parsed to extract `{ title, url }` for user-friendly display. Returns lists of added (in target but not local), removed (in local but not target), and changed entries. The options UI renders the preview inline under the selected history row: summary badges, then Added and Removed in two columns (collapsed `<details>` by default), then Changed full width below, then Restore/Close. The history table uses one grid row per commit: headers and cells share the same four columns (date, short SHA, client id, actions). Preview and restore are icon buttons in the last column; the row matching `lastCommitSha` shows a checkmark icon plus a “current” label. Restore uses a two-step confirmation on the same control (first click arms, second click runs `restoreFromCommit`) without a browser `confirm()` dialog. The same pattern applies to Restore inside an open diff preview (text buttons there).
 
 ### Undo Last Sync
 

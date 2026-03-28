@@ -26,6 +26,7 @@ import { initLinkwarden, renderLwOptionsTagChips, renderLwOptionsTagCloud, setLw
 import { initHistory } from './options/history.js';
 import { initContextMenuConfig, renderContextMenuConfig, DEFAULT_CONTEXT_MENU_ITEMS } from './options/context-menu-config.js';
 import { initSettings, downloadFile, updateGenerateFilesBtn, updateSettingsSyncVisibility, updateSettingsSyncButtonsState, renderSettingsProfiles, refreshSettingsProfiles } from './options/settings.js';
+import { mountWhatsNewIfPending } from './lib/whats-new-ui.js';
 
 const browserObj = typeof browser !== 'undefined' ? browser : chrome;
 
@@ -195,6 +196,36 @@ document.querySelectorAll('.sub-tab-btn').forEach(btn => {
 // Initialization
 // ==============================
 
+/**
+ * Show "What's new" after update once onboarding wizard is not visible (avoid stacking modals).
+ */
+async function scheduleWhatsNewWhenWizardHidden() {
+  const wiz = document.getElementById('onboarding-wizard-screen');
+  const manifestVersion = chrome.runtime.getManifest().version;
+
+  const tryMount = async () => {
+    await mountWhatsNewIfPending(document.body, { getMessage, manifestVersion });
+  };
+
+  const wizardHidden = () => {
+    if (!wiz) return true;
+    return getComputedStyle(wiz).display === 'none';
+  };
+
+  if (wizardHidden()) {
+    await tryMount();
+    return;
+  }
+
+  const obs = new MutationObserver(() => {
+    if (wizardHidden()) {
+      obs.disconnect();
+      tryMount().catch(() => {});
+    }
+  });
+  obs.observe(wiz, { attributes: true, attributeFilter: ['style'] });
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     await initTheme();
@@ -224,6 +255,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     await loadSettings();
     loadShortcuts();
+
+    await scheduleWhatsNewWhenWizardHidden();
 
     const versionEl = document.getElementById('app-version');
     if (versionEl) {

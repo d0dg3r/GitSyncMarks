@@ -5,6 +5,7 @@
 
 import { initI18n, applyI18n, getMessage } from './lib/i18n.js';
 import { initTheme } from './lib/theme.js';
+import { mountWhatsNewIfPending } from './lib/whats-new-ui.js';
 
 // DOM elements
 const notConfiguredEl = document.getElementById('not-configured');
@@ -50,6 +51,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
   await loadStatus();
+  await mountWhatsNewIfPending(document.body, {
+    getMessage,
+    manifestVersion: chrome.runtime.getManifest().version,
+  });
 });
 
 async function loadStatus() {
