@@ -767,6 +767,9 @@
   "api_branchNotFound": {
     "message": "Branch '$1' not found."
   },
+  "api_listCommitsFailed": {
+    "message": "Failed to list commits (HTTP $1)."
+  },
   "sync_alreadyInProgress": {
     "message": "Sync already in progress."
   },

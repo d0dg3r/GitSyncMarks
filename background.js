@@ -439,17 +439,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     getDebugLogExportContent().then((content) => sendResponse({ content }));
     return true; // keep channel open for async response
   }
-  if (message.action === '__debugSessionIngest') {
-    const { endpoint, headers, body } = message;
-    if (!endpoint || typeof body !== 'string') {
-      sendResponse({ ok: false });
-      return false;
-    }
-    fetch(endpoint, { method: 'POST', headers: headers || { 'Content-Type': 'application/json' }, body })
-      .then(() => sendResponse({ ok: true }))
-      .catch(() => sendResponse({ ok: false }));
-    return true;
-  }
   if (message.action === 'captureScreenshot') {
     const { windowId } = message;
     const targetWindowId = windowId ? parseInt(windowId, 10) : null;

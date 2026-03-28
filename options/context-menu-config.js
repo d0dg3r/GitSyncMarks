@@ -3,7 +3,7 @@
  * Handles context menu item ordering, toggling, and category submenu configuration.
  */
 
-import { getMessage, applyI18n } from '../lib/i18n.js';
+import { getMessage } from '../lib/i18n.js';
 
 export const DEFAULT_CONTEXT_MENU_ITEMS = [
   { id: 'ADD_TOOLBAR', enabled: true },

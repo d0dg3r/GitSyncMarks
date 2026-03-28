@@ -8,7 +8,7 @@ import { getMessage, applyI18n } from '../lib/i18n.js';
 import { updateLinkwardenCollectionsFolder } from '../lib/linkwarden-sync.js';
 import { LinkwardenAPI } from '../lib/linkwarden-api.js';
 import { decryptToken } from '../lib/crypto.js';
-import { isDebugLogEnabled, setDebugLogEnabled } from '../lib/debug-log.js';
+import { setDebugLogEnabled } from '../lib/debug-log.js';
 
 // ---- Module-level state ----
 let lwOptionsSelectedTags = [];
@@ -201,7 +201,7 @@ export function initLinkwarden({ saveSettings, downloadFile }) {
     const tokenEnc = linkwardenTokenInput.value.trim();
 
     if (!url || !tokenEnc) {
-      linkwardenSyncResult.textContent = getMessage('options_pleaseEnterLinkwardenConfig') || 'Linkwarden URL and Token are required';
+      linkwardenSyncResult.textContent = getMessage('options_pleaseEnterLinkwardenConfig');
       linkwardenSyncResult.className = 'validation-result error';
       return;
     }
@@ -216,7 +216,7 @@ export function initLinkwarden({ saveSettings, downloadFile }) {
 
       const result = await updateLinkwardenCollectionsFolder(url, token, parent);
 
-      linkwardenSyncResult.textContent = getMessage('options_linkwardenSyncSuccess', [result.collections.toString(), result.links.toString()]) || `Synced ${result.collections} collections and ${result.links} links.`;
+      linkwardenSyncResult.textContent = getMessage('options_linkwardenSyncSuccess', [result.collections.toString(), result.links.toString()]);
       linkwardenSyncResult.className = 'validation-result success';
     } catch (err) {
       linkwardenSyncResult.textContent = getMessage('options_error', [err.message]);

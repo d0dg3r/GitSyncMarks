@@ -11,7 +11,6 @@ import {
   addProfile,
   deleteProfile,
   switchProfile,
-  MAX_PROFILES,
 } from '../lib/profile-manager.js';
 
 const profileSelect = document.getElementById('profile-select');
@@ -44,6 +43,7 @@ let pendingProfileSwitchId = null;
 let _loadSettings = null;
 let _saveSettings = null;
 let _showSaveResult = null;
+let _profileMessageTimer = null;
 
 function setProfileButtonsEnabled(enabled) {
   profileSelect.disabled = !enabled;
@@ -79,7 +79,8 @@ export function showProfileMessage(message, isError = true) {
   profileMessage.textContent = message;
   profileMessage.style.display = '';
   profileMessage.className = 'profile-message' + (isError ? ' error' : '');
-  setTimeout(() => {
+  clearTimeout(_profileMessageTimer);
+  _profileMessageTimer = setTimeout(() => {
     profileMessage.style.display = 'none';
   }, 5000);
 }

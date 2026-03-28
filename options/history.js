@@ -13,88 +13,6 @@ const historyList = document.getElementById('history-list');
 
 let currentCommitSha = null;
 
-// #region agent log
-const DEBUG_INGEST = 'http://127.0.0.1:7246/ingest/1b416a88-d62d-415a-a55c-29910a80e72b';
-const DEBUG_SESSION = 'f0a9cb';
-
-function emitHistoryLayoutDebug(reason) {
-  try {
-    const html = document.documentElement;
-    const body = document.body;
-    const card = document.querySelector('#subtab-files-history .card');
-    const list = document.getElementById('history-list');
-    const lastWrap = list?.querySelector('.history-item-wrap:last-child');
-    const pickRect = (el) => {
-      if (!el) return null;
-      const r = el.getBoundingClientRect();
-      return { top: r.top, bottom: r.bottom, left: r.left, right: r.right, h: r.height, w: r.width };
-    };
-    const firstWrap = list?.querySelector('.history-item-wrap');
-    const firstActions = firstWrap?.querySelector('.history-item-actions');
-    const firstRestoreBtn = firstActions?.querySelector('.btn-primary');
-    const cardR = card ? pickRect(card) : null;
-    const restoreR = firstRestoreBtn ? pickRect(firstRestoreBtn) : null;
-    const outflowX =
-      cardR && restoreR && Number.isFinite(cardR.right) && Number.isFinite(restoreR.right)
-        ? Math.round((restoreR.right - cardR.right) * 100) / 100
-        : null;
-
-    const payload = {
-      sessionId: DEBUG_SESSION,
-      runId: 'post-fix',
-      hypothesisId: 'H-hoverflow',
-      location: 'options/history.js:emitHistoryLayoutDebug',
-      message: String(reason),
-      timestamp: Date.now(),
-      data: {
-        reason,
-        innerH: window.innerHeight,
-        innerW: window.innerWidth,
-        scrollY: window.scrollY,
-        maxScrollY: html.scrollHeight - html.clientHeight,
-        docClientH: html.clientHeight,
-        docScrollH: html.scrollHeight,
-        bodyClientH: body.clientHeight,
-        bodyScrollH: body.scrollHeight,
-        overflowHtml: getComputedStyle(html).overflowY,
-        overflowBody: getComputedStyle(body).overflowY,
-        card: card
-          ? {
-              overflowX: getComputedStyle(card).overflowX,
-              overflowY: getComputedStyle(card).overflowY,
-              maxHeight: getComputedStyle(card).maxHeight,
-              rect: cardR,
-            }
-          : null,
-        list: list
-          ? {
-              overflowX: getComputedStyle(list).overflowX,
-              overflowY: getComputedStyle(list).overflowY,
-              maxHeight: getComputedStyle(list).maxHeight,
-              rect: pickRect(list),
-            }
-          : null,
-        lastWrapRect: pickRect(lastWrap),
-        firstActionsRect: pickRect(firstActions),
-        firstRestoreRect: restoreR,
-        outflowX,
-      },
-    };
-    chrome.runtime.sendMessage(
-      {
-        action: '__debugSessionIngest',
-        endpoint: DEBUG_INGEST,
-        headers: { 'Content-Type': 'application/json', 'X-Debug-Session-Id': DEBUG_SESSION },
-        body: JSON.stringify(payload),
-      },
-      () => void chrome.runtime.lastError
-    );
-  } catch {
-    /* ignore */
-  }
-}
-// #endregion
-
 const HISTORY_RESTORE_ARM_MS = 10000;
 
 /** Inline SVG (static); injected into icon buttons only. */
@@ -250,13 +168,6 @@ function renderHistoryList(commits) {
     wrap.append(row, diffSlot);
     historyList.appendChild(wrap);
   }
-  // #region agent log
-  if (commits.length > 0) {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => emitHistoryLayoutDebug('renderHistoryList'));
-    });
-  }
-  // #endregion
 }
 
 /**

@@ -37,4 +37,31 @@ describe('sync-commit-message', () => {
     assert.strictEqual(extractClientIdFromCommitMessage('manual commit'), '');
     assert.strictEqual(extractClientIdFromCommitMessage(null), '');
   });
+
+  it('returns empty when separator is a hyphen instead of em dash', () => {
+    // Only the em dash (—) is a valid separator; regular hyphen should not match
+    const msgHyphen = 'Bookmark sync from 3a9b2ca8 - 2026-03-28T11:41:13.220Z';
+    assert.strictEqual(extractClientIdFromCommitMessage(msgHyphen), '');
+  });
+
+  it('uses only the first line of a multiline commit message', () => {
+    const multiline =
+      'Bookmark sync from abcdef12 — 2026-03-28T11:41:13.220Z\n\nExtra detail on second line';
+    // The function receives the message already split to first line by github-api.js
+    // but we test the raw regex directly here too
+    assert.strictEqual(extractClientIdFromCommitMessage(multiline), 'abcdef12');
+  });
+
+  it('returns empty when "from" appears in non-GitSyncMarks context', () => {
+    assert.strictEqual(extractClientIdFromCommitMessage('Update README with notes from meeting'), '');
+    assert.strictEqual(extractClientIdFromCommitMessage('Merge pull request from feature-branch'), '');
+    // "from" present but no em-dash separator
+    assert.strictEqual(extractClientIdFromCommitMessage('Initial import from legacy repo'), '');
+  });
+
+  it('returns empty for non-string input types', () => {
+    assert.strictEqual(extractClientIdFromCommitMessage(undefined), '');
+    assert.strictEqual(extractClientIdFromCommitMessage(42), '');
+    assert.strictEqual(extractClientIdFromCommitMessage({}), '');
+  });
 });

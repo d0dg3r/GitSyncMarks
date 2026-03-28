@@ -953,6 +953,7 @@ function updateThemeButtons(active) {
   themeSelector.querySelectorAll('.seg-btn').forEach(btn => {
     const t = btn.dataset.theme;
     btn.classList.toggle('active', t === active);
+    btn.setAttribute('aria-checked', t === active ? 'true' : 'false');
     btn.title = getMessage(THEME_TITLES[t]) || t;
     btn.setAttribute('aria-label', getMessage(THEME_TITLES[t]) || t);
   });
@@ -980,6 +981,7 @@ if (densitySelector) {
     densitySelector.querySelectorAll('.seg-btn').forEach(btn => {
       const d = btn.dataset.density;
       btn.classList.toggle('active', d === active);
+      btn.setAttribute('aria-checked', d === active ? 'true' : 'false');
       btn.title = getMessage(DENSITY_LABELS[d]) || d;
       btn.setAttribute('aria-label', getMessage(DENSITY_LABELS[d]) || d);
     });

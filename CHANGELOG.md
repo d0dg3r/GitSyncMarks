@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
-- **Firefox — Sync History layout**: History rows use a two-row grid (date / SHA / message on the first row; Preview + Restore or the “current” badge on a full-width second row, right-aligned). A single-row four-column grid let the actions column’s min-content width exceed the card so the Restore button could paint outside the card; card and list still use horizontal overflow containment as a safeguard.
+- **Firefox — Sync History layout**: History rows use a single-row four-column grid (date, SHA, message, and an actions column with Preview + Restore or the “current” badge, right-aligned). A previous layout attempt let the actions column’s min-content width exceed the card so the Restore button could paint outside the card; card and list still use horizontal overflow containment as a safeguard.
 
 ### Added
 - **UI Density**: Three-level density setting (Compact / Medium / Large) via S / M / L selector in the options header. Applies to all extension surfaces (options, popup, search, Linkwarden save). Stored in `chrome.storage.sync` and synced across devices. CSS tokens in `ui-density.css` control typography, spacing, and control sizes globally.
