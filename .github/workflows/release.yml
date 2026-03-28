@@ -12,6 +12,8 @@ permissions:
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout code
@@ -42,7 +44,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
@@ -94,5 +96,6 @@ jobs:
             ${{ steps.changelog.outputs.release_notes }}
 
             [Release](https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}) · [Changelog](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)
-          category-name: Announcements
+          repository-id: R_kgDORLqm_w # GraphQL node ID of this repository (github.repository); retrieve via `gh api graphql -f query='query { repository(owner:"<owner>", name:"<name>"){ id } }'`
+          category-id: DIC_kwDORLqm_84C2fI- # GraphQL node ID of the Discussions category used for releases; retrieve via `gh api graphql -f query='query { repository(owner:"<owner>", name:"<name>"){ discussionCategories(first:50){ nodes{ id, name } } } }'`
           github-token: ${{ secrets.GITHUB_TOKEN }}
