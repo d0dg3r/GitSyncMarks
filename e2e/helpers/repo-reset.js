@@ -7,10 +7,13 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { execFileSync } = require('child_process');
 const os = require('os');
 
 const BASE_PATH = 'bookmarks';
+
+/** GitHub owner and repo name segments (no shell metacharacters). */
+const SAFE_REPO_SEGMENT = /^[a-zA-Z0-9._-]+$/;
 
 function createMinimalStructure(dir) {
   const bookmarksDir = path.join(dir, BASE_PATH);
@@ -30,9 +33,16 @@ function createMinimalStructure(dir) {
   }
 }
 
-function runGit(command, { cwd } = {}) {
+/**
+ * Run git without a shell (avoids CodeQL js/indirect-command-line-injection on env-derived strings).
+ * @param {string | undefined} cwd
+ * @param {string[]} args
+ * @param {string} [label]
+ * @returns {string}
+ */
+function gitExec(cwd, args, label = 'git') {
   try {
-    return execSync(command, {
+    return execFileSync('git', args, {
       cwd,
       stdio: 'pipe',
       encoding: 'utf-8',
@@ -41,7 +51,25 @@ function runGit(command, { cwd } = {}) {
     const stdout = String(err?.stdout || '').trim();
     const stderr = String(err?.stderr || '').trim();
     const detail = [stdout, stderr].filter(Boolean).join('\n');
-    throw new Error(`repo-reset git command failed: ${command}${detail ? `\n${detail}` : ''}`);
+    throw new Error(
+      `repo-reset git failed (${label}): ${args.join(' ')}${detail ? `\n${detail}` : ''}`
+    );
+  }
+}
+
+/**
+ * @param {string} cloneDir
+ * @returns {boolean}
+ */
+function hasStagedChanges(cloneDir) {
+  try {
+    execFileSync('git', ['diff', '--cached', '--quiet'], {
+      cwd: cloneDir,
+      stdio: 'pipe',
+    });
+    return false;
+  } catch {
+    return true;
   }
 }
 
@@ -60,11 +88,17 @@ async function resetTestRepo() {
     );
   }
 
-  const cloneDir = path.join(os.tmpdir(), `gitsyncmarks-reset-${Date.now()}`);
+  if (!SAFE_REPO_SEGMENT.test(owner) || !SAFE_REPO_SEGMENT.test(repo)) {
+    throw new Error(
+      'Invalid GITSYNCMARKS_TEST_REPO_OWNER or GITSYNCMARKS_TEST_REPO (use [a-zA-Z0-9._-]+ only)'
+    );
+  }
+
+  const cloneDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gitsyncmarks-reset-'));
   const url = `https://${token}@github.com/${owner}/${repo}.git`;
 
   try {
-    runGit(`git clone --depth 1 ${url} ${cloneDir}`);
+    gitExec(undefined, ['clone', '--depth', '1', url, cloneDir], 'clone');
 
     // Remove existing bookmarks, create minimal structure
     const bookmarksPath = path.join(cloneDir, BASE_PATH);
@@ -73,19 +107,11 @@ async function resetTestRepo() {
     }
     createMinimalStructure(cloneDir);
 
-    runGit('git add -A', { cwd: cloneDir });
-    const hasChanges = (() => {
-      try {
-        execSync('git diff --cached --quiet', { cwd: cloneDir, stdio: 'pipe' });
-        return false;
-      } catch {
-        return true;
-      }
-    })();
+    gitExec(cloneDir, ['add', '-A'], 'add');
 
-    if (hasChanges) {
-      runGit('git commit -m "E2E reset: minimal bookmark structure"', { cwd: cloneDir });
-      runGit('git push --force origin main', { cwd: cloneDir });
+    if (hasStagedChanges(cloneDir)) {
+      gitExec(cloneDir, ['commit', '-m', 'E2E reset: minimal bookmark structure'], 'commit');
+      gitExec(cloneDir, ['push', '--force', 'origin', 'main'], 'push');
     }
 
     fs.rmSync(cloneDir, { recursive: true, force: true });
