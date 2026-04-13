@@ -54,7 +54,7 @@ jobs:
         run: bash scripts/build.sh
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           name: "GitSyncMarks ${{ steps.version.outputs.VERSION }}"
           prerelease: ${{ steps.prerelease.outputs.prerelease }}
