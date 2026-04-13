@@ -96,6 +96,12 @@ Create a **Poll** in [Discussions → Polls](https://github.com/d0dg3r/GitSyncMa
 | 7 | Tag and push: `git tag v2.2.0 && git push origin v2.2.0` |
 | 8 | GitHub Actions creates the release with ZIPs |
 
+**Third-party Actions in `release.yml`:** Pin each non-`actions/*` `uses:` reference to a full commit SHA (not only a moving tag) so CodeQL’s `actions/unpinned-tag` stays satisfied. Resolve a tag to the current commit with:
+
+```bash
+gh api repos/<org>/<repo>/commits/<tag> -q .sha
+```
+
 ### 2.6.0 Preparation Checklist
 
 Use this sequence when preparing `2.6.0`:

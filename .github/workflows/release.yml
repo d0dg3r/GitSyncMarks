@@ -14,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    # Third-party actions below are pinned to full commit SHAs (CodeQL: actions/unpinned-tag).
+    # Refresh: gh api repos/<org>/<repo>/commits/<tag> -q .sha
 
     steps:
       - name: Checkout code
@@ -37,7 +39,7 @@ jobs:
 
       - name: Extract changelog
         id: changelog
-        uses: ffurrer2/extract-release-notes@v3
+        uses: ffurrer2/extract-release-notes@273da39a24fb7db106a35526c8162815faffd31d # v3
         with:
           changelog_file: CHANGELOG.md
 
@@ -54,7 +56,7 @@ jobs:
         run: bash scripts/build.sh
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v3
+        uses: softprops/action-gh-release@b4309332981a82ec1c5618f44dd2e27cc8bfbfda # v3
         with:
           name: "GitSyncMarks ${{ steps.version.outputs.VERSION }}"
           prerelease: ${{ steps.prerelease.outputs.prerelease }}
@@ -89,7 +91,7 @@ jobs:
 
       - name: Create Release Discussion
         if: success()
-        uses: abirismyname/create-discussion@v2.1.0
+        uses: abirismyname/create-discussion@c2b7c825241769dda523865ae444a879f6bbd0e0 # v2.1.0
         with:
           title: "${{ steps.version.outputs.VERSION }} — Released"
           body: |

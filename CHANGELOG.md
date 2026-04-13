@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **CodeQL / Code Scanning**: Pinned third-party actions in [`.github/workflows/release.yml`](.github/workflows/release.yml) to full commit SHAs (`actions/unpinned-tag`). Hardened [`e2e/helpers/repo-reset.js`](e2e/helpers/repo-reset.js) with `fs.mkdtempSync` for the clone directory, `execFileSync('git', …)` instead of shell `execSync`, and validation of test repo owner/name (`js/insecure-temporary-file`, `js/indirect-command-line-injection`).
+
 ## [2.7.1] - 2026-03-28 (*Spock*)
 
 ### Improved
