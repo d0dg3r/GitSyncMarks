@@ -31,7 +31,7 @@
     "eslint": "^10.1.0",
     "eslint-plugin-security": "^4.0.0",
     "globals": "^17.4.0",
-    "marked": "^17.0.5",
+    "marked": "^17.0.6",
     "playwright": "^1.58.2",
     "png-to-ico": "^3.0.1",
     "sharp": "^0.34.5"
