@@ -245,7 +245,7 @@ Barrel module re-exporting from focused sub-modules:
 | Download Favicon | page | Downloads favicon via `chrome.downloads.download()` |
 | Switch Profile | page, link | Submenu with radio items for each profile; active profile checked |
 
-`setupContextMenus()` is called on SW load, `onStartup`, and `onInstalled` (and when relevant sync keys change); it ends with `refreshContextMenuDynamicItems()`. `handleContextMenuClick()` is wired to a top-level `contextMenus.onClicked` listener for MV3 service worker persistence.
+`setupContextMenus()` is called on SW load, `onStartup`, and `onInstalled` (and when relevant sync keys change); it builds the static items with the same `contextMenuCreateAsync` (await per `contextMenus.create`) as the dynamic module, then sets the static ready flag and calls `refreshContextMenuDynamicItems()`. The whole run is in one `try/catch` (storage read, defaults, and `create` chain) so early failures are handled and the ready flag does not get stuck. `handleContextMenuClick()` is wired to a top-level `contextMenus.onClicked` listener for MV3 service worker persistence.
 
 ### `lib/browser-polyfill.js` — Browser Detection
 
