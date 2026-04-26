@@ -1,6 +1,6 @@
 {
   "name": "gitsyncmarks",
-  "version": "2.7.1",
+  "version": "2.7.2",
   "private": true,
   "description": "Bookmark sync via GitHub. Linkwarden synergy, Smart Search, and Companion App. Direct, secure, private.",
   "scripts": {
@@ -11,6 +11,7 @@
     "generate-screenshots": "node scripts/generate-screenshots.js",
     "screenshots": "npm run build:chrome && npm run generate-screenshots",
     "lint": "npx eslint .",
+    "typecheck": "tsc -p jsconfig.json --noEmit",
     "test:unit": "node --test test/*.test.js",
     "test:e2e": "npm run build:chrome && npx playwright test",
     "test:e2e:smoke": "npm run build:chrome && npx playwright test e2e/smoke.spec.js",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.59.1",
+    "@types/chrome": "^0.1.40",
     "dotenv": "^17.4.2",
     "eslint": "^10.2.0",
     "eslint-plugin-security": "^4.0.0",
@@ -34,6 +36,7 @@
     "marked": "^17.0.6",
     "playwright": "^1.58.2",
     "png-to-ico": "^3.0.1",
-    "sharp": "^0.34.5"
+    "sharp": "^0.34.5",
+    "typescript": "~5.7.0"
   }
 }

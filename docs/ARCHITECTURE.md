@@ -72,7 +72,7 @@ Shared: Manifest V3, permissions (`bookmarks`, `storage`, `alarms`, `notificatio
 The central coordinator:
 
 - **Bookmark event listeners** — `onCreated`, `onRemoved`, `onChanged`, `onMoved` trigger debounced auto-sync
-- **Context menu** — `contextMenus.onClicked` listener (top-level for SW persistence); `setupContextMenus()` called from `onInstalled`
+- **Context menu** — `contextMenus.onClicked` listener (top-level for SW persistence); `setupContextMenus()` runs on service worker start (after migrations), `chrome.runtime.onStartup`, and `onInstalled` (and when sync storage for profiles, menu config, or Linkwarden visibility changes) so the menu matches `chrome.storage.sync` after every SW wake
 - **Periodic sync alarm** — `chrome.alarms` for periodic three-way merge sync
 - **Message handler** — Receives `sync`, `push`, `pull`, `generateFilesNow`, `getStatus`, `switchProfile`, `settingsChanged`, `setSettingsSyncPassword`, `clearSettingsSyncPassword`, `listDeviceConfigs`, `importDeviceConfig`, `getDebugLog` from popup/options
 - **Badge & Error Visibility** — Uses a centralized `updateSyncStatusBadge` helper to set an orange `!` badge and a descriptive tooltip (via `chrome.action.setTitle`) on sync failure, ensuring it clears reliably on success across all triggers.
@@ -100,12 +100,16 @@ Sub-modules (`options/`):
 - **`history.js`** — Sync history listing (four-column header + rows: date, SHA, client id, actions; checkmark + “current” for `lastCommitSha`), diff preview, bookmark restore, undo
 - **`context-menu-config.js`** — Context menu item ordering, toggling, category submenu configuration
 - **`settings.js`** — Settings sync to Git, file export/import, generated files toggles, automation clipboard
+- **`help-shortcuts.js`** — Help tab: keyboard shortcut labels and “Customize shortcuts” link
+- **`factory-reset.js`** — Files tab: full extension data reset (sync + local `storage` clear)
 
 ### `lib/sync-engine.js` — Sync Engine (barrel)
 
 Barrel module re-exporting from focused sub-modules:
 
-- **`lib/sync-settings.js`** — Storage keys (`STORAGE_KEYS`, `SYNC_PRESETS`), settings accessors (`getSettings`, `isConfigured`, `createApi`, `getDeviceId`), local bookmark access (`getLocalFileMap`), file map filtering (`filterForDiff`, `addGeneratedFiles`), and encrypted settings sync (`buildEncryptedSettings`, `applyEncryptedSettings`, profile CRUD)
+- **`lib/storage-keys.js`** — Single source for `STORAGE_KEYS` and `LOCAL_STORAGE_KEYS` string names; re-exported from `sync-settings.js` / `sync-engine.js` for the rest of the app
+- **`lib/context-menu-defaults.js`** — Default context menu item list, submenu flags, and `ensureContextMenuItemDefaults()` (shared by options and `context-menu-setup.js`)
+- **`lib/sync-settings.js`** — Re-exports `STORAGE_KEYS` and `LOCAL_STORAGE_KEYS` from `storage-keys.js`; `SYNC_PRESETS`, settings accessors (`getSettings`, `isConfigured`, `createApi`, `getDeviceId`), local bookmark access (`getLocalFileMap`), file map filtering (`filterForDiff`, `addGeneratedFiles`), and encrypted settings sync (`buildEncryptedSettings`, `applyEncryptedSettings`, profile CRUD)
 - **`lib/sync-core.js`** — Core sync operations (`push`, `pull`, `sync`), three-way merge (`computeDiff`, `mergeDiffs`, `mergeOrderJson`), sync state management (`saveSyncState`, `getSyncStatus`, `isSyncInProgress`), debounced auto-sync (`debouncedSync`, `bootstrapFirstSync`), and Linkwarden mirroring
 - **`lib/sync-history.js`** — Commit history listing (`listSyncHistory`), bookmark restore (`restoreFromCommit`), undo support (`getPreviousCommitSha`), and diff preview (`getCommitDiffPreview`)
 - **`lib/sync-commit-message.js`** — Parses standard GitSyncMarks commit subjects to extract the device/client id (`extractClientIdFromCommitMessage`) for Sync History display
@@ -226,7 +230,7 @@ Fetches the authenticated user's repos via GitHub REST API and maintains a "GitH
 Barrel module re-exporting from focused sub-modules:
 
 - **`lib/context-menu-constants.js`** — Menu IDs (`MENU_IDS`), categories (`CATEGORIES`), ID prefixes, popup dimensions, and other shared constants
-- **`lib/context-menu-setup.js`** — Static menu creation (`setupContextMenus`), called from `chrome.runtime.onInstalled`
+- **`lib/context-menu-setup.js`** — Static menu creation (`setupContextMenus`), called from the background service worker on startup and `chrome.runtime.onInstalled`
 - **`lib/context-menu-dynamic.js`** — Dynamic menu management: profile submenus, quick folders, folder tree, open-all-from-folder items; concurrency protection (`isRefreshing`/`refreshPending`) and debounced rebuild (`refreshContextMenuDynamicItemsDebounced`, 500ms delay, 5s max-wait)
 - **`lib/context-menu-handlers.js`** — Click event dispatch (`handleContextMenuClick`) and all action handlers (add bookmark, sync, Linkwarden save, search, favicon, profile switch)
 
@@ -241,7 +245,7 @@ Barrel module re-exporting from focused sub-modules:
 | Download Favicon | page | Downloads favicon via `chrome.downloads.download()` |
 | Switch Profile | page, link | Submenu with radio items for each profile; active profile checked |
 
-`setupContextMenus()` is called from `onInstalled`; `handleContextMenuClick()` is wired to a top-level `contextMenus.onClicked` listener for MV3 service worker persistence.
+`setupContextMenus()` is called on SW load, `onStartup`, and `onInstalled` (and when relevant sync keys change); it ends with `refreshContextMenuDynamicItems()`. `handleContextMenuClick()` is wired to a top-level `contextMenus.onClicked` listener for MV3 service worker persistence.
 
 ### `lib/browser-polyfill.js` — Browser Detection
 
@@ -251,6 +255,7 @@ Minimal shim: `isFirefox`, `isChrome`, `getBrowserName()`.
 
 ```
 GitSyncMarks/
+├── .cursor/mcp.json              # Optional Cursor MCP: Chrome + Firefox DevTools (see docs/TESTING.md)
 ├── manifest.json                 # Chrome manifest
 ├── manifest.firefox.json         # Firefox manifest
 ├── background.js                 # Background script
@@ -267,10 +272,13 @@ GitSyncMarks/
 │   ├── linkwarden.js             # Linkwarden tab UI
 │   ├── history.js                # Sync history & restore
 │   ├── context-menu-config.js    # Context menu configuration
-│   └── settings.js               # Settings sync, export/import, file generation
+│   ├── settings.js               # Settings sync, export/import, file generation
+│   ├── help-shortcuts.js         # Help tab keyboard shortcuts
+│   └── factory-reset.js          # Full data reset
 ├── lib/
 │   ├── sync-engine.js            # Barrel: re-exports sync sub-modules
-│   ├── sync-settings.js          # Storage keys, settings, encrypted settings sync
+│   ├── storage-keys.js           # STORAGE_KEYS / LOCAL_STORAGE_KEYS (source of truth)
+│   ├── sync-settings.js          # Re-exports keys; settings, encrypted settings sync
 │   ├── sync-core.js              # Push/pull/sync, three-way merge, auto-sync
 │   ├── sync-history.js           # Commit history, restore, diff preview
 │   ├── sync-commit-message.js    # Parse commit subject → client id (history UI)
@@ -286,7 +294,8 @@ GitSyncMarks/
 │   ├── crypto.js                 # Token encryption (AES-256-GCM)
 │   ├── context-menu.js           # Barrel: re-exports context menu sub-modules
 │   ├── context-menu-constants.js # Menu IDs, categories, prefixes
-│   ├── context-menu-setup.js     # Static menu creation (onInstalled)
+│   ├── context-menu-defaults.js  # Default context menu list & merge helper
+│   ├── context-menu-setup.js     # Static menu creation (on SW start, onStartup, onInstalled)
 │   ├── context-menu-dynamic.js   # Dynamic profile/folder menus
 │   ├── context-menu-handlers.js  # Click event dispatch & actions
 │   ├── linkwarden-api.js         # Linkwarden REST API wrapper
@@ -322,6 +331,10 @@ GitSyncMarks/
 ├── PRIVACY.md
 └── README.md
 ```
+
+## Developer Tooling (IDE / agents)
+
+End-to-end regression is covered by **Playwright** (`npm run test:e2e*`, see [../e2e/README.md](../e2e/README.md)). The repository may include **`.cursor/mcp.json`** to register [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) and [Firefox DevTools MCP](https://github.com/mozilla/firefox-devtools-mcp) for **Cursor**—optional live-browser inspection and automation for a coding agent, not a replacement for the Playwright suite. See [TESTING.md](TESTING.md#chrome-devtools-mcp-optional-cursor) and [TESTING.md](TESTING.md#firefox-devtools-mcp-optional-cursor).
 
 ## Technology Stack
 

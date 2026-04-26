@@ -28,53 +28,10 @@ import { initHistory } from './options/history.js';
 import { initContextMenuConfig, renderContextMenuConfig, DEFAULT_CONTEXT_MENU_ITEMS } from './options/context-menu-config.js';
 import { initSettings, downloadFile, updateGenerateFilesBtn, updateSettingsSyncVisibility, updateSettingsSyncButtonsState, renderSettingsProfiles, refreshSettingsProfiles } from './options/settings.js';
 import { mountWhatsNewIfPending } from './lib/whats-new-ui.js';
-
-const browserObj = typeof browser !== 'undefined' ? browser : chrome;
-
-const STORAGE_KEYS = {
-  GITHUB_TOKEN: 'githubToken',
-  REPO_OWNER: 'repoOwner',
-  REPO_NAME: 'repoName',
-  BRANCH: 'branch',
-  FILE_PATH: 'filePath',
-  AUTO_SYNC: 'autoSync',
-  SYNC_INTERVAL: 'syncInterval',
-  SYNC_ON_STARTUP: 'syncOnStartup',
-  SYNC_ON_FOCUS: 'syncOnFocus',
-  SYNC_PROFILE: 'syncProfile',
-  NOTIFICATIONS_MODE: 'notificationsMode',
-  NOTIFICATIONS_ENABLED: 'notificationsEnabled',
-  DEBOUNCE_DELAY: 'debounceDelay',
-  LANGUAGE: 'language',
-  THEME: 'theme',
-  UI_DENSITY: 'uiDensity',
-  PROFILE_SWITCH_WITHOUT_CONFIRM: 'profileSwitchWithoutConfirm',
-  GENERATE_README_MD: 'generateReadmeMd',
-  GENERATE_BOOKMARKS_HTML: 'generateBookmarksHtml',
-  GENERATE_FEED_XML: 'generateFeedXml',
-  GENERATE_DASHY_YML: 'generateDashyYml',
-  SYNC_SETTINGS_TO_GIT: 'syncSettingsToGit',
-  SETTINGS_SYNC_MODE: 'settingsSyncMode',
-  SETTINGS_SYNC_GLOBAL_WRITE_ENABLED: 'settingsSyncGlobalWriteEnabled',
-  ONBOARDING_WIZARD_COMPLETED: 'onboardingWizardCompleted',
-  ONBOARDING_WIZARD_DISMISSED: 'onboardingWizardDismissed',
-  CONTEXT_OPEN_ALL_THRESHOLD: 'contextOpenAllThreshold',
-  CONTEXT_MENU_ITEMS: 'contextMenuItems',
-  CONTEXT_MENU_SUBMENUS: 'contextMenuSubmenus',
-  LINKWARDEN_ENABLED: 'linkwardenEnabled',
-  LINKWARDEN_URL: 'linkwardenUrl',
-  LINKWARDEN_TOKEN: 'linkwardenToken',
-  LINKWARDEN_DEFAULT_COLLECTION: 'linkwardenDefaultCollection',
-  LINKWARDEN_DEFAULT_TAGS: 'linkwardenDefaultTags',
-  LINKWARDEN_DEFAULT_SCREENSHOT: 'linkwardenDefaultScreenshot',
-  LINKWARDEN_SYNC_ENABLED: 'linkwardenSyncEnabled',
-  LINKWARDEN_SYNC_PARENT: 'linkwardenSyncParent',
-  LINKWARDEN_SYNC_PUSH_TO_GIT: 'linkwardenSyncPushToGit',
-};
-
-const LOCAL_STORAGE_KEYS = {
-  SETTINGS_SYNC_CLIENT_NAME: 'settingsSyncClientName',
-};
+import { ensureContextMenuItemDefaults } from './lib/context-menu-defaults.js';
+import { STORAGE_KEYS, LOCAL_STORAGE_KEYS } from './lib/storage-keys.js';
+import { initFactoryReset } from './options/factory-reset.js';
+import { initHelpTabShortcuts, loadShortcuts } from './options/help-shortcuts.js';
 
 function normalizeGenMode(val) {
   if (val === true) return 'auto';
@@ -193,6 +150,9 @@ document.querySelectorAll('.sub-tab-btn').forEach(btn => {
   });
 });
 
+initHelpTabShortcuts();
+initFactoryReset({ resetBtn, resetConfirmDialog });
+
 // ==============================
 // Initialization
 // ==============================
@@ -267,74 +227,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   } catch (err) {
     console.error('[GitSyncMarks] options init failed:', err);
-  }
-});
-
-// ==============================
-// Help Tab: Dynamic Keyboard Shortcuts
-// ==============================
-
-const SHORTCUT_FORMAT = {
-  Period: '.', Comma: ',', Space: 'Space',
-  ArrowUp: '↑', ArrowDown: '↓', ArrowLeft: '←', ArrowRight: '→',
-};
-
-function formatShortcut(raw) {
-  if (!raw) return getMessage('help_shortcutNotSet');
-  return raw.split('+').map(p => SHORTCUT_FORMAT[p] || p).join('+');
-}
-
-function loadShortcuts() {
-  if (!chrome.commands?.getAll) return;
-  chrome.commands.getAll((commands) => {
-    for (const cmd of commands) {
-      if (cmd.name === 'quick-sync') {
-        const el = document.getElementById('shortcut-quick-sync');
-        if (el) el.textContent = formatShortcut(cmd.shortcut);
-      } else if (cmd.name === 'open-options') {
-        const el = document.getElementById('shortcut-open-options');
-        if (el) el.textContent = formatShortcut(cmd.shortcut);
-      }
-    }
-  });
-}
-
-document.getElementById('btn-customize-shortcuts')?.addEventListener('click', () => {
-  const isFirefox = navigator.userAgent.includes('Firefox');
-  const url = isFirefox ? 'about:addons' : 'chrome://extensions/shortcuts';
-  chrome.tabs.create({ url });
-});
-
-// ==============================
-// Files Tab: Factory Reset
-// ==============================
-
-const resetConfirmBtn = document.getElementById('btn-reset-confirm');
-const resetCancelBtn = document.getElementById('btn-reset-cancel');
-
-resetBtn?.addEventListener('click', () => {
-  resetBtn.style.display = 'none';
-  resetConfirmDialog.style.display = 'flex';
-});
-
-resetCancelBtn?.addEventListener('click', () => {
-  resetConfirmDialog.style.display = 'none';
-  resetBtn.style.display = '';
-});
-
-resetConfirmBtn?.addEventListener('click', async () => {
-  resetConfirmBtn.disabled = true;
-  resetCancelBtn.disabled = true;
-  try {
-    await chrome.storage.sync.clear();
-    await chrome.storage.local.clear();
-    location.reload();
-  } catch (err) {
-    console.error('[GitSyncMarks] Reset failed:', err);
-    resetConfirmBtn.disabled = false;
-    resetCancelBtn.disabled = false;
-    resetConfirmDialog.style.display = 'none';
-    resetBtn.style.display = '';
   }
 });
 
@@ -631,12 +523,7 @@ async function loadSettings() {
     Math.max(1, parseInt(globals.contextMenuOpenAllThreshold, 10) || 15)
   );
 
-  const existingMenuIds = new Set(globals.contextMenuItems.map(i => i.id));
-  for (const defItem of DEFAULT_CONTEXT_MENU_ITEMS) {
-    if (!existingMenuIds.has(defItem.id)) {
-      globals.contextMenuItems.push(defItem);
-    }
-  }
+  ensureContextMenuItemDefaults(globals.contextMenuItems);
 
   renderContextMenuConfig(globals.contextMenuItems);
   profileSwitchConfirm.style.display = 'none';

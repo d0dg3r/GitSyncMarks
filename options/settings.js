@@ -8,21 +8,12 @@ import { getMessage } from '../lib/i18n.js';
 import { serializeToJson, deserializeFromJson, bookmarkTreeToFileMap, fileMapToDashyYaml } from '../lib/bookmark-serializer.js';
 import { replaceLocalBookmarks } from '../lib/sync-engine.js';
 import { encryptToken, decryptToken, encryptWithPassword, decryptWithPassword, PASSWORD_ENC_PREFIX } from '../lib/crypto.js';
+import { LOCAL_STORAGE_KEYS } from '../lib/storage-keys.js';
 
 let _saveSettings = null;
 let _loadSettings = null;
 let _showOnboardingConfirm = null;
 let _hideOnboardingConfirm = null;
-
-const STORAGE_KEYS = {
-  SYNC_SETTINGS_TO_GIT: 'syncSettingsToGit',
-  SETTINGS_SYNC_MODE: 'settingsSyncMode',
-  SETTINGS_SYNC_GLOBAL_WRITE_ENABLED: 'settingsSyncGlobalWriteEnabled',
-};
-
-const LOCAL_STORAGE_KEYS = {
-  SETTINGS_SYNC_CLIENT_NAME: 'settingsSyncClientName',
-};
 
 // --- DOM element lookups ---
 

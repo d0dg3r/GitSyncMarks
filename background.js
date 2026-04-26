@@ -42,7 +42,6 @@ import {
   setupContextMenus,
   handleContextMenuClick,
   refreshProfileMenuItems,
-  refreshContextMenuDynamicItems,
   refreshContextMenuDynamicItemsDebounced,
 } from './lib/context-menu.js';
 
@@ -469,7 +468,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 // ---- Refresh context menu when profiles change ----
 
 chrome.storage.onChanged.addListener((changes, area) => {
-  if (area === 'sync' && (changes.profiles || changes.activeProfileId || changes.contextMenuItems)) {
+  if (
+    area === 'sync' &&
+    (changes.profiles ||
+      changes.activeProfileId ||
+      changes.contextMenuItems ||
+      changes.contextMenuSubmenus ||
+      changes.linkwardenEnabled)
+  ) {
     setupContextMenus();
   }
 });
@@ -513,8 +519,9 @@ chrome.runtime.onStartup.addListener(async () => {
   await migrateTokenIfNeeded();
   await migrateToProfiles();
   await initI18n();
-  refreshProfileMenuItems();
-  refreshContextMenuDynamicItems();
+  // Rebuild the full static + dynamic context menu; SW restarts and browser
+  // startup do not fire onInstalled, so this must not rely on refresh* alone.
+  setupContextMenus();
   await setupAlarm();
   await checkAndMigrate();
   if (await shouldAutoOpenOnboardingWizard()) {
@@ -532,10 +539,11 @@ chrome.runtime.onStartup.addListener(async () => {
   }
 });
 
-// Initial setup
+// Initial setup — every service worker start (not only install/update)
 migrateTokenIfNeeded().then(() =>
   migrateToProfiles().then(() => {
     initI18n();
+    setupContextMenus();
     setupAlarm();
     checkAndMigrate();
   })
