@@ -257,13 +257,9 @@ function showConnectionPathInitAction(basePath) {
 }
 
 async function initializePathAndRunFirstPush() {
-  try {
-    const result = await chrome.runtime.sendMessage({ action: 'bootstrapFirstSync' });
-    if (result?.success) return;
-    throw new Error(result?.message || 'Push failed');
-  } catch (err) {
-    throw err;
-  }
+  const result = await chrome.runtime.sendMessage({ action: 'bootstrapFirstSync' });
+  if (result?.success) return;
+  throw new Error(result?.message || 'Push failed');
 }
 
 async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {

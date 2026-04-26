@@ -40,6 +40,7 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 
 | Version | Codename | Description |
 |---|---|---|
+| `2.7.2` | *Spock* | Code quality: unified storage keys & context menu defaults, `typecheck` in CI, stricter ESLint (empty / useless-catch) for app code; options modules (`help-shortcuts`, `factory-reset`); context menu: async `setupContextMenus` + full rebuild on SW `onStartup` + MV3 `create` ordering for “Add to folder” (fixes “Cannot find menu item with id”); `staticContextMenuReady` and disabled-item skips for dynamic updates; optional `.cursor/mcp.json` (DevTools MCP); CodeQL / E2E hardening (pinned actions, safer repo reset) |
 | `2.7.1` | *Spock* | Fix: layered tree uploads with inline content for atomicCommit — avoids secondary rate limits on large first pushes (e.g. 5 000 bookmarks); onboarding diagnostic tooling (test:onboarding-scale, verify-test-repo) |
 | `2.7.0` | *Spock* | Sync history & rollback + diff preview; duplicate folder merge; options modularization + Sync History layout/SVG hardening; UI density (S/M/L) + shared CSS; What’s new (popup + copy); store listings/screenshots refresh; `extDescription` aligned with Chrome store summaries (12 locales) and `extDescriptionFirefox` with AMO summaries; package.json description match; CI CodeQL v4 / Node 24; 65 unit tests |
 | `2.6.0` | *Link* | Linkwarden integration; Smart Search; Onboarding Wizard; switched to Bearer authentication; support for Fine-grained PATs and GitHub Apps |

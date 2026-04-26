@@ -7,7 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.7.2] - 2026-04-26 (*Spock*)
+
+### Added
+- **`lib/storage-keys.js`**: single source for `STORAGE_KEYS` and `LOCAL_STORAGE_KEYS`; `lib/context-menu-defaults.js` for default context menu data and `ensureContextMenuItemDefaults()`.
+- **`jsconfig.json`** + `npm run typecheck`: TypeScript `checkJs` on selected `lib` modules; `global-extension-ambient.d.ts` for the `browser` name when typechecking; `@types/chrome` as a dev dependency.
+- **Unit tests**: `test/storage-keys.test.js`, `test/context-menu-defaults.test.js`.
+- **ESLint** (app code only): `no-empty` and `no-useless-catch` as **errors** for `lib/`, `options/`, and root page scripts; CI runs `npm run typecheck` after lint.
+- **Developer tooling**: Optional [`.cursor/mcp.json`](.cursor/mcp.json) for [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) and [Firefox DevTools MCP](https://github.com/mozilla/firefox-devtools-mcp) in Cursor; docs in [docs/TESTING.md](docs/TESTING.md), [CONTRIBUTING.md](CONTRIBUTING.md), and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) (MCP is additive; Playwright E2E remains the regression suite).
+
+### Changed
+- **Options page**: `options/help-shortcuts.js` (Help tab shortcuts) and `options/factory-reset.js` (data reset) extracted from `options.js`.
+- **Context menu**: `setupContextMenus` is `async` and uses `contextMenus.removeAll` via a Promise wrapper; duplicate default-menu merge logic removed in favor of `ensureContextMenuItemDefaults()`.
+
 ### Fixed
+- **Context menu (MV3)**: The full static context menu (visibility and order) is rebuilt on every service worker start and on browser `runtime.onStartup`, not only on `onInstalled` or when `contextMenuItems` changes. Previously, right‑click could show an incomplete menu until a toggle in options forced `setupContextMenus()`; options UI already merged missing items for display, which did not persist a rebuild by itself. Storage `onChanged` now also reacts to `contextMenuSubmenus` and `linkwardenEnabled` so those updates stay in sync without relying only on the options message.
+- **Context menu: dynamic “Cannot find menu item” / uncaught `update`**: Dynamic submenus (open-all, quick folders, folder tree, profiles) can run while static items are being rebuilt, or can target parents the user has turned off in **Menu → Visibility and order** — both caused Chrome console spam and a rejected `contextMenus.update` on `gitsyncmarks-sep-quick`. Fixes: a `staticContextMenuReady` flag until static `create` is complete, coalesced `setupContextMenus` runs, skipping dynamic work per disabled `contextMenuItems` id, and promise-safe `contextMenus.update` for the quick-folder separator.
+- **Context menu — “Add to folder” tree (MV3)**: In Manifest V3, `contextMenus.create` is not synchronous; the dynamic bookmark-folder tree previously created children in the same turn as a parent, so Chrome often reported "Cannot find menu item with id" for the parent id. Dynamic `create` now goes through a shared `contextMenuCreateAsync` helper with depth-first `async/await` so every parent is registered before its submenus, separators, and "add here" entries.
+- **Context menu — static tree (MV3)**: The same `contextMenuCreateAsync` helper is used for the static right-click menu. `setStaticContextMenuReady(true)` runs only after each `create` has completed, so the dynamic pass does not attach to parents that are not registered yet. `setupContextMenus()` uses one `try/catch` for `removeAll`, `storage.sync.get`, defaults merge, and all `create` calls, so a rejected read or a thrown merge does not become an unhandled promise rejection; failures leave the static ready flag `false` and are logged.
 - **CodeQL / Code Scanning**: Pinned third-party actions in [`.github/workflows/release.yml`](.github/workflows/release.yml) to full commit SHAs (`actions/unpinned-tag`). Hardened [`e2e/helpers/repo-reset.js`](e2e/helpers/repo-reset.js) with `fs.mkdtempSync` for the clone directory, `execFileSync('git', …)` instead of shell `execSync`, and validation of test repo owner/name (`js/insecure-temporary-file`, `js/indirect-command-line-injection`).
 
 ## [2.7.1] - 2026-03-28 (*Spock*)

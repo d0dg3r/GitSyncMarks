@@ -29,6 +29,21 @@ export default [
       'preserve-caught-error': 'warn',
     },
   },
+  // Stricter empty / catch rules for application code (excludes e2e/, scripts/ — see their overrides below).
+  {
+    files: [
+      'lib/**/*.js',
+      'options/**/*.js',
+      'options.js',
+      'background.js',
+      'popup.js',
+      'linkwarden-save.js',
+    ],
+    rules: {
+      'no-empty': 'error',
+      'no-useless-catch': 'error',
+    },
+  },
   {
     files: ['test/**/*.js'],
     languageOptions: {
@@ -55,6 +70,7 @@ export default [
       'playwright-report/**',
       '_site/**',
       'store-assets/**',
+      '**/*.d.ts',
     ],
   },
 ];

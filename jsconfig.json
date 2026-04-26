@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable", "WebWorker"],
+    "checkJs": true,
+    "noEmit": true,
+    "strict": false,
+    "noImplicitThis": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "types": ["chrome"],
+    "skipLibCheck": true
+  },
+  "include": [
+    "global-extension-ambient.d.ts",
+    "lib/storage-keys.js",
+    "lib/context-menu-defaults.js",
+    "lib/context-menu-constants.js"
+  ],
+  "exclude": ["node_modules", "build"]
+}

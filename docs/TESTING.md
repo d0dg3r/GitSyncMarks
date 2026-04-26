@@ -22,6 +22,33 @@ npm run test:e2e:report   # Open HTML report after a run
 
 **CI (GitHub Actions):** Smoke and options-UI E2E tests run automatically on every push/PR to `main` (in the `ci.yml` workflow). These tests require no secrets. Full E2E tests (connection + sync) require a PAT and test repo and can be triggered manually via Actions → E2E Tests → Run workflow.
 
+### Chrome DevTools MCP (optional, Cursor)
+
+This is **not** a substitute for Playwright. Use **`npm run test:e2e*`** for repeatable regression; use [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) when you want an AI agent in **Cursor** to drive or inspect a live **Google Chrome** session (console, network, performance traces, screenshots, navigation).
+
+- **Config:** The repo includes [`.cursor/mcp.json`](../.cursor/mcp.json) (`chrome-devtools` with `--no-usage-statistics` and `firefox-devtools`; see the Firefox subsection below). Restart Cursor after changing MCP config. If you prefer user-wide settings, merge the same `mcpServers` entries under `~/.cursor/mcp.json` and remove or ignore the project file.
+- **Checklist:** Node.js 20.19+ (as required by upstream), current Chrome, `npm` available to `npx`.
+- **Smoke test prompt** (in Cursor chat, with MCP enabled): e.g. *Check the performance of https://developers.chrome.com* — confirms the server starts Chrome and tools run.
+
+**Extension / GitSyncMarks development**
+
+- The default MCP config launches a dedicated Chrome profile. To work with **your** normal Chrome, use **`--autoConnect`** (Chrome 144+, enable remote debugging at `chrome://inspect/#remote-debugging`) or start Chrome with `--remote-debugging-port=9222` and pass **`--browserUrl=http://127.0.0.1:9222`** in the `args` array. Remote debugging has security implications; do not leave the port open on untrusted networks.
+- To load the **unpacked** extension in the instance Chrome DevTools MCP starts, either open `chrome://extensions` manually in that window after launch or use extension-related tools. Upstream exposes tools such as `install_extension` / `reload_extension` only when **`--categoryExtensions` is true**; at the time of writing they are **limited to a pipe-launched** session—**`--browserUrl` / `autoConnect` and extension tools are not used together** until a future Chrome (see [upstream help](https://github.com/ChromeDevTools/chrome-devtools-mcp) and `npx -y chrome-devtools-mcp@latest --help`). For most cases, `npm run build:chrome` and load `build/chrome/` in that Chrome, then use MCP for the options page and popup URLs under `chrome-extension://…`.
+- **This server is Chrome-only** for extension URLs. For agent-assisted **Firefox** debugging, use [Firefox DevTools MCP](#firefox-devtools-mcp-optional-cursor) below (separate Cursor MCP entry).
+
+### Firefox DevTools MCP (optional, Cursor)
+
+This is **not** a substitute for Playwright. **`npm run test:e2e*`** is **Chrome only**; use [Firefox DevTools MCP](https://github.com/mozilla/firefox-devtools-mcp) when you want an AI agent in **Cursor** to drive or inspect a local **Mozilla Firefox** session (snapshots, network, console, screenshots, navigation, optional script evaluation) via WebDriver BiDi.
+
+- **Config:** The repo includes [`mcpServers.firefox-devtools` in `.cursor/mcp.json`](../.cursor/mcp.json). Restart Cursor after changes. A local **Firefox 100+** must be installed (or pass a custom path via upstream flags).
+- **Checklist:** Node.js 20.19+ (as required by upstream), `npm` for `npx`. The server is **not** for remote/cloud-only environments without a local Firefox; see the [project README](https://github.com/mozilla/firefox-devtools-mcp/blob/main/README.md).
+- **Smoke test** (in Cursor, with the Firefox MCP enabled): e.g. navigate to `https://example.com` and take a snapshot (or an equivalent one-shot flow) so you confirm the server launches Firefox and tools respond.
+
+**Extension / manual parity**
+
+- The usual hand test remains: `npm run build:firefox` and [Load Temporary Add-on from `build/`](#firefox--manual-testing) in `about:debugging` (see below). The Firefox MCP can automate pages under `moz-extension://…` when your add-on is loaded; WebExtension tools such as `install_extension` and privileged helpers may require extra upstream flags and **`MOZ_REMOTE_ALLOW_SYSTEM_ACCESS=1`** / `--enable-privileged-context` (see [upstream `firefox-devtools-mcp` README](https://github.com/mozilla/firefox-devtools-mcp/blob/main/README.md), `npx -y firefox-devtools-mcp@latest --help`). Do **not** enable those globally unless you understand the security and fingerprint implications.
+- **`--connect-existing`** can attach to **Firefox** you started with Marionette (e.g. `firefox --marionette`); in that mode some BiDi-driven features (e.g. some console or network event streams) are limited. Upstream warns: do not leave Marionette on for day-to-day browsing.
+
 ---
 
 ## Firefox — Manual Testing

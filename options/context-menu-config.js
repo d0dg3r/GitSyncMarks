@@ -4,20 +4,10 @@
  */
 
 import { getMessage } from '../lib/i18n.js';
+import { DEFAULT_CONTEXT_MENU_ITEMS, DEFAULT_CONTEXT_MENU_SUBMENUS } from '../lib/context-menu-defaults.js';
+import { STORAGE_KEYS } from '../lib/storage-keys.js';
 
-export const DEFAULT_CONTEXT_MENU_ITEMS = [
-  { id: 'ADD_TOOLBAR', enabled: true },
-  { id: 'ADD_OTHER', enabled: true },
-  { id: 'ADD_TO_FOLDER', enabled: true },
-  { id: 'QUICK_FOLDERS', enabled: true },
-  { id: 'LINKWARDEN_SAVE', enabled: true },
-  { id: 'SYNC_NOW', enabled: true },
-  { id: 'SEARCH_BOOKMARKS', enabled: true },
-  { id: 'OPEN_ALL_FOLDER', enabled: true },
-  { id: 'COPY_FAVICON', enabled: true },
-  { id: 'DOWNLOAD_FAVICON', enabled: true },
-  { id: 'SWITCH_PROFILE', enabled: true },
-];
+export { DEFAULT_CONTEXT_MENU_ITEMS, DEFAULT_CONTEXT_MENU_SUBMENUS };
 
 const CATEGORIES = {
   ADD: 'ADD',
@@ -38,12 +28,6 @@ const ITEM_CATEGORY_MAP = {
   SWITCH_PROFILE: CATEGORIES.TOOLS,
   COPY_FAVICON: CATEGORIES.FAVICONS,
   DOWNLOAD_FAVICON: CATEGORIES.FAVICONS,
-};
-
-const STORAGE_KEYS = {
-  CONTEXT_MENU_ITEMS: 'contextMenuItems',
-  CONTEXT_MENU_SUBMENUS: 'contextMenuSubmenus',
-  CONTEXT_OPEN_ALL_THRESHOLD: 'contextOpenAllThreshold',
 };
 
 const contextMenuItemsList = document.getElementById('context-menu-items-list');
