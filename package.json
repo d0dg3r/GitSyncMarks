@@ -32,7 +32,7 @@
     "dotenv": "^17.4.2",
     "eslint": "^10.3.0",
     "eslint-plugin-security": "^4.0.0",
-    "globals": "^17.5.0",
+    "globals": "^17.6.0",
     "marked": "^18.0.3",
     "playwright": "^1.58.2",
     "png-to-ico": "^3.0.1",
