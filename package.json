@@ -30,7 +30,7 @@
     "@playwright/test": "^1.59.1",
     "@types/chrome": "^0.1.42",
     "dotenv": "^17.4.2",
-    "eslint": "^10.2.1",
+    "eslint": "^10.3.0",
     "eslint-plugin-security": "^4.0.0",
     "globals": "^17.5.0",
     "marked": "^18.0.3",
