@@ -26,7 +26,30 @@ npm run test:e2e:report   # Open HTML report after a run
 
 This is **not** a substitute for Playwright. Use **`npm run test:e2e*`** for repeatable regression; use [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) when you want an AI agent in **Cursor** to drive or inspect a live **Google Chrome** session (console, network, performance traces, screenshots, navigation).
 
-- **Config:** The repo includes [`.cursor/mcp.json`](../.cursor/mcp.json) (`chrome-devtools` with `--no-usage-statistics` and `firefox-devtools`; see the Firefox subsection below). Restart Cursor after changing MCP config. If you prefer user-wide settings, merge the same `mcpServers` entries under `~/.cursor/mcp.json` and remove or ignore the project file.
+- **Config (Cursor):** Register the `mcpServers` block in **one** place: either the **user-wide** file (`~/.cursor/mcp.json` on Linux and macOS, `%USERPROFILE%\.cursor\mcp.json` on Windows) so it applies to all projects, or [`.cursor/mcp.json`](../.cursor/mcp.json) in this repository only. See [Cursor](https://cursor.com/docs) (*MCP*). **Restart Cursor** after changes. The committed project [`.cursor/mcp.json`](../.cursor/mcp.json) has an **empty** `mcpServers` by default; use the **reference JSON** below (or the same in `~/.cursor/mcp.json`) to avoid double-registering if you also keep a user-wide config.
+
+Reference (copy into `~/.cursor/mcp.json` or a project’s `.cursor/mcp.json`):
+
+```json
+{
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest",
+        "--no-usage-statistics"
+      ]
+    },
+    "firefox-devtools": {
+      "command": "npx",
+      "args": ["-y", "firefox-devtools-mcp@latest"]
+    }
+  }
+}
+```
+
+See the Firefox subsection below for `firefox-devtools` behavior.
 - **Checklist:** Node.js 20.19+ (as required by upstream), current Chrome, `npm` available to `npx`.
 - **Smoke test prompt** (in Cursor chat, with MCP enabled): e.g. *Check the performance of https://developers.chrome.com* — confirms the server starts Chrome and tools run.
 
@@ -40,7 +63,7 @@ This is **not** a substitute for Playwright. Use **`npm run test:e2e*`** for rep
 
 This is **not** a substitute for Playwright. **`npm run test:e2e*`** is **Chrome only**; use [Firefox DevTools MCP](https://github.com/mozilla/firefox-devtools-mcp) when you want an AI agent in **Cursor** to drive or inspect a local **Mozilla Firefox** session (snapshots, network, console, screenshots, navigation, optional script evaluation) via WebDriver BiDi.
 
-- **Config:** The repo includes [`mcpServers.firefox-devtools` in `.cursor/mcp.json`](../.cursor/mcp.json). Restart Cursor after changes. A local **Firefox 100+** must be installed (or pass a custom path via upstream flags).
+- **Config (Cursor):** `firefox-devtools` is part of the same `mcpServers` **reference** as Chrome (see the JSON block [above](#chrome-devtools-mcp-optional-cursor) or your `~/.cursor/mcp.json`). Restart Cursor after changes. A local **Firefox 100+** must be installed (or pass a custom path via upstream flags).
 - **Checklist:** Node.js 20.19+ (as required by upstream), `npm` for `npx`. The server is **not** for remote/cloud-only environments without a local Firefox; see the [project README](https://github.com/mozilla/firefox-devtools-mcp/blob/main/README.md).
 - **Smoke test** (in Cursor, with the Firefox MCP enabled): e.g. navigate to `https://example.com` and take a snapshot (or an equivalent one-shot flow) so you confirm the server launches Firefox and tools respond.
 

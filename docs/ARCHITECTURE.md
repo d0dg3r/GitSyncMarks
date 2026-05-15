@@ -255,7 +255,7 @@ Minimal shim: `isFirefox`, `isChrome`, `getBrowserName()`.
 
 ```
 GitSyncMarks/
-├── .cursor/mcp.json              # Optional Cursor MCP: Chrome + Firefox DevTools (see docs/TESTING.md)
+├── .cursor/mcp.json              # Empty by default: put MCP in ~/.cursor/mcp.json; see docs/TESTING.md for JSON
 ├── manifest.json                 # Chrome manifest
 ├── manifest.firefox.json         # Firefox manifest
 ├── background.js                 # Background script
@@ -334,7 +334,7 @@ GitSyncMarks/
 
 ## Developer Tooling (IDE / agents)
 
-End-to-end regression is covered by **Playwright** (`npm run test:e2e*`, see [../e2e/README.md](../e2e/README.md)). The repository may include **`.cursor/mcp.json`** to register [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) and [Firefox DevTools MCP](https://github.com/mozilla/firefox-devtools-mcp) for **Cursor**—optional live-browser inspection and automation for a coding agent, not a replacement for the Playwright suite. See [TESTING.md](TESTING.md#chrome-devtools-mcp-optional-cursor) and [TESTING.md](TESTING.md#firefox-devtools-mcp-optional-cursor).
+End-to-end regression is covered by **Playwright** (`npm run test:e2e*`, see [../e2e/README.md](../e2e/README.md)). **Cursor** can load [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) and [Firefox DevTools MCP](https://github.com/mozilla/firefox-devtools-mcp) from your **user** `~/.cursor/mcp.json` (or from a per-project file); the **reference JSON** and duplicate-avoidance notes are in [TESTING.md](TESTING.md#chrome-devtools-mcp-optional-cursor) and [TESTING.md](TESTING.md#firefox-devtools-mcp-optional-cursor), not a replacement for the Playwright suite. The committed **`.cursor/mcp.json`** keeps an empty `mcpServers` so a global file can supply both servers without double registration in this clone.
 
 ## Technology Stack
 
