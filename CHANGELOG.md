@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.7.3] - 2026-05-15 (*Spock*)
+
+### Fixed
+- **Popup status after sync** ([#128](https://github.com/d0dg3r/GitSyncMarks/issues/128)): clear `lastError` when `sync()` completes successfully on no-change paths so a stale **“Failed to fetch”** line does not reappear after **“Everything in sync”** until the next failed request ([PR #129](https://github.com/d0dg3r/GitSyncMarks/pull/129), thanks [@katiras](https://github.com/katiras)).
+
+### Changed
+- **Developer documentation (Cursor MCP)**: Committed [`.cursor/mcp.json`](.cursor/mcp.json) ships an empty `mcpServers` object; copy-paste **reference JSON** for [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) and [Firefox DevTools MCP](https://github.com/mozilla/firefox-devtools-mcp) is in [docs/TESTING.md](docs/TESTING.md). Document **user-wide** `~/.cursor/mcp.json` (Linux/macOS) or `%USERPROFILE%\.cursor\mcp.json` (Windows) versus a **per-project** `.cursor/mcp.json`, and avoid registering the same MCP server names in both. [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) updated accordingly.
+
+### Added
+- **What's new** (`lib/whats-new.js`): [2.7.3] overlay copy (popup sync-status fix + Cursor MCP contributor note).
+
 ## [2.7.2] - 2026-04-26 (*Spock*)
 
 ### Added
