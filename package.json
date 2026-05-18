@@ -34,7 +34,7 @@
     "eslint-plugin-security": "^4.0.0",
     "globals": "^17.6.0",
     "marked": "^18.0.3",
-    "playwright": "^1.58.2",
+    "playwright": "^1.60.0",
     "png-to-ico": "^3.0.1",
     "sharp": "^0.34.5",
     "typescript": "~6.0.3"
