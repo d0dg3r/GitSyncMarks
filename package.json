@@ -1,8 +1,11 @@
 {
   "name": "gitsyncmarks",
-  "version": "2.7.3",
+  "version": "2.8.0",
   "private": true,
   "description": "Bookmark sync via GitHub. Linkwarden synergy, Smart Search, and Companion App. Direct, secure, private.",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "build": "bash scripts/build.sh",
     "build:chrome": "bash scripts/build.sh chrome",

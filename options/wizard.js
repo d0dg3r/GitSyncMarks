@@ -8,7 +8,6 @@ import { GitHubAPI } from '../lib/github-api.js';
 import { checkPathSetup, waitForRemoteBaseline } from '../lib/onboarding.js';
 
 let _saveSettings = null;
-let _loadSettings = null;
 
 const validationSpinner = document.getElementById('validation-spinner');
 const validationResult = document.getElementById('validation-result');
@@ -585,9 +584,8 @@ export function showValidation(message, type) {
   validationSpinner.style.display = type === 'loading' ? 'inline-block' : 'none';
 }
 
-export function initWizard({ saveSettings, loadSettings }) {
+export function initWizard({ saveSettings }) {
   _saveSettings = saveSettings;
-  _loadSettings = loadSettings;
 
   validateBtn.addEventListener('click', async () => {
     await validateAndInspectRepo({ offerInteractiveActions: true });

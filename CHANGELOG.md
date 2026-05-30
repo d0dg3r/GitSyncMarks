@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.8.0] - 2026-05-31 (*TARS*)
+
+Reliability, performance and quality release (code-analysis Tiers 1–3). First published as a `2.8.0-beta` pre-release.
+
+### Fixed
+- **Large repos — truncated tree guard (data-loss prevention)**: [`lib/github-api.js`](lib/github-api.js) `getTree()` now reports GitHub's `truncated` flag, and [`lib/remote-fetch.js`](lib/remote-fetch.js) aborts the sync with a clear error instead of treating a partially-listed tree as if remote files were deleted (which could wipe remote data during cleanup).
+- **Network and rate-limit handling**: `_fetch()` wraps connectivity failures into a typed `GitHubError` (`api_networkError`) and retries transient secondary rate limits with a bounded backoff driven by `Retry-After` / `x-ratelimit-reset` (`api_rateLimitExceeded`).
+- **Stale-fetch guard no longer hides remote changes**: In [`lib/sync-core.js`](lib/sync-core.js) the remote-only path re-fetches a stable remote snapshot instead of silently returning **"Everything in sync"** when the branch HEAD advanced mid-fetch; if the remote keeps moving it asks the user to retry (`sync_remoteChangedRetry`).
+- **Fewer false conflicts**: diffs and merge equality now compare bookmark JSON by canonical form (`contentEquals`), so cosmetic differences (key order, whitespace) no longer register as changes or conflicts. Array order (e.g. `_order.json`) stays significant.
+- **Linkwarden auto-save tags**: `saveLink()` accepts both string and `{ name }` tag shapes, fixing a silent failure when auto-save mirrored bookmarks with default tags.
+
+### Changed
+- **`lib/github-repos.js`** now routes the `/user` and `/user/repos` calls through `GitHubAPI` (`getAuthenticatedUser()`, `listUserRepos()`) for shared error handling and rate-limit backoff.
+- **Performance**: generated files (`README.md`, `bookmarks.html`, `feed.xml`, `dashy-conf.yml`) are only committed when their meaningful content changes (timestamps normalized); a push reuses the tree SHA produced by `atomicCommit` to skip a redundant `getCommit`; auto-sync coalesces overlapping runs so edits made during an in-flight sync are not dropped.
+- **Storage**: `lastSyncFiles` no longer stores generated/settings files (smaller base state), and persisting it is quota-aware — on `QUOTA_BYTES` overflow the lightweight state is saved without the base map (next sync re-fetches; no data loss).
+- **Accessibility**: settings tabs expose `tablist`/`tab`/`tabpanel` roles with arrow/Home/End keyboard navigation; the popup status area is an `aria-live` region; confirm/inline dialogs use `dialog`/`alertdialog` + `aria-modal`; the search popup adds `listbox`/`option` semantics with Up/Down/Enter selection.
+- **i18n**: `applyI18n()` supports `data-i18n-aria-label`; search sync messages and header density/theme ARIA labels are localized (new `_locales/en` keys).
+- **Tooling**: added `engines.node >= 20` and `.nvmrc`; release workflow gained a lint/typecheck/unit-test gate before building.
+
+### Added
+- **Unit tests**: `test/crypto.test.js`, `test/github-tree-batch.test.js`, `test/profile-manager.test.js`, `test/linkwarden-api.test.js`, plus canonical-diff/`contentEquals` and `mergeOrderJson` edge-case coverage (104 → 110 cases).
+
 ## [2.7.3] - 2026-05-15 (*Spock*)
 
 ### Fixed

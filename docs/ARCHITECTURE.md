@@ -128,7 +128,9 @@ Wraps both the **Contents API** (legacy, used for migration/validation) and the 
 | `listContents(path)` | Contents | List directories at a given path (for folder browser) |
 | `getFile()` / `createOrUpdateFile()` | Contents | Single-file operations (legacy) |
 | `getLatestCommitSha()` | Git Data | Get current branch HEAD |
-| `getCommit()` / `getTree()` / `getBlob()` | Git Data | Read commit, tree, file content |
+| `getCommit()` / `getTree()` / `getBlob()` | Git Data | Read commit, tree, file content. `getTree()` returns `{ tree, truncated }`; callers must abort on `truncated` to avoid acting on a partial listing |
+| `getCommitTreeSha()` | Git Data | Resolve a commit's tree SHA, reusing the tree built by the last `atomicCommit` to skip a redundant `getCommit` |
+| `getAuthenticatedUser()` / `listUserRepos()` | REST | `/user` and paginated `/user/repos` (used by `lib/github-repos.js`) |
 | `createBlob()` / `createTree()` / `createCommit()` | Git Data | Build new commit |
 | `updateRef()` / `createRef()` | Git Data | Update or create branch |
 | `atomicCommit(message, fileChanges)` | Git Data | Atomic multi-file commit via layered `POST /git/trees` with inline `content` (`lib/github-tree-batch.js`) |
@@ -214,8 +216,8 @@ Fetches the authenticated user's repos via GitHub REST API and maintains a "GitH
 
 | Function | Description |
 |---|---|
-| `fetchCurrentUser(token)` | GET /user → `{ login }` for folder name |
-| `fetchUserRepos(token)` | GET /user/repos (paginated) → `{ full_name, html_url, private }` |
+| `fetchCurrentUser(token)` | `{ login }` for folder name; delegates to `GitHubAPI.getAuthenticatedUser()` |
+| `fetchUserRepos(token)` | Paginated `{ full_name, html_url, private }`; delegates to `GitHubAPI.listUserRepos()` |
 | `updateGitHubReposFolder(token, parentRole, username?, onUsername?)` | Find/create folder, diff existing bookmarks with API list, add/remove/update; optional callback to persist username on first run |
 
 ### `lib/remote-fetch.js` — Remote File Map

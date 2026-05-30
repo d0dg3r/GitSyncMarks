@@ -33,14 +33,14 @@
 
     <div class="search-row">
       <div class="search-input-wrap">
-        <input type="text" id="search-input" data-i18n-placeholder="search_inputPlaceholder"
+        <input type="text" id="search-input" role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list" data-i18n-placeholder="search_inputPlaceholder"
           placeholder="Type title or URL..." autocomplete="off">
         <button type="button" id="search-clear-btn" class="search-clear-btn" aria-label="Clear search">X</button>
       </div>
     </div>
 
     <div id="search-status" class="search-status" aria-live="polite"></div>
-    <ul id="search-results" class="search-results"></ul>
+    <ul id="search-results" class="search-results" role="listbox" aria-label="Search results" data-i18n-aria-label="search_resultsLabel"></ul>
   </main>
 
   <script type="module" src="search.js"></script>

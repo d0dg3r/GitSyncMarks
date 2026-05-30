@@ -67,4 +67,42 @@ describe('mergeOrderJson deduplication', () => {
   it('returns null for malformed JSON', () => {
     assert.equal(mergeOrderJson('[]', '{bad', '[]'), null);
   });
+
+  it('returns null when any side is not an array', () => {
+    assert.equal(mergeOrderJson('{}', '[]', '[]'), null);
+    assert.equal(mergeOrderJson('[]', '{}', '[]'), null);
+    assert.equal(mergeOrderJson('[]', '[]', '{}'), null);
+  });
+
+  it('treats a null base as an empty base (new _order.json)', () => {
+    const local = JSON.stringify(['a.json']);
+    const remote = JSON.stringify(['b.json']);
+    const result = JSON.parse(mergeOrderJson(null, local, remote));
+    assert.ok(result.includes('a.json'));
+    assert.ok(result.includes('b.json'));
+  });
+
+  it('honours a removal made on the remote side', () => {
+    const base = JSON.stringify(['a.json', 'b.json']);
+    const local = JSON.stringify(['a.json', 'b.json']);
+    const remote = JSON.stringify(['a.json']); // remote removed b.json
+    const result = JSON.parse(mergeOrderJson(base, local, remote));
+    assert.deepEqual(result, ['a.json']);
+  });
+
+  it('honours a removal made on the local side', () => {
+    const base = JSON.stringify(['a.json', 'b.json']);
+    const local = JSON.stringify(['b.json']); // local removed a.json
+    const remote = JSON.stringify(['a.json', 'b.json']);
+    const result = JSON.parse(mergeOrderJson(base, local, remote));
+    assert.deepEqual(result, ['b.json']);
+  });
+
+  it('keeps an entry both sides removed out of the result', () => {
+    const base = JSON.stringify(['a.json', 'b.json']);
+    const local = JSON.stringify(['a.json']);
+    const remote = JSON.stringify(['a.json']);
+    const result = JSON.parse(mergeOrderJson(base, local, remote));
+    assert.deepEqual(result, ['a.json']);
+  });
 });

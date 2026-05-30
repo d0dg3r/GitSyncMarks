@@ -1,7 +1,7 @@
 import { describe, it, before } from 'node:test';
 import assert from 'node:assert/strict';
 
-let computeDiff, mergeDiffs;
+let computeDiff, mergeDiffs, contentEquals;
 
 before(async () => {
   globalThis.chrome = {
@@ -16,6 +16,7 @@ before(async () => {
   const mod = await import('../lib/sync-engine.js');
   computeDiff = mod.computeDiff;
   mergeDiffs = mod.mergeDiffs;
+  contentEquals = mod.contentEquals;
 });
 
 // ---- computeDiff ----
@@ -63,6 +64,49 @@ describe('computeDiff', () => {
     assert.deepEqual(diff.added, { 'd.json': 'new' });
     assert.deepEqual(diff.removed, ['c.json']);
     assert.deepEqual(diff.modified, { 'b.json': 'changed' });
+  });
+
+  it('ignores cosmetic JSON differences (key order / whitespace)', () => {
+    const base = { 'a.json': '{"title":"X","url":"https://x"}' };
+    const current = { 'a.json': '{\n  "url": "https://x",\n  "title": "X"\n}' };
+    const diff = computeDiff(base, current);
+    assert.deepEqual(diff.modified, {});
+  });
+
+  it('still detects a real value change in JSON', () => {
+    const base = { 'a.json': '{"title":"X","url":"https://x"}' };
+    const current = { 'a.json': '{"title":"X","url":"https://y"}' };
+    const diff = computeDiff(base, current);
+    assert.deepEqual(diff.modified, { 'a.json': current['a.json'] });
+  });
+});
+
+// ---- contentEquals ----
+
+describe('contentEquals', () => {
+  it('treats identical strings as equal', () => {
+    assert.equal(contentEquals('x', 'x'), true);
+  });
+
+  it('treats reordered JSON keys as equal', () => {
+    assert.equal(contentEquals('{"a":1,"b":2}', '{"b":2,"a":1}'), true);
+  });
+
+  it('treats whitespace-only JSON differences as equal', () => {
+    assert.equal(contentEquals('{"a":1}', '{ "a" : 1 }'), true);
+  });
+
+  it('preserves array order significance', () => {
+    assert.equal(contentEquals('["a","b"]', '["b","a"]'), false);
+  });
+
+  it('returns false for non-JSON differing strings', () => {
+    assert.equal(contentEquals('local', 'remote'), false);
+  });
+
+  it('treats null === null as equal but null vs string as not', () => {
+    assert.equal(contentEquals(null, null), true);
+    assert.equal(contentEquals(null, '{}'), false);
   });
 });
 

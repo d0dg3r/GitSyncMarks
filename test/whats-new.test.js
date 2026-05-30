@@ -13,6 +13,13 @@ describe('whats-new', () => {
     assert.ok(c.bullets.length >= 3);
   });
 
+  it('getWhatsNewContent returns bullets for 2.8.0', () => {
+    const c = getWhatsNewContent('2.8.0');
+    assert.ok(c);
+    assert.ok(Array.isArray(c.bullets));
+    assert.ok(c.bullets.length >= 1);
+  });
+
   it('getWhatsNewContent returns bullets for 2.7.3', () => {
     const c = getWhatsNewContent('2.7.3');
     assert.ok(c);
@@ -33,6 +40,7 @@ describe('whats-new', () => {
 
   it('shouldDisplayWhatsNew matches pending to manifest and content', () => {
     assert.strictEqual(shouldDisplayWhatsNew('2.7.0', '2.7.0'), true);
+    assert.strictEqual(shouldDisplayWhatsNew('2.8.0', '2.8.0'), true);
     assert.strictEqual(shouldDisplayWhatsNew('2.7.3', '2.7.3'), true);
     assert.strictEqual(shouldDisplayWhatsNew('2.7.2', '2.7.2'), true);
     assert.strictEqual(shouldDisplayWhatsNew('2.7.0', '2.6.0'), false);

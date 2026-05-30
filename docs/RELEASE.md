@@ -27,6 +27,7 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 | 2.5.0 | **Cortana** | Halo — AI assistant; fits context menu, favicon tools, 8 new languages, folder browser |
 | 2.6.0 | **Link** | Zelda — wordplay with Linkwarden; hero who saves and collects |
 | 2.7.0 | **Spock** | Star Trek — logical, precise; fits history/restore, diff preview, and maintainability refactor |
+| 2.8.0 | **TARS** | Interstellar — dependable, honest mission robot; fits the reliability/safety-guard, performance and quality focus |
 | 3.0 | **GLaDOS** | Portal — AI, cult, iconic; fits AI features; the irony of "murderous" AI as bookmark keeper is fun |
 
 **Naming logic:**
@@ -40,6 +41,7 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 
 | Version | Codename | Description |
 |---|---|---|
+| `2.8.0` | *TARS* | Reliability, performance & quality (code-analysis Tiers 1–3). **Fixed:** truncated-tree guard prevents data loss on large repos; network/rate-limit backoff (`api_networkError`, `Retry-After`); stale-fetch guard re-fetches a stable snapshot instead of silently reporting "in sync"; fewer false conflicts via canonical JSON compare (`contentEquals`); Linkwarden tag-shape fix. **Changed:** `github-repos.js` routes through `GitHubAPI`; generated files only committed on real change + tree-SHA reuse + auto-sync coalescing; leaner quota-aware `lastSyncFiles`; a11y (tablist/aria-live/dialog roles/search keyboard nav); i18n `data-i18n-aria-label`; `engines.node >= 20`, `.nvmrc`, release lint/typecheck/test gate. **Added:** unit tests (crypto, tree-batch, profile-manager, linkwarden, diff/order edges). First shipped as `2.8.0-beta`. |
 | `2.7.3` | *Spock* | Fix: popup clears stale **“Failed to fetch”** after successful no-change sync ([#128](https://github.com/d0dg3r/GitSyncMarks/issues/128), [PR #129](https://github.com/d0dg3r/GitSyncMarks/pull/129)). Cursor MCP docs: empty committed [`.cursor/mcp.json`](.cursor/mcp.json); reference `mcpServers` JSON in [docs/TESTING.md](docs/TESTING.md); user-wide `~/.cursor/mcp.json` vs project file + duplicate-avoidance; [CONTRIBUTING.md](CONTRIBUTING.md), [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
 | `2.7.2` | *Spock* | Code quality: unified storage keys & context menu defaults, `typecheck` in CI, stricter ESLint (empty / useless-catch) for app code; options modules (`help-shortcuts`, `factory-reset`); context menu: async `setupContextMenus` + full rebuild on SW `onStartup` + MV3 `create` ordering for “Add to folder” (fixes “Cannot find menu item with id”); `staticContextMenuReady` and disabled-item skips for dynamic updates; optional `.cursor/mcp.json` (DevTools MCP); CodeQL / E2E hardening (pinned actions, safer repo reset) |
 | `2.7.1` | *Spock* | Fix: layered tree uploads with inline content for atomicCommit — avoids secondary rate limits on large first pushes (e.g. 5 000 bookmarks); onboarding diagnostic tooling (test:onboarding-scale, verify-test-repo) |

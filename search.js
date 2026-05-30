@@ -10,6 +10,32 @@ const searchResults = document.getElementById('search-results');
 const searchSyncBtn = document.getElementById('search-sync-btn');
 
 let searchTimer = null;
+let currentItems = [];
+let selectedIndex = -1;
+
+function setActiveOption(index) {
+  const options = searchResults.querySelectorAll('.search-result-item');
+  if (options.length === 0) {
+    selectedIndex = -1;
+    searchInput.removeAttribute('aria-activedescendant');
+    return;
+  }
+  selectedIndex = Math.max(0, Math.min(index, options.length - 1));
+  options.forEach((el, i) => {
+    const active = i === selectedIndex;
+    el.classList.toggle('selected', active);
+    el.setAttribute('aria-selected', active ? 'true' : 'false');
+    if (active) {
+      searchInput.setAttribute('aria-activedescendant', el.id);
+      el.scrollIntoView({ block: 'nearest' });
+    }
+  });
+}
+
+function openItem(item) {
+  if (!item || !item.url) return;
+  chrome.tabs.create({ url: item.url });
+}
 
 function updateClearButtonVisibility(value) {
   const hasValue = String(value || '').trim().length > 0;
@@ -47,9 +73,16 @@ function highlightText(text, query) {
 
 function renderResults(items, query) {
   searchResults.innerHTML = '';
-  for (const item of items) {
+  currentItems = items;
+  selectedIndex = -1;
+  searchInput.removeAttribute('aria-activedescendant');
+  searchInput.setAttribute('aria-expanded', items.length > 0 ? 'true' : 'false');
+  items.forEach((item, idx) => {
     const li = document.createElement('li');
     li.className = 'search-result-item';
+    li.id = `search-result-${idx}`;
+    li.setAttribute('role', 'option');
+    li.setAttribute('aria-selected', 'false');
 
     const info = document.createElement('div');
     info.className = 'search-result-info';
@@ -79,15 +112,18 @@ function renderResults(items, query) {
     openBtn.type = 'button';
     openBtn.className = 'search-open-btn';
     openBtn.textContent = getMessage('search_openBtn');
-    openBtn.addEventListener('click', () => {
-      if (!item.url) return;
-      chrome.tabs.create({ url: item.url });
+    openBtn.addEventListener('click', () => openItem(item));
+
+    li.addEventListener('click', (e) => {
+      if (e.target === openBtn) return;
+      setActiveOption(idx);
     });
+    li.addEventListener('dblclick', () => openItem(item));
 
     li.appendChild(info);
     li.appendChild(openBtn);
     searchResults.appendChild(li);
-  }
+  });
 }
 
 function runSearch(query) {
@@ -149,24 +185,41 @@ searchCloseBtn.addEventListener('click', () => {
 });
 
 searchSyncBtn.addEventListener('click', () => {
-  setStatus(getMessage('search_statusSearching') || 'Syncing...', 'success');
+  setStatus(getMessage('search_syncing'), 'success');
   searchSyncBtn.disabled = true;
   chrome.runtime.sendMessage({ action: 'sync' }, (response) => {
     searchSyncBtn.disabled = false;
     if (response && response.success) {
-      setStatus('Sync complete', 'success');
+      setStatus(getMessage('search_syncComplete'), 'success');
       // re-run current search if any
       if (searchInput.value) {
         runSearch(searchInput.value);
       }
     } else {
-      setStatus('Sync failed: ' + (response?.message || 'Unknown error'), 'error');
+      setStatus(getMessage('search_syncFailed', [response?.message || getMessage('search_unknownError')]), 'error');
     }
   });
 });
 
 document.addEventListener('keydown', (event) => {
-  if (event.key !== 'Escape') return;
-  event.preventDefault();
-  window.close();
+  if (event.key === 'Escape') {
+    event.preventDefault();
+    window.close();
+    return;
+  }
+
+  if (currentItems.length === 0) return;
+
+  if (event.key === 'ArrowDown') {
+    event.preventDefault();
+    setActiveOption(selectedIndex < 0 ? 0 : selectedIndex + 1);
+  } else if (event.key === 'ArrowUp') {
+    event.preventDefault();
+    setActiveOption(selectedIndex <= 0 ? currentItems.length - 1 : selectedIndex - 1);
+  } else if (event.key === 'Enter') {
+    if (selectedIndex >= 0 && selectedIndex < currentItems.length) {
+      event.preventDefault();
+      openItem(currentItems[selectedIndex]);
+    }
+  }
 });
