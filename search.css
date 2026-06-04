@@ -196,6 +196,11 @@ input[type="text"]:focus-visible {
   padding: 10px;
 }
 
+.search-result-item.selected {
+  border-color: var(--color-primary, #2563eb);
+  box-shadow: 0 0 0 2px var(--color-primary, #2563eb);
+}
+
 .search-result-info {
   min-width: 0;
   display: flex;

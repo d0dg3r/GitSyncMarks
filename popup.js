@@ -17,7 +17,6 @@ const statusMessage = document.getElementById('status-message');
 const lastDataChangeEl = document.getElementById('last-data-change');
 const lastCommitWrap = document.getElementById('last-commit-wrap');
 const conflictBox = document.getElementById('conflict-box');
-const autoSyncStatus = document.getElementById('auto-sync-status');
 const autoSyncDot = document.getElementById('auto-sync-dot');
 const autoSyncText = document.getElementById('auto-sync-text');
 

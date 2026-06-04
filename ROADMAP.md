@@ -25,6 +25,20 @@ See [docs/IDEAS-LINKWARDEN.md](docs/IDEAS-LINKWARDEN.md) for full specification 
 
 ---
 
+## Tier 4 — Larger features (from code analysis)
+
+Outcome of the 2026 code analysis. Tiers 1–3 (correctness, performance, quality) shipped in `2.8.0`; Tier 4 captures the larger, optional features for a future milestone (mostly v3.0 *GLaDOS*).
+
+| Feature | Notes | Effort |
+|---|---|---|
+| **Conflict-resolution UI** | Diff view for merge conflicts instead of only force push/pull. Builds on the existing diff logic in [lib/sync-history.js](lib/sync-history.js) (`getCommitDiffPreview`). | Medium |
+| **Selective / read-only folder sync** | Sync only selected folders, and/or merge additional read-only sources (e.g. shared team bookmarks). Touches `filterForDiff` and the three-way merge in [lib/sync-core.js](lib/sync-core.js). | Medium |
+| **Provider abstraction (`lib/git-provider.js`)** | Decouple transport from `api.github.com` to support Gitea/Forgejo (GitHub-compatible, lowest effort first) and GitLab. The sync logic is provider-neutral; only the transport ([lib/github-api.js](lib/github-api.js) `API_BASE`) and manifest host permissions need abstracting. | Large |
+| **Open tabs / Tab-Profiles** | Named URL sets persisted to the repo (`tab-profiles.json`). See [docs/IDEAS-TAB-PROFILES.md](docs/IDEAS-TAB-PROFILES.md). | Large |
+| **Context menu: Save all tabs to folder** | `chrome.tabs.query({ currentWindow: true })` + `chrome.bookmarks.create()` into a chosen folder, then trigger a sync. | Medium |
+
+---
+
 ## Recently completed
 
 - **v2.5.0** *Cortana* — Context menu (Add to Toolbar/Other, Sync Now, Switch Profile, Copy Favicon URL, Download Favicon); profile switching via context menu; favicon tools (copy URL / download PNG); 8 new languages (PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL — 12 total); dynamic keyboard shortcuts; factory reset; folder browser for path selection; CI screenshot workflow; feature lists reordered; "No middleman" replaces "No server needed"

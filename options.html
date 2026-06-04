@@ -22,15 +22,15 @@
         <select id="language-select">
           <!-- Populated dynamically -->
         </select>
-        <div id="density-selector" class="header-segmented" role="radiogroup" aria-label="UI density">
-          <button type="button" role="radio" aria-checked="false" class="seg-btn" data-density="compact" aria-label="Compact" title="Compact">S</button>
-          <button type="button" role="radio" aria-checked="true" class="seg-btn active" data-density="medium" aria-label="Medium" title="Medium">M</button>
-          <button type="button" role="radio" aria-checked="false" class="seg-btn" data-density="large" aria-label="Large" title="Large">L</button>
+        <div id="density-selector" class="header-segmented" role="radiogroup" aria-label="UI density" data-i18n-aria-label="options_densityGroupLabel">
+          <button type="button" role="radio" aria-checked="false" class="seg-btn" data-density="compact" aria-label="Compact" data-i18n-aria-label="options_densityCompact" title="Compact" data-i18n-title="options_densityCompact">S</button>
+          <button type="button" role="radio" aria-checked="true" class="seg-btn active" data-density="medium" aria-label="Medium" data-i18n-aria-label="options_densityMedium" title="Medium" data-i18n-title="options_densityMedium">M</button>
+          <button type="button" role="radio" aria-checked="false" class="seg-btn" data-density="large" aria-label="Large" data-i18n-aria-label="options_densityLarge" title="Large" data-i18n-title="options_densityLarge">L</button>
         </div>
-        <div id="theme-selector" class="header-segmented" role="radiogroup" aria-label="Theme">
-          <button type="button" role="radio" aria-checked="false" class="seg-btn" data-theme="auto" aria-label="Auto" title="Auto"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"/><path d="M16 12a4 4 0 01-4 4" fill="currentColor" opacity=".4"/></svg></button>
-          <button type="button" role="radio" aria-checked="false" class="seg-btn" data-theme="dark" aria-label="Dark" title="Dark"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg></button>
-          <button type="button" role="radio" aria-checked="false" class="seg-btn" data-theme="light" aria-label="Light" title="Light"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42m12.72-12.72l1.42-1.42"/></svg></button>
+        <div id="theme-selector" class="header-segmented" role="radiogroup" aria-label="Theme" data-i18n-aria-label="options_theme">
+          <button type="button" role="radio" aria-checked="false" class="seg-btn" data-theme="auto" aria-label="Auto" data-i18n-aria-label="options_themeAutoLabel" title="Auto" data-i18n-title="options_themeAutoLabel"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"/><path d="M16 12a4 4 0 01-4 4" fill="currentColor" opacity=".4"/></svg></button>
+          <button type="button" role="radio" aria-checked="false" class="seg-btn" data-theme="dark" aria-label="Dark" data-i18n-aria-label="options_themeDarkLabel" title="Dark" data-i18n-title="options_themeDarkLabel"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg></button>
+          <button type="button" role="radio" aria-checked="false" class="seg-btn" data-theme="light" aria-label="Light" data-i18n-aria-label="options_themeLightLabel" title="Light" data-i18n-title="options_themeLightLabel"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42m12.72-12.72l1.42-1.42"/></svg></button>
         </div>
       </div>
     </header>
@@ -182,7 +182,7 @@
                   data-i18n="options_profileSwitchCancelBtn">Cancel</button>
               </div>
             </div>
-            <div id="profile-delete-confirm" class="profile-inline-dialog" style="display: none;">
+            <div id="profile-delete-confirm" class="profile-inline-dialog" style="display: none;" role="alertdialog" aria-modal="true" aria-labelledby="profile-delete-confirm-text">
               <span id="profile-delete-confirm-text" class="profile-inline-dialog-text"></span>
               <div class="profile-inline-dialog-actions">
                 <button type="button" id="profile-delete-confirm-btn" class="btn btn-danger btn-sm"
@@ -191,9 +191,9 @@
                   data-i18n="options_profileSwitchCancelBtn">Cancel</button>
               </div>
             </div>
-            <div id="profile-add-dialog" class="profile-inline-dialog" style="display: none;">
+            <div id="profile-add-dialog" class="profile-inline-dialog" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="profile-add-name-label">
               <div class="profile-inline-dialog-body">
-                <label for="profile-add-name-input" class="profile-inline-dialog-label"
+                <label for="profile-add-name-input" id="profile-add-name-label" class="profile-inline-dialog-label"
                   data-i18n="options_profileAddNameLabel">Profile name</label>
                 <input type="text" id="profile-add-name-input" class="profile-inline-dialog-input"
                   data-i18n-placeholder="options_profileAddPlaceholder" placeholder="New Profile">
@@ -205,9 +205,9 @@
                   data-i18n="options_profileSwitchCancelBtn">Cancel</button>
               </div>
             </div>
-            <div id="profile-rename-dialog" class="profile-inline-dialog" style="display: none;">
+            <div id="profile-rename-dialog" class="profile-inline-dialog" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="profile-rename-label">
               <div class="profile-inline-dialog-body">
-                <label for="profile-rename-input" class="profile-inline-dialog-label"
+                <label for="profile-rename-input" id="profile-rename-label" class="profile-inline-dialog-label"
                   data-i18n="options_profileRenameLabel">New name</label>
                 <input type="text" id="profile-rename-input" class="profile-inline-dialog-input">
               </div>
@@ -294,7 +294,7 @@
                   data-i18n="options_onboardingInitPathBtn">Create path and run first sync</button>
                 <small id="connection-path-init-hint" style="display: block; margin-top: 0.35rem;"></small>
               </div>
-              <div id="onboarding-confirm" class="onboarding-confirm" style="display: none; margin-top: 0.75rem;">
+              <div id="onboarding-confirm" class="onboarding-confirm" style="display: none; margin-top: 0.75rem;" role="alertdialog" aria-modal="true" aria-labelledby="onboarding-confirm-text">
                 <span id="onboarding-confirm-text" class="onboarding-confirm-text"></span>
                 <div class="onboarding-confirm-actions">
                   <button type="button" id="onboarding-confirm-yes-btn" class="btn btn-primary btn-sm"></button>
@@ -827,7 +827,7 @@
         </section>
       </div>
 
-      <div id="password-dialog" class="profile-inline-dialog" style="display: none;">
+      <div id="password-dialog" class="profile-inline-dialog" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="password-dialog-prompt">
         <div class="profile-inline-dialog-body">
           <p id="password-dialog-prompt" class="profile-inline-dialog-text"></p>
           <label for="password-dialog-input" class="profile-inline-dialog-label"
@@ -1238,8 +1238,8 @@
           browser bookmarks will not be affected.</p>
         <button type="button" class="btn btn-danger" id="btn-reset-extension" data-i18n="options_resetBtn">Reset all
           data</button>
-        <div id="reset-confirm-dialog" class="reset-confirm-dialog" style="display: none;">
-          <p data-i18n="options_resetConfirm">Are you sure? This cannot be undone. All profiles and settings will be
+        <div id="reset-confirm-dialog" class="reset-confirm-dialog" style="display: none;" role="alertdialog" aria-modal="true" aria-labelledby="reset-confirm-text">
+          <p id="reset-confirm-text" data-i18n="options_resetConfirm">Are you sure? This cannot be undone. All profiles and settings will be
             permanently deleted.</p>
           <div class="reset-confirm-actions">
             <button type="button" class="btn btn-danger" id="btn-reset-confirm" data-i18n="options_resetConfirmBtn">Yes,

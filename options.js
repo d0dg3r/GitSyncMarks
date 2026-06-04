@@ -123,15 +123,55 @@ const linkwardenSyncDisabledMsg = document.getElementById('linkwarden-sync-disab
 // Tab Navigation
 // ==============================
 
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+const tabButtons = Array.from(document.querySelectorAll('.tab-btn'));
 
-    btn.classList.add('active');
-    const tabId = `tab-${btn.dataset.tab}`;
-    const panel = document.getElementById(tabId);
-    if (panel) panel.classList.add('active');
+// Wire up ARIA tab semantics (tablist/tab/tabpanel) so screen readers and
+// keyboard users can navigate the settings tabs. Markup stays class-based for
+// styling and e2e selectors; roles/state are applied here.
+(function initTabsA11y() {
+  const tabBar = document.querySelector('.tab-bar');
+  if (tabBar) tabBar.setAttribute('role', 'tablist');
+  for (const btn of tabButtons) {
+    const tab = btn.dataset.tab;
+    const panel = document.getElementById(`tab-${tab}`);
+    btn.setAttribute('role', 'tab');
+    btn.id = btn.id || `tab-btn-${tab}`;
+    const isActive = btn.classList.contains('active');
+    btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    btn.setAttribute('tabindex', isActive ? '0' : '-1');
+    if (panel) {
+      btn.setAttribute('aria-controls', panel.id);
+      panel.setAttribute('role', 'tabpanel');
+      panel.setAttribute('aria-labelledby', btn.id);
+      panel.setAttribute('tabindex', '0');
+    }
+  }
+})();
+
+function activateTab(btn, { focus = false } = {}) {
+  for (const b of tabButtons) {
+    const selected = b === btn;
+    b.classList.toggle('active', selected);
+    b.setAttribute('aria-selected', selected ? 'true' : 'false');
+    b.setAttribute('tabindex', selected ? '0' : '-1');
+  }
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  const panel = document.getElementById(`tab-${btn.dataset.tab}`);
+  if (panel) panel.classList.add('active');
+  if (focus) btn.focus();
+}
+
+tabButtons.forEach((btn, index) => {
+  btn.addEventListener('click', () => activateTab(btn));
+  btn.addEventListener('keydown', (e) => {
+    let targetIndex = null;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') targetIndex = (index + 1) % tabButtons.length;
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') targetIndex = (index - 1 + tabButtons.length) % tabButtons.length;
+    else if (e.key === 'Home') targetIndex = 0;
+    else if (e.key === 'End') targetIndex = tabButtons.length - 1;
+    if (targetIndex === null) return;
+    e.preventDefault();
+    activateTab(tabButtons[targetIndex], { focus: true });
   });
 });
 

@@ -98,9 +98,14 @@ sequenceDiagram
     else Only local changes
         SE->>GH: atomicCommit(localChanges)
     else Only remote changes
-        SE->>GH: getLatestCommitSha() (verify fetch not stale)
-        alt remote.commitSha != verifySha
-            SE-->>UI: "All in sync" (skip pull — stale fetch)
+        SE->>GH: getLatestCommitSha() (verify fetch is stable)
+        alt remote advanced mid-fetch
+            SE->>GH: re-fetch stable remote snapshot (up to 3x)
+            alt still moving
+                SE-->>UI: "Remote changing, retry"
+            else stable
+                SE->>BM: replaceLocalBookmarks()
+            end
         else Match
             SE->>BM: replaceLocalBookmarks()
         end
@@ -124,7 +129,9 @@ sequenceDiagram
 |---|---|
 | **added** | Files in `current` but not in `base` |
 | **removed** | Files in `base` but not in `current` |
-| **modified** | Files in both but with different content |
+| **modified** | Files in both but with **semantically** different content |
+
+Content comparison uses `contentEquals()`, which compares valid JSON by canonical form (recursively sorted object keys; array order preserved). Cosmetic differences (key order, whitespace) therefore do not register as modifications or conflicts. Non-JSON or unparseable content falls back to exact string comparison.
 
 Generated/meta files (`README.md`, `_index.json`, `bookmarks.html`, `feed.xml`, `dashy-conf.yml`, `settings.enc`) are excluded from diff via `DIFF_IGNORE_SUFFIXES`. Individual settings files (`settings-{id}.enc`) are excluded via `SETTINGS_ENC_PATTERN`.
 
@@ -191,6 +198,7 @@ Bookmark event → triggerAutoSync() → debouncedSync(5000ms)
 - Each new event resets the timer
 - Uses `sync()` (three-way merge), not just push
 - Suppressed for 10 seconds after a pull (to ignore bookmark events from `replaceLocalBookmarks`)
+- **Overlap coalescing**: if the debounce fires while a sync is already running, the run is re-armed (bounded by the max-wait timer) instead of being dropped, so edits made during an in-flight sync are not lost
 
 ### Re-Entrancy Guard
 
@@ -209,9 +217,13 @@ Uses **role-based mapping** for cross-browser compatibility:
    d. Recursively recreate from merged remote data
 4. Result: All bookmarks appear in both browsers; GitHubRepos folder is kept on pull when not in Git
 
-## Stale-Fetch Guard (Path 8)
+## Stable-Snapshot Guard (Path 8)
 
-When only remote changes exist (path 8), the API response may be cached or eventually consistent. To avoid overwriting local state with stale data (e.g. right after our own push), we re-fetch `getLatestCommitSha()` before applying. If it differs from the commit we fetched, we skip the pull and treat as "all in sync".
+When only remote changes exist (path 8), the API response may be cached or eventually consistent. To avoid overwriting local state with stale data (e.g. right after our own push), `getLatestCommitSha()` is re-checked before applying. If the branch HEAD advanced since our fetch, the engine re-fetches a fresh remote snapshot (up to 3 attempts). Because local has no changes versus base in this path, applying the latest remote is always safe (it is effectively a pull). If the remote is still moving after the retries, the sync does **not** report "all in sync" (which previously hid pending remote changes); instead it returns `sync_remoteChangedRetry` so the user can retry.
+
+## Truncated-Tree Guard
+
+GitHub truncates the recursive tree listing for very large repositories (>100k entries or >7 MB). `GitHubAPI.getTree()` surfaces the `truncated` flag and `fetchRemoteFileMap()` aborts with `api_treeTruncated` rather than acting on a partial tree, which would otherwise misread missing entries as deletions and risk wiping remote data during cleanup.
 
 GitHub API requests use `cache: no-store` to reduce cache-related staleness.
 

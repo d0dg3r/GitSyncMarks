@@ -17,7 +17,6 @@ const profileSelect = document.getElementById('profile-select');
 const profileAddBtn = document.getElementById('profile-add-btn');
 const profileRenameBtn = document.getElementById('profile-rename-btn');
 const profileDeleteBtn = document.getElementById('profile-delete-btn');
-const profileLimitEl = document.getElementById('profile-limit');
 const profileSpinner = document.getElementById('profile-spinner');
 const profileSwitchingMsg = document.getElementById('profile-switching-msg');
 const profileSwitchWithoutConfirmInput = document.getElementById('profile-switch-without-confirm');

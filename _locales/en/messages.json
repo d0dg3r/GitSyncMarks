@@ -497,6 +497,18 @@
   "options_theme": {
     "message": "Theme"
   },
+  "options_densityGroupLabel": {
+    "message": "UI density"
+  },
+  "options_themeAutoLabel": {
+    "message": "Auto"
+  },
+  "options_themeLightLabel": {
+    "message": "Light"
+  },
+  "options_themeDarkLabel": {
+    "message": "Dark"
+  },
   "options_densityCompact": {
     "message": "Compact"
   },
@@ -761,6 +773,12 @@
   "api_conflict": {
     "message": "Conflict: The file was modified in the meantime."
   },
+  "api_networkError": {
+    "message": "Network error. Please check your internet connection and try again."
+  },
+  "api_treeTruncated": {
+    "message": "The repository is too large to read in one request (GitHub truncated the file tree). Sync was stopped to avoid data loss."
+  },
   "api_errorReading": {
     "message": "Error reading file: $1"
   },
@@ -808,6 +826,9 @@
   },
   "sync_allInSync": {
     "message": "Everything in sync. No changes."
+  },
+  "sync_remoteChangedRetry": {
+    "message": "Remote is changing right now. Please try syncing again in a moment."
   },
   "sync_conflictBothModified": {
     "message": "Conflict: Both local and remote bookmarks were modified. Please choose Push or Pull."
@@ -1598,6 +1619,21 @@
         "content": "$1"
       }
     }
+  },
+  "search_resultsLabel": {
+    "message": "Search results"
+  },
+  "search_syncing": {
+    "message": "Syncing..."
+  },
+  "search_syncComplete": {
+    "message": "Sync complete"
+  },
+  "search_syncFailed": {
+    "message": "Sync failed: $1"
+  },
+  "search_unknownError": {
+    "message": "Unknown error"
   },
   "contextMenu_addToToolbar_chrome": {
     "message": "Add to Bookmarks Bar"
