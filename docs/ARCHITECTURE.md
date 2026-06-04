@@ -110,7 +110,7 @@ Barrel module re-exporting from focused sub-modules:
 - **`lib/storage-keys.js`** — Single source for `STORAGE_KEYS` and `LOCAL_STORAGE_KEYS` string names; re-exported from `sync-settings.js` / `sync-engine.js` for the rest of the app
 - **`lib/context-menu-defaults.js`** — Default context menu item list, submenu flags, and `ensureContextMenuItemDefaults()` (shared by options and `context-menu-setup.js`)
 - **`lib/sync-settings.js`** — Re-exports `STORAGE_KEYS` and `LOCAL_STORAGE_KEYS` from `storage-keys.js`; `SYNC_PRESETS`, settings accessors (`getSettings`, `isConfigured`, `createApi`, `getDeviceId`), local bookmark access (`getLocalFileMap`), file map filtering (`filterForDiff`, `addGeneratedFiles`), and encrypted settings sync (`buildEncryptedSettings`, `applyEncryptedSettings`, profile CRUD)
-- **`lib/sync-core.js`** — Core sync operations (`push`, `pull`, `sync`), three-way merge (`computeDiff`, `mergeDiffs`, `mergeOrderJson`), sync state management (`saveSyncState`, `getSyncStatus`, `isSyncInProgress`), debounced auto-sync (`debouncedSync`, `bootstrapFirstSync`), and Linkwarden mirroring
+- **`lib/sync-core.js`** — Core sync operations (`push`, `pull`, `sync`), three-way merge (`computeDiff`, `mergeDiffs`, `mergeOrderJson`), sync state management (`saveSyncState`, `getSyncStatus`, `isSyncInProgress`), debounced auto-sync (`debouncedSync`, `bootstrapFirstSync`), Linkwarden mirroring, and a sync-activity listener (`setSyncActivityListener`) the background uses to keep the worker alive during long operations
 - **`lib/sync-history.js`** — Commit history listing (`listSyncHistory`), bookmark restore (`restoreFromCommit`), undo support (`getPreviousCommitSha`), and diff preview (`getCommitDiffPreview`)
 - **`lib/sync-commit-message.js`** — Parses standard GitSyncMarks commit subjects to extract the device/client id (`extractClientIdFromCommitMessage`) for Sync History display
 - **`lib/sync-migration.js`** — Legacy single-file format migration (`migrateFromLegacyFormat`)
@@ -162,6 +162,10 @@ AES-256-GCM encryption for the GitHub PAT at rest (non-extractable CryptoKey in 
 Minimal wrapper for the Linkwarden REST API:
 - `saveLink(data)`: Create a new link in a collection with tags.
 - `uploadScreenshot(linkId, blob)`: Upload a PNG screenshot to an existing link.
+
+### `lib/keep-alive.js` — Background keep-alive
+
+Keeps the non-persistent background (Firefox MV3 event page / Chrome MV3 service worker) alive while long operations run, so they are not terminated at the ~30s idle limit (issue [#143](https://github.com/d0dg3r/GitSyncMarks/issues/143)). `startKeepAlive()` / `stopKeepAlive()` are reference-counted; while held, a timer touches `runtime.getPlatformInfo()` every 20s to reset the idle timer. The background wires this to `sync-core`'s `setSyncActivityListener` so it covers every `sync`/`push`/`pull`/`restore`, and wraps `generateFilesNow` explicitly.
 
 ### `lib/i18n.js` — Internationalization
 
@@ -301,6 +305,7 @@ GitSyncMarks/
 │   ├── context-menu-dynamic.js   # Dynamic profile/folder menus
 │   ├── context-menu-handlers.js  # Click event dispatch & actions
 │   ├── linkwarden-api.js         # Linkwarden REST API wrapper
+│   ├── keep-alive.js             # Keeps MV3 worker alive during long ops (#143)
 │   ├── debug-log.js              # Debug log for sync diagnostics
 │   ├── i18n.js                   # Internationalization
 │   ├── theme.js                  # Light/dark/auto theme

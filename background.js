@@ -32,8 +32,10 @@ import {
   restoreFromCommit,
   getPreviousCommitSha,
   getCommitDiffPreview,
+  setSyncActivityListener,
   STORAGE_KEYS,
 } from './lib/sync-engine.js';
+import { startKeepAlive, stopKeepAlive } from './lib/keep-alive.js';
 import { log as debugLog, getLogAsString, getDebugLogExportContent } from './lib/debug-log.js';
 import { GitHubAPI } from './lib/github-api.js';
 import { migrateTokenIfNeeded } from './lib/crypto.js';
@@ -49,6 +51,13 @@ const ALARM_NAME = 'bookmarkSyncPull';
 const NOTIFICATION_ID = 'gitsyncmarks-sync';
 const ONBOARDING_WIZARD_COMPLETED = 'onboardingWizardCompleted';
 const ONBOARDING_WIZARD_DISMISSED = 'onboardingWizardDismissed';
+
+// Keep the non-persistent background alive while any sync/push/pull/restore runs,
+// so long operations are not terminated mid-flight (issue #143).
+setSyncActivityListener((active) => {
+  if (active) startKeepAlive();
+  else stopKeepAlive();
+});
 
 async function shouldAutoOpenOnboardingWizard() {
   const state = await chrome.storage.sync.get({
@@ -257,11 +266,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
   if (message.action === 'generateFilesNow') {
-    generateFilesNow().then(async (result) => {
-      await updateSyncStatusBadge(result);
-      await showNotificationIfEnabled(result);
-      sendResponse(result);
-    });
+    startKeepAlive();
+    generateFilesNow()
+      .then(async (result) => {
+        await updateSyncStatusBadge(result);
+        await showNotificationIfEnabled(result);
+        sendResponse(result);
+      })
+      .catch((err) => sendResponse({ success: false, message: err?.message || 'Generate failed' }))
+      .finally(() => stopKeepAlive());
     return true;
   }
   if (message.action === 'pull') {

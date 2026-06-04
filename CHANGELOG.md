@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Sync aborted with "Receiving end does not exist"** ([#143](https://github.com/d0dg3r/GitSyncMarks/issues/143)): On Firefox (MV3 event page) and Chrome (MV3 service worker) the non-persistent background is terminated after ~30s of idle time. A `sync`/`push`/`pull`/`restore` that ran longer was killed mid-operation — the work was aborted (status stayed *"Not synced yet"*) and the popup's pending message rejected with **"Could not establish connection. Receiving end does not exist."**. New [`lib/keep-alive.js`](lib/keep-alive.js) periodically touches a lightweight extension API (`runtime.getPlatformInfo`) to reset the idle timer; the background ([`background.js`](background.js)) starts/stops it via a sync-activity listener ([`lib/sync-core.js`](lib/sync-core.js) `setSyncActivityListener`) for the full duration of every long operation, so syncs run to completion.
+
 ## [2.8.0] - 2026-05-31 (*TARS*)
 
 Reliability, performance and quality release (code-analysis Tiers 1–3). First published as a `2.8.0-beta` pre-release.
