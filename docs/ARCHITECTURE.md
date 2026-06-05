@@ -2,7 +2,7 @@
 
 ## High-Level Architecture
 
-GitSyncMarks is a browser extension (Manifest V3, Chrome + Firefox) that bidirectionally synchronizes bookmarks with a Git repository (GitHub or self-hosted Gitea/Forgejo). It stores each bookmark as an individual JSON file and uses a three-way merge algorithm for conflict-free synchronization.
+GitSyncMarks is a browser extension (Manifest V3, Chrome + Firefox) that bidirectionally synchronizes bookmarks with a Git repository (GitHub, GitLab, Codeberg, Gitea, Forgejo, or Gogs). It stores each bookmark as an individual JSON file and uses a three-way merge algorithm for conflict-free synchronization.
 
 ```mermaid
 flowchart TB
@@ -65,7 +65,7 @@ Extension metadata. Two manifests for browser-specific differences:
 | Background | `service_worker: "background.js"` | `scripts: ["background.js"]` |
 | Browser-specific | — | `browser_specific_settings.gecko` |
 
-Shared: Manifest V3, permissions (`bookmarks`, `storage`, `alarms`, `notifications`, `contextMenus`, `activeTab`, `scripting`, `downloads`), host permissions (`api.github.com`; Gitea origins via optional permissions + runtime grant).
+Shared: Manifest V3, permissions (`bookmarks`, `storage`, `alarms`, `notifications`, `contextMenus`, `activeTab`, `scripting`, `downloads`), host permissions (`api.github.com`, `gitlab.com`; self-hosted origins via optional permissions + runtime grant).
 
 ### `background.js` — Background Script
 
@@ -110,7 +110,7 @@ Barrel module re-exporting from focused sub-modules:
 - **`lib/storage-keys.js`** — Single source for `STORAGE_KEYS` and `LOCAL_STORAGE_KEYS` string names; re-exported from `sync-settings.js` / `sync-engine.js` for the rest of the app
 - **`lib/context-menu-defaults.js`** — Default context menu item list, submenu flags, and `ensureContextMenuItemDefaults()` (shared by options and `context-menu-setup.js`)
 - **`lib/sync-settings.js`** — Re-exports `STORAGE_KEYS` and `LOCAL_STORAGE_KEYS` from `storage-keys.js`; `SYNC_PRESETS`, settings accessors (`getSettings`, `isConfigured`, `createApi`, `getDeviceId`), local bookmark access (`getLocalFileMap`), file map filtering (`filterForDiff`, `addGeneratedFiles`), and encrypted settings sync (`buildEncryptedSettings`, `applyEncryptedSettings`, profile CRUD)
-- **`lib/sync-core.js`** — Core sync operations (`push`, `pull`, `sync`), three-way merge (`computeDiff`, `mergeDiffs`, `mergeOrderJson`), sync state management (`saveSyncState`, `getSyncStatus`, `isSyncInProgress`), debounced auto-sync (`debouncedSync`, `bootstrapFirstSync`), Linkwarden mirroring, and a sync-activity listener (`setSyncActivityListener`) the background uses to keep the worker alive during long operations
+- **`lib/sync-core.js`** — Core sync operations (`push`, `pull`, `sync`, `pushForProfile`, `previewRemoteOrphans`, `cleanRemoteOrphans`), three-way merge (`computeDiff`, `mergeDiffs`, `mergeOrderJson`), sync state management (`saveSyncState`, `getSyncStatus`, `isSyncInProgress`), debounced auto-sync (`debouncedSync`, `bootstrapFirstSync`), Linkwarden mirroring, mirror fan-out hook (`invokePushToMirrors`), and a sync-activity listener (`setSyncActivityListener`) the background uses to keep the worker alive during long operations
 - **`lib/sync-history.js`** — Commit history listing (`listSyncHistory`), bookmark restore (`restoreFromCommit`), undo support (`getPreviousCommitSha`), and diff preview (`getCommitDiffPreview`)
 - **`lib/sync-commit-message.js`** — Parses standard GitSyncMarks commit subjects to extract the device/client id (`extractClientIdFromCommitMessage`) for Sync History display
 - **`lib/sync-migration.js`** — Legacy single-file format migration (`migrateFromLegacyFormat`)
@@ -119,7 +119,7 @@ State is stored as `LAST_SYNC_FILES` (path → {sha, content}) and `LAST_COMMIT_
 
 ### `lib/git-provider.js` — Git Provider Factory
 
-Selects GitHub or Gitea adapter via `createGitProvider()`. Shared URL helpers and `GitProviderError` live in `lib/git-provider-common.js`. See [GITEA-PROVIDER.md](GITEA-PROVIDER.md).
+Selects GitHub, Gitea-family, or GitLab adapter via `createGitProvider()`. Provider capabilities (`PROVIDER_CAPS`) and shared URL helpers live in `lib/git-provider-common.js`. UI helpers in `lib/provider-ui.js`. See [PROVIDERS.md](PROVIDERS.md).
 
 ### `lib/providers/github-api.js` — GitHub API Wrapper
 
@@ -203,10 +203,36 @@ Multiple bookmark profiles (Work/Personal) with separate GitHub repo config:
 |---|---|
 | `getProfiles()` / `getActiveProfileId()` | List profiles, get current active profile |
 | `addProfile()` / `deleteProfile()` / `saveProfile()` | CRUD for profiles |
-| `switchProfile(targetId)` | Save current bookmarks, push to current repo, pull target profile, replace local bookmarks |
+| `switchProfile(targetId)` | Diff-push current profile (skip when unchanged), HEAD-check target cache, delta-pull when remote advanced, replace local bookmarks |
 | `migrateToProfiles()` | Migrate legacy single-config to profiles format |
 
-State stored in `chrome.storage.sync` (profiles, activeProfileId) and `chrome.storage.local` (per-profile tokens, sync state).
+State stored in `chrome.storage.sync` (profiles, activeProfileId, optional `mirrors[]` per profile) and `chrome.storage.local` (nested per-profile tokens `{ primary, mirrors: { id: enc } }`, sync state including `mirrors` push metadata).
+
+### `lib/profile-switch-logic.js` — Fast Profile Switch
+
+Testable helpers used by `switchProfile()` and sync path 8: `buildSwitchPushChanges()`, `mergeLocalIntoSyncFiles()` (preserves removed paths in base until push), `buildStaleBasePushChanges()`, `loadTargetFileMapForSwitch()` (HEAD check + delta pull).
+
+### `lib/sync-diff.js` — Diff Utilities
+
+Shared `computeDiff()`, `contentEquals()`, `filterForDiff()` — no `profile-manager` dependency (avoids circular imports during profile switch).
+
+### `lib/profile-transfer.js` — Cross-Profile Transfer
+
+One-shot copy of bookmark file maps between profiles without switching:
+
+| Function | Description |
+|---|---|
+| `loadProfileFileMap(profileId)` | Active profile → browser tree; inactive → remote fetch or `lastSyncFiles` cache |
+| `rewriteFileMapPaths()` / `filterGeneratedAndAuto()` | Path rewrite and strip generated/auto folders |
+| `previewTransfer()` / `transferBookmarks()` | Replace or merge mode; optional push via `pushForProfile()` |
+
+### `lib/sync-progress.js` — Sync Progress UI
+
+Formats `onProgress` payloads from `sync-core` (`phase`, `current`, `total`) and runs long sync actions over a `syncProgress` runtime port (popup sync/push/pull, wizard first sync and pull, connection-tab first push, Automation **Generate now**). Mirrors the profile-transfer port pattern so progress events are not lost to a connect/message race.
+
+### `lib/mirror-push.js` — Push Mirror Destinations
+
+After each successful primary commit, optional mirror remotes receive a push-only copy of bookmark files (not involved in merge/fetch). Loop guard skips when `lastPushedCommitSha === primaryCommitSha`.
 
 ### `lib/onboarding.js` — Onboarding
 
@@ -218,9 +244,13 @@ First-time and new-profile setup when configuring GitHub:
 | `createMinimalBookmarkStructure(basePath)` | Build `_index.json` and role folders with `_order.json` |
 | `initializeRemoteFolder(api, basePath)` | Create minimal structure via `atomicCommit` |
 
-### `lib/providers/gitea-api.js` — Gitea / Forgejo Adapter
+### `lib/providers/gitea-api.js` — Gitea-family Adapter
 
-Extends the GitHub client for read paths; implements `atomicCommit` via Gitea Change Files API (`POST /repos/{owner}/{repo}/contents` with `files[]`). Auth: `Authorization: token {PAT}`.
+Shared adapter for Gitea, Forgejo, Codeberg, and Gogs (`providerId` preserved per profile). Extends the GitHub client for read paths; implements `atomicCommit` via the Contents API. Auth: `Authorization: token {PAT}`.
+
+### `lib/providers/gitlab-api.js` — GitLab Adapter
+
+Standalone client for gitlab.com and self-managed GitLab. `atomicCommit` uses `POST /repository/commits` with `actions[]`. Subgroup paths encoded in project URL. Auth: `Authorization: Bearer {PAT}`.
 
 ### `lib/github-api.js` — Compatibility Shim
 
@@ -302,11 +332,13 @@ GitSyncMarks/
 │   ├── sync-history.js           # Commit history, restore, diff preview
 │   ├── sync-commit-message.js    # Parse commit subject → client id (history UI)
 │   ├── sync-migration.js         # Legacy format migration
-│   ├── git-provider.js           # Provider factory (GitHub / Gitea)
-│   ├── git-provider-common.js    # Shared errors + URL helpers
+│   ├── git-provider.js           # Provider factory (GitHub / Gitea-family / GitLab)
+│   ├── git-provider-common.js    # PROVIDER_CAPS + URL helpers
+│   ├── provider-ui.js            # Shared provider dropdown / form UI
 │   ├── providers/
 │   │   ├── github-api.js         # GitHub REST + Git Data API
-│   │   └── gitea-api.js          # Gitea / Forgejo adapter
+│   │   ├── gitea-api.js          # Gitea-family adapter
+│   │   └── gitlab-api.js         # GitLab adapter
 │   ├── connection-settings.js    # Form → createGitProvider helpers
 │   ├── host-permissions.js       # Runtime Gitea origin permission
 │   ├── github-api.js             # Re-export shim
@@ -315,6 +347,11 @@ GitSyncMarks/
 │   ├── bookmark-replace.js       # Replace local bookmarks
 │   ├── github-repos.js           # GitHub Repos folder
 │   ├── profile-manager.js        # Multiple profiles, switchProfile
+│   ├── profile-switch-logic.js   # Fast switch: diff push, HEAD check, delta pull
+│   ├── sync-diff.js              # computeDiff, filterForDiff (no profile-manager dep)
+│   ├── profile-transfer.js       # Cross-profile bookmark copy
+│   ├── sync-progress.js          # Sync progress formatting + runtime port helper
+│   ├── mirror-push.js            # Push-only mirror destinations
 │   ├── onboarding.js             # checkPathSetup, initializeRemoteFolder
 │   ├── remote-fetch.js           # fetchRemoteFileMap
 │   ├── crypto.js                 # Token encryption (AES-256-GCM)
@@ -370,8 +407,8 @@ End-to-end regression is covered by **Playwright** (`npm run test:e2e*`, see [..
 | Extension Framework | Manifest V3 (Chrome + Firefox) |
 | Background | Service Worker (Chrome) / Background Script (Firefox) |
 | Browser APIs | `chrome.bookmarks`, `chrome.storage`, `chrome.alarms`, `chrome.contextMenus`, `chrome.scripting`, `chrome.downloads` |
-| Remote Storage | GitHub or Gitea Git Data / Contents API (atomic multi-file commits) |
-| Authentication | Bearer Auth (GitHub) or `token` Auth (Gitea); PAT per profile |
+| Remote Storage | GitHub/GitLab Git Data API or Gitea-family Contents API |
+| Authentication | Bearer (GitHub, GitLab) or `token` (Gitea-family); PAT per profile |
 | Sync Algorithm | Three-way merge (base vs local vs remote, per-file diff) |
 | i18n | Custom runtime system + Chrome `_locales/` |
 | Build | Shell script (`build.sh`), separate Chrome/Firefox packages |

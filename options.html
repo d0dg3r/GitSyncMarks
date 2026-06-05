@@ -45,14 +45,17 @@
 
       <div id="onboarding-wizard-provider-group" class="onboarding-wizard-section" style="display: none;">
         <label for="onboarding-wizard-git-provider" data-i18n="options_gitProvider">Git provider</label>
-        <select id="onboarding-wizard-git-provider">
-          <option value="github" data-i18n="options_gitProviderGithub">GitHub</option>
-          <option value="gitea" data-i18n="options_gitProviderGitea">Gitea / Forgejo</option>
-        </select>
+        <select id="onboarding-wizard-git-provider"></select>
+        <div id="onboarding-wizard-ghe-disclosure" class="hidden">
+          <label class="mirror-option-toggle">
+            <input type="checkbox" id="onboarding-wizard-ghe-enabled">
+            <span data-i18n="options_gheServerUrlEnabled">Use custom server URL (GitHub Enterprise)</span>
+          </label>
+        </div>
         <div id="onboarding-wizard-server-url-group" class="hidden">
           <label for="onboarding-wizard-server-url" data-i18n="options_serverUrl">Server URL</label>
           <input type="url" id="onboarding-wizard-server-url" placeholder="https://gitea.example.com">
-          <small data-i18n="options_serverUrlHint">Base URL of your Gitea instance (no /api/v1 suffix).</small>
+          <small data-i18n="options_serverUrlHint">Base URL of your Git server (no /api/v1 or /api/v4 suffix).</small>
         </div>
       </div>
 
@@ -237,6 +240,48 @@
               </div>
             </div>
             <div id="profile-message" class="profile-message" style="display: none;"></div>
+            <div class="profile-transfer-actions" style="margin-top: 0.75rem;">
+              <button type="button" id="profile-transfer-open-btn" class="btn btn-secondary btn-sm"
+                data-i18n="options_transferOpen">Transfer…</button>
+            </div>
+            <div id="profile-transfer-dialog" class="profile-inline-dialog profile-transfer-dialog" style="display: none;" role="dialog" aria-modal="true">
+              <h3 data-i18n="options_transferTitle">Transfer bookmarks</h3>
+              <p class="card-desc" data-i18n="options_transferDesc">Copy bookmarks between profiles.</p>
+              <div class="form-group">
+                <label for="profile-transfer-source" data-i18n="options_transferSource">Source profile</label>
+                <select id="profile-transfer-source"></select>
+              </div>
+              <div class="form-group">
+                <label for="profile-transfer-target" data-i18n="options_transferTarget">Target profile</label>
+                <select id="profile-transfer-target"></select>
+              </div>
+              <div class="form-group">
+                <label for="profile-transfer-mode" data-i18n="options_transferMode">Mode</label>
+                <select id="profile-transfer-mode">
+                  <option value="replace" data-i18n="options_transferModeReplace">Replace target</option>
+                  <option value="merge" data-i18n="options_transferModeMerge">Merge into target</option>
+                </select>
+                <small id="profile-transfer-merge-hint" class="profile-transfer-merge-hint" style="display: none;" data-i18n="options_transferMergeHint">Merge hint</small>
+              </div>
+              <div class="form-group">
+                <label for="profile-transfer-folder" data-i18n="options_transferFolder">Folder (optional)</label>
+                <input type="text" id="profile-transfer-folder" placeholder="toolbar/work">
+                <small data-i18n="options_transferFolderHint">Relative path under repo folder.</small>
+              </div>
+              <label class="profile-option-toggle"><input type="checkbox" id="profile-transfer-push" checked> <span data-i18n="options_transferPush">Push to target repository</span></label>
+              <label class="profile-option-toggle"><input type="checkbox" id="profile-transfer-apply"> <span data-i18n="options_transferApplyLocal">Apply to browser (only when target is active)</span></label>
+              <div id="profile-transfer-warning" class="profile-message error" style="display: none;"></div>
+              <p id="profile-transfer-result" class="profile-transfer-result"></p>
+              <div id="profile-transfer-status" class="profile-transfer-status" style="display: none;" aria-live="polite" aria-atomic="true">
+                <span id="profile-transfer-spinner" class="spinner" aria-hidden="true"></span>
+                <span id="profile-transfer-progress" class="profile-transfer-progress">…</span>
+              </div>
+              <div class="profile-inline-dialog-actions">
+                <button type="button" id="profile-transfer-preview-btn" class="btn btn-secondary btn-sm" data-i18n="options_transferPreview">Preview</button>
+                <button type="button" id="profile-transfer-run-btn" class="btn btn-primary btn-sm" data-i18n="options_transferRun">Transfer</button>
+                <button type="button" id="profile-transfer-cancel-btn" class="btn btn-secondary btn-sm" data-i18n="options_transferCancel">Cancel</button>
+              </div>
+            </div>
           </section>
         </div>
 
@@ -246,16 +291,20 @@
 
             <div class="form-group">
               <label for="git-provider" data-i18n="options_gitProvider">Git provider</label>
-              <select id="git-provider">
-                <option value="github" data-i18n="options_gitProviderGithub">GitHub</option>
-                <option value="gitea" data-i18n="options_gitProviderGitea">Gitea / Forgejo</option>
-              </select>
+              <select id="git-provider"></select>
+            </div>
+
+            <div class="form-group hidden" id="ghe-server-url-disclosure">
+              <label class="mirror-option-toggle">
+                <input type="checkbox" id="ghe-server-url-enabled">
+                <span data-i18n="options_gheServerUrlEnabled">Use custom server URL (GitHub Enterprise)</span>
+              </label>
             </div>
 
             <div class="form-group hidden" id="server-url-group">
               <label for="server-url" data-i18n="options_serverUrl">Server URL</label>
               <input type="url" id="server-url" placeholder="https://gitea.example.com">
-              <small data-i18n="options_serverUrlHint">Base URL of your Gitea instance (no /api/v1 suffix).</small>
+              <small data-i18n="options_serverUrlHint">Base URL of your Git server (no /api/v1 or /api/v4 suffix).</small>
             </div>
 
             <div class="form-group">
@@ -274,6 +323,7 @@
 
             <div class="form-group">
               <label for="owner" data-i18n="options_repoOwner">Repository Owner</label>
+              <small id="owner-hint" class="hidden"></small>
               <input type="text" id="owner" data-i18n-placeholder="options_ownerPlaceholder"
                 placeholder="your-github-username">
             </div>
@@ -315,6 +365,13 @@
               </div>
               <small data-i18n="options_filePathHint">Folder where bookmark files will be stored.</small>
             </div>
+
+            <section class="card mirrors-card" id="mirrors-card">
+              <h3 data-i18n="options_mirrorsTitle">Mirror destinations</h3>
+              <p class="card-desc" data-i18n="options_mirrorsDesc">Push-only copies to additional Git remotes.</p>
+              <div id="mirrors-list"></div>
+              <button type="button" id="mirrors-add-btn" class="btn btn-secondary btn-sm" data-i18n="options_mirrorsAdd">+ Add mirror</button>
+            </section>
 
             <div class="form-group">
               <button id="validate-btn" class="btn btn-secondary" data-i18n="options_testConnection">Test
@@ -438,6 +495,17 @@
               </select>
               <small data-i18n="options_notificationsHint">Choose when to show notifications.</small>
             </div>
+
+            <section class="card card-nested" id="clean-orphans-card">
+              <h3 data-i18n="options_cleanOrphansTitle">Clean remote orphans</h3>
+              <p class="card-desc" data-i18n="options_cleanOrphansDesc">Remove bookmark files on the remote that are not in your local bookmarks (active profile). Use after a messy transfer or duplicate folders on the server.</p>
+              <div class="form-group">
+                <button type="button" id="clean-orphans-preview-btn" class="btn btn-secondary btn-sm" data-i18n="options_cleanOrphansPreview">Preview orphans</button>
+                <button type="button" id="clean-orphans-run-btn" class="btn btn-warning btn-sm" disabled data-i18n="options_cleanOrphansRun">Clean remote</button>
+                <span id="clean-orphans-spinner" class="spinner" style="display: none;"></span>
+                <span id="clean-orphans-result" class="validation-result"></span>
+              </div>
+            </section>
 
             <div class="actions actions-in-card actions-sync-feedback">
               <span id="save-sync-result" class="save-result"></span>
@@ -987,8 +1055,16 @@
             Personal Access Token (PAT) with the <code>repo</code> scope. In the GitHub tab, enter token, repository
             owner, name, branch (usually <code>main</code>), and the folder path (default: <code>bookmarks</code>).
             Click <strong>Test Connection</strong> to verify.</p>
+          <p data-i18n-html="help_transferDesc">Transfer and mirror help.</p>
+          <h3 data-i18n="help_cleanOrphansTitle">Clean remote orphans</h3>
+          <p data-i18n="help_cleanOrphansDesc">On the Sync sub-tab, preview and remove remote bookmark files that are not in your local bookmarks (active profile). Useful after duplicate folders from a merge transfer.</p>
           <p data-i18n="help_onboarding">If the folder is empty, you can create the base structure (toolbar, other). If
             bookmarks already exist in the repo, you can pull them into this browser.</p>
+          <h3 data-i18n="options_gitProvider">Git providers</h3>
+          <p data-i18n-html="help_provider_forgejo">Forgejo help.</p>
+          <p data-i18n-html="help_provider_codeberg">Codeberg help.</p>
+          <p data-i18n-html="help_provider_gogs">Gogs help.</p>
+          <p data-i18n-html="help_provider_gitlab">GitLab help.</p>
         </div>
       </details>
 

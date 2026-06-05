@@ -2,7 +2,9 @@
 
 ## Overview
 
-GitSyncMarks stores each bookmark as an individual JSON file in a Git repository. The directory structure mirrors the bookmark folder hierarchy. Synchronization uses the configured Git provider API (GitHub Git Data API or Gitea Change Files API) for atomic multi-file commits. See [GITEA-PROVIDER.md](GITEA-PROVIDER.md).
+GitSyncMarks stores each bookmark as an individual JSON file in a Git repository. The directory structure mirrors the bookmark folder hierarchy. Synchronization uses the configured Git provider API (GitHub/GitLab Git Data API, Gitea-family Contents API, or GitLab `/repository/commits`). See [PROVIDERS.md](PROVIDERS.md).
+
+**Profile transfer** copies file maps between profiles (one-shot migration). **Mirror destinations** receive push-only copies after each primary commit; they are not merge participants.
 
 ## Data Flow: Push
 
@@ -119,7 +121,7 @@ flowchart LR
 - **Sync Now**: Calls `sync()` directly (same as popup sync button).
 - **Copy Favicon URL**: Resolves favicon via `getFaviconUrl(tab)` — uses `tab.favIconUrl` if available, falls back to Google's favicon service (`https://www.google.com/s2/favicons?domain={domain}&sz=64`). Then uses `chrome.scripting.executeScript()` to run `navigator.clipboard.writeText()` in the active tab context (clipboard API is not available in service workers).
 - **Download Favicon**: Same favicon resolution as Copy. Uses `chrome.downloads.download()` with `saveAs: true`; filename is `favicon_{hostname}.png`.
-- **Switch Profile**: Reads all profiles via `getProfiles()`, calls `switchProfile(targetId)` which saves current bookmarks, pushes to GitHub, loads target bookmarks via `replaceLocalBookmarks()`, then refreshes the context menu radio items.
+- **Switch Profile**: Reads all profiles via `getProfiles()`, calls `switchProfile(targetId)` which diff-pushes the current profile (skip commit when unchanged), loads the target from cache when remote HEAD matches `lastCommitSha` or delta-pulls when it differs, applies bookmarks via `replaceLocalBookmarks()`, then refreshes the context menu radio items.
 
 ## File Formats
 

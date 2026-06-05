@@ -5,13 +5,16 @@
 GitSyncMarks
 
 ### Summary (max 132 characters)
-Bookmark sync via GitHub. Linkwarden synergy, Smart Search, and Companion App. Direct, secure, private.
+Bookmark sync via GitHub, GitLab, Codeberg, Gitea & more. Linkwarden, Smart Search, Companion App.
 
 ### Detailed Description
-GitSyncMarks is a professional solution to bidirectionally and automatically synchronize your bookmarks with a GitHub repository. Manage your data on desktop via Chrome and Firefox, or on the go with the GitSyncMarks Companion App. No middleman, no third-party servers – total control and privacy.
+GitSyncMarks bidirectionally synchronizes your bookmarks with GitHub, GitLab, Codeberg, Gitea, Forgejo, or Gogs. Manage your data on desktop via Chrome and Firefox, or on the go with the GitSyncMarks Companion App. No middleman, no third-party servers – total control and privacy.
 
 Highlights
 
+- Multi-Provider Git Sync: GitHub, GitLab, Codeberg, Gitea, Forgejo, or Gogs — each profile can use its own provider and server URL.
+- Profile Transfer & Mirrors: Copy bookmarks between profiles (replace or merge); optional push-only backup remotes after each sync.
+- Live Sync Progress: See step text during sync (e.g. files or bookmarks uploaded while pushing or pulling).
 - Sync History & Restore: Browse past commits, preview changes with a diff view, and restore any previous bookmark state in one click.
 - Duplicate Fix: Same-name folders no longer multiply across syncs — duplicates are automatically merged.
 - Linkwarden Synergy: Save pages or links directly to your Linkwarden instance. Includes automatic viewport screenshots, collection synchronization, and predefined tags.
@@ -20,8 +23,8 @@ Highlights
 
 Key Capabilities
 
-- Private-by-Design: Direct communication with the GitHub API. No third parties see your data.
-- Single-File Storage: Each bookmark is stored as a readable JSON file – ideal for versioning and manual editing on GitHub.
+- Private-by-Design: Direct communication with your Git provider's API. No third parties see your data.
+- Single-File Storage: Each bookmark is stored as a readable JSON file – ideal for versioning and manual editing in your Git repo.
 - Multiple Profiles: Manage up to 10 separate profiles for work, personal life, or projects, each with their own repositories.
 - Automation: Add bookmarks via CLI or GitHub Actions; the extension automatically integrates them during the next sync.
 - Generated Files: Automatically creates a README.md (overview), bookmarks.html (browser import), or RSS feed optionally in your repository.

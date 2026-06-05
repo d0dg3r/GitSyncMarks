@@ -5,6 +5,7 @@
  */
 
 import { getMessage } from '../lib/i18n.js';
+import { formatSyncProgress, runSyncPortAction } from '../lib/sync-progress.js';
 import { serializeToJson, deserializeFromJson, bookmarkTreeToFileMap, fileMapToDashyYaml } from '../lib/bookmark-serializer.js';
 import { replaceLocalBookmarks } from '../lib/sync-engine.js';
 import { encryptToken, decryptToken, encryptWithPassword, decryptWithPassword, PASSWORD_ENC_PREFIX } from '../lib/crypto.js';
@@ -387,11 +388,15 @@ export function initSettings({ saveSettings, loadSettings, showOnboardingConfirm
 
   // Generate files
   generateFilesBtn.addEventListener('click', async () => {
+    const defaultLabel = getMessage('options_generateNowBtn') || 'Generate now';
     generateFilesBtn.disabled = true;
     try {
-      await chrome.runtime.sendMessage({ action: 'generateFilesNow' });
+      await runSyncPortAction('generateFilesNow', {}, (payload) => {
+        generateFilesBtn.textContent = formatSyncProgress(payload);
+      });
     } catch (e) { /* Background may be terminated */ }
     generateFilesBtn.disabled = false;
+    generateFilesBtn.textContent = defaultLabel;
   });
 
   generateReadmeMdSelect.addEventListener('change', onGenerateFilesToggleChange);

@@ -53,3 +53,25 @@ describe('GiteaAPI contents ref cascade', () => {
     ]);
   });
 });
+
+describe('Gitea-family provider ids', () => {
+  for (const provider of ['forgejo', 'codeberg', 'gogs']) {
+    it(`${provider} preserves providerId and resolves API base`, () => {
+      const opts = {
+        provider,
+        token: 't',
+        owner: 'o',
+        repo: 'r',
+        branch: 'main',
+        serverUrl: provider === 'codeberg' ? '' : 'http://host.local',
+      };
+      const api = new GiteaAPI(opts);
+      assert.equal(api.providerId, provider);
+      if (provider === 'codeberg') {
+        assert.match(api._apiBase(), /codeberg\.org\/api\/v1/);
+      } else {
+        assert.match(api._apiBase(), /host\.local\/api\/v1/);
+      }
+    });
+  }
+});

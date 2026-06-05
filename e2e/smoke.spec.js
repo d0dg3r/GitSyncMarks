@@ -34,6 +34,8 @@ test.describe('Smoke', () => {
 
     await page.locator('.sub-tab-btn[data-subtab="github-connection"]').click();
     await test.expect(page.locator('#git-provider')).toBeVisible();
+    await test.expect(page.locator('#git-provider option[value="gitlab"]')).toHaveCount(1);
+    await test.expect(page.locator('#git-provider option[value="codeberg"]')).toHaveCount(1);
     await test.expect(page.locator('#token')).toBeVisible();
     await test.expect(page.locator('#owner')).toBeVisible();
     await test.expect(page.locator('#repo')).toBeVisible();

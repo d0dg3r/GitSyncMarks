@@ -38,6 +38,7 @@
         <div class="status-meta">
           <span id="last-data-change" class="status-meta-item" style="display: none;"></span>
           <span id="last-commit-wrap" class="status-meta-item last-commit-wrap" style="display: none;"></span>
+          <span id="mirror-status" class="status-meta-item" style="display: none;"></span>
         </div>
       </div>
 
@@ -49,8 +50,8 @@
         </div>
         <p data-i18n="popup_conflictDescription">Both local and remote bookmarks were modified. Choose a resolution:</p>
         <div class="conflict-actions">
-          <button id="force-push-btn" class="btn btn-small btn-warning" data-i18n="popup_localToGithub">Local → GitHub</button>
-          <button id="force-pull-btn" class="btn btn-small btn-secondary" data-i18n="popup_githubToLocal">GitHub → Local</button>
+          <button id="force-push-btn" class="btn btn-small btn-warning" data-i18n="popup_localToRemote">Local → Remote</button>
+          <button id="force-pull-btn" class="btn btn-small btn-secondary" data-i18n="popup_remoteToLocal">Remote → Local</button>
         </div>
       </div>
 

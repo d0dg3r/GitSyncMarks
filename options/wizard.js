@@ -5,7 +5,14 @@
 
 import { getMessage } from '../lib/i18n.js';
 import { createConnectionApi, ensureProviderHostPermission, normalizeGitProvider } from '../lib/connection-settings.js';
+import { getProviderCaps } from '../lib/git-provider-common.js';
+import {
+  applyProviderFormUi,
+  providerNeedsHostPermission,
+  renderProviderOptions,
+} from '../lib/provider-ui.js';
 import { checkPathSetup, waitForRemoteBaseline } from '../lib/onboarding.js';
+import { formatSyncProgress, runSyncPortAction } from '../lib/sync-progress.js';
 
 let _saveSettings = null;
 
@@ -41,6 +48,8 @@ const onboardingWizardProviderGroup = document.getElementById('onboarding-wizard
 const onboardingWizardGitProviderSelect = document.getElementById('onboarding-wizard-git-provider');
 const onboardingWizardServerUrlGroup = document.getElementById('onboarding-wizard-server-url-group');
 const onboardingWizardServerUrlInput = document.getElementById('onboarding-wizard-server-url');
+const onboardingWizardGheDisclosure = document.getElementById('onboarding-wizard-ghe-disclosure');
+const onboardingWizardGheEnabled = document.getElementById('onboarding-wizard-ghe-enabled');
 const onboardingWizardTokenHelp = document.getElementById('onboarding-wizard-token-help');
 const onboardingWizardTokenHelpGithub = document.getElementById('onboarding-wizard-token-help-github');
 const onboardingWizardTokenHelpGitea = document.getElementById('onboarding-wizard-token-help-gitea');
@@ -98,9 +107,7 @@ async function persistWizardState(completed, dismissed) {
 export async function startOnboardingWizard({ manual = false } = {}) {
   resetWizardState();
   onboardingWizardTokenInput.value = tokenInput.value || '';
-  if (onboardingWizardGitProviderSelect) {
-    onboardingWizardGitProviderSelect.value = gitProviderSelect?.value || 'github';
-  }
+  renderProviderOptions(onboardingWizardGitProviderSelect, gitProviderSelect?.value || 'github');
   if (onboardingWizardServerUrlInput) {
     onboardingWizardServerUrlInput.value = serverUrlInput?.value || '';
   }
@@ -163,34 +170,55 @@ function setWizardBusy(isBusy, loadingMessage = '') {
   }
 }
 
+function isGiteaFamilyProvider(provider) {
+  return ['gitea', 'forgejo', 'codeberg', 'gogs'].includes(provider);
+}
+
 function updateWizardProviderUi() {
   const provider = normalizeGitProvider(onboardingWizardGitProviderSelect?.value);
-  const isGitea = provider === 'gitea';
-  if (onboardingWizardServerUrlGroup) {
-    onboardingWizardServerUrlGroup.classList.toggle('hidden', !isGitea);
-  }
+  applyProviderFormUi(
+    {
+      serverUrlGroup: onboardingWizardServerUrlGroup,
+      serverUrlInput: onboardingWizardServerUrlInput,
+      tokenInput: onboardingWizardTokenInput,
+      ownerInput: onboardingWizardOwnerInput,
+      gheDisclosureGroup: onboardingWizardGheDisclosure,
+    },
+    provider,
+    { gheEnabled: onboardingWizardGheEnabled?.checked }
+  );
   if (onboardingWizardTokenHelpGithub) {
-    onboardingWizardTokenHelpGithub.classList.toggle('hidden', isGitea);
+    onboardingWizardTokenHelpGithub.classList.toggle('hidden', isGiteaFamilyProvider(provider) || provider === 'gitlab');
   }
   if (onboardingWizardTokenHelpGitea) {
-    onboardingWizardTokenHelpGitea.classList.toggle('hidden', !isGitea);
+    onboardingWizardTokenHelpGitea.classList.toggle('hidden', !isGiteaFamilyProvider(provider));
   }
   const helpLink = onboardingWizardTokenHelpGithub?.querySelector('a');
-  if (helpLink && !isGitea) {
+  if (helpLink && provider === 'github') {
     helpLink.href = 'https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks';
     helpLink.textContent = getMessage('options_onboardingWizardTokenHelpLink');
     helpLink.onclick = null;
   }
-  if (onboardingWizardTokenInput) {
-    onboardingWizardTokenInput.placeholder = getMessage(
-      isGitea ? 'options_tokenPlaceholderGitea' : 'options_tokenPlaceholderGithub'
-    );
+}
+
+async function ensureWizardHostPermission(fields) {
+  const caps = getProviderCaps(fields.gitProvider);
+  const serverUrl = fields.serverUrl || caps.defaultServerUrl || '';
+  if (!providerNeedsHostPermission(fields.gitProvider, serverUrl)) return true;
+  if (!serverUrl) return false;
+  const { granted } = await ensureProviderHostPermission(fields.gitProvider, serverUrl);
+  if (!granted) {
+    const msg = getMessage('options_hostPermissionDenied');
+    showValidation(msg, 'error');
+    setWizardResult(msg, 'error');
   }
-  if (onboardingWizardOwnerInput) {
-    onboardingWizardOwnerInput.placeholder = getMessage(
-      isGitea ? 'options_ownerPlaceholderGitea' : 'options_ownerPlaceholder'
-    );
-  }
+  return granted;
+}
+
+function wizardServerUrlRequired(fields) {
+  const caps = getProviderCaps(fields.gitProvider);
+  const serverUrl = fields.serverUrl || caps.defaultServerUrl || '';
+  return caps.requireServerUrl && !serverUrl;
 }
 
 function getWizardConnectionFields(overrides = {}) {
@@ -329,10 +357,14 @@ function showConnectionPathInitAction(basePath) {
   connectionPathInitGroup.style.display = '';
 }
 
-async function initializePathAndRunFirstPush() {
+async function initializePathAndRunFirstPush(onProgress) {
   await _saveSettings();
   const connection = getConnectionFormFieldsFromPage();
-  const result = await chrome.runtime.sendMessage({ action: 'bootstrapFirstSync', connection });
+  const result = await runSyncPortAction(
+    'bootstrapFirstSync',
+    { connection },
+    onProgress
+  );
   if (result?.success) return;
   throw new Error(result?.message || 'Push failed');
 }
@@ -345,16 +377,12 @@ async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
     showValidation(getMessage('options_pleaseEnterToken'), 'error');
     return { ok: false };
   }
-  if (fields.gitProvider === 'gitea' && !fields.serverUrl) {
+  if (wizardServerUrlRequired(fields)) {
     showValidation(getMessage('options_serverUrlRequired'), 'error');
     return { ok: false };
   }
-  if (fields.gitProvider === 'gitea') {
-    const { granted } = await ensureProviderHostPermission(fields.gitProvider, fields.serverUrl);
-    if (!granted) {
-      showValidation(getMessage('options_giteaPermissionDenied'), 'error');
-      return { ok: false };
-    }
+  if (!(await ensureWizardHostPermission(fields))) {
+    return { ok: false };
   }
 
   showValidation(getMessage('options_checking'), 'loading');
@@ -407,7 +435,14 @@ async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
         if (confirmed) {
           try {
             await _saveSettings();
-            await chrome.runtime.sendMessage({ action: 'pull' });
+            showValidation(getMessage('popup_syncing'), 'loading');
+            const pullResult = await runSyncPortAction('pull', {}, (payload) => {
+              showValidation(formatSyncProgress(payload), 'loading');
+            });
+            if (!pullResult?.success) {
+              showValidation(pullResult?.message || 'Pull failed', 'error');
+              return;
+            }
             showValidation(getMessage('options_onboardingPullSuccess'), 'success');
           } catch (pullErr) {
             showValidation(getMessage('options_error', [pullErr.message]), 'error');
@@ -475,16 +510,12 @@ async function runWizardTokenValidation() {
     setWizardResult(getMessage('options_pleaseEnterToken'), 'error');
     return false;
   }
-  if (fields.gitProvider === 'gitea' && !fields.serverUrl) {
+  if (wizardServerUrlRequired(fields)) {
     setWizardResult(getMessage('options_serverUrlRequired'), 'error');
     return false;
   }
-  if (fields.gitProvider === 'gitea') {
-    const { granted } = await ensureProviderHostPermission(fields.gitProvider, fields.serverUrl);
-    if (!granted) {
-      setWizardResult(getMessage('options_giteaPermissionDenied'), 'error');
-      return false;
-    }
+  if (!(await ensureWizardHostPermission(fields))) {
+    return false;
   }
   const api = createConnectionApi({ ...fields, owner: 'x', repo: 'x' });
   const tokenResult = await api.validateToken();
@@ -522,12 +553,8 @@ async function runWizardEnvironmentCheck() {
     setWizardResult(getMessage('options_onboardingWizardRepoRequired'), 'error');
     return false;
   }
-  if (fields.gitProvider === 'gitea') {
-    const { granted } = await ensureProviderHostPermission(fields.gitProvider, fields.serverUrl);
-    if (!granted) {
-      setWizardResult(getMessage('options_giteaPermissionDenied'), 'error');
-      return false;
-    }
+  if (!(await ensureWizardHostPermission(fields))) {
+    return false;
   }
 
   if (onboardingWizardRepoFlowSelect.value === 'autoCreate') {
@@ -582,17 +609,14 @@ async function runWizardEnvironmentCheck() {
   wizardState.pathStatus = pathCheck.status;
   wizardState.firstSyncDone = false;
   if (onboardingWizardRepoFlowSelect.value === 'autoCreate' && pathCheck.status !== 'hasBookmarks') {
-    const stopInitPulse = startProgressPulse([
-      'Waiting for repository to be ready',
-      'Setting up initial folder structure',
-      'Uploading bookmarks to remote Git host',
-      'Creating first commit',
-    ]);
+    setWizardBusy(true, getMessage('popup_syncing'));
     try {
       await waitForRemoteBaseline(api);
-      await initializePathAndRunFirstPush();
+      await initializePathAndRunFirstPush((payload) => {
+        onboardingWizardHint.textContent = formatSyncProgress(payload);
+      });
     } finally {
-      stopInitPulse();
+      setWizardBusy(false);
     }
     wizardState.firstSyncDone = true;
     setWizardResult(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
@@ -647,14 +671,12 @@ async function runWizardSyncAction() {
   wizardStatusEl.style.display = 'flex';
 
   if (wizardState.pathStatus === 'hasBookmarks') {
-    const stopPulse = startProgressPulse([
-      getMessage('options_onboardingWizardPhaseDownloading') || 'Downloading bookmarks',
-      getMessage('options_onboardingWizardPhaseApplying') || 'Applying bookmarks to browser',
-      getMessage('options_onboardingWizardPhaseSaving') || 'Saving sync state',
-    ]);
+    setWizardBusy(true, getMessage('popup_syncing'));
     try {
-      const pullResult = await chrome.runtime.sendMessage({ action: 'pull' });
-      stopPulse();
+      const pullResult = await runSyncPortAction('pull', {}, (payload) => {
+        onboardingWizardHint.textContent = formatSyncProgress(payload);
+      });
+      setWizardBusy(false);
       if (!pullResult?.success) {
         setWizardResult(pullResult?.message || 'Pull failed', 'error');
         return false;
@@ -663,17 +685,12 @@ async function runWizardSyncAction() {
       wizardState.firstSyncDone = true;
       return true;
     } catch (err) {
-      stopPulse();
+      setWizardBusy(false);
       throw err;
     }
   }
 
-  const stopPulse = startProgressPulse([
-    getMessage('options_onboardingWizardPhasePreparing') || 'Preparing bookmark data',
-    getMessage('options_onboardingWizardPhaseUploading') || 'Uploading bookmarks to GitHub',
-    getMessage('options_onboardingWizardPhaseCommit') || 'Creating repository commit',
-    getMessage('options_onboardingWizardPhaseSaving') || 'Saving sync state',
-  ]);
+  setWizardBusy(true, getMessage('popup_syncing'));
 
   let bookmarkCount = 0;
   let estSec = null;
@@ -687,8 +704,10 @@ async function runWizardSyncAction() {
 
   const syncStart = Date.now();
   try {
-    await initializePathAndRunFirstPush();
-    stopPulse();
+    await initializePathAndRunFirstPush((payload) => {
+      onboardingWizardHint.textContent = formatSyncProgress(payload);
+    });
+    setWizardBusy(false);
     const actualSec = ((Date.now() - syncStart) / 1000).toFixed(1);
     console.log(
       `[GitSyncMarks] Onboarding sync done — bookmarks: ${bookmarkCount}, ` +
@@ -698,7 +717,7 @@ async function runWizardSyncAction() {
     wizardState.firstSyncDone = true;
     return true;
   } catch (err) {
-    stopPulse();
+    setWizardBusy(false);
     throw err;
   }
 }
@@ -712,7 +731,9 @@ export function showValidation(message, type) {
 export function initWizard({ saveSettings }) {
   _saveSettings = saveSettings;
 
+  renderProviderOptions(onboardingWizardGitProviderSelect, 'github');
   onboardingWizardGitProviderSelect?.addEventListener('change', updateWizardProviderUi);
+  onboardingWizardGheEnabled?.addEventListener('change', updateWizardProviderUi);
 
   validateBtn.addEventListener('click', async () => {
     await validateAndInspectRepo({ offerInteractiveActions: true });
@@ -725,16 +746,12 @@ export function initWizard({ saveSettings }) {
       showValidation(getMessage('options_browseFolderNotConfigured'), 'error');
       return;
     }
-    if (fields.gitProvider === 'gitea') {
-      const { granted } = await ensureProviderHostPermission(fields.gitProvider, fields.serverUrl);
-      if (!granted) {
-        showValidation(getMessage('options_giteaPermissionDenied'), 'error');
-        return;
-      }
+    if (!(await ensureWizardHostPermission(fields))) {
+      return;
     }
 
     connectionPathInitBtn.disabled = true;
-    showValidation(getMessage('options_checking'), 'loading');
+    showValidation(getMessage('popup_syncing'), 'loading');
     try {
       const api = createConnectionApi(fields);
       const pathCheck = await checkPathSetup(api, basePath);
@@ -743,7 +760,9 @@ export function initWizard({ saveSettings }) {
         showValidation(getMessage('options_onboardingInitPathAlreadyExists', [basePath]), 'success');
         return;
       }
-      await initializePathAndRunFirstPush();
+      await initializePathAndRunFirstPush((payload) => {
+        showValidation(formatSyncProgress(payload), 'loading');
+      });
       hideConnectionPathInitAction();
       showValidation(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
     } catch (err) {
@@ -838,16 +857,13 @@ export function initWizard({ saveSettings }) {
       if (stepKey === 'provider') {
         syncWizardProviderState();
         updateWizardProviderUi();
-        if (wizardState.gitProvider === 'gitea' && !wizardState.serverUrl) {
+        const providerFields = getWizardConnectionFields();
+        if (wizardServerUrlRequired(providerFields)) {
           setWizardResult(getMessage('options_serverUrlRequired'), 'error');
           return;
         }
-        if (wizardState.gitProvider === 'gitea') {
-          const { granted } = await ensureProviderHostPermission(wizardState.gitProvider, wizardState.serverUrl);
-          if (!granted) {
-            setWizardResult(getMessage('options_giteaPermissionDenied'), 'error');
-            return;
-          }
+        if (!(await ensureWizardHostPermission(providerFields))) {
+          return;
         }
       }
       if (stepKey === 'repoDecision') {

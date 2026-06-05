@@ -62,13 +62,13 @@ This prevents `eval()`, inline scripts, and remote script loading on all extensi
 | `activeTab` | Save current tab as bookmark |
 | `scripting` | Inject content scripts for bookmark actions |
 | `downloads` | Export bookmarks as file |
-| **host_permissions** `https://api.github.com/*` | GitHub API access for sync |
-| **optional_host_permissions** `<all_urls>` (Chrome) / `https://*/* http://*/*` (Firefox) | Required only when Linkwarden integration is enabled; granted at runtime by user consent |
+| **host_permissions** `https://api.github.com/*`, `https://gitlab.com/*` | GitHub and GitLab.com API access for sync |
+| **optional_host_permissions** `<all_urls>` (Chrome) / `https://*/* http://*/*` (Firefox) | Self-hosted Git providers and Linkwarden; granted at runtime by user consent |
 
 ## Security Considerations
 
 GitSyncMarks handles sensitive data:
 
-- **GitHub Personal Access Token** — stored encrypted (AES-256-GCM) in browser local storage; only sent to `api.github.com`
-- **Bookmarks** — synced to your GitHub repository; no third-party servers
+- **Git Personal Access Token** — stored encrypted (AES-256-GCM) in browser local storage; only sent to configured Git provider APIs
+- **Bookmarks** — synced to your Git repository; no third-party servers
 - **No analytics or tracking** — see [PRIVACY.md](PRIVACY.md)

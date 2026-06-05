@@ -4,7 +4,7 @@
 
 GitSyncMarks implements **bidirectional bookmark synchronization** using a **three-way merge** algorithm. Each bookmark is stored as an individual JSON file. The sync engine compares three states — base (last sync), local (browser), and remote (Git provider) — to automatically merge non-conflicting changes.
 
-Transport is provider-specific ([`lib/git-provider.js`](../lib/git-provider.js): GitHub Git Data API or Gitea Change Files API); merge logic in [`lib/sync-core.js`](../lib/sync-core.js) is provider-neutral.
+Transport is provider-specific ([`lib/git-provider.js`](../lib/git-provider.js): GitHub/GitLab tree API, Gitea-family Contents API, or GitLab atomic commits); merge logic in [`lib/sync-core.js`](../lib/sync-core.js) is provider-neutral. GitLab uses commit SHA instead of tree SHA as cache key.
 
 ## Core Concept: Three-Way Merge
 
@@ -221,7 +221,11 @@ Uses **role-based mapping** for cross-browser compatibility:
 
 ## Stable-Snapshot Guard (Path 8)
 
-When only remote changes exist (path 8), the API response may be cached or eventually consistent. To avoid overwriting local state with stale data (e.g. right after our own push), `getLatestCommitSha()` is re-checked before applying. If the branch HEAD advanced since our fetch, the engine re-fetches a fresh remote snapshot (up to 3 attempts). Because local has no changes versus base in this path, applying the latest remote is always safe (it is effectively a pull). If the remote is still moving after the retries, the sync does **not** report "all in sync" (which previously hid pending remote changes); instead it returns `sync_remoteChangedRetry` so the user can retry.
+When only remote changes exist (path 8), the API response may be cached or eventually consistent. To avoid overwriting local state with stale data (e.g. right after our own push), `getLatestCommitSha()` is re-checked before applying. If the branch HEAD advanced since our fetch, the engine re-fetches a fresh remote snapshot (up to 3 attempts). If the remote is still moving after the retries, the sync does **not** report "all in sync" (which previously hid pending remote changes); instead it returns `sync_remoteChangedRetry` so the user can retry.
+
+**Stale-base guard:** If `localModifiedSinceSync` is set (bookmark create/remove/change/move since last successful sync) and the remote diff vs base only adds paths that are absent from local, sync pushes deletes to the remote instead of pulling. This recovers when `lastSyncFiles` was shrunk without a matching remote commit (e.g. profile-switch cache update). Normal path-8 pull still applies when the user did not edit bookmarks locally (remote changes from another device).
+
+Bookmark events call `markLocalBookmarksModified()` in `background.js`; successful sync clears the flag.
 
 ## Truncated-Tree Guard
 
@@ -264,3 +268,37 @@ In the common case (few files changed), this is 3 + N calls where N is the numbe
 ### Undo Last Sync
 
 Before any operation that applies remote changes locally (`pull()`, sync path 8, sync path 9 merge), the current `lastCommitSha` is saved as `previousCommitSha` in the profile's sync state. The "Undo last sync" button in the UI calls `restoreFromCommit(previousCommitSha)` to revert to the pre-sync state.
+
+## Profile Switch
+
+`switchProfile()` in `lib/profile-manager.js` uses helpers in `lib/profile-switch-logic.js` and diff utilities in `lib/sync-diff.js`.
+
+**Leaving the current profile:**
+
+1. Snapshot browser bookmarks to a file map.
+2. `buildSwitchPushChanges()` compares against `lastSyncFiles` via `computeDiff()` / `filterForDiff()`.
+3. If no bookmark changes → skip commit; refresh `lastSyncFiles` via `mergeLocalIntoSyncFiles()` (updates content and SHAs; **keeps paths removed locally** so the next sync still sees them as `localDiff.removed`).
+4. If changes → `commitBookmarkChanges()` with only added/modified/removed paths, then `saveSyncState()` (no full-tree commit, no post-commit refetch).
+
+**Loading the target profile:**
+
+1. If `lastSyncFiles` cache exists and `lastCommitSha` is set → `getLatestCommitSha()` (cheap HEAD check).
+2. HEAD equals cached SHA → use cache (no download).
+3. HEAD differs → `fetchRemoteFileMap()` with `lastSyncFiles` as base (delta blob fetch for changed files only).
+4. HEAD check fails (offline) → fall back to cache.
+5. Cache without `lastCommitSha` (legacy) → use cache; no blocking pull.
+6. No cache → full `fetchRemoteFileMap()` as before.
+
+Local bookmarks are still replaced via `replaceLocalBookmarks()` (full remove/create per role folder).
+
+## Profile Transfer (Cross-Profile Copy)
+
+`lib/profile-transfer.js` copies bookmark file maps between profiles without switching. Source data: browser tree (if source is active), else remote fetch, else `lastSyncFiles` cache. Generated files and auto-managed folders (`GitHubRepos`, `GiteaRepos`, `Linkwarden`) are stripped. Modes: **replace** (overwrite target map; remote files not in the result are deleted on push) or **merge** (conflict if same path differs; existing target files are kept — duplicate folder names can result). UI shows merge/replace warnings and a confirm dialog for merge when the target already has data. Optional `pushForProfile()` commits to the target primary remote and updates sync state. The transfer dialog reports progress via a runtime port: loading steps (`1 of 2`), remote fetch, then `$current of $total files` during per-file Gitea commits (GitHub batch commit jumps from `0` to `$total`).
+
+## Remote Orphan Cleanup
+
+`previewRemoteOrphans()` / `cleanRemoteOrphans()` in `lib/sync-core.js` compare the canonical local file map (browser tree for the active profile, else `lastSyncFiles`) to the remote repository. Paths on the remote under the profile's `filePath` that are absent locally (excluding generated/settings files) are orphans. `cleanRemoteOrphans()` runs `pushForProfile()` with `replaceRemote: true` and a dedicated commit message, deleting orphan files without changing local bookmarks. Options UI: Sync sub-tab.
+
+## Push Mirror Destinations
+
+Each profile may define `mirrors[]` — secondary Git remotes that receive a **push-only** copy after every successful primary commit (`push()`, sync path 7/9). Mirrors do not participate in fetch or three-way merge. `pushToMirrors()` filters files per mirror (`pushGenerated`, `pushSettings`), skips when `lastPushedCommitSha === primaryCommitSha` (server-side mirror loop guard), and records per-mirror errors in `syncState.mirrors` without rolling back the primary commit.

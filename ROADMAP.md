@@ -19,8 +19,8 @@ See [docs/IDEAS-LINKWARDEN.md](docs/IDEAS-LINKWARDEN.md) for full specification 
 
 ## Planned for v3.0 (*GLaDOS*) — Larger milestones
 
-- **GitLab support** — GitLab API wrapper (different endpoints than GitHub), additional provider adapter. Current provider layer supports GitHub and Gitea/Forgejo.
-- **Gitea / Forgejo support** — **In progress on `develop/3.0`**. Self-hosted Git via GitHub-compatible API; per-profile `serverUrl` (e.g. `https://gitea.example.com`). See [docs/GITEA-PROVIDER.md](docs/GITEA-PROVIDER.md).
+- **GitLab support** — **Shipped (develop/3.0).** gitlab.com + self-managed; subgroup paths; atomic commits via `/repository/commits`. See [docs/PROVIDERS.md](docs/PROVIDERS.md).
+- **Gitea / Forgejo / Codeberg / Gogs** — **Shipped (develop/3.0).** Separate provider entries; shared Gitea-family adapter. See [docs/PROVIDERS.md](docs/PROVIDERS.md).
 - **GitHub Enterprise & On-Premise Support** — Custom API endpoints (e.g., `https://github.company.com/api/v3`) via optional `serverUrl` on GitHub profiles; SAML SSO remains out of scope for the extension.
 
 ---
@@ -33,7 +33,7 @@ Outcome of the 2026 code analysis. Tiers 1–3 (correctness, performance, qualit
 |---|---|---|
 | **Conflict-resolution UI** | Diff view for merge conflicts instead of only force push/pull. Builds on the existing diff logic in [lib/sync-history.js](lib/sync-history.js) (`getCommitDiffPreview`). | Medium |
 | **Selective / read-only folder sync** | Sync only selected folders, and/or merge additional read-only sources (e.g. shared team bookmarks). Touches `filterForDiff` and the three-way merge in [lib/sync-core.js](lib/sync-core.js). | Medium |
-| **Provider abstraction (`lib/git-provider.js`)** | **Shipped (develop/3.0):** GitHub + Gitea/Forgejo adapters; GitLab still planned. See [docs/GITEA-PROVIDER.md](docs/GITEA-PROVIDER.md). | Large |
+| **Provider abstraction (`lib/git-provider.js`)** | **Shipped (develop/3.0):** GitHub, Gitea-family (Gitea/Forgejo/Codeberg/Gogs), GitLab; capability map in `lib/git-provider-common.js`. See [docs/PROVIDERS.md](docs/PROVIDERS.md). | Large |
 | **Open tabs / Tab-Profiles** | Named URL sets persisted to the repo (`tab-profiles.json`). See [docs/IDEAS-TAB-PROFILES.md](docs/IDEAS-TAB-PROFILES.md). | Large |
 | **Context menu: Save all tabs to folder** | `chrome.tabs.query({ currentWindow: true })` + `chrome.bookmarks.create()` into a chosen folder, then trigger a sync. | Medium |
 

@@ -3,10 +3,10 @@
     "message": "GitSyncMarks"
   },
   "extDescription": {
-    "message": "Bookmark sync via GitHub. Linkwarden synergy, Smart Search, and Companion App. Direct, secure, private."
+    "message": "Bookmark sync via GitHub, GitLab, Codeberg, Gitea & more. Linkwarden, Smart Search, Companion App. Direct, secure, private."
   },
   "extDescriptionFirefox": {
-    "message": "Bookmark sync via GitHub. Linkwarden synergy, Smart Search, and guided setup wizard. Bidirectional, secure, and private. Full Firefox support. No middleman."
+    "message": "Bookmark sync via GitHub, GitLab, Codeberg, Gitea & more. Linkwarden, Smart Search, guided wizard. Bidirectional, secure, private. Full Firefox support. No middleman."
   },
   "commands_quickSync": {
     "message": "Quick sync bookmarks"
@@ -35,11 +35,17 @@
   "popup_conflictDescription": {
     "message": "Both local and remote bookmarks were modified. Choose a resolution:"
   },
+  "popup_localToRemote": {
+    "message": "Local → Remote"
+  },
+  "popup_remoteToLocal": {
+    "message": "Remote → Local"
+  },
   "popup_localToGithub": {
-    "message": "Local → GitHub"
+    "message": "Local → Remote"
   },
   "popup_githubToLocal": {
-    "message": "GitHub → Local"
+    "message": "Remote → Local"
   },
   "popup_syncNow": {
     "message": "Sync Now"
@@ -79,6 +85,21 @@
   },
   "popup_syncing": {
     "message": "Syncing..."
+  },
+  "sync_progressFiles": {
+    "message": "$1 / $2 files"
+  },
+  "sync_progressFetching": {
+    "message": "Fetching remote…"
+  },
+  "sync_progressApplying": {
+    "message": "Applying bookmarks…"
+  },
+  "sync_progressApplyingBookmarks": {
+    "message": "$1 / $2 bookmarks"
+  },
+  "sync_progressGenerating": {
+    "message": "Generating files…"
   },
   "popup_profileSwitching": {
     "message": "Switching profile..."
@@ -147,13 +168,31 @@
     "message": "$1/$2 profiles"
   },
   "options_githubConnection": {
-    "message": "GitHub Connection"
+    "message": "Git Connection"
   },
   "options_gitConnection": {
     "message": "Git Connection"
   },
   "options_gitProvider": {
     "message": "Git provider"
+  },
+  "options_gitProvider_github": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_gitea": {
+    "message": "Gitea"
+  },
+  "options_gitProvider_forgejo": {
+    "message": "Forgejo"
+  },
+  "options_gitProvider_codeberg": {
+    "message": "Codeberg"
+  },
+  "options_gitProvider_gogs": {
+    "message": "Gogs"
+  },
+  "options_gitProvider_gitlab": {
+    "message": "GitLab"
   },
   "options_gitProviderGithub": {
     "message": "GitHub"
@@ -165,13 +204,67 @@
     "message": "Server URL"
   },
   "options_serverUrlHint": {
-    "message": "Base URL of your Gitea instance (no /api/v1 suffix)."
+    "message": "Base URL of your Git server (no /api/v1 or /api/v4 suffix)."
+  },
+  "options_serverUrlPlaceholder_gitlab": {
+    "message": "https://gitlab.com (leave empty for GitLab.com)"
+  },
+  "options_serverUrlPlaceholder_github": {
+    "message": "https://github.company.com"
   },
   "options_serverUrlRequired": {
-    "message": "Server URL is required for Gitea profiles."
+    "message": "Server URL is required for this provider."
+  },
+  "options_gheServerUrlEnabled": {
+    "message": "Use custom server URL (GitHub Enterprise)"
+  },
+  "options_hostPermissionDenied": {
+    "message": "Host permission for the Git server was denied. Allow access when prompted, then try again."
   },
   "options_giteaPermissionDenied": {
     "message": "Host permission for the Gitea server was denied. Allow access when prompted, then try again."
+  },
+  "options_tokenHintHtml_gitea": {
+    "message": "Create a token under <strong>User Settings → Applications</strong> with repository read/write access."
+  },
+  "options_tokenHintHtml_forgejo": {
+    "message": "Create a token on your Forgejo server under <strong>User Settings → Applications</strong> with repository read/write access."
+  },
+  "options_tokenHintHtml_codeberg": {
+    "message": "Create a token on <a href=\"https://codeberg.org/user/settings/applications\" target=\"_blank\" rel=\"noopener\">Codeberg → User Settings → Applications</a> with repository read/write access."
+  },
+  "options_tokenHintHtml_gogs": {
+    "message": "Create a token on your Gogs server under <strong>User Settings → Applications</strong> with repository read/write access."
+  },
+  "options_tokenHintHtml_gitlab": {
+    "message": "Create a token on <a href=\"https://gitlab.com/-/user_settings/personal_access_tokens\" target=\"_blank\" rel=\"noopener\">GitLab → User Settings → Access Tokens</a> with <code>api</code> scope (read/write repository)."
+  },
+  "options_tokenPlaceholder_github": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitea": {
+    "message": "your-access-token"
+  },
+  "options_tokenPlaceholder_gitlab": {
+    "message": "glpat-xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_ownerHint_gitlab": {
+    "message": "Username, group, or group/subgroup path (e.g. mygroup/subgroup)."
+  },
+  "options_ownerPlaceholder_gitlab": {
+    "message": "user or group/subgroup"
+  },
+  "help_provider_forgejo": {
+    "message": "<strong>Forgejo</strong> uses the same API as Gitea. Enter your Forgejo server URL and a personal access token from User Settings → Applications."
+  },
+  "help_provider_codeberg": {
+    "message": "<strong>Codeberg</strong> is a Forgejo host at <code>codeberg.org</code>. Select Codeberg as provider; the server URL is preset. Create a token under User Settings → Applications."
+  },
+  "help_provider_gogs": {
+    "message": "<strong>Gogs</strong> shares a similar API with Gitea. Enter your Gogs server URL and an access token from User Settings → Applications."
+  },
+  "help_provider_gitlab": {
+    "message": "<strong>GitLab</strong> supports gitlab.com and self-managed instances. For subgroup projects, use <code>group/subgroup</code> as owner and the project name as repository. Leave server URL empty for GitLab.com."
   },
   "options_giteaTokenHintHtml": {
     "message": "Create a token in Gitea under <strong>User Settings → Applications</strong> with repository read/write access. Gitea tokens are <em>not</em> GitHub-style <code>ghp_…</code> strings."
@@ -191,11 +284,209 @@
   "options_ownerPlaceholderGitea": {
     "message": "your-gitea-username"
   },
+  "options_transferTitle": {
+    "message": "Transfer bookmarks"
+  },
+  "options_transferDesc": {
+    "message": "Copy bookmarks from one profile to another (e.g. GitHub → Gitea migration). Does not change the browser unless the target profile is active and you choose to apply locally."
+  },
+  "options_transferOpen": {
+    "message": "Transfer…"
+  },
+  "options_transferSource": {
+    "message": "Source profile"
+  },
+  "options_transferTarget": {
+    "message": "Target profile"
+  },
+  "options_transferMode": {
+    "message": "Mode"
+  },
+  "options_transferModeReplace": {
+    "message": "Replace target"
+  },
+  "options_transferModeMerge": {
+    "message": "Merge into target"
+  },
+  "options_transferFolder": {
+    "message": "Folder (optional)"
+  },
+  "options_transferFolderHint": {
+    "message": "Relative path under the repo folder, e.g. toolbar/work. Leave empty for all bookmarks."
+  },
+  "options_transferPush": {
+    "message": "Push to target repository"
+  },
+  "options_transferApplyLocal": {
+    "message": "Apply to browser (only when target is active)"
+  },
+  "options_transferPreview": {
+    "message": "Preview"
+  },
+  "options_transferRun": {
+    "message": "Transfer"
+  },
+  "options_transferCancel": {
+    "message": "Cancel"
+  },
+  "options_transferProgressFiles": {
+    "message": "$1 of $2 files"
+  },
+  "options_transferProgressLoadingStep": {
+    "message": "Loading… $1 of $2"
+  },
+  "options_transferProgressLoading": {
+    "message": "Loading bookmarks…"
+  },
+  "options_transferProgressFetching": {
+    "message": "Reading remote repository…"
+  },
+  "options_transferProgressPreparing": {
+    "message": "Preparing transfer…"
+  },
+  "options_transferProgressApplying": {
+    "message": "Applying to browser…"
+  },
+  "options_transferPreviewResult": {
+    "message": "Source: $1 ($2 files). Target has $3 existing files → $4 after transfer."
+  },
+  "options_transferSourceBrowser": {
+    "message": "browser"
+  },
+  "options_transferSourceRemote": {
+    "message": "remote"
+  },
+  "options_transferSourceCache": {
+    "message": "cache"
+  },
+  "options_transferTargetWarning": {
+    "message": "Warning: target already has bookmark data."
+  },
+  "options_transferMergeHint": {
+    "message": "Merge keeps all existing target files and adds source bookmarks. This can create duplicate folders (e.g. bucher and bucher-2). For a clean migration, use Replace target."
+  },
+  "options_transferMergeWarning": {
+    "message": "Target already has $1 bookmark file(s). Merge keeps all of them plus copied source files — duplicate folders are likely."
+  },
+  "options_transferMergeConfirm": {
+    "message": "Merge into a target with $1 existing file(s)? Existing remote bookmarks are kept; duplicate folders may result. Continue?"
+  },
+  "options_transferReplaceWarning": {
+    "message": "Replace will delete $1 remote file(s) not included in the transfer result."
+  },
+  "options_transferDuplicateFoldersWarning": {
+    "message": "Duplicate folder names in the transfer result (slug collision): $1. Merge these folders in the source profile's bookmarks before transferring, or the duplicates will be copied to the target remote."
+  },
+  "options_cleanOrphansTitle": {
+    "message": "Clean remote orphans"
+  },
+  "options_cleanOrphansDesc": {
+    "message": "Remove bookmark files on the remote that are not in your local bookmarks (active profile). Use after a messy transfer or duplicate folders on the server."
+  },
+  "options_cleanOrphansPreview": {
+    "message": "Preview orphans"
+  },
+  "options_cleanOrphansRun": {
+    "message": "Clean remote"
+  },
+  "cleanOrphans_none": {
+    "message": "No orphan bookmark files on the remote."
+  },
+  "cleanOrphans_previewResult": {
+    "message": "$1 orphan file(s) in $2 top-level folder(s) would be removed."
+  },
+  "cleanOrphans_previewFailed": {
+    "message": "Could not preview remote orphans."
+  },
+  "cleanOrphans_remoteFetchFailed": {
+    "message": "Could not read remote repository: $1"
+  },
+  "cleanOrphans_noLocalBaseline": {
+    "message": "No local bookmark baseline for this profile. Switch to the profile and sync once, or use Clean remote on the active profile."
+  },
+  "cleanOrphans_confirm": {
+    "message": "Delete $1 orphan file(s) in $2 top-level folder(s) from the remote? Local bookmarks are unchanged. This cannot be undone from GitSyncMarks (use Git history to restore)."
+  },
+  "cleanOrphans_commitMessage": {
+    "message": "Remove orphan bookmark files not present locally"
+  },
+  "cleanOrphans_success": {
+    "message": "Removed $1 orphan file(s) from $2 top-level folder(s) on the remote."
+  },
+  "help_cleanOrphansTitle": {
+    "message": "Clean remote orphans"
+  },
+  "help_cleanOrphansDesc": {
+    "message": "On the Sync sub-tab, preview and remove remote bookmark files that are not in your local bookmarks (active profile). Useful after duplicate folders from a merge transfer."
+  },
+  "transfer_profileNotFound": {
+    "message": "Profile not found"
+  },
+  "transfer_sameProfile": {
+    "message": "Source and target must be different profiles"
+  },
+  "transfer_noBookmarks": {
+    "message": "No bookmark files to transfer"
+  },
+  "transfer_mergeConflicts": {
+    "message": "Merge blocked: $1 path conflict(s). Resolve overlapping files or use Replace mode."
+  },
+  "transfer_success": {
+    "message": "Transferred $1 bookmark file(s)"
+  },
+  "transfer_commitMessage": {
+    "message": "Bookmark transfer from profile $1"
+  },
+  "transfer_connectionLost": {
+    "message": "Transfer connection lost. Reload the options page and try again."
+  },
+  "options_mirrorsTitle": {
+    "message": "Mirror destinations"
+  },
+  "options_mirrorsDesc": {
+    "message": "Push-only copies of bookmark files to additional Git remotes after each successful primary sync. Direct edits on a mirror are overwritten on the next sync."
+  },
+  "options_mirrorsAdd": {
+    "message": "+ Add mirror"
+  },
+  "options_mirrorsRemove": {
+    "message": "Remove"
+  },
+  "options_mirrorsTest": {
+    "message": "Test"
+  },
+  "options_mirrorsLabel": {
+    "message": "Label"
+  },
+  "options_mirrorsPaused": {
+    "message": "Paused"
+  },
+  "options_mirrorsPushGenerated": {
+    "message": "Include generated files (README, HTML, feed, Dashy)"
+  },
+  "options_mirrorsPushSettings": {
+    "message": "Include encrypted settings"
+  },
+  "options_mirrorsStatusOk": {
+    "message": "Last push OK"
+  },
+  "options_mirrorsStatusError": {
+    "message": "Mirror error: $1"
+  },
+  "popup_mirrorStatus": {
+    "message": "Mirrored: $1"
+  },
+  "help_transferTitle": {
+    "message": "Transfer bookmarks between profiles"
+  },
+  "help_transferDesc": {
+    "message": "Use <strong>Transfer…</strong> on the Profile tab to copy bookmarks from one profile to another without switching first. Typical use: migrate from GitHub to Gitea. Choose <strong>Replace target</strong> for a clean migration; <strong>Merge into target</strong> keeps existing target files and can create duplicate folders. After a messy migration, use <strong>Clean remote orphans</strong> on the Sync sub-tab. Mirror destinations on the Git Connection tab push a copy to backup remotes after each sync."
+  },
   "options_onboardingWizardStepProviderTitle": {
     "message": "Choose your Git provider"
   },
   "options_onboardingWizardStepProviderText": {
-    "message": "Select GitHub or a self-hosted Gitea/Forgejo instance. Each profile stores its own provider and server URL."
+    "message": "Select GitHub, GitLab, Codeberg, Gitea, Forgejo, or Gogs. Each profile stores its own provider and server URL."
   },
   "options_patLabel": {
     "message": "Personal Access Token (PAT)"
@@ -240,7 +531,7 @@
     "message": "Please configure token, owner, and repo first"
   },
   "options_filePathChangeHint": {
-    "message": "On the next sync a conflict may occur. Use \"GitHub → Local\" to adopt the remote state."
+    "message": "On the next sync a conflict may occur. Use \"Remote → Local\" to adopt the remote state."
   },
   "options_testConnection": {
     "message": "Test Connection"
@@ -852,7 +1143,7 @@
     "message": "Conflict detected: Remote was also modified."
   },
   "sync_pushSuccess": {
-    "message": "Bookmarks successfully pushed to GitHub."
+    "message": "Bookmarks successfully pushed to the remote repository."
   },
   "sync_conflictFileModified": {
     "message": "Conflict: The file was modified in the meantime."
@@ -860,14 +1151,20 @@
   "sync_pushFailed": {
     "message": "Push failed: $1"
   },
+  "sync_noBookmarksOnRemote": {
+    "message": "No bookmarks found on the remote repository."
+  },
   "sync_noBookmarksOnGithub": {
-    "message": "No bookmarks found on GitHub."
+    "message": "No bookmarks found on the remote repository."
   },
   "sync_alreadyUpToDate": {
     "message": "Bookmarks are already up to date."
   },
+  "sync_loadedFromRemote": {
+    "message": "Loaded from remote repository."
+  },
   "sync_pullSuccess": {
-    "message": "Loaded from GitHub."
+    "message": "Loaded from remote repository."
   },
   "sync_pullFailed": {
     "message": "Pull failed: $1"
@@ -933,7 +1230,7 @@
     "message": "Links"
   },
   "options_githubRepo": {
-    "message": "GitHub Repository"
+    "message": "Repository"
   },
   "options_documentation": {
     "message": "Documentation"
@@ -1112,13 +1409,13 @@
     "message": "Setup Wizard"
   },
   "help_wizardRestartDesc": {
-    "message": "Step-by-step guide to connect your GitHub repository and run the first sync."
+    "message": "Step-by-step guide to connect your Git repository and run the first sync."
   },
   "options_onboardingWizardPhasePreparing": {
     "message": "Preparing bookmark data"
   },
   "options_onboardingWizardPhaseUploading": {
-    "message": "Uploading bookmarks to GitHub"
+    "message": "Uploading bookmarks to remote"
   },
   "options_onboardingWizardPhaseCommit": {
     "message": "Creating repository commit"
@@ -1136,7 +1433,7 @@
     "message": "Getting Started"
   },
   "help_gettingStartedIntro": {
-    "message": "Create a Git repository for your bookmarks on <strong>GitHub</strong> or self-hosted <strong>Gitea/Forgejo</strong>. In <strong>Git → Connection</strong>, choose your provider, enter a Personal Access Token, repository owner/name, branch (usually <code>main</code>), and folder path (default: <code>bookmarks</code>). For Gitea, also enter the server URL and allow host access when prompted. Click <strong>Test Connection</strong> to verify."
+    "message": "Create a Git repository for your bookmarks on <strong>GitHub</strong>, <strong>GitLab</strong>, <strong>Codeberg</strong>, <strong>Gitea</strong>, <strong>Forgejo</strong>, or <strong>Gogs</strong>. In <strong>Git → Connection</strong>, choose your provider, enter a Personal Access Token, repository owner/name, branch (usually <code>main</code>), and folder path (default: <code>bookmarks</code>). Self-hosted providers need a server URL; allow host access when prompted. Click <strong>Test Connection</strong> to verify."
   },
   "help_onboarding": {
     "message": "If the folder is empty, you can create the base structure (toolbar, other). If bookmarks already exist in the repo, you can pull them into this browser."
@@ -1145,7 +1442,7 @@
     "message": "Profiles"
   },
   "help_profilesIntro": {
-    "message": "Each profile has its own bookmark set and GitHub repo config. Use profiles for work/personal or different devices."
+    "message": "Each profile has its own bookmark set and Git repo config. Use profiles for work/personal or different devices."
   },
   "help_profilesAdd": {
     "message": "Add, Rename, Delete"
@@ -1211,13 +1508,13 @@
     "message": "Push ↑"
   },
   "help_popupPushDesc": {
-    "message": "Upload local bookmarks to GitHub (overwrites remote changes)."
+    "message": "Upload local bookmarks to the remote repository (overwrites remote changes)."
   },
   "help_popupPull": {
     "message": "Pull ↓"
   },
   "help_popupPullDesc": {
-    "message": "Download from GitHub (overwrites local changes)."
+    "message": "Download from the remote repository (overwrites local changes)."
   },
   "help_syncTitle": {
     "message": "Sync"
@@ -1340,7 +1637,7 @@
     "message": "Why does sync sometimes take long?"
   },
   "help_whySlowIntro": {
-    "message": "GitSyncMarks uses GitHub's Git Data API for atomic commits. Each changed or new bookmark file requires an API call. With many changes, this adds up."
+    "message": "GitSyncMarks uses your Git provider's API for commits. Each changed or new bookmark file may require an API call. With many changes, this adds up."
   },
   "help_linkwardenTitle": {
     "message": "Linkwarden"
@@ -1424,7 +1721,7 @@
     "message": "Export Settings"
   },
   "options_exportSettingsDesc": {
-    "message": "GitHub connection and sync settings (incl. profiles)."
+    "message": "Git connection and sync settings (incl. profiles)."
   },
   "options_importSettings": {
     "message": "Import Settings"

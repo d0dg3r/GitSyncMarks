@@ -17,7 +17,8 @@
     "downloads"
   ],
   "host_permissions": [
-    "https://api.github.com/*"
+    "https://api.github.com/*",
+    "https://gitlab.com/*"
   ],
   "optional_host_permissions": [
     "<all_urls>"

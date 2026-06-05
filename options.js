@@ -5,6 +5,12 @@
 
 import { getAppVersion } from './lib/display-version.js';
 import { createConnectionApi, ensureProviderHostPermission, isConnectionFormConfigured, normalizeGitProvider } from './lib/connection-settings.js';
+import { getProviderCaps } from './lib/git-provider-common.js';
+import {
+  applyProviderFormUi,
+  providerNeedsHostPermission,
+  renderProviderOptions,
+} from './lib/provider-ui.js';
 import { initI18n, applyI18n, getMessage, reloadI18n, SUPPORTED_LANGUAGES } from './lib/i18n.js';
 import { initTheme, applyTheme } from './lib/theme.js';
 import { initUiDensity, applyUiDensity } from './lib/ui-density.js';
@@ -23,6 +29,9 @@ import {
 
 import { initWizard, wizardState, startOnboardingWizard, renderOnboardingWizardStep, hideConnectionPathInitAction, showOnboardingConfirm, hideOnboardingConfirm, showValidation } from './options/wizard.js';
 import { initProfiles } from './options/profiles.js';
+import { initProfileTransfer } from './options/profile-transfer.js';
+import { initRemoteCleanup } from './options/remote-cleanup.js';
+import { initMirrors, loadMirrorsFromProfile, saveMirrorsForActiveProfile } from './options/mirrors.js';
 import { initLinkwarden, renderLwOptionsTagChips, renderLwOptionsTagCloud, setLwOptionsSelectedTags, setLwOptionsAllTags, getLwOptionsSelectedTags } from './options/linkwarden.js';
 import { initHistory } from './options/history.js';
 import { initContextMenuConfig, renderContextMenuConfig, DEFAULT_CONTEXT_MENU_ITEMS } from './options/context-menu-config.js';
@@ -46,27 +55,29 @@ function getConnectionFormFields() {
 
 function updateProviderUi() {
   const provider = normalizeGitProvider(gitProviderSelect?.value);
-  const isGitea = provider === 'gitea';
-  if (serverUrlGroup) {
-    serverUrlGroup.classList.toggle('hidden', !isGitea);
-  }
-  if (tokenHintEl) {
-    tokenHintEl.innerHTML = getMessage(isGitea ? 'options_giteaTokenHintHtml' : 'options_tokenHint');
-  }
-  if (tokenInput) {
-    tokenInput.placeholder = getMessage(isGitea ? 'options_tokenPlaceholderGitea' : 'options_tokenPlaceholderGithub');
-  }
-  if (ownerInput) {
-    ownerInput.placeholder = getMessage(isGitea ? 'options_ownerPlaceholderGitea' : 'options_ownerPlaceholder');
-  }
+  applyProviderFormUi(
+    {
+      serverUrlGroup,
+      serverUrlInput,
+      tokenHintEl,
+      tokenInput,
+      ownerInput,
+      ownerHintEl,
+      gheDisclosureGroup,
+    },
+    provider,
+    { gheEnabled: gheServerUrlEnabledInput?.checked }
+  );
 }
 
 async function ensureConnectionHostPermission(fields = getConnectionFormFields()) {
-  if (fields.gitProvider !== 'gitea') return true;
-  if (!fields.serverUrl) return false;
-  const { granted } = await ensureProviderHostPermission(fields.gitProvider, fields.serverUrl);
+  const caps = getProviderCaps(fields.gitProvider);
+  const serverUrl = fields.serverUrl || caps.defaultServerUrl || '';
+  if (!providerNeedsHostPermission(fields.gitProvider, serverUrl)) return true;
+  if (!serverUrl) return false;
+  const { granted } = await ensureProviderHostPermission(fields.gitProvider, serverUrl);
   if (!granted) {
-    showSaveResult(getMessage('options_giteaPermissionDenied'), 'error');
+    showSaveResult(getMessage('options_hostPermissionDenied'), 'error');
   }
   return granted;
 }
@@ -92,9 +103,12 @@ const profileRenameDialog = document.getElementById('profile-rename-dialog');
 const profileMessage = document.getElementById('profile-message');
 const tokenInput = document.getElementById('token');
 const gitProviderSelect = document.getElementById('git-provider');
+const gheDisclosureGroup = document.getElementById('ghe-server-url-disclosure');
+const gheServerUrlEnabledInput = document.getElementById('ghe-server-url-enabled');
 const serverUrlGroup = document.getElementById('server-url-group');
 const serverUrlInput = document.getElementById('server-url');
 const tokenHintEl = document.getElementById('token-hint');
+const ownerHintEl = document.getElementById('owner-hint');
 const toggleTokenBtn = document.getElementById('toggle-token');
 const ownerInput = document.getElementById('owner');
 const repoInput = document.getElementById('repo');
@@ -290,8 +304,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
+    renderProviderOptions(gitProviderSelect, 'github');
     initWizard({ saveSettings, loadSettings });
     initProfiles({ loadSettings, saveSettings, showSaveResult });
+    initProfileTransfer({ showProfileMessage: (msg, err) => showSaveResult(msg, err ? 'error' : 'success') });
+    initRemoteCleanup();
+    initMirrors();
     initLinkwarden({ saveSettings, downloadFile });
     initHistory();
     initContextMenuConfig();
@@ -436,8 +454,11 @@ async function loadSettings() {
   const activeProfile = profiles[activeId];
   if (profileSettings) {
     tokenInput.value = profileSettings.githubToken || '';
-    if (gitProviderSelect) gitProviderSelect.value = profileSettings.gitProvider || 'github';
+    renderProviderOptions(gitProviderSelect, profileSettings.gitProvider || 'github');
     if (serverUrlInput) serverUrlInput.value = profileSettings.serverUrl || '';
+    if (gheServerUrlEnabledInput) {
+      gheServerUrlEnabledInput.checked = !!(profileSettings.serverUrl && (profileSettings.gitProvider || 'github') === 'github');
+    }
     ownerInput.value = profileSettings.repoOwner || '';
     repoInput.value = profileSettings.repoName || '';
     branchInput.value = profileSettings.branch || 'main';
@@ -446,6 +467,7 @@ async function loadSettings() {
     githubReposParentSelect.value = activeProfile?.githubReposParent ?? 'other';
   }
   updateProviderUi();
+  await loadMirrorsFromProfile();
   try {
     await loadBookmarkFolders();
   } catch (err) {
@@ -641,7 +663,7 @@ async function saveSettings() {
     const pathChanged = newPath !== oldPath;
 
     const fields = getConnectionFormFields();
-    if (fields.gitProvider === 'gitea') {
+    if (providerNeedsHostPermission(fields.gitProvider, fields.serverUrl || getProviderCaps(fields.gitProvider).defaultServerUrl)) {
       const granted = await ensureConnectionHostPermission(fields);
       if (!granted) return;
     }
@@ -662,6 +684,7 @@ async function saveSettings() {
         quickFolderSelect3.value,
       ].filter(Boolean),
     });
+    await saveMirrorsForActiveProfile();
 
     await chrome.storage.sync.set({
       [STORAGE_KEYS.AUTO_SYNC]: autoSyncInput.checked,
@@ -726,6 +749,10 @@ gitProviderSelect?.addEventListener('change', () => {
   updateProviderUi();
   saveSettings();
 });
+gheServerUrlEnabledInput?.addEventListener('change', () => {
+  updateProviderUi();
+  saveSettings();
+});
 serverUrlInput?.addEventListener('change', saveSettings);
 ownerInput?.addEventListener('change', saveSettings);
 repoInput?.addEventListener('change', saveSettings);
@@ -783,11 +810,11 @@ async function loadFolderBrowserContents(path) {
       folderBrowserLoading.classList.add('hidden');
       return;
     }
-    if (fields.gitProvider === 'gitea') {
+    if (providerNeedsHostPermission(fields.gitProvider, fields.serverUrl || getProviderCaps(fields.gitProvider).defaultServerUrl)) {
       const granted = await ensureConnectionHostPermission(fields);
       if (!granted) {
         folderBrowserLoading.classList.add('hidden');
-        folderBrowserEmpty.textContent = getMessage('options_giteaPermissionDenied');
+        folderBrowserEmpty.textContent = getMessage('options_hostPermissionDenied');
         folderBrowserEmpty.classList.remove('hidden');
         return;
       }
@@ -848,7 +875,9 @@ btnBrowseFolder?.addEventListener('click', () => {
     showValidation(getMessage('options_browseFolderNotConfigured') || 'Please configure token, owner, and repo first', 'error');
     return;
   }
-  if (fields.gitProvider === 'gitea' && !fields.serverUrl) {
+  const caps = getProviderCaps(fields.gitProvider);
+  const serverUrl = fields.serverUrl || caps.defaultServerUrl || '';
+  if (caps.requireServerUrl && !serverUrl) {
     showValidation(getMessage('options_serverUrlRequired'), 'error');
     return;
   }
@@ -899,7 +928,7 @@ githubReposRefreshBtn?.addEventListener('click', async () => {
     githubReposResult.className = 'validation-result error';
     return;
   }
-  if (fields.gitProvider === 'gitea') {
+  if (providerNeedsHostPermission(fields.gitProvider, fields.serverUrl || getProviderCaps(fields.gitProvider).defaultServerUrl)) {
     const granted = await ensureConnectionHostPermission(fields);
     if (!granted) return;
   }

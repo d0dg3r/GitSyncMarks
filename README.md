@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="store-assets/marquee_promo_tile_linkwarden.png" width="960" alt="GitSyncMarks — Effortless Bookmark Sync via GitHub & Linkwarden Integration">
+  <img src="store-assets/marquee_promo_tile_linkwarden.png" width="960" alt="GitSyncMarks — Bookmark sync via GitHub, GitLab, Codeberg, Gitea & Linkwarden">
 </p>
 
 <p align="center">
@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <strong>GitSyncMarks</strong> — Your bookmarks, safe on GitHub. <br>
+  <strong>GitSyncMarks</strong> — Your bookmarks, safe in your Git repo (GitHub, GitLab, Codeberg, Gitea & more). <br>
   Bidirectional, automatic sync for Chrome, Firefox, and the <strong>Companion App</strong>. <br>
   <em>No middleman. No privacy concerns. Total control.</em>
 </p>
@@ -27,14 +27,19 @@
 ## Features
 
 ### Core Sync & Workflow
-- **Bidirectional & Automatic**: Syncs bookmarks seamlessly between GitHub and your browsers (Chrome, Firefox, Edge, Brave).
+- **Multi-Provider Git Sync**: GitHub, GitLab, Codeberg, Gitea, Forgejo, or Gogs — each profile can use its own provider and server URL.
+- **Bidirectional & Automatic**: Syncs bookmarks seamlessly between your Git remote and browsers (Chrome, Firefox, Edge, Brave).
 - **Three-Way Merge**: Industrial-grade reliability. Handles concurrent changes across multiple devices automatically.
-- **Guided Onboarding**: A step-by-Step wizard leads you from token creation to your first successful sync.
+- **Live Sync Progress**: Popup, wizard, and options show step text during sync (e.g. `3 / 12 files` while pushing).
+- **Profile Transfer**: Copy bookmarks between profiles (replace or merge) — ideal for migrating GitHub → Gitea or similar.
+- **Push Mirrors**: Optional backup remotes receive a push-only copy after each successful primary commit.
+- **Clean Remote Orphans**: Preview and delete remote bookmark files that no longer exist locally.
+- **Guided Onboarding**: A step-by-step wizard leads you from token creation to your first successful sync.
 - **Multiple Profiles**: Manage up to 10 separate profiles (e.g., Work, Personal, Research) with individual repositories.
 - **Native Integration**: Full support for native browser structures, including toolbars, menus, and context menus.
 
 ### 🛡️ Privacy & Security
-- **Private-by-Design**: Direct communication with the GitHub API. No third-party servers, no analytics, no tracking.
+- **Private-by-Design**: Direct communication with your Git provider's API. No third-party servers, no analytics, no tracking.
 - **You Own the Data**: Your bookmarks are stored in *your* repository, under *your* control.
 - **Human-Readable Storage**: Every bookmark is a separate, editable JSON file—perfect for versioning and manual audits.
 
@@ -53,7 +58,7 @@ A dedicated, lightning-fast search interface accessible from anywhere via the ex
 ### Companion App
 Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/d0dg3r/GitSyncMarks-App)**.
 - **Cross-Platform**: Native apps for **Android, iOS, Windows, macOS, and Linux**.
-- **Direct Access**: Connects directly to your GitHub repository for mobile management.
+- **Direct Access**: Connects directly to your Git repository for mobile management.
 
 ### Developer & Power User Tools
 - **Automation Ready**: Use provided GitHub Actions (`add-bookmark.yml`) or CLI tools to add bookmarks programmatically.
@@ -72,7 +77,7 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 | <img src="store-assets/en/chrome-9-wizard-welcome.png" width="280"> | <img src="store-assets/en/chrome-6-search.png" width="280"> | <img src="store-assets/en/chrome-4-linkwarden.png" width="280"> |
 | *Easy Step-by-Step* | *Lightning Fast Search* | *Deep Integration* |
 
-| **4. GitHub Connection** | **5. Action Popup** | **6. Save to Linkwarden** |
+| **4. Git Connection** | **5. Action Popup** | **6. Save to Linkwarden** |
 | :---: | :---: | :---: |
 | <img src="store-assets/en/chrome-1-connection.png" width="280"> | <img src="store-assets/en/chrome-7-popup.png" width="280"> | <img src="store-assets/en/chrome-8-linkwarden-save.png" width="280"> |
 | *Manage Profiles* | *Status at a Glance* | *Context Menu Power* |
@@ -86,16 +91,17 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 
 ---
 
-## Upgrading to v2.7.0
+## Upgrading to v3.0.0
 
 > [!IMPORTANT]
-> **v2.7.0** adds **sync history and restore** in the Backup tab, plus stability fixes and internal modularization. There are **no breaking changes** to your core bookmark sync; please review the notes below if you are upgrading from v2.5.x or earlier.
+> **v3.0.0** adds **multi-provider Git sync** (GitLab, Codeberg, Gitea family), **profile transfer**, **push mirrors**, **clean remote orphans**, and **live sync progress**. There are **no breaking changes** for existing GitHub profiles; your bookmark sync continues as before.
 
 ### Migration Steps
-- **No Action Needed**: Your current GitHub bookmark sync will continue to work perfectly after the update.
-- **Backup / History**: Open the **Backup** tab to load recent commits, preview diffs, and restore bookmarks from a previous sync when needed.
-- **Linkwarden Setup**: To use the "Save to Linkwarden" feature, visit the **Linkwarden tab** in settings and enter your instance URL and API key.
-- **Wizard Access**: If you want to re-verify your connection, use the **Restart Wizard** button in the **Help** tab.
+- **No Action Needed**: Existing GitHub profiles keep working without reconfiguration.
+- **New Providers**: Open **Settings → Git → Connection**, choose a provider (GitLab, Codeberg, Gitea, etc.), and run **Test Connection**. See [docs/PROVIDERS.md](docs/PROVIDERS.md).
+- **Profile Transfer**: Use **Transfer…** on the Profile tab to copy bookmarks between profiles (e.g. GitHub → Gitea migration).
+- **Push Mirrors**: Optional backup remotes on the Connection tab — configure per profile after the primary sync works.
+- **Wizard Access**: To re-verify a connection, use **Restart Wizard** in the **Help** tab.
 
 ---
 
@@ -106,17 +112,17 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 - **Firefox**: [Install from AMO](https://addons.mozilla.org/en-US/firefox/addon/gitsyncmarks/).
 
 ### 2. Git Configuration
-1. Open **Settings → Git → Connection** and choose **Git provider** (GitHub or Gitea / Forgejo).
-2. For **Gitea**, enter your server URL (e.g. `https://gitea.example.com`) and allow host access when prompted.
+1. Open **Settings → Git → Connection** and choose **Git provider** (GitHub, GitLab, Codeberg, Gitea, Forgejo, or Gogs).
+2. For **self-hosted** providers, enter your server URL and allow host access when prompted. **Codeberg** presets `codeberg.org`; **GitLab.com** needs no server URL.
 3. Create a **Personal Access Token**:
    - **GitHub — Fine-grained PAT (Recommended)**: Requires `Contents: Read/Write` and `Metadata: Read`.
    - **GitHub — Classic PAT**: Requires the `repo` scope.
-   - **GitHub App**: Installation tokens are supported (note: these typically expire after 1 hour).
-   - **Gitea**: User settings → Applications → token with repository read/write.
-4. Enter token, owner, repository, branch, and bookmark path.
+   - **GitLab**: `api` scope (read/write repository).
+   - **Gitea / Forgejo / Gogs / Codeberg**: User settings → Applications → token with repository read/write.
+4. Enter token, owner, repository, branch, and bookmark path. For **GitLab subgroup** projects, use `group/subgroup` as owner.
 5. Use the **Setup Wizard** (Help → Getting Started) for a guided walkthrough.
 
-See [docs/GITEA-PROVIDER.md](docs/GITEA-PROVIDER.md) for Gitea endpoint details.
+See [docs/PROVIDERS.md](docs/PROVIDERS.md) for API details per provider.
 
 ### 3. Linkwarden Integration
 1. Go to the **Linkwarden** tab in settings.
@@ -138,8 +144,8 @@ Licensed under [MIT](LICENSE). Made with heart by developers, for developers.
 ## Requirements
 
 - Chrome, Chromium, Brave, Edge, or Firefox
-- Git repository on **GitHub** or self-hosted **Gitea/Forgejo**
-- Personal access token with repository read/write (GitHub classic `repo` or fine-grained `Contents: R/W`; Gitea repo scope)
+- Git repository on **GitHub**, **GitLab**, **Codeberg**, **Gitea**, **Forgejo**, or **Gogs** (self-hosted supported)
+- Personal access token with repository read/write (provider-specific: GitHub `repo` or fine-grained `Contents: R/W`; GitLab `api`; Gitea-family repo scope)
 
 ## License
 
