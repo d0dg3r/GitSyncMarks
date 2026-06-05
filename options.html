@@ -57,6 +57,7 @@
       </div>
 
       <div id="onboarding-wizard-token-help" class="onboarding-wizard-section" style="display: none;">
+        <div id="onboarding-wizard-token-help-github">
         <p data-i18n="options_onboardingWizardTokenHelpIntro">A Personal Access Token (PAT) lets GitSyncMarks access
           your GitHub repository to sync bookmarks. You create it in your GitHub account settings.</p>
         <p data-i18n-html="options_onboardingWizardTokenHelpScopes">The token needs the <code>repo</code> scope. This
@@ -75,6 +76,10 @@
         <a href="https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks+Sync" target="_blank"
           rel="noopener" class="onboarding-wizard-token-link" data-i18n="options_onboardingWizardTokenHelpLink">Open
           GitHub token page</a>
+        </div>
+        <div id="onboarding-wizard-token-help-gitea" class="hidden">
+          <p data-i18n-html="options_giteaTokenWizardHelpHtml">In Gitea, open User Settings → Applications.</p>
+        </div>
       </div>
 
       <div id="onboarding-wizard-has-token-group" class="onboarding-wizard-section" style="display: none;">
@@ -88,7 +93,7 @@
 
       <div id="onboarding-wizard-token-group" class="onboarding-wizard-section" style="display: none;">
         <label for="onboarding-wizard-token" data-i18n="options_patLabel">Personal Access Token (PAT)</label>
-        <input type="password" id="onboarding-wizard-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+        <input type="password" id="onboarding-wizard-token" data-i18n-placeholder="options_tokenPlaceholderGithub" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
       </div>
 
       <div id="onboarding-wizard-repo-flow-group" class="onboarding-wizard-section" style="display: none;">
@@ -256,7 +261,7 @@
             <div class="form-group">
               <label for="token" data-i18n="options_patLabel">Personal Access Token (PAT)</label>
               <div class="input-row">
-                <input type="password" id="token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+                <input type="password" id="token" data-i18n-placeholder="options_tokenPlaceholderGithub" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
                 <button id="toggle-token" class="btn-icon" data-i18n-title="options_toggleToken"
                   title="Show/hide token">
                   <span class="icon-eye">👁</span>

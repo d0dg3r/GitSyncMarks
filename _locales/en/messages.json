@@ -174,10 +174,22 @@
     "message": "Host permission for the Gitea server was denied. Allow access when prompted, then try again."
   },
   "options_giteaTokenHintHtml": {
-    "message": "Create a personal access token in your Gitea user settings with repository read/write access."
+    "message": "Create a token in Gitea under <strong>User Settings → Applications</strong> with repository read/write access. Gitea tokens are <em>not</em> GitHub-style <code>ghp_…</code> strings."
   },
   "options_giteaTokenHelpLink": {
-    "message": "Create token in Gitea settings"
+    "message": "Open Gitea user settings (Applications)"
+  },
+  "options_giteaTokenWizardHelpHtml": {
+    "message": "In Gitea, open <strong>User Settings → Applications → Generate New Token</strong>. Enable repository read and write. Copy the token — it is shown only once. Gitea tokens do not use GitHub prefixes like <code>ghp_</code>."
+  },
+  "options_tokenPlaceholderGithub": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholderGitea": {
+    "message": "your-gitea-access-token"
+  },
+  "options_ownerPlaceholderGitea": {
+    "message": "your-gitea-username"
   },
   "options_onboardingWizardStepProviderTitle": {
     "message": "Choose your Git provider"

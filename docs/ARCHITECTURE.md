@@ -240,7 +240,8 @@ Fetches the authenticated user's repos via GitHub REST API and maintains a "GitH
 
 | Function | Description |
 |---|---|
-| `fetchRemoteFileMap(api, basePath, baseFiles)` | Fetch bookmark files from GitHub via Git Data API; returns `{ shaMap, fileMap, commitSha }` or `null` for empty repo |
+| `fetchRemoteFileMap(api, basePath, baseFiles)` | Fetch bookmark files via git tree; Gitea falls back to Contents API ref cascade through `buildRemoteMaps()` |
+| `buildRemoteMaps(api, basePath, baseFiles, commitSha)` | Shared tree + Contents fallback used by pull/sync/save-state |
 | `fetchRemoteFileMapAtCommit(api, basePath, commitSha, options?)` | Fetch file map at a specific commit SHA (history restore/preview); batched `getBlob` (concurrency 5); optional short-lived in-memory cache per owner/repo/path/commit |
 
 ### `lib/context-menu.js` — Context Menu (barrel)

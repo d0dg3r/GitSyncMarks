@@ -32,22 +32,11 @@ Errors use `GitProviderError` (`GitHubError` extends it for backward compatibili
 
 ## Gitea write path
 
-GitHub `atomicCommit` uses layered `POST /git/trees` with inline content. Gitea multi-file writes use the **Change Files API**:
+GitHub `atomicCommit` uses layered `POST /git/trees` with inline content. Gitea uses the **Contents API** (`POST` for new files, `PUT` for updates), one commit per changed file. This avoids the batch Change Files endpoint (`POST /repos/{owner}/{repo}/contents`), which often returns misleading 401 responses on empty repositories or older Forgejo builds.
 
-```
-POST /repos/{owner}/{repo}/contents
-{
-  "message": "...",
-  "branch": "main",
-  "files": [
-    { "operation": "create", "path": "a.json", "content": "<base64>" },
-    { "operation": "update", "path": "b.json", "content": "<base64>", "sha": "..." },
-    { "operation": "delete", "path": "c.json", "sha": "..." }
-  ]
-}
-```
+Implementation: [lib/providers/gitea-api.js](../lib/providers/gitea-api.js). [lib/sync-core.js](../lib/sync-core.js) adds a secondary Contents-API fallback for Gitea when a write still fails.
 
-Implementation: [lib/providers/gitea-api.js](../lib/providers/gitea-api.js). If the batch endpoint returns 404 (older server), the adapter falls back to sequential Contents API calls.
+For Gitea profiles, [`lib/remote-fetch.js`](../lib/remote-fetch.js) `buildRemoteMaps()` reads bookmarks via the Contents API first (same path as writes). Git tree endpoints are not used for pull/sync on Gitea. Ref cascade: commit SHA, branch name, then `refs/heads/{branch}`. Debug logs record each Contents attempt.
 
 Reads (recursive tree + blobs) use the same paths as GitHub-compatible Gitea endpoints, so [lib/remote-fetch.js](../lib/remote-fetch.js) is unchanged.
 
@@ -72,4 +61,4 @@ Popup and history UIs build commit URLs with `buildCommitUrl()` using `webBaseUr
 
 ## Verified target
 
-Develop and test against Gitea / Forgejo **≥ 1.19** (Change Files API). Older instances may work via the sequential Contents fallback but are not guaranteed for large sync batches.
+Develop and test against Gitea / Forgejo **≥ 1.19**. Writes use the Contents API; large first syncs create one commit per file.

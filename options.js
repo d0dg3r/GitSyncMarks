@@ -3,7 +3,7 @@
  * Orchestrates sub-modules and hosts shared functions (loadSettings, saveSettings).
  */
 
-import { DISPLAY_VERSION } from './lib/display-version.js';
+import { getAppVersion } from './lib/display-version.js';
 import { createConnectionApi, ensureProviderHostPermission, isConnectionFormConfigured, normalizeGitProvider } from './lib/connection-settings.js';
 import { initI18n, applyI18n, getMessage, reloadI18n, SUPPORTED_LANGUAGES } from './lib/i18n.js';
 import { initTheme, applyTheme } from './lib/theme.js';
@@ -46,15 +46,18 @@ function getConnectionFormFields() {
 
 function updateProviderUi() {
   const provider = normalizeGitProvider(gitProviderSelect?.value);
+  const isGitea = provider === 'gitea';
   if (serverUrlGroup) {
-    serverUrlGroup.classList.toggle('hidden', provider !== 'gitea');
+    serverUrlGroup.classList.toggle('hidden', !isGitea);
   }
   if (tokenHintEl) {
-    if (provider === 'gitea') {
-      tokenHintEl.innerHTML = getMessage('options_giteaTokenHintHtml');
-    } else {
-      tokenHintEl.innerHTML = getMessage('options_tokenHint');
-    }
+    tokenHintEl.innerHTML = getMessage(isGitea ? 'options_giteaTokenHintHtml' : 'options_tokenHint');
+  }
+  if (tokenInput) {
+    tokenInput.placeholder = getMessage(isGitea ? 'options_tokenPlaceholderGitea' : 'options_tokenPlaceholderGithub');
+  }
+  if (ownerInput) {
+    ownerInput.placeholder = getMessage(isGitea ? 'options_ownerPlaceholderGitea' : 'options_ownerPlaceholder');
   }
 }
 
@@ -301,8 +304,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const versionEl = document.getElementById('app-version');
     if (versionEl) {
-      const version = DISPLAY_VERSION ?? chrome.runtime.getManifest().version;
-      versionEl.textContent = version;
+      versionEl.textContent = getAppVersion(chrome.runtime.getManifest().version);
     }
   } catch (err) {
     console.error('[GitSyncMarks] options init failed:', err);

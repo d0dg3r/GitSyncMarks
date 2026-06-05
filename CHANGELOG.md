@@ -7,11 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Development builds on `develop/3.0` report version **3.0.0-dev** in the About tab (`lib/display-version.js`, `scripts/build.sh`); manifest version is **3.0.0**. Build output includes `getAppVersion()` export (fixes options page load from `build/chrome`).
+
 ### Added
 - **Gitea / Forgejo support (develop/3.0)**: Provider abstraction (`lib/git-provider.js`, `lib/providers/github-api.js`, `lib/providers/gitea-api.js`). Each profile can target GitHub or a self-hosted Gitea instance (`gitProvider`, `serverUrl` per profile). Connection tab and onboarding wizard include provider selection; Gitea host permissions are requested at runtime. See [docs/GITEA-PROVIDER.md](docs/GITEA-PROVIDER.md).
 
+### Fixed
+- **Gitea first sync and bookmark sync after connection test**: Connection test used form values while background sync read persisted settings (race/mismatch). First sync now passes connection fields to `bootstrapFirstSync`. Gitea writes use the Contents API (`POST` for new files, `PUT` for updates) instead of the batch Change Files endpoint, which often returns misleading 401 errors on empty or older instances. Sync/push paths share a Gitea Contents-API fallback when a write still fails.
+- **Gitea push crash (`reading 'sha'`)**: Normalize Gitea API responses (`sha` / `id` / commit tree metadata) in `getLatestCommitSha`, `getCommit`, and `createOrUpdateFile`; cache commit tree SHA after Contents API writes so post-push state save does not fail on missing `tree.sha`.
+- **Gitea sync in MV3 service worker**: Replaced dynamic `import()` of `debug-log.js` with static imports (dynamic import is blocked in ServiceWorkerGlobalScope).
+- **Gitea sync after successful push (`Commit … has no tree SHA`)**: Gitea remote reads (pull/sync/save-state) use the Contents API via `buildRemoteMaps()` with a ref cascade (`commitSha` → branch → `refs/heads/{branch}`), bypassing unreliable git/trees metadata on self-hosted instances.
+
 ### Changed
-- Git connection UI generalized from "GitHub Connection" to "Git Connection" with per-provider token help and commit links (`buildCommitUrl()`).
+- Connection tab and onboarding wizard show provider-specific token and owner placeholders and hints (Gitea tokens are not `ghp_…` GitHub-style strings).
 - Git repos bookmark folder adapts folder prefix for Gitea (`GiteaRepos`) vs GitHub (`GitHubRepos`).
 
 ## [2.8.0] - 2026-05-31 (*TARS*)

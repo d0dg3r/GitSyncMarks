@@ -42,6 +42,8 @@ const onboardingWizardGitProviderSelect = document.getElementById('onboarding-wi
 const onboardingWizardServerUrlGroup = document.getElementById('onboarding-wizard-server-url-group');
 const onboardingWizardServerUrlInput = document.getElementById('onboarding-wizard-server-url');
 const onboardingWizardTokenHelp = document.getElementById('onboarding-wizard-token-help');
+const onboardingWizardTokenHelpGithub = document.getElementById('onboarding-wizard-token-help-github');
+const onboardingWizardTokenHelpGitea = document.getElementById('onboarding-wizard-token-help-gitea');
 const onboardingWizardHasTokenGroup = document.getElementById('onboarding-wizard-has-token-group');
 const onboardingWizardHasTokenSelect = document.getElementById('onboarding-wizard-has-token');
 const onboardingWizardTokenGroup = document.getElementById('onboarding-wizard-token-group');
@@ -163,20 +165,31 @@ function setWizardBusy(isBusy, loadingMessage = '') {
 
 function updateWizardProviderUi() {
   const provider = normalizeGitProvider(onboardingWizardGitProviderSelect?.value);
+  const isGitea = provider === 'gitea';
   if (onboardingWizardServerUrlGroup) {
-    onboardingWizardServerUrlGroup.classList.toggle('hidden', provider !== 'gitea');
+    onboardingWizardServerUrlGroup.classList.toggle('hidden', !isGitea);
   }
-  const helpLink = onboardingWizardTokenHelp?.querySelector('a');
-  if (helpLink) {
-    if (provider === 'gitea') {
-      helpLink.href = '#';
-      helpLink.textContent = getMessage('options_giteaTokenHelpLink');
-      helpLink.onclick = (e) => e.preventDefault();
-    } else {
-      helpLink.href = 'https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks';
-      helpLink.textContent = getMessage('options_onboardingWizardTokenHelpLink');
-      helpLink.onclick = null;
-    }
+  if (onboardingWizardTokenHelpGithub) {
+    onboardingWizardTokenHelpGithub.classList.toggle('hidden', isGitea);
+  }
+  if (onboardingWizardTokenHelpGitea) {
+    onboardingWizardTokenHelpGitea.classList.toggle('hidden', !isGitea);
+  }
+  const helpLink = onboardingWizardTokenHelpGithub?.querySelector('a');
+  if (helpLink && !isGitea) {
+    helpLink.href = 'https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks';
+    helpLink.textContent = getMessage('options_onboardingWizardTokenHelpLink');
+    helpLink.onclick = null;
+  }
+  if (onboardingWizardTokenInput) {
+    onboardingWizardTokenInput.placeholder = getMessage(
+      isGitea ? 'options_tokenPlaceholderGitea' : 'options_tokenPlaceholderGithub'
+    );
+  }
+  if (onboardingWizardOwnerInput) {
+    onboardingWizardOwnerInput.placeholder = getMessage(
+      isGitea ? 'options_ownerPlaceholderGitea' : 'options_ownerPlaceholder'
+    );
   }
 }
 
@@ -266,7 +279,9 @@ export function renderOnboardingWizardStep() {
 
   onboardingWizardTokenHelp.style.display = stepKey === 'tokenHelp' ? '' : 'none';
   onboardingWizardProviderGroup.style.display = stepKey === 'provider' ? '' : 'none';
-  if (stepKey === 'provider') updateWizardProviderUi();
+  if (['provider', 'tokenHelp', 'tokenInput', 'repoDetails'].includes(stepKey)) {
+    updateWizardProviderUi();
+  }
   onboardingWizardHasTokenGroup.style.display = stepKey === 'hasToken' ? '' : 'none';
   onboardingWizardTokenGroup.style.display = stepKey === 'tokenInput' ? '' : 'none';
   onboardingWizardRepoFlowGroup.style.display = stepKey === 'repoDecision' ? '' : 'none';
@@ -315,7 +330,9 @@ function showConnectionPathInitAction(basePath) {
 }
 
 async function initializePathAndRunFirstPush() {
-  const result = await chrome.runtime.sendMessage({ action: 'bootstrapFirstSync' });
+  await _saveSettings();
+  const connection = getConnectionFormFieldsFromPage();
+  const result = await chrome.runtime.sendMessage({ action: 'bootstrapFirstSync', connection });
   if (result?.success) return;
   throw new Error(result?.message || 'Push failed');
 }
@@ -726,7 +743,6 @@ export function initWizard({ saveSettings }) {
         showValidation(getMessage('options_onboardingInitPathAlreadyExists', [basePath]), 'success');
         return;
       }
-      await _saveSettings();
       await initializePathAndRunFirstPush();
       hideConnectionPathInitAction();
       showValidation(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
