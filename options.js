@@ -68,6 +68,7 @@ async function ensureConnectionHostPermission(fields = getConnectionFormFields()
   return granted;
 }
 
+function normalizeGenMode(val) {
   if (val === true) return 'auto';
   if (val === false) return 'off';
   if (val === 'off' || val === 'manual' || val === 'auto') return val;

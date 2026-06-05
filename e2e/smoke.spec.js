@@ -20,7 +20,7 @@ test.describe('Smoke', () => {
     await test.expect(page.getByRole('link', { name: /settings/i })).toBeVisible();
   });
 
-  test('Options page loads and shows GitHub tab', async ({
+  test('Options page loads and shows Git tab', async ({
     page,
     extensionId,
   }) => {
@@ -28,13 +28,12 @@ test.describe('Smoke', () => {
     await page.waitForLoadState('networkidle');
     await skipWizardIfVisible(page);
 
-    // GitHub tab should be active
-    const githubTab = page.locator('.tab-btn[data-tab="github"]');
-    await test.expect(githubTab).toBeVisible();
-    await test.expect(githubTab).toHaveClass(/active/);
+    const gitTab = page.locator('.tab-btn[data-tab="github"]');
+    await test.expect(gitTab).toBeVisible();
+    await test.expect(gitTab).toHaveClass(/active/);
 
-    // Switch to connection sub-tab, then token input must be visible
     await page.locator('.sub-tab-btn[data-subtab="github-connection"]').click();
+    await test.expect(page.locator('#git-provider')).toBeVisible();
     await test.expect(page.locator('#token')).toBeVisible();
     await test.expect(page.locator('#owner')).toBeVisible();
     await test.expect(page.locator('#repo')).toBeVisible();
