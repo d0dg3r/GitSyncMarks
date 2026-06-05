@@ -43,6 +43,19 @@
         <span id="onboarding-wizard-progress" class="onboarding-wizard-progress"></span>
       </div>
 
+      <div id="onboarding-wizard-provider-group" class="onboarding-wizard-section" style="display: none;">
+        <label for="onboarding-wizard-git-provider" data-i18n="options_gitProvider">Git provider</label>
+        <select id="onboarding-wizard-git-provider">
+          <option value="github" data-i18n="options_gitProviderGithub">GitHub</option>
+          <option value="gitea" data-i18n="options_gitProviderGitea">Gitea / Forgejo</option>
+        </select>
+        <div id="onboarding-wizard-server-url-group" class="hidden">
+          <label for="onboarding-wizard-server-url" data-i18n="options_serverUrl">Server URL</label>
+          <input type="url" id="onboarding-wizard-server-url" placeholder="https://gitea.example.com">
+          <small data-i18n="options_serverUrlHint">Base URL of your Gitea instance (no /api/v1 suffix).</small>
+        </div>
+      </div>
+
       <div id="onboarding-wizard-token-help" class="onboarding-wizard-section" style="display: none;">
         <p data-i18n="options_onboardingWizardTokenHelpIntro">A Personal Access Token (PAT) lets GitSyncMarks access
           your GitHub repository to sync bookmarks. You create it in your GitHub account settings.</p>
@@ -224,7 +237,21 @@
 
         <div class="sub-tab-content" id="subtab-github-connection">
           <section class="card">
-            <h2 data-i18n="options_githubConnection">GitHub Connection</h2>
+            <h2 data-i18n="options_gitConnection">Git Connection</h2>
+
+            <div class="form-group">
+              <label for="git-provider" data-i18n="options_gitProvider">Git provider</label>
+              <select id="git-provider">
+                <option value="github" data-i18n="options_gitProviderGithub">GitHub</option>
+                <option value="gitea" data-i18n="options_gitProviderGitea">Gitea / Forgejo</option>
+              </select>
+            </div>
+
+            <div class="form-group hidden" id="server-url-group">
+              <label for="server-url" data-i18n="options_serverUrl">Server URL</label>
+              <input type="url" id="server-url" placeholder="https://gitea.example.com">
+              <small data-i18n="options_serverUrlHint">Base URL of your Gitea instance (no /api/v1 suffix).</small>
+            </div>
 
             <div class="form-group">
               <label for="token" data-i18n="options_patLabel">Personal Access Token (PAT)</label>
@@ -235,7 +262,7 @@
                   <span class="icon-eye">👁</span>
                 </button>
               </div>
-              <small data-i18n-html="options_tokenHint">Requires the <code>repo</code> scope. <a
+              <small id="token-hint" data-i18n-html="options_tokenHint">Requires the <code>repo</code> scope. <a
                   href="https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks" target="_blank"
                   rel="noopener">Create token</a></small>
             </div>

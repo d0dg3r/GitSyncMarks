@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Gitea / Forgejo support (develop/3.0)**: Provider abstraction (`lib/git-provider.js`, `lib/providers/github-api.js`, `lib/providers/gitea-api.js`). Each profile can target GitHub or a self-hosted Gitea instance (`gitProvider`, `serverUrl` per profile). Connection tab and onboarding wizard include provider selection; Gitea host permissions are requested at runtime. See [docs/GITEA-PROVIDER.md](docs/GITEA-PROVIDER.md).
+
+### Changed
+- Git connection UI generalized from "GitHub Connection" to "Git Connection" with per-provider token help and commit links (`buildCommitUrl()`).
+- Git repos bookmark folder adapts folder prefix for Gitea (`GiteaRepos`) vs GitHub (`GitHubRepos`).
+
 ## [2.8.0] - 2026-05-31 (*TARS*)
 
 Reliability, performance and quality release (code-analysis Tiers 1–3). First published as a `2.8.0-beta` pre-release.

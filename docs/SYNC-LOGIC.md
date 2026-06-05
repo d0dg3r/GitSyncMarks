@@ -2,7 +2,9 @@
 
 ## Overview
 
-GitSyncMarks implements **bidirectional bookmark synchronization** using a **three-way merge** algorithm. Each bookmark is stored as an individual JSON file. The sync engine compares three states — base (last sync), local (browser), and remote (GitHub) — to automatically merge non-conflicting changes.
+GitSyncMarks implements **bidirectional bookmark synchronization** using a **three-way merge** algorithm. Each bookmark is stored as an individual JSON file. The sync engine compares three states — base (last sync), local (browser), and remote (Git provider) — to automatically merge non-conflicting changes.
+
+Transport is provider-specific ([`lib/git-provider.js`](../lib/git-provider.js): GitHub Git Data API or Gitea Change Files API); merge logic in [`lib/sync-core.js`](../lib/sync-core.js) is provider-neutral.
 
 ## Core Concept: Three-Way Merge
 

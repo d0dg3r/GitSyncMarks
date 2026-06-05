@@ -4,7 +4,7 @@
  */
 
 import { getMessage } from '../lib/i18n.js';
-import { GitHubAPI } from '../lib/github-api.js';
+import { createConnectionApi, ensureProviderHostPermission, normalizeGitProvider } from '../lib/connection-settings.js';
 import { checkPathSetup, waitForRemoteBaseline } from '../lib/onboarding.js';
 
 let _saveSettings = null;
@@ -12,6 +12,8 @@ let _saveSettings = null;
 const validationSpinner = document.getElementById('validation-spinner');
 const validationResult = document.getElementById('validation-result');
 const tokenInput = document.getElementById('token');
+const gitProviderSelect = document.getElementById('git-provider');
+const serverUrlInput = document.getElementById('server-url');
 const ownerInput = document.getElementById('owner');
 const repoInput = document.getElementById('repo');
 const branchInput = document.getElementById('branch');
@@ -35,6 +37,10 @@ const onboardingWizardBackBtn = document.getElementById('onboarding-wizard-back-
 const onboardingWizardNextBtn = document.getElementById('onboarding-wizard-next-btn');
 const onboardingWizardSkipBtn = document.getElementById('onboarding-wizard-skip-btn');
 const onboardingWizardStartBtn = document.getElementById('onboarding-wizard-start-btn');
+const onboardingWizardProviderGroup = document.getElementById('onboarding-wizard-provider-group');
+const onboardingWizardGitProviderSelect = document.getElementById('onboarding-wizard-git-provider');
+const onboardingWizardServerUrlGroup = document.getElementById('onboarding-wizard-server-url-group');
+const onboardingWizardServerUrlInput = document.getElementById('onboarding-wizard-server-url');
 const onboardingWizardTokenHelp = document.getElementById('onboarding-wizard-token-help');
 const onboardingWizardHasTokenGroup = document.getElementById('onboarding-wizard-has-token-group');
 const onboardingWizardHasTokenSelect = document.getElementById('onboarding-wizard-has-token');
@@ -52,10 +58,12 @@ const connectionPathInitBtn = document.getElementById('connection-path-init-btn'
 const connectionPathInitHint = document.getElementById('connection-path-init-hint');
 const validateBtn = document.getElementById('validate-btn');
 
-export const WIZARD_STEPS = ['welcome', 'tokenHelp', 'hasToken', 'tokenInput', 'repoDecision', 'repoDetails', 'environment', 'finish'];
+export const WIZARD_STEPS = ['welcome', 'provider', 'tokenHelp', 'hasToken', 'tokenInput', 'repoDecision', 'repoDetails', 'environment', 'finish'];
 export const wizardState = {
   active: false,
   stepIndex: 0,
+  gitProvider: 'github',
+  serverUrl: '',
   tokenValidated: false,
   environmentChecked: false,
   pathStatus: null,
@@ -67,6 +75,8 @@ export const wizardState = {
 
 function resetWizardState() {
   wizardState.stepIndex = 0;
+  wizardState.gitProvider = 'github';
+  wizardState.serverUrl = '';
   wizardState.tokenValidated = false;
   wizardState.environmentChecked = false;
   wizardState.pathStatus = null;
@@ -86,6 +96,13 @@ async function persistWizardState(completed, dismissed) {
 export async function startOnboardingWizard({ manual = false } = {}) {
   resetWizardState();
   onboardingWizardTokenInput.value = tokenInput.value || '';
+  if (onboardingWizardGitProviderSelect) {
+    onboardingWizardGitProviderSelect.value = gitProviderSelect?.value || 'github';
+  }
+  if (onboardingWizardServerUrlInput) {
+    onboardingWizardServerUrlInput.value = serverUrlInput?.value || '';
+  }
+  updateWizardProviderUi();
   onboardingWizardOwnerInput.value = ownerInput.value || '';
   onboardingWizardRepoInput.value = repoInput.value || '';
   onboardingWizardBranchInput.value = branchInput.value || 'main';
@@ -144,12 +161,52 @@ function setWizardBusy(isBusy, loadingMessage = '') {
   }
 }
 
+function updateWizardProviderUi() {
+  const provider = normalizeGitProvider(onboardingWizardGitProviderSelect?.value);
+  if (onboardingWizardServerUrlGroup) {
+    onboardingWizardServerUrlGroup.classList.toggle('hidden', provider !== 'gitea');
+  }
+  const helpLink = onboardingWizardTokenHelp?.querySelector('a');
+  if (helpLink) {
+    if (provider === 'gitea') {
+      helpLink.href = '#';
+      helpLink.textContent = getMessage('options_giteaTokenHelpLink');
+      helpLink.onclick = (e) => e.preventDefault();
+    } else {
+      helpLink.href = 'https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks';
+      helpLink.textContent = getMessage('options_onboardingWizardTokenHelpLink');
+      helpLink.onclick = null;
+    }
+  }
+}
+
+function getWizardConnectionFields(overrides = {}) {
+  return {
+    token: overrides.token ?? onboardingWizardTokenInput.value.trim(),
+    owner: overrides.owner ?? onboardingWizardOwnerInput.value.trim(),
+    repo: overrides.repo ?? onboardingWizardRepoInput.value.trim(),
+    branch: overrides.branch ?? (onboardingWizardBranchInput.value.trim() || 'main'),
+    gitProvider: normalizeGitProvider(overrides.gitProvider ?? onboardingWizardGitProviderSelect?.value ?? wizardState.gitProvider),
+    serverUrl: overrides.serverUrl ?? onboardingWizardServerUrlInput?.value?.trim() ?? wizardState.serverUrl ?? '',
+  };
+}
+
+function syncWizardProviderState() {
+  wizardState.gitProvider = normalizeGitProvider(onboardingWizardGitProviderSelect?.value);
+  wizardState.serverUrl = onboardingWizardServerUrlInput?.value?.trim() || '';
+}
+
 function wizardStepText(stepKey) {
   switch (stepKey) {
     case 'welcome':
       return {
         title: getMessage('options_onboardingWizardStepWelcomeTitle'),
         text: getMessage('options_onboardingWizardStepWelcomeText'),
+      };
+    case 'provider':
+      return {
+        title: getMessage('options_onboardingWizardStepProviderTitle'),
+        text: getMessage('options_onboardingWizardStepProviderText'),
       };
     case 'tokenHelp':
       return {
@@ -208,6 +265,8 @@ export function renderOnboardingWizardStep() {
     : getMessage('options_onboardingWizardNext');
 
   onboardingWizardTokenHelp.style.display = stepKey === 'tokenHelp' ? '' : 'none';
+  onboardingWizardProviderGroup.style.display = stepKey === 'provider' ? '' : 'none';
+  if (stepKey === 'provider') updateWizardProviderUi();
   onboardingWizardHasTokenGroup.style.display = stepKey === 'hasToken' ? '' : 'none';
   onboardingWizardTokenGroup.style.display = stepKey === 'tokenInput' ? '' : 'none';
   onboardingWizardRepoFlowGroup.style.display = stepKey === 'repoDecision' ? '' : 'none';
@@ -263,20 +322,28 @@ async function initializePathAndRunFirstPush() {
 
 async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
   await _saveSettings();
-  const token = tokenInput.value.trim();
-  const owner = ownerInput.value.trim();
-  const repo = repoInput.value.trim();
-  const branch = branchInput.value.trim() || 'main';
+  const fields = getConnectionFormFieldsFromPage();
 
-  if (!token) {
+  if (!fields.token) {
     showValidation(getMessage('options_pleaseEnterToken'), 'error');
     return { ok: false };
+  }
+  if (fields.gitProvider === 'gitea' && !fields.serverUrl) {
+    showValidation(getMessage('options_serverUrlRequired'), 'error');
+    return { ok: false };
+  }
+  if (fields.gitProvider === 'gitea') {
+    const { granted } = await ensureProviderHostPermission(fields.gitProvider, fields.serverUrl);
+    if (!granted) {
+      showValidation(getMessage('options_giteaPermissionDenied'), 'error');
+      return { ok: false };
+    }
   }
 
   showValidation(getMessage('options_checking'), 'loading');
 
   try {
-    const api = new GitHubAPI(token, owner, repo, branch);
+    const api = createConnectionApi(fields);
 
     const tokenResult = await api.validateToken();
     if (!tokenResult.valid) {
@@ -284,28 +351,32 @@ async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
       return { ok: false };
     }
 
-    if (!tokenResult.ambiguous && !tokenResult.scopes.includes('repo')) {
+    if (
+      fields.gitProvider === 'github' &&
+      !tokenResult.ambiguous &&
+      !tokenResult.scopes.includes('repo')
+    ) {
       hideConnectionPathInitAction();
       showValidation(getMessage('options_tokenValidMissingScope', [tokenResult.username]), 'error');
       return { ok: false };
     }
 
-    if (owner && repo) {
+    if (fields.owner && fields.repo) {
       const repoExists = await api.checkRepo();
       if (!repoExists) {
         hideConnectionPathInitAction();
-        showValidation(getMessage('options_tokenValidRepoNotFound', [tokenResult.username, `${owner}/${repo}`]), 'error');
+        showValidation(getMessage('options_tokenValidRepoNotFound', [tokenResult.username, `${fields.owner}/${fields.repo}`]), 'error');
         return { ok: false };
       }
       const basePath = filepathInput.value.trim() || 'bookmarks';
       const pathCheck = await checkPathSetup(api, basePath);
       if (offerInteractiveActions && (pathCheck.status === 'unreachable' || pathCheck.status === 'empty')) {
         showConnectionPathInitAction(basePath);
-        showValidation(getMessage('options_connectionOk', [tokenResult.username, `${owner}/${repo}`]), 'success');
+        showValidation(getMessage('options_connectionOk', [tokenResult.username, `${fields.owner}/${fields.repo}`]), 'success');
         return {
           ok: true,
           username: tokenResult.username,
-          repoRef: `${owner}/${repo}`,
+          repoRef: `${fields.owner}/${fields.repo}`,
           pathStatus: pathCheck.status,
         };
       }
@@ -325,15 +396,15 @@ async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
             showValidation(getMessage('options_error', [pullErr.message]), 'error');
           }
         } else {
-          showValidation(getMessage('options_connectionOk', [tokenResult.username, `${owner}/${repo}`]), 'success');
+          showValidation(getMessage('options_connectionOk', [tokenResult.username, `${fields.owner}/${fields.repo}`]), 'success');
         }
         return;
       }
-      showValidation(getMessage('options_connectionOk', [tokenResult.username, `${owner}/${repo}`]), 'success');
+      showValidation(getMessage('options_connectionOk', [tokenResult.username, `${fields.owner}/${fields.repo}`]), 'success');
       return {
         ok: true,
         username: tokenResult.username,
-        repoRef: `${owner}/${repo}`,
+        repoRef: `${fields.owner}/${fields.repo}`,
         pathStatus: pathCheck.status,
       };
     } else {
@@ -353,34 +424,68 @@ async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
   }
 }
 
+function getConnectionFormFieldsFromPage() {
+  return {
+    token: tokenInput?.value?.trim() ?? '',
+    owner: ownerInput?.value?.trim() ?? '',
+    repo: repoInput?.value?.trim() ?? '',
+    branch: branchInput?.value?.trim() || 'main',
+    gitProvider: normalizeGitProvider(gitProviderSelect?.value),
+    serverUrl: serverUrlInput?.value?.trim() ?? '',
+  };
+}
+
 function syncWizardFieldsToConnectionForm() {
   tokenInput.value = onboardingWizardTokenInput.value.trim();
+  if (gitProviderSelect && onboardingWizardGitProviderSelect) {
+    gitProviderSelect.value = onboardingWizardGitProviderSelect.value;
+  }
+  if (serverUrlInput && onboardingWizardServerUrlInput) {
+    serverUrlInput.value = onboardingWizardServerUrlInput.value.trim();
+  }
   ownerInput.value = onboardingWizardOwnerInput.value.trim();
   repoInput.value = onboardingWizardRepoInput.value.trim();
   branchInput.value = onboardingWizardBranchInput.value.trim() || 'main';
   filepathInput.value = onboardingWizardPathInput.value.trim() || 'bookmarks';
+  syncWizardProviderState();
 }
 
 async function runWizardTokenValidation() {
   onboardingWizardResult.textContent = '';
-  const token = onboardingWizardTokenInput.value.trim();
-  if (!token) {
+  syncWizardProviderState();
+  const fields = getWizardConnectionFields();
+  if (!fields.token) {
     setWizardResult(getMessage('options_pleaseEnterToken'), 'error');
     return false;
   }
-  const api = new GitHubAPI(token, 'x', 'x', 'main');
+  if (fields.gitProvider === 'gitea' && !fields.serverUrl) {
+    setWizardResult(getMessage('options_serverUrlRequired'), 'error');
+    return false;
+  }
+  if (fields.gitProvider === 'gitea') {
+    const { granted } = await ensureProviderHostPermission(fields.gitProvider, fields.serverUrl);
+    if (!granted) {
+      setWizardResult(getMessage('options_giteaPermissionDenied'), 'error');
+      return false;
+    }
+  }
+  const api = createConnectionApi({ ...fields, owner: 'x', repo: 'x' });
   const tokenResult = await api.validateToken();
   if (!tokenResult.valid) {
     setWizardResult(getMessage('options_invalidToken'), 'error');
     return false;
   }
-  if (!tokenResult.ambiguous && !tokenResult.scopes.includes('repo')) {
+  if (
+    fields.gitProvider === 'github' &&
+    !tokenResult.ambiguous &&
+    !tokenResult.scopes.includes('repo')
+  ) {
     setWizardResult(getMessage('options_tokenValidMissingScope', [tokenResult.username]), 'error');
     return false;
   }
   wizardState.username = tokenResult.username;
   wizardState.tokenValidated = true;
-  if (!onboardingWizardOwnerInput.value.trim()) onboardingWizardOwnerInput.value = tokenResult.username;
+  if (!onboardingWizardOwnerInput.value.trim()) onboardingWizardOwnerInput.value = tokenResult.username || '';
   setWizardResult(getMessage('options_onboardingWizardTokenValidated'), 'success');
   return true;
 }
@@ -394,18 +499,22 @@ async function runWizardEnvironmentCheck() {
   syncWizardFieldsToConnectionForm();
   await _saveSettings();
 
-  const token = onboardingWizardTokenInput.value.trim();
-  const owner = onboardingWizardOwnerInput.value.trim();
-  const repo = onboardingWizardRepoInput.value.trim();
-  const branch = onboardingWizardBranchInput.value.trim() || 'main';
+  const fields = getWizardConnectionFields();
   const basePath = onboardingWizardPathInput.value.trim() || 'bookmarks';
-  if (!owner || !repo) {
+  if (!fields.owner || !fields.repo) {
     setWizardResult(getMessage('options_onboardingWizardRepoRequired'), 'error');
     return false;
   }
+  if (fields.gitProvider === 'gitea') {
+    const { granted } = await ensureProviderHostPermission(fields.gitProvider, fields.serverUrl);
+    if (!granted) {
+      setWizardResult(getMessage('options_giteaPermissionDenied'), 'error');
+      return false;
+    }
+  }
 
   if (onboardingWizardRepoFlowSelect.value === 'autoCreate') {
-    const normalizedOwner = owner.toLowerCase();
+    const normalizedOwner = fields.owner.toLowerCase();
     const normalizedUser = String(wizardState.username || '').toLowerCase();
     if (!normalizedUser || normalizedOwner !== normalizedUser) {
       setWizardResult(
@@ -416,10 +525,12 @@ async function runWizardEnvironmentCheck() {
     }
     const createResp = await chrome.runtime.sendMessage({
       action: 'createRepository',
-      token,
-      owner,
-      repo,
-      branch,
+      token: fields.token,
+      owner: fields.owner,
+      repo: fields.repo,
+      branch: fields.branch,
+      gitProvider: fields.gitProvider,
+      serverUrl: fields.serverUrl,
     });
     if (!createResp?.success && !String(createResp?.message || '').includes('name already exists')) {
       const message = createResp?.message || getMessage('options_onboardingWizardRepoCreateFailed');
@@ -432,10 +543,10 @@ async function runWizardEnvironmentCheck() {
     }
   }
 
-  const api = new GitHubAPI(token, owner, repo, branch);
+  const api = createConnectionApi(fields);
   const repoExists = await api.checkRepo();
   if (!repoExists) {
-    setWizardResult(getMessage('options_tokenValidRepoNotFound', [wizardState.username || owner, `${owner}/${repo}`]), 'error');
+    setWizardResult(getMessage('options_tokenValidRepoNotFound', [wizardState.username || fields.owner, `${fields.owner}/${fields.repo}`]), 'error');
     return false;
   }
 
@@ -450,14 +561,14 @@ async function runWizardEnvironmentCheck() {
     stopPathPulse();
   }
 
-  wizardState.repoRef = `${owner}/${repo}`;
+  wizardState.repoRef = `${fields.owner}/${fields.repo}`;
   wizardState.pathStatus = pathCheck.status;
   wizardState.firstSyncDone = false;
   if (onboardingWizardRepoFlowSelect.value === 'autoCreate' && pathCheck.status !== 'hasBookmarks') {
     const stopInitPulse = startProgressPulse([
       'Waiting for repository to be ready',
       'Setting up initial folder structure',
-      'Uploading bookmarks to GitHub',
+      'Uploading bookmarks to remote Git host',
       'Creating first commit',
     ]);
     try {
@@ -512,12 +623,9 @@ async function runWizardSyncAction() {
     setWizardResult(getMessage('options_onboardingWizardNeedAction'), 'error');
     return false;
   }
-  const token = onboardingWizardTokenInput.value.trim();
-  const owner = onboardingWizardOwnerInput.value.trim();
-  const repo = onboardingWizardRepoInput.value.trim();
-  const branch = onboardingWizardBranchInput.value.trim() || 'main';
+  const fields = getWizardConnectionFields();
   const basePath = onboardingWizardPathInput.value.trim() || 'bookmarks';
-  const api = new GitHubAPI(token, owner, repo, branch);
+  const api = createConnectionApi(fields);
 
   wizardStatusEl.style.display = 'flex';
 
@@ -587,25 +695,31 @@ export function showValidation(message, type) {
 export function initWizard({ saveSettings }) {
   _saveSettings = saveSettings;
 
+  onboardingWizardGitProviderSelect?.addEventListener('change', updateWizardProviderUi);
+
   validateBtn.addEventListener('click', async () => {
     await validateAndInspectRepo({ offerInteractiveActions: true });
   });
 
   connectionPathInitBtn.addEventListener('click', async () => {
-    const token = tokenInput.value.trim();
-    const owner = ownerInput.value.trim();
-    const repo = repoInput.value.trim();
-    const branch = branchInput.value.trim() || 'main';
+    const fields = getConnectionFormFieldsFromPage();
     const basePath = connectionPathInitGroup.dataset.path || filepathInput.value.trim() || 'bookmarks';
-    if (!token || !owner || !repo) {
+    if (!fields.token || !fields.owner || !fields.repo) {
       showValidation(getMessage('options_browseFolderNotConfigured'), 'error');
       return;
+    }
+    if (fields.gitProvider === 'gitea') {
+      const { granted } = await ensureProviderHostPermission(fields.gitProvider, fields.serverUrl);
+      if (!granted) {
+        showValidation(getMessage('options_giteaPermissionDenied'), 'error');
+        return;
+      }
     }
 
     connectionPathInitBtn.disabled = true;
     showValidation(getMessage('options_checking'), 'loading');
     try {
-      const api = new GitHubAPI(token, owner, repo, branch);
+      const api = createConnectionApi(fields);
       const pathCheck = await checkPathSetup(api, basePath);
       if (pathCheck.status === 'hasBookmarks') {
         hideConnectionPathInitAction();
@@ -704,6 +818,21 @@ export function initWizard({ saveSettings }) {
       if (stepKey === 'tokenInput') {
         const ok = await runWizardTokenValidation();
         if (!ok) return;
+      }
+      if (stepKey === 'provider') {
+        syncWizardProviderState();
+        updateWizardProviderUi();
+        if (wizardState.gitProvider === 'gitea' && !wizardState.serverUrl) {
+          setWizardResult(getMessage('options_serverUrlRequired'), 'error');
+          return;
+        }
+        if (wizardState.gitProvider === 'gitea') {
+          const { granted } = await ensureProviderHostPermission(wizardState.gitProvider, wizardState.serverUrl);
+          if (!granted) {
+            setWizardResult(getMessage('options_giteaPermissionDenied'), 'error');
+            return;
+          }
+        }
       }
       if (stepKey === 'repoDecision') {
         wizardState.repoFlow = onboardingWizardRepoFlowSelect.value;

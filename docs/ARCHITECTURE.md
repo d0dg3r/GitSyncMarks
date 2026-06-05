@@ -2,7 +2,7 @@
 
 ## High-Level Architecture
 
-GitSyncMarks is a browser extension (Manifest V3, Chrome + Firefox) that bidirectionally synchronizes bookmarks with a GitHub repository. It stores each bookmark as an individual JSON file and uses a three-way merge algorithm for conflict-free synchronization.
+GitSyncMarks is a browser extension (Manifest V3, Chrome + Firefox) that bidirectionally synchronizes bookmarks with a Git repository (GitHub or self-hosted Gitea/Forgejo). It stores each bookmark as an individual JSON file and uses a three-way merge algorithm for conflict-free synchronization.
 
 ```mermaid
 flowchart TB
@@ -18,7 +18,7 @@ flowchart TB
         Options["options.html / options.js"]
         subgraph Lib["lib/"]
             SE["sync-engine.js"]
-            GH["github-api.js"]
+            GH["git-provider.js\n+ providers/"]
             GR["github-repos.js"]
             BS["bookmark-serializer.js"]
             PM["profile-manager.js"]
@@ -34,8 +34,8 @@ flowchart TB
         end
     end
 
-    subgraph Remote["GitHub"]
-        GitAPI["Git Data API"]
+    subgraph Remote["Git remote (GitHub / Gitea)"]
+        GitAPI["Git REST + Git Data API"]
         Repo["Repository\n(per-file bookmarks)"]
     end
 
@@ -65,7 +65,7 @@ Extension metadata. Two manifests for browser-specific differences:
 | Background | `service_worker: "background.js"` | `scripts: ["background.js"]` |
 | Browser-specific | — | `browser_specific_settings.gecko` |
 
-Shared: Manifest V3, permissions (`bookmarks`, `storage`, `alarms`, `notifications`, `contextMenus`, `activeTab`, `scripting`, `downloads`), host permissions (`api.github.com`).
+Shared: Manifest V3, permissions (`bookmarks`, `storage`, `alarms`, `notifications`, `contextMenus`, `activeTab`, `scripting`, `downloads`), host permissions (`api.github.com`; Gitea origins via optional permissions + runtime grant).
 
 ### `background.js` — Background Script
 
@@ -86,7 +86,7 @@ Toolbar popup with header (icon, title, profile dropdown when 2+ profiles), stat
 
 Full-page settings (opens in tab) with five tabs. `options.js` is the entry point that imports and orchestrates focused sub-modules in `options/`.
 
-1. **GitHub** (sub-tabs: Profile, Connection, Repos) — Profile selector (multiple profiles with separate repos); token, repository, connection test, onboarding (create folder or pull when path empty/has bookmarks); GitHub Repos folder (optional, position toolbar/other)
+1. **Git** (sub-tabs: Profile, Connection, Repos) — Profile selector (multiple profiles with separate repos); Git provider (GitHub or Gitea), token, repository, connection test, onboarding; optional Git repos folder (GitHubRepos / GiteaRepos)
 2. **Sync** — Sync profile, auto-sync, sync on start/focus, notifications; Debug Log
 3. **Files** (sub-tabs: Generated, Settings, Export/Import, Git Add) — Generated files (README.md, bookmarks.html, feed.xml, dashy-conf.yml) with Off/Manual/Auto mode; settings sync to Git (client name + Create in one row; Refresh, profile list, Import & Apply, Sync current to selected in one row; buttons disabled until client name set; password saved after Import/Sync/Create); compact export/import (bookmarks, Dashy, settings plain/encrypted via dropdown); automation guide for adding bookmarks via Git, CLI, or GitHub Actions
 4. **Help** — Quick links (Vote on backlog, Documentation, Discussions, Report Issue) as pill buttons; collapsible feature sections (Getting Started with Start setup wizard button, Profiles, GitHub Repos, Popup, Sync, Files, Notifications, Conflicts, Keyboard Shortcuts)
@@ -117,9 +117,13 @@ Barrel module re-exporting from focused sub-modules:
 
 State is stored as `LAST_SYNC_FILES` (path → {sha, content}) and `LAST_COMMIT_SHA`.
 
-### `lib/github-api.js` — GitHub API Wrapper
+### `lib/git-provider.js` — Git Provider Factory
 
-Wraps both the **Contents API** (legacy, used for migration/validation) and the **Git Data API** (for atomic multi-file commits):
+Selects GitHub or Gitea adapter via `createGitProvider()`. Shared URL helpers and `GitProviderError` live in `lib/git-provider-common.js`. See [GITEA-PROVIDER.md](GITEA-PROVIDER.md).
+
+### `lib/providers/github-api.js` — GitHub API Wrapper
+
+Wraps both the **Contents API** (legacy, used for migration/validation) and the **Git Data API** (for atomic multi-file commits on GitHub):
 
 | Method | API | Description |
 |---|---|---|
@@ -214,7 +218,15 @@ First-time and new-profile setup when configuring GitHub:
 | `createMinimalBookmarkStructure(basePath)` | Build `_index.json` and role folders with `_order.json` |
 | `initializeRemoteFolder(api, basePath)` | Create minimal structure via `atomicCommit` |
 
-### `lib/github-repos.js` — GitHub Repos Folder
+### `lib/providers/gitea-api.js` — Gitea / Forgejo Adapter
+
+Extends the GitHub client for read paths; implements `atomicCommit` via Gitea Change Files API (`POST /repos/{owner}/{repo}/contents` with `files[]`). Auth: `Authorization: token {PAT}`.
+
+### `lib/github-api.js` — Compatibility Shim
+
+Re-exports `GitHubAPI` / `GitHubError` from `lib/providers/github-api.js` and factory helpers from `lib/git-provider.js`.
+
+### `lib/github-repos.js` — Git Repos Folder
 
 Fetches the authenticated user's repos via GitHub REST API and maintains a "GitHubRepos (username)" folder:
 
@@ -289,7 +301,14 @@ GitSyncMarks/
 │   ├── sync-history.js           # Commit history, restore, diff preview
 │   ├── sync-commit-message.js    # Parse commit subject → client id (history UI)
 │   ├── sync-migration.js         # Legacy format migration
-│   ├── github-api.js             # GitHub REST + Git Data API
+│   ├── git-provider.js           # Provider factory (GitHub / Gitea)
+│   ├── git-provider-common.js    # Shared errors + URL helpers
+│   ├── providers/
+│   │   ├── github-api.js         # GitHub REST + Git Data API
+│   │   └── gitea-api.js          # Gitea / Forgejo adapter
+│   ├── connection-settings.js    # Form → createGitProvider helpers
+│   ├── host-permissions.js       # Runtime Gitea origin permission
+│   ├── github-api.js             # Re-export shim
 │   ├── github-tree-batch.js      # Chunk file changes for tree API (inline blob content)
 │   ├── bookmark-serializer.js    # Per-file bookmark conversion
 │   ├── bookmark-replace.js       # Replace local bookmarks
@@ -350,8 +369,8 @@ End-to-end regression is covered by **Playwright** (`npm run test:e2e*`, see [..
 | Extension Framework | Manifest V3 (Chrome + Firefox) |
 | Background | Service Worker (Chrome) / Background Script (Firefox) |
 | Browser APIs | `chrome.bookmarks`, `chrome.storage`, `chrome.alarms`, `chrome.contextMenus`, `chrome.scripting`, `chrome.downloads` |
-| Remote Storage | GitHub Git Data API (atomic multi-file commits) |
-| Authentication | Bearer Auth (Classic PAT `repo`, Fine-grained PAT `Contents: R/W`, or GitHub App) |
+| Remote Storage | GitHub or Gitea Git Data / Contents API (atomic multi-file commits) |
+| Authentication | Bearer Auth (GitHub) or `token` Auth (Gitea); PAT per profile |
 | Sync Algorithm | Three-way merge (base vs local vs remote, per-file diff) |
 | i18n | Custom runtime system + Chrome `_locales/` |
 | Build | Shell script (`build.sh`), separate Chrome/Firefox packages |

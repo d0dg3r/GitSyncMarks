@@ -4,7 +4,7 @@
  */
 
 import { DISPLAY_VERSION } from './lib/display-version.js';
-import { GitHubAPI } from './lib/github-api.js';
+import { createConnectionApi, ensureProviderHostPermission, isConnectionFormConfigured, normalizeGitProvider } from './lib/connection-settings.js';
 import { initI18n, applyI18n, getMessage, reloadI18n, SUPPORTED_LANGUAGES } from './lib/i18n.js';
 import { initTheme, applyTheme } from './lib/theme.js';
 import { initUiDensity, applyUiDensity } from './lib/ui-density.js';
@@ -33,7 +33,41 @@ import { STORAGE_KEYS, LOCAL_STORAGE_KEYS } from './lib/storage-keys.js';
 import { initFactoryReset } from './options/factory-reset.js';
 import { initHelpTabShortcuts, loadShortcuts } from './options/help-shortcuts.js';
 
-function normalizeGenMode(val) {
+function getConnectionFormFields() {
+  return {
+    token: tokenInput?.value?.trim() ?? '',
+    owner: ownerInput?.value?.trim() ?? '',
+    repo: repoInput?.value?.trim() ?? '',
+    branch: branchInput?.value?.trim() || 'main',
+    gitProvider: normalizeGitProvider(gitProviderSelect?.value),
+    serverUrl: serverUrlInput?.value?.trim() ?? '',
+  };
+}
+
+function updateProviderUi() {
+  const provider = normalizeGitProvider(gitProviderSelect?.value);
+  if (serverUrlGroup) {
+    serverUrlGroup.classList.toggle('hidden', provider !== 'gitea');
+  }
+  if (tokenHintEl) {
+    if (provider === 'gitea') {
+      tokenHintEl.innerHTML = getMessage('options_giteaTokenHintHtml');
+    } else {
+      tokenHintEl.innerHTML = getMessage('options_tokenHint');
+    }
+  }
+}
+
+async function ensureConnectionHostPermission(fields = getConnectionFormFields()) {
+  if (fields.gitProvider !== 'gitea') return true;
+  if (!fields.serverUrl) return false;
+  const { granted } = await ensureProviderHostPermission(fields.gitProvider, fields.serverUrl);
+  if (!granted) {
+    showSaveResult(getMessage('options_giteaPermissionDenied'), 'error');
+  }
+  return granted;
+}
+
   if (val === true) return 'auto';
   if (val === false) return 'off';
   if (val === 'off' || val === 'manual' || val === 'auto') return val;
@@ -53,6 +87,10 @@ const profileAddDialog = document.getElementById('profile-add-dialog');
 const profileRenameDialog = document.getElementById('profile-rename-dialog');
 const profileMessage = document.getElementById('profile-message');
 const tokenInput = document.getElementById('token');
+const gitProviderSelect = document.getElementById('git-provider');
+const serverUrlGroup = document.getElementById('server-url-group');
+const serverUrlInput = document.getElementById('server-url');
+const tokenHintEl = document.getElementById('token-hint');
 const toggleTokenBtn = document.getElementById('toggle-token');
 const ownerInput = document.getElementById('owner');
 const repoInput = document.getElementById('repo');
@@ -395,6 +433,8 @@ async function loadSettings() {
   const activeProfile = profiles[activeId];
   if (profileSettings) {
     tokenInput.value = profileSettings.githubToken || '';
+    if (gitProviderSelect) gitProviderSelect.value = profileSettings.gitProvider || 'github';
+    if (serverUrlInput) serverUrlInput.value = profileSettings.serverUrl || '';
     ownerInput.value = profileSettings.repoOwner || '';
     repoInput.value = profileSettings.repoName || '';
     branchInput.value = profileSettings.branch || 'main';
@@ -402,6 +442,7 @@ async function loadSettings() {
     githubReposEnabledInput.checked = activeProfile?.githubReposEnabled ?? false;
     githubReposParentSelect.value = activeProfile?.githubReposParent ?? 'other';
   }
+  updateProviderUi();
   try {
     await loadBookmarkFolders();
   } catch (err) {
@@ -415,7 +456,7 @@ async function loadSettings() {
   populateQuickFolderSelect(quickFolderSelect2, quickFolderIds[1] || '');
   populateQuickFolderSelect(quickFolderSelect3, quickFolderIds[2] || '');
 
-  const isConfigured = !!(tokenInput.value.trim() && ownerInput.value.trim() && repoInput.value.trim());
+  const isConfigured = isConnectionFormConfigured(getConnectionFormFields());
   githubReposCard.style.display = isConfigured ? 'block' : 'none';
   githubReposOptions.style.display = githubReposEnabledInput.checked ? 'block' : 'none';
 
@@ -596,12 +637,20 @@ async function saveSettings() {
     const newPath = (filepathInput.value.trim() || 'bookmarks').replace(/\/+$/, '');
     const pathChanged = newPath !== oldPath;
 
+    const fields = getConnectionFormFields();
+    if (fields.gitProvider === 'gitea') {
+      const granted = await ensureConnectionHostPermission(fields);
+      if (!granted) return;
+    }
+
     await saveProfile(activeId, {
-      owner: ownerInput.value.trim(),
-      repo: repoInput.value.trim(),
-      branch: branchInput.value.trim() || 'main',
+      gitProvider: fields.gitProvider,
+      serverUrl: fields.serverUrl,
+      owner: fields.owner,
+      repo: fields.repo,
+      branch: fields.branch,
       filePath: filepathInput.value.trim() || 'bookmarks',
-      token: tokenInput.value.trim(),
+      token: fields.token,
       githubReposEnabled: githubReposEnabledInput.checked,
       githubReposParent: githubReposParentSelect.value,
       contextQuickFolderIds: [
@@ -651,7 +700,7 @@ async function saveSettings() {
       : getMessage('options_settingsSaved');
     showSaveResult(successMsg, 'success');
 
-    const isConf = !!(tokenInput.value.trim() && ownerInput.value.trim() && repoInput.value.trim());
+    const isConf = isConnectionFormConfigured(getConnectionFormFields());
     githubReposCard.style.display = isConf ? 'block' : 'none';
   } catch (err) {
     showSaveResult(getMessage('options_error', [err.message]), 'error');
@@ -670,6 +719,11 @@ function showSaveResult(message, type) {
 // ==============================
 
 tokenInput?.addEventListener('change', saveSettings);
+gitProviderSelect?.addEventListener('change', () => {
+  updateProviderUi();
+  saveSettings();
+});
+serverUrlInput?.addEventListener('change', saveSettings);
 ownerInput?.addEventListener('change', saveSettings);
 repoInput?.addEventListener('change', saveSettings);
 branchInput?.addEventListener('change', saveSettings);
@@ -719,11 +773,23 @@ async function loadFolderBrowserContents(path) {
   btnFolderUp.disabled = !path;
 
   try {
-    const token = tokenInput?.value?.trim() ?? '';
-    const owner = ownerInput?.value?.trim() ?? '';
-    const repo = repoInput?.value?.trim() ?? '';
-    const branch = branchInput?.value?.trim() || 'main';
-    const api = new GitHubAPI(token, owner, repo, branch);
+    const fields = getConnectionFormFields();
+    if (!isConnectionFormConfigured({ ...fields, owner: fields.owner || 'x', repo: fields.repo || 'x' }) && !fields.token) {
+      folderBrowserEmpty.textContent = getMessage('options_browseFolderNotConfigured');
+      folderBrowserEmpty.classList.remove('hidden');
+      folderBrowserLoading.classList.add('hidden');
+      return;
+    }
+    if (fields.gitProvider === 'gitea') {
+      const granted = await ensureConnectionHostPermission(fields);
+      if (!granted) {
+        folderBrowserLoading.classList.add('hidden');
+        folderBrowserEmpty.textContent = getMessage('options_giteaPermissionDenied');
+        folderBrowserEmpty.classList.remove('hidden');
+        return;
+      }
+    }
+    const api = createConnectionApi(fields);
     const dirs = await api.listContents(path);
 
     folderBrowserLoading.classList.add('hidden');
@@ -774,11 +840,13 @@ btnBrowseFolder?.addEventListener('click', () => {
     return;
   }
 
-  const token = tokenInput?.value?.trim() ?? '';
-  const owner = ownerInput?.value?.trim() ?? '';
-  const repo = repoInput?.value?.trim() ?? '';
-  if (!token || !owner || !repo) {
+  const fields = getConnectionFormFields();
+  if (!fields.token || !fields.owner || !fields.repo) {
     showValidation(getMessage('options_browseFolderNotConfigured') || 'Please configure token, owner, and repo first', 'error');
+    return;
+  }
+  if (fields.gitProvider === 'gitea' && !fields.serverUrl) {
+    showValidation(getMessage('options_serverUrlRequired'), 'error');
     return;
   }
 
@@ -819,22 +887,33 @@ githubReposParentSelect?.addEventListener('change', saveSettings);
 
 githubReposRefreshBtn?.addEventListener('click', async () => {
   await saveSettings();
-  const token = tokenInput?.value?.trim() ?? '';
   const activeId = await getActiveProfileId();
   const profiles = await getProfiles();
   const currentProfile = profiles[activeId];
-  if (!token) {
+  const fields = getConnectionFormFields();
+  if (!fields.token) {
     githubReposResult.textContent = getMessage('options_pleaseEnterToken');
     githubReposResult.className = 'validation-result error';
     return;
+  }
+  if (fields.gitProvider === 'gitea') {
+    const granted = await ensureConnectionHostPermission(fields);
+    if (!granted) return;
   }
   try {
     githubReposRefreshBtn.disabled = true;
     githubReposSpinner.style.display = 'inline-block';
     githubReposResult.textContent = '';
     const parent = githubReposParentSelect.value || 'other';
-    const result = await updateGitHubReposFolder(token, parent, currentProfile?.githubReposUsername || '', async (username) => {
-      await saveProfile(activeId, { githubReposUsername: username });
+    const result = await updateGitHubReposFolder({
+      token: fields.token,
+      gitProvider: fields.gitProvider,
+      serverUrl: fields.serverUrl,
+      parentRole: parent,
+      username: currentProfile?.githubReposUsername || '',
+      onUsername: async (username) => {
+        await saveProfile(activeId, { githubReposUsername: username });
+      },
     });
     githubReposResult.textContent = getMessage('options_githubReposRefreshSuccess', [result.count.toString(), result.username || '']);
     githubReposResult.className = 'validation-result success';

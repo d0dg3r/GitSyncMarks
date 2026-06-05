@@ -149,6 +149,42 @@
   "options_githubConnection": {
     "message": "GitHub Connection"
   },
+  "options_gitConnection": {
+    "message": "Git Connection"
+  },
+  "options_gitProvider": {
+    "message": "Git provider"
+  },
+  "options_gitProviderGithub": {
+    "message": "GitHub"
+  },
+  "options_gitProviderGitea": {
+    "message": "Gitea / Forgejo"
+  },
+  "options_serverUrl": {
+    "message": "Server URL"
+  },
+  "options_serverUrlHint": {
+    "message": "Base URL of your Gitea instance (no /api/v1 suffix)."
+  },
+  "options_serverUrlRequired": {
+    "message": "Server URL is required for Gitea profiles."
+  },
+  "options_giteaPermissionDenied": {
+    "message": "Host permission for the Gitea server was denied. Allow access when prompted, then try again."
+  },
+  "options_giteaTokenHintHtml": {
+    "message": "Create a personal access token in your Gitea user settings with repository read/write access."
+  },
+  "options_giteaTokenHelpLink": {
+    "message": "Create token in Gitea settings"
+  },
+  "options_onboardingWizardStepProviderTitle": {
+    "message": "Choose your Git provider"
+  },
+  "options_onboardingWizardStepProviderText": {
+    "message": "Select GitHub or a self-hosted Gitea/Forgejo instance. Each profile stores its own provider and server URL."
+  },
   "options_patLabel": {
     "message": "Personal Access Token (PAT)"
   },
@@ -1088,7 +1124,7 @@
     "message": "Getting Started"
   },
   "help_gettingStartedIntro": {
-    "message": "Create a GitHub repository for your bookmarks, then create a Personal Access Token (PAT) with the <code>repo</code> scope. In the GitHub tab, enter token, repository owner, name, branch (usually <code>main</code>), and the folder path (default: <code>bookmarks</code>). Click <strong>Test Connection</strong> to verify."
+    "message": "Create a Git repository for your bookmarks on <strong>GitHub</strong> or self-hosted <strong>Gitea/Forgejo</strong>. In <strong>Git → Connection</strong>, choose your provider, enter a Personal Access Token, repository owner/name, branch (usually <code>main</code>), and folder path (default: <code>bookmarks</code>). For Gitea, also enter the server URL and allow host access when prompted. Click <strong>Test Connection</strong> to verify."
   },
   "help_onboarding": {
     "message": "If the folder is empty, you can create the base structure (toolbar, other). If bookmarks already exist in the repo, you can pull them into this browser."

@@ -2,7 +2,7 @@
 
 ## Overview
 
-GitSyncMarks stores each bookmark as an individual JSON file in a Git repository. The directory structure mirrors the bookmark folder hierarchy. Synchronization uses the GitHub Git Data API for atomic multi-file commits.
+GitSyncMarks stores each bookmark as an individual JSON file in a Git repository. The directory structure mirrors the bookmark folder hierarchy. Synchronization uses the configured Git provider API (GitHub Git Data API or Gitea Change Files API) for atomic multi-file commits. See [GITEA-PROVIDER.md](GITEA-PROVIDER.md).
 
 ## Data Flow: Push
 

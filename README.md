@@ -105,13 +105,18 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 - **Chrome/Edge/Brave**: [Download ZIP](https://github.com/d0dg3r/GitSyncMarks/releases), Extract, and Load Unpacked in `chrome://extensions/` (Developer Mode).
 - **Firefox**: [Install from AMO](https://addons.mozilla.org/en-US/firefox/addon/gitsyncmarks/).
 
-### 2. GitHub Configuration
-1. Create a **GitHub Token**:
-   - **Fine-grained PAT (Recommended)**: For repository-specific access. Requires `Contents: Read/Write` and `Metadata: Read`. *Use this if you want "App-like" restricted permissions.*
-   - **Classic PAT**: Requires the `repo` scope.
+### 2. Git Configuration
+1. Open **Settings → Git → Connection** and choose **Git provider** (GitHub or Gitea / Forgejo).
+2. For **Gitea**, enter your server URL (e.g. `https://gitea.example.com`) and allow host access when prompted.
+3. Create a **Personal Access Token**:
+   - **GitHub — Fine-grained PAT (Recommended)**: Requires `Contents: Read/Write` and `Metadata: Read`.
+   - **GitHub — Classic PAT**: Requires the `repo` scope.
    - **GitHub App**: Installation tokens are supported (note: these typically expire after 1 hour).
-2. Open extension settings, enter your token, owner, and repository name.
-3. Use the **Setup Wizard** (Help -> Getting Started) for a guided walkthrough.
+   - **Gitea**: User settings → Applications → token with repository read/write.
+4. Enter token, owner, repository, branch, and bookmark path.
+5. Use the **Setup Wizard** (Help → Getting Started) for a guided walkthrough.
+
+See [docs/GITEA-PROVIDER.md](docs/GITEA-PROVIDER.md) for Gitea endpoint details.
 
 ### 3. Linkwarden Integration
 1. Go to the **Linkwarden** tab in settings.
@@ -133,8 +138,8 @@ Licensed under [MIT](LICENSE). Made with heart by developers, for developers.
 ## Requirements
 
 - Chrome, Chromium, Brave, Edge, or Firefox
-- GitHub account with a repository for bookmarks
-- GitHub Token (Classic `repo` scope or Fine-grained `Contents: R/W`)
+- Git repository on **GitHub** or self-hosted **Gitea/Forgejo**
+- Personal access token with repository read/write (GitHub classic `repo` or fine-grained `Contents: R/W`; Gitea repo scope)
 
 ## License
 

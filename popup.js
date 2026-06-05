@@ -7,6 +7,7 @@ import { initI18n, applyI18n, getMessage } from './lib/i18n.js';
 import { initTheme } from './lib/theme.js';
 import { initUiDensity } from './lib/ui-density.js';
 import { mountWhatsNewIfPending } from './lib/whats-new-ui.js';
+import { buildCommitUrl } from './lib/git-provider.js';
 
 // DOM elements
 const notConfiguredEl = document.getElementById('not-configured');
@@ -122,7 +123,13 @@ function updateUI(status) {
   // Last commit (hash as link)
   if (status.lastCommitSha && status.repoOwner && status.repoName) {
     const shortSha = status.lastCommitSha.substring(0, 7);
-    const url = `https://github.com/${status.repoOwner}/${status.repoName}/commit/${status.lastCommitSha}`;
+    const url = buildCommitUrl({
+      provider: status.gitProvider || 'github',
+      serverUrl: status.serverUrl || '',
+      owner: status.repoOwner,
+      repo: status.repoName,
+      commitSha: status.lastCommitSha,
+    });
     lastCommitWrap.innerHTML = '';
     lastCommitWrap.appendChild(document.createTextNode(getMessage('popup_lastCommit') + ' '));
     const a = document.createElement('a');

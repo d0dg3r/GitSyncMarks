@@ -37,7 +37,7 @@ import {
 } from './lib/sync-engine.js';
 import { startKeepAlive, stopKeepAlive } from './lib/keep-alive.js';
 import { log as debugLog, getLogAsString, getDebugLogExportContent } from './lib/debug-log.js';
-import { GitHubAPI } from './lib/github-api.js';
+import { createApi } from './lib/sync-settings.js';
 import { migrateTokenIfNeeded } from './lib/crypto.js';
 import { migrateToProfiles, getActiveProfileId, getActiveProfile, getProfiles, switchProfile, getSyncState } from './lib/profile-manager.js';
 import {
@@ -220,12 +220,7 @@ async function checkAndMigrate() {
       && Object.keys(syncState.lastSyncFiles).length > 0;
     if (hasNewFormat) return; // Already migrated
 
-    const api = new GitHubAPI(
-      settings[STORAGE_KEYS.GITHUB_TOKEN],
-      settings[STORAGE_KEYS.REPO_OWNER],
-      settings[STORAGE_KEYS.REPO_NAME],
-      settings[STORAGE_KEYS.BRANCH]
-    );
+    const api = createApi(settings);
     const basePath = settings[STORAGE_KEYS.FILE_PATH] || 'bookmarks';
 
     const migrated = await migrateFromLegacyFormat(api, basePath);
@@ -320,12 +315,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
   if (message.action === 'createRepository') {
-    const { token, owner, repo, branch } = message;
+    const { token, owner, repo, branch, gitProvider, serverUrl } = message;
     if (!token || !owner || !repo) {
       sendResponse({ success: false, message: 'Missing token/owner/repo' });
       return false;
     }
-    const api = new GitHubAPI(token, owner, repo, branch || 'main');
+    const api = createApi({
+      [STORAGE_KEYS.GITHUB_TOKEN]: token,
+      [STORAGE_KEYS.REPO_OWNER]: owner,
+      [STORAGE_KEYS.REPO_NAME]: repo,
+      [STORAGE_KEYS.BRANCH]: branch || 'main',
+      [STORAGE_KEYS.GIT_PROVIDER]: gitProvider || 'github',
+      [STORAGE_KEYS.SERVER_URL]: serverUrl || '',
+    });
     api.validateToken()
       .then(async (tokenResult) => {
         if (!tokenResult?.valid) {
