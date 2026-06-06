@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0-beta.7] - 2026-06-06
+
+Pre-release: nested-card UI, Bitwarden sync isolation, audit follow-ups.
+
 ### Fixed
 - **Custom Bitwarden backup folder sync isolation**: `filterForDiff()`, orphan cleanup, mirror filter, profile transfer, profile-switch push, and sync base state now respect each profile's `bitwardenBackupPath` (not only the default `backups/bitwarden/` prefix).
 
@@ -34,7 +38,7 @@ Pre-release: Bitwarden / Vaultwarden backup to Git.
 
 ## [3.0.0] - 2026-06-06 (*GLaDOS*)
 
-Multi-provider Git sync (GitHub, GitLab, Codeberg, Gitea family), profile transfer, push mirrors, and live sync progress. Pre-releases: `v3.0.0-beta.1` (initial), `v3.0.0-beta.2` (wizard fix [#146](https://github.com/d0dg3r/GitSyncMarks/issues/146), full 12-language i18n), `v3.0.0-beta.3` (Codeberg repo-scoped token connection test), `v3.0.0-beta.4` (settings export/import token API), `v3.0.0-beta.5` (Codeberg CORS, Gitea sync performance, profile-switch progress), `v3.0.0-beta.6` (Bitwarden backup to Git).
+Multi-provider Git sync (GitHub, GitLab, Codeberg, Gitea family), profile transfer, push mirrors, and live sync progress. Pre-releases: `v3.0.0-beta.1` (initial), `v3.0.0-beta.2` (wizard fix [#146](https://github.com/d0dg3r/GitSyncMarks/issues/146), full 12-language i18n), `v3.0.0-beta.3` (Codeberg repo-scoped token connection test), `v3.0.0-beta.4` (settings export/import token API), `v3.0.0-beta.5` (Codeberg CORS, Gitea sync performance, profile-switch progress), `v3.0.0-beta.6` (Bitwarden backup to Git), `v3.0.0-beta.7` (nested UI, custom Bitwarden path sync fix, per-profile backup password).
 
 ### Fixed (since `v3.0.0-beta.4` — shipped in `v3.0.0-beta.5`)
 - **Codeberg sync/push failed with CORS / “Network error”**: `https://codeberg.org/*` was missing from manifest `host_permissions`. Codeberg is a fixed public host (like GitLab.com) and does not request optional runtime permission, so API calls were blocked by the browser.
