@@ -21,7 +21,17 @@
 > — **Linus Torvalds** (Git creator)
 
 ---
-
+> [!TIP]
+> **Try GitSyncMarks 3.0 (beta):** The stable builds in the Chrome Web Store and on Firefox Add-ons are still **v2.x**. New sync features are available in the **v3.0 pre-release** — download the latest beta from [GitHub Releases (pre-releases)](https://github.com/d0dg3r/GitSyncMarks/releases?q=pre) (currently **[v3.0.0-beta.4](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.0-beta.4)**).
+>
+> **What’s new in the beta:**
+> - **Multi-provider Git sync** — GitHub, GitLab, Codeberg, Gitea, Forgejo, Gogs (not GitHub-only)
+> - **Live sync progress** in popup, wizard, and options (e.g. `3 / 12 files`)
+> - **Profile transfer**, **push mirrors**, and **clean remote orphans**
+> - **Safer setup wizard** — connection check does not push; you choose pull / merge / push / skip with confirmation ([#146](https://github.com/d0dg3r/GitSyncMarks/issues/146))
+> - **Codeberg / Gitea** connection test works with repository-scoped tokens
+>
+> **Install:** Chrome/Edge/Brave — download the ZIP, extract, **Load unpacked** (`chrome://extensions`, Developer mode). Firefox — **Install temporary add-on** from the ZIP. Existing GitHub profiles keep working; no breaking changes planned for stable 3.0.0. Feedback welcome before the store release.
 ---
 
 ## Features
