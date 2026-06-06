@@ -219,9 +219,9 @@ describe('Gitea-family provider ids', () => {
       const api = new GiteaAPI(opts);
       assert.equal(api.providerId, provider);
       if (provider === 'codeberg') {
-        assert.match(api._apiBase(), /codeberg\.org\/api\/v1/);
+        assert.equal(api._apiBase(), 'https://codeberg.org/api/v1');
       } else {
-        assert.match(api._apiBase(), /host\.local\/api\/v1/);
+        assert.equal(api._apiBase(), 'http://host.local/api/v1');
       }
     });
   }
