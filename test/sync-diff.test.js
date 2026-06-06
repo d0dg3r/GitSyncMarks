@@ -230,4 +230,14 @@ describe('filterForDiff', () => {
     const filtered = filterForDiff(files);
     assert.deepEqual(filtered, { 'bookmarks/toolbar/foo.json': '{}' });
   });
+
+  it('excludes custom Bitwarden backup prefix', () => {
+    const files = {
+      'bookmarks/toolbar/foo.json': '{}',
+      'vault-backups/2026-01-01.enc.json': 'encrypted',
+      'backups/bitwarden/other.enc.json': 'encrypted',
+    };
+    const filtered = filterForDiff(files, 'vault-backups');
+    assert.deepEqual(filtered, { 'bookmarks/toolbar/foo.json': '{}' });
+  });
 });

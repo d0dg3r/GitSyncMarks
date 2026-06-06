@@ -1410,7 +1410,7 @@
     "message": "Git backup password"
   },
   "options_bitwardenBackupPasswordHint": {
-    "message": "Stored locally on this device only. Used to wrap the export before push and unwrap on download."
+    "message": "Stored locally per profile on this device. Used to wrap the export before push and unwrap on download."
   },
   "options_bitwardenBackupSavePasswordBtn": {
     "message": "Save password"

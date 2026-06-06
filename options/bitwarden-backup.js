@@ -4,7 +4,8 @@
 
 import { getMessage } from '../lib/i18n.js';
 import { downloadFile, showPasswordDialog } from './settings.js';
-import { STORAGE_KEYS, LOCAL_STORAGE_KEYS } from '../lib/storage-keys.js';
+import { STORAGE_KEYS, bitwardenBackupPasswordKey } from '../lib/storage-keys.js';
+import { getActiveProfileId } from '../lib/profile-manager.js';
 import { DEFAULT_BITWARDEN_BACKUP_PATH } from '../lib/bitwarden-backup.js';
 
 const fileInput = document.getElementById('bitwarden-backup-file');
@@ -19,8 +20,27 @@ const reEncryptInput = document.getElementById('bitwarden-backup-reencrypt');
 const reEncryptGroup = document.getElementById('bitwarden-backup-reencrypt-group');
 const passwordInput = document.getElementById('bitwarden-backup-password');
 const savePasswordBtn = document.getElementById('bitwarden-backup-save-pw-btn');
+const deleteConfirmEl = document.getElementById('bitwarden-backup-delete-confirm');
+const deleteConfirmText = document.getElementById('bitwarden-backup-delete-confirm-text');
+const deleteConfirmBtn = document.getElementById('bitwarden-backup-delete-confirm-btn');
+const deleteCancelBtn = document.getElementById('bitwarden-backup-delete-cancel-btn');
 
 let selectedFile = null;
+let pendingDeletePath = null;
+
+async function getStoredBackupPassword(profileId) {
+  const key = bitwardenBackupPasswordKey(profileId);
+  const local = await chrome.storage.local.get({ [key]: '' });
+  return local[key] || '';
+}
+
+async function migrateLegacyBackupPassword(profileId) {
+  const key = bitwardenBackupPasswordKey(profileId);
+  const local = await chrome.storage.local.get({ [key]: '', bitwardenBackupPassword: '' });
+  if (!local[key] && local.bitwardenBackupPassword) {
+    await chrome.storage.local.set({ [key]: local.bitwardenBackupPassword });
+  }
+}
 
 /** Password typed in the field (ignores masked placeholder after save). */
 function getPasswordFromField() {
@@ -34,8 +54,8 @@ function getPasswordFromField() {
 async function resolveBackupPassword(promptKey, confirmKey) {
   const fieldPw = getPasswordFromField();
   if (fieldPw) return fieldPw;
-  const local = await chrome.storage.local.get({ [LOCAL_STORAGE_KEYS.BITWARDEN_BACKUP_PASSWORD]: '' });
-  const stored = local[LOCAL_STORAGE_KEYS.BITWARDEN_BACKUP_PASSWORD] || '';
+  const profileId = await getActiveProfileId();
+  const stored = await getStoredBackupPassword(profileId);
   if (stored) return stored;
   return showPasswordDialog(promptKey, confirmKey);
 }
@@ -136,9 +156,27 @@ async function refreshBackupList() {
   }
 }
 
+function showDeleteConfirm(path) {
+  pendingDeletePath = path;
+  if (deleteConfirmText) {
+    deleteConfirmText.textContent = getMessage('options_bitwardenBackupDeleteConfirm', [path]);
+  }
+  if (deleteConfirmEl) deleteConfirmEl.style.display = 'flex';
+}
+
+function hideDeleteConfirm() {
+  pendingDeletePath = null;
+  if (deleteConfirmEl) deleteConfirmEl.style.display = 'none';
+}
+
 async function deleteBackup(path) {
-  const confirmed = window.confirm(getMessage('options_bitwardenBackupDeleteConfirm', [path]));
-  if (!confirmed) return;
+  showDeleteConfirm(path);
+}
+
+async function executeDeleteBackup() {
+  const path = pendingDeletePath;
+  if (!path) return;
+  hideDeleteConfirm();
 
   showResult(getMessage('options_bitwardenBackupDeleting'), 'info');
   try {
@@ -241,9 +279,14 @@ async function pushBackup() {
       return;
     }
     if (reEncryptInput?.checked && password) {
-      const local = await chrome.storage.local.get({ [LOCAL_STORAGE_KEYS.BITWARDEN_BACKUP_PASSWORD]: '' });
-      if (local[LOCAL_STORAGE_KEYS.BITWARDEN_BACKUP_PASSWORD] !== password) {
-        await chrome.runtime.sendMessage({ action: 'setBitwardenBackupPassword', password });
+      const profileId = await getActiveProfileId();
+      const storedPw = await getStoredBackupPassword(profileId);
+      if (storedPw !== password) {
+        await chrome.runtime.sendMessage({
+          action: 'setBitwardenBackupPassword',
+          password,
+          profileId,
+        });
         if (passwordInput) {
           passwordInput.value = '********';
           passwordInput.dataset.hasPassword = 'true';
@@ -290,6 +333,8 @@ export function initBitwardenBackup(ctx = {}) {
   pushBtn.addEventListener('click', () => pushBackup());
   refreshBtn?.addEventListener('click', () => refreshBackupList());
   pathInput?.addEventListener('change', () => saveBackupPath());
+  deleteConfirmBtn?.addEventListener('click', () => executeDeleteBackup());
+  deleteCancelBtn?.addEventListener('click', () => hideDeleteConfirm());
 
   savePasswordBtn?.addEventListener('click', async () => {
     const pw = passwordInput?.value?.trim();
@@ -297,7 +342,12 @@ export function initBitwardenBackup(ctx = {}) {
       showResult(getMessage('options_bitwardenBackupPasswordRequired'), 'error');
       return;
     }
-    await chrome.runtime.sendMessage({ action: 'setBitwardenBackupPassword', password: pw });
+    const profileId = await getActiveProfileId();
+    await chrome.runtime.sendMessage({
+      action: 'setBitwardenBackupPassword',
+      password: pw,
+      profileId,
+    });
     passwordInput.value = '********';
     passwordInput.dataset.hasPassword = 'true';
     showResult(getMessage('options_bitwardenBackupPasswordSaved'), 'success');
@@ -322,14 +372,16 @@ export function initBitwardenBackup(ctx = {}) {
   });
 
   (async () => {
+    const profileId = await getActiveProfileId();
+    await migrateLegacyBackupPassword(profileId);
     const globals = await chrome.storage.sync.get({
       [STORAGE_KEYS.BITWARDEN_BACKUP_PATH]: DEFAULT_BITWARDEN_BACKUP_PATH,
     });
     if (pathInput) {
       pathInput.value = globals[STORAGE_KEYS.BITWARDEN_BACKUP_PATH] || DEFAULT_BITWARDEN_BACKUP_PATH;
     }
-    const local = await chrome.storage.local.get({ [LOCAL_STORAGE_KEYS.BITWARDEN_BACKUP_PASSWORD]: '' });
-    if (local[LOCAL_STORAGE_KEYS.BITWARDEN_BACKUP_PASSWORD] && passwordInput) {
+    const storedPw = await getStoredBackupPassword(profileId);
+    if (storedPw && passwordInput) {
       passwordInput.value = '********';
       passwordInput.dataset.hasPassword = 'true';
     }

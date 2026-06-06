@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Custom Bitwarden backup folder sync isolation**: `filterForDiff()`, orphan cleanup, mirror filter, profile transfer, profile-switch push, and sync base state now respect each profile's `bitwardenBackupPath` (not only the default `backups/bitwarden/` prefix).
+
+### Changed
+- **Unified nested-card UI**: Feature subsections use `.card-nested` (inset surface with title, description, and action row) across Options, setup wizard panels, popup conflict/status boxes, search results, and Linkwarden save metadata. Replaces flat `automation-block` dividers. Shared tokens in `shared.css`: `--color-surface-nested`, `.panel-compact`.
+- **Bitwarden Git backup password**: Stored per profile on this device (`bitwardenBackupPassword:{profileId}`); legacy device-wide key migrates on first load.
+- **Bitwarden backup delete**: Inline confirmation dialog (consistent with profile delete) instead of `window.confirm`.
+- **Search results**: Single border per result row (removed redundant panel wrapper border).
+- **Profile inline dialogs**: Aligned with `panel-compact` surface tokens.
+- **What's new**: Popup shows 3.0 highlights (multi-provider, Bitwarden backup, nested UI) after update.
+- **i18n**: Bitwarden backup strings added to all 12 locales (English fallback where not yet translated).
+
 ## [3.0.0-beta.6] - 2026-06-06
 
 Pre-release: Bitwarden / Vaultwarden backup to Git.

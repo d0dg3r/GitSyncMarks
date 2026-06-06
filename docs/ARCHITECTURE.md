@@ -193,6 +193,14 @@ Root-level CSS custom properties for typography, spacing, padding, and control s
 
 Loaded after `ui-density.css` and before each page stylesheet on options, popup, search, and Linkwarden save. Defines the extension-wide `--color-*` palette for light and `html.dark`, `*` box-sizing reset, default `body` font stack and `font-size` / `line-height` from density tokens, shared `.btn` variants, `.spinner` + `@keyframes spin`, and `--focus-ring`. Page CSS may override a small subset (e.g. popup `--color-bg` and `--radius`).
 
+**UI surface hierarchy** (options and other pages):
+
+| Class | Role |
+|-------|------|
+| `.card` | Tab-level section (`h2` + form or nested units) — [`options.css`](../options.css) |
+| `.card.card-nested` | Feature unit inside a card (`h3`, description, `.card-nested-actions`) — tokens `--color-surface-nested`, `--shadow-nested` |
+| `.panel-compact` | Lightweight inset panel (wizard steps, popup alerts, Linkwarden metadata) — border + nested surface, no heavy card shadow |
+
 ### `lib/whats-new.js` / `lib/whats-new-ui.js` — Post-update release notes
 
 On `chrome.runtime.onInstalled` with `reason === 'update'`, [background.js](../background.js) writes `showWhatsNewForVersion` (manifest version string) to `chrome.storage.local`. [popup.js](../popup.js) and [options.js](../options.js) call `mountWhatsNewIfPending()` from `whats-new-ui.js`, which shows a dismissible overlay (styled by [whats-new.css](../whats-new.css)) when the pending version matches the manifest and `whats-new.js` has copy for that version. If `.popup` is present, the overlay gets `whats-new-overlay--popup` for a compact, no-scroll layout; the options page uses the default larger panel. Closing the overlay removes the storage key. New installs do not set the flag, so onboarding stays first. Options defers the overlay until the onboarding wizard is hidden (MutationObserver on `#onboarding-wizard-screen` style).
@@ -356,7 +364,7 @@ GitSyncMarks/
 │   ├── github-repos.js           # GitHub Repos folder
 │   ├── profile-manager.js        # Multiple profiles, switchProfile
 │   ├── profile-switch-logic.js   # Fast switch: diff push, HEAD check, delta pull
-│   ├── sync-diff.js              # computeDiff, filterForDiff (no profile-manager dep)
+│   ├── sync-diff.js              # computeDiff, filterForDiff, isBitwardenBackupDiffPath (no profile-manager dep)
 │   ├── profile-transfer.js       # Cross-profile bookmark copy
 │   ├── sync-progress.js          # Sync progress formatting + runtime port helper
 │   ├── mirror-push.js            # Push-only mirror destinations

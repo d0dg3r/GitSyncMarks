@@ -135,7 +135,7 @@ sequenceDiagram
 
 Content comparison uses `contentEquals()`, which compares valid JSON by canonical form (recursively sorted object keys; array order preserved). Cosmetic differences (key order, whitespace) therefore do not register as modifications or conflicts. Non-JSON or unparseable content falls back to exact string comparison.
 
-Generated/meta files (`README.md`, `_index.json`, `bookmarks.html`, `feed.xml`, `dashy-conf.yml`, `settings.enc`) are excluded from diff via `DIFF_IGNORE_SUFFIXES`. Individual settings files (`settings-{id}.enc`) are excluded via `SETTINGS_ENC_PATTERN`. Bitwarden backup files under `backups/bitwarden/` are excluded via `BITWARDEN_BACKUP_DEFAULT_PATTERN` (custom `bitwardenBackupPath` prefixes are also skipped in `isGeneratedOrSettingsPath()`).
+Generated/meta files (`README.md`, `_index.json`, `bookmarks.html`, `feed.xml`, `dashy-conf.yml`, `settings.enc`) are excluded from diff via `DIFF_IGNORE_SUFFIXES`. Individual settings files (`settings-{id}.enc`) are excluded via `SETTINGS_ENC_PATTERN`. Bitwarden backup files are excluded via `isBitwardenBackupDiffPath()` in `filterForDiff()` and `isGeneratedOrSettingsPath()` — default prefix `backups/bitwarden/` plus each profile's configured `bitwardenBackupPath`.
 
 ## Merge Rules
 

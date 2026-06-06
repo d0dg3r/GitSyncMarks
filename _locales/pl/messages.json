@@ -226,6 +226,18 @@
   "help_backupTitle": {
     "message": "Kopia zapasowa"
   },
+  "help_bitwardenBackupCliDesc": {
+    "message": "bw login && bw export --format encrypted_json --password '…' --output vault.enc.json — then git add backups/bitwarden/ and commit. See the Bitwarden backup sub-tab for a copy-ready snippet."
+  },
+  "help_bitwardenBackupCliTitle": {
+    "message": "CLI example"
+  },
+  "help_bitwardenBackupDesc": {
+    "message": "Export your vault from Bitwarden or Vaultwarden as password-protected encrypted JSON, then upload it in Files → Bitwarden Backup or commit it under backups/bitwarden/ in your repo. List remote backups and download or delete them from the table. Optional additional Git encryption wraps the file with a local password (gitsyncmarks-enc:v1). GitSyncMarks does not connect to Bitwarden or decrypt vault contents."
+  },
+  "help_bitwardenBackupTitle": {
+    "message": "Bitwarden backup to Git"
+  },
   "help_cleanOrphansDesc": {
     "message": "W podzakładce Synchronizacja wyświetl podgląd i usuń zdalne pliki zakładek, których nie ma w lokalnych zakładkach (aktywny profil). Przydatne po zduplikowanych folderach z transferu merge."
   },
@@ -618,6 +630,129 @@
   },
   "options_backupTitle": {
     "message": "Kopia zapasowa"
+  },
+  "options_bitwardenBackupChooseFile": {
+    "message": "Choose file"
+  },
+  "options_bitwardenBackupCliDesc": {
+    "message": "Export with the Bitwarden CLI (Vaultwarden-compatible), then commit to the same folder or upload here."
+  },
+  "options_bitwardenBackupCliTitle": {
+    "message": "CLI / Git workflow"
+  },
+  "options_bitwardenBackupColActions": {
+    "message": "Actions"
+  },
+  "options_bitwardenBackupColFile": {
+    "message": "File"
+  },
+  "options_bitwardenBackupDeleteBtn": {
+    "message": "Delete"
+  },
+  "options_bitwardenBackupDeleteConfirm": {
+    "message": "Remove this backup from the Git repository?\n\n$1"
+  },
+  "options_bitwardenBackupDeleteError": {
+    "message": "Delete failed."
+  },
+  "options_bitwardenBackupDeleteSuccess": {
+    "message": "Removed from repository: $1"
+  },
+  "options_bitwardenBackupDeleting": {
+    "message": "Deleting backup…"
+  },
+  "options_bitwardenBackupDesc": {
+    "message": "Store a password-protected Bitwarden or Vaultwarden export in your Git repo as a versioned backup."
+  },
+  "options_bitwardenBackupDownloadBtn": {
+    "message": "Download"
+  },
+  "options_bitwardenBackupDownloadError": {
+    "message": "Download failed."
+  },
+  "options_bitwardenBackupDownloadNeedsPassword": {
+    "message": "Enter the Git backup password to download this file."
+  },
+  "options_bitwardenBackupDownloadPasswordPrompt": {
+    "message": "Enter the Git backup password to unwrap this file."
+  },
+  "options_bitwardenBackupDownloadSuccess": {
+    "message": "Download started."
+  },
+  "options_bitwardenBackupDownloading": {
+    "message": "Downloading…"
+  },
+  "options_bitwardenBackupEncryptPasswordPrompt": {
+    "message": "Enter a password for additional Git encryption."
+  },
+  "options_bitwardenBackupListEmpty": {
+    "message": "No backups found in the repository folder."
+  },
+  "options_bitwardenBackupListError": {
+    "message": "Could not list backups."
+  },
+  "options_bitwardenBackupListReady": {
+    "message": "$1 backup file(s) in repository."
+  },
+  "options_bitwardenBackupLoading": {
+    "message": "Loading…"
+  },
+  "options_bitwardenBackupNotEncrypted": {
+    "message": "Expected a Bitwarden password-protected encrypted JSON export."
+  },
+  "options_bitwardenBackupPasswordHint": {
+    "message": "Stored locally per profile on this device. Used to wrap the export before push and unwrap on download."
+  },
+  "options_bitwardenBackupPasswordLabel": {
+    "message": "Git backup password"
+  },
+  "options_bitwardenBackupPasswordRequired": {
+    "message": "Enter and save a password first."
+  },
+  "options_bitwardenBackupPasswordSaved": {
+    "message": "Password saved locally."
+  },
+  "options_bitwardenBackupPathHint": {
+    "message": "Repo-root path (default: backups/bitwarden)."
+  },
+  "options_bitwardenBackupPathLabel": {
+    "message": "Backup folder in repo"
+  },
+  "options_bitwardenBackupPlaintextBlocked": {
+    "message": "Plaintext exports are not allowed. Use password-protected encrypted JSON from Bitwarden."
+  },
+  "options_bitwardenBackupPushBtn": {
+    "message": "Upload & push"
+  },
+  "options_bitwardenBackupPushError": {
+    "message": "Push failed."
+  },
+  "options_bitwardenBackupPushSuccess": {
+    "message": "Backup pushed: $1"
+  },
+  "options_bitwardenBackupPushing": {
+    "message": "Pushing backup…"
+  },
+  "options_bitwardenBackupReEncrypt": {
+    "message": "Additional Git encryption"
+  },
+  "options_bitwardenBackupRefreshBtn": {
+    "message": "Refresh list"
+  },
+  "options_bitwardenBackupSavePasswordBtn": {
+    "message": "Save password"
+  },
+  "options_bitwardenBackupTitle": {
+    "message": "Bitwarden backup"
+  },
+  "options_bitwardenBackupTooLarge": {
+    "message": "File is too large (max 25 MB)."
+  },
+  "options_bitwardenBackupUploadTitle": {
+    "message": "Upload export"
+  },
+  "options_bitwardenBackupWarning": {
+    "message": "Export as password-protected encrypted JSON in Bitwarden (not plaintext JSON/CSV or account-restricted). GitSyncMarks never decrypts your vault."
   },
   "options_bookmarksCard": {
     "message": "Zakładki"
@@ -1797,6 +1932,9 @@
   },
   "options_specialThanks": {
     "message": "Podziękowania"
+  },
+  "options_subTabBitwardenBackup": {
+    "message": "Bitwarden Backup"
   },
   "options_subTabConnection": {
     "message": "Połączenie"

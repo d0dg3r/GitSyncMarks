@@ -24,10 +24,11 @@
 > **Stable release ([v2.8.0](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v2.8.0))** — the builds in the [Chrome Web Store](https://chromewebstore.google.com/detail/kogijidhfkoibgihpiaiippajhgdgmif) and on [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/gitsyncmarks/) are still **v2.x**. They provide **GitHub** bookmark sync, Linkwarden, Smart Search, sync history, profiles, and the rest of the feature list marked **(stable)** below. **GitLab, Codeberg, Gitea, profile transfer, push mirrors, and live sync progress are not in the store builds yet.**
 
 > [!TIP]
-> **Try GitSyncMarks 3.0 (beta)** — upcoming multi-provider sync and related features are in the **v3.0 pre-release** only. Download the latest beta from [GitHub Releases (pre-releases)](https://github.com/d0dg3r/GitSyncMarks/releases?q=pre) — currently **[v3.0.0-beta.5](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.0-beta.5)**.
+> **Try GitSyncMarks 3.0 (beta)** — upcoming multi-provider sync and related features are in the **v3.0 pre-release** only. Download the latest beta from [GitHub Releases (pre-releases)](https://github.com/d0dg3r/GitSyncMarks/releases?q=pre) — currently **[v3.0.0-beta.6](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.0-beta.6)**.
 >
 > **What’s new in the beta (not in store builds):**
 > - **Multi-provider Git sync** — GitHub, GitLab, Codeberg, Gitea, Forgejo, Gogs (not GitHub-only)
+> - **Bitwarden backup to Git** — upload password-protected vault exports, list/download/delete in Files → Bitwarden Backup (beta.6)
 > - **Gitea/Codeberg performance** — fast git tree + blob reads; single-commit pushes (beta.5)
 > - **Codeberg CORS fix** — sync/push no longer blocked as “Network error” (beta.5)
 > - **Live sync progress** and **profile-switch step progress** (`1 of 3`) in popup, wizard, and options
@@ -124,7 +125,7 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 > [!IMPORTANT]
 > **v3.0.0** adds **multi-provider Git sync** (GitLab, Codeberg, Gitea family), **profile transfer**, **push mirrors**, **clean remote orphans**, and **live sync progress**. Available only in the **beta ZIP** until stable 3.0.0 ships to the stores. **No breaking changes** for existing GitHub profiles.
 
-- **Install beta**: **[v3.0.0-beta.5](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.0-beta.5)** — Load unpacked / temporary add-on (see beta box above).
+- **Install beta**: **[v3.0.0-beta.6](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.0-beta.6)** — Load unpacked / temporary add-on (see beta box above).
 - **No action needed**: Existing GitHub profiles keep working without reconfiguration.
 - **New providers**: **Settings → Git → Connection** — choose GitLab, Codeberg, Gitea, etc. See [docs/PROVIDERS.md](docs/PROVIDERS.md).
 - **Profile transfer**: **Transfer…** on the Profile tab (e.g. GitHub → Gitea migration).
@@ -142,7 +143,7 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 
 ### 2. v3.0 beta — GitHub Releases (multi-provider)
 
-- **Chrome/Edge/Brave**: Download **[v3.0.0-beta.5](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.0-beta.5)** ZIP, extract, **Load unpacked** in `chrome://extensions/` (Developer Mode).
+- **Chrome/Edge/Brave**: Download **[v3.0.0-beta.6](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.0-beta.6)** ZIP, extract, **Load unpacked** in `chrome://extensions/` (Developer Mode).
 - **Firefox**: Same ZIP → **Install temporary add-on** in `about:debugging`.
 
 ### 3. Git configuration

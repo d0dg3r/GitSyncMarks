@@ -8,6 +8,17 @@ import {
 } from '../lib/profile-switch-logic.js';
 
 describe('buildSwitchPushChanges', () => {
+  it('excludes custom Bitwarden backup paths from switch push diff', () => {
+    const local = {
+      'bookmarks/toolbar/foo.json': '{}',
+      'vault-backups/new.enc.json': 'enc',
+    };
+    const base = {};
+    const { fileChanges, hasChanges } = buildSwitchPushChanges(local, base, 'vault-backups');
+    assert.equal(hasChanges, true);
+    assert.deepEqual(fileChanges, { 'bookmarks/toolbar/foo.json': '{}' });
+  });
+
   it('returns no changes when local matches lastSyncFiles', () => {
     const local = { 'bookmarks/toolbar/a.json': '{"title":"a"}' };
     const base = { 'bookmarks/toolbar/a.json': { sha: 'sha1', content: '{"title":"a"}' } };

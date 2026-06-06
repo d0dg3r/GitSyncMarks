@@ -43,7 +43,7 @@
         <span id="onboarding-wizard-progress" class="onboarding-wizard-progress"></span>
       </div>
 
-      <div id="onboarding-wizard-provider-group" class="onboarding-wizard-section" style="display: none;">
+      <div id="onboarding-wizard-provider-group" class="onboarding-wizard-section panel-compact" style="display: none;">
         <label for="onboarding-wizard-git-provider" data-i18n="options_gitProvider">Git provider</label>
         <select id="onboarding-wizard-git-provider"></select>
         <div id="onboarding-wizard-ghe-disclosure" class="hidden">
@@ -59,7 +59,7 @@
         </div>
       </div>
 
-      <div id="onboarding-wizard-token-help" class="onboarding-wizard-section" style="display: none;">
+      <div id="onboarding-wizard-token-help" class="onboarding-wizard-section panel-compact" style="display: none;">
         <div id="onboarding-wizard-token-help-github">
         <p data-i18n="options_onboardingWizardTokenHelpIntro">A Personal Access Token (PAT) lets GitSyncMarks access
           your GitHub repository to sync bookmarks. You create it in your GitHub account settings.</p>
@@ -85,7 +85,7 @@
         </div>
       </div>
 
-      <div id="onboarding-wizard-has-token-group" class="onboarding-wizard-section" style="display: none;">
+      <div id="onboarding-wizard-has-token-group" class="onboarding-wizard-section panel-compact" style="display: none;">
         <label for="onboarding-wizard-has-token" data-i18n="options_onboardingWizardHasTokenLabel">Do you already have a
           token?</label>
         <select id="onboarding-wizard-has-token">
@@ -94,12 +94,12 @@
         </select>
       </div>
 
-      <div id="onboarding-wizard-token-group" class="onboarding-wizard-section" style="display: none;">
+      <div id="onboarding-wizard-token-group" class="onboarding-wizard-section panel-compact" style="display: none;">
         <label for="onboarding-wizard-token" data-i18n="options_patLabel">Personal Access Token (PAT)</label>
         <input type="password" id="onboarding-wizard-token" data-i18n-placeholder="options_tokenPlaceholderGithub" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
       </div>
 
-      <div id="onboarding-wizard-repo-flow-group" class="onboarding-wizard-section" style="display: none;">
+      <div id="onboarding-wizard-repo-flow-group" class="onboarding-wizard-section panel-compact" style="display: none;">
         <label for="onboarding-wizard-repo-flow" data-i18n="options_onboardingWizardRepoFlowLabel">Repository setup
           mode</label>
         <select id="onboarding-wizard-repo-flow">
@@ -108,7 +108,7 @@
         </select>
       </div>
 
-      <div id="onboarding-wizard-repo-group" class="onboarding-wizard-section" style="display: none;">
+      <div id="onboarding-wizard-repo-group" class="onboarding-wizard-section panel-compact" style="display: none;">
         <label for="onboarding-wizard-owner" data-i18n="options_repoOwner">Repository Owner</label>
         <input type="text" id="onboarding-wizard-owner" data-i18n-placeholder="options_ownerPlaceholder"
           placeholder="your-github-username">
@@ -120,7 +120,7 @@
         <input type="text" id="onboarding-wizard-path" placeholder="bookmarks" value="bookmarks">
       </div>
 
-      <div id="onboarding-wizard-sync-choice-group" class="onboarding-wizard-section onboarding-wizard-sync-choice" style="display: none;">
+      <div id="onboarding-wizard-sync-choice-group" class="onboarding-wizard-section panel-compact onboarding-wizard-sync-choice" style="display: none;">
         <label for="onboarding-wizard-sync-mode" data-i18n="options_onboardingWizardSyncModeLabel">First sync action</label>
         <select id="onboarding-wizard-sync-mode"></select>
         <p id="onboarding-wizard-sync-warning" class="onboarding-wizard-sync-warning" role="status"></p>
@@ -372,11 +372,13 @@
               <small data-i18n="options_filePathHint">Folder where bookmark files will be stored.</small>
             </div>
 
-            <section class="card mirrors-card" id="mirrors-card">
+            <section class="card card-nested" id="mirrors-card">
               <h3 data-i18n="options_mirrorsTitle">Mirror destinations</h3>
               <p class="card-desc" data-i18n="options_mirrorsDesc">Push-only copies to additional Git remotes.</p>
               <div id="mirrors-list"></div>
-              <button type="button" id="mirrors-add-btn" class="btn btn-secondary btn-sm" data-i18n="options_mirrorsAdd">+ Add mirror</button>
+              <div class="card-nested-actions">
+                <button type="button" id="mirrors-add-btn" class="btn btn-secondary btn-sm" data-i18n="options_mirrorsAdd">+ Add mirror</button>
+              </div>
             </section>
 
             <div class="form-group">
@@ -505,12 +507,12 @@
             <section class="card card-nested" id="clean-orphans-card">
               <h3 data-i18n="options_cleanOrphansTitle">Clean remote orphans</h3>
               <p class="card-desc" data-i18n="options_cleanOrphansDesc">Remove bookmark files on the remote that are not in your local bookmarks (active profile). Use after a messy transfer or duplicate folders on the server.</p>
-              <div class="form-group">
+              <div class="card-nested-actions">
                 <button type="button" id="clean-orphans-preview-btn" class="btn btn-secondary btn-sm" data-i18n="options_cleanOrphansPreview">Preview orphans</button>
                 <button type="button" id="clean-orphans-run-btn" class="btn btn-warning btn-sm" disabled data-i18n="options_cleanOrphansRun">Clean remote</button>
                 <span id="clean-orphans-spinner" class="spinner" style="display: none;"></span>
-                <span id="clean-orphans-result" class="validation-result"></span>
               </div>
+              <span id="clean-orphans-result" class="validation-result ie-result"></span>
             </section>
 
             <div class="actions actions-in-card actions-sync-feedback">
@@ -806,8 +808,8 @@
           <p class="card-desc" data-i18n="options_exportImportDesc">Export or import bookmarks and extension settings.
           </p>
 
-          <div class="export-import-block">
-            <h3 class="automation-block-title" data-i18n="options_exportLabel">Export</h3>
+          <section class="card card-nested">
+            <h3 data-i18n="options_exportLabel">Export</h3>
             <div class="export-import-row">
               <select id="export-type-select">
                 <option value="bookmarks" data-i18n="options_exportTypeBookmarks">Bookmarks (JSON)</option>
@@ -820,10 +822,10 @@
               <button id="export-btn" class="btn btn-secondary" data-i18n="options_exportBtn">Export</button>
             </div>
             <span id="export-result" class="ie-result"></span>
-          </div>
+          </section>
 
-          <div class="export-import-block">
-            <h3 class="automation-block-title" data-i18n="options_importLabel">Import</h3>
+          <section class="card card-nested">
+            <h3 data-i18n="options_importLabel">Import</h3>
             <p id="import-warning" class="backup-warning" data-i18n="options_importBookmarksWarning">Replaces all
               current bookmarks. Cannot be undone.</p>
             <div class="export-import-row">
@@ -838,11 +840,11 @@
                 data-i18n="options_chooseFile">Choose file</button>
               <span class="backup-file-name" id="import-filename"></span>
             </div>
-            <div class="backup-actions">
+            <div class="card-nested-actions">
               <button id="import-btn" class="btn btn-primary" data-i18n="options_importBtn" disabled>Import</button>
-              <span id="import-result" class="ie-result"></span>
             </div>
-          </div>
+            <span id="import-result" class="ie-result"></span>
+          </section>
         </section>
       </div>
 
@@ -852,9 +854,9 @@
           <p class="card-desc" data-i18n="options_automationIntro">Add bookmarks directly in your repository. The
             extension picks them up on the next sync and normalizes filenames automatically.</p>
 
-          <div class="automation-block">
-            <h3 class="automation-block-title" data-i18n="options_automationCreateFileTitle">Create file in repo</h3>
-            <p class="automation-block-desc" data-i18n-html="options_automationCreateFileDesc"></p>
+          <section class="card card-nested">
+            <h3 data-i18n="options_automationCreateFileTitle">Create file in repo</h3>
+            <p class="card-nested-desc" data-i18n-html="options_automationCreateFileDesc"></p>
             <div class="automation-copy-wrap">
               <pre id="automation-json-block"
                 class="code-block code-block-sm">{ "title": "Example", "url": "https://example.com" }</pre>
@@ -865,10 +867,10 @@
               <span data-i18n="options_automationFoldersLabel">Folders:</span>
               <code>toolbar</code> <code>other</code>
             </p>
-          </div>
+          </section>
 
-          <div class="automation-block">
-            <h3 class="automation-block-title" data-i18n="options_automationGithubActionTitle">GitHub Action</h3>
+          <section class="card card-nested">
+            <h3 data-i18n="options_automationGithubActionTitle">GitHub Action</h3>
             <p class="automation-workflow-link">
               <a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/.github/workflows/add-bookmark.yml"
                 target="_blank" rel="noopener" data-i18n="options_automationWorkflowLink">
@@ -916,7 +918,7 @@
                 </tr>
               </tbody>
             </table>
-          </div>
+          </section>
         </section>
       </div>
 
@@ -944,7 +946,7 @@
             </label>
           </div>
 
-          <div id="bitwarden-backup-reencrypt-group" class="backup-block" style="display: none;">
+          <section id="bitwarden-backup-reencrypt-group" class="card card-nested" style="display: none;">
             <div class="form-group">
               <label for="bitwarden-backup-password" data-i18n="options_bitwardenBackupPasswordLabel">Git backup
                 password</label>
@@ -952,32 +954,45 @@
               <small data-i18n="options_bitwardenBackupPasswordHint">Stored locally on this device only. Used to wrap the
                 export before push and unwrap on download.</small>
             </div>
-            <button type="button" id="bitwarden-backup-save-pw-btn" class="btn btn-secondary"
-              data-i18n="options_bitwardenBackupSavePasswordBtn">Save password</button>
-          </div>
+            <div class="card-nested-actions">
+              <button type="button" id="bitwarden-backup-save-pw-btn" class="btn btn-secondary"
+                data-i18n="options_bitwardenBackupSavePasswordBtn">Save password</button>
+            </div>
+          </section>
 
-          <div class="backup-block">
-            <h3 class="automation-block-title" data-i18n="options_bitwardenBackupUploadTitle">Upload export</h3>
+          <section class="card card-nested">
+            <h3 data-i18n="options_bitwardenBackupUploadTitle">Upload export</h3>
             <div class="backup-file-picker">
               <input type="file" id="bitwarden-backup-file" class="backup-file-input" accept=".json,.enc,application/json">
               <button type="button" id="bitwarden-backup-file-trigger" class="btn btn-secondary backup-file-trigger"
                 data-i18n="options_bitwardenBackupChooseFile">Choose file</button>
               <span id="bitwarden-backup-filename" class="backup-file-name"></span>
             </div>
-            <div class="backup-actions">
+            <div class="card-nested-actions">
               <button type="button" id="bitwarden-backup-push-btn" class="btn btn-primary" disabled
                 data-i18n="options_bitwardenBackupPushBtn">Upload &amp; push</button>
               <button type="button" id="bitwarden-backup-refresh-btn" class="btn btn-secondary"
                 data-i18n="options_bitwardenBackupRefreshBtn">Refresh list</button>
             </div>
             <span id="bitwarden-backup-result" class="validation-result ie-result"></span>
-          </div>
+          </section>
 
           <div id="bitwarden-backup-list" style="display: none;"></div>
 
-          <div class="automation-block" style="margin-top: 1.5rem;">
-            <h3 class="automation-block-title" data-i18n="options_bitwardenBackupCliTitle">CLI / Git workflow</h3>
-            <p class="automation-block-desc" data-i18n="options_bitwardenBackupCliDesc">Export with the Bitwarden CLI
+          <div id="bitwarden-backup-delete-confirm" class="profile-inline-dialog" style="display: none;" role="alertdialog"
+            aria-modal="true" aria-labelledby="bitwarden-backup-delete-confirm-text">
+            <span id="bitwarden-backup-delete-confirm-text" class="profile-inline-dialog-text"></span>
+            <div class="profile-inline-dialog-actions">
+              <button type="button" id="bitwarden-backup-delete-confirm-btn" class="btn btn-danger"
+                data-i18n="options_bitwardenBackupDeleteBtn">Delete</button>
+              <button type="button" id="bitwarden-backup-delete-cancel-btn" class="btn btn-secondary"
+                data-i18n="options_cancel">Cancel</button>
+            </div>
+          </div>
+
+          <section class="card card-nested">
+            <h3 data-i18n="options_bitwardenBackupCliTitle">CLI / Git workflow</h3>
+            <p class="card-nested-desc" data-i18n="options_bitwardenBackupCliDesc">Export with the Bitwarden CLI
               (Vaultwarden-compatible), then commit to the same folder or upload here.</p>
             <div class="automation-copy-wrap">
               <pre id="bitwarden-backup-cli-block" class="code-block code-block-sm">bw login
@@ -987,7 +1002,7 @@ git commit -m "Bitwarden backup"</pre>
               <button type="button" class="btn btn-secondary btn-sm automation-copy-btn" id="bitwarden-backup-copy-cli-btn"
                 data-i18n="options_automationCopy">Copy</button>
             </div>
-          </div>
+          </section>
         </section>
       </div>
 
