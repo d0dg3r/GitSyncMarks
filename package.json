@@ -25,6 +25,8 @@
     "test:rate-limit": "node scripts/test-onboarding-rate-limit.js",
     "test:rate-limit:reset": "node scripts/test-onboarding-rate-limit.js --reset",
     "test:onboarding-scale": "node scripts/test-onboarding-rate-limit.js --ensure-repo",
+    "test:gitea-benchmark": "node scripts/benchmark-gitea-sync.js",
+    "test:gitea-benchmark:estimate": "node scripts/benchmark-gitea-sync.js --estimate-only",
     "verify-test-repo": "node scripts/verify-test-repo.js",
     "website:preview": "bash scripts/prepare-website.sh && npx --yes serve _site -p 3000"
   },

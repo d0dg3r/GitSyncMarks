@@ -1,11 +1,14 @@
 import { describe, it, before } from 'node:test';
 import assert from 'node:assert/strict';
 
-let chunkAtomicCommitTreeBatches, ATOMIC_COMMIT_TREE_BATCH_MAX_ENTRIES;
+let chunkAtomicCommitTreeBatches,
+  chunkAtomicCommitShaTreeBatches,
+  ATOMIC_COMMIT_TREE_BATCH_MAX_ENTRIES;
 
 before(async () => {
   const mod = await import('../lib/github-tree-batch.js');
   chunkAtomicCommitTreeBatches = mod.chunkAtomicCommitTreeBatches;
+  chunkAtomicCommitShaTreeBatches = mod.chunkAtomicCommitShaTreeBatches;
   ATOMIC_COMMIT_TREE_BATCH_MAX_ENTRIES = mod.ATOMIC_COMMIT_TREE_BATCH_MAX_ENTRIES;
 });
 
@@ -51,5 +54,38 @@ describe('chunkAtomicCommitTreeBatches', () => {
       assert.equal(item.mode, '100644');
       assert.equal(item.type, 'blob');
     }
+  });
+});
+
+describe('chunkAtomicCommitShaTreeBatches', () => {
+  it('returns no batches for empty input', () => {
+    assert.deepEqual(chunkAtomicCommitShaTreeBatches([], []), []);
+  });
+
+  it('places deletions before uploads with blob SHAs', () => {
+    const batches = chunkAtomicCommitShaTreeBatches(
+      ['del.json'],
+      [{ path: 'add.json', sha: 'blobsha123' }]
+    );
+    assert.equal(batches.length, 1);
+    assert.deepEqual(batches[0][0], { path: 'del.json', mode: '100644', type: 'blob', sha: null });
+    assert.deepEqual(batches[0][1], {
+      path: 'add.json',
+      mode: '100644',
+      type: 'blob',
+      sha: 'blobsha123',
+    });
+  });
+
+  it('splits when exceeding the max entries per batch', () => {
+    const uploads = [];
+    const total = ATOMIC_COMMIT_TREE_BATCH_MAX_ENTRIES + 3;
+    for (let i = 0; i < total; i++) {
+      uploads.push({ path: `f${i}.json`, sha: `sha${i}` });
+    }
+    const batches = chunkAtomicCommitShaTreeBatches([], uploads);
+    assert.equal(batches.length, 2);
+    assert.equal(batches[0].length, ATOMIC_COMMIT_TREE_BATCH_MAX_ENTRIES);
+    assert.equal(batches[1].length, 3);
   });
 });

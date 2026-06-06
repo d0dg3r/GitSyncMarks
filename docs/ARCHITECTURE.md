@@ -65,7 +65,7 @@ Extension metadata. Two manifests for browser-specific differences:
 | Background | `service_worker: "background.js"` | `scripts: ["background.js"]` |
 | Browser-specific | — | `browser_specific_settings.gecko` |
 
-Shared: Manifest V3, permissions (`bookmarks`, `storage`, `alarms`, `notifications`, `contextMenus`, `activeTab`, `scripting`, `downloads`), host permissions (`api.github.com`, `gitlab.com`; self-hosted origins via optional permissions + runtime grant).
+Shared: Manifest V3, permissions (`bookmarks`, `storage`, `alarms`, `notifications`, `contextMenus`, `activeTab`, `scripting`, `downloads`), host permissions (`api.github.com`, `gitlab.com`, `codeberg.org`; self-hosted origins via optional permissions + runtime grant).
 
 ### `background.js` — Background Script
 
@@ -250,7 +250,7 @@ First-time and new-profile setup when configuring Git:
 
 ### `lib/providers/gitea-api.js` — Gitea-family Adapter
 
-Shared adapter for Gitea, Forgejo, Codeberg, and Gogs (`providerId` preserved per profile). Extends the GitHub client for read paths; implements `atomicCommit` via the Contents API. Auth: `Authorization: token {PAT}`.
+Shared adapter for Gitea, Forgejo, Codeberg, and Gogs (`providerId` preserved per profile). Extends the GitHub client for git data read/write; `atomicCommit` uses batched blobs + layered trees (one commit), with Contents API sequential fallback. Auth: `Authorization: token {PAT}`.
 
 ### `lib/providers/gitlab-api.js` — GitLab Adapter
 
@@ -274,9 +274,11 @@ Fetches the authenticated user's repos via GitHub REST API and maintains a "GitH
 
 | Function | Description |
 |---|---|
-| `fetchRemoteFileMap(api, basePath, baseFiles)` | Fetch bookmark files via git tree; Gitea falls back to Contents API ref cascade through `buildRemoteMaps()` |
-| `buildRemoteMaps(api, basePath, baseFiles, commitSha)` | Shared tree + Contents fallback used by pull/sync/save-state |
+| `fetchRemoteFileMap(api, basePath, baseFiles)` | Fetch bookmark files via git tree + batched blobs; Gitea-family falls back to Contents API through `buildRemoteMaps()` |
+| `buildRemoteMaps(api, basePath, baseFiles, commitSha)` | Tree+blob first for all providers with `getRecursiveTreeForCommit`; Contents API fallback for Gitea-family |
 | `fetchRemoteFileMapAtCommit(api, basePath, commitSha, options?)` | Fetch file map at a specific commit SHA (history restore/preview); batched `getBlob` (concurrency 5); optional short-lived in-memory cache per owner/repo/path/commit |
+
+Gitea-family performance analysis and benchmark script: [GITEA-PERFORMANCE.md](GITEA-PERFORMANCE.md) (`scripts/benchmark-gitea-sync.js`).
 
 ### `lib/context-menu.js` — Context Menu (barrel)
 
@@ -412,7 +414,7 @@ End-to-end regression is covered by **Playwright** (`npm run test:e2e*`, see [..
 | Extension Framework | Manifest V3 (Chrome + Firefox) |
 | Background | Service Worker (Chrome) / Background Script (Firefox) |
 | Browser APIs | `chrome.bookmarks`, `chrome.storage`, `chrome.alarms`, `chrome.contextMenus`, `chrome.scripting`, `chrome.downloads` |
-| Remote Storage | GitHub/GitLab Git Data API or Gitea-family Contents API |
+| Remote Storage | GitHub/GitLab/Gitea-family Git Data API (Gitea Contents API fallback) |
 | Authentication | Bearer (GitHub, GitLab) or `token` (Gitea-family); PAT per profile |
 | Sync Algorithm | Three-way merge (base vs local vs remote, per-file diff) |
 | i18n | Custom runtime system + Chrome `_locales/` |

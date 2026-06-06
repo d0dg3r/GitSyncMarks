@@ -1605,6 +1605,12 @@
   "options_profileSwitching": {
     "message": "Profil wird gewechselt..."
   },
+  "options_profileSwitchingStep": {
+    "message": "Profil wechseln — $1 von $2"
+  },
+  "options_profileSwitchingStepFiles": {
+    "message": "Profil wechseln — $1 von $2 — $3 von $4 Dateien"
+  },
   "options_profilesLimit": {
     "message": "$1/$2 Profile"
   },

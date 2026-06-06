@@ -38,11 +38,11 @@ Errors use `GitProviderError` (`GitHubError` extends it for backward compatibili
 
 ## Gitea-family write path (Gitea, Forgejo, Codeberg, Gogs)
 
-GitHub `atomicCommit` uses layered `POST /git/trees` with inline content. Gitea-family providers use the **Contents API** (`POST` for new files, `PUT` for updates), one commit per changed file. This avoids the batch Change Files endpoint, which often returns misleading 401 responses on empty repositories or older Forgejo builds.
+Primary path: **git data API** — batched `POST /git/blobs`, layered `POST /git/trees` with **blob SHA references** (not inline `content`; that returns HTTP 404 on Codeberg), then `POST /git/commits` and ref update (**one commit** per push). Fallback: **Contents API** sequential (`POST`/`PUT`/`DELETE` per file, one commit per file) when git-data writes fail (empty repos, older instances).
 
-Implementation: [lib/providers/gitea-api.js](../lib/providers/gitea-api.js) (shared adapter; `providerId` preserved for branding and URLs). [lib/sync-core.js](../lib/sync-core.js) adds a secondary Contents-API fallback when `writeStrategy === 'contents'` and the primary write fails.
+Implementation: [lib/providers/gitea-api.js](../lib/providers/gitea-api.js) (shared adapter; `providerId` preserved for branding and URLs). [lib/sync-core.js](../lib/sync-core.js) adds a secondary per-file Contents fallback when `writeStrategy === 'contents'` and `atomicCommit` still throws.
 
-For Gitea-family profiles, [`lib/remote-fetch.js`](../lib/remote-fetch.js) `buildRemoteMaps()` reads bookmarks via the Contents API first. Git tree endpoints are not used for pull/sync. Ref cascade: commit SHA, branch name, then `refs/heads/{branch}`.
+For Gitea-family profiles, [`lib/remote-fetch.js`](../lib/remote-fetch.js) `buildRemoteMaps()` tries **git tree + batched blob GETs** first (`getRecursiveTreeForCommit`, concurrency 5). On failure, truncated tree, or empty listing under `basePath`, it falls back to the Contents API (`fetchFileMapViaContents` with ref cascade: commit SHA → branch → `refs/heads/{branch}`). Benchmark: [GITEA-PERFORMANCE.md](GITEA-PERFORMANCE.md).
 
 ### Gitea-family token validation
 
@@ -64,6 +64,7 @@ Remote reads use the standard tree + blob path in [lib/remote-fetch.js](../lib/r
 
 - GitHub: `https://api.github.com/*` in manifest `host_permissions`
 - GitLab.com: `https://gitlab.com/*` in manifest `host_permissions`
+- Codeberg: `https://codeberg.org/*` in manifest `host_permissions`
 - Self-hosted Gitea, Forgejo, Gogs, GitLab, GitHub Enterprise: runtime origin via `chrome.permissions.request()` when saving a server URL ([lib/host-permissions.js](../lib/host-permissions.js), [lib/connection-settings.js](../lib/connection-settings.js)). Chrome uses `optional_host_permissions` (`<all_urls>`); Firefox uses `https://*/*`.
 
 Mirror destinations request host permission before push ([lib/mirror-push.js](../lib/mirror-push.js)).

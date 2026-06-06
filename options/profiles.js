@@ -44,6 +44,39 @@ let _saveSettings = null;
 let _showSaveResult = null;
 let _profileMessageTimer = null;
 
+function progressText(key, substitutions, fallback) {
+  const msg = getMessage(key, substitutions);
+  return !msg || msg === key ? fallback : msg;
+}
+
+/**
+ * @param {{ phase?: string, step?: number, totalSteps?: number, current?: number, total?: number }} payload
+ */
+function formatProfileSwitchProgress(payload = {}) {
+  const step = String(payload.step ?? '');
+  const totalSteps = String(payload.totalSteps ?? '');
+
+  if (payload.phase === 'pushing' && payload.total > 0) {
+    return progressText(
+      'options_profileSwitchingStepFiles',
+      [step, totalSteps, String(payload.current), String(payload.total)],
+      `Switching profile — ${step} of ${totalSteps} — ${payload.current} of ${payload.total} files`
+    );
+  }
+  if (payload.step && payload.totalSteps) {
+    return progressText(
+      'options_profileSwitchingStep',
+      [step, totalSteps],
+      `Switching profile — ${step} of ${totalSteps}`
+    );
+  }
+  return getMessage('options_profileSwitching');
+}
+
+function updateProfileSwitchProgress(payload) {
+  profileSwitchingMsg.textContent = formatProfileSwitchProgress(payload);
+}
+
 function setProfileButtonsEnabled(enabled) {
   profileSelect.disabled = !enabled;
   profileAddBtn.disabled = !enabled;
@@ -60,9 +93,9 @@ async function doProfileSwitch(targetId) {
   try {
     setProfileButtonsEnabled(false);
     profileSpinner.style.display = 'inline-block';
-    profileSwitchingMsg.textContent = getMessage('options_profileSwitching');
+    updateProfileSwitchProgress({ step: 1, totalSteps: 3 });
     profileSwitchingMsg.style.display = '';
-    await switchProfile(targetId);
+    await switchProfile(targetId, { onProgress: updateProfileSwitchProgress });
     await _loadSettings();
   } catch (err) {
     showProfileMessage(getMessage('options_error', [err.message]));
@@ -164,10 +197,13 @@ export function initProfiles({ loadSettings, saveSettings, showSaveResult }) {
       const newId = await addProfile(name);
       setProfileButtonsEnabled(false);
       profileSpinner.style.display = 'inline-block';
-      profileSwitchingMsg.textContent = getMessage('options_profileSwitching');
+      updateProfileSwitchProgress({ step: 1, totalSteps: 3 });
       profileSwitchingMsg.style.display = '';
       try {
-        await switchProfile(newId, { skipConfirm: true });
+        await switchProfile(newId, {
+          skipConfirm: true,
+          onProgress: updateProfileSwitchProgress,
+        });
         await _loadSettings();
       } finally {
         setProfileButtonsEnabled(true);

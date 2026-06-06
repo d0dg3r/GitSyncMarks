@@ -18,7 +18,8 @@
   ],
   "host_permissions": [
     "https://api.github.com/*",
-    "https://gitlab.com/*"
+    "https://gitlab.com/*",
+    "https://codeberg.org/*"
   ],
   "optional_host_permissions": [
     "<all_urls>"

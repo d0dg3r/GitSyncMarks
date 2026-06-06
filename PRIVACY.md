@@ -18,7 +18,7 @@ GitSyncMarks is an open-source browser extension (Chrome and Firefox) that syncs
 
 - You provide a Personal Access Token (PAT) to authenticate with your Git provider's API.
 - The token is encrypted and stored locally in your browser using `chrome.storage.local` (AES-256-GCM encryption at rest).
-- The token is sent **only** to your configured Git host (`api.github.com`, `gitlab.com`, or a self-hosted origin you approve at runtime).
+- The token is sent **only** to your configured Git host (`api.github.com`, `gitlab.com`, `codeberg.org`, or a self-hosted origin you approve at runtime).
 - The token is **never** sent to any other server or third party.
 
 ### Settings and Sync State
@@ -30,7 +30,7 @@ GitSyncMarks is an open-source browser extension (Chrome and Firefox) that syncs
 ## Data NOT Collected
 
 - **No analytics or tracking**: GitSyncMarks does not use any analytics, telemetry, or tracking tools.
-- **No external servers**: GitSyncMarks does not communicate with any server other than the Git provider APIs you configure (e.g. `api.github.com`, `gitlab.com`, or self-hosted origins granted at runtime). There is no backend, no proxy, and no intermediary server.
+- **No external servers**: GitSyncMarks does not communicate with any server other than the Git provider APIs you configure (e.g. `api.github.com`, `gitlab.com`, `codeberg.org`, or self-hosted origins granted at runtime). There is no backend, no proxy, and no intermediary server.
 - **No personal information**: GitSyncMarks does not collect your name, email, IP address, or any other personal information.
 - **No data sharing**: Your data is never shared with, sold to, or disclosed to any third party.
 - **No remote code**: GitSyncMarks does not load or execute any remote code.
@@ -52,7 +52,7 @@ All data is stored locally in your browser or in your own GitHub repository. Git
 | `storage` | Store extension settings and sync state locally |
 | `alarms` | Schedule periodic sync checks |
 | `notifications` | Show sync success or failure notifications (user-configurable) |
-| `host_permissions (api.github.com, gitlab.com)` | Communicate with GitHub and GitLab.com APIs to read/write bookmark files |
+| `host_permissions (api.github.com, gitlab.com, codeberg.org)` | Communicate with GitHub, GitLab.com, and Codeberg APIs to read/write bookmark files |
 | Runtime host permission (self-hosted) | Optional grant when you enter a custom server URL for Gitea, Forgejo, Gogs, GitLab, or GitHub Enterprise |
 
 ## Open Source

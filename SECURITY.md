@@ -62,7 +62,7 @@ This prevents `eval()`, inline scripts, and remote script loading on all extensi
 | `activeTab` | Save current tab as bookmark |
 | `scripting` | Inject content scripts for bookmark actions |
 | `downloads` | Export bookmarks as file |
-| **host_permissions** `https://api.github.com/*`, `https://gitlab.com/*` | GitHub and GitLab.com API access for sync |
+| **host_permissions** `https://api.github.com/*`, `https://gitlab.com/*`, `https://codeberg.org/*` | GitHub, GitLab.com, and Codeberg API access for sync |
 | **optional_host_permissions** `<all_urls>` (Chrome) / `https://*/* http://*/*` (Firefox) | Self-hosted Git providers and Linkwarden; granted at runtime by user consent |
 
 ## Security Considerations

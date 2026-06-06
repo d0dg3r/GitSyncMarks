@@ -2,7 +2,7 @@
 
 ## Overview
 
-GitSyncMarks stores each bookmark as an individual JSON file in a Git repository. The directory structure mirrors the bookmark folder hierarchy. Synchronization uses the configured Git provider API (GitHub/GitLab Git Data API, Gitea-family Contents API, or GitLab `/repository/commits`). See [PROVIDERS.md](PROVIDERS.md).
+GitSyncMarks stores each bookmark as an individual JSON file in a Git repository. The directory structure mirrors the bookmark folder hierarchy. Synchronization uses the configured Git provider API (GitHub/GitLab Git Data API, Gitea-family git data with Contents fallback, or GitLab `/repository/commits`). See [PROVIDERS.md](PROVIDERS.md).
 
 **Profile transfer** copies file maps between profiles (one-shot migration). **Mirror destinations** receive push-only copies after each primary commit; they are not merge participants.
 

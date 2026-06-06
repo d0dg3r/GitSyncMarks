@@ -251,6 +251,16 @@ In the common case (few files changed), this is 3 + N calls where N is the numbe
 
 **History / pinned commit:** `fetchRemoteFileMapAtCommit()` uses the same batched blob fetch. A small in-memory cache (few entries, short TTL) deduplicates work when preview and restore target the same commit SHA in quick succession.
 
+## Gitea-family performance (Contents vs Git Data API)
+
+Gitea / Forgejo / Codeberg / Gogs profiles use **git tree + batched blob GETs** for reads (`buildRemoteMaps` → `getRecursiveTreeForCommit` → `fetchBlobsBatched`, concurrency 5), with **Contents API fallback** when the tree path fails. Writes use `GiteaAPI.atomicCommit` → batched `POST /git/blobs` + layered `POST /git/trees` (**one commit** per push), with **Contents API sequential fallback** when git-data writes fail.
+
+Reads on Codeberg (686 files, 2026-06-06 benchmark): ~223s Contents vs ~12s tree+blob full pull; ~0.8s for 5% delta with warm `lastSyncFiles` cache.
+
+Benchmark and compatibility analysis: [GITEA-PERFORMANCE.md](GITEA-PERFORMANCE.md). Tooling: `npm run test:gitea-benchmark:estimate` (analytical) and `npm run test:gitea-benchmark` (live, requires `GITSYNCMARKS_GITEA_*` env).
+
+At 5 000 files, analytical estimates show ~5 250 Contents read requests vs ~5 001 tree+blob reads (cold cache), but writes differ by **5 000 commits** (Contents) vs **1 commit** (~15 tree POSTs). Incremental sync with a warm `lastSyncFiles` cache reduces tree+blob reads to ~1 tree plus blob GETs for changed SHAs only.
+
 ## Sync History and Restore
 
 ### Commit History
@@ -271,7 +281,7 @@ Before any operation that applies remote changes locally (`pull()`, sync path 8,
 
 ## Profile Switch
 
-`switchProfile()` in `lib/profile-manager.js` uses helpers in `lib/profile-switch-logic.js` and diff utilities in `lib/sync-diff.js`.
+`switchProfile()` in `lib/profile-manager.js` uses helpers in `lib/profile-switch-logic.js` and diff utilities in `lib/sync-diff.js`. Optional `onProgress` reports three steps (save current profile, load target, apply to browser); step 1 also forwards per-file push progress on Gitea-family providers. The options page displays this as `Switching profile — $step of 3` (and `$current of $total files` during push).
 
 **Leaving the current profile:**
 
@@ -293,7 +303,7 @@ Local bookmarks are still replaced via `replaceLocalBookmarks()` (full remove/cr
 
 ## Profile Transfer (Cross-Profile Copy)
 
-`lib/profile-transfer.js` copies bookmark file maps between profiles without switching. Source data: browser tree (if source is active), else remote fetch, else `lastSyncFiles` cache. Generated files and auto-managed folders (`GitHubRepos`, `GiteaRepos`, `Linkwarden`) are stripped. Modes: **replace** (overwrite target map; remote files not in the result are deleted on push) or **merge** (conflict if same path differs; existing target files are kept — duplicate folder names can result). UI shows merge/replace warnings and a confirm dialog for merge when the target already has data. Optional `pushForProfile()` commits to the target primary remote and updates sync state. The transfer dialog reports progress via a runtime port: loading steps (`1 of 2`), remote fetch, then `$current of $total files` during per-file Gitea commits (GitHub batch commit jumps from `0` to `$total`).
+`lib/profile-transfer.js` copies bookmark file maps between profiles without switching. Source data: browser tree (if source is active), else remote fetch, else `lastSyncFiles` cache. Generated files and auto-managed folders (`GitHubRepos`, `GiteaRepos`, `Linkwarden`) are stripped. Modes: **replace** (overwrite target map; remote files not in the result are deleted on push) or **merge** (conflict if same path differs; existing target files are kept — duplicate folder names can result). UI shows merge/replace warnings and a confirm dialog for merge when the target already has data. Optional `pushForProfile()` commits to the target primary remote and updates sync state. The transfer dialog reports progress via a runtime port: loading steps (`1 of 2`), remote fetch, then push progress (`$current of $total files` during blob upload on Gitea-family providers, or `0` → `$total` for single-commit GitHub/GitLab pushes).
 
 ## Remote Orphan Cleanup
 
