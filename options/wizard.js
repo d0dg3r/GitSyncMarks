@@ -4,14 +4,32 @@
  */
 
 import { getMessage } from '../lib/i18n.js';
-import { GitHubAPI } from '../lib/github-api.js';
-import { checkPathSetup, waitForRemoteBaseline } from '../lib/onboarding.js';
+import { createConnectionApi, ensureProviderHostPermission, normalizeGitProvider } from '../lib/connection-settings.js';
+import { getProviderCaps } from '../lib/git-provider-common.js';
+import {
+  applyProviderFormUi,
+  providerNeedsHostPermission,
+  renderProviderOptions,
+} from '../lib/provider-ui.js';
+import { checkPathSetup, initializeRemoteFolder, waitForRemoteBaseline } from '../lib/onboarding.js';
+import { formatSyncProgress, runSyncPortAction } from '../lib/sync-progress.js';
+import {
+  buildWizardSyncOptions,
+  countLocalBookmarks,
+  countRemoteBookmarks,
+  fetchRemoteBookmarkState,
+  remoteHasBookmarkPayload,
+  wizardSyncConfirmKey,
+  wizardSyncModeLabelKey,
+} from '../lib/wizard-sync-choice.js';
 
 let _saveSettings = null;
 
 const validationSpinner = document.getElementById('validation-spinner');
 const validationResult = document.getElementById('validation-result');
 const tokenInput = document.getElementById('token');
+const gitProviderSelect = document.getElementById('git-provider');
+const serverUrlInput = document.getElementById('server-url');
 const ownerInput = document.getElementById('owner');
 const repoInput = document.getElementById('repo');
 const branchInput = document.getElementById('branch');
@@ -35,7 +53,15 @@ const onboardingWizardBackBtn = document.getElementById('onboarding-wizard-back-
 const onboardingWizardNextBtn = document.getElementById('onboarding-wizard-next-btn');
 const onboardingWizardSkipBtn = document.getElementById('onboarding-wizard-skip-btn');
 const onboardingWizardStartBtn = document.getElementById('onboarding-wizard-start-btn');
+const onboardingWizardProviderGroup = document.getElementById('onboarding-wizard-provider-group');
+const onboardingWizardGitProviderSelect = document.getElementById('onboarding-wizard-git-provider');
+const onboardingWizardServerUrlGroup = document.getElementById('onboarding-wizard-server-url-group');
+const onboardingWizardServerUrlInput = document.getElementById('onboarding-wizard-server-url');
+const onboardingWizardGheDisclosure = document.getElementById('onboarding-wizard-ghe-disclosure');
+const onboardingWizardGheEnabled = document.getElementById('onboarding-wizard-ghe-enabled');
 const onboardingWizardTokenHelp = document.getElementById('onboarding-wizard-token-help');
+const onboardingWizardTokenHelpGithub = document.getElementById('onboarding-wizard-token-help-github');
+const onboardingWizardTokenHelpGitea = document.getElementById('onboarding-wizard-token-help-gitea');
 const onboardingWizardHasTokenGroup = document.getElementById('onboarding-wizard-has-token-group');
 const onboardingWizardHasTokenSelect = document.getElementById('onboarding-wizard-has-token');
 const onboardingWizardTokenGroup = document.getElementById('onboarding-wizard-token-group');
@@ -51,14 +77,21 @@ const connectionPathInitGroup = document.getElementById('connection-path-init-gr
 const connectionPathInitBtn = document.getElementById('connection-path-init-btn');
 const connectionPathInitHint = document.getElementById('connection-path-init-hint');
 const validateBtn = document.getElementById('validate-btn');
+const onboardingWizardSyncChoiceGroup = document.getElementById('onboarding-wizard-sync-choice-group');
+const onboardingWizardSyncModeSelect = document.getElementById('onboarding-wizard-sync-mode');
+const onboardingWizardSyncWarningEl = document.getElementById('onboarding-wizard-sync-warning');
 
-export const WIZARD_STEPS = ['welcome', 'tokenHelp', 'hasToken', 'tokenInput', 'repoDecision', 'repoDetails', 'environment', 'finish'];
+export const WIZARD_STEPS = ['welcome', 'provider', 'tokenHelp', 'hasToken', 'tokenInput', 'repoDecision', 'repoDetails', 'environment', 'finish'];
 export const wizardState = {
   active: false,
   stepIndex: 0,
+  gitProvider: 'github',
+  serverUrl: '',
   tokenValidated: false,
   environmentChecked: false,
   pathStatus: null,
+  remoteBookmarkCount: 0,
+  localBookmarkCount: 0,
   username: '',
   repoRef: '',
   firstSyncDone: false,
@@ -67,9 +100,13 @@ export const wizardState = {
 
 function resetWizardState() {
   wizardState.stepIndex = 0;
+  wizardState.gitProvider = 'github';
+  wizardState.serverUrl = '';
   wizardState.tokenValidated = false;
   wizardState.environmentChecked = false;
   wizardState.pathStatus = null;
+  wizardState.remoteBookmarkCount = 0;
+  wizardState.localBookmarkCount = 0;
   wizardState.username = '';
   wizardState.repoRef = '';
   wizardState.firstSyncDone = false;
@@ -86,6 +123,11 @@ async function persistWizardState(completed, dismissed) {
 export async function startOnboardingWizard({ manual = false } = {}) {
   resetWizardState();
   onboardingWizardTokenInput.value = tokenInput.value || '';
+  renderProviderOptions(onboardingWizardGitProviderSelect, gitProviderSelect?.value || 'github');
+  if (onboardingWizardServerUrlInput) {
+    onboardingWizardServerUrlInput.value = serverUrlInput?.value || '';
+  }
+  updateWizardProviderUi();
   onboardingWizardOwnerInput.value = ownerInput.value || '';
   onboardingWizardRepoInput.value = repoInput.value || '';
   onboardingWizardBranchInput.value = branchInput.value || 'main';
@@ -144,12 +186,84 @@ function setWizardBusy(isBusy, loadingMessage = '') {
   }
 }
 
+function isGiteaFamilyProvider(provider) {
+  return ['gitea', 'forgejo', 'codeberg', 'gogs'].includes(provider);
+}
+
+function updateWizardProviderUi() {
+  const provider = normalizeGitProvider(onboardingWizardGitProviderSelect?.value);
+  applyProviderFormUi(
+    {
+      serverUrlGroup: onboardingWizardServerUrlGroup,
+      serverUrlInput: onboardingWizardServerUrlInput,
+      tokenInput: onboardingWizardTokenInput,
+      ownerInput: onboardingWizardOwnerInput,
+      gheDisclosureGroup: onboardingWizardGheDisclosure,
+    },
+    provider,
+    { gheEnabled: onboardingWizardGheEnabled?.checked }
+  );
+  if (onboardingWizardTokenHelpGithub) {
+    onboardingWizardTokenHelpGithub.classList.toggle('hidden', isGiteaFamilyProvider(provider) || provider === 'gitlab');
+  }
+  if (onboardingWizardTokenHelpGitea) {
+    onboardingWizardTokenHelpGitea.classList.toggle('hidden', !isGiteaFamilyProvider(provider));
+  }
+  const helpLink = onboardingWizardTokenHelpGithub?.querySelector('a');
+  if (helpLink && provider === 'github') {
+    helpLink.href = 'https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks';
+    helpLink.textContent = getMessage('options_onboardingWizardTokenHelpLink');
+    helpLink.onclick = null;
+  }
+}
+
+async function ensureWizardHostPermission(fields) {
+  const caps = getProviderCaps(fields.gitProvider);
+  const serverUrl = fields.serverUrl || caps.defaultServerUrl || '';
+  if (!providerNeedsHostPermission(fields.gitProvider, serverUrl)) return true;
+  if (!serverUrl) return false;
+  const { granted } = await ensureProviderHostPermission(fields.gitProvider, serverUrl);
+  if (!granted) {
+    const msg = getMessage('options_hostPermissionDenied');
+    showValidation(msg, 'error');
+    setWizardResult(msg, 'error');
+  }
+  return granted;
+}
+
+function wizardServerUrlRequired(fields) {
+  const caps = getProviderCaps(fields.gitProvider);
+  const serverUrl = fields.serverUrl || caps.defaultServerUrl || '';
+  return caps.requireServerUrl && !serverUrl;
+}
+
+function getWizardConnectionFields(overrides = {}) {
+  return {
+    token: overrides.token ?? onboardingWizardTokenInput.value.trim(),
+    owner: overrides.owner ?? onboardingWizardOwnerInput.value.trim(),
+    repo: overrides.repo ?? onboardingWizardRepoInput.value.trim(),
+    branch: overrides.branch ?? (onboardingWizardBranchInput.value.trim() || 'main'),
+    gitProvider: normalizeGitProvider(overrides.gitProvider ?? onboardingWizardGitProviderSelect?.value ?? wizardState.gitProvider),
+    serverUrl: overrides.serverUrl ?? onboardingWizardServerUrlInput?.value?.trim() ?? wizardState.serverUrl ?? '',
+  };
+}
+
+function syncWizardProviderState() {
+  wizardState.gitProvider = normalizeGitProvider(onboardingWizardGitProviderSelect?.value);
+  wizardState.serverUrl = onboardingWizardServerUrlInput?.value?.trim() || '';
+}
+
 function wizardStepText(stepKey) {
   switch (stepKey) {
     case 'welcome':
       return {
         title: getMessage('options_onboardingWizardStepWelcomeTitle'),
         text: getMessage('options_onboardingWizardStepWelcomeText'),
+      };
+    case 'provider':
+      return {
+        title: getMessage('options_onboardingWizardStepProviderTitle'),
+        text: getMessage('options_onboardingWizardStepProviderText'),
       };
     case 'tokenHelp':
       return {
@@ -178,11 +292,11 @@ function wizardStepText(stepKey) {
       };
     case 'environment':
       return {
-        title: getMessage('options_onboardingWizardStepValidateTitle'),
+        title: wizardState.environmentChecked
+          ? getMessage('options_onboardingWizardStepSyncTitle')
+          : getMessage('options_onboardingWizardStepValidateTitle'),
         text: wizardState.environmentChecked
-          ? (wizardState.pathStatus === 'hasBookmarks'
-            ? getMessage('options_onboardingWizardStepSyncTextExisting')
-            : getMessage('options_onboardingWizardStepSyncTextEmpty'))
+          ? getMessage('options_onboardingWizardStepSyncChoiceText')
           : getMessage('options_onboardingWizardStepValidateText'),
       };
     default:
@@ -203,18 +317,187 @@ export function renderOnboardingWizardStep() {
 
   onboardingWizardBackBtn.disabled = wizardState.stepIndex === 0;
   onboardingWizardSkipBtn.style.display = stepKey === 'finish' ? 'none' : '';
-  onboardingWizardNextBtn.textContent = stepKey === 'finish'
-    ? getMessage('options_onboardingWizardFinish')
-    : getMessage('options_onboardingWizardNext');
+  if (stepKey === 'finish') {
+    onboardingWizardNextBtn.textContent = getMessage('options_onboardingWizardFinish');
+  } else if (stepKey === 'environment' && wizardState.environmentChecked && !wizardState.firstSyncDone) {
+    onboardingWizardNextBtn.textContent = getMessage('options_onboardingWizardStartSync');
+  } else if (stepKey === 'environment' && !wizardState.environmentChecked) {
+    onboardingWizardNextBtn.textContent = getMessage('options_onboardingWizardCheckConnection');
+  } else {
+    onboardingWizardNextBtn.textContent = getMessage('options_onboardingWizardNext');
+  }
 
   onboardingWizardTokenHelp.style.display = stepKey === 'tokenHelp' ? '' : 'none';
+  onboardingWizardProviderGroup.style.display = stepKey === 'provider' ? '' : 'none';
+  if (['provider', 'tokenHelp', 'tokenInput', 'repoDetails'].includes(stepKey)) {
+    updateWizardProviderUi();
+  }
   onboardingWizardHasTokenGroup.style.display = stepKey === 'hasToken' ? '' : 'none';
   onboardingWizardTokenGroup.style.display = stepKey === 'tokenInput' ? '' : 'none';
   onboardingWizardRepoFlowGroup.style.display = stepKey === 'repoDecision' ? '' : 'none';
   onboardingWizardRepoGroup.style.display = stepKey === 'repoDetails' ? '' : 'none';
+  const showSyncChoice = stepKey === 'environment' && wizardState.environmentChecked && !wizardState.firstSyncDone;
+  if (onboardingWizardSyncChoiceGroup) {
+    onboardingWizardSyncChoiceGroup.style.display = showSyncChoice ? '' : 'none';
+  }
+  if (showSyncChoice) {
+    populateWizardSyncModeSelect();
+  }
   wizardStatusEl.style.display = 'none';
 
   onboardingWizardActionBtn.style.display = 'none';
+}
+
+function populateWizardSyncModeSelect() {
+  if (!onboardingWizardSyncModeSelect) return;
+  const { modes, defaultMode, warningKey } = buildWizardSyncOptions(
+    wizardState.pathStatus,
+    wizardState.localBookmarkCount,
+    wizardState.remoteBookmarkCount
+  );
+  const previous = onboardingWizardSyncModeSelect.value;
+  onboardingWizardSyncModeSelect.innerHTML = '';
+  for (const mode of modes) {
+    const opt = document.createElement('option');
+    opt.value = mode;
+    opt.textContent = getMessage(wizardSyncModeLabelKey(mode)) || mode;
+    onboardingWizardSyncModeSelect.appendChild(opt);
+  }
+  onboardingWizardSyncModeSelect.value = modes.includes(previous) ? previous : defaultMode;
+  updateWizardSyncWarning();
+}
+
+function updateWizardSyncWarning() {
+  if (!onboardingWizardSyncWarningEl || !onboardingWizardSyncModeSelect) return;
+  const { warningKey } = buildWizardSyncOptions(
+    wizardState.pathStatus,
+    wizardState.localBookmarkCount,
+    wizardState.remoteBookmarkCount
+  );
+  const mode = onboardingWizardSyncModeSelect.value;
+  let text = getMessage(warningKey) || '';
+  if (mode === 'push' && remoteHasBookmarkPayload(wizardState.pathStatus, wizardState.remoteBookmarkCount)) {
+    text = getMessage(
+      'options_onboardingWizardSyncWarn_pushDanger',
+      [String(wizardState.remoteBookmarkCount)]
+    ) || text;
+    onboardingWizardSyncWarningEl.classList.add('danger');
+  } else {
+    onboardingWizardSyncWarningEl.classList.remove('danger');
+  }
+  onboardingWizardSyncWarningEl.textContent = text;
+}
+
+function getSelectedWizardSyncMode() {
+  return onboardingWizardSyncModeSelect?.value || buildWizardSyncOptions(
+    wizardState.pathStatus,
+    wizardState.localBookmarkCount,
+    wizardState.remoteBookmarkCount
+  ).defaultMode;
+}
+
+async function confirmWizardSyncAction(mode) {
+  const confirmKey = wizardSyncConfirmKey(
+    mode,
+    wizardState.localBookmarkCount,
+    wizardState.remoteBookmarkCount
+  );
+  const body = getMessage(
+    confirmKey,
+    [String(wizardState.localBookmarkCount), String(wizardState.remoteBookmarkCount)]
+  );
+  const yesLabel = mode === 'skip'
+    ? getMessage('options_onboardingWizardSyncConfirmSkipBtn')
+    : getMessage('options_onboardingWizardSyncConfirmRunBtn');
+  const confirmed = await showOnboardingConfirm(body, yesLabel);
+  hideOnboardingConfirm();
+  return confirmed;
+}
+
+async function assertSafeWizardPush(api, basePath) {
+  const fresh = await fetchRemoteBookmarkState(api, basePath, checkPathSetup);
+  wizardState.pathStatus = fresh.status;
+  wizardState.remoteBookmarkCount = fresh.remoteCount;
+  if (remoteHasBookmarkPayload(fresh.status, fresh.remoteCount)) {
+    return fresh;
+  }
+  return fresh;
+}
+
+async function executeWizardSyncAction(mode) {
+  syncWizardFieldsToConnectionForm();
+  await _saveSettings();
+  const fields = getWizardConnectionFields();
+  const basePath = onboardingWizardPathInput.value.trim() || 'bookmarks';
+  const api = createConnectionApi(fields);
+  const connection = getConnectionFormFieldsFromPage();
+  const onProgress = (payload) => {
+    onboardingWizardHint.textContent = formatSyncProgress(payload);
+  };
+
+  wizardStatusEl.style.display = 'flex';
+  setWizardBusy(true, getMessage('popup_syncing'));
+
+  try {
+    if (mode === 'skip') {
+      return true;
+    }
+    if (mode === 'pull') {
+      const pullResult = await runSyncPortAction('pull', {}, onProgress);
+      if (!pullResult?.success) {
+        setWizardResult(pullResult?.message || 'Pull failed', 'error');
+        return false;
+      }
+      setWizardResult(getMessage('options_onboardingPullSuccess'), 'success');
+      return true;
+    }
+    if (mode === 'sync') {
+      const syncResult = await runSyncPortAction('bootstrapFirstSync', { connection }, onProgress);
+      if (!syncResult?.success) {
+        setWizardResult(syncResult?.message || 'Sync failed', 'error');
+        return false;
+      }
+      setWizardResult(syncResult.message || getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
+      return true;
+    }
+    if (mode === 'push') {
+      await assertSafeWizardPush(api, basePath);
+      const pushResult = await runSyncPortAction('push', {}, onProgress);
+      if (!pushResult?.success) {
+        setWizardResult(pushResult?.message || 'Push failed', 'error');
+        return false;
+      }
+      setWizardResult(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
+      return true;
+    }
+    if (mode === 'initialize') {
+      if (onboardingWizardRepoFlowSelect.value === 'autoCreate') {
+        await waitForRemoteBaseline(api);
+      }
+      await initializeRemoteFolder(api, basePath);
+      setWizardResult(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
+      return true;
+    }
+    return false;
+  } finally {
+    setWizardBusy(false);
+  }
+}
+
+async function runWizardSyncWithChoice() {
+  if (!wizardState.environmentChecked) {
+    setWizardResult(getMessage('options_onboardingWizardNeedAction'), 'error');
+    return false;
+  }
+  const mode = getSelectedWizardSyncMode();
+  if (!(await confirmWizardSyncAction(mode))) {
+    return false;
+  }
+  const ok = await executeWizardSyncAction(mode);
+  if (ok) {
+    wizardState.firstSyncDone = true;
+  }
+  return ok;
 }
 
 export function showOnboardingConfirm(message, yesButtonLabel) {
@@ -255,28 +538,38 @@ function showConnectionPathInitAction(basePath) {
   connectionPathInitGroup.style.display = '';
 }
 
-async function initializePathAndRunFirstPush() {
-  const result = await chrome.runtime.sendMessage({ action: 'bootstrapFirstSync' });
+async function initializePathAndRunFirstPush(onProgress) {
+  await _saveSettings();
+  const connection = getConnectionFormFieldsFromPage();
+  const result = await runSyncPortAction(
+    'bootstrapFirstSync',
+    { connection },
+    onProgress
+  );
   if (result?.success) return;
   throw new Error(result?.message || 'Push failed');
 }
 
 async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
   await _saveSettings();
-  const token = tokenInput.value.trim();
-  const owner = ownerInput.value.trim();
-  const repo = repoInput.value.trim();
-  const branch = branchInput.value.trim() || 'main';
+  const fields = getConnectionFormFieldsFromPage();
 
-  if (!token) {
+  if (!fields.token) {
     showValidation(getMessage('options_pleaseEnterToken'), 'error');
+    return { ok: false };
+  }
+  if (wizardServerUrlRequired(fields)) {
+    showValidation(getMessage('options_serverUrlRequired'), 'error');
+    return { ok: false };
+  }
+  if (!(await ensureWizardHostPermission(fields))) {
     return { ok: false };
   }
 
   showValidation(getMessage('options_checking'), 'loading');
 
   try {
-    const api = new GitHubAPI(token, owner, repo, branch);
+    const api = createConnectionApi(fields);
 
     const tokenResult = await api.validateToken();
     if (!tokenResult.valid) {
@@ -284,28 +577,32 @@ async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
       return { ok: false };
     }
 
-    if (!tokenResult.ambiguous && !tokenResult.scopes.includes('repo')) {
+    if (
+      fields.gitProvider === 'github' &&
+      !tokenResult.ambiguous &&
+      !tokenResult.scopes.includes('repo')
+    ) {
       hideConnectionPathInitAction();
       showValidation(getMessage('options_tokenValidMissingScope', [tokenResult.username]), 'error');
       return { ok: false };
     }
 
-    if (owner && repo) {
+    if (fields.owner && fields.repo) {
       const repoExists = await api.checkRepo();
       if (!repoExists) {
         hideConnectionPathInitAction();
-        showValidation(getMessage('options_tokenValidRepoNotFound', [tokenResult.username, `${owner}/${repo}`]), 'error');
+        showValidation(getMessage('options_tokenValidRepoNotFound', [tokenResult.username, `${fields.owner}/${fields.repo}`]), 'error');
         return { ok: false };
       }
       const basePath = filepathInput.value.trim() || 'bookmarks';
       const pathCheck = await checkPathSetup(api, basePath);
       if (offerInteractiveActions && (pathCheck.status === 'unreachable' || pathCheck.status === 'empty')) {
         showConnectionPathInitAction(basePath);
-        showValidation(getMessage('options_connectionOk', [tokenResult.username, `${owner}/${repo}`]), 'success');
+        showValidation(getMessage('options_connectionOk', [tokenResult.username, `${fields.owner}/${fields.repo}`]), 'success');
         return {
           ok: true,
           username: tokenResult.username,
-          repoRef: `${owner}/${repo}`,
+          repoRef: `${fields.owner}/${fields.repo}`,
           pathStatus: pathCheck.status,
         };
       }
@@ -319,21 +616,28 @@ async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
         if (confirmed) {
           try {
             await _saveSettings();
-            await chrome.runtime.sendMessage({ action: 'pull' });
+            showValidation(getMessage('popup_syncing'), 'loading');
+            const pullResult = await runSyncPortAction('pull', {}, (payload) => {
+              showValidation(formatSyncProgress(payload), 'loading');
+            });
+            if (!pullResult?.success) {
+              showValidation(pullResult?.message || 'Pull failed', 'error');
+              return;
+            }
             showValidation(getMessage('options_onboardingPullSuccess'), 'success');
           } catch (pullErr) {
             showValidation(getMessage('options_error', [pullErr.message]), 'error');
           }
         } else {
-          showValidation(getMessage('options_connectionOk', [tokenResult.username, `${owner}/${repo}`]), 'success');
+          showValidation(getMessage('options_connectionOk', [tokenResult.username, `${fields.owner}/${fields.repo}`]), 'success');
         }
         return;
       }
-      showValidation(getMessage('options_connectionOk', [tokenResult.username, `${owner}/${repo}`]), 'success');
+      showValidation(getMessage('options_connectionOk', [tokenResult.username, `${fields.owner}/${fields.repo}`]), 'success');
       return {
         ok: true,
         username: tokenResult.username,
-        repoRef: `${owner}/${repo}`,
+        repoRef: `${fields.owner}/${fields.repo}`,
         pathStatus: pathCheck.status,
       };
     } else {
@@ -353,34 +657,64 @@ async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
   }
 }
 
+function getConnectionFormFieldsFromPage() {
+  return {
+    token: tokenInput?.value?.trim() ?? '',
+    owner: ownerInput?.value?.trim() ?? '',
+    repo: repoInput?.value?.trim() ?? '',
+    branch: branchInput?.value?.trim() || 'main',
+    gitProvider: normalizeGitProvider(gitProviderSelect?.value),
+    serverUrl: serverUrlInput?.value?.trim() ?? '',
+  };
+}
+
 function syncWizardFieldsToConnectionForm() {
   tokenInput.value = onboardingWizardTokenInput.value.trim();
+  if (gitProviderSelect && onboardingWizardGitProviderSelect) {
+    gitProviderSelect.value = onboardingWizardGitProviderSelect.value;
+  }
+  if (serverUrlInput && onboardingWizardServerUrlInput) {
+    serverUrlInput.value = onboardingWizardServerUrlInput.value.trim();
+  }
   ownerInput.value = onboardingWizardOwnerInput.value.trim();
   repoInput.value = onboardingWizardRepoInput.value.trim();
   branchInput.value = onboardingWizardBranchInput.value.trim() || 'main';
   filepathInput.value = onboardingWizardPathInput.value.trim() || 'bookmarks';
+  syncWizardProviderState();
 }
 
 async function runWizardTokenValidation() {
   onboardingWizardResult.textContent = '';
-  const token = onboardingWizardTokenInput.value.trim();
-  if (!token) {
+  syncWizardProviderState();
+  const fields = getWizardConnectionFields();
+  if (!fields.token) {
     setWizardResult(getMessage('options_pleaseEnterToken'), 'error');
     return false;
   }
-  const api = new GitHubAPI(token, 'x', 'x', 'main');
+  if (wizardServerUrlRequired(fields)) {
+    setWizardResult(getMessage('options_serverUrlRequired'), 'error');
+    return false;
+  }
+  if (!(await ensureWizardHostPermission(fields))) {
+    return false;
+  }
+  const api = createConnectionApi({ ...fields, owner: 'x', repo: 'x' });
   const tokenResult = await api.validateToken();
   if (!tokenResult.valid) {
     setWizardResult(getMessage('options_invalidToken'), 'error');
     return false;
   }
-  if (!tokenResult.ambiguous && !tokenResult.scopes.includes('repo')) {
+  if (
+    fields.gitProvider === 'github' &&
+    !tokenResult.ambiguous &&
+    !tokenResult.scopes.includes('repo')
+  ) {
     setWizardResult(getMessage('options_tokenValidMissingScope', [tokenResult.username]), 'error');
     return false;
   }
   wizardState.username = tokenResult.username;
   wizardState.tokenValidated = true;
-  if (!onboardingWizardOwnerInput.value.trim()) onboardingWizardOwnerInput.value = tokenResult.username;
+  if (!onboardingWizardOwnerInput.value.trim()) onboardingWizardOwnerInput.value = tokenResult.username || '';
   setWizardResult(getMessage('options_onboardingWizardTokenValidated'), 'success');
   return true;
 }
@@ -394,18 +728,18 @@ async function runWizardEnvironmentCheck() {
   syncWizardFieldsToConnectionForm();
   await _saveSettings();
 
-  const token = onboardingWizardTokenInput.value.trim();
-  const owner = onboardingWizardOwnerInput.value.trim();
-  const repo = onboardingWizardRepoInput.value.trim();
-  const branch = onboardingWizardBranchInput.value.trim() || 'main';
+  const fields = getWizardConnectionFields();
   const basePath = onboardingWizardPathInput.value.trim() || 'bookmarks';
-  if (!owner || !repo) {
+  if (!fields.owner || !fields.repo) {
     setWizardResult(getMessage('options_onboardingWizardRepoRequired'), 'error');
+    return false;
+  }
+  if (!(await ensureWizardHostPermission(fields))) {
     return false;
   }
 
   if (onboardingWizardRepoFlowSelect.value === 'autoCreate') {
-    const normalizedOwner = owner.toLowerCase();
+    const normalizedOwner = fields.owner.toLowerCase();
     const normalizedUser = String(wizardState.username || '').toLowerCase();
     if (!normalizedUser || normalizedOwner !== normalizedUser) {
       setWizardResult(
@@ -416,10 +750,12 @@ async function runWizardEnvironmentCheck() {
     }
     const createResp = await chrome.runtime.sendMessage({
       action: 'createRepository',
-      token,
-      owner,
-      repo,
-      branch,
+      token: fields.token,
+      owner: fields.owner,
+      repo: fields.repo,
+      branch: fields.branch,
+      gitProvider: fields.gitProvider,
+      serverUrl: fields.serverUrl,
     });
     if (!createResp?.success && !String(createResp?.message || '').includes('name already exists')) {
       const message = createResp?.message || getMessage('options_onboardingWizardRepoCreateFailed');
@@ -432,10 +768,10 @@ async function runWizardEnvironmentCheck() {
     }
   }
 
-  const api = new GitHubAPI(token, owner, repo, branch);
+  const api = createConnectionApi(fields);
   const repoExists = await api.checkRepo();
   if (!repoExists) {
-    setWizardResult(getMessage('options_tokenValidRepoNotFound', [wizardState.username || owner, `${owner}/${repo}`]), 'error');
+    setWizardResult(getMessage('options_tokenValidRepoNotFound', [wizardState.username || fields.owner, `${fields.owner}/${fields.repo}`]), 'error');
     return false;
   }
 
@@ -450,28 +786,14 @@ async function runWizardEnvironmentCheck() {
     stopPathPulse();
   }
 
-  wizardState.repoRef = `${owner}/${repo}`;
+  wizardState.repoRef = `${fields.owner}/${fields.repo}`;
   wizardState.pathStatus = pathCheck.status;
+  wizardState.remoteBookmarkCount = countRemoteBookmarks(pathCheck.fileMap);
+  wizardState.localBookmarkCount = await countLocalBookmarks();
   wizardState.firstSyncDone = false;
-  if (onboardingWizardRepoFlowSelect.value === 'autoCreate' && pathCheck.status !== 'hasBookmarks') {
-    const stopInitPulse = startProgressPulse([
-      'Waiting for repository to be ready',
-      'Setting up initial folder structure',
-      'Uploading bookmarks to GitHub',
-      'Creating first commit',
-    ]);
-    try {
-      await waitForRemoteBaseline(api);
-      await initializePathAndRunFirstPush();
-    } finally {
-      stopInitPulse();
-    }
-    wizardState.firstSyncDone = true;
-    setWizardResult(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
-  } else {
-    setWizardResult(getMessage('options_onboardingWizardEnvironmentChecked'), 'success');
-  }
   wizardState.environmentChecked = true;
+  setWizardResult(getMessage('options_onboardingWizardEnvironmentChecked'), 'success');
+  renderOnboardingWizardStep();
   return true;
 }
 
@@ -507,75 +829,25 @@ function startProgressPulse(messages, msPerStep = 3000) {
   return () => clearInterval(id);
 }
 
-async function runWizardSyncAction() {
-  if (!wizardState.environmentChecked) {
-    setWizardResult(getMessage('options_onboardingWizardNeedAction'), 'error');
-    return false;
+async function confirmConnectionPathInit(api, basePath) {
+  const pathCheck = await checkPathSetup(api, basePath);
+  if (pathCheck.status === 'hasBookmarks') {
+    return { proceed: false, reason: getMessage('options_onboardingInitPathAlreadyExists', [basePath]) };
   }
-  const token = onboardingWizardTokenInput.value.trim();
-  const owner = onboardingWizardOwnerInput.value.trim();
-  const repo = onboardingWizardRepoInput.value.trim();
-  const branch = onboardingWizardBranchInput.value.trim() || 'main';
-  const basePath = onboardingWizardPathInput.value.trim() || 'bookmarks';
-  const api = new GitHubAPI(token, owner, repo, branch);
-
-  wizardStatusEl.style.display = 'flex';
-
-  if (wizardState.pathStatus === 'hasBookmarks') {
-    const stopPulse = startProgressPulse([
-      getMessage('options_onboardingWizardPhaseDownloading') || 'Downloading bookmarks',
-      getMessage('options_onboardingWizardPhaseApplying') || 'Applying bookmarks to browser',
-      getMessage('options_onboardingWizardPhaseSaving') || 'Saving sync state',
-    ]);
-    try {
-      const pullResult = await chrome.runtime.sendMessage({ action: 'pull' });
-      stopPulse();
-      if (!pullResult?.success) {
-        setWizardResult(pullResult?.message || 'Pull failed', 'error');
-        return false;
-      }
-      setWizardResult(getMessage('options_onboardingPullSuccess'), 'success');
-      wizardState.firstSyncDone = true;
-      return true;
-    } catch (err) {
-      stopPulse();
-      throw err;
-    }
+  const remoteCount = countRemoteBookmarks(pathCheck.fileMap);
+  const localCount = await countLocalBookmarks();
+  const { defaultMode } = buildWizardSyncOptions(pathCheck.status, localCount, remoteCount);
+  const mode = localCount > 0 ? 'push' : defaultMode;
+  const confirmKey = wizardSyncConfirmKey(mode, localCount, remoteCount);
+  const confirmed = await showOnboardingConfirm(
+    getMessage(confirmKey, [String(localCount), String(remoteCount)]),
+    getMessage('options_onboardingWizardSyncConfirmRunBtn')
+  );
+  hideOnboardingConfirm();
+  if (!confirmed) {
+    return { proceed: false, reason: null };
   }
-
-  const stopPulse = startProgressPulse([
-    getMessage('options_onboardingWizardPhasePreparing') || 'Preparing bookmark data',
-    getMessage('options_onboardingWizardPhaseUploading') || 'Uploading bookmarks to GitHub',
-    getMessage('options_onboardingWizardPhaseCommit') || 'Creating repository commit',
-    getMessage('options_onboardingWizardPhaseSaving') || 'Saving sync state',
-  ]);
-
-  let bookmarkCount = 0;
-  let estSec = null;
-  try {
-    const tree = await chrome.bookmarks.getTree();
-    const countNodes = (nodes) => nodes.reduce((n, node) =>
-      n + (node.url ? 1 : 0) + (node.children ? countNodes(node.children) : 0), 0);
-    bookmarkCount = countNodes(tree);
-    estSec = Math.round(bookmarkCount / 5) + 5;
-  } catch (_) { /* non-fatal */ }
-
-  const syncStart = Date.now();
-  try {
-    await initializePathAndRunFirstPush();
-    stopPulse();
-    const actualSec = ((Date.now() - syncStart) / 1000).toFixed(1);
-    console.log(
-      `[GitSyncMarks] Onboarding sync done — bookmarks: ${bookmarkCount}, ` +
-      `estimated: ${estSec != null ? estSec + 's' : 'n/a'}, actual: ${actualSec}s`
-    );
-    setWizardResult(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
-    wizardState.firstSyncDone = true;
-    return true;
-  } catch (err) {
-    stopPulse();
-    throw err;
-  }
+  return { proceed: true, mode, pathCheck };
 }
 
 export function showValidation(message, type) {
@@ -587,33 +859,53 @@ export function showValidation(message, type) {
 export function initWizard({ saveSettings }) {
   _saveSettings = saveSettings;
 
+  renderProviderOptions(onboardingWizardGitProviderSelect, 'github');
+  onboardingWizardGitProviderSelect?.addEventListener('change', updateWizardProviderUi);
+  onboardingWizardGheEnabled?.addEventListener('change', updateWizardProviderUi);
+
   validateBtn.addEventListener('click', async () => {
     await validateAndInspectRepo({ offerInteractiveActions: true });
   });
 
   connectionPathInitBtn.addEventListener('click', async () => {
-    const token = tokenInput.value.trim();
-    const owner = ownerInput.value.trim();
-    const repo = repoInput.value.trim();
-    const branch = branchInput.value.trim() || 'main';
+    const fields = getConnectionFormFieldsFromPage();
     const basePath = connectionPathInitGroup.dataset.path || filepathInput.value.trim() || 'bookmarks';
-    if (!token || !owner || !repo) {
+    if (!fields.token || !fields.owner || !fields.repo) {
       showValidation(getMessage('options_browseFolderNotConfigured'), 'error');
+      return;
+    }
+    if (!(await ensureWizardHostPermission(fields))) {
       return;
     }
 
     connectionPathInitBtn.disabled = true;
-    showValidation(getMessage('options_checking'), 'loading');
     try {
-      const api = new GitHubAPI(token, owner, repo, branch);
-      const pathCheck = await checkPathSetup(api, basePath);
-      if (pathCheck.status === 'hasBookmarks') {
-        hideConnectionPathInitAction();
-        showValidation(getMessage('options_onboardingInitPathAlreadyExists', [basePath]), 'success');
+      const api = createConnectionApi(fields);
+      const gate = await confirmConnectionPathInit(api, basePath);
+      if (!gate.proceed) {
+        if (gate.reason) {
+          hideConnectionPathInitAction();
+          showValidation(gate.reason, 'success');
+        }
         return;
       }
-      await _saveSettings();
-      await initializePathAndRunFirstPush();
+      showValidation(getMessage('popup_syncing'), 'loading');
+      if (gate.mode === 'initialize') {
+        await initializeRemoteFolder(api, basePath);
+      } else if (gate.mode === 'push') {
+        await assertSafeWizardPush(api, basePath);
+        const pushResult = await runSyncPortAction('push', {}, (payload) => {
+          showValidation(formatSyncProgress(payload), 'loading');
+        });
+        if (!pushResult?.success) {
+          showValidation(pushResult?.message || 'Push failed', 'error');
+          return;
+        }
+      } else {
+        await initializePathAndRunFirstPush((payload) => {
+          showValidation(formatSyncProgress(payload), 'loading');
+        });
+      }
       hideConnectionPathInitAction();
       showValidation(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
     } catch (err) {
@@ -622,6 +914,8 @@ export function initWizard({ saveSettings }) {
       connectionPathInitBtn.disabled = false;
     }
   });
+
+  onboardingWizardSyncModeSelect?.addEventListener('change', updateWizardSyncWarning);
 
   onboardingWizardStartBtn.addEventListener('click', async () => {
     await startOnboardingWizard({ manual: true });
@@ -637,7 +931,12 @@ export function initWizard({ saveSettings }) {
   onboardingWizardBackBtn.addEventListener('click', () => {
     if (!wizardState.active) return;
     if (wizardState.stepIndex > 0) {
+      const leavingEnvironment = WIZARD_STEPS[wizardState.stepIndex] === 'environment';
       wizardState.stepIndex -= 1;
+      if (leavingEnvironment) {
+        wizardState.environmentChecked = false;
+        wizardState.firstSyncDone = false;
+      }
       renderOnboardingWizardStep();
     }
   });
@@ -653,7 +952,9 @@ export function initWizard({ saveSettings }) {
     const shouldShowBusy = stepKey === 'tokenInput' || stepKey === 'environment';
     if (shouldShowBusy) {
       const loadingMsg = stepKey === 'environment'
-        ? getMessage('options_onboardingWizardSyncInProgress')
+        ? (wizardState.environmentChecked
+          ? getMessage('options_onboardingWizardSyncInProgress')
+          : getMessage('options_checking'))
         : getMessage('options_checking');
       setWizardBusy(true, loadingMsg);
     } else {
@@ -667,8 +968,8 @@ export function initWizard({ saveSettings }) {
       if (stepKey === 'environment') {
         if (!wizardState.environmentChecked) {
           await runWizardEnvironmentCheck();
-        } else {
-          await runWizardSyncAction();
+        } else if (!wizardState.firstSyncDone) {
+          await runWizardSyncWithChoice();
         }
         return;
       }
@@ -689,7 +990,9 @@ export function initWizard({ saveSettings }) {
     const shouldShowBusy = stepKey === 'tokenInput' || stepKey === 'environment';
     if (shouldShowBusy) {
       const loadingMsg = stepKey === 'environment'
-        ? getMessage('options_onboardingWizardSyncInProgress')
+        ? (wizardState.environmentChecked
+          ? getMessage('options_onboardingWizardSyncInProgress')
+          : getMessage('options_checking'))
         : getMessage('options_checking');
       setWizardBusy(true, loadingMsg);
     } else {
@@ -705,6 +1008,18 @@ export function initWizard({ saveSettings }) {
         const ok = await runWizardTokenValidation();
         if (!ok) return;
       }
+      if (stepKey === 'provider') {
+        syncWizardProviderState();
+        updateWizardProviderUi();
+        const providerFields = getWizardConnectionFields();
+        if (wizardServerUrlRequired(providerFields)) {
+          setWizardResult(getMessage('options_serverUrlRequired'), 'error');
+          return;
+        }
+        if (!(await ensureWizardHostPermission(providerFields))) {
+          return;
+        }
+      }
       if (stepKey === 'repoDecision') {
         wizardState.repoFlow = onboardingWizardRepoFlowSelect.value;
       }
@@ -712,9 +1027,10 @@ export function initWizard({ saveSettings }) {
         if (!wizardState.environmentChecked) {
           const checked = await runWizardEnvironmentCheck();
           if (!checked) return;
+          return;
         }
         if (!wizardState.firstSyncDone) {
-          const synced = await runWizardSyncAction();
+          const synced = await runWizardSyncWithChoice();
           if (!synced) return;
         }
       }

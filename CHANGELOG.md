@@ -7,6 +7,59 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-06-06 (*GLaDOS*)
+
+Multi-provider Git sync (GitHub, GitLab, Codeberg, Gitea family), profile transfer, push mirrors, and live sync progress. Pre-releases: `v3.0.0-beta.1` (initial), `v3.0.0-beta.2` (wizard fix [#146](https://github.com/d0dg3r/GitSyncMarks/issues/146), full 12-language i18n), `v3.0.0-beta.3` (Codeberg repo-scoped token connection test), `v3.0.0-beta.4` (settings export/import token API), `v3.0.0-beta.5` (Codeberg CORS, Gitea sync performance, profile-switch progress).
+
+### Fixed (since `v3.0.0-beta.4` — shipped in `v3.0.0-beta.5`)
+- **Codeberg sync/push failed with CORS / “Network error”**: `https://codeberg.org/*` was missing from manifest `host_permissions`. Codeberg is a fixed public host (like GitLab.com) and does not request optional runtime permission, so API calls were blocked by the browser.
+
+### Changed (since `v3.0.0-beta.4` — shipped in `v3.0.0-beta.5`)
+- **Profile switch progress**: Options page shows step progress (`Switching profile — 1 of 3`) and per-file push progress during step 1 on Gitea-family providers.
+- **Gitea-family remote reads (Phase 1)**: `buildRemoteMaps()` tries git tree + batched blob GETs before Contents API fallback (~18× faster full pull on Codeberg in benchmarks; see [GITEA-PERFORMANCE.md](docs/GITEA-PERFORMANCE.md)).
+- **Gitea-family writes (Phase 2)**: `GiteaAPI.atomicCommit()` tries batched `POST /git/blobs` + layered `POST /git/trees` (SHA refs, one commit) before Contents API sequential fallback. GitHub-style inline `content` on trees remains unsupported on Codeberg (HTTP 404). Console warning when git-data write falls back to Contents API (one commit per file).
+
+### Added (since `v3.0.0-beta.4` — shipped in `v3.0.0-beta.5`)
+- **Gitea sync performance analysis**: [`docs/GITEA-PERFORMANCE.md`](docs/GITEA-PERFORMANCE.md) (Contents vs Git Data API, compatibility matrix, try-first recommendation). Benchmark script [`scripts/benchmark-gitea-sync.js`](scripts/benchmark-gitea-sync.js) — `npm run test:gitea-benchmark:estimate` / `npm run test:gitea-benchmark` (env: `GITSYNCMARKS_GITEA_*` in [`.env.example`](.env.example)).
+
+### Fixed (since `v3.0.0-beta.3` — shipped in `v3.0.0-beta.4`)
+- **Settings export/import and Git settings sync**: Token read/write now uses `getProfileToken()` / `setEncryptedProfileToken()` from `profile-manager.js` (supports mirror token layout and legacy `profileTokens` migration). Import restores `gitProvider`, `serverUrl`, and legacy `repoOwner` / `githubToken` fields.
+
+### Fixed (since `v3.0.0-beta.2` — shipped in `v3.0.0-beta.3`)
+- **Codeberg / Gitea connection test falsely reported “Invalid token”** when the PAT lacked `read:user` but had repository access (403 on `GET /api/v1/user`). `GiteaAPI` now uses a non-throwing `_fetch` and treats 403 on `/user` as ambiguous-valid, then verifies via repo endpoints.
+
+### Fixed (since `v3.0.0-beta.1` — shipped in `v3.0.0-beta.2`)
+- **Setup wizard overwrote remote bookmarks** ([#146](https://github.com/d0dg3r/GitSyncMarks/issues/146)): Connection test no longer pushes to the repository. After check, user chooses pull, merge/sync, push, initialize structure, or skip — with confirm dialogs and push warnings when remote bookmarks exist.
+
+### Changed (since `v3.0.0-beta.1` — shipped in `v3.0.0-beta.2`)
+- **i18n**: Completed 3.0 strings (multi-provider UI, mirrors, transfer, sync history, wizard sync choice, clean orphans) in all 11 non-English locales (`de`, `fr`, `es`, `pt_BR`, `it`, `ja`, `zh_CN`, `ko`, `ru`, `tr`, `pl`). Apply script: `node scripts/apply-3.0-i18n.mjs`.
+
+### Added
+- **Multi-provider support**: Provider capability map (`lib/git-provider-common.js`). Separate UI entries for **Forgejo**, **Codeberg**, and **Gogs** (shared Gitea-family adapter). **GitLab** adapter (`lib/providers/gitlab-api.js`) for gitlab.com, self-managed instances, and subgroup project paths. Shared provider UI (`lib/provider-ui.js`). See [docs/PROVIDERS.md](docs/PROVIDERS.md).
+- **Profile bookmark transfer**: Copy bookmarks between profiles (full replace or folder merge) from the Profile tab. Supports push to target repository and sync-state update (`lib/profile-transfer.js`, `pushForProfile()`).
+- **Push mirror destinations**: Optional secondary Git remotes receive a push-only copy after each successful primary commit (`lib/mirror-push.js`, `mirrors[]` on profiles, per-mirror tokens).
+- **Clean remote orphans**: Sync sub-tab action to preview and delete remote bookmark files not present in local bookmarks (`previewRemoteOrphans()`, `cleanRemoteOrphans()` in `lib/sync-core.js`).
+
+### Changed
+- Development builds on `develop/3.0` report version **3.0.0-dev** in the About tab (`lib/display-version.js`, `scripts/build.sh`); manifest version is **3.0.0**. Build output includes `getAppVersion()` export (fixes options page load from `build/chrome`).
+- **Fast profile switch**: `switchProfile()` skips no-op commits, avoids post-commit full refetch, and loads the target profile from `lastSyncFiles` when remote HEAD matches `lastCommitSha`; otherwise delta-pulls via `fetchRemoteFileMap()` with cached blob SHAs (`lib/profile-switch-logic.js`, `lib/sync-diff.js`).
+- **Transfer progress**: Profile transfer dialog shows spinner plus step text (e.g. `$1 of $2 files` during push). Progress uses a dedicated runtime port so updates are not lost to a connect/message race.
+- **Sync progress**: Popup, onboarding wizard, connection-tab first push, pull, and **Generate now** show live step text (e.g. `$1 / $2 files` during push, `$1 / $2 bookmarks` during pull, generating files before commit). Uses a `syncProgress` runtime port (`lib/sync-progress.js`).
+- Connection tab and onboarding wizard show provider-specific token and owner placeholders and hints (Gitea tokens are not `ghp_…` GitHub-style strings).
+- Git repos bookmark folder adapts folder prefix per provider (`GitHubRepos`, `GiteaRepos`, etc.).
+- Provider-neutral UI copy where all Git providers are meant (push/pull labels, connection tab title).
+
+### Fixed
+- **GitLab connection test on empty repo**: Repos with commits but no `bookmarks/` folder (e.g. README-only) no longer fail with “Git tree listing empty under base path”; connection test reports success and offers path initialization.
+- **Deleted bookmark reappears after sync**: Profile switch cached local bookmarks into `lastSyncFiles` without keeping removed paths, so the three-way base no longer recorded the deletion. The next sync took path 8 (remote-only change) and pulled the bookmark back from the remote. `mergeLocalIntoSyncFiles()` now keeps removed paths in the base until a successful push; successful switch pushes use `saveSyncState()`. When the base is already stale and the user edited bookmarks locally, sync path 8 pushes remote deletes instead of pulling (`localModifiedSinceSync`, `buildStaleBasePushChanges()`).
+- **Gitea replace push left orphan folders**: The Contents-API commit fallback skipped file deletions (`content === null`), so profile transfer or replace push could add new folders while old ones (e.g. `bucher` alongside `bucher-2`) remained on the remote. Fallback now commits one path at a time via `atomicCommit`, including deletes.
+- **Stale “Last commit” in popup after Gitea sync**: When sync found no content changes (path 6), the stored commit SHA was not refreshed from the remote HEAD — e.g. after a profile transfer push — so the popup could show an old commit SHA while the remote had a newer commit. Sync now updates `lastCommitSha` from the fetched remote when it differs from the stored base.
+- **Popup conflict buttons said “GitHub” for non-GitHub profiles**: Push/pull labels and push-success message are provider-neutral (“Remote”).
+- **Transfer merge mode**: Merge hint, preview warnings, and confirm dialog when the target already has remote data (duplicate-folder risk). Preview warns when the transfer result contains slug-collision folder pairs (`bucher` + `bucher-2`). Replace push runs a post-commit orphan sweep on the target remote. Connection test used form values while background sync read persisted settings (race/mismatch). First sync now passes connection fields to `bootstrapFirstSync`. Gitea writes use the Contents API (`POST` for new files, `PUT` for updates) instead of the batch Change Files endpoint, which often returns misleading 401 errors on empty or older instances. Sync/push paths share a Gitea Contents-API fallback when a write still fails.
+- **Gitea push crash (`reading 'sha'`)**: Normalize Gitea API responses (`sha` / `id` / commit tree metadata) in `getLatestCommitSha`, `getCommit`, and `createOrUpdateFile`; cache commit tree SHA after Contents API writes so post-push state save does not fail on missing `tree.sha`.
+- **Gitea sync in MV3 service worker**: Replaced dynamic `import()` of `debug-log.js` with static imports (dynamic import is blocked in ServiceWorkerGlobalScope).
+- **Gitea sync after successful push (`Commit … has no tree SHA`)**: Gitea remote reads (pull/sync/save-state) use the Contents API via `buildRemoteMaps()` with a ref cascade (`commitSha` → branch → `refs/heads/{branch}`), bypassing unreliable git/trees metadata on self-hosted instances.
+
 ## [2.8.0] - 2026-05-31 (*TARS*)
 
 Reliability, performance and quality release (code-analysis Tiers 1–3). First published as a `2.8.0-beta` pre-release.

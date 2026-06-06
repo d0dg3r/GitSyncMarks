@@ -3,8 +3,14 @@
  * Orchestrates sub-modules and hosts shared functions (loadSettings, saveSettings).
  */
 
-import { DISPLAY_VERSION } from './lib/display-version.js';
-import { GitHubAPI } from './lib/github-api.js';
+import { getAppVersion } from './lib/display-version.js';
+import { createConnectionApi, ensureProviderHostPermission, isConnectionFormConfigured, normalizeGitProvider } from './lib/connection-settings.js';
+import { getProviderCaps } from './lib/git-provider-common.js';
+import {
+  applyProviderFormUi,
+  providerNeedsHostPermission,
+  renderProviderOptions,
+} from './lib/provider-ui.js';
 import { initI18n, applyI18n, getMessage, reloadI18n, SUPPORTED_LANGUAGES } from './lib/i18n.js';
 import { initTheme, applyTheme } from './lib/theme.js';
 import { initUiDensity, applyUiDensity } from './lib/ui-density.js';
@@ -23,6 +29,9 @@ import {
 
 import { initWizard, wizardState, startOnboardingWizard, renderOnboardingWizardStep, hideConnectionPathInitAction, showOnboardingConfirm, hideOnboardingConfirm, showValidation } from './options/wizard.js';
 import { initProfiles } from './options/profiles.js';
+import { initProfileTransfer } from './options/profile-transfer.js';
+import { initRemoteCleanup } from './options/remote-cleanup.js';
+import { initMirrors, loadMirrorsFromProfile, saveMirrorsForActiveProfile } from './options/mirrors.js';
 import { initLinkwarden, renderLwOptionsTagChips, renderLwOptionsTagCloud, setLwOptionsSelectedTags, setLwOptionsAllTags, getLwOptionsSelectedTags } from './options/linkwarden.js';
 import { initHistory } from './options/history.js';
 import { initContextMenuConfig, renderContextMenuConfig, DEFAULT_CONTEXT_MENU_ITEMS } from './options/context-menu-config.js';
@@ -32,6 +41,46 @@ import { ensureContextMenuItemDefaults } from './lib/context-menu-defaults.js';
 import { STORAGE_KEYS, LOCAL_STORAGE_KEYS } from './lib/storage-keys.js';
 import { initFactoryReset } from './options/factory-reset.js';
 import { initHelpTabShortcuts, loadShortcuts } from './options/help-shortcuts.js';
+
+function getConnectionFormFields() {
+  return {
+    token: tokenInput?.value?.trim() ?? '',
+    owner: ownerInput?.value?.trim() ?? '',
+    repo: repoInput?.value?.trim() ?? '',
+    branch: branchInput?.value?.trim() || 'main',
+    gitProvider: normalizeGitProvider(gitProviderSelect?.value),
+    serverUrl: serverUrlInput?.value?.trim() ?? '',
+  };
+}
+
+function updateProviderUi() {
+  const provider = normalizeGitProvider(gitProviderSelect?.value);
+  applyProviderFormUi(
+    {
+      serverUrlGroup,
+      serverUrlInput,
+      tokenHintEl,
+      tokenInput,
+      ownerInput,
+      ownerHintEl,
+      gheDisclosureGroup,
+    },
+    provider,
+    { gheEnabled: gheServerUrlEnabledInput?.checked }
+  );
+}
+
+async function ensureConnectionHostPermission(fields = getConnectionFormFields()) {
+  const caps = getProviderCaps(fields.gitProvider);
+  const serverUrl = fields.serverUrl || caps.defaultServerUrl || '';
+  if (!providerNeedsHostPermission(fields.gitProvider, serverUrl)) return true;
+  if (!serverUrl) return false;
+  const { granted } = await ensureProviderHostPermission(fields.gitProvider, serverUrl);
+  if (!granted) {
+    showSaveResult(getMessage('options_hostPermissionDenied'), 'error');
+  }
+  return granted;
+}
 
 function normalizeGenMode(val) {
   if (val === true) return 'auto';
@@ -53,6 +102,13 @@ const profileAddDialog = document.getElementById('profile-add-dialog');
 const profileRenameDialog = document.getElementById('profile-rename-dialog');
 const profileMessage = document.getElementById('profile-message');
 const tokenInput = document.getElementById('token');
+const gitProviderSelect = document.getElementById('git-provider');
+const gheDisclosureGroup = document.getElementById('ghe-server-url-disclosure');
+const gheServerUrlEnabledInput = document.getElementById('ghe-server-url-enabled');
+const serverUrlGroup = document.getElementById('server-url-group');
+const serverUrlInput = document.getElementById('server-url');
+const tokenHintEl = document.getElementById('token-hint');
+const ownerHintEl = document.getElementById('owner-hint');
 const toggleTokenBtn = document.getElementById('toggle-token');
 const ownerInput = document.getElementById('owner');
 const repoInput = document.getElementById('repo');
@@ -248,8 +304,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
+    renderProviderOptions(gitProviderSelect, 'github');
     initWizard({ saveSettings, loadSettings });
     initProfiles({ loadSettings, saveSettings, showSaveResult });
+    initProfileTransfer({ showProfileMessage: (msg, err) => showSaveResult(msg, err ? 'error' : 'success') });
+    initRemoteCleanup();
+    initMirrors();
     initLinkwarden({ saveSettings, downloadFile });
     initHistory();
     initContextMenuConfig();
@@ -262,8 +322,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const versionEl = document.getElementById('app-version');
     if (versionEl) {
-      const version = DISPLAY_VERSION ?? chrome.runtime.getManifest().version;
-      versionEl.textContent = version;
+      versionEl.textContent = getAppVersion(chrome.runtime.getManifest().version);
     }
   } catch (err) {
     console.error('[GitSyncMarks] options init failed:', err);
@@ -395,6 +454,11 @@ async function loadSettings() {
   const activeProfile = profiles[activeId];
   if (profileSettings) {
     tokenInput.value = profileSettings.githubToken || '';
+    renderProviderOptions(gitProviderSelect, profileSettings.gitProvider || 'github');
+    if (serverUrlInput) serverUrlInput.value = profileSettings.serverUrl || '';
+    if (gheServerUrlEnabledInput) {
+      gheServerUrlEnabledInput.checked = !!(profileSettings.serverUrl && (profileSettings.gitProvider || 'github') === 'github');
+    }
     ownerInput.value = profileSettings.repoOwner || '';
     repoInput.value = profileSettings.repoName || '';
     branchInput.value = profileSettings.branch || 'main';
@@ -402,6 +466,8 @@ async function loadSettings() {
     githubReposEnabledInput.checked = activeProfile?.githubReposEnabled ?? false;
     githubReposParentSelect.value = activeProfile?.githubReposParent ?? 'other';
   }
+  updateProviderUi();
+  await loadMirrorsFromProfile();
   try {
     await loadBookmarkFolders();
   } catch (err) {
@@ -415,7 +481,7 @@ async function loadSettings() {
   populateQuickFolderSelect(quickFolderSelect2, quickFolderIds[1] || '');
   populateQuickFolderSelect(quickFolderSelect3, quickFolderIds[2] || '');
 
-  const isConfigured = !!(tokenInput.value.trim() && ownerInput.value.trim() && repoInput.value.trim());
+  const isConfigured = isConnectionFormConfigured(getConnectionFormFields());
   githubReposCard.style.display = isConfigured ? 'block' : 'none';
   githubReposOptions.style.display = githubReposEnabledInput.checked ? 'block' : 'none';
 
@@ -596,12 +662,20 @@ async function saveSettings() {
     const newPath = (filepathInput.value.trim() || 'bookmarks').replace(/\/+$/, '');
     const pathChanged = newPath !== oldPath;
 
+    const fields = getConnectionFormFields();
+    if (providerNeedsHostPermission(fields.gitProvider, fields.serverUrl || getProviderCaps(fields.gitProvider).defaultServerUrl)) {
+      const granted = await ensureConnectionHostPermission(fields);
+      if (!granted) return;
+    }
+
     await saveProfile(activeId, {
-      owner: ownerInput.value.trim(),
-      repo: repoInput.value.trim(),
-      branch: branchInput.value.trim() || 'main',
+      gitProvider: fields.gitProvider,
+      serverUrl: fields.serverUrl,
+      owner: fields.owner,
+      repo: fields.repo,
+      branch: fields.branch,
       filePath: filepathInput.value.trim() || 'bookmarks',
-      token: tokenInput.value.trim(),
+      token: fields.token,
       githubReposEnabled: githubReposEnabledInput.checked,
       githubReposParent: githubReposParentSelect.value,
       contextQuickFolderIds: [
@@ -610,6 +684,7 @@ async function saveSettings() {
         quickFolderSelect3.value,
       ].filter(Boolean),
     });
+    await saveMirrorsForActiveProfile();
 
     await chrome.storage.sync.set({
       [STORAGE_KEYS.AUTO_SYNC]: autoSyncInput.checked,
@@ -651,7 +726,7 @@ async function saveSettings() {
       : getMessage('options_settingsSaved');
     showSaveResult(successMsg, 'success');
 
-    const isConf = !!(tokenInput.value.trim() && ownerInput.value.trim() && repoInput.value.trim());
+    const isConf = isConnectionFormConfigured(getConnectionFormFields());
     githubReposCard.style.display = isConf ? 'block' : 'none';
   } catch (err) {
     showSaveResult(getMessage('options_error', [err.message]), 'error');
@@ -670,6 +745,15 @@ function showSaveResult(message, type) {
 // ==============================
 
 tokenInput?.addEventListener('change', saveSettings);
+gitProviderSelect?.addEventListener('change', () => {
+  updateProviderUi();
+  saveSettings();
+});
+gheServerUrlEnabledInput?.addEventListener('change', () => {
+  updateProviderUi();
+  saveSettings();
+});
+serverUrlInput?.addEventListener('change', saveSettings);
 ownerInput?.addEventListener('change', saveSettings);
 repoInput?.addEventListener('change', saveSettings);
 branchInput?.addEventListener('change', saveSettings);
@@ -719,11 +803,23 @@ async function loadFolderBrowserContents(path) {
   btnFolderUp.disabled = !path;
 
   try {
-    const token = tokenInput?.value?.trim() ?? '';
-    const owner = ownerInput?.value?.trim() ?? '';
-    const repo = repoInput?.value?.trim() ?? '';
-    const branch = branchInput?.value?.trim() || 'main';
-    const api = new GitHubAPI(token, owner, repo, branch);
+    const fields = getConnectionFormFields();
+    if (!isConnectionFormConfigured({ ...fields, owner: fields.owner || 'x', repo: fields.repo || 'x' }) && !fields.token) {
+      folderBrowserEmpty.textContent = getMessage('options_browseFolderNotConfigured');
+      folderBrowserEmpty.classList.remove('hidden');
+      folderBrowserLoading.classList.add('hidden');
+      return;
+    }
+    if (providerNeedsHostPermission(fields.gitProvider, fields.serverUrl || getProviderCaps(fields.gitProvider).defaultServerUrl)) {
+      const granted = await ensureConnectionHostPermission(fields);
+      if (!granted) {
+        folderBrowserLoading.classList.add('hidden');
+        folderBrowserEmpty.textContent = getMessage('options_hostPermissionDenied');
+        folderBrowserEmpty.classList.remove('hidden');
+        return;
+      }
+    }
+    const api = createConnectionApi(fields);
     const dirs = await api.listContents(path);
 
     folderBrowserLoading.classList.add('hidden');
@@ -774,11 +870,15 @@ btnBrowseFolder?.addEventListener('click', () => {
     return;
   }
 
-  const token = tokenInput?.value?.trim() ?? '';
-  const owner = ownerInput?.value?.trim() ?? '';
-  const repo = repoInput?.value?.trim() ?? '';
-  if (!token || !owner || !repo) {
+  const fields = getConnectionFormFields();
+  if (!fields.token || !fields.owner || !fields.repo) {
     showValidation(getMessage('options_browseFolderNotConfigured') || 'Please configure token, owner, and repo first', 'error');
+    return;
+  }
+  const caps = getProviderCaps(fields.gitProvider);
+  const serverUrl = fields.serverUrl || caps.defaultServerUrl || '';
+  if (caps.requireServerUrl && !serverUrl) {
+    showValidation(getMessage('options_serverUrlRequired'), 'error');
     return;
   }
 
@@ -819,22 +919,33 @@ githubReposParentSelect?.addEventListener('change', saveSettings);
 
 githubReposRefreshBtn?.addEventListener('click', async () => {
   await saveSettings();
-  const token = tokenInput?.value?.trim() ?? '';
   const activeId = await getActiveProfileId();
   const profiles = await getProfiles();
   const currentProfile = profiles[activeId];
-  if (!token) {
+  const fields = getConnectionFormFields();
+  if (!fields.token) {
     githubReposResult.textContent = getMessage('options_pleaseEnterToken');
     githubReposResult.className = 'validation-result error';
     return;
+  }
+  if (providerNeedsHostPermission(fields.gitProvider, fields.serverUrl || getProviderCaps(fields.gitProvider).defaultServerUrl)) {
+    const granted = await ensureConnectionHostPermission(fields);
+    if (!granted) return;
   }
   try {
     githubReposRefreshBtn.disabled = true;
     githubReposSpinner.style.display = 'inline-block';
     githubReposResult.textContent = '';
     const parent = githubReposParentSelect.value || 'other';
-    const result = await updateGitHubReposFolder(token, parent, currentProfile?.githubReposUsername || '', async (username) => {
-      await saveProfile(activeId, { githubReposUsername: username });
+    const result = await updateGitHubReposFolder({
+      token: fields.token,
+      gitProvider: fields.gitProvider,
+      serverUrl: fields.serverUrl,
+      parentRole: parent,
+      username: currentProfile?.githubReposUsername || '',
+      onUsername: async (username) => {
+        await saveProfile(activeId, { githubReposUsername: username });
+      },
     });
     githubReposResult.textContent = getMessage('options_githubReposRefreshSuccess', [result.count.toString(), result.username || '']);
     githubReposResult.className = 'validation-result success';

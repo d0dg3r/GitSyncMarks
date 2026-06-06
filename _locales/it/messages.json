@@ -1,663 +1,9 @@
 {
-  "extName": {
-    "message": "GitSyncMarks"
-  },
-  "extDescription": {
-    "message": "Sincronizzazione segnalibri via GitHub. Sinergia Linkwarden, ricerca intelligente e Companion App. Diretto, sicuro, privato."
-  },
-  "extDescriptionFirefox": {
-    "message": "Sincronizzazione segnalibri via GitHub. Sinergia Linkwarden, ricerca veloce e configurazione guidata. Sicuro e privato. Supporto Firefox nativo."
-  },
-  "commands_quickSync": {
-    "message": "Sincronizzazione rapida segnalibri"
-  },
-  "commands_openOptions": {
-    "message": "Apri impostazioni estensione"
-  },
-  "popup_configureFirst": {
-    "message": "Configura prima l'estensione."
-  },
-  "popup_openSettings": {
-    "message": "Apri impostazioni"
-  },
-  "popup_ready": {
-    "message": "Pronto"
-  },
-  "popup_conflictDetected": {
-    "message": "Conflitto rilevato"
-  },
-  "popup_conflictDescription": {
-    "message": "Sia i segnalibri locali che quelli remoti sono stati modificati. Scegli una risoluzione:"
-  },
-  "popup_localToGithub": {
-    "message": "Locale → GitHub"
-  },
-  "popup_githubToLocal": {
-    "message": "GitHub → Locale"
-  },
-  "popup_syncNow": {
-    "message": "Sincronizza ora"
-  },
-  "popup_pushUp": {
-    "message": "Push ↑"
-  },
-  "popup_pullDown": {
-    "message": "Pull ↓"
-  },
-  "popup_autoSyncActive": {
-    "message": "Sincronizzazione automatica attiva"
-  },
-  "popup_autoSyncDisabled": {
-    "message": "Sincronizzazione automatica disattivata"
-  },
-  "popup_settings": {
-    "message": "Impostazioni"
-  },
-  "popup_synced": {
-    "message": "Sincronizzato"
-  },
-  "popup_notSyncedYet": {
-    "message": "Non ancora sincronizzato"
-  },
-  "popup_lastSync": {
-    "message": "Ultima sincronizzazione: $1"
-  },
-  "popup_justNow": {
-    "message": "adesso"
-  },
-  "popup_minAgo": {
-    "message": "$1 min fa"
-  },
-  "popup_hoursAgo": {
-    "message": "$1h fa"
-  },
-  "popup_syncing": {
-    "message": "Sincronizzazione..."
-  },
-  "popup_profileSwitching": {
-    "message": "Cambio profilo..."
-  },
-  "popup_error": {
-    "message": "Errore: $1"
-  },
-  "popup_nextSyncIn": {
-    "message": "Prossima sincronizzazione tra $1"
-  },
-  "popup_lastDataChange": {
-    "message": "Ultima modifica dati: $1"
-  },
-  "popup_lastCommit": {
-    "message": "Ultimo commit:"
-  },
-  "options_subtitle": {
-    "message": "Impostazioni"
-  },
-  "options_profile": {
-    "message": "Profilo"
-  },
-  "options_profileAdd": {
-    "message": "+ Aggiungi"
-  },
-  "options_profileAddNameLabel": {
-    "message": "Nome profilo"
-  },
-  "options_profileAddConfirmBtn": {
-    "message": "Aggiungi"
-  },
-  "options_profileRenameLabel": {
-    "message": "Nuovo nome"
-  },
-  "options_profileAddPlaceholder": {
-    "message": "Nuovo profilo"
-  },
-  "options_profileRename": {
-    "message": "Rinomina"
-  },
-  "options_profileRenamePrompt": {
-    "message": "Nuovo nome per \"$1\":"
-  },
-  "options_profileDelete": {
-    "message": "Elimina"
-  },
-  "options_profileSwitchConfirm": {
-    "message": "Passare a \"$1\"? I tuoi segnalibri verranno sostituiti con quelli di quel profilo."
-  },
-  "options_profileDeleteConfirm": {
-    "message": "Eliminare il profilo \"$1\"? L'operazione non può essere annullata."
-  },
-  "options_profileSwitching": {
-    "message": "Cambio profilo..."
-  },
-  "options_profileSwitchWithoutConfirm": {
-    "message": "Cambia senza conferma"
-  },
-  "options_profileSwitchConfirmBtn": {
-    "message": "Cambia"
-  },
-  "options_profileSwitchCancelBtn": {
-    "message": "Annulla"
-  },
-  "options_profilesLimit": {
-    "message": "$1/$2 profili"
-  },
-  "options_githubConnection": {
-    "message": "Connessione GitHub"
-  },
-  "options_patLabel": {
-    "message": "Personal Access Token (PAT)"
-  },
-  "options_toggleToken": {
-    "message": "Mostra/nascondi token"
-  },
-  "options_tokenHint": {
-    "message": "Richiede lo scope <code>repo</code> (classic) o <code>Contents: Read/Write</code> e <code>Metadata: Read</code> (fine-grained). <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Crea token</a>"
-  },
-  "options_repoOwner": {
-    "message": "Proprietario del repository"
-  },
-  "options_ownerPlaceholder": {
-    "message": "tuo-nome-utente-github"
-  },
-  "options_repoName": {
-    "message": "Nome del repository"
-  },
-  "options_branch": {
-    "message": "Branch"
-  },
-  "options_filePath": {
-    "message": "Percorso file nel repository"
-  },
-  "options_filePathHint": {
-    "message": "Cartella in cui verranno salvati i file dei segnalibri."
-  },
-  "options_browseFolder": {
-    "message": "Sfoglia"
-  },
-  "options_browseFolderEmpty": {
-    "message": "Nessuna cartella trovata"
-  },
-  "options_browseFolderLoading": {
-    "message": "Caricamento…"
-  },
-  "options_browseFolderSelect": {
-    "message": "Seleziona"
-  },
-  "options_browseFolderNotConfigured": {
-    "message": "Configurare prima token, proprietario e repository"
-  },
-  "options_filePathChangeHint": {
-    "message": "Alla prossima sincronizzazione potrebbe verificarsi un conflitto. Usa \"GitHub → Locale\" per adottare lo stato remoto."
-  },
-  "options_testConnection": {
-    "message": "Testa connessione"
-  },
-  "options_githubReposTitle": {
-    "message": "Cartella GitHub Repos"
-  },
-  "options_githubReposDesc": {
-    "message": "Crea una cartella con segnalibri a tutti i tuoi repository GitHub (pubblici e privati)."
-  },
-  "options_githubReposEnabled": {
-    "message": "Cartella GitHub Repos"
-  },
-  "options_githubReposParentLabel": {
-    "message": "Posizione"
-  },
-  "options_githubReposParentToolbar": {
-    "message": "Barra dei segnalibri"
-  },
-  "options_githubReposParentOther": {
-    "message": "Altri segnalibri"
-  },
-  "options_githubReposParentMenu": {
-    "message": "Menu segnalibri"
-  },
-  "options_githubReposRefresh": {
-    "message": "Aggiorna GitHub Repos"
-  },
-  "options_githubReposRefreshSuccess": {
-    "message": "Aggiunti $1 repository per $2"
-  },
-  "options_synchronization": {
-    "message": "Sincronizzazione"
-  },
-  "options_autoSync": {
-    "message": "Sincronizzazione automatica"
-  },
-  "options_syncInterval": {
-    "message": "Intervallo di sincronizzazione (minuti)"
-  },
-  "options_syncIntervalHint": {
-    "message": "Frequenza di controllo delle modifiche remote."
-  },
-  "options_syncProfile": {
-    "message": "Profilo di sincronizzazione"
-  },
-  "options_syncProfileRealtime": {
-    "message": "Tempo reale (1 min, 2s debounce)"
-  },
-  "options_syncProfileFrequent": {
-    "message": "Frequente (5 min, 3s debounce)"
-  },
-  "options_syncProfileNormal": {
-    "message": "Normale (15 min, 5s debounce)"
-  },
-  "options_syncProfilePowersave": {
-    "message": "Risparmio energetico (60 min, 10s debounce)"
-  },
-  "options_syncProfileCustom": {
-    "message": "Personalizzato"
-  },
-  "options_debounceDelay": {
-    "message": "Ritardo debounce (secondi)"
-  },
-  "options_debounceDelayHint": {
-    "message": "Tempo di attesa prima della sincronizzazione dopo modifiche ai segnalibri."
-  },
-  "options_syncOnStartup": {
-    "message": "Sincronizza all'avvio del browser"
-  },
-  "options_syncOnFocus": {
-    "message": "Sincronizza quando il browser torna in primo piano"
-  },
-  "options_generatedFilesTitle": {
-    "message": "File generati"
-  },
-  "options_generatedFilesDesc": {
-    "message": "File creati nel repository durante la sincronizzazione. Scegli Off, Manuale o Auto per ogni file."
-  },
-  "options_generateModeOff": {
-    "message": "Off"
-  },
-  "options_generateModeManual": {
-    "message": "Manuale"
-  },
-  "options_generateModeAuto": {
-    "message": "Auto"
-  },
-  "options_generateNowBtn": {
-    "message": "Genera ora"
-  },
-  "options_generateReadmeMd": {
-    "message": "README.md"
-  },
-  "options_generateReadmeMdDesc": {
-    "message": "Panoramica Markdown nel repository."
-  },
-  "options_generateBookmarksHtml": {
-    "message": "Genera bookmarks.html"
-  },
-  "options_generateBookmarksHtmlDesc": {
-    "message": "Formato Netscape per l'importazione nel browser (Chrome, Firefox)."
-  },
-  "options_generateFeedXml": {
-    "message": "Genera feed.xml"
-  },
-  "options_generateFeedXmlDesc": {
-    "message": "Feed RSS 2.0 — iscriviti con qualsiasi lettore RSS o usalo per automazioni."
-  },
-  "options_generateDashyYml": {
-    "message": "Genera dashy-conf.yml"
-  },
-  "options_generateDashyYmlDesc": {
-    "message": "Configurazione dashboard Dashy — importa come sezioni nel tuo conf.yml."
-  },
-  "options_settingsSyncTitle": {
-    "message": "File impostazioni"
-  },
-  "options_settingsSyncDesc": {
-    "message": "Backup crittografato delle impostazioni dell'estensione nel repository. Stessa password su ogni dispositivo."
-  },
-  "options_syncSettingsToGit": {
-    "message": "Sincronizza impostazioni su Git (crittografato)"
-  },
-  "options_settingsSyncPasswordLabel": {
-    "message": "Password di crittografia"
-  },
-  "options_settingsSyncPasswordHint": {
-    "message": "Imposta una volta per dispositivo. Deve essere uguale su tutti i dispositivi."
-  },
-  "options_settingsSyncSaveBtn": {
-    "message": "Salva password"
-  },
-  "options_settingsSyncActive": {
-    "message": "Sincronizzazione impostazioni attiva — le impostazioni verranno inviate alla prossima sincronizzazione."
-  },
-  "options_settingsSyncPasswordMissing": {
-    "message": "Inserisci una password."
-  },
-  "options_settingsSyncModeLabel": {
-    "message": "Modalità di sincronizzazione"
-  },
-  "options_settingsSyncModeGlobal": {
-    "message": "Globale — condiviso tra tutti i dispositivi"
-  },
-  "options_settingsSyncModeIndividual": {
-    "message": "Individuale — solo questo dispositivo"
-  },
-  "options_settingsSyncGlobalWriteEnabled": {
-    "message": "Allow writing to global settings (settings.enc)"
-  },
-  "options_settingsSyncGlobalWriteHint": {
-    "message": "Recommended OFF. If enabled, this client can overwrite global settings for all devices."
-  },
-  "options_settingsSyncImportTitle": {
-    "message": "Importa da un altro dispositivo"
-  },
-  "options_settingsSyncImportBtn": {
-    "message": "Carica configurazioni disponibili"
-  },
-  "options_settingsSyncImportApply": {
-    "message": "Importa"
-  },
-  "options_settingsSyncImportEmpty": {
-    "message": "Nessuna configurazione dispositivo trovata"
-  },
-  "options_settingsSyncImportSuccess": {
-    "message": "Impostazioni importate con successo"
-  },
-  "options_settingsSyncImportGlobalConfirm": {
-    "message": "Apply the global settings file now? This will overwrite current local settings on this device."
-  },
-  "options_settingsSyncImportGlobalConfirmBtn": {
-    "message": "Apply global config"
-  },
-  "options_settingsSyncImportReloadConfirm": {
-    "message": "Settings were imported. Reload now to apply them everywhere?"
-  },
-  "options_settingsSyncImportReloadConfirmBtn": {
-    "message": "Reload now"
-  },
-  "options_settingsRegistryTitle": {
-    "message": "Available settings in repository"
-  },
-  "options_settingsRegistryRefreshBtn": {
-    "message": "Refresh"
-  },
-  "options_settingsRegistryImportApplyBtn": {
-    "message": "Import & Apply"
-  },
-  "options_settingsRegistrySyncSelectedBtn": {
-    "message": "Sync current to selected"
-  },
-  "options_settingsRegistryCreateBtn": {
-    "message": "Create new setting"
-  },
-  "options_settingsRegistryNewNamePlaceholder": {
-    "message": "New setting name"
-  },
-  "options_settingsRegistryActionPasswordPrompt": {
-    "message": "Enter password for this settings action"
-  },
-  "options_settingsRegistryImportSuccess": {
-    "message": "Settings imported and applied"
-  },
-  "options_settingsRegistrySyncSuccess": {
-    "message": "Current settings synced to selected profile"
-  },
-  "options_settingsRegistryCreateSuccess": {
-    "message": "New settings profile created"
-  },
-  "options_settingsRegistryCreateNameRequired": {
-    "message": "Please enter a name for the new setting"
-  },
-  "options_resetTitle": {
-    "message": "Reimposta estensione"
-  },
-  "options_resetDescription": {
-    "message": "Elimina tutti i profili, i token e le impostazioni. I segnalibri del browser non saranno modificati."
-  },
-  "options_resetBtn": {
-    "message": "Reimposta tutti i dati"
-  },
-  "options_resetConfirm": {
-    "message": "Sei sicuro? Questa azione non può essere annullata. Tutti i profili e le impostazioni verranno eliminati permanentemente."
-  },
-  "options_resetSuccess": {
-    "message": "L'estensione è stata reimpostata."
-  },
-  "options_notifications": {
-    "message": "Notifiche di sincronizzazione"
-  },
-  "options_notificationsOff": {
-    "message": "Off"
-  },
-  "options_notificationsAll": {
-    "message": "Tutte (successo e errore)"
-  },
-  "options_notificationsErrorsOnly": {
-    "message": "Solo errori"
-  },
-  "options_notificationsHint": {
-    "message": "Scegli quando mostrare le notifiche."
-  },
-  "notification_titleSuccess": {
-    "message": "Sincronizzazione riuscita"
-  },
-  "notification_titleFailure": {
-    "message": "Sincronizzazione fallita"
-  },
-  "options_saveSettings": {
-    "message": "Salva impostazioni"
-  },
-  "options_theme": {
-    "message": "Tema"
-  },
-  "options_themeAuto": {
-    "message": "A Auto (sistema)"
-  },
-  "options_themeLight": {
-    "message": "☀ Chiaro"
-  },
-  "options_themeDark": {
-    "message": "☽ Scuro"
-  },
-  "options_language": {
-    "message": "Lingua"
-  },
-  "options_langAuto": {
-    "message": "Auto (browser)"
-  },
-  "options_pleaseEnterToken": {
-    "message": "Inserisci un token."
-  },
-  "options_checking": {
-    "message": "Verifica in corso..."
-  },
-  "options_invalidToken": {
-    "message": "Token non valido."
-  },
-  "options_tokenValidMissingScope": {
-    "message": "Token valido ($1), ma manca lo scope \"repo\"."
-  },
-  "options_tokenValidRepoNotFound": {
-    "message": "Token valido ($1), ma il repository \"$2\" non è stato trovato."
-  },
-  "options_connectionOk": {
-    "message": "Connessione OK! Utente: $1, Repository: $2"
-  },
-  "options_tokenValidSpecifyRepo": {
-    "message": "Token valido! Utente: $1. Specifica un repository."
-  },
-  "options_error": {
-    "message": "Errore: $1"
-  },
-  "options_onboardingCreateBtn": {
-    "message": "Crea"
-  },
-  "options_onboardingPullBtn": {
-    "message": "Carica"
-  },
-  "options_onboardingCreateFolder": {
-    "message": "La cartella $1 non esiste ancora. Crearla con la struttura di base (toolbar, other)?"
-  },
-  "options_onboardingPullNow": {
-    "message": "Segnalibri trovati nel repository. Scaricarli in questo browser?"
-  },
-  "options_onboardingCreateSuccess": {
-    "message": "Cartella creata con successo."
-  },
-  "options_onboardingPullSuccess": {
-    "message": "Segnalibri scaricati con successo."
-  },
-  "options_onboardingWizardStart": {
-    "message": "Avvia procedura guidata"
-  },
-  "options_onboardingWizardTitle": {
-    "message": "Procedura guidata"
-  },
-  "options_onboardingWizardStepWelcomeTitle": {
-    "message": "Benvenuto"
-  },
-  "options_onboardingWizardStepWelcomeText": {
-    "message": "Questa procedura ti guida in setup repository, token, test connessione e primo sync."
-  },
-  "options_onboardingWizardStepRepoTitle": {
-    "message": "Impostazioni repository"
-  },
-  "options_onboardingWizardStepRepoText": {
-    "message": "Compila owner, nome repository, branch e percorso base."
-  },
-  "options_onboardingWizardStepTokenTitle": {
-    "message": "Token di accesso"
-  },
-  "options_onboardingWizardStepTokenText": {
-    "message": "Aggiungi un token GitHub con scope repo e tienilo privato."
-  },
-  "options_onboardingWizardStepValidateTitle": {
-    "message": "Testa connessione"
-  },
-  "options_onboardingWizardStepValidateText": {
-    "message": "Esegui il test per verificare token, repository e accesso al percorso."
-  },
-  "options_onboardingWizardStepSyncTitle": {
-    "message": "Prima azione di sync"
-  },
-  "options_onboardingWizardStepSyncTextEmpty": {
-    "message": "Il percorso è vuoto. Crea la struttura iniziale per iniziare."
-  },
-  "options_onboardingWizardStepSyncTextExisting": {
-    "message": "Ci sono già segnalibri nel repository. Importali ora in questo browser."
-  },
-  "options_onboardingWizardStepFinishTitle": {
-    "message": "Fine"
-  },
-  "options_onboardingWizardStepFinishText": {
-    "message": "Configurazione completata. Puoi continuare con le impostazioni normali."
-  },
-  "options_onboardingWizardActionTest": {
-    "message": "Esegui test"
-  },
-  "options_onboardingWizardActionCreate": {
-    "message": "Crea struttura"
-  },
-  "options_onboardingWizardActionPull": {
-    "message": "Importa ora"
-  },
-  "options_onboardingWizardNext": {
-    "message": "Avanti"
-  },
-  "options_onboardingWizardBack": {
-    "message": "Indietro"
-  },
-  "options_onboardingWizardSkip": {
-    "message": "Esci"
-  },
-  "options_onboardingWizardFinish": {
-    "message": "Fine"
-  },
-  "options_onboardingWizardNeedConnection": {
-    "message": "Esegui prima il test di connessione."
-  },
-  "options_onboardingWizardNeedAction": {
-    "message": "Completa prima la prima azione di sync."
-  },
-  "options_onboardingWizardDismissed": {
-    "message": "Procedura chiusa. Puoi riavviarla in qualsiasi momento."
-  },
-  "options_onboardingWizardCompleted": {
-    "message": "Procedura completata con successo."
-  },
-  "options_onboardingWizardStepTokenHelpTitle": {
-    "message": "Crea token"
-  },
-  "options_onboardingWizardStepTokenHelpText": {
-    "message": "Apri le impostazioni token di GitHub e crea un Personal Access Token con scope repo."
-  },
-  "options_onboardingWizardTokenHelpText": {
-    "message": "Crea un Personal Access Token GitHub con scope repo nelle impostazioni di GitHub."
-  },
-  "options_onboardingWizardTokenHelpLink": {
-    "message": "Apri pagina token GitHub"
-  },
-  "options_onboardingWizardStepHasTokenTitle": {
-    "message": "Hai già un token?"
-  },
-  "options_onboardingWizardStepHasTokenText": {
-    "message": "Se no, crealo prima e poi continua con l'inserimento del token."
-  },
-  "options_onboardingWizardHasTokenLabel": {
-    "message": "Hai già un token?"
-  },
-  "options_onboardingWizardHasTokenYes": {
-    "message": "Sì, ne ho già uno"
-  },
-  "options_onboardingWizardHasTokenNo": {
-    "message": "No, mostrami come"
-  },
-  "options_onboardingWizardStepRepoDecisionTitle": {
-    "message": "Modalità repository"
-  },
-  "options_onboardingWizardStepRepoDecisionText": {
-    "message": "Scegli tra creare automaticamente il repository o usare un repository esistente."
-  },
-  "options_onboardingWizardRepoFlowLabel": {
-    "message": "Modalità repository"
-  },
-  "options_onboardingWizardRepoFlowAuto": {
-    "message": "Crea repository automaticamente"
-  },
-  "options_onboardingWizardRepoFlowManual": {
-    "message": "Usa repository esistente"
-  },
-  "options_onboardingWizardActionCheckEnvironment": {
-    "message": "Verifica repository e percorso"
-  },
-  "options_onboardingWizardTokenValidated": {
-    "message": "Il token è valido e ha lo scope richiesto."
-  },
-  "options_onboardingWizardRepoRequired": {
-    "message": "Inserisci proprietario e nome del repository."
-  },
-  "options_onboardingWizardRepoCreateFailed": {
-    "message": "Impossibile creare il repository con questo token/permessi."
-  },
-  "options_onboardingWizardEnvironmentChecked": {
-    "message": "Verifica repository e percorso completata."
-  },
-  "options_onboardingWizardRepoOwnerMismatch": {
-    "message": "La creazione automatica supporta solo repository del tuo utente. Imposta il proprietario su $1."
-  },
-  "options_onboardingWizardRepoUserOnlyHint": {
-    "message": "Per repository di organizzazioni o con proprietario diverso, passa alla modalità manuale (repository esistente)."
-  },
-  "options_onboardingWizardRepoCreatePermissionDenied": {
-    "message": "Questo token non può creare repository. Controlla lo scope repo e i permessi dell'account."
-  },
-  "options_settingsSaved": {
-    "message": "Impostazioni salvate!"
-  },
-  "options_errorSaving": {
-    "message": "Errore durante il salvataggio delle impostazioni: $1"
-  },
-  "api_invalidToken": {
-    "message": "Token non valido. Controlla il tuo Personal Access Token."
-  },
-  "api_rateLimitExceeded": {
-    "message": "Limite di richieste API GitHub superato. Attendi un momento."
-  },
   "api_accessDenied": {
     "message": "Accesso negato. Controlla i permessi del token."
+  },
+  "api_branchNotFound": {
+    "message": "Branch '$1' non trovato."
   },
   "api_conflict": {
     "message": "Conflitto: il file è stato modificato nel frattempo."
@@ -668,598 +14,59 @@
   "api_errorWriting": {
     "message": "Errore durante la scrittura del file: $1"
   },
-  "api_branchNotFound": {
-    "message": "Branch '$1' non trovato."
+  "api_invalidToken": {
+    "message": "Token non valido. Controlla il tuo Personal Access Token."
   },
-  "sync_alreadyInProgress": {
-    "message": "Sincronizzazione già in corso."
+  "api_listCommitsFailed": {
+    "message": "Impossibile elencare i commit (HTTP $1)."
   },
-  "sync_notConfigured": {
-    "message": "Estensione non configurata. Apri le impostazioni."
+  "api_networkError": {
+    "message": "Errore di rete. Controlla la connessione Internet e riprova."
   },
-  "sync_noChanges": {
-    "message": "Nessuna modifica dall'ultima sincronizzazione."
+  "api_rateLimitExceeded": {
+    "message": "Limite di richieste API GitHub superato. Attendi un momento."
   },
-  "sync_conflictRemoteModified": {
-    "message": "Conflitto rilevato: anche il remoto è stato modificato."
+  "api_treeTruncated": {
+    "message": "Il repository è troppo grande per essere letto in una richiesta (GitHub ha troncato l'albero file). La sincronizzazione è stata interrotta per evitare perdita di dati."
   },
-  "sync_pushSuccess": {
-    "message": "Segnalibri inviati con successo a GitHub."
+  "cleanOrphans_commitMessage": {
+    "message": "Rimuovi file segnalibri orfani non presenti localmente"
   },
-  "sync_conflictFileModified": {
-    "message": "Conflitto: il file è stato modificato nel frattempo."
+  "cleanOrphans_confirm": {
+    "message": "Eliminare $1 file orfano/i in $2 cartella/e di primo livello dal remoto? I segnalibri locali restano invariati. Non annullabile da GitSyncMarks (usa la cronologia Git per ripristinare)."
   },
-  "sync_pushFailed": {
-    "message": "Push fallito: $1"
+  "cleanOrphans_noLocalBaseline": {
+    "message": "Nessuna base locale di segnalibri per questo profilo. Passa al profilo e sincronizza una volta, oppure usa Pulisci remoto sul profilo attivo."
   },
-  "sync_noBookmarksOnGithub": {
-    "message": "Nessun segnalibro trovato su GitHub."
+  "cleanOrphans_none": {
+    "message": "Nessun file segnalibri orfano sul remoto."
   },
-  "sync_alreadyUpToDate": {
-    "message": "I segnalibri sono già aggiornati."
+  "cleanOrphans_previewFailed": {
+    "message": "Impossibile visualizzare gli orfani remoti."
   },
-  "sync_pullSuccess": {
-    "message": "Scaricato da GitHub."
+  "cleanOrphans_previewResult": {
+    "message": "$1 file orfano/i in $2 cartella/e di primo livello verrebbero rimossi."
   },
-  "sync_pullFailed": {
-    "message": "Pull fallito: $1"
+  "cleanOrphans_remoteFetchFailed": {
+    "message": "Impossibile leggere il repository remoto: $1"
   },
-  "sync_allInSync": {
-    "message": "Tutto sincronizzato. Nessuna modifica."
+  "cleanOrphans_success": {
+    "message": "Rimossi $1 file orfano/i da $2 cartella/e di primo livello sul remoto."
   },
-  "sync_conflictBothModified": {
-    "message": "Conflitto: sia i segnalibri locali che quelli remoti sono stati modificati. Scegli Push o Pull."
-  },
-  "sync_syncFailed": {
-    "message": "Sincronizzazione fallita: $1"
-  },
-  "serializer_invalidFormat": {
-    "message": "Formato dati segnalibri non valido."
-  },
-  "serializer_lastSynced": {
-    "message": "Ultima sincronizzazione: $1"
-  },
-  "serializer_device": {
-    "message": "Dispositivo: $1"
-  },
-  "serializer_untitled": {
-    "message": "(Senza titolo)"
-  },
-  "popup_reportIssue": {
-    "message": "Segnala problema"
-  },
-  "options_about": {
-    "message": "Informazioni"
-  },
-  "options_version": {
-    "message": "Versione"
-  },
-  "options_by": {
-    "message": "Di"
-  },
-  "options_specialThanks": {
-    "message": "Ringraziamenti speciali"
-  },
-  "options_mobileAppTitle": {
-    "message": "App mobile"
-  },
-  "options_mobileAppDesc": {
-    "message": "Consulta i tuoi segnalibri ovunque. GitSyncMarks-App (iOS + Android) si sincronizza dal tuo repository GitHub — companion in sola lettura."
-  },
-  "options_mobileAppLink": {
-    "message": "GitSyncMarks-App su GitHub"
-  },
-  "options_mobileAppStores": {
-    "message": "F-Droid e Google Play in arrivo."
-  },
-  "options_links": {
-    "message": "Link"
-  },
-  "options_githubRepo": {
-    "message": "Repository GitHub"
-  },
-  "options_documentation": {
-    "message": "Documentazione"
-  },
-  "options_reportBug": {
-    "message": "Segnala un bug / Richiesta funzionalità"
-  },
-  "options_privacyPolicy": {
-    "message": "Informativa sulla privacy"
-  },
-  "options_license": {
-    "message": "Licenza (MIT)"
-  },
-  "options_debugLogTitle": {
-    "message": "Log di debug"
-  },
-  "options_debugLogDesc": {
-    "message": "Attiva per registrare la diagnostica della sincronizzazione (diff, decisioni di merge, conflitti, hash dei commit nei punti chiave). Usa per risolvere problemi di sincronizzazione. Esporta e condividi il log per il supporto."
-  },
-  "options_debugLogEnabled": {
-    "message": "Attiva log di debug"
-  },
-  "options_debugLogExport": {
-    "message": "Esporta log"
-  },
-  "options_debugLogExportEmpty": {
-    "message": "Il log è vuoto. Attiva il log di debug ed esegui prima una sincronizzazione."
-  },
-  "options_tabGitHub": {
-    "message": "GitHub"
-  },
-  "options_tabSynchronization": {
-    "message": "Sincronizzazione"
-  },
-  "options_tabFiles": {
-    "message": "File"
-  },
-  "options_tabHelp": {
-    "message": "Aiuto"
-  },
-  "options_tabAbout": {
-    "message": "Informazioni"
-  },
-  "options_subTabProfile": {
-    "message": "Profilo"
-  },
-  "options_subTabConnection": {
-    "message": "Connessione"
-  },
-  "options_subTabRepos": {
-    "message": "Cartella GitHub"
-  },
-  "options_subTabGenerated": {
-    "message": "Generati"
-  },
-  "options_subTabSettings": {
-    "message": "Impostazioni"
-  },
-  "options_subTabExportImport": {
-    "message": "Esporta / Importa"
-  },
-  "options_subTabGitAdd": {
-    "message": "Git Add"
-  },
-  "help_wizardRestartTitle": {
-    "message": "Configurazione guidata"
-  },
-  "help_wizardRestartDesc": {
-    "message": "Guida passo-passo per collegare il tuo repository GitHub ed eseguire la prima sincronizzazione."
-  },
-  "options_onboardingWizardPhasePreparing": {
-    "message": "Preparazione dei dati dei segnalibri"
-  },
-  "options_onboardingWizardPhaseUploading": {
-    "message": "Caricamento dei segnalibri su GitHub"
-  },
-  "options_onboardingWizardPhaseCommit": {
-    "message": "Creazione del commit nel repository"
-  },
-  "options_onboardingWizardPhaseSaving": {
-    "message": "Salvataggio dello stato di sincronizzazione"
-  },
-  "options_onboardingWizardPhaseDownloading": {
-    "message": "Download dei segnalibri"
-  },
-  "options_onboardingWizardPhaseApplying": {
-    "message": "Applicazione dei segnalibri al browser"
-  },
-  "help_gettingStartedTitle": {
-    "message": "Guida introduttiva"
-  },
-  "help_gettingStartedIntro": {
-    "message": "Crea un repository GitHub per i tuoi segnalibri, poi crea un Personal Access Token (PAT) con lo scope <code>repo</code> (classic) o <code>Contents: Read/Write</code> e <code>Metadata: Read</code> (fine-grained). Nella scheda GitHub, inserisci token, proprietario del repository, nome, branch (di solito <code>main</code>) e il percorso della cartella (predefinito: <code>bookmarks</code>). Clicca <strong>Testa connessione</strong> per verificare."
-  },
-  "help_onboarding": {
-    "message": "Se la cartella è vuota, puoi creare la struttura di base (toolbar, other). Se nel repository esistono già dei segnalibri, puoi scaricarli in questo browser."
-  },
-  "help_profilesTitle": {
-    "message": "Profili"
-  },
-  "help_profilesIntro": {
-    "message": "Ogni profilo ha il proprio set di segnalibri e la propria configurazione del repository GitHub. Usa i profili per lavoro/personale o dispositivi diversi."
-  },
-  "help_profilesAdd": {
-    "message": "Aggiungi, Rinomina, Elimina"
-  },
-  "help_profilesAddDesc": {
-    "message": "Seleziona un profilo nel menu a discesa, poi Aggiungi (nuovo profilo), Rinomina o Elimina. Fino a 10 profili. L'eliminazione rimuove il profilo selezionato."
-  },
-  "help_profilesSwitch": {
-    "message": "Cambio profilo"
-  },
-  "help_profilesSwitchDesc": {
-    "message": "Seleziona un altro profilo per cambiare. I tuoi segnalibri attuali vengono salvati e inviati al repository del profilo corrente prima del cambio. I segnalibri del profilo di destinazione sostituiscono quelli locali. Usa Cambia senza conferma per saltare la finestra di conferma."
-  },
-  "help_profilesNote": {
-    "message": "I profili funzionano in modo affidabile. Con più profili, occasionalmente possono verificarsi conflitti di sincronizzazione — provare Push o Pull 2–3 volte di solito li risolve. Questa funzionalità è ancora in evoluzione. Se riscontri bug riproducibili, apri un issue su GitHub."
-  },
-  "help_githubReposTitle": {
-    "message": "Cartella GitHub Repos"
-  },
-  "help_githubReposDesc": {
-    "message": "Opzionale: crea una cartella con segnalibri a tutti i tuoi repository GitHub (pubblici e privati). Scegli la posizione (toolbar, other). La cartella viene sincronizzata come i normali segnalibri; usa <strong>Aggiorna GitHub Repos</strong> per aggiornare l'elenco."
-  },
-  "help_popupTitle": {
-    "message": "Popup (icona estensione)"
-  },
-  "help_popupProfile": {
-    "message": "Selettore profilo"
-  },
-  "help_popupProfileDesc": {
-    "message": "Cambia profilo direttamente dall'intestazione del popup."
-  },
-  "help_popupSyncNow": {
-    "message": "Sincronizza ora"
-  },
-  "help_popupSyncNowDesc": {
-    "message": "Sincronizzazione completa con merge a tre vie: le modifiche locali e remote vengono unite automaticamente quando possibile."
-  },
-  "help_popupPush": {
-    "message": "Push ↑"
-  },
-  "help_popupPushDesc": {
-    "message": "Carica i segnalibri locali su GitHub (sovrascrive le modifiche remote)."
-  },
-  "help_popupPull": {
-    "message": "Pull ↓"
-  },
-  "help_popupPullDesc": {
-    "message": "Scarica da GitHub (sovrascrive le modifiche locali)."
-  },
-  "help_syncTitle": {
-    "message": "Sincronizzazione"
-  },
-  "help_autoSyncTitle": {
-    "message": "Sincronizzazione automatica"
-  },
-  "help_autoSyncDesc": {
-    "message": "Quando attiva, sincronizza automaticamente quando aggiungi, modifichi o rimuovi segnalibri. Un ritardo debounce attende che le modifiche rapide siano terminate prima di sincronizzare."
-  },
-  "help_syncProfiles": {
-    "message": "Profili di sincronizzazione"
-  },
-  "help_syncProfilesDesc": {
-    "message": "Tempo reale (1 min), Frequente (5 min), Normale (15 min) o Risparmio energetico (60 min). Personalizzato permette di impostare intervallo e debounce manualmente."
-  },
-  "help_syncStartup": {
-    "message": "Sincronizzazione all'avvio / al focus"
-  },
-  "help_syncStartupDesc": {
-    "message": "Opzionale: sincronizza all'avvio del browser o quando torni alla finestra del browser (con cooldown)."
-  },
-  "help_generatedFilesTitle": {
-    "message": "File generati"
-  },
-  "help_generatedFilesDesc": {
-    "message": "README.md, bookmarks.html, feed.xml e dashy-conf.yml possono essere creati durante la sincronizzazione. Scegli Off, Manuale o Auto per ogni file nella scheda File."
-  },
-  "help_settingsSyncTitle": {
-    "message": "File impostazioni"
-  },
-  "help_settingsSyncDesc": {
-    "message": "Quando attivo, le impostazioni dell'estensione (profili, token, preferenze) vengono crittografate e salvate nel repository. Scegli Globale (settings.enc condiviso tra tutti i dispositivi) o Individuale (settings-{id}.enc specifico per dispositivo). In modalità individuale puoi importare le impostazioni da altri dispositivi. La password viene salvata localmente per dispositivo e deve essere uguale su tutti i dispositivi che condividono il repository."
-  },
-  "help_notificationsTitle": {
-    "message": "Notifiche"
-  },
-  "help_notificationsDesc": {
-    "message": "Scegli quando mostrare le notifiche di sincronizzazione: Tutte (successo e errore), Solo errori o Off."
-  },
-  "help_backupTitle": {
-    "message": "Backup"
-  },
-  "help_backupBookmarks": {
-    "message": "Esporta / Importa segnalibri"
-  },
-  "help_backupBookmarksDesc": {
-    "message": "Esporta tutti i segnalibri del browser come JSON. L'importazione sostituisce tutti i segnalibri nel profilo attivo con il contenuto del file."
-  },
-  "help_backupSettings": {
-    "message": "Esporta / Importa impostazioni"
-  },
-  "help_backupSettingsDesc": {
-    "message": "Esporta come .json in chiaro o .enc crittografato con password. L'importazione sostituisce tutte le impostazioni (tutti i profili); la pagina si ricarica dopo."
-  },
-  "help_conflictTitle": {
-    "message": "Conflitti"
-  },
-  "help_conflictDesc": {
-    "message": "Quando sia i segnalibri locali che quelli remoti sono stati modificati, il popup mostra un conflitto. Scegli <strong>Push</strong> (vince il locale, sovrascrive il remoto) o <strong>Pull</strong> (vince il remoto, sovrascrive il locale). Non c'è merge automatico per i conflitti."
-  },
-  "help_shortcuts": {
-    "message": "Scorciatoie da tastiera"
-  },
-  "help_quickSync": {
-    "message": "Sincronizzazione rapida segnalibri"
-  },
-  "help_openOptions": {
+  "commands_openOptions": {
     "message": "Apri impostazioni estensione"
   },
-  "help_customizeShortcuts": {
-    "message": "Personalizza scorciatoie"
-  },
-  "help_shortcutNotSet": {
-    "message": "Non impostato"
-  },
-  "help_debugLogTitle": {
-    "message": "Log di debug"
-  },
-  "help_debugLogDesc": {
-    "message": "Attiva nella scheda Sincronizzazione per registrare la diagnostica dettagliata — diff, decisioni di merge e hash dei commit. Esporta il log per condividerlo nella risoluzione dei problemi."
-  },
-  "help_backupBookmarksDesc2": {
-    "message": "Esporta segnalibri (JSON), configurazione Dashy (YAML) o impostazioni (JSON in chiaro / .enc crittografato). Importa segnalibri o impostazioni — i file crittografati vengono decrittati con la tua password. L'importazione dei segnalibri sostituisce tutti i segnalibri locali; l'importazione delle impostazioni sostituisce tutti i profili e ricarica la pagina."
-  },
-  "help_themeAutoSaveTitle": {
-    "message": "Tema e salvataggio automatico"
-  },
-  "help_themeCycleTitle": {
-    "message": "Tema"
-  },
-  "help_themeCycleDesc": {
-    "message": "Clicca il pulsante nell'intestazione per alternare: Auto (sistema) → Scuro → Chiaro → Auto. L'icona mostra la modalità corrente. Funziona nelle opzioni e nel popup."
-  },
-  "help_autoSaveTitle": {
-    "message": "Salvataggio automatico"
-  },
-  "help_autoSaveDesc": {
-    "message": "Tutte le impostazioni vengono salvate automaticamente quando le modifichi — non ci sono pulsanti Salva. Le modifiche hanno effetto immediato."
-  },
-  "help_whySlowTitle": {
-    "message": "Perché la sincronizzazione a volte è lenta?"
-  },
-  "help_whySlowIntro": {
-    "message": "GitSyncMarks usa l'API Git Data di GitHub per commit atomici. Ogni file di segnalibri modificato o nuovo richiede una chiamata API. Con molte modifiche, questo si accumula."
-  },
-  "help_whyAtomic": {
-    "message": "Tutte le modifiche vengono scritte in un singolo commit atomico: o tutto riesce o niente. Questo previene stati parziali o corrotti se la sincronizzazione viene interrotta. Un commit invece di tanti evita anche di raggiungere i limiti di richieste API e mantiene pulita la cronologia Git."
-  },
-  "help_reportIssue": {
-    "message": "Segnala problema"
-  },
-  "help_links": {
-    "message": "Link"
-  },
-  "help_discussions": {
-    "message": "Discussioni"
-  },
-  "help_voteBacklogTitle": {
-    "message": "Prossimi sviluppi"
-  },
-  "help_voteBacklogDesc": {
-    "message": "Vota quale funzionalità del backlog affrontare per prima. La tua voce definisce la roadmap."
-  },
-  "help_voteBacklogBtn": {
-    "message": "Vota sul backlog"
-  },
-  "options_backupTitle": {
-    "message": "Backup"
-  },
-  "options_backupIntro": {
-    "message": "Esporta o importa segnalibri come JSON; impostazioni come JSON o .enc crittografato con password."
-  },
-  "options_bookmarksCard": {
-    "message": "Segnalibri"
-  },
-  "options_settingsCard": {
-    "message": "Impostazioni"
-  },
-  "options_exportBookmarks": {
-    "message": "Esporta segnalibri"
-  },
-  "options_exportBookmarksDesc": {
-    "message": "Salva tutti i segnalibri come JSON."
-  },
-  "options_exportDashy": {
-    "message": "Esporta configurazione Dashy"
-  },
-  "options_exportDashyDesc": {
-    "message": "Esporta segnalibri come sezioni dashboard Dashy (YAML)."
-  },
-  "options_exportBtn": {
-    "message": "Esporta"
-  },
-  "options_importBtn": {
-    "message": "Importa"
-  },
-  "options_chooseFile": {
-    "message": "Scegli file"
-  },
-  "options_importBookmarks": {
-    "message": "Importa segnalibri"
-  },
-  "options_exportSettings": {
-    "message": "Esporta impostazioni"
-  },
-  "options_exportSettingsDesc": {
-    "message": "Connessione GitHub e impostazioni di sincronizzazione (inclusi i profili)."
-  },
-  "options_importSettings": {
-    "message": "Importa impostazioni"
-  },
-  "options_importBookmarksWarning": {
-    "message": "Sostituisce tutti i segnalibri nel profilo attivo. Non può essere annullato."
-  },
-  "options_importSettingsWarning": {
-    "message": "Sostituisce tutte le impostazioni (tutti i profili). La pagina si ricarica dopo."
-  },
-  "options_importSettingsFormats": {
-    "message": "Accetta file .json (in chiaro) o .enc (crittografati)."
-  },
-  "options_selectFile": {
-    "message": "Seleziona file..."
-  },
-  "options_importSuccess": {
-    "message": "Importazione riuscita!"
-  },
-  "options_exportSuccess": {
-    "message": "Esportazione riuscita!"
-  },
-  "options_importError": {
-    "message": "Importazione fallita: $1"
-  },
-  "options_exportSettingsPlain": {
-    "message": "Esporta (in chiaro)"
-  },
-  "options_exportSettingsEncrypted": {
-    "message": "Esporta crittografato"
-  },
-  "options_exportPasswordPrompt": {
-    "message": "Inserisci una password per crittografare il file delle impostazioni."
-  },
-  "options_importPasswordPrompt": {
-    "message": "Inserisci la password per decrittare il file delle impostazioni."
-  },
-  "options_passwordPlaceholder": {
-    "message": "Password"
-  },
-  "options_decryptError": {
-    "message": "Decrittazione fallita. Password errata?"
-  },
-  "options_exportEncryptedSuccess": {
-    "message": "Esportazione crittografata riuscita!"
-  },
-  "options_tabAutomation": {
-    "message": "Automazione"
-  },
-  "options_automationTitle": {
-    "message": "Aggiungi segnalibri tramite Git"
-  },
-  "options_automationIntro": {
-    "message": "Aggiungi segnalibri direttamente nel tuo repository. L'estensione li rileva alla prossima sincronizzazione e normalizza automaticamente i nomi dei file."
-  },
-  "options_automationFormatTitle": {
-    "message": "Formato file"
-  },
-  "options_automationFoldersLabel": {
-    "message": "Sezioni:"
-  },
-  "options_automationGithubActionTitle": {
-    "message": "GitHub Action"
-  },
-  "options_automationWorkflowLink": {
-    "message": "Copia add-bookmark.yml nel tuo repository"
-  },
-  "options_automationGithubActionParams": {
-    "message": "folder = root; path = sottocartella opzionale; base-path se il percorso file ≠ bookmarks"
-  },
-  "options_automationCreateFileTitle": {
-    "message": "Crea file nel repository"
-  },
-  "options_automationCreateFileDesc": {
-    "message": "Aggiungi un nuovo file JSON in <code>bookmarks/toolbar/</code> o <code>bookmarks/other/</code> (o una sottocartella). Usa il percorso file della tua estensione se diverso."
-  },
-  "options_automationCopy": {
-    "message": "Copia"
-  },
-  "options_automationWorkflowRaw": {
-    "message": "Raw"
-  },
-  "options_automationSubfolderExample": {
-    "message": "Esempio: path=\"dev-tools\" → bookmarks/toolbar/dev-tools/"
-  },
-  "options_automationParamUrl": {
-    "message": "URL del segnalibro (obbligatorio)"
-  },
-  "options_automationParamTitle": {
-    "message": "Titolo (opzionale; se vuoto viene usato l'URL)"
-  },
-  "options_automationParamSection": {
-    "message": "Sezione: toolbar o other"
-  },
-  "options_automationParamFolder": {
-    "message": "Cartella nella sezione (es. dev-tools)"
-  },
-  "options_automationParamBasePath": {
-    "message": "Cartella di base nel repository (predefinito bookmarks; deve corrispondere all'impostazione Percorso file)"
-  },
-  "options_exportImportTitle": {
-    "message": "Esporta / Importa"
-  },
-  "options_exportImportDesc": {
-    "message": "Esporta o importa segnalibri e impostazioni dell'estensione."
-  },
-  "options_exportLabel": {
-    "message": "Esporta"
-  },
-  "options_importLabel": {
-    "message": "Importa"
-  },
-  "options_exportTypeBookmarks": {
-    "message": "Segnalibri (JSON)"
-  },
-  "options_exportTypeDashy": {
-    "message": "Configurazione Dashy (YAML)"
-  },
-  "options_exportTypeSettingsPlain": {
-    "message": "Impostazioni (JSON in chiaro)"
-  },
-  "options_exportTypeSettingsEncrypted": {
-    "message": "Impostazioni (crittografato)"
-  },
-  "options_importTypeBookmarks": {
-    "message": "Segnalibri (JSON)"
-  },
-  "options_importTypeSettings": {
-    "message": "Impostazioni (JSON / ENC)"
-  },
-  "help_filesTitle": {
-    "message": "File"
-  },
-  "contextMenu_addToToolbar_chrome": {
-    "message": "Aggiungi alla barra dei preferiti"
-  },
-  "contextMenu_addToToolbar_firefox": {
-    "message": "Aggiungi alla barra dei segnalibri"
+  "commands_quickSync": {
+    "message": "Sincronizzazione rapida segnalibri"
+  },
+  "contextMenu_addToFolderMenu": {
+    "message": "Aggiungi alla cartella..."
   },
   "contextMenu_addToOther_chrome": {
     "message": "Aggiungi ad altri preferiti"
   },
   "contextMenu_addToOther_firefox": {
     "message": "Aggiungi al menu dei segnalibri"
-  },
-  "contextMenu_addToFolderMenu": {
-    "message": "Aggiungi alla cartella..."
-  },
-  "contextMenu_addToThisFolder": {
-    "message": "Aggiungi a questa cartella"
-  },
-  "contextMenu_syncNow": {
-    "message": "Sincronizza ora"
-  },
-  "contextMenu_copyFaviconUrl": {
-    "message": "Copia URL favicon"
-  },
-  "contextMenu_downloadFavicon": {
-    "message": "Scarica favicon"
-  },
-  "contextMenu_notifAdded": {
-    "message": "Preferito aggiunto a $1"
-  },
-  "contextMenu_notifFaviconCopied": {
-    "message": "URL del favicon copiata"
-  },
-  "contextMenu_notifNotConfigured": {
-    "message": "Configura prima GitSyncMarks"
-  },
-  "contextMenu_notifNoFavicon": {
-    "message": "Nessun favicon disponibile per questa pagina"
-  },
-  "contextMenu_notifError": {
-    "message": "Azione fallita — riprova"
-  },
-  "contextMenu_switchProfile": {
-    "message": "Cambia profilo"
-  },
-  "contextMenu_notifProfileSwitched": {
-    "message": "Passato a $1",
-    "placeholders": {
-      "name": {
-        "content": "$1"
-      }
-    }
   },
   "contextMenu_addToQuickFolder": {
     "message": "Aggiungi a $1",
@@ -1268,6 +75,15 @@
         "content": "$1"
       }
     }
+  },
+  "contextMenu_addToThisFolder": {
+    "message": "Aggiungi a questa cartella"
+  },
+  "contextMenu_addToToolbar_chrome": {
+    "message": "Aggiungi alla barra dei preferiti"
+  },
+  "contextMenu_addToToolbar_firefox": {
+    "message": "Aggiungi alla barra dei segnalibri"
   },
   "contextMenu_category_ADD": {
     "message": "Aggiungi segnalibro"
@@ -1281,8 +97,47 @@
   "contextMenu_category_TOOLS": {
     "message": "Strumenti e Sincronizzazione"
   },
+  "contextMenu_copyFaviconUrl": {
+    "message": "Copia URL favicon"
+  },
+  "contextMenu_downloadFavicon": {
+    "message": "Scarica favicon"
+  },
+  "contextMenu_notifAdded": {
+    "message": "Preferito aggiunto a $1"
+  },
+  "contextMenu_notifError": {
+    "message": "Azione fallita — riprova"
+  },
+  "contextMenu_notifFaviconCopied": {
+    "message": "URL del favicon copiata"
+  },
   "contextMenu_notifFolderMissing": {
     "message": "La cartella selezionata non esiste più. Aggiorna le impostazioni delle cartelle rapide."
+  },
+  "contextMenu_notifLinkwardenError": {
+    "message": "Errore Linkwarden: $1"
+  },
+  "contextMenu_notifLinkwardenGrantPermissions": {
+    "message": "Concedi le autorizzazioni tramite «Test connessione» nelle Opzioni"
+  },
+  "contextMenu_notifLinkwardenNotConfigured": {
+    "message": "Linkwarden non configurato"
+  },
+  "contextMenu_notifLinkwardenSaved": {
+    "message": "Link salvato in Linkwarden"
+  },
+  "contextMenu_notifLinkwardenSavedWithScreenshot": {
+    "message": "Link e screenshot salvati in Linkwarden"
+  },
+  "contextMenu_notifLinkwardenUrlInvalid": {
+    "message": "URL Linkwarden non valido"
+  },
+  "contextMenu_notifNoFavicon": {
+    "message": "Nessun favicon disponibile per questa pagina"
+  },
+  "contextMenu_notifNotConfigured": {
+    "message": "Configura prima GitSyncMarks"
   },
   "contextMenu_notifOpenAllEmpty": {
     "message": "La cartella selezionata non contiene segnalibri da aprire."
@@ -1309,6 +164,14 @@
       }
     }
   },
+  "contextMenu_notifProfileSwitched": {
+    "message": "Passato a $1",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
   "contextMenu_openAllFromFolder": {
     "message": "Apri tutto dalla cartella"
   },
@@ -1318,11 +181,497 @@
   "contextMenu_searchBookmarks": {
     "message": "Cerca segnalibri"
   },
+  "contextMenu_switchProfile": {
+    "message": "Cambia profilo"
+  },
+  "contextMenu_syncNow": {
+    "message": "Sincronizza ora"
+  },
+  "extDescription": {
+    "message": "Sincronizzazione segnalibri via GitHub, GitLab, Codeberg, Gitea e altro. Linkwarden, ricerca intelligente, app companion. Diretto, sicuro e privato."
+  },
+  "extDescriptionFirefox": {
+    "message": "Sincronizzazione segnalibri via GitHub, GitLab, Codeberg, Gitea e altro. Linkwarden, ricerca intelligente, assistente configurazione. Bidirezionale, sicuro e privato. Supporto Firefox completo. Nessun intermediario."
+  },
+  "extName": {
+    "message": "GitSyncMarks"
+  },
+  "help_autoSaveDesc": {
+    "message": "Tutte le impostazioni vengono salvate automaticamente quando le modifichi — non ci sono pulsanti Salva. Le modifiche hanno effetto immediato."
+  },
+  "help_autoSaveTitle": {
+    "message": "Salvataggio automatico"
+  },
+  "help_autoSyncDesc": {
+    "message": "Quando attiva, sincronizza automaticamente quando aggiungi, modifichi o rimuovi segnalibri. Un ritardo debounce attende che le modifiche rapide siano terminate prima di sincronizzare."
+  },
+  "help_autoSyncTitle": {
+    "message": "Sincronizzazione automatica"
+  },
+  "help_backupBookmarks": {
+    "message": "Esporta / Importa segnalibri"
+  },
+  "help_backupBookmarksDesc": {
+    "message": "Esporta tutti i segnalibri del browser come JSON. L'importazione sostituisce tutti i segnalibri nel profilo attivo con il contenuto del file."
+  },
+  "help_backupBookmarksDesc2": {
+    "message": "Esporta segnalibri (JSON), configurazione Dashy (YAML) o impostazioni (JSON in chiaro / .enc crittografato). Importa segnalibri o impostazioni — i file crittografati vengono decrittati con la tua password. L'importazione dei segnalibri sostituisce tutti i segnalibri locali; l'importazione delle impostazioni sostituisce tutti i profili e ricarica la pagina."
+  },
+  "help_backupSettings": {
+    "message": "Esporta / Importa impostazioni"
+  },
+  "help_backupSettingsDesc": {
+    "message": "Esporta come .json in chiaro o .enc crittografato con password. L'importazione sostituisce tutte le impostazioni (tutti i profili); la pagina si ricarica dopo."
+  },
+  "help_backupTitle": {
+    "message": "Backup"
+  },
+  "help_cleanOrphansDesc": {
+    "message": "Nella sotto-scheda Sincronizzazione, visualizza e rimuovi file segnalibri remoti assenti dai tuoi segnalibri locali (profilo attivo). Utile dopo cartelle duplicate da un trasferimento con merge."
+  },
+  "help_cleanOrphansTitle": {
+    "message": "Pulisci orfani remoti"
+  },
+  "help_conflictDesc": {
+    "message": "Quando sia i segnalibri locali che quelli remoti sono stati modificati, il popup mostra un conflitto. Scegli <strong>Push</strong> (vince il locale, sovrascrive il remoto) o <strong>Pull</strong> (vince il remoto, sovrascrive il locale). Non c'è merge automatico per i conflitti."
+  },
+  "help_conflictTitle": {
+    "message": "Conflitti"
+  },
+  "help_contextMenuToolsDesc": {
+    "message": "In File → Impostazioni, puoi fissare fino a 3 cartelle per azioni di aggiunta rapida e configurare la soglia di conferma per Apri tutto. Il menu contestuale include anche la Ricerca segnalibri."
+  },
+  "help_contextMenuToolsTitle": {
+    "message": "Strumenti del menu contestuale"
+  },
+  "help_customizeShortcuts": {
+    "message": "Personalizza scorciatoie"
+  },
+  "help_debugLogDesc": {
+    "message": "Attiva nella scheda Sincronizzazione per registrare la diagnostica dettagliata — diff, decisioni di merge e hash dei commit. Esporta il log per condividerlo nella risoluzione dei problemi."
+  },
+  "help_debugLogTitle": {
+    "message": "Log di debug"
+  },
+  "help_densityDesc": {
+    "message": "Usa i pulsanti S / M / L nell'intestazione per passare tra Compatto, Medio e Grande. L'impostazione si applica a tutte le superfici dell'estensione (opzioni, popup, ricerca, salvataggio Linkwarden) e si sincronizza tra dispositivi."
+  },
+  "help_densityTitle": {
+    "message": "Densità interfaccia"
+  },
+  "help_discussions": {
+    "message": "Discussioni"
+  },
+  "help_filesTitle": {
+    "message": "File"
+  },
+  "help_generatedFilesDesc": {
+    "message": "README.md, bookmarks.html, feed.xml e dashy-conf.yml possono essere creati durante la sincronizzazione. Scegli Off, Manuale o Auto per ogni file nella scheda File."
+  },
+  "help_generatedFilesTitle": {
+    "message": "File generati"
+  },
+  "help_gettingStartedIntro": {
+    "message": "Crea un repository Git per i tuoi segnalibri su <strong>GitHub</strong>, <strong>GitLab</strong>, <strong>Codeberg</strong>, <strong>Gitea</strong>, <strong>Forgejo</strong> o <strong>Gogs</strong>. In <strong>Git → Connessione</strong>, scegli il provider, inserisci un token di accesso personale, proprietario/nome repository, branch (di solito <code>main</code>) e percorso cartella (predefinito: <code>bookmarks</code>). I provider self-hosted richiedono un URL server; consenti l'accesso all'host quando richiesto. Clicca <strong>Test connessione</strong> per verificare."
+  },
+  "help_gettingStartedTitle": {
+    "message": "Guida introduttiva"
+  },
+  "help_githubReposDesc": {
+    "message": "Opzionale: crea una cartella con segnalibri a tutti i tuoi repository GitHub (pubblici e privati). Scegli la posizione (toolbar, other). La cartella viene sincronizzata come i normali segnalibri; usa <strong>Aggiorna GitHub Repos</strong> per aggiornare l'elenco."
+  },
+  "help_githubReposTitle": {
+    "message": "Cartella GitHub Repos"
+  },
+  "help_headerLangDesc": {
+    "message": "Il pulsante lingua nell'intestazione cambia la lingua di visualizzazione dell'estensione. L'impostazione viene salvata e sincronizzata su tutti i dispositivi."
+  },
+  "help_headerLangTitle": {
+    "message": "Lingua"
+  },
+  "help_historyIntro": {
+    "message": "Ogni sincronizzazione crea un commit Git. Puoi sfogliare i commit recenti nella sotto-scheda Cronologia (sotto File) e ripristinare segnalibri da una versione precedente."
+  },
+  "help_historyLoadDesc": {
+    "message": "Recupera gli ultimi 20 commit che hanno toccato il percorso segnalibri. L'intestazione della tabella etichetta le colonne (data, hash commit breve, id client dal messaggio del commit). Passa il mouse sulla cella client per il messaggio completo. Ogni riga ha un'icona anteprima (lente) e una di ripristino."
+  },
+  "help_historyLoadLabel": {
+    "message": "Carica cronologia"
+  },
+  "help_historyRestoreDesc": {
+    "message": "Sostituisce tutti i segnalibri locali con lo stato di quel commit. Nell'elenco, clicca l'icona ripristino, poi di nuovo quando mostra la conferma breve (o il testo completo nel pannello diff). Non riscrive il branch remoto — i dati remoti attuali restano intatti. La prossima sincronizzazione invierà lo stato locale."
+  },
+  "help_historyRestoreLabel": {
+    "message": "Ripristina"
+  },
+  "help_historyTitle": {
+    "message": "Cronologia sync e annulla"
+  },
+  "help_historyUndoDesc": {
+    "message": "Rollback con un clic al commit precedente all'ultima sincronizzazione che ha modificato i segnalibri locali. Disponibile dopo ogni pull o merge che ha modificato i segnalibri locali."
+  },
+  "help_historyUndoLabel": {
+    "message": "Annulla ultima sincronizzazione"
+  },
+  "help_links": {
+    "message": "Link"
+  },
+  "help_linkwardenIntegrationDesc": {
+    "message": "Connect to your Linkwarden instance to save bookmarks directly from the context menu. You can specify default tags and auto-capture screenshots."
+  },
+  "help_linkwardenIntegrationTitle": {
+    "message": "Integration"
+  },
+  "help_linkwardenSyncDesc": {
+    "message": "Sync your Linkwarden collections into your browser bookmark folders and optionally push them to your Git repository."
+  },
+  "help_linkwardenSyncTitle": {
+    "message": "Sync Collections"
+  },
+  "help_linkwardenTitle": {
+    "message": "Linkwarden"
+  },
+  "help_menuTitle": {
+    "message": "Menu"
+  },
+  "help_notificationsDesc": {
+    "message": "Scegli quando mostrare le notifiche di sincronizzazione: Tutte (successo e errore), Solo errori o Off."
+  },
+  "help_notificationsTitle": {
+    "message": "Notifiche"
+  },
+  "help_onboarding": {
+    "message": "Se la cartella è vuota, puoi creare la struttura di base (toolbar, other). Se nel repository esistono già dei segnalibri, puoi scaricarli in questo browser."
+  },
+  "help_openOptions": {
+    "message": "Apri impostazioni estensione"
+  },
+  "help_popupProfile": {
+    "message": "Selettore profilo"
+  },
+  "help_popupProfileDesc": {
+    "message": "Cambia profilo direttamente dall'intestazione del popup."
+  },
+  "help_popupPull": {
+    "message": "Pull ↓"
+  },
+  "help_popupPullDesc": {
+    "message": "Scarica da GitHub (sovrascrive le modifiche locali)."
+  },
+  "help_popupPush": {
+    "message": "Push ↑"
+  },
+  "help_popupPushDesc": {
+    "message": "Carica i segnalibri locali su GitHub (sovrascrive le modifiche remote)."
+  },
+  "help_popupSyncNow": {
+    "message": "Sincronizza ora"
+  },
+  "help_popupSyncNowDesc": {
+    "message": "Sincronizzazione completa con merge a tre vie: le modifiche locali e remote vengono unite automaticamente quando possibile."
+  },
+  "help_popupTitle": {
+    "message": "Popup (icona estensione)"
+  },
+  "help_profilesAdd": {
+    "message": "Aggiungi, Rinomina, Elimina"
+  },
+  "help_profilesAddDesc": {
+    "message": "Seleziona un profilo nel menu a discesa, poi Aggiungi (nuovo profilo), Rinomina o Elimina. Fino a 10 profili. L'eliminazione rimuove il profilo selezionato."
+  },
+  "help_profilesIntro": {
+    "message": "Ogni profilo ha il proprio set di segnalibri e la propria configurazione del repository GitHub. Usa i profili per lavoro/personale o dispositivi diversi."
+  },
+  "help_profilesNote": {
+    "message": "I profili funzionano in modo affidabile. Con più profili, occasionalmente possono verificarsi conflitti di sincronizzazione — provare Push o Pull 2–3 volte di solito li risolve. Questa funzionalità è ancora in evoluzione. Se riscontri bug riproducibili, apri un issue su GitHub."
+  },
+  "help_profilesSwitch": {
+    "message": "Cambio profilo"
+  },
+  "help_profilesSwitchDesc": {
+    "message": "Seleziona un altro profilo per cambiare. I tuoi segnalibri attuali vengono salvati e inviati al repository del profilo corrente prima del cambio. I segnalibri del profilo di destinazione sostituiscono quelli locali. Usa Cambia senza conferma per saltare la finestra di conferma."
+  },
+  "help_profilesTitle": {
+    "message": "Profili"
+  },
+  "help_provider_codeberg": {
+    "message": "<strong>Codeberg</strong> è un host Forgejo su <code>codeberg.org</code>. Seleziona Codeberg come provider; l'URL server è preimpostato. Crea un token in Impostazioni utente → Applicazioni."
+  },
+  "help_provider_forgejo": {
+    "message": "<strong>Forgejo</strong> usa la stessa API di Gitea. Inserisci l'URL del server Forgejo e un token di accesso personale da Impostazioni utente → Applicazioni."
+  },
+  "help_provider_gitlab": {
+    "message": "<strong>GitLab</strong> supporta gitlab.com e istanze self-managed. Per progetti di sottogruppo, usa <code>gruppo/sottogruppo</code> come proprietario e il nome progetto come repository. Lascia vuoto l'URL server per GitLab.com."
+  },
+  "help_provider_gogs": {
+    "message": "<strong>Gogs</strong> condivide un'API simile a Gitea. Inserisci l'URL del server Gogs e un token di accesso da Impostazioni utente → Applicazioni."
+  },
+  "help_quickSync": {
+    "message": "Sincronizzazione rapida segnalibri"
+  },
+  "help_reportIssue": {
+    "message": "Segnala problema"
+  },
+  "help_settingsSyncDesc": {
+    "message": "Quando attivo, le impostazioni dell'estensione (profili, token, preferenze) vengono crittografate e salvate nel repository. Scegli Globale (settings.enc condiviso tra tutti i dispositivi) o Individuale (settings-{id}.enc specifico per dispositivo). In modalità individuale puoi importare le impostazioni da altri dispositivi. La password viene salvata localmente per dispositivo e deve essere uguale su tutti i dispositivi che condividono il repository."
+  },
+  "help_settingsSyncTitle": {
+    "message": "File impostazioni"
+  },
+  "help_shortcutNotSet": {
+    "message": "Non impostato"
+  },
+  "help_shortcuts": {
+    "message": "Scorciatoie da tastiera"
+  },
+  "help_syncProfiles": {
+    "message": "Profili di sincronizzazione"
+  },
+  "help_syncProfilesDesc": {
+    "message": "Tempo reale (1 min), Frequente (5 min), Normale (15 min) o Risparmio energetico (60 min). Personalizzato permette di impostare intervallo e debounce manualmente."
+  },
+  "help_syncStartup": {
+    "message": "Sincronizzazione all'avvio / al focus"
+  },
+  "help_syncStartupDesc": {
+    "message": "Opzionale: sincronizza all'avvio del browser o quando torni alla finestra del browser (con cooldown)."
+  },
+  "help_syncTitle": {
+    "message": "Sincronizzazione"
+  },
+  "help_themeAutoSaveTitle": {
+    "message": "Tema e salvataggio automatico"
+  },
+  "help_themeCycleDesc": {
+    "message": "Clicca il pulsante nell'intestazione per alternare: Auto (sistema) → Scuro → Chiaro → Auto. L'icona mostra la modalità corrente. Funziona nelle opzioni e nel popup."
+  },
+  "help_themeCycleTitle": {
+    "message": "Tema"
+  },
+  "help_transferDesc": {
+    "message": "Usa <strong>Trasferisci…</strong> nella scheda Profilo per copiare segnalibri da un profilo a un altro senza cambiare prima. Uso tipico: migrare da GitHub a Gitea. Scegli <strong>Sostituisci destinazione</strong> per una migrazione pulita; <strong>Unisci nella destinazione</strong> mantiene i file esistenti e può creare cartelle duplicate. Dopo una migrazione disordinata, usa <strong>Pulisci orfani remoti</strong> nella sotto-scheda Sincronizzazione. Le destinazioni mirror nella scheda Connessione Git inviano una copia ai remoti di backup dopo ogni sincronizzazione."
+  },
+  "help_transferTitle": {
+    "message": "Trasferisci segnalibri tra profili"
+  },
+  "help_voteBacklogBtn": {
+    "message": "Vota sul backlog"
+  },
+  "help_voteBacklogDesc": {
+    "message": "Vota quale funzionalità del backlog affrontare per prima. La tua voce definisce la roadmap."
+  },
+  "help_voteBacklogTitle": {
+    "message": "Prossimi sviluppi"
+  },
+  "help_website": {
+    "message": "Sito web"
+  },
+  "help_whyAtomic": {
+    "message": "Tutte le modifiche vengono scritte in un singolo commit atomico: o tutto riesce o niente. Questo previene stati parziali o corrotti se la sincronizzazione viene interrotta. Un commit invece di tanti evita anche di raggiungere i limiti di richieste API e mantiene pulita la cronologia Git."
+  },
+  "help_whySlowIntro": {
+    "message": "GitSyncMarks usa l'API Git Data di GitHub per commit atomici. Ogni file di segnalibri modificato o nuovo richiede una chiamata API. Con molte modifiche, questo si accumula."
+  },
+  "help_whySlowTitle": {
+    "message": "Perché la sincronizzazione a volte è lenta?"
+  },
+  "help_wizardRestartDesc": {
+    "message": "Guida passo passo per collegare il repository Git ed eseguire la prima sincronizzazione."
+  },
+  "help_wizardRestartTitle": {
+    "message": "Configurazione guidata"
+  },
+  "help_wizardSyncChoice": {
+    "message": "Nell'assistente di configurazione, <strong>Verifica connessione</strong> valida solo l'accesso — non sincronizza. Poi scegli pull, unisci/sincronizza, push, crea struttura cartelle o salta, con conferma prima di scrivere nel repository."
+  },
+  "linkwardenSave_cancelBtn": {
+    "message": "Annulla"
+  },
+  "linkwardenSave_collectionLabel": {
+    "message": "Collezione"
+  },
+  "linkwardenSave_collectionNew": {
+    "message": "Crea nuova collezione"
+  },
+  "linkwardenSave_collectionNewPlaceholder": {
+    "message": "Nome della nuova collezione..."
+  },
+  "linkwardenSave_collectionNone": {
+    "message": "Non organizzato"
+  },
+  "linkwardenSave_deleteBtn": {
+    "message": "Elimina"
+  },
+  "linkwardenSave_deleteConfirm": {
+    "message": "Sei sicuro di voler eliminare questo link da Linkwarden?"
+  },
+  "linkwardenSave_descriptionLabel": {
+    "message": "Descrizione"
+  },
+  "linkwardenSave_descriptionPlaceholder": {
+    "message": "Descrizione opzionale..."
+  },
+  "linkwardenSave_quickSaveBtn": {
+    "message": "Salvataggio rapido"
+  },
+  "linkwardenSave_saveBtn": {
+    "message": "Salva"
+  },
+  "linkwardenSave_screenshotLabel": {
+    "message": "Includi screenshot"
+  },
+  "linkwardenSave_statusDeleted": {
+    "message": "Link eliminato con successo!"
+  },
+  "linkwardenSave_statusDuplicate": {
+    "message": "Già salvato in Linkwarden"
+  },
+  "linkwardenSave_statusError": {
+    "message": "Errore"
+  },
+  "linkwardenSave_statusSaved": {
+    "message": "Salvato!"
+  },
+  "linkwardenSave_statusSaving": {
+    "message": "Salvataggio..."
+  },
+  "linkwardenSave_tagsLabel": {
+    "message": "Tag"
+  },
+  "linkwardenSave_tagsPlaceholder": {
+    "message": "Aggiungi tag..."
+  },
+  "linkwardenSave_title": {
+    "message": "Salva su Linkwarden"
+  },
+  "linkwardenSave_titleLabel": {
+    "message": "Titolo"
+  },
+  "linkwardenSave_urlLabel": {
+    "message": "URL"
+  },
+  "notification_titleFailure": {
+    "message": "Sincronizzazione fallita"
+  },
+  "notification_titleSuccess": {
+    "message": "Sincronizzazione riuscita"
+  },
+  "options_about": {
+    "message": "Informazioni"
+  },
+  "options_autoSync": {
+    "message": "Sincronizzazione automatica"
+  },
+  "options_automationCopy": {
+    "message": "Copia"
+  },
+  "options_automationCreateFileDesc": {
+    "message": "Aggiungi un nuovo file JSON in <code>bookmarks/toolbar/</code> o <code>bookmarks/other/</code> (o una sottocartella). Usa il percorso file della tua estensione se diverso."
+  },
+  "options_automationCreateFileTitle": {
+    "message": "Crea file nel repository"
+  },
+  "options_automationFoldersLabel": {
+    "message": "Sezioni:"
+  },
+  "options_automationFormatTitle": {
+    "message": "Formato file"
+  },
+  "options_automationGithubActionParams": {
+    "message": "folder = root; path = sottocartella opzionale; base-path se il percorso file ≠ bookmarks"
+  },
+  "options_automationGithubActionTitle": {
+    "message": "GitHub Action"
+  },
+  "options_automationIntro": {
+    "message": "Aggiungi segnalibri direttamente nel tuo repository. L'estensione li rileva alla prossima sincronizzazione e normalizza automaticamente i nomi dei file."
+  },
+  "options_automationParamBasePath": {
+    "message": "Cartella di base nel repository (predefinito bookmarks; deve corrispondere all'impostazione Percorso file)"
+  },
+  "options_automationParamFolder": {
+    "message": "Cartella nella sezione (es. dev-tools)"
+  },
+  "options_automationParamSection": {
+    "message": "Sezione: toolbar o other"
+  },
+  "options_automationParamTitle": {
+    "message": "Titolo (opzionale; se vuoto viene usato l'URL)"
+  },
+  "options_automationParamUrl": {
+    "message": "URL del segnalibro (obbligatorio)"
+  },
+  "options_automationSubfolderExample": {
+    "message": "Esempio: path=\"dev-tools\" → bookmarks/toolbar/dev-tools/"
+  },
+  "options_automationTitle": {
+    "message": "Aggiungi segnalibri tramite Git"
+  },
+  "options_automationWorkflowLink": {
+    "message": "Copia add-bookmark.yml nel tuo repository"
+  },
+  "options_automationWorkflowRaw": {
+    "message": "Raw"
+  },
+  "options_backupIntro": {
+    "message": "Esporta o importa segnalibri come JSON; impostazioni come JSON o .enc crittografato con password."
+  },
+  "options_backupTitle": {
+    "message": "Backup"
+  },
+  "options_bookmarksCard": {
+    "message": "Segnalibri"
+  },
+  "options_branch": {
+    "message": "Branch"
+  },
+  "options_browseFolder": {
+    "message": "Sfoglia"
+  },
+  "options_browseFolderEmpty": {
+    "message": "Nessuna cartella trovata"
+  },
+  "options_browseFolderLoading": {
+    "message": "Caricamento…"
+  },
+  "options_browseFolderNotConfigured": {
+    "message": "Configurare prima token, proprietario e repository"
+  },
+  "options_browseFolderSelect": {
+    "message": "Seleziona"
+  },
+  "options_by": {
+    "message": "Di"
+  },
+  "options_checking": {
+    "message": "Verifica in corso..."
+  },
+  "options_chooseFile": {
+    "message": "Scegli file"
+  },
+  "options_cleanOrphansDesc": {
+    "message": "Rimuovi file segnalibri remoti assenti dai tuoi segnalibri locali (profilo attivo). Usa dopo un trasferimento disordinato o cartelle duplicate sul server."
+  },
+  "options_cleanOrphansPreview": {
+    "message": "Anteprima orfani"
+  },
+  "options_cleanOrphansRun": {
+    "message": "Pulisci remoto"
+  },
+  "options_cleanOrphansTitle": {
+    "message": "Pulisci orfani remoti"
+  },
+  "options_connectionOk": {
+    "message": "Connessione OK! Utente: $1, Repository: $2"
+  },
   "options_contextMenuConfigDesc": {
     "message": "Attiva o disattiva gli elementi per mostrarli nel menu contestuale. Trascina o usa le frecce per cambiare l'ordine."
   },
   "options_contextMenuConfigTitle": {
     "message": "Visibilità e ordine degli elementi"
+  },
+  "options_contextMenuFoldersRefreshed": {
+    "message": "Elenco cartelle aggiornato"
   },
   "options_contextMenuItem_ADD_OTHER": {
     "message": "Aggiungi ad Altri segnalibri"
@@ -1338,6 +687,9 @@
   },
   "options_contextMenuItem_DOWNLOAD_FAVICON": {
     "message": "Scarica Favicon"
+  },
+  "options_contextMenuItem_LINKWARDEN_SAVE": {
+    "message": "Salva su Linkwarden..."
   },
   "options_contextMenuItem_OPEN_ALL_FOLDER": {
     "message": "Apri tutto dalla cartella"
@@ -1360,72 +712,6 @@
   "options_contextMenuOpenAllThresholdLabel": {
     "message": "Sicurezza di conferma per \"Apri tutto\" (schede)"
   },
-  "options_contextMenuResetBtn": {
-    "message": "Ripristina predefiniti"
-  },
-  "options_linkwardenApiKey": {
-    "message": "Chiave API"
-  },
-  "options_linkwardenDefaultCollection": {
-    "message": "Collezione predefinita"
-  },
-  "options_linkwardenDefaultTags": {
-    "message": "Tag predefiniti"
-  },
-  "options_linkwardenEnabled": {
-    "message": "Abilita Linkwarden"
-  },
-  "options_linkwardenInstanceUrl": {
-    "message": "URL dell'istanza"
-  },
-  "options_linkwardenIntro": {
-    "message": "Configura la tua istanza Linkwarden per salvare segnalibri direttamente dal menu contestuale."
-  },
-  "options_linkwardenTestConnection": {
-    "message": "Testa connessione"
-  },
-  "options_linkwardenTitle": {
-    "message": "Integrazione Linkwarden"
-  },
-  "options_menu_showAsSubmenu": {
-    "message": "Mostra come sottomenu"
-  },
-  "options_mobileAppAlert": {
-    "message": "<strong>Nota per utenti Android:</strong> Firefox per Android non supporta la sincronizzazione diretta dei segnalibri tramite estensioni. Devi usare l'app companion."
-  },
-  "options_subTabMenuAdvanced": {
-    "message": "Avanzato e Sicurezza"
-  },
-  "options_subTabMenuFolders": {
-    "message": "Cartelle fissate"
-  },
-  "options_subTabMenuItems": {
-    "message": "Visibilità e ordine"
-  },
-  "options_subTabSync": {
-    "message": "Sincronizzazione"
-  },
-  "options_tabGit": {
-    "message": "Git"
-  },
-  "options_tabLinkwarden": {
-    "message": "Linkwarden"
-  },
-  "options_tabMenu": {
-    "message": "Menu"
-  },
-  "help_contextMenuToolsDesc": {
-    "message": "In File → Impostazioni, puoi fissare fino a 3 cartelle per azioni di aggiunta rapida e configurare la soglia di conferma per Apri tutto. Il menu contestuale include anche la Ricerca segnalibri."
-  },
-  "help_contextMenuToolsTitle": {
-    "message": "Strumenti del menu contestuale"
-  },
-  "help_website": {
-    "message": "Sito web"
-  },
-  "options_contextMenuFoldersRefreshed": {
-    "message": "Elenco cartelle aggiornato"
-  },
   "options_contextMenuQuickFolder1": {
     "message": "Cartella rapida 1"
   },
@@ -1447,11 +733,508 @@
   "options_contextMenuRefreshFolders": {
     "message": "Aggiorna elenco cartelle"
   },
+  "options_contextMenuResetBtn": {
+    "message": "Ripristina predefiniti"
+  },
   "options_contextMenuToolsDesc": {
     "message": "Configura le azioni delle cartelle fissate, la sicurezza Apri tutto e la visibilità degli elementi del menu."
   },
   "options_contextMenuToolsTitle": {
     "message": "Strumenti del menu contestuale"
+  },
+  "options_debounceDelay": {
+    "message": "Ritardo debounce (secondi)"
+  },
+  "options_debounceDelayHint": {
+    "message": "Tempo di attesa prima della sincronizzazione dopo modifiche ai segnalibri."
+  },
+  "options_debugLogDesc": {
+    "message": "Attiva per registrare la diagnostica della sincronizzazione (diff, decisioni di merge, conflitti, hash dei commit nei punti chiave). Usa per risolvere problemi di sincronizzazione. Esporta e condividi il log per il supporto."
+  },
+  "options_debugLogEnabled": {
+    "message": "Attiva log di debug"
+  },
+  "options_debugLogExport": {
+    "message": "Esporta log"
+  },
+  "options_debugLogExportEmpty": {
+    "message": "Il log è vuoto. Attiva il log di debug ed esegui prima una sincronizzazione."
+  },
+  "options_debugLogTitle": {
+    "message": "Log di debug"
+  },
+  "options_decryptError": {
+    "message": "Decrittazione fallita. Password errata?"
+  },
+  "options_densityCompact": {
+    "message": "Compatto"
+  },
+  "options_densityGroupLabel": {
+    "message": "Densità interfaccia"
+  },
+  "options_densityLarge": {
+    "message": "Grande"
+  },
+  "options_densityMedium": {
+    "message": "Medio"
+  },
+  "options_documentation": {
+    "message": "Documentazione"
+  },
+  "options_error": {
+    "message": "Errore: $1"
+  },
+  "options_errorSaving": {
+    "message": "Errore durante il salvataggio delle impostazioni: $1"
+  },
+  "options_exportBookmarks": {
+    "message": "Esporta segnalibri"
+  },
+  "options_exportBookmarksDesc": {
+    "message": "Salva tutti i segnalibri come JSON."
+  },
+  "options_exportBtn": {
+    "message": "Esporta"
+  },
+  "options_exportDashy": {
+    "message": "Esporta configurazione Dashy"
+  },
+  "options_exportDashyDesc": {
+    "message": "Esporta segnalibri come sezioni dashboard Dashy (YAML)."
+  },
+  "options_exportEncryptedSuccess": {
+    "message": "Esportazione crittografata riuscita!"
+  },
+  "options_exportImportDesc": {
+    "message": "Esporta o importa segnalibri e impostazioni dell'estensione."
+  },
+  "options_exportImportTitle": {
+    "message": "Esporta / Importa"
+  },
+  "options_exportLabel": {
+    "message": "Esporta"
+  },
+  "options_exportPasswordPrompt": {
+    "message": "Inserisci una password per crittografare il file delle impostazioni."
+  },
+  "options_exportSettings": {
+    "message": "Esporta impostazioni"
+  },
+  "options_exportSettingsDesc": {
+    "message": "Connessione GitHub e impostazioni di sincronizzazione (inclusi i profili)."
+  },
+  "options_exportSettingsEncrypted": {
+    "message": "Esporta crittografato"
+  },
+  "options_exportSettingsPlain": {
+    "message": "Esporta (in chiaro)"
+  },
+  "options_exportSuccess": {
+    "message": "Esportazione riuscita!"
+  },
+  "options_exportTypeBookmarks": {
+    "message": "Segnalibri (JSON)"
+  },
+  "options_exportTypeDashy": {
+    "message": "Configurazione Dashy (YAML)"
+  },
+  "options_exportTypeSettingsEncrypted": {
+    "message": "Impostazioni (crittografato)"
+  },
+  "options_exportTypeSettingsPlain": {
+    "message": "Impostazioni (JSON in chiaro)"
+  },
+  "options_filePath": {
+    "message": "Percorso file nel repository"
+  },
+  "options_filePathChangeHint": {
+    "message": "Alla prossima sincronizzazione potrebbe verificarsi un conflitto. Usa \"GitHub → Locale\" per adottare lo stato remoto."
+  },
+  "options_filePathHint": {
+    "message": "Cartella in cui verranno salvati i file dei segnalibri."
+  },
+  "options_generateBookmarksHtml": {
+    "message": "Genera bookmarks.html"
+  },
+  "options_generateBookmarksHtmlDesc": {
+    "message": "Formato Netscape per l'importazione nel browser (Chrome, Firefox)."
+  },
+  "options_generateDashyYml": {
+    "message": "Genera dashy-conf.yml"
+  },
+  "options_generateDashyYmlDesc": {
+    "message": "Configurazione dashboard Dashy — importa come sezioni nel tuo conf.yml."
+  },
+  "options_generateFeedXml": {
+    "message": "Genera feed.xml"
+  },
+  "options_generateFeedXmlDesc": {
+    "message": "Feed RSS 2.0 — iscriviti con qualsiasi lettore RSS o usalo per automazioni."
+  },
+  "options_generateModeAuto": {
+    "message": "Auto"
+  },
+  "options_generateModeManual": {
+    "message": "Manuale"
+  },
+  "options_generateModeOff": {
+    "message": "Off"
+  },
+  "options_generateNowBtn": {
+    "message": "Genera ora"
+  },
+  "options_generateReadmeMd": {
+    "message": "README.md"
+  },
+  "options_generateReadmeMdDesc": {
+    "message": "Panoramica Markdown nel repository."
+  },
+  "options_generatedFilesDesc": {
+    "message": "File creati nel repository durante la sincronizzazione. Scegli Off, Manuale o Auto per ogni file."
+  },
+  "options_generatedFilesTitle": {
+    "message": "File generati"
+  },
+  "options_gheServerUrlEnabled": {
+    "message": "Usa URL server personalizzato (GitHub Enterprise)"
+  },
+  "options_gitConnection": {
+    "message": "Connessione Git"
+  },
+  "options_gitProvider": {
+    "message": "Provider Git"
+  },
+  "options_gitProviderGitea": {
+    "message": "Gitea / Forgejo"
+  },
+  "options_gitProviderGithub": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_codeberg": {
+    "message": "Codeberg"
+  },
+  "options_gitProvider_forgejo": {
+    "message": "Forgejo"
+  },
+  "options_gitProvider_gitea": {
+    "message": "Gitea"
+  },
+  "options_gitProvider_github": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_gitlab": {
+    "message": "GitLab"
+  },
+  "options_gitProvider_gogs": {
+    "message": "Gogs"
+  },
+  "options_giteaPermissionDenied": {
+    "message": "Autorizzazione host per il server Gitea negata. Consenti l'accesso quando richiesto e riprova."
+  },
+  "options_giteaTokenHelpLink": {
+    "message": "Apri impostazioni utente Gitea (Applicazioni)"
+  },
+  "options_giteaTokenHintHtml": {
+    "message": "Crea un token in Gitea in <strong>Impostazioni utente → Applicazioni</strong> con accesso lettura/scrittura al repository. I token Gitea <em>non</em> sono stringhe stile GitHub <code>ghp_…</code>."
+  },
+  "options_giteaTokenWizardHelpHtml": {
+    "message": "In Gitea, apri <strong>Impostazioni utente → Applicazioni → Genera nuovo token</strong>. Abilita lettura e scrittura repository. Copia il token — viene mostrato una sola volta. I token Gitea non usano prefissi GitHub come <code>ghp_</code>."
+  },
+  "options_githubConnection": {
+    "message": "Connessione GitHub"
+  },
+  "options_githubRepo": {
+    "message": "Repository GitHub"
+  },
+  "options_githubReposDesc": {
+    "message": "Crea una cartella con segnalibri a tutti i tuoi repository GitHub (pubblici e privati)."
+  },
+  "options_githubReposEnabled": {
+    "message": "Cartella GitHub Repos"
+  },
+  "options_githubReposParentLabel": {
+    "message": "Posizione"
+  },
+  "options_githubReposParentMenu": {
+    "message": "Menu segnalibri"
+  },
+  "options_githubReposParentOther": {
+    "message": "Altri segnalibri"
+  },
+  "options_githubReposParentToolbar": {
+    "message": "Barra dei segnalibri"
+  },
+  "options_githubReposRefresh": {
+    "message": "Aggiorna GitHub Repos"
+  },
+  "options_githubReposRefreshSuccess": {
+    "message": "Aggiunti $1 repository per $2"
+  },
+  "options_githubReposTitle": {
+    "message": "Cartella GitHub Repos"
+  },
+  "options_historyColActions": {
+    "message": "Azioni"
+  },
+  "options_historyColClient": {
+    "message": "Client"
+  },
+  "options_historyColCommit": {
+    "message": "Commit"
+  },
+  "options_historyColDate": {
+    "message": "Data"
+  },
+  "options_historyCurrent": {
+    "message": "attuale"
+  },
+  "options_historyDesc": {
+    "message": "Sfoglia commit di sincronizzazione recenti e ripristina segnalibri da una versione precedente. Il ripristino modifica solo i segnalibri locali — non riscrive il branch remoto."
+  },
+  "options_historyDiffAdded": {
+    "message": "Aggiunto"
+  },
+  "options_historyDiffChanged": {
+    "message": "Modificato"
+  },
+  "options_historyDiffClose": {
+    "message": "Chiudi"
+  },
+  "options_historyDiffLoading": {
+    "message": "Caricamento anteprima…"
+  },
+  "options_historyDiffNoChanges": {
+    "message": "Nessuna differenza — questo commit corrisponde ai tuoi segnalibri attuali."
+  },
+  "options_historyDiffRemoved": {
+    "message": "Rimosso"
+  },
+  "options_historyEmpty": {
+    "message": "Nessun commit trovato."
+  },
+  "options_historyLoadBtn": {
+    "message": "Carica cronologia"
+  },
+  "options_historyPreviewBtn": {
+    "message": "Anteprima"
+  },
+  "options_historyRestoreBtn": {
+    "message": "Ripristina"
+  },
+  "options_historyRestoreConfirmBtn": {
+    "message": "Clicca di nuovo per confermare"
+  },
+  "options_historyRestoreConfirmShort": {
+    "message": "Clicca di nuovo"
+  },
+  "options_historyRestoring": {
+    "message": "Ripristino…"
+  },
+  "options_historyTitle": {
+    "message": "Cronologia sincronizzazione"
+  },
+  "options_historyUndoBtn": {
+    "message": "Annulla ultima sincronizzazione"
+  },
+  "options_hostPermissionDenied": {
+    "message": "Autorizzazione host per il server Git negata. Consenti l'accesso quando richiesto e riprova."
+  },
+  "options_importBookmarks": {
+    "message": "Importa segnalibri"
+  },
+  "options_importBookmarksWarning": {
+    "message": "Sostituisce tutti i segnalibri nel profilo attivo. Non può essere annullato."
+  },
+  "options_importBtn": {
+    "message": "Importa"
+  },
+  "options_importError": {
+    "message": "Importazione fallita: $1"
+  },
+  "options_importLabel": {
+    "message": "Importa"
+  },
+  "options_importPasswordPrompt": {
+    "message": "Inserisci la password per decrittare il file delle impostazioni."
+  },
+  "options_importSettings": {
+    "message": "Importa impostazioni"
+  },
+  "options_importSettingsFormats": {
+    "message": "Accetta file .json (in chiaro) o .enc (crittografati)."
+  },
+  "options_importSettingsWarning": {
+    "message": "Sostituisce tutte le impostazioni (tutti i profili). La pagina si ricarica dopo."
+  },
+  "options_importSuccess": {
+    "message": "Importazione riuscita!"
+  },
+  "options_importTypeBookmarks": {
+    "message": "Segnalibri (JSON)"
+  },
+  "options_importTypeSettings": {
+    "message": "Impostazioni (JSON / ENC)"
+  },
+  "options_invalidToken": {
+    "message": "Token non valido."
+  },
+  "options_langAuto": {
+    "message": "Auto (browser)"
+  },
+  "options_language": {
+    "message": "Lingua"
+  },
+  "options_license": {
+    "message": "Licenza (MIT)"
+  },
+  "options_links": {
+    "message": "Link"
+  },
+  "options_linkwardenApiKey": {
+    "message": "Chiave API"
+  },
+  "options_linkwardenConnectionFailed": {
+    "message": "Connessione fallita: $1"
+  },
+  "options_linkwardenConnectionOk": {
+    "message": "Connessione riuscita!"
+  },
+  "options_linkwardenDefaultCollection": {
+    "message": "Collezione predefinita"
+  },
+  "options_linkwardenDefaultScreenshot": {
+    "message": "Screenshot predefiniti"
+  },
+  "options_linkwardenDefaultScreenshotHint": {
+    "message": "Se gli screenshot debbano essere abilitati di default nel popup di salvataggio."
+  },
+  "options_linkwardenDefaultTags": {
+    "message": "Tag predefiniti"
+  },
+  "options_linkwardenDefaultTagsHint": {
+    "message": "Clicca per aggiungere tag esistenti o digita per crearne di nuovi. Applicato ad ogni salvataggio."
+  },
+  "options_linkwardenEnabled": {
+    "message": "Abilita Linkwarden"
+  },
+  "options_linkwardenHostPermissionDenied": {
+    "message": "Autorizzazione host negata. Controlla barra indirizzi o blocco popup."
+  },
+  "options_linkwardenInstanceUrl": {
+    "message": "URL dell'istanza"
+  },
+  "options_linkwardenIntro": {
+    "message": "Configura la tua istanza Linkwarden per salvare segnalibri direttamente dal menu contestuale."
+  },
+  "options_linkwardenInvalidUrlFormat": {
+    "message": "Formato URL non valido"
+  },
+  "options_linkwardenSyncEnabled": {
+    "message": "Sincronizza collezioni con i segnalibri"
+  },
+  "options_linkwardenSyncParent": {
+    "message": "Cartella genitore"
+  },
+  "options_linkwardenSyncPushToGit": {
+    "message": "Invia i segnalibri di Linkwarden a Git"
+  },
+  "options_linkwardenSyncRefresh": {
+    "message": "Sincronizza ora"
+  },
+  "options_linkwardenSyncSuccess": {
+    "message": "$1 collezioni e $2 link sincronizzati.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      },
+      "2": {
+        "content": "$2"
+      }
+    }
+  },
+  "options_linkwardenTestConnection": {
+    "message": "Testa connessione"
+  },
+  "options_linkwardenTitle": {
+    "message": "Integrazione Linkwarden"
+  },
+  "options_linkwardenUrlTokenRequired": {
+    "message": "URL e token sono obbligatori"
+  },
+  "options_menu_showAsSubmenu": {
+    "message": "Mostra come sottomenu"
+  },
+  "options_mirrorsAdd": {
+    "message": "+ Aggiungi mirror"
+  },
+  "options_mirrorsDesc": {
+    "message": "Copie solo push dei file segnalibri verso remoti Git aggiuntivi dopo ogni sincronizzazione principale riuscita. Le modifiche dirette su un mirror vengono sovrascritte alla prossima sincronizzazione."
+  },
+  "options_mirrorsLabel": {
+    "message": "Etichetta"
+  },
+  "options_mirrorsPaused": {
+    "message": "In pausa"
+  },
+  "options_mirrorsPushGenerated": {
+    "message": "Includi file generati (README, HTML, feed, Dashy)"
+  },
+  "options_mirrorsPushSettings": {
+    "message": "Includi impostazioni crittografate"
+  },
+  "options_mirrorsRemove": {
+    "message": "Rimuovi"
+  },
+  "options_mirrorsStatusError": {
+    "message": "Errore mirror: $1"
+  },
+  "options_mirrorsStatusOk": {
+    "message": "Ultimo push OK"
+  },
+  "options_mirrorsTest": {
+    "message": "Test"
+  },
+  "options_mirrorsTitle": {
+    "message": "Destinazioni mirror"
+  },
+  "options_mobileAppAlert": {
+    "message": "<strong>Nota per utenti Android:</strong> Firefox per Android non supporta la sincronizzazione diretta dei segnalibri tramite estensioni. Devi usare l'app companion."
+  },
+  "options_mobileAppDesc": {
+    "message": "Consulta i tuoi segnalibri ovunque. GitSyncMarks-App (iOS + Android) si sincronizza dal tuo repository GitHub — companion in sola lettura."
+  },
+  "options_mobileAppLink": {
+    "message": "GitSyncMarks-App su GitHub"
+  },
+  "options_mobileAppStores": {
+    "message": "F-Droid e Google Play in arrivo."
+  },
+  "options_mobileAppTitle": {
+    "message": "App mobile"
+  },
+  "options_notifications": {
+    "message": "Notifiche di sincronizzazione"
+  },
+  "options_notificationsAll": {
+    "message": "Tutte (successo e errore)"
+  },
+  "options_notificationsErrorsOnly": {
+    "message": "Solo errori"
+  },
+  "options_notificationsHint": {
+    "message": "Scegli quando mostrare le notifiche."
+  },
+  "options_notificationsOff": {
+    "message": "Off"
+  },
+  "options_onboardingCreateBtn": {
+    "message": "Crea"
+  },
+  "options_onboardingCreateFolder": {
+    "message": "La cartella $1 non esiste ancora. Crearla con la struttura di base (toolbar, other)?"
+  },
+  "options_onboardingCreateSuccess": {
+    "message": "Cartella creata con successo."
   },
   "options_onboardingInitPathAlreadyExists": {
     "message": "Il percorso \"$1\" contiene già dati dei segnalibri.",
@@ -1480,17 +1263,260 @@
       }
     }
   },
+  "options_onboardingPullBtn": {
+    "message": "Carica"
+  },
+  "options_onboardingPullNow": {
+    "message": "Segnalibri trovati nel repository. Scaricarli in questo browser?"
+  },
+  "options_onboardingPullSuccess": {
+    "message": "Segnalibri scaricati con successo."
+  },
+  "options_onboardingWizardActionCheckEnvironment": {
+    "message": "Verifica repository e percorso"
+  },
+  "options_onboardingWizardActionCreate": {
+    "message": "Crea struttura"
+  },
+  "options_onboardingWizardActionPull": {
+    "message": "Importa ora"
+  },
+  "options_onboardingWizardActionTest": {
+    "message": "Esegui test"
+  },
+  "options_onboardingWizardBack": {
+    "message": "Indietro"
+  },
+  "options_onboardingWizardCheckConnection": {
+    "message": "Verifica connessione"
+  },
+  "options_onboardingWizardCompleted": {
+    "message": "Procedura completata con successo."
+  },
+  "options_onboardingWizardDismissed": {
+    "message": "Procedura chiusa. Puoi riavviarla in qualsiasi momento."
+  },
+  "options_onboardingWizardEnvironmentChecked": {
+    "message": "Verifica repository e percorso completata."
+  },
+  "options_onboardingWizardFinish": {
+    "message": "Fine"
+  },
   "options_onboardingWizardFirstSyncHint": {
     "message": "La prima sincronizzazione può richiedere più tempo durante le verifiche del repository e la configurazione iniziale."
+  },
+  "options_onboardingWizardHasTokenLabel": {
+    "message": "Hai già un token?"
+  },
+  "options_onboardingWizardHasTokenNo": {
+    "message": "No, mostrami come"
+  },
+  "options_onboardingWizardHasTokenYes": {
+    "message": "Sì, ne ho già uno"
+  },
+  "options_onboardingWizardNeedAction": {
+    "message": "Completa prima la prima azione di sync."
+  },
+  "options_onboardingWizardNeedConnection": {
+    "message": "Esegui prima il test di connessione."
+  },
+  "options_onboardingWizardNext": {
+    "message": "Avanti"
+  },
+  "options_onboardingWizardPhaseApplying": {
+    "message": "Applicazione dei segnalibri al browser"
+  },
+  "options_onboardingWizardPhaseCommit": {
+    "message": "Creazione del commit nel repository"
+  },
+  "options_onboardingWizardPhaseDownloading": {
+    "message": "Download dei segnalibri"
+  },
+  "options_onboardingWizardPhasePreparing": {
+    "message": "Preparazione dei dati dei segnalibri"
+  },
+  "options_onboardingWizardPhaseSaving": {
+    "message": "Salvataggio dello stato di sincronizzazione"
+  },
+  "options_onboardingWizardPhaseUploading": {
+    "message": "Caricamento segnalibri sul remoto"
+  },
+  "options_onboardingWizardRepoCreateFailed": {
+    "message": "Impossibile creare il repository con questo token/permessi."
+  },
+  "options_onboardingWizardRepoCreatePermissionDenied": {
+    "message": "Questo token non può creare repository. Controlla lo scope repo e i permessi dell'account."
+  },
+  "options_onboardingWizardRepoFlowAuto": {
+    "message": "Crea repository automaticamente"
+  },
+  "options_onboardingWizardRepoFlowLabel": {
+    "message": "Modalità repository"
+  },
+  "options_onboardingWizardRepoFlowManual": {
+    "message": "Usa repository esistente"
+  },
+  "options_onboardingWizardRepoOwnerMismatch": {
+    "message": "La creazione automatica supporta solo repository del tuo utente. Imposta il proprietario su $1."
+  },
+  "options_onboardingWizardRepoRequired": {
+    "message": "Inserisci proprietario e nome del repository."
+  },
+  "options_onboardingWizardRepoUserOnlyHint": {
+    "message": "Per repository di organizzazioni o con proprietario diverso, passa alla modalità manuale (repository esistente)."
+  },
+  "options_onboardingWizardSkip": {
+    "message": "Esci"
+  },
+  "options_onboardingWizardStart": {
+    "message": "Avvia procedura guidata"
+  },
+  "options_onboardingWizardStartSync": {
+    "message": "Avvia sincronizzazione"
+  },
+  "options_onboardingWizardStepFinishText": {
+    "message": "Configurazione completata. Puoi continuare con le impostazioni normali."
+  },
+  "options_onboardingWizardStepFinishTitle": {
+    "message": "Fine"
+  },
+  "options_onboardingWizardStepHasTokenText": {
+    "message": "Se no, crealo prima e poi continua con l'inserimento del token."
+  },
+  "options_onboardingWizardStepHasTokenTitle": {
+    "message": "Hai già un token?"
+  },
+  "options_onboardingWizardStepProviderText": {
+    "message": "Seleziona GitHub, GitLab, Codeberg, Gitea, Forgejo o Gogs. Ogni profilo memorizza il proprio provider e URL server."
+  },
+  "options_onboardingWizardStepProviderTitle": {
+    "message": "Scegli il provider Git"
+  },
+  "options_onboardingWizardStepRepoDecisionText": {
+    "message": "Scegli tra creare automaticamente il repository o usare un repository esistente."
+  },
+  "options_onboardingWizardStepRepoDecisionTitle": {
+    "message": "Modalità repository"
+  },
+  "options_onboardingWizardStepRepoText": {
+    "message": "Compila owner, nome repository, branch e percorso base."
+  },
+  "options_onboardingWizardStepRepoTitle": {
+    "message": "Impostazioni repository"
+  },
+  "options_onboardingWizardStepSyncChoiceText": {
+    "message": "Scegli come sincronizzare, leggi l'avviso e clicca Avvia sincronizzazione. Nulla viene scritto nel repository finché non confermi."
+  },
+  "options_onboardingWizardStepSyncTextEmpty": {
+    "message": "Il percorso è vuoto. Crea la struttura iniziale per iniziare."
+  },
+  "options_onboardingWizardStepSyncTextExisting": {
+    "message": "Ci sono già segnalibri nel repository. Importali ora in questo browser."
+  },
+  "options_onboardingWizardStepSyncTitle": {
+    "message": "Prima azione di sync"
+  },
+  "options_onboardingWizardStepTokenHelpText": {
+    "message": "Apri le impostazioni token di GitHub e crea un Personal Access Token con scope repo."
+  },
+  "options_onboardingWizardStepTokenHelpTitle": {
+    "message": "Crea token"
+  },
+  "options_onboardingWizardStepTokenText": {
+    "message": "Aggiungi un token GitHub con scope repo e tienilo privato."
+  },
+  "options_onboardingWizardStepTokenTitle": {
+    "message": "Token di accesso"
+  },
+  "options_onboardingWizardStepValidateText": {
+    "message": "Clicca Verifica connessione per validare token, repository e accesso al percorso. In questo passaggio non viene eseguita alcuna sincronizzazione."
+  },
+  "options_onboardingWizardStepValidateTitle": {
+    "message": "Testa connessione"
+  },
+  "options_onboardingWizardStepWelcomeText": {
+    "message": "Questa procedura ti guida in setup repository, token, test connessione e primo sync."
+  },
+  "options_onboardingWizardStepWelcomeTitle": {
+    "message": "Benvenuto"
+  },
+  "options_onboardingWizardSyncConfirmRunBtn": {
+    "message": "Esegui"
+  },
+  "options_onboardingWizardSyncConfirmSkipBtn": {
+    "message": "Salta"
+  },
+  "options_onboardingWizardSyncConfirm_initialize": {
+    "message": "Creare la struttura iniziale della cartella bookmarks/ sul repository remoto (senza caricare segnalibri locali)?"
+  },
+  "options_onboardingWizardSyncConfirm_pull": {
+    "message": "Scaricare $2 segnalibro/i dal repository remoto in questo browser?"
+  },
+  "options_onboardingWizardSyncConfirm_pullOverwriteLocal": {
+    "message": "Pull sostituirà tutti i $1 segnalibro/i locali con $2 dal repository remoto. Continuare?"
+  },
+  "options_onboardingWizardSyncConfirm_push": {
+    "message": "Caricare $1 segnalibro/i locali sul repository remoto?"
+  },
+  "options_onboardingWizardSyncConfirm_pushDanger": {
+    "message": "Push sovrascriverà il repository remoto. $2 segnalibro/i remoti potrebbero essere eliminati; resteranno solo $1 segnalibro/i locali. Continuare?"
+  },
+  "options_onboardingWizardSyncConfirm_skip": {
+    "message": "Saltare la prima sincronizzazione per ora? Puoi sincronizzare manualmente dal popup in seguito."
+  },
+  "options_onboardingWizardSyncConfirm_sync": {
+    "message": "Eseguire unione/sincronizzazione tra $1 segnalibro/i locali e $2 remoti? Potrebbe essere necessario risolvere conflitti in seguito."
   },
   "options_onboardingWizardSyncInProgress": {
     "message": "Lavoro in corso in background, attendere..."
   },
+  "options_onboardingWizardSyncModeLabel": {
+    "message": "Prima azione di sincronizzazione"
+  },
+  "options_onboardingWizardSyncMode_initialize": {
+    "message": "Solo crea struttura cartelle"
+  },
+  "options_onboardingWizardSyncMode_pull": {
+    "message": "Solo pull (scarica dal remoto)"
+  },
+  "options_onboardingWizardSyncMode_push": {
+    "message": "Solo push (carica segnalibri locali — sovrascrive remoto)"
+  },
+  "options_onboardingWizardSyncMode_skip": {
+    "message": "Salta per ora"
+  },
+  "options_onboardingWizardSyncMode_sync": {
+    "message": "Unisci / sincronizza (consigliato quando entrambi i lati hanno segnalibri)"
+  },
+  "options_onboardingWizardSyncWarn_both": {
+    "message": "Segnalibri presenti su entrambi i lati. Unisci/sincronizza combina le modifiche; pull o push sovrascrive un lato."
+  },
+  "options_onboardingWizardSyncWarn_emptyBoth": {
+    "message": "Percorso remoto e browser sono vuoti. Crea la struttura cartelle o salta e sincronizza dopo."
+  },
+  "options_onboardingWizardSyncWarn_localOnly": {
+    "message": "Il percorso remoto è vuoto; i segnalibri locali verranno caricati con push."
+  },
+  "options_onboardingWizardSyncWarn_pushDanger": {
+    "message": "Attenzione: push eliminerà $1 file segnalibri remoti non presenti localmente e sostituirà il repository con i segnalibri di questo browser."
+  },
+  "options_onboardingWizardSyncWarn_remoteOnly": {
+    "message": "Il remoto ha segnalibri; questo browser è vuoto. Pull è consigliato per non sovrascrivere il repository."
+  },
+  "options_onboardingWizardTitle": {
+    "message": "Procedura guidata"
+  },
   "options_onboardingWizardTokenHelpIntro": {
     "message": "Un Personal Access Token (PAT) consente a GitSyncMarks di accedere al tuo repository GitHub per sincronizzare i segnalibri. Lo crei nelle impostazioni del tuo account GitHub."
   },
+  "options_onboardingWizardTokenHelpLink": {
+    "message": "Apri pagina token GitHub"
+  },
   "options_onboardingWizardTokenHelpScopes": {
     "message": "Il token necessita dell'ambito <code>repo</code>. Questo concede l'accesso in lettura/scrittura ai tuoi repository (inclusi quelli privati) e consente all'estensione di creare automaticamente un repository. Tratta il token come una password."
+  },
+  "options_onboardingWizardTokenHelpText": {
+    "message": "Crea un Personal Access Token GitHub con scope repo nelle impostazioni di GitHub."
   },
   "options_onboardingWizardTokenStep1": {
     "message": "Clicca il link qui sotto per aprire la pagina di creazione token di GitHub."
@@ -1504,8 +1530,137 @@
   "options_onboardingWizardTokenStep4": {
     "message": "Clicca \"Generate token\", copialo e incollalo nel campo qui sotto."
   },
+  "options_onboardingWizardTokenValidated": {
+    "message": "Il token è valido e ha lo scope richiesto."
+  },
+  "options_ownerHint_gitlab": {
+    "message": "Nome utente, gruppo o percorso gruppo/sottogruppo (es. miogruppo/sottogruppo)."
+  },
+  "options_ownerPlaceholder": {
+    "message": "tuo-nome-utente-github"
+  },
+  "options_ownerPlaceholderGitea": {
+    "message": "tuo-utente-gitea"
+  },
+  "options_ownerPlaceholder_gitlab": {
+    "message": "utente o gruppo/sottogruppo"
+  },
+  "options_passwordPlaceholder": {
+    "message": "Password"
+  },
+  "options_patLabel": {
+    "message": "Personal Access Token (PAT)"
+  },
+  "options_pleaseEnterLinkwardenConfig": {
+    "message": "Inserire prima l'URL e il token di Linkwarden."
+  },
+  "options_pleaseEnterToken": {
+    "message": "Inserisci un token."
+  },
+  "options_privacyPolicy": {
+    "message": "Informativa sulla privacy"
+  },
+  "options_profile": {
+    "message": "Profilo"
+  },
+  "options_profileAdd": {
+    "message": "+ Aggiungi"
+  },
+  "options_profileAddConfirmBtn": {
+    "message": "Aggiungi"
+  },
+  "options_profileAddNameLabel": {
+    "message": "Nome profilo"
+  },
+  "options_profileAddPlaceholder": {
+    "message": "Nuovo profilo"
+  },
+  "options_profileDelete": {
+    "message": "Elimina"
+  },
+  "options_profileDeleteConfirm": {
+    "message": "Eliminare il profilo \"$1\"? L'operazione non può essere annullata."
+  },
+  "options_profileRename": {
+    "message": "Rinomina"
+  },
+  "options_profileRenameLabel": {
+    "message": "Nuovo nome"
+  },
+  "options_profileRenamePrompt": {
+    "message": "Nuovo nome per \"$1\":"
+  },
+  "options_profileSwitchCancelBtn": {
+    "message": "Annulla"
+  },
+  "options_profileSwitchConfirm": {
+    "message": "Passare a \"$1\"? I tuoi segnalibri verranno sostituiti con quelli di quel profilo."
+  },
+  "options_profileSwitchConfirmBtn": {
+    "message": "Cambia"
+  },
+  "options_profileSwitchWithoutConfirm": {
+    "message": "Cambia senza conferma"
+  },
+  "options_profileSwitching": {
+    "message": "Cambio profilo..."
+  },
+  "options_profilesLimit": {
+    "message": "$1/$2 profili"
+  },
+  "options_repoName": {
+    "message": "Nome del repository"
+  },
+  "options_repoOwner": {
+    "message": "Proprietario del repository"
+  },
+  "options_reportBug": {
+    "message": "Segnala un bug / Richiesta funzionalità"
+  },
+  "options_resetBtn": {
+    "message": "Reimposta tutti i dati"
+  },
+  "options_resetConfirm": {
+    "message": "Sei sicuro? Questa azione non può essere annullata. Tutti i profili e le impostazioni verranno eliminati permanentemente."
+  },
   "options_resetConfirmBtn": {
     "message": "Sì, elimina tutti i dati"
+  },
+  "options_resetDescription": {
+    "message": "Elimina tutti i profili, i token e le impostazioni. I segnalibri del browser non saranno modificati."
+  },
+  "options_resetSuccess": {
+    "message": "L'estensione è stata reimpostata."
+  },
+  "options_resetTitle": {
+    "message": "Reimposta estensione"
+  },
+  "options_saveSettings": {
+    "message": "Salva impostazioni"
+  },
+  "options_selectFile": {
+    "message": "Seleziona file..."
+  },
+  "options_serverUrl": {
+    "message": "URL server"
+  },
+  "options_serverUrlHint": {
+    "message": "URL base del server Git (senza suffisso /api/v1 o /api/v4)."
+  },
+  "options_serverUrlPlaceholder_github": {
+    "message": "https://github.azienda.com"
+  },
+  "options_serverUrlPlaceholder_gitlab": {
+    "message": "https://gitlab.com (lascia vuoto per GitLab.com)"
+  },
+  "options_serverUrlRequired": {
+    "message": "URL server obbligatorio per questo provider."
+  },
+  "options_settingsCard": {
+    "message": "Impostazioni"
+  },
+  "options_settingsRegistryActionPasswordPrompt": {
+    "message": "Enter password for this settings action"
   },
   "options_settingsRegistryAliasNormalized": {
     "message": "Nuovo profilo impostazioni creato con alias: $1",
@@ -1514,6 +1669,42 @@
         "content": "$1"
       }
     }
+  },
+  "options_settingsRegistryCreateBtn": {
+    "message": "Create new setting"
+  },
+  "options_settingsRegistryCreateNameRequired": {
+    "message": "Please enter a name for the new setting"
+  },
+  "options_settingsRegistryCreateSuccess": {
+    "message": "New settings profile created"
+  },
+  "options_settingsRegistryImportApplyBtn": {
+    "message": "Import & Apply"
+  },
+  "options_settingsRegistryImportSuccess": {
+    "message": "Settings imported and applied"
+  },
+  "options_settingsRegistryNewNamePlaceholder": {
+    "message": "New setting name"
+  },
+  "options_settingsRegistryRefreshBtn": {
+    "message": "Refresh"
+  },
+  "options_settingsRegistrySyncSelectedBtn": {
+    "message": "Sync current to selected"
+  },
+  "options_settingsRegistrySyncSuccess": {
+    "message": "Current settings synced to selected profile"
+  },
+  "options_settingsRegistryTitle": {
+    "message": "Available settings in repository"
+  },
+  "options_settingsSaved": {
+    "message": "Impostazioni salvate!"
+  },
+  "options_settingsSyncActive": {
+    "message": "Sincronizzazione impostazioni attiva — le impostazioni verranno inviate alla prossima sincronizzazione."
   },
   "options_settingsSyncClientNameConflict": {
     "message": "Il nome client esiste già nel repository: $1",
@@ -1538,11 +1729,431 @@
   "options_settingsSyncCreateOwnBtn": {
     "message": "Crea la mia impostazione client"
   },
+  "options_settingsSyncDesc": {
+    "message": "Backup crittografato delle impostazioni dell'estensione nel repository. Stessa password su ogni dispositivo."
+  },
+  "options_settingsSyncGlobalWriteEnabled": {
+    "message": "Allow writing to global settings (settings.enc)"
+  },
+  "options_settingsSyncGlobalWriteHint": {
+    "message": "Recommended OFF. If enabled, this client can overwrite global settings for all devices."
+  },
+  "options_settingsSyncImportApply": {
+    "message": "Importa"
+  },
+  "options_settingsSyncImportBtn": {
+    "message": "Carica configurazioni disponibili"
+  },
+  "options_settingsSyncImportEmpty": {
+    "message": "Nessuna configurazione dispositivo trovata"
+  },
+  "options_settingsSyncImportGlobalConfirm": {
+    "message": "Apply the global settings file now? This will overwrite current local settings on this device."
+  },
+  "options_settingsSyncImportGlobalConfirmBtn": {
+    "message": "Apply global config"
+  },
+  "options_settingsSyncImportReloadConfirm": {
+    "message": "Settings were imported. Reload now to apply them everywhere?"
+  },
+  "options_settingsSyncImportReloadConfirmBtn": {
+    "message": "Reload now"
+  },
+  "options_settingsSyncImportSuccess": {
+    "message": "Impostazioni importate con successo"
+  },
+  "options_settingsSyncImportTitle": {
+    "message": "Importa da un altro dispositivo"
+  },
   "options_settingsSyncMigrationDone": {
     "message": "I profili impostazioni legacy sono stati migrati a nomi client leggibili."
   },
+  "options_settingsSyncModeGlobal": {
+    "message": "Globale — condiviso tra tutti i dispositivi"
+  },
   "options_settingsSyncModeGlobalTemporarilyDisabled": {
     "message": "La modalità globale è temporaneamente non disponibile. Usa le impostazioni client basate su profilo."
+  },
+  "options_settingsSyncModeIndividual": {
+    "message": "Individuale — solo questo dispositivo"
+  },
+  "options_settingsSyncModeLabel": {
+    "message": "Modalità di sincronizzazione"
+  },
+  "options_settingsSyncPasswordHint": {
+    "message": "Imposta una volta per dispositivo. Deve essere uguale su tutti i dispositivi."
+  },
+  "options_settingsSyncPasswordLabel": {
+    "message": "Password di crittografia"
+  },
+  "options_settingsSyncPasswordMissing": {
+    "message": "Inserisci una password."
+  },
+  "options_settingsSyncSaveBtn": {
+    "message": "Salva password"
+  },
+  "options_settingsSyncTitle": {
+    "message": "File impostazioni"
+  },
+  "options_specialThanks": {
+    "message": "Ringraziamenti speciali"
+  },
+  "options_subTabConnection": {
+    "message": "Connessione"
+  },
+  "options_subTabExportImport": {
+    "message": "Esporta / Importa"
+  },
+  "options_subTabGeneral": {
+    "message": "Generale"
+  },
+  "options_subTabGenerated": {
+    "message": "Generati"
+  },
+  "options_subTabGitAdd": {
+    "message": "Git Add"
+  },
+  "options_subTabHistory": {
+    "message": "Cronologia"
+  },
+  "options_subTabMenuAdvanced": {
+    "message": "Avanzato e Sicurezza"
+  },
+  "options_subTabMenuFolders": {
+    "message": "Cartelle fissate"
+  },
+  "options_subTabMenuItems": {
+    "message": "Visibilità e ordine"
+  },
+  "options_subTabProfile": {
+    "message": "Profilo"
+  },
+  "options_subTabRepos": {
+    "message": "Cartella GitHub"
+  },
+  "options_subTabSettings": {
+    "message": "Impostazioni"
+  },
+  "options_subTabSync": {
+    "message": "Sincronizzazione"
+  },
+  "options_subtitle": {
+    "message": "Impostazioni"
+  },
+  "options_syncInterval": {
+    "message": "Intervallo di sincronizzazione (minuti)"
+  },
+  "options_syncIntervalHint": {
+    "message": "Frequenza di controllo delle modifiche remote."
+  },
+  "options_syncOnFocus": {
+    "message": "Sincronizza quando il browser torna in primo piano"
+  },
+  "options_syncOnStartup": {
+    "message": "Sincronizza all'avvio del browser"
+  },
+  "options_syncProfile": {
+    "message": "Profilo di sincronizzazione"
+  },
+  "options_syncProfileCustom": {
+    "message": "Personalizzato"
+  },
+  "options_syncProfileFrequent": {
+    "message": "Frequente (5 min, 3s debounce)"
+  },
+  "options_syncProfileNormal": {
+    "message": "Normale (15 min, 5s debounce)"
+  },
+  "options_syncProfilePowersave": {
+    "message": "Risparmio energetico (60 min, 10s debounce)"
+  },
+  "options_syncProfileRealtime": {
+    "message": "Tempo reale (1 min, 2s debounce)"
+  },
+  "options_syncSettingsToGit": {
+    "message": "Sincronizza impostazioni su Git (crittografato)"
+  },
+  "options_synchronization": {
+    "message": "Sincronizzazione"
+  },
+  "options_tabAbout": {
+    "message": "Informazioni"
+  },
+  "options_tabAutomation": {
+    "message": "Automazione"
+  },
+  "options_tabFiles": {
+    "message": "File"
+  },
+  "options_tabGit": {
+    "message": "Git"
+  },
+  "options_tabGitHub": {
+    "message": "GitHub"
+  },
+  "options_tabHelp": {
+    "message": "Aiuto"
+  },
+  "options_tabLinkwarden": {
+    "message": "Linkwarden"
+  },
+  "options_tabMenu": {
+    "message": "Menu"
+  },
+  "options_tabSynchronization": {
+    "message": "Sincronizzazione"
+  },
+  "options_testConnection": {
+    "message": "Testa connessione"
+  },
+  "options_theme": {
+    "message": "Tema"
+  },
+  "options_themeAuto": {
+    "message": "A Auto (sistema)"
+  },
+  "options_themeAutoLabel": {
+    "message": "Auto"
+  },
+  "options_themeDark": {
+    "message": "☽ Scuro"
+  },
+  "options_themeDarkLabel": {
+    "message": "Scuro"
+  },
+  "options_themeLight": {
+    "message": "☀ Chiaro"
+  },
+  "options_themeLightLabel": {
+    "message": "Chiaro"
+  },
+  "options_toggleToken": {
+    "message": "Mostra/nascondi token"
+  },
+  "options_tokenHint": {
+    "message": "Richiede lo scope <code>repo</code> (classic) o <code>Contents: Read/Write</code> e <code>Metadata: Read</code> (fine-grained). <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Crea token</a>"
+  },
+  "options_tokenHintHtml_codeberg": {
+    "message": "Crea un token su <a href=\"https://codeberg.org/user/settings/applications\" target=\"_blank\" rel=\"noopener\">Codeberg → Impostazioni utente → Applicazioni</a> con accesso lettura/scrittura al repository."
+  },
+  "options_tokenHintHtml_forgejo": {
+    "message": "Crea un token sul server Forgejo in <strong>Impostazioni utente → Applicazioni</strong> con accesso lettura/scrittura al repository."
+  },
+  "options_tokenHintHtml_gitea": {
+    "message": "Crea un token in <strong>Impostazioni utente → Applicazioni</strong> con accesso lettura/scrittura al repository."
+  },
+  "options_tokenHintHtml_gitlab": {
+    "message": "Crea un token su <a href=\"https://gitlab.com/-/user_settings/personal_access_tokens\" target=\"_blank\" rel=\"noopener\">GitLab → Impostazioni utente → Token di accesso</a> con ambito <code>api</code> (lettura/scrittura repository)."
+  },
+  "options_tokenHintHtml_gogs": {
+    "message": "Crea un token sul server Gogs in <strong>Impostazioni utente → Applicazioni</strong> con accesso lettura/scrittura al repository."
+  },
+  "options_tokenPlaceholderGitea": {
+    "message": "tuo-token-accesso-gitea"
+  },
+  "options_tokenPlaceholderGithub": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitea": {
+    "message": "tuo-token-accesso"
+  },
+  "options_tokenPlaceholder_github": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitlab": {
+    "message": "glpat-xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenValidMissingScope": {
+    "message": "Token valido ($1), ma manca lo scope \"repo\"."
+  },
+  "options_tokenValidRepoNotFound": {
+    "message": "Token valido ($1), ma il repository \"$2\" non è stato trovato."
+  },
+  "options_tokenValidSpecifyRepo": {
+    "message": "Token valido! Utente: $1. Specifica un repository."
+  },
+  "options_transferApplyLocal": {
+    "message": "Applica al browser (solo se la destinazione è attiva)"
+  },
+  "options_transferCancel": {
+    "message": "Annulla"
+  },
+  "options_transferDesc": {
+    "message": "Copia segnalibri da un profilo a un altro (es. migrazione GitHub → Gitea). Non modifica il browser a meno che il profilo destinazione sia attivo e scegli di applicare localmente."
+  },
+  "options_transferDuplicateFoldersWarning": {
+    "message": "Nomi cartella duplicati nel risultato del trasferimento (collisione slug): $1. Unisci queste cartelle nei segnalibri del profilo sorgente prima di trasferire, altrimenti i duplicati verranno copiati sul remoto destinazione."
+  },
+  "options_transferFolder": {
+    "message": "Cartella (opzionale)"
+  },
+  "options_transferFolderHint": {
+    "message": "Percorso relativo sotto la cartella repo, es. toolbar/lavoro. Lascia vuoto per tutti i segnalibri."
+  },
+  "options_transferMergeConfirm": {
+    "message": "Unire in una destinazione con $1 file esistente/i? I segnalibri remoti esistenti vengono mantenuti; possono risultare cartelle duplicate. Continuare?"
+  },
+  "options_transferMergeHint": {
+    "message": "Unisci mantiene tutti i file destinazione esistenti e aggiunge i segnalibri sorgente. Può creare cartelle duplicate (es. libri e libri-2). Per una migrazione pulita, usa Sostituisci destinazione."
+  },
+  "options_transferMergeWarning": {
+    "message": "La destinazione ha già $1 file segnalibri. Unisci li mantiene tutti più i file sorgente copiati — cartelle duplicate probabili."
+  },
+  "options_transferMode": {
+    "message": "Modalità"
+  },
+  "options_transferModeMerge": {
+    "message": "Unisci nella destinazione"
+  },
+  "options_transferModeReplace": {
+    "message": "Sostituisci destinazione"
+  },
+  "options_transferOpen": {
+    "message": "Trasferisci…"
+  },
+  "options_transferPreview": {
+    "message": "Anteprima"
+  },
+  "options_transferPreviewResult": {
+    "message": "Sorgente: $1 ($2 file). Destinazione ha $3 file esistenti → $4 dopo il trasferimento."
+  },
+  "options_transferProgressApplying": {
+    "message": "Applicazione nel browser…"
+  },
+  "options_transferProgressFetching": {
+    "message": "Lettura repository remoto…"
+  },
+  "options_transferProgressFiles": {
+    "message": "$1 di $2 file"
+  },
+  "options_transferProgressLoading": {
+    "message": "Caricamento segnalibri…"
+  },
+  "options_transferProgressLoadingStep": {
+    "message": "Caricamento… $1 di $2"
+  },
+  "options_transferProgressPreparing": {
+    "message": "Preparazione trasferimento…"
+  },
+  "options_transferPush": {
+    "message": "Push al repository destinazione"
+  },
+  "options_transferReplaceWarning": {
+    "message": "Sostituisci eliminerà $1 file remoto/i non inclusi nel risultato del trasferimento."
+  },
+  "options_transferRun": {
+    "message": "Trasferisci"
+  },
+  "options_transferSource": {
+    "message": "Profilo sorgente"
+  },
+  "options_transferSourceBrowser": {
+    "message": "browser"
+  },
+  "options_transferSourceCache": {
+    "message": "cache"
+  },
+  "options_transferSourceRemote": {
+    "message": "remoto"
+  },
+  "options_transferTarget": {
+    "message": "Profilo destinazione"
+  },
+  "options_transferTargetWarning": {
+    "message": "Attenzione: la destinazione ha già dati segnalibri."
+  },
+  "options_transferTitle": {
+    "message": "Trasferisci segnalibri"
+  },
+  "options_version": {
+    "message": "Versione"
+  },
+  "popup_autoSyncActive": {
+    "message": "Sincronizzazione automatica attiva"
+  },
+  "popup_autoSyncDisabled": {
+    "message": "Sincronizzazione automatica disattivata"
+  },
+  "popup_configureFirst": {
+    "message": "Configura prima l'estensione."
+  },
+  "popup_conflictDescription": {
+    "message": "Sia i segnalibri locali che quelli remoti sono stati modificati. Scegli una risoluzione:"
+  },
+  "popup_conflictDetected": {
+    "message": "Conflitto rilevato"
+  },
+  "popup_error": {
+    "message": "Errore: $1"
+  },
+  "popup_githubToLocal": {
+    "message": "GitHub → Locale"
+  },
+  "popup_hoursAgo": {
+    "message": "$1h fa"
+  },
+  "popup_justNow": {
+    "message": "adesso"
+  },
+  "popup_lastCommit": {
+    "message": "Ultimo commit:"
+  },
+  "popup_lastDataChange": {
+    "message": "Ultima modifica dati: $1"
+  },
+  "popup_lastSync": {
+    "message": "Ultima sincronizzazione: $1"
+  },
+  "popup_localToGithub": {
+    "message": "Locale → GitHub"
+  },
+  "popup_localToRemote": {
+    "message": "Locale → Remoto"
+  },
+  "popup_minAgo": {
+    "message": "$1 min fa"
+  },
+  "popup_mirrorStatus": {
+    "message": "Mirror: $1"
+  },
+  "popup_nextSyncIn": {
+    "message": "Prossima sincronizzazione tra $1"
+  },
+  "popup_notSyncedYet": {
+    "message": "Non ancora sincronizzato"
+  },
+  "popup_openSettings": {
+    "message": "Apri impostazioni"
+  },
+  "popup_profileSwitching": {
+    "message": "Cambio profilo..."
+  },
+  "popup_pullDown": {
+    "message": "Pull ↓"
+  },
+  "popup_pushUp": {
+    "message": "Push ↑"
+  },
+  "popup_ready": {
+    "message": "Pronto"
+  },
+  "popup_remoteToLocal": {
+    "message": "Remoto → Locale"
+  },
+  "popup_reportIssue": {
+    "message": "Segnala problema"
+  },
+  "popup_settings": {
+    "message": "Impostazioni"
+  },
+  "popup_syncNow": {
+    "message": "Sincronizza ora"
+  },
+  "popup_synced": {
+    "message": "Sincronizzato"
+  },
+  "popup_syncing": {
+    "message": "Sincronizzazione..."
   },
   "popup_website": {
     "message": "Sito web"
@@ -1558,6 +2169,9 @@
   },
   "search_openBtn": {
     "message": "Apri"
+  },
+  "search_resultsLabel": {
+    "message": "Risultati ricerca"
   },
   "search_statusNoResults": {
     "message": "Nessun segnalibro trovato"
@@ -1576,132 +2190,127 @@
   "search_subtitle": {
     "message": "Cerca segnalibri locali e apri le corrispondenze in una nuova scheda."
   },
+  "search_syncComplete": {
+    "message": "Sincronizzazione completata"
+  },
+  "search_syncFailed": {
+    "message": "Sincronizzazione fallita: $1"
+  },
+  "search_syncing": {
+    "message": "Sincronizzazione…"
+  },
   "search_title": {
     "message": "Ricerca segnalibri"
+  },
+  "search_unknownError": {
+    "message": "Errore sconosciuto"
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – Ricerca segnalibri"
   },
-  "linkwardenSave_title": {
-    "message": "Salva su Linkwarden"
+  "serializer_device": {
+    "message": "Dispositivo: $1"
   },
-  "linkwardenSave_urlLabel": {
-    "message": "URL"
+  "serializer_invalidFormat": {
+    "message": "Formato dati segnalibri non valido."
   },
-  "linkwardenSave_titleLabel": {
-    "message": "Titolo"
+  "serializer_lastSynced": {
+    "message": "Ultima sincronizzazione: $1"
   },
-  "linkwardenSave_descriptionLabel": {
-    "message": "Descrizione"
+  "serializer_untitled": {
+    "message": "(Senza titolo)"
   },
-  "linkwardenSave_descriptionPlaceholder": {
-    "message": "Descrizione opzionale..."
+  "sync_allInSync": {
+    "message": "Tutto sincronizzato. Nessuna modifica."
   },
-  "linkwardenSave_collectionLabel": {
-    "message": "Collezione"
+  "sync_alreadyInProgress": {
+    "message": "Sincronizzazione già in corso."
   },
-  "linkwardenSave_collectionNone": {
-    "message": "Non organizzato"
+  "sync_alreadyUpToDate": {
+    "message": "I segnalibri sono già aggiornati."
   },
-  "linkwardenSave_collectionNew": {
-    "message": "Crea nuova collezione"
+  "sync_conflictBothModified": {
+    "message": "Conflitto: sia i segnalibri locali che quelli remoti sono stati modificati. Scegli Push o Pull."
   },
-  "linkwardenSave_collectionNewPlaceholder": {
-    "message": "Nome della nuova collezione..."
+  "sync_conflictFileModified": {
+    "message": "Conflitto: il file è stato modificato nel frattempo."
   },
-  "linkwardenSave_tagsLabel": {
-    "message": "Tag"
+  "sync_conflictRemoteModified": {
+    "message": "Conflitto rilevato: anche il remoto è stato modificato."
   },
-  "linkwardenSave_tagsPlaceholder": {
-    "message": "Aggiungi tag..."
+  "sync_loadedFromRemote": {
+    "message": "Caricato dal repository remoto."
   },
-  "linkwardenSave_screenshotLabel": {
-    "message": "Includi screenshot"
+  "sync_noBookmarksOnGithub": {
+    "message": "Nessun segnalibro trovato su GitHub."
   },
-  "linkwardenSave_saveBtn": {
-    "message": "Salva"
+  "sync_noBookmarksOnRemote": {
+    "message": "Nessun segnalibro trovato sul repository remoto."
   },
-  "linkwardenSave_cancelBtn": {
-    "message": "Annulla"
+  "sync_noChanges": {
+    "message": "Nessuna modifica dall'ultima sincronizzazione."
   },
-  "linkwardenSave_statusSaving": {
-    "message": "Salvataggio..."
+  "sync_notConfigured": {
+    "message": "Estensione non configurata. Apri le impostazioni."
   },
-  "linkwardenSave_statusSaved": {
-    "message": "Salvato!"
+  "sync_progressApplying": {
+    "message": "Applicazione segnalibri…"
   },
-  "linkwardenSave_statusDuplicate": {
-    "message": "Già salvato in Linkwarden"
+  "sync_progressApplyingBookmarks": {
+    "message": "$1 / $2 segnalibri"
   },
-  "linkwardenSave_statusError": {
-    "message": "Errore"
+  "sync_progressFetching": {
+    "message": "Recupero remoto…"
   },
-  "linkwardenSave_quickSaveBtn": {
-    "message": "Salvataggio rapido"
+  "sync_progressFiles": {
+    "message": "$1 / $2 file"
   },
-  "options_contextMenuItem_LINKWARDEN_SAVE": {
-    "message": "Salva su Linkwarden..."
+  "sync_progressGenerating": {
+    "message": "Generazione file…"
   },
-  "options_linkwardenDefaultTagsHint": {
-    "message": "Clicca per aggiungere tag esistenti o digita per crearne di nuovi. Applicato ad ogni salvataggio."
+  "sync_pullFailed": {
+    "message": "Pull fallito: $1"
   },
-  "options_linkwardenDefaultScreenshot": {
-    "message": "Screenshot predefiniti"
+  "sync_pullSuccess": {
+    "message": "Scaricato da GitHub."
   },
-  "options_linkwardenDefaultScreenshotHint": {
-    "message": "Se gli screenshot debbano essere abilitati di default nel popup di salvataggio."
+  "sync_pushFailed": {
+    "message": "Push fallito: $1"
   },
-  "linkwardenSave_deleteBtn": {
-    "message": "Elimina"
+  "sync_pushSuccess": {
+    "message": "Segnalibri inviati con successo a GitHub."
   },
-  "linkwardenSave_deleteConfirm": {
-    "message": "Sei sicuro di voler eliminare questo link da Linkwarden?"
+  "sync_remoteChangedRetry": {
+    "message": "Il remoto sta cambiando ora. Riprova a sincronizzare tra un momento."
   },
-  "linkwardenSave_statusDeleted": {
-    "message": "Link eliminato con successo!"
+  "sync_syncFailed": {
+    "message": "Sincronizzazione fallita: $1"
   },
-  "options_linkwardenSyncEnabled": {
-    "message": "Sincronizza collezioni con i segnalibri"
+  "transfer_commitMessage": {
+    "message": "Trasferimento segnalibri dal profilo $1"
   },
-  "options_linkwardenSyncParent": {
-    "message": "Cartella genitore"
+  "transfer_connectionLost": {
+    "message": "Connessione trasferimento persa. Ricarica la pagina opzioni e riprova."
   },
-  "options_linkwardenSyncRefresh": {
-    "message": "Sincronizza ora"
+  "transfer_mergeConflicts": {
+    "message": "Merge bloccato: $1 conflitto/i di percorso. Risolvi file sovrapposti o usa la modalità Sostituisci."
   },
-  "options_linkwardenSyncSuccess": {
-    "message": "$1 collezioni e $2 link sincronizzati.",
-    "placeholders": {
-      "1": {
-        "content": "$1"
-      },
-      "2": {
-        "content": "$2"
-      }
-    }
+  "transfer_noBookmarks": {
+    "message": "Nessun file segnalibri da trasferire"
   },
-  "options_pleaseEnterLinkwardenConfig": {
-    "message": "Inserire prima l'URL e il token di Linkwarden."
+  "transfer_profileNotFound": {
+    "message": "Profilo non trovato"
   },
-  "options_linkwardenSyncPushToGit": {
-    "message": "Invia i segnalibri di Linkwarden a Git"
+  "transfer_sameProfile": {
+    "message": "Sorgente e destinazione devono essere profili diversi"
   },
-  "options_subTabGeneral": {
-    "message": "Generale"
+  "transfer_success": {
+    "message": "Trasferiti $1 file segnalibri"
   },
-  "help_linkwardenTitle": {
-    "message": "Linkwarden"
+  "whatsnew_close": {
+    "message": "Chiudi"
   },
-  "help_linkwardenIntegrationTitle": {
-    "message": "Integration"
-  },
-  "help_linkwardenIntegrationDesc": {
-    "message": "Connect to your Linkwarden instance to save bookmarks directly from the context menu. You can specify default tags and auto-capture screenshots."
-  },
-  "help_linkwardenSyncTitle": {
-    "message": "Sync Collections"
-  },
-  "help_linkwardenSyncDesc": {
-    "message": "Sync your Linkwarden collections into your browser bookmark folders and optionally push them to your Git repository."
+  "whatsnew_title": {
+    "message": "Novità in GitSyncMarks $1"
   }
 }

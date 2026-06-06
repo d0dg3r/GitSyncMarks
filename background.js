@@ -33,13 +33,17 @@ import {
   getPreviousCommitSha,
   getCommitDiffPreview,
   setSyncActivityListener,
+  previewRemoteOrphans,
+  cleanRemoteOrphans,
   STORAGE_KEYS,
 } from './lib/sync-engine.js';
 import { startKeepAlive, stopKeepAlive } from './lib/keep-alive.js';
 import { log as debugLog, getLogAsString, getDebugLogExportContent } from './lib/debug-log.js';
-import { GitHubAPI } from './lib/github-api.js';
+import { createApi } from './lib/sync-settings.js';
+import { previewTransfer, transferBookmarks } from './lib/profile-transfer.js';
+import { testMirrorConnection } from './lib/mirror-push.js';
 import { migrateTokenIfNeeded } from './lib/crypto.js';
-import { migrateToProfiles, getActiveProfileId, getActiveProfile, getProfiles, switchProfile, getSyncState } from './lib/profile-manager.js';
+import { migrateToProfiles, getActiveProfileId, getActiveProfile, getProfiles, switchProfile, getSyncState, markLocalBookmarksModified } from './lib/profile-manager.js';
 import {
   setupContextMenus,
   handleContextMenuClick,
@@ -49,6 +53,111 @@ import {
 
 const ALARM_NAME = 'bookmarkSyncPull';
 const NOTIFICATION_ID = 'gitsyncmarks-sync';
+
+chrome.runtime.onConnect.addListener((port) => {
+  if (port.name === 'profileTransfer') {
+    port.onMessage.addListener((msg) => {
+      void handleProfileTransferPortMessage(port, msg);
+    });
+    return;
+  }
+  if (port.name === 'syncProgress') {
+    port.onMessage.addListener((msg) => {
+      void handleSyncProgressPortMessage(port, msg);
+    });
+  }
+});
+
+/**
+ * @param {chrome.runtime.Port} port
+ * @param {{ action?: string, params?: object }} msg
+ */
+async function handleProfileTransferPortMessage(port, msg) {
+  const onProgress = (progress) => {
+    try {
+      port.postMessage({ type: 'transferProgress', ...progress });
+    } catch {
+      /* options page closed */
+    }
+  };
+
+  try {
+    if (msg.action === 'previewTransfer') {
+      const result = await previewTransfer(msg.params, onProgress);
+      port.postMessage({ type: 'transferDone', result });
+      return;
+    }
+    if (msg.action === 'transferBookmarks') {
+      const result = await transferBookmarks(msg.params, onProgress);
+      port.postMessage({ type: 'transferDone', result });
+      return;
+    }
+    port.postMessage({ type: 'transferDone', error: 'Unknown action' });
+  } catch (err) {
+    port.postMessage({ type: 'transferDone', error: err?.message || String(err) });
+  }
+}
+
+/**
+ * @param {chrome.runtime.Port} port
+ * @param {{ action?: string, params?: object }} msg
+ */
+async function handleSyncProgressPortMessage(port, msg) {
+  const onProgress = (progress) => {
+    try {
+      port.postMessage({ type: 'syncProgress', ...progress });
+    } catch {
+      /* popup/options closed */
+    }
+  };
+
+  try {
+    const params = msg.params || {};
+    if (msg.action === 'sync') {
+      const result = await sync({ onProgress });
+      await updateSyncStatusBadge(result);
+      await showNotificationIfEnabled(result);
+      port.postMessage({ type: 'syncDone', result });
+      return;
+    }
+    if (msg.action === 'push') {
+      const result = await push({ onProgress });
+      await updateSyncStatusBadge(result);
+      await showNotificationIfEnabled(result);
+      port.postMessage({ type: 'syncDone', result });
+      return;
+    }
+    if (msg.action === 'bootstrapFirstSync') {
+      const result = await bootstrapFirstSync(params.connection || null, { onProgress });
+      await updateSyncStatusBadge(result);
+      port.postMessage({ type: 'syncDone', result });
+      return;
+    }
+    if (msg.action === 'pull') {
+      const result = await pull({ onProgress, connectionOverride: params.connection || null });
+      await updateSyncStatusBadge(result);
+      await showNotificationIfEnabled(result);
+      port.postMessage({ type: 'syncDone', result });
+      return;
+    }
+    if (msg.action === 'generateFilesNow') {
+      startKeepAlive();
+      try {
+        const result = await generateFilesNow({ onProgress });
+        await updateSyncStatusBadge(result);
+        await showNotificationIfEnabled(result);
+        port.postMessage({ type: 'syncDone', result });
+      } finally {
+        stopKeepAlive();
+      }
+      return;
+    }
+    port.postMessage({ type: 'syncDone', error: 'Unknown action' });
+  } catch (err) {
+    port.postMessage({ type: 'syncDone', error: err?.message || String(err) });
+  }
+}
+
 const ONBOARDING_WIZARD_COMPLETED = 'onboardingWizardCompleted';
 const ONBOARDING_WIZARD_DISMISSED = 'onboardingWizardDismissed';
 
@@ -113,24 +222,28 @@ browserObj.contextMenus.onClicked.addListener(handleContextMenuClick);
 chrome.bookmarks.onCreated.addListener((id, bookmark) => {
   console.log('[GitSyncMarks] Bookmark created:', bookmark.title);
   refreshContextMenuDynamicItemsDebounced();
+  markLocalBookmarksModified().catch(() => {});
   triggerAutoSync();
 });
 
 chrome.bookmarks.onRemoved.addListener((id, removeInfo) => {
   console.log('[GitSyncMarks] Bookmark removed:', id);
   refreshContextMenuDynamicItemsDebounced();
+  markLocalBookmarksModified().catch(() => {});
   triggerAutoSync();
 });
 
 chrome.bookmarks.onChanged.addListener((id, changeInfo) => {
   console.log('[GitSyncMarks] Bookmark changed:', id, changeInfo);
   refreshContextMenuDynamicItemsDebounced();
+  markLocalBookmarksModified().catch(() => {});
   triggerAutoSync();
 });
 
 chrome.bookmarks.onMoved.addListener((id, moveInfo) => {
   console.log('[GitSyncMarks] Bookmark moved:', id);
   refreshContextMenuDynamicItemsDebounced();
+  markLocalBookmarksModified().catch(() => {});
   triggerAutoSync();
 });
 
@@ -220,12 +333,7 @@ async function checkAndMigrate() {
       && Object.keys(syncState.lastSyncFiles).length > 0;
     if (hasNewFormat) return; // Already migrated
 
-    const api = new GitHubAPI(
-      settings[STORAGE_KEYS.GITHUB_TOKEN],
-      settings[STORAGE_KEYS.REPO_OWNER],
-      settings[STORAGE_KEYS.REPO_NAME],
-      settings[STORAGE_KEYS.BRANCH]
-    );
+    const api = createApi(settings);
     const basePath = settings[STORAGE_KEYS.FILE_PATH] || 'bookmarks';
 
     const migrated = await migrateFromLegacyFormat(api, basePath);
@@ -257,7 +365,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
   if (message.action === 'bootstrapFirstSync') {
-    bootstrapFirstSync()
+    bootstrapFirstSync(message.connection || null)
       .then(async (result) => {
         await updateSyncStatusBadge(result);
         sendResponse(result);
@@ -302,6 +410,36 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       });
     return true;
   }
+  if (message.action === 'previewTransfer') {
+    previewTransfer(message.params)
+      .then((result) => sendResponse(result))
+      .catch((err) => sendResponse({ error: err.message }));
+    return true;
+  }
+  if (message.action === 'transferBookmarks') {
+    transferBookmarks(message.params)
+      .then(sendResponse)
+      .catch((err) => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'previewRemoteOrphans') {
+    previewRemoteOrphans(message.profileId)
+      .then(sendResponse)
+      .catch((err) => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'cleanRemoteOrphans') {
+    cleanRemoteOrphans(message.profileId)
+      .then(sendResponse)
+      .catch((err) => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'testMirror') {
+    testMirrorConnection(message.profileId, message.mirror, message.token || null)
+      .then(sendResponse)
+      .catch((err) => sendResponse({ ok: false, message: err.message }));
+    return true;
+  }
   if (message.action === 'switchProfile') {
     const { targetId } = message;
     if (!targetId) {
@@ -311,7 +449,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     switchProfile(targetId)
       .then(async () => {
         await refreshProfileMenuItems();
-        sendResponse({ success: true, message: getMessage('sync_pullSuccess') });
+        sendResponse({ success: true, message: getMessage('sync_loadedFromRemote') });
       })
       .catch((err) => {
         console.error('[GitSyncMarks] switchProfile failed:', err);
@@ -320,12 +458,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
   if (message.action === 'createRepository') {
-    const { token, owner, repo, branch } = message;
+    const { token, owner, repo, branch, gitProvider, serverUrl } = message;
     if (!token || !owner || !repo) {
       sendResponse({ success: false, message: 'Missing token/owner/repo' });
       return false;
     }
-    const api = new GitHubAPI(token, owner, repo, branch || 'main');
+    const api = createApi({
+      [STORAGE_KEYS.GITHUB_TOKEN]: token,
+      [STORAGE_KEYS.REPO_OWNER]: owner,
+      [STORAGE_KEYS.REPO_NAME]: repo,
+      [STORAGE_KEYS.BRANCH]: branch || 'main',
+      [STORAGE_KEYS.GIT_PROVIDER]: gitProvider || 'github',
+      [STORAGE_KEYS.SERVER_URL]: serverUrl || '',
+    });
     api.validateToken()
       .then(async (tokenResult) => {
         if (!tokenResult?.valid) {

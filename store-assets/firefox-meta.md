@@ -8,7 +8,7 @@ Language-specific files: firefox-{lang}.md (e.g. firefox-en.md, firefox-de.md, .
 ## Privacy
 
 ### Single Purpose
-Sync browser bookmarks with a GitHub repository.
+Sync browser bookmarks with GitHub, GitLab, Codeberg, Gitea, Forgejo, or Gogs.
 
 ### Privacy Policy URL
 https://github.com/d0dg3r/GitSyncMarks/blob/main/PRIVACY.md
@@ -22,6 +22,9 @@ https://github.com/d0dg3r/GitSyncMarks/blob/main/PRIVACY.md
 | `alarms` | Required to schedule periodic background sync checks for remote changes. |
 | `notifications` | Required to show sync success or failure notifications (user-configurable). |
 | `host_permissions: https://api.github.com/*` | Required to communicate with the GitHub REST API to read and write bookmark files in the user's repository. |
+| `host_permissions: https://gitlab.com/*` | Required to communicate with the GitLab.com REST API when the user selects GitLab as provider. |
+| `host_permissions: https://codeberg.org/*` | Required to communicate with the Codeberg REST API when the user selects Codeberg as provider. |
+| `optional_host_permissions` (self-hosted origins) | Granted at runtime when the user configures a self-hosted Git provider or GitHub Enterprise server URL. |
 | `contextMenus` | Required to add right-click menu items for adding bookmarks, syncing, and favicon utilities. |
 | `activeTab` | Required to access the active tab's URL and title when adding a bookmark via the context menu. |
 | `scripting` | Required to copy the favicon URL to the clipboard via the context menu. |
@@ -30,13 +33,13 @@ https://github.com/d0dg3r/GitSyncMarks/blob/main/PRIVACY.md
 ### Data Use Disclosure
 
 **Does your extension collect or transmit user data?**
-Yes — the extension reads the user's bookmarks and transmits them to the GitHub API (api.github.com) to store them in the user's own repository.
+Yes — the extension reads the user's bookmarks and transmits them to the configured Git provider API to store them in the user's own repository.
 
 **What data is collected?**
 - Browser bookmarks (titles, URLs, folder structure)
 
 **Is data transmitted to any server?**
-- Only to api.github.com, authenticated with the user's own Personal Access Token
+- Only to the configured Git provider host, authenticated with the user's own Personal Access Token
 - No other servers, no analytics, no tracking
 
 **Is data sold or transferred to third parties?**

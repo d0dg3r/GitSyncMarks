@@ -4,9 +4,11 @@
  */
 
 import { initI18n, applyI18n, getMessage } from './lib/i18n.js';
+import { formatSyncProgress, runSyncPortAction } from './lib/sync-progress.js';
 import { initTheme } from './lib/theme.js';
 import { initUiDensity } from './lib/ui-density.js';
 import { mountWhatsNewIfPending } from './lib/whats-new-ui.js';
+import { buildCommitUrl } from './lib/git-provider.js';
 
 // DOM elements
 const notConfiguredEl = document.getElementById('not-configured');
@@ -16,6 +18,7 @@ const profileSelect = document.getElementById('profile-select');
 const statusMessage = document.getElementById('status-message');
 const lastDataChangeEl = document.getElementById('last-data-change');
 const lastCommitWrap = document.getElementById('last-commit-wrap');
+const mirrorStatusEl = document.getElementById('mirror-status');
 const conflictBox = document.getElementById('conflict-box');
 const autoSyncDot = document.getElementById('auto-sync-dot');
 const autoSyncText = document.getElementById('auto-sync-text');
@@ -122,7 +125,13 @@ function updateUI(status) {
   // Last commit (hash as link)
   if (status.lastCommitSha && status.repoOwner && status.repoName) {
     const shortSha = status.lastCommitSha.substring(0, 7);
-    const url = `https://github.com/${status.repoOwner}/${status.repoName}/commit/${status.lastCommitSha}`;
+    const url = buildCommitUrl({
+      provider: status.gitProvider || 'github',
+      serverUrl: status.serverUrl || '',
+      owner: status.repoOwner,
+      repo: status.repoName,
+      commitSha: status.lastCommitSha,
+    });
     lastCommitWrap.innerHTML = '';
     lastCommitWrap.appendChild(document.createTextNode(getMessage('popup_lastCommit') + ' '));
     const a = document.createElement('a');
@@ -136,6 +145,20 @@ function updateUI(status) {
   } else {
     lastCommitWrap.innerHTML = '';
     lastCommitWrap.style.display = 'none';
+  }
+
+  if (mirrorStatusEl) {
+    if (status.mirrorSummary) {
+      let text = getMessage('popup_mirrorStatus', [status.mirrorSummary]);
+      const failed = (status.mirrorStatuses || []).filter((m) => !m.paused && m.lastError);
+      if (failed.length) {
+        text += ` — ${failed.map((m) => m.lastError).join('; ')}`;
+      }
+      mirrorStatusEl.textContent = text;
+      mirrorStatusEl.style.display = '';
+    } else {
+      mirrorStatusEl.style.display = 'none';
+    }
   }
 
   // Auto-sync status
@@ -250,7 +273,7 @@ function formatRelativeTime(date) {
 
 // ---- Button handlers ----
 
-function setLoading(loading) {
+function setLoading(loading, progressText = null) {
   isSyncing = loading;
   syncBtn.disabled = loading;
   pushBtn.disabled = loading;
@@ -259,21 +282,33 @@ function setLoading(loading) {
   forcePullBtn.disabled = loading;
   profileSelect.disabled = loading;
   syncSpinner.style.display = loading ? 'inline-block' : 'none';
-  syncText.textContent = loading ? getMessage('popup_syncing') : getMessage('popup_syncNow');
+  const label = progressText || (loading ? getMessage('popup_syncing') : getMessage('popup_syncNow'));
+  syncText.textContent = loading ? label : getMessage('popup_syncNow');
   if (loading) {
-    statusMessage.textContent = getMessage('popup_syncing');
+    statusMessage.textContent = label;
     statusArea.classList.add('status-loading');
   } else {
     statusArea.classList.remove('status-loading');
   }
 }
 
+function updateSyncProgress(payload) {
+  if (!isSyncing) return;
+  const text = formatSyncProgress(payload);
+  syncText.textContent = text;
+  statusMessage.textContent = text;
+}
+
+const SYNC_PORT_ACTIONS = new Set(['sync', 'push', 'pull', 'bootstrapFirstSync']);
+
 async function handleAction(action) {
   if (isSyncing) return;
   setLoading(true);
 
   try {
-    const result = await chrome.runtime.sendMessage({ action });
+    const result = SYNC_PORT_ACTIONS.has(action)
+      ? await runSyncPortAction(action, {}, updateSyncProgress)
+      : await chrome.runtime.sendMessage({ action });
 
     if (result.success) {
       await loadStatus();
