@@ -37,6 +37,9 @@
   --radius: 12px;
   --radius-sm: 8px;
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --color-surface-nested: #f5f5f7;
+  --shadow-nested: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --ui-space-nested: 14px;
   --focus-ring: 0 0 0 3px rgba(0, 113, 227, 0.15);
 }
 
@@ -75,6 +78,8 @@ html.dark {
   --color-tag-text: #5eaeff;
 
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --color-surface-nested: #363638;
+  --shadow-nested: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 * {
@@ -147,4 +152,53 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Nested surfaces — feature units inside a parent card or compact panels */
+
+.card-nested {
+  background: var(--color-surface-nested);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-nested);
+  padding: var(--ui-space-nested);
+}
+
+.card-nested h3 {
+  font-size: var(--ui-font-base);
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--color-text);
+}
+
+.card-nested .card-desc,
+.card-nested-desc {
+  font-size: var(--ui-font-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: 12px;
+  padding-bottom: 0;
+  border-bottom: none;
+  line-height: 1.45;
+}
+
+.card-nested-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card-nested-actions .btn {
+  flex-shrink: 0;
+}
+
+.panel-compact {
+  background: var(--color-surface-nested);
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.panel-compact:last-child {
+  margin-bottom: 0;
 }

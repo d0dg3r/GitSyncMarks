@@ -61,6 +61,17 @@ extTest.describe('Options page UI', () => {
     await expect(page.locator('#tab-about')).toHaveClass(/active/);
   });
 
+  extTest('Files sub-tabs include Bitwarden backup panel', async ({ page, extensionId }) => {
+    await openOptionsPage(page, extensionId);
+    await page.locator('.tab-btn[data-tab="files"]').click();
+    await page.locator('.sub-tab-btn[data-subtab="files-bitwarden"]').click();
+    const panel = page.locator('#subtab-files-bitwarden');
+    await expect(panel).toHaveClass(/active/, { timeout: 3000 });
+    await expect(panel.locator('#bitwarden-backup-path')).toBeVisible();
+    await expect(panel.locator('.card-nested')).toHaveCount(3, { timeout: 3000 });
+    await expect(panel.locator('#bitwarden-backup-push-btn')).toBeVisible();
+  });
+
   extTest('Customize shortcuts button does not throw', async ({ page, extensionId }) => {
     await openOptionsPage(page, extensionId);
     await page.locator('.tab-btn[data-tab="help"]').click();

@@ -11,6 +11,7 @@ import {
   prepareBackupPayload,
   isBitwardenBackupPath,
   unwrapGitEncryptionLayer,
+  deleteBackupBlobFromRepo,
 } from '../lib/bitwarden-backup.js';
 import { encryptWithPassword, decryptWithPassword } from '../lib/crypto.js';
 
@@ -102,5 +103,33 @@ describe('bitwarden backup helpers', () => {
   it('matches backup paths under configured prefix', () => {
     assert.equal(isBitwardenBackupPath('backups/bitwarden/vault.enc.json'), true);
     assert.equal(isBitwardenBackupPath('bookmarks/toolbar/foo.json'), false);
+  });
+
+  it('deleteBackupBlobFromRepo commits null when blob exists', async () => {
+    const path = 'backups/bitwarden/vault.enc.json';
+    const commits = [];
+    const api = { getLatestCommitSha: async () => 'head-sha' };
+    const fetchTree = async () => ({
+      tree: [{ type: 'blob', path, sha: 'blob-sha' }],
+    });
+    const commit = async (_api, _msg, changes) => {
+      commits.push(changes);
+      return 'new-sha';
+    };
+    const result = await deleteBackupBlobFromRepo(api, path, 'delete test', { fetchTree, commit });
+    assert.equal(result.success, true);
+    assert.equal(result.commitSha, 'new-sha');
+    assert.deepEqual(commits[0], { [path]: null });
+  });
+
+  it('deleteBackupBlobFromRepo returns not found when blob missing', async () => {
+    const api = { getLatestCommitSha: async () => 'head-sha' };
+    const fetchTree = async () => ({ tree: [] });
+    const result = await deleteBackupBlobFromRepo(api, 'backups/bitwarden/missing.json', 'delete', {
+      fetchTree,
+      commit: async () => 'sha',
+    });
+    assert.equal(result.success, false);
+    assert.equal(result.message, 'File not found');
   });
 });

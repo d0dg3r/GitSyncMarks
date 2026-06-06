@@ -32,7 +32,7 @@ GitSyncMarks is an open-source browser extension (Chrome and Firefox) that syncs
 - If you use **Files → Bitwarden Backup**, you upload an export file you created in Bitwarden or Vaultwarden yourself.
 - GitSyncMarks validates that the file looks like a **password-protected encrypted JSON** export and may optionally wrap it with an additional local password (`gitsyncmarks-enc:v1`) before pushing to **your** Git repository.
 - The extension **does not** connect to Bitwarden or Vaultwarden servers, **does not** store your Bitwarden master password, and **does not** decrypt vault contents. Only ciphertext is stored in Git.
-- An optional Git backup password is kept in `chrome.storage.local` on your device only (`bitwardenBackupPassword`).
+- An optional Git backup password is kept in `chrome.storage.local` on your device only, per profile (`bitwardenBackupPassword:{profileId}`).
 
 ## Data NOT Collected
 

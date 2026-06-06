@@ -42,7 +42,7 @@ Default path: `backups/bitwarden` (repo root, configurable per profile in `chrom
 
 Plaintext JSON/CSV uploads are rejected. Maximum upload size: 25 MB.
 
-Local secrets: `bitwardenBackupPassword` in `chrome.storage.local` (never synced to Git).
+Local secrets: `bitwardenBackupPassword:{profileId}` in `chrome.storage.local` (never synced to Git; one password per profile on this device).
 
 ---
 

@@ -589,8 +589,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
   if (message.action === 'setBitwardenBackupPassword') {
-    chrome.storage.local
-      .set({ bitwardenBackupPassword: message.password || '' })
+    import('./lib/storage-keys.js')
+      .then(({ bitwardenBackupPasswordKey }) => {
+        const key = bitwardenBackupPasswordKey(message.profileId);
+        return chrome.storage.local.set({ [key]: message.password || '' });
+      })
       .then(() => sendResponse({ ok: true }))
       .catch((err) => sendResponse({ ok: false, message: err.message }));
     return true;

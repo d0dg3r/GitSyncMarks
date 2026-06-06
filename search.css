@@ -162,10 +162,17 @@ input[type="text"]:focus-visible {
 }
 
 .search-status {
-  min-height: 20px;
+  min-height: 0;
   margin-bottom: 8px;
   font-size: var(--ui-font-sm);
   color: var(--color-text-secondary);
+}
+
+.search-status:not(:empty) {
+  background: var(--color-surface-nested);
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
 }
 
 .search-status.success {
@@ -185,14 +192,18 @@ input[type="text"]:focus-visible {
   gap: 8px;
 }
 
+.search-results:not(:empty) {
+  padding: 0;
+}
+
 .search-result-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  background: var(--color-surface);
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-nested);
   padding: 10px;
 }
 

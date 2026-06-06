@@ -36,6 +36,16 @@ describe('remote orphan cleanup helpers', () => {
     assert.deepEqual(orphans, ['bookmarks/toolbar/leftover.json']);
   });
 
+  it('listRemoteOrphanPaths ignores custom Bitwarden backup prefix', () => {
+    const local = {};
+    const remote = {
+      'vault-backups/vault.enc.json': 'enc',
+      'bookmarks/toolbar/leftover.json': '{}',
+    };
+    const orphans = listRemoteOrphanPaths(local, remote, base, 'vault-backups');
+    assert.deepEqual(orphans, ['bookmarks/toolbar/leftover.json']);
+  });
+
   it('summarizeOrphanPaths counts top-level folders', () => {
     const orphans = [
       'bookmarks/toolbar/bucher/a.json',
