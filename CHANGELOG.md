@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Settings export/import and Git settings sync**: Token read/write now uses `getProfileToken()` / `setEncryptedProfileToken()` from `profile-manager.js` (supports mirror token layout and legacy `profileTokens` migration). Import restores `gitProvider`, `serverUrl`, and legacy `repoOwner` / `githubToken` fields.
+
 ## [3.0.0] - 2026-06-06 (*GLaDOS*)
 
 Multi-provider Git sync (GitHub, GitLab, Codeberg, Gitea family), profile transfer, push mirrors, and live sync progress. Pre-releases: `v3.0.0-beta.1` (initial), `v3.0.0-beta.2` (wizard fix [#146](https://github.com/d0dg3r/GitSyncMarks/issues/146), full 12-language i18n), `v3.0.0-beta.3` (Codeberg repo-scoped token connection test).

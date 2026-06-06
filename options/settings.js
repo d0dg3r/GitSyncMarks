@@ -8,7 +8,8 @@ import { getMessage } from '../lib/i18n.js';
 import { formatSyncProgress, runSyncPortAction } from '../lib/sync-progress.js';
 import { serializeToJson, deserializeFromJson, bookmarkTreeToFileMap, fileMapToDashyYaml } from '../lib/bookmark-serializer.js';
 import { replaceLocalBookmarks } from '../lib/sync-engine.js';
-import { encryptToken, decryptToken, encryptWithPassword, decryptWithPassword, PASSWORD_ENC_PREFIX } from '../lib/crypto.js';
+import { encryptToken, encryptWithPassword, decryptWithPassword, PASSWORD_ENC_PREFIX } from '../lib/crypto.js';
+import { getProfileToken, setEncryptedProfileToken } from '../lib/profile-manager.js';
 import { LOCAL_STORAGE_KEYS } from '../lib/storage-keys.js';
 
 let _saveSettings = null;
@@ -216,15 +217,10 @@ export async function refreshSettingsProfiles() {
 
 async function buildSettingsExportData() {
   const syncSettings = await chrome.storage.sync.get(null);
-  const localData = await chrome.storage.local.get({ profileTokens: {}, syncState: {} });
   const profiles = syncSettings.profiles || {};
-  const profileTokens = localData.profileTokens || {};
   const exportedProfiles = {};
   for (const [id, p] of Object.entries(profiles)) {
-    let token = '';
-    try {
-      token = profileTokens[id] ? await decryptToken(profileTokens[id]) : '';
-    } catch { /* ignore */ }
+    const token = await getProfileToken(id, 'primary');
     exportedProfiles[id] = { ...p, token };
   }
   return { ...syncSettings, profiles: exportedProfiles };
@@ -295,22 +291,24 @@ export async function confirmReloadAfterImport() {
 
 async function applyImportedSettings(settings) {
   if (settings.profiles && Object.keys(settings.profiles).length > 0) {
-    const profileTokens = {};
     const profilesToSave = {};
     for (const [id, p] of Object.entries(settings.profiles)) {
       profilesToSave[id] = {
         id: p.id || id,
         name: p.name || 'Default',
-        owner: p.owner || '',
-        repo: p.repo || '',
+        gitProvider: p.gitProvider || 'github',
+        serverUrl: p.serverUrl || '',
+        owner: p.owner || p.repoOwner || '',
+        repo: p.repo || p.repoName || '',
         branch: p.branch || 'main',
         filePath: p.filePath || 'bookmarks',
         githubReposEnabled: p.githubReposEnabled ?? false,
         githubReposParent: p.githubReposParent ?? 'other',
         githubReposUsername: p.githubReposUsername ?? '',
       };
-      if (p.token) {
-        profileTokens[id] = await encryptToken(p.token);
+      const plainToken = p.token || p.githubToken || '';
+      if (plainToken) {
+        await setEncryptedProfileToken(id, await encryptToken(plainToken), 'primary');
       }
     }
     await chrome.storage.sync.set({
@@ -332,19 +330,20 @@ async function applyImportedSettings(settings) {
       generateDashyYml: settings.generateDashyYml ?? 'off',
       settingsSyncGlobalWriteEnabled: settings.settingsSyncGlobalWriteEnabled === true,
     });
-    await chrome.storage.local.set({ profileTokens });
   } else {
     const defaultProfile = {
       id: 'default',
       name: 'Default',
+      gitProvider: settings.gitProvider || 'github',
+      serverUrl: settings.serverUrl || '',
       owner: settings.repoOwner || '',
       repo: settings.repoName || '',
       branch: settings.branch || 'main',
       filePath: settings.filePath || 'bookmarks',
     };
-    const profileTokens = {};
-    if (settings.githubToken) {
-      profileTokens.default = await encryptToken(settings.githubToken);
+    if (settings.githubToken || settings.token) {
+      const plainToken = settings.githubToken || settings.token || '';
+      await setEncryptedProfileToken('default', await encryptToken(plainToken), 'primary');
     }
     await chrome.storage.sync.set({
       profiles: { default: defaultProfile },
@@ -365,7 +364,6 @@ async function applyImportedSettings(settings) {
       generateDashyYml: settings.generateDashyYml ?? 'off',
       settingsSyncGlobalWriteEnabled: settings.settingsSyncGlobalWriteEnabled === true,
     });
-    await chrome.storage.local.set({ profileTokens });
   }
   await chrome.runtime.sendMessage({ action: 'settingsChanged' });
 }
