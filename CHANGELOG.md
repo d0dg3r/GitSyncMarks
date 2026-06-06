@@ -7,20 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Fixed
+## [3.0.0] - 2026-06-06 (*GLaDOS*)
+
+Multi-provider Git sync (GitHub, GitLab, Codeberg, Gitea family), profile transfer, push mirrors, and live sync progress. Pre-releases: `v3.0.0-beta.1` (initial), `v3.0.0-beta.2` (wizard fix [#146](https://github.com/d0dg3r/GitSyncMarks/issues/146), full 12-language i18n), `v3.0.0-beta.3` (Codeberg repo-scoped token connection test), `v3.0.0-beta.4` (settings export/import token API), `v3.0.0-beta.5` (Codeberg CORS, Gitea sync performance, profile-switch progress).
+
+### Fixed (since `v3.0.0-beta.4` — shipped in `v3.0.0-beta.5`)
 - **Codeberg sync/push failed with CORS / “Network error”**: `https://codeberg.org/*` was missing from manifest `host_permissions`. Codeberg is a fixed public host (like GitLab.com) and does not request optional runtime permission, so API calls were blocked by the browser.
 
-### Changed
+### Changed (since `v3.0.0-beta.4` — shipped in `v3.0.0-beta.5`)
 - **Profile switch progress**: Options page shows step progress (`Switching profile — 1 of 3`) and per-file push progress during step 1 on Gitea-family providers.
 - **Gitea-family remote reads (Phase 1)**: `buildRemoteMaps()` tries git tree + batched blob GETs before Contents API fallback (~18× faster full pull on Codeberg in benchmarks; see [GITEA-PERFORMANCE.md](docs/GITEA-PERFORMANCE.md)).
 - **Gitea-family writes (Phase 2)**: `GiteaAPI.atomicCommit()` tries batched `POST /git/blobs` + layered `POST /git/trees` (SHA refs, one commit) before Contents API sequential fallback. GitHub-style inline `content` on trees remains unsupported on Codeberg (HTTP 404). Console warning when git-data write falls back to Contents API (one commit per file).
 
-### Added
+### Added (since `v3.0.0-beta.4` — shipped in `v3.0.0-beta.5`)
 - **Gitea sync performance analysis**: [`docs/GITEA-PERFORMANCE.md`](docs/GITEA-PERFORMANCE.md) (Contents vs Git Data API, compatibility matrix, try-first recommendation). Benchmark script [`scripts/benchmark-gitea-sync.js`](scripts/benchmark-gitea-sync.js) — `npm run test:gitea-benchmark:estimate` / `npm run test:gitea-benchmark` (env: `GITSYNCMARKS_GITEA_*` in [`.env.example`](.env.example)).
-
-## [3.0.0] - 2026-06-06 (*GLaDOS*)
-
-Multi-provider Git sync (GitHub, GitLab, Codeberg, Gitea family), profile transfer, push mirrors, and live sync progress. Pre-releases: `v3.0.0-beta.1` (initial), `v3.0.0-beta.2` (wizard fix [#146](https://github.com/d0dg3r/GitSyncMarks/issues/146), full 12-language i18n), `v3.0.0-beta.3` (Codeberg repo-scoped token connection test), `v3.0.0-beta.4` (settings export/import token API).
 
 ### Fixed (since `v3.0.0-beta.3` — shipped in `v3.0.0-beta.4`)
 - **Settings export/import and Git settings sync**: Token read/write now uses `getProfileToken()` / `setEncryptedProfileToken()` from `profile-manager.js` (supports mirror token layout and legacy `profileTokens` migration). Import restores `gitProvider`, `serverUrl`, and legacy `repoOwner` / `githubToken` fields.

@@ -21,7 +21,7 @@
 > — **Linus Torvalds** (Git creator)
 
 > [!TIP]
-> **v3.0.0 pre-release:** Latest beta is **[v3.0.0-beta.4](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.0-beta.4)** — multi-provider sync, **setup wizard sync confirmation** ([#146](https://github.com/d0dg3r/GitSyncMarks/issues/146)), **Codeberg/Gitea repo-scoped token** connection test fix, and **settings export/import** via profile-manager token API. Download Chrome/Firefox ZIPs from [Releases](https://github.com/d0dg3r/GitSyncMarks/releases). Feedback welcome before stable 3.0.0.
+> **v3.0.0 pre-release:** Latest beta is **[v3.0.0-beta.5](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.0-beta.5)** — **Codeberg CORS fix**, **Gitea/Codeberg sync performance** (fast tree+blob reads, single-commit writes), **profile-switch progress**, plus prior beta fixes (wizard [#146](https://github.com/d0dg3r/GitSyncMarks/issues/146), repo-scoped token test, settings export/import). Download Chrome/Firefox ZIPs from [Releases](https://github.com/d0dg3r/GitSyncMarks/releases). Feedback welcome before stable 3.0.0.
 
 ---
 
@@ -103,7 +103,7 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 - **Profile Transfer**: Use **Transfer…** on the Profile tab to copy bookmarks between profiles (e.g. GitHub → Gitea migration).
 - **Push Mirrors**: Optional backup remotes on the Connection tab — configure per profile after the primary sync works.
 - **Wizard Access**: Use **Restart Wizard** in the **Help** tab to re-run setup. Connection test does not sync; pick your first action explicitly (see beta.2+ ([#146](https://github.com/d0dg3r/GitSyncMarks/issues/146))).
-- **Try the beta**: Install **[v3.0.0-beta.4](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.0-beta.4)** from GitHub Releases (Load unpacked / temporary add-on) before the stable store build.
+- **Try the beta**: Install **[v3.0.0-beta.5](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.0-beta.5)** from GitHub Releases (Load unpacked / temporary add-on) before the stable store build.
 
 ---
 
