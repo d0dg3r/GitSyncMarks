@@ -7,12 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Fixed
-- **Codeberg / Gitea connection test falsely reported “Invalid token”** when the PAT lacked `read:user` but had repository access (403 on `GET /api/v1/user`). `GiteaAPI` now uses a non-throwing `_fetch` and treats 403 on `/user` as ambiguous-valid, then verifies via repo endpoints.
-
 ## [3.0.0] - 2026-06-06 (*GLaDOS*)
 
-Multi-provider Git sync (GitHub, GitLab, Codeberg, Gitea family), profile transfer, push mirrors, and live sync progress. Pre-releases: `v3.0.0-beta.1` (initial), `v3.0.0-beta.2` (wizard fix [#146](https://github.com/d0dg3r/GitSyncMarks/issues/146), full 12-language i18n).
+Multi-provider Git sync (GitHub, GitLab, Codeberg, Gitea family), profile transfer, push mirrors, and live sync progress. Pre-releases: `v3.0.0-beta.1` (initial), `v3.0.0-beta.2` (wizard fix [#146](https://github.com/d0dg3r/GitSyncMarks/issues/146), full 12-language i18n), `v3.0.0-beta.3` (Codeberg repo-scoped token connection test).
+
+### Fixed (since `v3.0.0-beta.2` — shipped in `v3.0.0-beta.3`)
+- **Codeberg / Gitea connection test falsely reported “Invalid token”** when the PAT lacked `read:user` but had repository access (403 on `GET /api/v1/user`). `GiteaAPI` now uses a non-throwing `_fetch` and treats 403 on `/user` as ambiguous-valid, then verifies via repo endpoints.
 
 ### Fixed (since `v3.0.0-beta.1` — shipped in `v3.0.0-beta.2`)
 - **Setup wizard overwrote remote bookmarks** ([#146](https://github.com/d0dg3r/GitSyncMarks/issues/146)): Connection test no longer pushes to the repository. After check, user chooses pull, merge/sync, push, initialize structure, or skip — with confirm dialogs and push warnings when remote bookmarks exist.
