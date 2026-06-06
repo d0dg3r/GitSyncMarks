@@ -9,7 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.0.0] - 2026-06-06 (*GLaDOS*)
 
-Multi-provider Git sync (GitHub, GitLab, Codeberg, Gitea family), profile transfer, push mirrors, and live sync progress. First published as a `3.0.0-beta.1` pre-release.
+Multi-provider Git sync (GitHub, GitLab, Codeberg, Gitea family), profile transfer, push mirrors, and live sync progress. Pre-releases: `v3.0.0-beta.1` (initial), `v3.0.0-beta.2` (wizard fix [#146](https://github.com/d0dg3r/GitSyncMarks/issues/146), full 12-language i18n).
+
+### Fixed (since `v3.0.0-beta.1` — shipped in `v3.0.0-beta.2`)
+- **Setup wizard overwrote remote bookmarks** ([#146](https://github.com/d0dg3r/GitSyncMarks/issues/146)): Connection test no longer pushes to the repository. After check, user chooses pull, merge/sync, push, initialize structure, or skip — with confirm dialogs and push warnings when remote bookmarks exist.
+
+### Changed (since `v3.0.0-beta.1` — shipped in `v3.0.0-beta.2`)
+- **i18n**: Completed 3.0 strings (multi-provider UI, mirrors, transfer, sync history, wizard sync choice, clean orphans) in all 11 non-English locales (`de`, `fr`, `es`, `pt_BR`, `it`, `ja`, `zh_CN`, `ko`, `ru`, `tr`, `pl`). Apply script: `node scripts/apply-3.0-i18n.mjs`.
 
 ### Added
 - **Multi-provider support**: Provider capability map (`lib/git-provider-common.js`). Separate UI entries for **Forgejo**, **Codeberg**, and **Gogs** (shared Gitea-family adapter). **GitLab** adapter (`lib/providers/gitlab-api.js`) for gitlab.com, self-managed instances, and subgroup project paths. Shared provider UI (`lib/provider-ui.js`). See [docs/PROVIDERS.md](docs/PROVIDERS.md).

@@ -17,8 +17,41 @@
   "api_invalidToken": {
     "message": "Token inválido. Por favor, verifique seu Token de Acesso Pessoal."
   },
+  "api_listCommitsFailed": {
+    "message": "Falha ao listar commits (HTTP $1)."
+  },
+  "api_networkError": {
+    "message": "Erro de rede. Verifique sua conexão com a Internet e tente novamente."
+  },
   "api_rateLimitExceeded": {
     "message": "Limite de requisições da API do GitHub excedido. Por favor, aguarde um momento."
+  },
+  "api_treeTruncated": {
+    "message": "O repositório é grande demais para ser lido em uma solicitação (GitHub truncou a árvore de arquivos). A sincronização foi interrompida para evitar perda de dados."
+  },
+  "cleanOrphans_commitMessage": {
+    "message": "Remover arquivos de favoritos órfãos ausentes localmente"
+  },
+  "cleanOrphans_confirm": {
+    "message": "Excluir $1 arquivo(s) órfão(s) em $2 pasta(s) de nível superior do remoto? Os favoritos locais permanecem inalterados. Não pode ser desfeito no GitSyncMarks (use o histórico do Git para restaurar)."
+  },
+  "cleanOrphans_noLocalBaseline": {
+    "message": "Sem base local de favoritos para este perfil. Mude para o perfil e sincronize uma vez, ou use Limpar remoto no perfil ativo."
+  },
+  "cleanOrphans_none": {
+    "message": "Nenhum arquivo de favoritos órfão no remoto."
+  },
+  "cleanOrphans_previewFailed": {
+    "message": "Não foi possível visualizar órfãos remotos."
+  },
+  "cleanOrphans_previewResult": {
+    "message": "$1 arquivo(s) órfão(s) em $2 pasta(s) de nível superior seriam removidos."
+  },
+  "cleanOrphans_remoteFetchFailed": {
+    "message": "Não foi possível ler o repositório remoto: $1"
+  },
+  "cleanOrphans_success": {
+    "message": "Removidos $1 arquivo(s) órfão(s) de $2 pasta(s) de nível superior no remoto."
   },
   "commands_openOptions": {
     "message": "Abrir configurações da extensão"
@@ -82,6 +115,24 @@
   "contextMenu_notifFolderMissing": {
     "message": "A pasta selecionada não existe mais. Atualize as configurações de pastas rápidas."
   },
+  "contextMenu_notifLinkwardenError": {
+    "message": "Erro do Linkwarden: $1"
+  },
+  "contextMenu_notifLinkwardenGrantPermissions": {
+    "message": "Conceda permissões via «Testar conexão» nas Opções"
+  },
+  "contextMenu_notifLinkwardenNotConfigured": {
+    "message": "Linkwarden não configurado"
+  },
+  "contextMenu_notifLinkwardenSaved": {
+    "message": "Link salvo no Linkwarden"
+  },
+  "contextMenu_notifLinkwardenSavedWithScreenshot": {
+    "message": "Link e captura salvos no Linkwarden"
+  },
+  "contextMenu_notifLinkwardenUrlInvalid": {
+    "message": "URL do Linkwarden inválida"
+  },
   "contextMenu_notifNoFavicon": {
     "message": "Nenhum favicon disponível para esta página"
   },
@@ -137,10 +188,10 @@
     "message": "Sincronizar agora"
   },
   "extDescription": {
-    "message": "Sincronização de favoritos via GitHub. Sinergia com Linkwarden, Smart Search e app complementar. Direto, seguro, privado."
+    "message": "Sincronização de favoritos via GitHub, GitLab, Codeberg, Gitea e mais. Linkwarden, busca inteligente, app complementar. Direto, seguro e privado."
   },
   "extDescriptionFirefox": {
-    "message": "Sincronização de favoritos via GitHub. Sinergia Linkwarden, Smart Search e assistente de configuração. Seguro e privado. Suporte nativo ao Firefox."
+    "message": "Sincronização de favoritos via GitHub, GitLab, Codeberg, Gitea e mais. Linkwarden, busca inteligente, assistente de configuração. Bidirecional, seguro e privado. Suporte completo no Firefox. Sem intermediários."
   },
   "extName": {
     "message": "GitSyncMarks"
@@ -175,6 +226,12 @@
   "help_backupTitle": {
     "message": "Backup"
   },
+  "help_cleanOrphansDesc": {
+    "message": "Na subaba Sincronização, visualize e remova arquivos de favoritos remotos que não estão nos seus favoritos locais (perfil ativo). Útil após pastas duplicadas de uma transferência com mesclagem."
+  },
+  "help_cleanOrphansTitle": {
+    "message": "Limpar órfãos remotos"
+  },
   "help_conflictDesc": {
     "message": "Quando ambos os favoritos locais e remotos foram alterados, o popup exibe um conflito. Escolha <strong>Enviar</strong> (local prevalece, sobrescreve remoto) ou <strong>Baixar</strong> (remoto prevalece, sobrescreve local). Não há merge automático para conflitos."
   },
@@ -196,6 +253,12 @@
   "help_debugLogTitle": {
     "message": "Log de Depuração"
   },
+  "help_densityDesc": {
+    "message": "Use os botões S / M / L no cabeçalho para alternar entre Compacto, Médio e Grande. A configuração se aplica a todas as superfícies da extensão (opções, popup, busca, salvar no Linkwarden) e sincroniza entre dispositivos."
+  },
+  "help_densityTitle": {
+    "message": "Densidade da interface"
+  },
   "help_discussions": {
     "message": "Discussões"
   },
@@ -209,7 +272,7 @@
     "message": "Arquivos gerados"
   },
   "help_gettingStartedIntro": {
-    "message": "Crie um repositório no GitHub para seus favoritos e depois crie um Token de Acesso Pessoal (PAT) com o escopo <code>repo</code> (clássico) ou <code>Contents: Read/Write</code> e <code>Metadata: Read</code> (fine-grained). Na aba GitHub, insira o token, proprietário do repositório, nome, branch (geralmente <code>main</code>) e o caminho da pasta (padrão: <code>bookmarks</code>). Clique em <strong>Testar Conexão</strong> para verificar."
+    "message": "Crie um repositório Git para seus favoritos no <strong>GitHub</strong>, <strong>GitLab</strong>, <strong>Codeberg</strong>, <strong>Gitea</strong>, <strong>Forgejo</strong> ou <strong>Gogs</strong>. Em <strong>Git → Conexão</strong>, escolha o provedor, informe um token de acesso pessoal, proprietário/nome do repositório, branch (geralmente <code>main</code>) e caminho da pasta (padrão: <code>bookmarks</code>). Provedores auto-hospedados precisam de uma URL de servidor; permita o acesso ao host quando solicitado. Clique em <strong>Testar conexão</strong> para verificar."
   },
   "help_gettingStartedTitle": {
     "message": "Primeiros Passos"
@@ -219,6 +282,36 @@
   },
   "help_githubReposTitle": {
     "message": "Pasta GitHub Repos"
+  },
+  "help_headerLangDesc": {
+    "message": "O botão de idioma no cabeçalho altera o idioma de exibição da extensão. A configuração é salva e sincronizada em todos os seus dispositivos."
+  },
+  "help_headerLangTitle": {
+    "message": "Idioma"
+  },
+  "help_historyIntro": {
+    "message": "Cada sincronização cria um commit Git. Você pode navegar commits recentes na subaba Histórico (em Arquivos) e restaurar favoritos de uma versão anterior."
+  },
+  "help_historyLoadDesc": {
+    "message": "Busca os últimos 20 commits que tocaram seu caminho de favoritos. O cabeçalho da tabela rotula as colunas (data, hash curto do commit, id do cliente da mensagem do commit). Passe o mouse sobre a célula do cliente para ver a mensagem completa. Cada linha tem um ícone de visualização (lupa) e um de restaurar."
+  },
+  "help_historyLoadLabel": {
+    "message": "Carregar histórico"
+  },
+  "help_historyRestoreDesc": {
+    "message": "Substitui todos os favoritos locais pelo estado desse commit. Na lista, clique no ícone de restaurar e depois novamente quando mostrar a confirmação curta (ou o texto completo no painel de diff). Não reescreve o branch remoto — seus dados remotos atuais permanecem intactos. A próxima sincronização enviará o estado local de volta."
+  },
+  "help_historyRestoreLabel": {
+    "message": "Restaurar"
+  },
+  "help_historyTitle": {
+    "message": "Histórico de sincronização e desfazer"
+  },
+  "help_historyUndoDesc": {
+    "message": "Reversão com um clique para o commit anterior à última sincronização que modificou os favoritos locais. Disponível após qualquer pull ou mesclagem que modificou os favoritos locais."
+  },
+  "help_historyUndoLabel": {
+    "message": "Desfazer última sincronização"
   },
   "help_links": {
     "message": "Links"
@@ -237,6 +330,9 @@
   },
   "help_linkwardenTitle": {
     "message": "Linkwarden"
+  },
+  "help_menuTitle": {
+    "message": "Menu"
   },
   "help_notificationsDesc": {
     "message": "Escolha quando exibir notificações de sincronização: Todas (sucesso e falha), Apenas erros ou Desligado."
@@ -298,6 +394,18 @@
   "help_profilesTitle": {
     "message": "Perfis"
   },
+  "help_provider_codeberg": {
+    "message": "<strong>Codeberg</strong> é um host Forgejo em <code>codeberg.org</code>. Selecione Codeberg como provedor; a URL do servidor é predefinida. Crie um token em Configurações do usuário → Aplicativos."
+  },
+  "help_provider_forgejo": {
+    "message": "<strong>Forgejo</strong> usa a mesma API do Gitea. Informe a URL do seu servidor Forgejo e um token de acesso pessoal em Configurações do usuário → Aplicativos."
+  },
+  "help_provider_gitlab": {
+    "message": "<strong>GitLab</strong> suporta gitlab.com e instâncias auto-hospedadas. Para projetos de subgrupo, use <code>grupo/subgrupo</code> como proprietário e o nome do projeto como repositório. Deixe a URL do servidor vazia para GitLab.com."
+  },
+  "help_provider_gogs": {
+    "message": "<strong>Gogs</strong> compartilha API similar ao Gitea. Informe a URL do seu servidor Gogs e um token de acesso em Configurações do usuário → Aplicativos."
+  },
   "help_quickSync": {
     "message": "Sincronização rápida dos favoritos"
   },
@@ -340,6 +448,12 @@
   "help_themeCycleTitle": {
     "message": "Tema"
   },
+  "help_transferDesc": {
+    "message": "Use <strong>Transferir…</strong> na aba Perfil para copiar favoritos de um perfil para outro sem trocar primeiro. Uso típico: migrar do GitHub para Gitea. Escolha <strong>Substituir destino</strong> para migração limpa; <strong>Mesclar no destino</strong> mantém arquivos existentes e pode criar pastas duplicadas. Após migração desordenada, use <strong>Limpar órfãos remotos</strong> na subaba Sincronização. Destinos espelho na aba Conexão Git enviam cópia para remotos de backup após cada sincronização."
+  },
+  "help_transferTitle": {
+    "message": "Transferir favoritos entre perfis"
+  },
   "help_voteBacklogBtn": {
     "message": "Votar no backlog"
   },
@@ -362,10 +476,13 @@
     "message": "Por que a sincronização às vezes demora?"
   },
   "help_wizardRestartDesc": {
-    "message": "Guia passo a passo para conectar seu repositório GitHub e realizar a primeira sincronização."
+    "message": "Guia passo a passo para conectar seu repositório Git e executar a primeira sincronização."
   },
   "help_wizardRestartTitle": {
     "message": "Assistente de Configuração"
+  },
+  "help_wizardSyncChoice": {
+    "message": "No assistente de configuração, <strong>Verificar conexão</strong> apenas valida o acesso — não sincroniza. Depois você escolhe pull, mesclar/sincronizar, push, criar estrutura de pastas ou pular, com confirmação antes de gravar no repositório."
   },
   "linkwardenSave_cancelBtn": {
     "message": "Cancelar"
@@ -532,6 +649,18 @@
   "options_chooseFile": {
     "message": "Escolher arquivo"
   },
+  "options_cleanOrphansDesc": {
+    "message": "Remova arquivos de favoritos remotos que não estão nos seus favoritos locais (perfil ativo). Use após transferência desordenada ou pastas duplicadas no servidor."
+  },
+  "options_cleanOrphansPreview": {
+    "message": "Visualizar órfãos"
+  },
+  "options_cleanOrphansRun": {
+    "message": "Limpar remoto"
+  },
+  "options_cleanOrphansTitle": {
+    "message": "Limpar órfãos remotos"
+  },
   "options_connectionOk": {
     "message": "Conexão OK! Usuário: $1, Repo: $2"
   },
@@ -636,6 +765,18 @@
   },
   "options_decryptError": {
     "message": "Falha na descriptografia. Senha incorreta?"
+  },
+  "options_densityCompact": {
+    "message": "Compacto"
+  },
+  "options_densityGroupLabel": {
+    "message": "Densidade da interface"
+  },
+  "options_densityLarge": {
+    "message": "Grande"
+  },
+  "options_densityMedium": {
+    "message": "Médio"
   },
   "options_documentation": {
     "message": "Documentação"
@@ -754,6 +895,51 @@
   "options_generatedFilesTitle": {
     "message": "Arquivos gerados"
   },
+  "options_gheServerUrlEnabled": {
+    "message": "Usar URL de servidor personalizada (GitHub Enterprise)"
+  },
+  "options_gitConnection": {
+    "message": "Conexão Git"
+  },
+  "options_gitProvider": {
+    "message": "Provedor Git"
+  },
+  "options_gitProviderGitea": {
+    "message": "Gitea / Forgejo"
+  },
+  "options_gitProviderGithub": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_codeberg": {
+    "message": "Codeberg"
+  },
+  "options_gitProvider_forgejo": {
+    "message": "Forgejo"
+  },
+  "options_gitProvider_gitea": {
+    "message": "Gitea"
+  },
+  "options_gitProvider_github": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_gitlab": {
+    "message": "GitLab"
+  },
+  "options_gitProvider_gogs": {
+    "message": "Gogs"
+  },
+  "options_giteaPermissionDenied": {
+    "message": "Permissão de host para o servidor Gitea foi negada. Permita o acesso quando solicitado e tente novamente."
+  },
+  "options_giteaTokenHelpLink": {
+    "message": "Abrir configurações do usuário Gitea (Aplicativos)"
+  },
+  "options_giteaTokenHintHtml": {
+    "message": "Crie um token no Gitea em <strong>Configurações do usuário → Aplicativos</strong> com acesso de leitura/escrita ao repositório. Tokens Gitea <em>não</em> são strings estilo GitHub <code>ghp_…</code>."
+  },
+  "options_giteaTokenWizardHelpHtml": {
+    "message": "No Gitea, abra <strong>Configurações do usuário → Aplicativos → Gerar novo token</strong>. Habilite leitura e escrita do repositório. Copie o token — ele é exibido apenas uma vez. Tokens Gitea não usam prefixos GitHub como <code>ghp_</code>."
+  },
   "options_githubConnection": {
     "message": "Conexão com GitHub"
   },
@@ -786,6 +972,72 @@
   },
   "options_githubReposTitle": {
     "message": "Pasta GitHub Repos"
+  },
+  "options_historyColActions": {
+    "message": "Ações"
+  },
+  "options_historyColClient": {
+    "message": "Cliente"
+  },
+  "options_historyColCommit": {
+    "message": "Commit"
+  },
+  "options_historyColDate": {
+    "message": "Data"
+  },
+  "options_historyCurrent": {
+    "message": "atual"
+  },
+  "options_historyDesc": {
+    "message": "Navegue commits de sincronização recentes e restaure favoritos de uma versão anterior. Restaurar altera apenas favoritos locais — não reescreve o branch remoto."
+  },
+  "options_historyDiffAdded": {
+    "message": "Adicionado"
+  },
+  "options_historyDiffChanged": {
+    "message": "Alterado"
+  },
+  "options_historyDiffClose": {
+    "message": "Fechar"
+  },
+  "options_historyDiffLoading": {
+    "message": "Carregando visualização…"
+  },
+  "options_historyDiffNoChanges": {
+    "message": "Sem diferenças — este commit corresponde aos seus favoritos atuais."
+  },
+  "options_historyDiffRemoved": {
+    "message": "Removido"
+  },
+  "options_historyEmpty": {
+    "message": "Nenhum commit encontrado."
+  },
+  "options_historyLoadBtn": {
+    "message": "Carregar histórico"
+  },
+  "options_historyPreviewBtn": {
+    "message": "Visualizar"
+  },
+  "options_historyRestoreBtn": {
+    "message": "Restaurar"
+  },
+  "options_historyRestoreConfirmBtn": {
+    "message": "Clique novamente para confirmar"
+  },
+  "options_historyRestoreConfirmShort": {
+    "message": "Clique novamente"
+  },
+  "options_historyRestoring": {
+    "message": "Restaurando…"
+  },
+  "options_historyTitle": {
+    "message": "Histórico de sincronização"
+  },
+  "options_historyUndoBtn": {
+    "message": "Desfazer última sincronização"
+  },
+  "options_hostPermissionDenied": {
+    "message": "Permissão de host para o servidor Git foi negada. Permita o acesso quando solicitado e tente novamente."
   },
   "options_importBookmarks": {
     "message": "Importar Favoritos"
@@ -841,6 +1093,12 @@
   "options_linkwardenApiKey": {
     "message": "Chave API"
   },
+  "options_linkwardenConnectionFailed": {
+    "message": "Falha na conexão: $1"
+  },
+  "options_linkwardenConnectionOk": {
+    "message": "Conexão bem-sucedida!"
+  },
   "options_linkwardenDefaultCollection": {
     "message": "Coleção padrão"
   },
@@ -859,11 +1117,17 @@
   "options_linkwardenEnabled": {
     "message": "Habilitar Linkwarden"
   },
+  "options_linkwardenHostPermissionDenied": {
+    "message": "Permissão de host negada. Verifique a barra de endereços ou o bloqueador de pop-ups."
+  },
   "options_linkwardenInstanceUrl": {
     "message": "URL da instância"
   },
   "options_linkwardenIntro": {
     "message": "Configure sua instância Linkwarden para salvar favoritos diretamente pelo menu de contexto."
+  },
+  "options_linkwardenInvalidUrlFormat": {
+    "message": "Formato de URL inválido"
   },
   "options_linkwardenSyncEnabled": {
     "message": "Sincronizar coleções com favoritos"
@@ -894,8 +1158,44 @@
   "options_linkwardenTitle": {
     "message": "Integração Linkwarden"
   },
+  "options_linkwardenUrlTokenRequired": {
+    "message": "URL e token são obrigatórios"
+  },
   "options_menu_showAsSubmenu": {
     "message": "Mostrar como submenu"
+  },
+  "options_mirrorsAdd": {
+    "message": "+ Adicionar espelho"
+  },
+  "options_mirrorsDesc": {
+    "message": "Cópias somente de envio dos arquivos de favoritos para remotos Git adicionais após cada sincronização principal bem-sucedida. Edições diretas em um espelho são sobrescritas na próxima sincronização."
+  },
+  "options_mirrorsLabel": {
+    "message": "Rótulo"
+  },
+  "options_mirrorsPaused": {
+    "message": "Pausado"
+  },
+  "options_mirrorsPushGenerated": {
+    "message": "Incluir arquivos gerados (README, HTML, feed, Dashy)"
+  },
+  "options_mirrorsPushSettings": {
+    "message": "Incluir configurações criptografadas"
+  },
+  "options_mirrorsRemove": {
+    "message": "Remover"
+  },
+  "options_mirrorsStatusError": {
+    "message": "Erro do espelho: $1"
+  },
+  "options_mirrorsStatusOk": {
+    "message": "Último push OK"
+  },
+  "options_mirrorsTest": {
+    "message": "Testar"
+  },
+  "options_mirrorsTitle": {
+    "message": "Destinos espelho"
   },
   "options_mobileAppAlert": {
     "message": "<strong>Nota para usuários Android:</strong> Firefox para Android não suporta sincronização direta de favoritos via extensões. Você deve usar o aplicativo complementar."
@@ -987,6 +1287,9 @@
   "options_onboardingWizardBack": {
     "message": "Voltar"
   },
+  "options_onboardingWizardCheckConnection": {
+    "message": "Verificar conexão"
+  },
   "options_onboardingWizardCompleted": {
     "message": "Assistente concluído com sucesso."
   },
@@ -1036,7 +1339,7 @@
     "message": "Salvando estado de sincronização"
   },
   "options_onboardingWizardPhaseUploading": {
-    "message": "Enviando favoritos para o GitHub"
+    "message": "Enviando favoritos para o remoto"
   },
   "options_onboardingWizardRepoCreateFailed": {
     "message": "Não foi possível criar o repositório com este token/permissões."
@@ -1068,6 +1371,9 @@
   "options_onboardingWizardStart": {
     "message": "Iniciar assistente de configuração"
   },
+  "options_onboardingWizardStartSync": {
+    "message": "Iniciar sincronização"
+  },
   "options_onboardingWizardStepFinishText": {
     "message": "Configuração concluída. Você pode continuar com os ajustes normais."
   },
@@ -1080,6 +1386,12 @@
   "options_onboardingWizardStepHasTokenTitle": {
     "message": "Você já tem um token?"
   },
+  "options_onboardingWizardStepProviderText": {
+    "message": "Selecione GitHub, GitLab, Codeberg, Gitea, Forgejo ou Gogs. Cada perfil armazena seu próprio provedor e URL de servidor."
+  },
+  "options_onboardingWizardStepProviderTitle": {
+    "message": "Escolha seu provedor Git"
+  },
   "options_onboardingWizardStepRepoDecisionText": {
     "message": "Escolha entre criar repositório automaticamente ou usar um repositório existente."
   },
@@ -1091,6 +1403,9 @@
   },
   "options_onboardingWizardStepRepoTitle": {
     "message": "Configurações do repositório"
+  },
+  "options_onboardingWizardStepSyncChoiceText": {
+    "message": "Escolha como sincronizar, leia o aviso e clique em Iniciar sincronização. Nada é gravado no repositório até você confirmar."
   },
   "options_onboardingWizardStepSyncTextEmpty": {
     "message": "O caminho está vazio. Crie a estrutura inicial para começar."
@@ -1114,7 +1429,7 @@
     "message": "Token de acesso"
   },
   "options_onboardingWizardStepValidateText": {
-    "message": "Execute o teste para verificar token, repositório e acesso ao caminho."
+    "message": "Clique em Verificar conexão para validar token, repositório e acesso ao caminho. Nenhuma sincronização é executada nesta etapa."
   },
   "options_onboardingWizardStepValidateTitle": {
     "message": "Testar conexão"
@@ -1125,8 +1440,68 @@
   "options_onboardingWizardStepWelcomeTitle": {
     "message": "Boas-vindas"
   },
+  "options_onboardingWizardSyncConfirmRunBtn": {
+    "message": "Executar"
+  },
+  "options_onboardingWizardSyncConfirmSkipBtn": {
+    "message": "Pular"
+  },
+  "options_onboardingWizardSyncConfirm_initialize": {
+    "message": "Criar a estrutura inicial da pasta bookmarks/ no repositório remoto (sem enviar favoritos locais)?"
+  },
+  "options_onboardingWizardSyncConfirm_pull": {
+    "message": "Baixar $2 favorito(s) do repositório remoto para este navegador?"
+  },
+  "options_onboardingWizardSyncConfirm_pullOverwriteLocal": {
+    "message": "Pull substituirá todos os $1 favorito(s) locais por $2 do repositório remoto. Continuar?"
+  },
+  "options_onboardingWizardSyncConfirm_push": {
+    "message": "Enviar $1 favorito(s) locais para o repositório remoto?"
+  },
+  "options_onboardingWizardSyncConfirm_pushDanger": {
+    "message": "Push sobrescreverá o repositório remoto. $2 favorito(s) remotos podem ser excluídos; apenas $1 favorito(s) locais permanecerão. Continuar?"
+  },
+  "options_onboardingWizardSyncConfirm_skip": {
+    "message": "Pular a primeira sincronização por agora? Você pode sincronizar manualmente pelo popup depois."
+  },
+  "options_onboardingWizardSyncConfirm_sync": {
+    "message": "Executar mesclagem/sincronização entre $1 favorito(s) local(is) e $2 remoto(s)? Pode ser necessário resolver conflitos depois."
+  },
   "options_onboardingWizardSyncInProgress": {
     "message": "Trabalhando em segundo plano, por favor aguarde..."
+  },
+  "options_onboardingWizardSyncModeLabel": {
+    "message": "Primeira ação de sincronização"
+  },
+  "options_onboardingWizardSyncMode_initialize": {
+    "message": "Apenas criar estrutura de pastas"
+  },
+  "options_onboardingWizardSyncMode_pull": {
+    "message": "Apenas pull (baixar do remoto)"
+  },
+  "options_onboardingWizardSyncMode_push": {
+    "message": "Apenas push (enviar favoritos locais — sobrescreve remoto)"
+  },
+  "options_onboardingWizardSyncMode_skip": {
+    "message": "Pular por agora"
+  },
+  "options_onboardingWizardSyncMode_sync": {
+    "message": "Mesclar / sincronizar (recomendado quando ambos os lados têm favoritos)"
+  },
+  "options_onboardingWizardSyncWarn_both": {
+    "message": "Favoritos existem em ambos os lados. Mesclar/sincronizar combina alterações; pull ou push sobrescreve um lado."
+  },
+  "options_onboardingWizardSyncWarn_emptyBoth": {
+    "message": "Caminho remoto e navegador estão vazios. Crie a estrutura de pastas ou pule e sincronize depois."
+  },
+  "options_onboardingWizardSyncWarn_localOnly": {
+    "message": "Caminho remoto está vazio; favoritos locais serão enviados no push."
+  },
+  "options_onboardingWizardSyncWarn_pushDanger": {
+    "message": "Aviso: push excluirá $1 arquivo(s) de favoritos remotos ausentes localmente e substituirá o repositório pelos favoritos deste navegador."
+  },
+  "options_onboardingWizardSyncWarn_remoteOnly": {
+    "message": "O remoto tem favoritos; este navegador está vazio. Pull é recomendado para não sobrescrever o repositório."
   },
   "options_onboardingWizardTitle": {
     "message": "Assistente de configuração"
@@ -1158,8 +1533,17 @@
   "options_onboardingWizardTokenValidated": {
     "message": "O token é válido e tem o escopo necessário."
   },
+  "options_ownerHint_gitlab": {
+    "message": "Nome de usuário, grupo ou caminho grupo/subgrupo (ex. meugrupo/subgrupo)."
+  },
   "options_ownerPlaceholder": {
     "message": "seu-usuario-github"
+  },
+  "options_ownerPlaceholderGitea": {
+    "message": "seu-usuario-gitea"
+  },
+  "options_ownerPlaceholder_gitlab": {
+    "message": "usuário ou grupo/subgrupo"
   },
   "options_passwordPlaceholder": {
     "message": "Senha"
@@ -1256,6 +1640,21 @@
   },
   "options_selectFile": {
     "message": "Selecionar arquivo..."
+  },
+  "options_serverUrl": {
+    "message": "URL do servidor"
+  },
+  "options_serverUrlHint": {
+    "message": "URL base do seu servidor Git (sem sufixo /api/v1 ou /api/v4)."
+  },
+  "options_serverUrlPlaceholder_github": {
+    "message": "https://github.empresa.com"
+  },
+  "options_serverUrlPlaceholder_gitlab": {
+    "message": "https://gitlab.com (deixe vazio para GitLab.com)"
+  },
+  "options_serverUrlRequired": {
+    "message": "URL do servidor é obrigatória para este provedor."
   },
   "options_settingsCard": {
     "message": "Configurações"
@@ -1414,6 +1813,9 @@
   "options_subTabGitAdd": {
     "message": "Git Add"
   },
+  "options_subTabHistory": {
+    "message": "Histórico"
+  },
   "options_subTabMenuAdvanced": {
     "message": "Avançado e Segurança"
   },
@@ -1510,17 +1912,56 @@
   "options_themeAuto": {
     "message": "A Auto (sistema)"
   },
+  "options_themeAutoLabel": {
+    "message": "Auto"
+  },
   "options_themeDark": {
     "message": "☽ Escuro"
   },
+  "options_themeDarkLabel": {
+    "message": "Escuro"
+  },
   "options_themeLight": {
     "message": "☀ Claro"
+  },
+  "options_themeLightLabel": {
+    "message": "Claro"
   },
   "options_toggleToken": {
     "message": "Mostrar/ocultar token"
   },
   "options_tokenHint": {
     "message": "Requer o escopo <code>repo</code> (clássico) ou <code>Contents: Read/Write</code> e <code>Metadata: Read</code> (fine-grained). <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Criar token</a>"
+  },
+  "options_tokenHintHtml_codeberg": {
+    "message": "Crie um token em <a href=\"https://codeberg.org/user/settings/applications\" target=\"_blank\" rel=\"noopener\">Codeberg → Configurações do usuário → Aplicativos</a> com acesso de leitura/escrita ao repositório."
+  },
+  "options_tokenHintHtml_forgejo": {
+    "message": "Crie um token no seu servidor Forgejo em <strong>Configurações do usuário → Aplicativos</strong> com acesso de leitura/escrita ao repositório."
+  },
+  "options_tokenHintHtml_gitea": {
+    "message": "Crie um token em <strong>Configurações do usuário → Aplicativos</strong> com acesso de leitura/escrita ao repositório."
+  },
+  "options_tokenHintHtml_gitlab": {
+    "message": "Crie um token em <a href=\"https://gitlab.com/-/user_settings/personal_access_tokens\" target=\"_blank\" rel=\"noopener\">GitLab → Configurações do usuário → Tokens de acesso</a> com escopo <code>api</code> (leitura/escrita do repositório)."
+  },
+  "options_tokenHintHtml_gogs": {
+    "message": "Crie um token no seu servidor Gogs em <strong>Configurações do usuário → Aplicativos</strong> com acesso de leitura/escrita ao repositório."
+  },
+  "options_tokenPlaceholderGitea": {
+    "message": "seu-token-acesso-gitea"
+  },
+  "options_tokenPlaceholderGithub": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitea": {
+    "message": "seu-token-acesso"
+  },
+  "options_tokenPlaceholder_github": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitlab": {
+    "message": "glpat-xxxxxxxxxxxxxxxxxxxx"
   },
   "options_tokenValidMissingScope": {
     "message": "Token válido ($1), mas sem o escopo \"repo\"."
@@ -1530,6 +1971,51 @@
   },
   "options_tokenValidSpecifyRepo": {
     "message": "Token válido! Usuário: $1. Por favor, especifique um repositório."
+  },
+  "options_transferApplyLocal": {
+    "message": "Aplicar ao navegador (somente quando o destino estiver ativo)"
+  },
+  "options_transferCancel": {
+    "message": "Cancelar"
+  },
+  "options_transferDesc": {
+    "message": "Copiar favoritos de um perfil para outro (ex. migração GitHub → Gitea). Não altera o navegador, a menos que o perfil destino esteja ativo e você escolha aplicar localmente."
+  },
+  "options_transferDuplicateFoldersWarning": {
+    "message": "Nomes de pasta duplicados no resultado da transferência (colisão de slug): $1. Mescle essas pastas nos favoritos do perfil origem antes de transferir, ou os duplicados serão copiados para o remoto destino."
+  },
+  "options_transferFolder": {
+    "message": "Pasta (opcional)"
+  },
+  "options_transferFolderHint": {
+    "message": "Caminho relativo sob a pasta do repo, ex. toolbar/trabalho. Deixe vazio para todos os favoritos."
+  },
+  "options_transferMergeConfirm": {
+    "message": "Mesclar em um destino com $1 arquivo(s) existente(s)? Favoritos remotos existentes são mantidos; pastas duplicadas podem resultar. Continuar?"
+  },
+  "options_transferMergeHint": {
+    "message": "Mesclar mantém todos os arquivos destino existentes e adiciona favoritos origem. Isso pode criar pastas duplicadas (ex. livros e livros-2). Para migração limpa, use Substituir destino."
+  },
+  "options_transferMergeWarning": {
+    "message": "O destino já tem $1 arquivo(s) de favoritos. Mesclar mantém todos mais os arquivos origem copiados — pastas duplicadas são prováveis."
+  },
+  "options_transferMode": {
+    "message": "Modo"
+  },
+  "options_transferModeMerge": {
+    "message": "Mesclar no destino"
+  },
+  "options_transferModeReplace": {
+    "message": "Substituir destino"
+  },
+  "options_transferOpen": {
+    "message": "Transferir…"
+  },
+  "options_transferPreview": {
+    "message": "Visualizar"
+  },
+  "options_transferPreviewResult": {
+    "message": "Origem: $1 ($2 arquivos). Destino tem $3 arquivos existentes → $4 após transferência."
   },
   "options_transferProgressApplying": {
     "message": "Aplicando no navegador…"
@@ -1548,6 +2034,36 @@
   },
   "options_transferProgressPreparing": {
     "message": "Preparando transferência…"
+  },
+  "options_transferPush": {
+    "message": "Push para o repositório destino"
+  },
+  "options_transferReplaceWarning": {
+    "message": "Substituir excluirá $1 arquivo(s) remoto(s) não incluídos no resultado da transferência."
+  },
+  "options_transferRun": {
+    "message": "Transferir"
+  },
+  "options_transferSource": {
+    "message": "Perfil origem"
+  },
+  "options_transferSourceBrowser": {
+    "message": "navegador"
+  },
+  "options_transferSourceCache": {
+    "message": "cache"
+  },
+  "options_transferSourceRemote": {
+    "message": "remoto"
+  },
+  "options_transferTarget": {
+    "message": "Perfil destino"
+  },
+  "options_transferTargetWarning": {
+    "message": "Aviso: o destino já tem dados de favoritos."
+  },
+  "options_transferTitle": {
+    "message": "Transferir favoritos"
   },
   "options_version": {
     "message": "Versão"
@@ -1591,8 +2107,14 @@
   "popup_localToGithub": {
     "message": "Local → GitHub"
   },
+  "popup_localToRemote": {
+    "message": "Local → Remoto"
+  },
   "popup_minAgo": {
     "message": "$1 min atrás"
+  },
+  "popup_mirrorStatus": {
+    "message": "Espelhado: $1"
   },
   "popup_nextSyncIn": {
     "message": "Próxima sincronização em $1"
@@ -1614,6 +2136,9 @@
   },
   "popup_ready": {
     "message": "Pronto"
+  },
+  "popup_remoteToLocal": {
+    "message": "Remoto → Local"
   },
   "popup_reportIssue": {
     "message": "Reportar Problema"
@@ -1645,6 +2170,9 @@
   "search_openBtn": {
     "message": "Abrir"
   },
+  "search_resultsLabel": {
+    "message": "Resultados da busca"
+  },
   "search_statusNoResults": {
     "message": "Nenhum favorito encontrado"
   },
@@ -1662,8 +2190,20 @@
   "search_subtitle": {
     "message": "Pesquise favoritos locais e abra correspondências em uma nova aba."
   },
+  "search_syncComplete": {
+    "message": "Sincronização concluída"
+  },
+  "search_syncFailed": {
+    "message": "Falha na sincronização: $1"
+  },
+  "search_syncing": {
+    "message": "Sincronizando…"
+  },
   "search_title": {
     "message": "Pesquisa de favoritos"
+  },
+  "search_unknownError": {
+    "message": "Erro desconhecido"
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – Pesquisa de favoritos"
@@ -1698,8 +2238,14 @@
   "sync_conflictRemoteModified": {
     "message": "Conflito detectado: O remoto também foi modificado."
   },
+  "sync_loadedFromRemote": {
+    "message": "Carregado do repositório remoto."
+  },
   "sync_noBookmarksOnGithub": {
     "message": "Nenhum favorito encontrado no GitHub."
+  },
+  "sync_noBookmarksOnRemote": {
+    "message": "Nenhum favorito encontrado no repositório remoto."
   },
   "sync_noChanges": {
     "message": "Sem alterações desde a última sincronização."
@@ -1734,7 +2280,37 @@
   "sync_pushSuccess": {
     "message": "Favoritos enviados para o GitHub com sucesso."
   },
+  "sync_remoteChangedRetry": {
+    "message": "O remoto está mudando agora. Tente sincronizar novamente em instantes."
+  },
   "sync_syncFailed": {
     "message": "Falha na sincronização: $1"
+  },
+  "transfer_commitMessage": {
+    "message": "Transferência de favoritos do perfil $1"
+  },
+  "transfer_connectionLost": {
+    "message": "Conexão de transferência perdida. Recarregue a página de opções e tente novamente."
+  },
+  "transfer_mergeConflicts": {
+    "message": "Mesclagem bloqueada: $1 conflito(s) de caminho. Resolva arquivos sobrepostos ou use o modo Substituir."
+  },
+  "transfer_noBookmarks": {
+    "message": "Nenhum arquivo de favoritos para transferir"
+  },
+  "transfer_profileNotFound": {
+    "message": "Perfil não encontrado"
+  },
+  "transfer_sameProfile": {
+    "message": "Origem e destino devem ser perfis diferentes"
+  },
+  "transfer_success": {
+    "message": "Transferidos $1 arquivo(s) de favoritos"
+  },
+  "whatsnew_close": {
+    "message": "Fechar"
+  },
+  "whatsnew_title": {
+    "message": "Novidades no GitSyncMarks $1"
   }
 }

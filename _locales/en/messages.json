@@ -954,7 +954,76 @@
     "message": "Test connection"
   },
   "options_onboardingWizardStepValidateText": {
-    "message": "Click Next to automatically validate token, repository, and path access."
+    "message": "Click Check connection to validate token, repository, and path access. No sync runs in this step."
+  },
+  "options_onboardingWizardCheckConnection": {
+    "message": "Check connection"
+  },
+  "options_onboardingWizardStartSync": {
+    "message": "Start sync"
+  },
+  "options_onboardingWizardStepSyncChoiceText": {
+    "message": "Choose how to sync, read the warning, then click Start sync. Nothing is written to the repository until you confirm."
+  },
+  "options_onboardingWizardSyncModeLabel": {
+    "message": "First sync action"
+  },
+  "options_onboardingWizardSyncMode_sync": {
+    "message": "Merge / sync (recommended when both sides have bookmarks)"
+  },
+  "options_onboardingWizardSyncMode_pull": {
+    "message": "Pull only (download from remote)"
+  },
+  "options_onboardingWizardSyncMode_push": {
+    "message": "Push only (upload local bookmarks — overwrites remote)"
+  },
+  "options_onboardingWizardSyncMode_initialize": {
+    "message": "Create folder structure only"
+  },
+  "options_onboardingWizardSyncMode_skip": {
+    "message": "Skip for now"
+  },
+  "options_onboardingWizardSyncWarn_remoteOnly": {
+    "message": "Remote has bookmarks; this browser is empty. Pull is recommended so you do not overwrite the repository."
+  },
+  "options_onboardingWizardSyncWarn_both": {
+    "message": "Bookmarks exist on both sides. Merge/sync combines changes; pull or push overwrites one side."
+  },
+  "options_onboardingWizardSyncWarn_localOnly": {
+    "message": "Remote path is empty; local bookmarks will be uploaded on push."
+  },
+  "options_onboardingWizardSyncWarn_emptyBoth": {
+    "message": "Remote path and browser are empty. Create the folder structure or skip and sync later."
+  },
+  "options_onboardingWizardSyncWarn_pushDanger": {
+    "message": "Warning: push will delete $1 remote bookmark file(s) not present locally and replace the repository with this browser's bookmarks."
+  },
+  "options_onboardingWizardSyncConfirm_pull": {
+    "message": "Download $2 bookmark(s) from the remote repository into this browser?"
+  },
+  "options_onboardingWizardSyncConfirm_pullOverwriteLocal": {
+    "message": "Pull replaces all $1 local bookmark(s) with $2 from the remote repository. Continue?"
+  },
+  "options_onboardingWizardSyncConfirm_sync": {
+    "message": "Run a merge/sync between $1 local and $2 remote bookmark(s)? You may need to resolve conflicts later."
+  },
+  "options_onboardingWizardSyncConfirm_push": {
+    "message": "Upload $1 local bookmark(s) to the remote repository?"
+  },
+  "options_onboardingWizardSyncConfirm_pushDanger": {
+    "message": "Push will overwrite the remote repository. $2 remote bookmark(s) may be deleted; only $1 local bookmark(s) will remain. Continue?"
+  },
+  "options_onboardingWizardSyncConfirm_initialize": {
+    "message": "Create the initial bookmarks/ folder structure on the remote repository (no local bookmarks uploaded)?"
+  },
+  "options_onboardingWizardSyncConfirm_skip": {
+    "message": "Skip first sync for now? You can sync manually from the popup later."
+  },
+  "options_onboardingWizardSyncConfirmRunBtn": {
+    "message": "Run"
+  },
+  "options_onboardingWizardSyncConfirmSkipBtn": {
+    "message": "Skip"
   },
   "options_onboardingWizardStepSyncTitle": {
     "message": "First sync action"
@@ -1437,6 +1506,9 @@
   },
   "help_onboarding": {
     "message": "If the folder is empty, you can create the base structure (toolbar, other). If bookmarks already exist in the repo, you can pull them into this browser."
+  },
+  "help_wizardSyncChoice": {
+    "message": "In the setup wizard, <strong>Check connection</strong> only validates access — it does not sync. You then choose pull, merge/sync, push, create folder structure, or skip, with a confirmation before anything is written to the repository."
   },
   "help_profilesTitle": {
     "message": "Profiles"

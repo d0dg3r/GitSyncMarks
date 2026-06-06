@@ -17,8 +17,41 @@
   "api_invalidToken": {
     "message": "Nieprawidłowy token. Sprawdź swój Personal Access Token."
   },
+  "api_listCommitsFailed": {
+    "message": "Nie udało się wyświetlić commitów (HTTP $1)."
+  },
+  "api_networkError": {
+    "message": "Błąd sieci. Sprawdź połączenie internetowe i spróbuj ponownie."
+  },
   "api_rateLimitExceeded": {
     "message": "Przekroczono limit zapytań API GitHub. Poczekaj chwilę."
+  },
+  "api_treeTruncated": {
+    "message": "Repozytorium jest zbyt duże, aby odczytać je w jednym żądaniu (GitHub obciął drzewo plików). Synchronizacja została zatrzymana, aby uniknąć utraty danych."
+  },
+  "cleanOrphans_commitMessage": {
+    "message": "Usuń osierocone pliki zakładek nieobecne lokalnie"
+  },
+  "cleanOrphans_confirm": {
+    "message": "Usunąć $1 osierocony(ch) plik(ów) w $2 folderach najwyższego poziomu ze zdalnego? Lokalne zakładki pozostają bez zmian. Nie można cofnąć w GitSyncMarks (użyj historii Git do przywrócenia)."
+  },
+  "cleanOrphans_noLocalBaseline": {
+    "message": "Brak lokalnej bazy zakładek dla tego profilu. Przełącz na profil i zsynchronizuj raz lub użyj Wyczyść zdalne na aktywnym profilu."
+  },
+  "cleanOrphans_none": {
+    "message": "Brak osieroconych plików zakładek na zdalnym."
+  },
+  "cleanOrphans_previewFailed": {
+    "message": "Nie udało się wyświetlić podglądu osieroconych na zdalnym."
+  },
+  "cleanOrphans_previewResult": {
+    "message": "$1 osierocony(ch) plik(ów) w $2 folderach najwyższego poziomu zostałoby usuniętych."
+  },
+  "cleanOrphans_remoteFetchFailed": {
+    "message": "Nie udało się odczytać zdalnego repozytorium: $1"
+  },
+  "cleanOrphans_success": {
+    "message": "Usunięto $1 osierocony(ch) plik(ów) z $2 folderów najwyższego poziomu na zdalnym."
   },
   "commands_openOptions": {
     "message": "Otwórz ustawienia rozszerzenia"
@@ -82,6 +115,24 @@
   "contextMenu_notifFolderMissing": {
     "message": "Wybrany folder już nie istnieje. Odśwież ustawienia szybkich folderów."
   },
+  "contextMenu_notifLinkwardenError": {
+    "message": "Błąd Linkwarden: $1"
+  },
+  "contextMenu_notifLinkwardenGrantPermissions": {
+    "message": "Przyznaj uprawnienia przez „Test połączenia” w Opcjach"
+  },
+  "contextMenu_notifLinkwardenNotConfigured": {
+    "message": "Linkwarden nie skonfigurowany"
+  },
+  "contextMenu_notifLinkwardenSaved": {
+    "message": "Link zapisany w Linkwarden"
+  },
+  "contextMenu_notifLinkwardenSavedWithScreenshot": {
+    "message": "Link i zrzut ekranu zapisane w Linkwarden"
+  },
+  "contextMenu_notifLinkwardenUrlInvalid": {
+    "message": "Nieprawidłowy URL Linkwarden"
+  },
   "contextMenu_notifNoFavicon": {
     "message": "Brak favikony dla tej strony"
   },
@@ -137,10 +188,10 @@
     "message": "Synchronizuj teraz"
   },
   "extDescription": {
-    "message": "Synchronizacja zakładek przez GitHub. Synergia z Linkwarden, inteligentne wyszukiwanie i app. Bezpośrednio i bezpiecznie."
+    "message": "Synchronizacja zakładek przez GitHub, GitLab, Codeberg, Gitea i inne. Linkwarden, inteligentne wyszukiwanie, aplikacja towarzysząca. Bezpośrednio, bezpiecznie, prywatnie."
   },
   "extDescriptionFirefox": {
-    "message": "Synchronizacja zakładek przez GitHub. Synergia Linkwarden, wyszukiwanie i kreator konfiguracji. Bezpośrednio, bezpiecznie. Wsparcie dla Firefox."
+    "message": "Synchronizacja zakładek przez GitHub, GitLab, Codeberg, Gitea i inne. Linkwarden, inteligentne wyszukiwanie, kreator konfiguracji. Dwukierunkowo, bezpiecznie i prywatnie. Pełne wsparcie Firefox. Bez pośredników."
   },
   "extName": {
     "message": "GitSyncMarks"
@@ -175,6 +226,12 @@
   "help_backupTitle": {
     "message": "Kopia zapasowa"
   },
+  "help_cleanOrphansDesc": {
+    "message": "W podzakładce Synchronizacja wyświetl podgląd i usuń zdalne pliki zakładek, których nie ma w lokalnych zakładkach (aktywny profil). Przydatne po zduplikowanych folderach z transferu merge."
+  },
+  "help_cleanOrphansTitle": {
+    "message": "Wyczyść osierocone na zdalnym"
+  },
   "help_conflictDesc": {
     "message": "Gdy zarówno lokalne, jak i zdalne zakładki zostały zmienione, popup pokazuje konflikt. Wybierz <strong>Wyślij</strong> (lokalne wygrywają, nadpisz zdalne) lub <strong>Pobierz</strong> (zdalne wygrywają, nadpisz lokalne). Nie ma automatycznego scalania dla konfliktów."
   },
@@ -196,6 +253,12 @@
   "help_debugLogTitle": {
     "message": "Dziennik debugowania"
   },
+  "help_densityDesc": {
+    "message": "Użyj przycisków S / M / L w nagłówku, aby przełączać między Kompaktowy, Średni i Duży. Ustawienie dotyczy wszystkich powierzchni rozszerzenia (opcje, popup, wyszukiwanie, zapis Linkwarden) i synchronizuje się między urządzeniami."
+  },
+  "help_densityTitle": {
+    "message": "Gęstość interfejsu"
+  },
   "help_discussions": {
     "message": "Dyskusje"
   },
@@ -209,7 +272,7 @@
     "message": "Generowane pliki"
   },
   "help_gettingStartedIntro": {
-    "message": "Utwórz repozytorium GitHub dla swoich zakładek, a następnie utwórz Personal Access Token (PAT) z zakresem <code>repo</code>. W zakładce GitHub wprowadź token, właściciela repozytorium, nazwę, gałąź (zwykle <code>main</code>) i ścieżkę folderu (domyślnie: <code>bookmarks</code>). Kliknij <strong>Testuj połączenie</strong>, aby zweryfikować."
+    "message": "Utwórz repozytorium Git dla zakładek na <strong>GitHub</strong>, <strong>GitLab</strong>, <strong>Codeberg</strong>, <strong>Gitea</strong>, <strong>Forgejo</strong> lub <strong>Gogs</strong>. W <strong>Git → Połączenie</strong> wybierz dostawcę, wprowadź token dostępu osobistego, właściciela/nazwę repozytorium, gałąź (zwykle <code>main</code>) i ścieżkę folderu (domyślnie: <code>bookmarks</code>). Dostawcy self-hosted wymagają URL serwera; zezwól na dostęp do hosta, gdy zostaniesz poproszony. Kliknij <strong>Test połączenia</strong>, aby zweryfikować."
   },
   "help_gettingStartedTitle": {
     "message": "Pierwsze kroki"
@@ -219,6 +282,36 @@
   },
   "help_githubReposTitle": {
     "message": "Folder GitHub Repos"
+  },
+  "help_headerLangDesc": {
+    "message": "Przycisk języka w nagłówku zmienia język wyświetlania rozszerzenia. Ustawienie jest zapisywane i synchronizowane na wszystkich urządzeniach."
+  },
+  "help_headerLangTitle": {
+    "message": "Język"
+  },
+  "help_historyIntro": {
+    "message": "Każda synchronizacja tworzy commit Git. Możesz przeglądać ostatnie commity w podzakładce Historia (pod Pliki) i przywracać zakładki z wcześniejszej wersji."
+  },
+  "help_historyLoadDesc": {
+    "message": "Pobiera ostatnie 20 commitów dotykających ścieżki zakładek. Nagłówek tabeli opisuje kolumny (data, krótki hash commita, id klienta z wiadomości commita). Najedź na komórkę klienta, aby zobaczyć pełną wiadomość. Każdy wiersz ma ikonę podglądu (lupa) i przywracania."
+  },
+  "help_historyLoadLabel": {
+    "message": "Załaduj historię"
+  },
+  "help_historyRestoreDesc": {
+    "message": "Zastępuje wszystkie lokalne zakładki stanem z tego commita. Na liście kliknij ikonę przywracania, potem ponownie, gdy pojawi się krótkie potwierdzenie (lub pełny tekst w panelu diff). Nie nadpisuje zdalnej gałęzi — aktualne dane zdalne pozostają nienaruszone. Następna synchronizacja wyśle lokalny stan z powrotem."
+  },
+  "help_historyRestoreLabel": {
+    "message": "Przywróć"
+  },
+  "help_historyTitle": {
+    "message": "Historia synchronizacji i cofanie"
+  },
+  "help_historyUndoDesc": {
+    "message": "Cofnięcie jednym kliknięciem do commita sprzed ostatniej synchronizacji, która zmodyfikowała lokalne zakładki. Dostępne po każdym pull lub merge zmieniającym lokalne zakładki."
+  },
+  "help_historyUndoLabel": {
+    "message": "Cofnij ostatnią synchronizację"
   },
   "help_links": {
     "message": "Linki"
@@ -237,6 +330,9 @@
   },
   "help_linkwardenTitle": {
     "message": "Linkwarden"
+  },
+  "help_menuTitle": {
+    "message": "Menu"
   },
   "help_notificationsDesc": {
     "message": "Wybierz, kiedy wyświetlać powiadomienia o synchronizacji: Wszystkie (sukces i błędy), Tylko błędy lub Wył."
@@ -298,6 +394,18 @@
   "help_profilesTitle": {
     "message": "Profile"
   },
+  "help_provider_codeberg": {
+    "message": "<strong>Codeberg</strong> to host Forgejo pod <code>codeberg.org</code>. Wybierz Codeberg jako dostawcę; URL serwera jest ustawiony domyślnie. Utwórz token w Ustawieniach użytkownika → Aplikacje."
+  },
+  "help_provider_forgejo": {
+    "message": "<strong>Forgejo</strong> używa tego samego API co Gitea. Wprowadź URL serwera Forgejo i token dostępu osobistego z Ustawień użytkownika → Aplikacje."
+  },
+  "help_provider_gitlab": {
+    "message": "<strong>GitLab</strong> obsługuje gitlab.com i instancje self-managed. Dla projektów podgrup użyj <code>grupa/podgrupa</code> jako właściciela i nazwy projektu jako repozytorium. Zostaw URL serwera pusty dla GitLab.com."
+  },
+  "help_provider_gogs": {
+    "message": "<strong>Gogs</strong> współdzieli podobne API z Gitea. Wprowadź URL serwera Gogs i token dostępu z Ustawień użytkownika → Aplikacje."
+  },
   "help_quickSync": {
     "message": "Szybka synchronizacja zakładek"
   },
@@ -340,6 +448,12 @@
   "help_themeCycleTitle": {
     "message": "Motyw"
   },
+  "help_transferDesc": {
+    "message": "Użyj <strong>Transfer…</strong> w zakładce Profil, aby skopiować zakładki z jednego profilu do drugiego bez wcześniejszego przełączenia. Typowe: migracja z GitHub do Gitea. Wybierz <strong>Zastąp cel</strong> dla czystej migracji; <strong>Scal w cel</strong> zachowuje istniejące pliki celu i może utworzyć zduplikowane foldery. Po nieudanej migracji użyj <strong>Wyczyść osierocone na zdalnym</strong> w podzakładce Synchronizacja. Lustra w zakładce Połączenie Git wysyłają kopię do zapasowych zdalnych po każdej synchronizacji."
+  },
+  "help_transferTitle": {
+    "message": "Transfer zakładek między profilami"
+  },
   "help_voteBacklogBtn": {
     "message": "Zagłosuj na backlog"
   },
@@ -362,10 +476,13 @@
     "message": "Dlaczego synchronizacja czasami trwa długo?"
   },
   "help_wizardRestartDesc": {
-    "message": "Przewodnik krok po kroku, który pomoże Ci połączyć repozytorium GitHub i wykonać pierwszą synchronizację."
+    "message": "Przewodnik krok po kroku do połączenia repozytorium Git i pierwszej synchronizacji."
   },
   "help_wizardRestartTitle": {
     "message": "Kreator konfiguracji"
+  },
+  "help_wizardSyncChoice": {
+    "message": "W kreatorze konfiguracji <strong>Sprawdź połączenie</strong> tylko weryfikuje dostęp — nie synchronizuje. Następnie wybierasz pull, merge/sync, push, utwórz strukturę folderów lub pomiń, z potwierdzeniem przed zapisem do repozytorium."
   },
   "linkwardenSave_cancelBtn": {
     "message": "Anuluj"
@@ -532,6 +649,18 @@
   "options_chooseFile": {
     "message": "Wybierz plik"
   },
+  "options_cleanOrphansDesc": {
+    "message": "Usuń pliki zakładek na zdalnym, których nie ma w lokalnych zakładkach (aktywny profil). Użyj po nieudanym transferze lub zduplikowanych folderach na serwerze."
+  },
+  "options_cleanOrphansPreview": {
+    "message": "Podgląd osieroconych"
+  },
+  "options_cleanOrphansRun": {
+    "message": "Wyczyść zdalne"
+  },
+  "options_cleanOrphansTitle": {
+    "message": "Wyczyść osierocone na zdalnym"
+  },
   "options_connectionOk": {
     "message": "Połączenie OK! Użytkownik: $1, Repozytorium: $2"
   },
@@ -636,6 +765,18 @@
   },
   "options_decryptError": {
     "message": "Odszyfrowywanie nie powiodło się. Złe hasło?"
+  },
+  "options_densityCompact": {
+    "message": "Kompaktowy"
+  },
+  "options_densityGroupLabel": {
+    "message": "Gęstość interfejsu"
+  },
+  "options_densityLarge": {
+    "message": "Duży"
+  },
+  "options_densityMedium": {
+    "message": "Średni"
   },
   "options_documentation": {
     "message": "Dokumentacja"
@@ -754,6 +895,51 @@
   "options_generatedFilesTitle": {
     "message": "Generowane pliki"
   },
+  "options_gheServerUrlEnabled": {
+    "message": "Użyj własnego URL serwera (GitHub Enterprise)"
+  },
+  "options_gitConnection": {
+    "message": "Połączenie Git"
+  },
+  "options_gitProvider": {
+    "message": "Dostawca Git"
+  },
+  "options_gitProviderGitea": {
+    "message": "Gitea / Forgejo"
+  },
+  "options_gitProviderGithub": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_codeberg": {
+    "message": "Codeberg"
+  },
+  "options_gitProvider_forgejo": {
+    "message": "Forgejo"
+  },
+  "options_gitProvider_gitea": {
+    "message": "Gitea"
+  },
+  "options_gitProvider_github": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_gitlab": {
+    "message": "GitLab"
+  },
+  "options_gitProvider_gogs": {
+    "message": "Gogs"
+  },
+  "options_giteaPermissionDenied": {
+    "message": "Odmowa uprawnienia hosta dla serwera Gitea. Zezwól na dostęp, gdy zostaniesz poproszony, i spróbuj ponownie."
+  },
+  "options_giteaTokenHelpLink": {
+    "message": "Otwórz ustawienia użytkownika Gitea (Aplikacje)"
+  },
+  "options_giteaTokenHintHtml": {
+    "message": "Utwórz token w Gitea w <strong>Ustawieniach użytkownika → Aplikacje</strong> z dostępem do odczytu/zapisu repozytorium. Tokeny Gitea <em>nie</em> są ciągami w stylu GitHub <code>ghp_…</code>."
+  },
+  "options_giteaTokenWizardHelpHtml": {
+    "message": "W Gitea otwórz <strong>Ustawienia użytkownika → Aplikacje → Wygeneruj nowy token</strong>. Włącz odczyt i zapis repozytorium. Skopiuj token — jest pokazywany tylko raz. Tokeny Gitea nie używają prefiksów GitHub jak <code>ghp_</code>."
+  },
   "options_githubConnection": {
     "message": "Połączenie z GitHub"
   },
@@ -786,6 +972,72 @@
   },
   "options_githubReposTitle": {
     "message": "Folder GitHub Repos"
+  },
+  "options_historyColActions": {
+    "message": "Akcje"
+  },
+  "options_historyColClient": {
+    "message": "Klient"
+  },
+  "options_historyColCommit": {
+    "message": "Commit"
+  },
+  "options_historyColDate": {
+    "message": "Data"
+  },
+  "options_historyCurrent": {
+    "message": "bieżący"
+  },
+  "options_historyDesc": {
+    "message": "Przeglądaj ostatnie commity synchronizacji i przywracaj zakładki z wcześniejszej wersji. Przywracanie zmienia tylko lokalne zakładki — nie nadpisuje zdalnej gałęzi."
+  },
+  "options_historyDiffAdded": {
+    "message": "Dodano"
+  },
+  "options_historyDiffChanged": {
+    "message": "Zmieniono"
+  },
+  "options_historyDiffClose": {
+    "message": "Zamknij"
+  },
+  "options_historyDiffLoading": {
+    "message": "Ładowanie podglądu…"
+  },
+  "options_historyDiffNoChanges": {
+    "message": "Brak różnic — ten commit odpowiada twoim bieżącym zakładkom."
+  },
+  "options_historyDiffRemoved": {
+    "message": "Usunięto"
+  },
+  "options_historyEmpty": {
+    "message": "Nie znaleziono commitów."
+  },
+  "options_historyLoadBtn": {
+    "message": "Załaduj historię"
+  },
+  "options_historyPreviewBtn": {
+    "message": "Podgląd"
+  },
+  "options_historyRestoreBtn": {
+    "message": "Przywróć"
+  },
+  "options_historyRestoreConfirmBtn": {
+    "message": "Kliknij ponownie, aby potwierdzić"
+  },
+  "options_historyRestoreConfirmShort": {
+    "message": "Kliknij ponownie"
+  },
+  "options_historyRestoring": {
+    "message": "Przywracanie…"
+  },
+  "options_historyTitle": {
+    "message": "Historia synchronizacji"
+  },
+  "options_historyUndoBtn": {
+    "message": "Cofnij ostatnią synchronizację"
+  },
+  "options_hostPermissionDenied": {
+    "message": "Odmowa uprawnienia hosta dla serwera Git. Zezwól na dostęp, gdy zostaniesz poproszony, i spróbuj ponownie."
   },
   "options_importBookmarks": {
     "message": "Importuj zakładki"
@@ -841,6 +1093,12 @@
   "options_linkwardenApiKey": {
     "message": "Klucz API"
   },
+  "options_linkwardenConnectionFailed": {
+    "message": "Połączenie nieudane: $1"
+  },
+  "options_linkwardenConnectionOk": {
+    "message": "Połączenie udane!"
+  },
   "options_linkwardenDefaultCollection": {
     "message": "Domyślna kolekcja"
   },
@@ -859,11 +1117,17 @@
   "options_linkwardenEnabled": {
     "message": "Włącz Linkwarden"
   },
+  "options_linkwardenHostPermissionDenied": {
+    "message": "Odmowa uprawnienia hosta. Sprawdź pasek adresu lub blokadę wyskakujących okien."
+  },
   "options_linkwardenInstanceUrl": {
     "message": "URL instancji"
   },
   "options_linkwardenIntro": {
     "message": "Skonfiguruj instancję Linkwarden, aby zapisywać zakładki bezpośrednio z menu kontekstowego."
+  },
+  "options_linkwardenInvalidUrlFormat": {
+    "message": "Nieprawidłowy format URL"
   },
   "options_linkwardenSyncEnabled": {
     "message": "Synchronizuj kolekcje z zakładkami"
@@ -894,8 +1158,44 @@
   "options_linkwardenTitle": {
     "message": "Integracja Linkwarden"
   },
+  "options_linkwardenUrlTokenRequired": {
+    "message": "URL i token są wymagane"
+  },
   "options_menu_showAsSubmenu": {
     "message": "Pokaż jako podmenu"
+  },
+  "options_mirrorsAdd": {
+    "message": "+ Dodaj lustro"
+  },
+  "options_mirrorsDesc": {
+    "message": "Kopie tylko push plików zakładek do dodatkowych zdalnych Git po każdej udanej głównej synchronizacji. Bezpośrednie edycje na lustrze są nadpisywane przy następnej synchronizacji."
+  },
+  "options_mirrorsLabel": {
+    "message": "Etykieta"
+  },
+  "options_mirrorsPaused": {
+    "message": "Wstrzymane"
+  },
+  "options_mirrorsPushGenerated": {
+    "message": "Uwzględnij wygenerowane pliki (README, HTML, feed, Dashy)"
+  },
+  "options_mirrorsPushSettings": {
+    "message": "Uwzględnij zaszyfrowane ustawienia"
+  },
+  "options_mirrorsRemove": {
+    "message": "Usuń"
+  },
+  "options_mirrorsStatusError": {
+    "message": "Błąd lustra: $1"
+  },
+  "options_mirrorsStatusOk": {
+    "message": "Ostatni push OK"
+  },
+  "options_mirrorsTest": {
+    "message": "Test"
+  },
+  "options_mirrorsTitle": {
+    "message": "Miejsca docelowe luster"
   },
   "options_mobileAppAlert": {
     "message": "<strong>Uwaga dla użytkowników Androida:</strong> Firefox na Androidzie nie obsługuje bezpośredniej synchronizacji zakładek przez rozszerzenia. Musisz użyć aplikacji towarzyszącej."
@@ -987,6 +1287,9 @@
   "options_onboardingWizardBack": {
     "message": "Wstecz"
   },
+  "options_onboardingWizardCheckConnection": {
+    "message": "Sprawdź połączenie"
+  },
   "options_onboardingWizardCompleted": {
     "message": "Kreator zakończony pomyślnie."
   },
@@ -1036,7 +1339,7 @@
     "message": "Zapisywanie stanu synchronizacji"
   },
   "options_onboardingWizardPhaseUploading": {
-    "message": "Przesyłanie zakładek do GitHub"
+    "message": "Wysyłanie zakładek do zdalnego"
   },
   "options_onboardingWizardRepoCreateFailed": {
     "message": "Nie udało się utworzyć repozytorium tym tokenem/uprawnieniami."
@@ -1068,6 +1371,9 @@
   "options_onboardingWizardStart": {
     "message": "Uruchom kreator konfiguracji"
   },
+  "options_onboardingWizardStartSync": {
+    "message": "Rozpocznij synchronizację"
+  },
   "options_onboardingWizardStepFinishText": {
     "message": "Konfiguracja zakończona. Możesz przejść do standardowych ustawień."
   },
@@ -1080,6 +1386,12 @@
   "options_onboardingWizardStepHasTokenTitle": {
     "message": "Czy masz już token?"
   },
+  "options_onboardingWizardStepProviderText": {
+    "message": "Wybierz GitHub, GitLab, Codeberg, Gitea, Forgejo lub Gogs. Każdy profil przechowuje własnego dostawcę i URL serwera."
+  },
+  "options_onboardingWizardStepProviderTitle": {
+    "message": "Wybierz dostawcę Git"
+  },
   "options_onboardingWizardStepRepoDecisionText": {
     "message": "Wybierz automatyczne utworzenie repozytorium lub użycie istniejącego."
   },
@@ -1091,6 +1403,9 @@
   },
   "options_onboardingWizardStepRepoTitle": {
     "message": "Ustawienia repozytorium"
+  },
+  "options_onboardingWizardStepSyncChoiceText": {
+    "message": "Wybierz sposób synchronizacji, przeczytaj ostrzeżenie i kliknij Rozpocznij synchronizację. Nic nie jest zapisywane w repozytorium, dopóki nie potwierdzisz."
   },
   "options_onboardingWizardStepSyncTextEmpty": {
     "message": "Ścieżka jest pusta. Utwórz strukturę początkową, aby zacząć."
@@ -1114,7 +1429,7 @@
     "message": "Token dostępu"
   },
   "options_onboardingWizardStepValidateText": {
-    "message": "Uruchom test, aby sprawdzić token, repozytorium i dostęp do ścieżki."
+    "message": "Kliknij Sprawdź połączenie, aby zweryfikować token, repozytorium i dostęp do ścieżki. W tym kroku nie uruchamia się synchronizacja."
   },
   "options_onboardingWizardStepValidateTitle": {
     "message": "Test połączenia"
@@ -1125,8 +1440,68 @@
   "options_onboardingWizardStepWelcomeTitle": {
     "message": "Witamy"
   },
+  "options_onboardingWizardSyncConfirmRunBtn": {
+    "message": "Uruchom"
+  },
+  "options_onboardingWizardSyncConfirmSkipBtn": {
+    "message": "Pomiń"
+  },
+  "options_onboardingWizardSyncConfirm_initialize": {
+    "message": "Utworzyć początkową strukturę folderu bookmarks/ w zdalnym repozytorium (bez wysyłania lokalnych zakładek)?"
+  },
+  "options_onboardingWizardSyncConfirm_pull": {
+    "message": "Pobrać $2 zakładek ze zdalnego repozytorium do tej przeglądarki?"
+  },
+  "options_onboardingWizardSyncConfirm_pullOverwriteLocal": {
+    "message": "Pull zastąpi wszystkie $1 lokalne zakładki przez $2 ze zdalnego repozytorium. Kontynuować?"
+  },
+  "options_onboardingWizardSyncConfirm_push": {
+    "message": "Wysłać $1 lokalnych zakładek do zdalnego repozytorium?"
+  },
+  "options_onboardingWizardSyncConfirm_pushDanger": {
+    "message": "Push nadpisze zdalne repozytorium. $2 zdalnych zakładek może zostać usuniętych; pozostanie tylko $1 lokalnych zakładek. Kontynuować?"
+  },
+  "options_onboardingWizardSyncConfirm_skip": {
+    "message": "Pominąć pierwszą synchronizację na razie? Możesz zsynchronizować ręcznie z popupu później."
+  },
+  "options_onboardingWizardSyncConfirm_sync": {
+    "message": "Uruchomić merge/sync między $1 lokalnymi a $2 zdalnymi zakładkami? Może być konieczne rozwiązanie konfliktów później."
+  },
   "options_onboardingWizardSyncInProgress": {
     "message": "Praca w tle, proszę czekać..."
+  },
+  "options_onboardingWizardSyncModeLabel": {
+    "message": "Pierwsza akcja synchronizacji"
+  },
+  "options_onboardingWizardSyncMode_initialize": {
+    "message": "Tylko utwórz strukturę folderów"
+  },
+  "options_onboardingWizardSyncMode_pull": {
+    "message": "Tylko pull (pobierz ze zdalnego)"
+  },
+  "options_onboardingWizardSyncMode_push": {
+    "message": "Tylko push (wyślij lokalne zakładki — nadpisuje zdalne)"
+  },
+  "options_onboardingWizardSyncMode_skip": {
+    "message": "Pomiń na razie"
+  },
+  "options_onboardingWizardSyncMode_sync": {
+    "message": "Merge / sync (zalecane, gdy obie strony mają zakładki)"
+  },
+  "options_onboardingWizardSyncWarn_both": {
+    "message": "Zakładki istnieją po obu stronach. Merge/sync łączy zmiany; pull lub push nadpisuje jedną stronę."
+  },
+  "options_onboardingWizardSyncWarn_emptyBoth": {
+    "message": "Ścieżka zdalna i przeglądarka są puste. Utwórz strukturę folderów lub pomiń i synchronizuj później."
+  },
+  "options_onboardingWizardSyncWarn_localOnly": {
+    "message": "Ścieżka zdalna jest pusta; lokalne zakładki zostaną wysłane przy push."
+  },
+  "options_onboardingWizardSyncWarn_pushDanger": {
+    "message": "Ostrzeżenie: push usunie $1 zdalnych plików zakładek nieobecnych lokalnie i zastąpi repozytorium zakładkami tej przeglądarki."
+  },
+  "options_onboardingWizardSyncWarn_remoteOnly": {
+    "message": "Zdalne ma zakładki; ta przeglądarka jest pusta. Zalecany pull, aby nie nadpisać repozytorium."
   },
   "options_onboardingWizardTitle": {
     "message": "Kreator konfiguracji"
@@ -1158,8 +1533,17 @@
   "options_onboardingWizardTokenValidated": {
     "message": "Token jest poprawny i ma wymagany zakres."
   },
+  "options_ownerHint_gitlab": {
+    "message": "Nazwa użytkownika, grupa lub ścieżka grupa/podgrupa (np. mojagrupa/podgrupa)."
+  },
   "options_ownerPlaceholder": {
     "message": "twoja-nazwa-użytkownika-github"
+  },
+  "options_ownerPlaceholderGitea": {
+    "message": "twoja-nazwa-gitea"
+  },
+  "options_ownerPlaceholder_gitlab": {
+    "message": "użytkownik lub grupa/podgrupa"
   },
   "options_passwordPlaceholder": {
     "message": "Hasło"
@@ -1256,6 +1640,21 @@
   },
   "options_selectFile": {
     "message": "Wybierz plik…"
+  },
+  "options_serverUrl": {
+    "message": "URL serwera"
+  },
+  "options_serverUrlHint": {
+    "message": "Bazowy URL serwera Git (bez sufiksu /api/v1 lub /api/v4)."
+  },
+  "options_serverUrlPlaceholder_github": {
+    "message": "https://github.firma.com"
+  },
+  "options_serverUrlPlaceholder_gitlab": {
+    "message": "https://gitlab.com (zostaw puste dla GitLab.com)"
+  },
+  "options_serverUrlRequired": {
+    "message": "URL serwera jest wymagany dla tego dostawcy."
   },
   "options_settingsCard": {
     "message": "Ustawienia"
@@ -1414,6 +1813,9 @@
   "options_subTabGitAdd": {
     "message": "Git Add"
   },
+  "options_subTabHistory": {
+    "message": "Historia"
+  },
   "options_subTabMenuAdvanced": {
     "message": "Zaawansowane i Bezpieczeństwo"
   },
@@ -1510,17 +1912,56 @@
   "options_themeAuto": {
     "message": "A Auto (systemowy)"
   },
+  "options_themeAutoLabel": {
+    "message": "Auto"
+  },
   "options_themeDark": {
     "message": "☽ Ciemny"
   },
+  "options_themeDarkLabel": {
+    "message": "Ciemny"
+  },
   "options_themeLight": {
     "message": "☀ Jasny"
+  },
+  "options_themeLightLabel": {
+    "message": "Jasny"
   },
   "options_toggleToken": {
     "message": "Pokaż/ukryj token"
   },
   "options_tokenHint": {
     "message": "Wymaga zakresu <code>repo</code> (classic) lub <code>Contents: Read/Write</code> i <code>Metadata: Read</code> (fine-grained). <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Utwórz token</a>"
+  },
+  "options_tokenHintHtml_codeberg": {
+    "message": "Utwórz token na <a href=\"https://codeberg.org/user/settings/applications\" target=\"_blank\" rel=\"noopener\">Codeberg → Ustawienia użytkownika → Aplikacje</a> z dostępem do odczytu/zapisu repozytorium."
+  },
+  "options_tokenHintHtml_forgejo": {
+    "message": "Utwórz token na serwerze Forgejo w <strong>Ustawieniach użytkownika → Aplikacje</strong> z dostępem do odczytu/zapisu repozytorium."
+  },
+  "options_tokenHintHtml_gitea": {
+    "message": "Utwórz token w <strong>Ustawieniach użytkownika → Aplikacje</strong> z dostępem do odczytu/zapisu repozytorium."
+  },
+  "options_tokenHintHtml_gitlab": {
+    "message": "Utwórz token na <a href=\"https://gitlab.com/-/user_settings/personal_access_tokens\" target=\"_blank\" rel=\"noopener\">GitLab → Ustawienia użytkownika → Tokeny dostępu</a> z zakresem <code>api</code> (odczyt/zapis repozytorium)."
+  },
+  "options_tokenHintHtml_gogs": {
+    "message": "Utwórz token na serwerze Gogs w <strong>Ustawieniach użytkownika → Aplikacje</strong> z dostępem do odczytu/zapisu repozytorium."
+  },
+  "options_tokenPlaceholderGitea": {
+    "message": "twoj-token-dostepu-gitea"
+  },
+  "options_tokenPlaceholderGithub": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitea": {
+    "message": "twoj-token-dostepu"
+  },
+  "options_tokenPlaceholder_github": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitlab": {
+    "message": "glpat-xxxxxxxxxxxxxxxxxxxx"
   },
   "options_tokenValidMissingScope": {
     "message": "Token prawidłowy ($1), ale brak zakresu \"repo\"."
@@ -1530,6 +1971,51 @@
   },
   "options_tokenValidSpecifyRepo": {
     "message": "Token prawidłowy! Użytkownik: $1. Podaj repozytorium."
+  },
+  "options_transferApplyLocal": {
+    "message": "Zastosuj w przeglądarce (tylko gdy cel jest aktywny)"
+  },
+  "options_transferCancel": {
+    "message": "Anuluj"
+  },
+  "options_transferDesc": {
+    "message": "Kopiuj zakładki z jednego profilu do drugiego (np. migracja GitHub → Gitea). Nie zmienia przeglądarki, chyba że profil docelowy jest aktywny i wybierzesz zastosowanie lokalne."
+  },
+  "options_transferDuplicateFoldersWarning": {
+    "message": "Zduplikowane nazwy folderów w wyniku transferu (kolizja slug): $1. Scal te foldery w zakładkach profilu źródłowego przed transferem, inaczej duplikaty zostaną skopiowane do zdalnego celu."
+  },
+  "options_transferFolder": {
+    "message": "Folder (opcjonalnie)"
+  },
+  "options_transferFolderHint": {
+    "message": "Ścieżka względna pod folderem repo, np. toolbar/praca. Zostaw puste dla wszystkich zakładek."
+  },
+  "options_transferMergeConfirm": {
+    "message": "Scalić w cel z $1 istniejącym(i) plikiem(ami)? Istniejące zdalne zakładki są zachowane; mogą powstać zduplikowane foldery. Kontynuować?"
+  },
+  "options_transferMergeHint": {
+    "message": "Merge zachowuje wszystkie istniejące pliki celu i dodaje zakładki źródłowe. Może utworzyć zduplikowane foldery (np. ksiazki i ksiazki-2). Dla czystej migracji użyj Zastąp cel."
+  },
+  "options_transferMergeWarning": {
+    "message": "Cel ma już $1 plik(ów) zakładek. Merge zachowuje je wszystkie plus skopiowane pliki źródłowe — zduplikowane foldery są prawdopodobne."
+  },
+  "options_transferMode": {
+    "message": "Tryb"
+  },
+  "options_transferModeMerge": {
+    "message": "Scal w cel"
+  },
+  "options_transferModeReplace": {
+    "message": "Zastąp cel"
+  },
+  "options_transferOpen": {
+    "message": "Transfer…"
+  },
+  "options_transferPreview": {
+    "message": "Podgląd"
+  },
+  "options_transferPreviewResult": {
+    "message": "Źródło: $1 ($2 plików). Cel ma $3 istnieących plików → $4 po transferze."
   },
   "options_transferProgressApplying": {
     "message": "Stosowanie w przeglądarce…"
@@ -1548,6 +2034,36 @@
   },
   "options_transferProgressPreparing": {
     "message": "Przygotowywanie transferu…"
+  },
+  "options_transferPush": {
+    "message": "Push do repozytorium docelowego"
+  },
+  "options_transferReplaceWarning": {
+    "message": "Zastąpienie usunie $1 zdalnych plików nieuwzględnionych w wyniku transferu."
+  },
+  "options_transferRun": {
+    "message": "Transfer"
+  },
+  "options_transferSource": {
+    "message": "Profil źródłowy"
+  },
+  "options_transferSourceBrowser": {
+    "message": "przeglądarka"
+  },
+  "options_transferSourceCache": {
+    "message": "pamięć podręczna"
+  },
+  "options_transferSourceRemote": {
+    "message": "zdalne"
+  },
+  "options_transferTarget": {
+    "message": "Profil docelowy"
+  },
+  "options_transferTargetWarning": {
+    "message": "Ostrzeżenie: cel ma już dane zakładek."
+  },
+  "options_transferTitle": {
+    "message": "Transfer zakładek"
   },
   "options_version": {
     "message": "Wersja"
@@ -1591,8 +2107,14 @@
   "popup_localToGithub": {
     "message": "Lokalne → GitHub"
   },
+  "popup_localToRemote": {
+    "message": "Lokalne → Zdalne"
+  },
   "popup_minAgo": {
     "message": "$1 min temu"
+  },
+  "popup_mirrorStatus": {
+    "message": "Lustro: $1"
   },
   "popup_nextSyncIn": {
     "message": "Następna synchronizacja za $1"
@@ -1614,6 +2136,9 @@
   },
   "popup_ready": {
     "message": "Gotowe"
+  },
+  "popup_remoteToLocal": {
+    "message": "Zdalne → Lokalne"
   },
   "popup_reportIssue": {
     "message": "Zgłoś problem"
@@ -1645,6 +2170,9 @@
   "search_openBtn": {
     "message": "Otwórz"
   },
+  "search_resultsLabel": {
+    "message": "Wyniki wyszukiwania"
+  },
   "search_statusNoResults": {
     "message": "Nie znaleziono zakładek"
   },
@@ -1662,8 +2190,20 @@
   "search_subtitle": {
     "message": "Wyszukuj lokalne zakładki i otwieraj dopasowania w nowej karcie."
   },
+  "search_syncComplete": {
+    "message": "Synchronizacja zakończona"
+  },
+  "search_syncFailed": {
+    "message": "Synchronizacja nieudana: $1"
+  },
+  "search_syncing": {
+    "message": "Synchronizowanie…"
+  },
   "search_title": {
     "message": "Wyszukiwanie zakładek"
+  },
+  "search_unknownError": {
+    "message": "Nieznany błąd"
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – Wyszukiwanie zakładek"
@@ -1698,8 +2238,14 @@
   "sync_conflictRemoteModified": {
     "message": "Wykryto konflikt: Zdalne dane również zostały zmodyfikowane."
   },
+  "sync_loadedFromRemote": {
+    "message": "Załadowano ze zdalnego repozytorium."
+  },
   "sync_noBookmarksOnGithub": {
     "message": "Nie znaleziono zakładek na GitHub."
+  },
+  "sync_noBookmarksOnRemote": {
+    "message": "Nie znaleziono zakładek w zdalnym repozytorium."
   },
   "sync_noChanges": {
     "message": "Brak zmian od ostatniej synchronizacji."
@@ -1734,7 +2280,37 @@
   "sync_pushSuccess": {
     "message": "Zakładki pomyślnie wysłane na GitHub."
   },
+  "sync_remoteChangedRetry": {
+    "message": "Zdalne właśnie się zmienia. Spróbuj zsynchronizować ponownie za chwilę."
+  },
   "sync_syncFailed": {
     "message": "Synchronizacja nie powiodła się: $1"
+  },
+  "transfer_commitMessage": {
+    "message": "Transfer zakładek z profilu $1"
+  },
+  "transfer_connectionLost": {
+    "message": "Utracono połączenie transferu. Odśwież stronę opcji i spróbuj ponownie."
+  },
+  "transfer_mergeConflicts": {
+    "message": "Merge zablokowany: $1 konflikt(ów) ścieżki. Rozwiąż nakładające się pliki lub użyj trybu Zastąp."
+  },
+  "transfer_noBookmarks": {
+    "message": "Brak plików zakładek do transferu"
+  },
+  "transfer_profileNotFound": {
+    "message": "Nie znaleziono profilu"
+  },
+  "transfer_sameProfile": {
+    "message": "Źródło i cel muszą być różnymi profilami"
+  },
+  "transfer_success": {
+    "message": "Przeniesiono $1 plik(ów) zakładek"
+  },
+  "whatsnew_close": {
+    "message": "Zamknij"
+  },
+  "whatsnew_title": {
+    "message": "Co nowego w GitSyncMarks $1"
   }
 }

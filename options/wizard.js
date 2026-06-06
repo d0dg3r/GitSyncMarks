@@ -11,8 +11,17 @@ import {
   providerNeedsHostPermission,
   renderProviderOptions,
 } from '../lib/provider-ui.js';
-import { checkPathSetup, waitForRemoteBaseline } from '../lib/onboarding.js';
+import { checkPathSetup, initializeRemoteFolder, waitForRemoteBaseline } from '../lib/onboarding.js';
 import { formatSyncProgress, runSyncPortAction } from '../lib/sync-progress.js';
+import {
+  buildWizardSyncOptions,
+  countLocalBookmarks,
+  countRemoteBookmarks,
+  fetchRemoteBookmarkState,
+  remoteHasBookmarkPayload,
+  wizardSyncConfirmKey,
+  wizardSyncModeLabelKey,
+} from '../lib/wizard-sync-choice.js';
 
 let _saveSettings = null;
 
@@ -68,6 +77,9 @@ const connectionPathInitGroup = document.getElementById('connection-path-init-gr
 const connectionPathInitBtn = document.getElementById('connection-path-init-btn');
 const connectionPathInitHint = document.getElementById('connection-path-init-hint');
 const validateBtn = document.getElementById('validate-btn');
+const onboardingWizardSyncChoiceGroup = document.getElementById('onboarding-wizard-sync-choice-group');
+const onboardingWizardSyncModeSelect = document.getElementById('onboarding-wizard-sync-mode');
+const onboardingWizardSyncWarningEl = document.getElementById('onboarding-wizard-sync-warning');
 
 export const WIZARD_STEPS = ['welcome', 'provider', 'tokenHelp', 'hasToken', 'tokenInput', 'repoDecision', 'repoDetails', 'environment', 'finish'];
 export const wizardState = {
@@ -78,6 +90,8 @@ export const wizardState = {
   tokenValidated: false,
   environmentChecked: false,
   pathStatus: null,
+  remoteBookmarkCount: 0,
+  localBookmarkCount: 0,
   username: '',
   repoRef: '',
   firstSyncDone: false,
@@ -91,6 +105,8 @@ function resetWizardState() {
   wizardState.tokenValidated = false;
   wizardState.environmentChecked = false;
   wizardState.pathStatus = null;
+  wizardState.remoteBookmarkCount = 0;
+  wizardState.localBookmarkCount = 0;
   wizardState.username = '';
   wizardState.repoRef = '';
   wizardState.firstSyncDone = false;
@@ -276,11 +292,11 @@ function wizardStepText(stepKey) {
       };
     case 'environment':
       return {
-        title: getMessage('options_onboardingWizardStepValidateTitle'),
+        title: wizardState.environmentChecked
+          ? getMessage('options_onboardingWizardStepSyncTitle')
+          : getMessage('options_onboardingWizardStepValidateTitle'),
         text: wizardState.environmentChecked
-          ? (wizardState.pathStatus === 'hasBookmarks'
-            ? getMessage('options_onboardingWizardStepSyncTextExisting')
-            : getMessage('options_onboardingWizardStepSyncTextEmpty'))
+          ? getMessage('options_onboardingWizardStepSyncChoiceText')
           : getMessage('options_onboardingWizardStepValidateText'),
       };
     default:
@@ -301,9 +317,15 @@ export function renderOnboardingWizardStep() {
 
   onboardingWizardBackBtn.disabled = wizardState.stepIndex === 0;
   onboardingWizardSkipBtn.style.display = stepKey === 'finish' ? 'none' : '';
-  onboardingWizardNextBtn.textContent = stepKey === 'finish'
-    ? getMessage('options_onboardingWizardFinish')
-    : getMessage('options_onboardingWizardNext');
+  if (stepKey === 'finish') {
+    onboardingWizardNextBtn.textContent = getMessage('options_onboardingWizardFinish');
+  } else if (stepKey === 'environment' && wizardState.environmentChecked && !wizardState.firstSyncDone) {
+    onboardingWizardNextBtn.textContent = getMessage('options_onboardingWizardStartSync');
+  } else if (stepKey === 'environment' && !wizardState.environmentChecked) {
+    onboardingWizardNextBtn.textContent = getMessage('options_onboardingWizardCheckConnection');
+  } else {
+    onboardingWizardNextBtn.textContent = getMessage('options_onboardingWizardNext');
+  }
 
   onboardingWizardTokenHelp.style.display = stepKey === 'tokenHelp' ? '' : 'none';
   onboardingWizardProviderGroup.style.display = stepKey === 'provider' ? '' : 'none';
@@ -314,9 +336,168 @@ export function renderOnboardingWizardStep() {
   onboardingWizardTokenGroup.style.display = stepKey === 'tokenInput' ? '' : 'none';
   onboardingWizardRepoFlowGroup.style.display = stepKey === 'repoDecision' ? '' : 'none';
   onboardingWizardRepoGroup.style.display = stepKey === 'repoDetails' ? '' : 'none';
+  const showSyncChoice = stepKey === 'environment' && wizardState.environmentChecked && !wizardState.firstSyncDone;
+  if (onboardingWizardSyncChoiceGroup) {
+    onboardingWizardSyncChoiceGroup.style.display = showSyncChoice ? '' : 'none';
+  }
+  if (showSyncChoice) {
+    populateWizardSyncModeSelect();
+  }
   wizardStatusEl.style.display = 'none';
 
   onboardingWizardActionBtn.style.display = 'none';
+}
+
+function populateWizardSyncModeSelect() {
+  if (!onboardingWizardSyncModeSelect) return;
+  const { modes, defaultMode, warningKey } = buildWizardSyncOptions(
+    wizardState.pathStatus,
+    wizardState.localBookmarkCount,
+    wizardState.remoteBookmarkCount
+  );
+  const previous = onboardingWizardSyncModeSelect.value;
+  onboardingWizardSyncModeSelect.innerHTML = '';
+  for (const mode of modes) {
+    const opt = document.createElement('option');
+    opt.value = mode;
+    opt.textContent = getMessage(wizardSyncModeLabelKey(mode)) || mode;
+    onboardingWizardSyncModeSelect.appendChild(opt);
+  }
+  onboardingWizardSyncModeSelect.value = modes.includes(previous) ? previous : defaultMode;
+  updateWizardSyncWarning();
+}
+
+function updateWizardSyncWarning() {
+  if (!onboardingWizardSyncWarningEl || !onboardingWizardSyncModeSelect) return;
+  const { warningKey } = buildWizardSyncOptions(
+    wizardState.pathStatus,
+    wizardState.localBookmarkCount,
+    wizardState.remoteBookmarkCount
+  );
+  const mode = onboardingWizardSyncModeSelect.value;
+  let text = getMessage(warningKey) || '';
+  if (mode === 'push' && remoteHasBookmarkPayload(wizardState.pathStatus, wizardState.remoteBookmarkCount)) {
+    text = getMessage(
+      'options_onboardingWizardSyncWarn_pushDanger',
+      [String(wizardState.remoteBookmarkCount)]
+    ) || text;
+    onboardingWizardSyncWarningEl.classList.add('danger');
+  } else {
+    onboardingWizardSyncWarningEl.classList.remove('danger');
+  }
+  onboardingWizardSyncWarningEl.textContent = text;
+}
+
+function getSelectedWizardSyncMode() {
+  return onboardingWizardSyncModeSelect?.value || buildWizardSyncOptions(
+    wizardState.pathStatus,
+    wizardState.localBookmarkCount,
+    wizardState.remoteBookmarkCount
+  ).defaultMode;
+}
+
+async function confirmWizardSyncAction(mode) {
+  const confirmKey = wizardSyncConfirmKey(
+    mode,
+    wizardState.localBookmarkCount,
+    wizardState.remoteBookmarkCount
+  );
+  const body = getMessage(
+    confirmKey,
+    [String(wizardState.localBookmarkCount), String(wizardState.remoteBookmarkCount)]
+  );
+  const yesLabel = mode === 'skip'
+    ? getMessage('options_onboardingWizardSyncConfirmSkipBtn')
+    : getMessage('options_onboardingWizardSyncConfirmRunBtn');
+  const confirmed = await showOnboardingConfirm(body, yesLabel);
+  hideOnboardingConfirm();
+  return confirmed;
+}
+
+async function assertSafeWizardPush(api, basePath) {
+  const fresh = await fetchRemoteBookmarkState(api, basePath, checkPathSetup);
+  wizardState.pathStatus = fresh.status;
+  wizardState.remoteBookmarkCount = fresh.remoteCount;
+  if (remoteHasBookmarkPayload(fresh.status, fresh.remoteCount)) {
+    return fresh;
+  }
+  return fresh;
+}
+
+async function executeWizardSyncAction(mode) {
+  syncWizardFieldsToConnectionForm();
+  await _saveSettings();
+  const fields = getWizardConnectionFields();
+  const basePath = onboardingWizardPathInput.value.trim() || 'bookmarks';
+  const api = createConnectionApi(fields);
+  const connection = getConnectionFormFieldsFromPage();
+  const onProgress = (payload) => {
+    onboardingWizardHint.textContent = formatSyncProgress(payload);
+  };
+
+  wizardStatusEl.style.display = 'flex';
+  setWizardBusy(true, getMessage('popup_syncing'));
+
+  try {
+    if (mode === 'skip') {
+      return true;
+    }
+    if (mode === 'pull') {
+      const pullResult = await runSyncPortAction('pull', {}, onProgress);
+      if (!pullResult?.success) {
+        setWizardResult(pullResult?.message || 'Pull failed', 'error');
+        return false;
+      }
+      setWizardResult(getMessage('options_onboardingPullSuccess'), 'success');
+      return true;
+    }
+    if (mode === 'sync') {
+      const syncResult = await runSyncPortAction('bootstrapFirstSync', { connection }, onProgress);
+      if (!syncResult?.success) {
+        setWizardResult(syncResult?.message || 'Sync failed', 'error');
+        return false;
+      }
+      setWizardResult(syncResult.message || getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
+      return true;
+    }
+    if (mode === 'push') {
+      await assertSafeWizardPush(api, basePath);
+      const pushResult = await runSyncPortAction('push', {}, onProgress);
+      if (!pushResult?.success) {
+        setWizardResult(pushResult?.message || 'Push failed', 'error');
+        return false;
+      }
+      setWizardResult(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
+      return true;
+    }
+    if (mode === 'initialize') {
+      if (onboardingWizardRepoFlowSelect.value === 'autoCreate') {
+        await waitForRemoteBaseline(api);
+      }
+      await initializeRemoteFolder(api, basePath);
+      setWizardResult(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
+      return true;
+    }
+    return false;
+  } finally {
+    setWizardBusy(false);
+  }
+}
+
+async function runWizardSyncWithChoice() {
+  if (!wizardState.environmentChecked) {
+    setWizardResult(getMessage('options_onboardingWizardNeedAction'), 'error');
+    return false;
+  }
+  const mode = getSelectedWizardSyncMode();
+  if (!(await confirmWizardSyncAction(mode))) {
+    return false;
+  }
+  const ok = await executeWizardSyncAction(mode);
+  if (ok) {
+    wizardState.firstSyncDone = true;
+  }
+  return ok;
 }
 
 export function showOnboardingConfirm(message, yesButtonLabel) {
@@ -607,23 +788,12 @@ async function runWizardEnvironmentCheck() {
 
   wizardState.repoRef = `${fields.owner}/${fields.repo}`;
   wizardState.pathStatus = pathCheck.status;
+  wizardState.remoteBookmarkCount = countRemoteBookmarks(pathCheck.fileMap);
+  wizardState.localBookmarkCount = await countLocalBookmarks();
   wizardState.firstSyncDone = false;
-  if (onboardingWizardRepoFlowSelect.value === 'autoCreate' && pathCheck.status !== 'hasBookmarks') {
-    setWizardBusy(true, getMessage('popup_syncing'));
-    try {
-      await waitForRemoteBaseline(api);
-      await initializePathAndRunFirstPush((payload) => {
-        onboardingWizardHint.textContent = formatSyncProgress(payload);
-      });
-    } finally {
-      setWizardBusy(false);
-    }
-    wizardState.firstSyncDone = true;
-    setWizardResult(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
-  } else {
-    setWizardResult(getMessage('options_onboardingWizardEnvironmentChecked'), 'success');
-  }
   wizardState.environmentChecked = true;
+  setWizardResult(getMessage('options_onboardingWizardEnvironmentChecked'), 'success');
+  renderOnboardingWizardStep();
   return true;
 }
 
@@ -659,67 +829,25 @@ function startProgressPulse(messages, msPerStep = 3000) {
   return () => clearInterval(id);
 }
 
-async function runWizardSyncAction() {
-  if (!wizardState.environmentChecked) {
-    setWizardResult(getMessage('options_onboardingWizardNeedAction'), 'error');
-    return false;
+async function confirmConnectionPathInit(api, basePath) {
+  const pathCheck = await checkPathSetup(api, basePath);
+  if (pathCheck.status === 'hasBookmarks') {
+    return { proceed: false, reason: getMessage('options_onboardingInitPathAlreadyExists', [basePath]) };
   }
-  const fields = getWizardConnectionFields();
-  const basePath = onboardingWizardPathInput.value.trim() || 'bookmarks';
-  const api = createConnectionApi(fields);
-
-  wizardStatusEl.style.display = 'flex';
-
-  if (wizardState.pathStatus === 'hasBookmarks') {
-    setWizardBusy(true, getMessage('popup_syncing'));
-    try {
-      const pullResult = await runSyncPortAction('pull', {}, (payload) => {
-        onboardingWizardHint.textContent = formatSyncProgress(payload);
-      });
-      setWizardBusy(false);
-      if (!pullResult?.success) {
-        setWizardResult(pullResult?.message || 'Pull failed', 'error');
-        return false;
-      }
-      setWizardResult(getMessage('options_onboardingPullSuccess'), 'success');
-      wizardState.firstSyncDone = true;
-      return true;
-    } catch (err) {
-      setWizardBusy(false);
-      throw err;
-    }
+  const remoteCount = countRemoteBookmarks(pathCheck.fileMap);
+  const localCount = await countLocalBookmarks();
+  const { defaultMode } = buildWizardSyncOptions(pathCheck.status, localCount, remoteCount);
+  const mode = localCount > 0 ? 'push' : defaultMode;
+  const confirmKey = wizardSyncConfirmKey(mode, localCount, remoteCount);
+  const confirmed = await showOnboardingConfirm(
+    getMessage(confirmKey, [String(localCount), String(remoteCount)]),
+    getMessage('options_onboardingWizardSyncConfirmRunBtn')
+  );
+  hideOnboardingConfirm();
+  if (!confirmed) {
+    return { proceed: false, reason: null };
   }
-
-  setWizardBusy(true, getMessage('popup_syncing'));
-
-  let bookmarkCount = 0;
-  let estSec = null;
-  try {
-    const tree = await chrome.bookmarks.getTree();
-    const countNodes = (nodes) => nodes.reduce((n, node) =>
-      n + (node.url ? 1 : 0) + (node.children ? countNodes(node.children) : 0), 0);
-    bookmarkCount = countNodes(tree);
-    estSec = Math.round(bookmarkCount / 5) + 5;
-  } catch (_) { /* non-fatal */ }
-
-  const syncStart = Date.now();
-  try {
-    await initializePathAndRunFirstPush((payload) => {
-      onboardingWizardHint.textContent = formatSyncProgress(payload);
-    });
-    setWizardBusy(false);
-    const actualSec = ((Date.now() - syncStart) / 1000).toFixed(1);
-    console.log(
-      `[GitSyncMarks] Onboarding sync done — bookmarks: ${bookmarkCount}, ` +
-      `estimated: ${estSec != null ? estSec + 's' : 'n/a'}, actual: ${actualSec}s`
-    );
-    setWizardResult(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
-    wizardState.firstSyncDone = true;
-    return true;
-  } catch (err) {
-    setWizardBusy(false);
-    throw err;
-  }
+  return { proceed: true, mode, pathCheck };
 }
 
 export function showValidation(message, type) {
@@ -751,18 +879,33 @@ export function initWizard({ saveSettings }) {
     }
 
     connectionPathInitBtn.disabled = true;
-    showValidation(getMessage('popup_syncing'), 'loading');
     try {
       const api = createConnectionApi(fields);
-      const pathCheck = await checkPathSetup(api, basePath);
-      if (pathCheck.status === 'hasBookmarks') {
-        hideConnectionPathInitAction();
-        showValidation(getMessage('options_onboardingInitPathAlreadyExists', [basePath]), 'success');
+      const gate = await confirmConnectionPathInit(api, basePath);
+      if (!gate.proceed) {
+        if (gate.reason) {
+          hideConnectionPathInitAction();
+          showValidation(gate.reason, 'success');
+        }
         return;
       }
-      await initializePathAndRunFirstPush((payload) => {
-        showValidation(formatSyncProgress(payload), 'loading');
-      });
+      showValidation(getMessage('popup_syncing'), 'loading');
+      if (gate.mode === 'initialize') {
+        await initializeRemoteFolder(api, basePath);
+      } else if (gate.mode === 'push') {
+        await assertSafeWizardPush(api, basePath);
+        const pushResult = await runSyncPortAction('push', {}, (payload) => {
+          showValidation(formatSyncProgress(payload), 'loading');
+        });
+        if (!pushResult?.success) {
+          showValidation(pushResult?.message || 'Push failed', 'error');
+          return;
+        }
+      } else {
+        await initializePathAndRunFirstPush((payload) => {
+          showValidation(formatSyncProgress(payload), 'loading');
+        });
+      }
       hideConnectionPathInitAction();
       showValidation(getMessage('options_onboardingInitPathSuccess', [basePath]), 'success');
     } catch (err) {
@@ -771,6 +914,8 @@ export function initWizard({ saveSettings }) {
       connectionPathInitBtn.disabled = false;
     }
   });
+
+  onboardingWizardSyncModeSelect?.addEventListener('change', updateWizardSyncWarning);
 
   onboardingWizardStartBtn.addEventListener('click', async () => {
     await startOnboardingWizard({ manual: true });
@@ -786,7 +931,12 @@ export function initWizard({ saveSettings }) {
   onboardingWizardBackBtn.addEventListener('click', () => {
     if (!wizardState.active) return;
     if (wizardState.stepIndex > 0) {
+      const leavingEnvironment = WIZARD_STEPS[wizardState.stepIndex] === 'environment';
       wizardState.stepIndex -= 1;
+      if (leavingEnvironment) {
+        wizardState.environmentChecked = false;
+        wizardState.firstSyncDone = false;
+      }
       renderOnboardingWizardStep();
     }
   });
@@ -802,7 +952,9 @@ export function initWizard({ saveSettings }) {
     const shouldShowBusy = stepKey === 'tokenInput' || stepKey === 'environment';
     if (shouldShowBusy) {
       const loadingMsg = stepKey === 'environment'
-        ? getMessage('options_onboardingWizardSyncInProgress')
+        ? (wizardState.environmentChecked
+          ? getMessage('options_onboardingWizardSyncInProgress')
+          : getMessage('options_checking'))
         : getMessage('options_checking');
       setWizardBusy(true, loadingMsg);
     } else {
@@ -816,8 +968,8 @@ export function initWizard({ saveSettings }) {
       if (stepKey === 'environment') {
         if (!wizardState.environmentChecked) {
           await runWizardEnvironmentCheck();
-        } else {
-          await runWizardSyncAction();
+        } else if (!wizardState.firstSyncDone) {
+          await runWizardSyncWithChoice();
         }
         return;
       }
@@ -838,7 +990,9 @@ export function initWizard({ saveSettings }) {
     const shouldShowBusy = stepKey === 'tokenInput' || stepKey === 'environment';
     if (shouldShowBusy) {
       const loadingMsg = stepKey === 'environment'
-        ? getMessage('options_onboardingWizardSyncInProgress')
+        ? (wizardState.environmentChecked
+          ? getMessage('options_onboardingWizardSyncInProgress')
+          : getMessage('options_checking'))
         : getMessage('options_checking');
       setWizardBusy(true, loadingMsg);
     } else {
@@ -873,9 +1027,10 @@ export function initWizard({ saveSettings }) {
         if (!wizardState.environmentChecked) {
           const checked = await runWizardEnvironmentCheck();
           if (!checked) return;
+          return;
         }
         if (!wizardState.firstSyncDone) {
-          const synced = await runWizardSyncAction();
+          const synced = await runWizardSyncWithChoice();
           if (!synced) return;
         }
       }

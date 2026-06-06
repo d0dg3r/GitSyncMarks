@@ -120,6 +120,12 @@
         <input type="text" id="onboarding-wizard-path" placeholder="bookmarks" value="bookmarks">
       </div>
 
+      <div id="onboarding-wizard-sync-choice-group" class="onboarding-wizard-section onboarding-wizard-sync-choice" style="display: none;">
+        <label for="onboarding-wizard-sync-mode" data-i18n="options_onboardingWizardSyncModeLabel">First sync action</label>
+        <select id="onboarding-wizard-sync-mode"></select>
+        <p id="onboarding-wizard-sync-warning" class="onboarding-wizard-sync-warning" role="status"></p>
+      </div>
+
       <div class="onboarding-wizard-actions">
         <button type="button" id="onboarding-wizard-action-btn" class="btn btn-secondary btn-sm"
           style="display: none;"></button>
@@ -1060,6 +1066,7 @@
           <p data-i18n="help_cleanOrphansDesc">On the Sync sub-tab, preview and remove remote bookmark files that are not in your local bookmarks (active profile). Useful after duplicate folders from a merge transfer.</p>
           <p data-i18n="help_onboarding">If the folder is empty, you can create the base structure (toolbar, other). If
             bookmarks already exist in the repo, you can pull them into this browser.</p>
+          <p data-i18n="help_wizardSyncChoice">In the setup wizard, Check connection only validates access — it does not sync. You then choose pull, merge/sync, push, create folder structure, or skip, with a confirmation before anything is written to the repository.</p>
           <h3 data-i18n="options_gitProvider">Git providers</h3>
           <p data-i18n-html="help_provider_forgejo">Forgejo help.</p>
           <p data-i18n-html="help_provider_codeberg">Codeberg help.</p>

@@ -17,8 +17,41 @@
   "api_invalidToken": {
     "message": "Token inválido. Comprueba tu Personal Access Token."
   },
+  "api_listCommitsFailed": {
+    "message": "Error al listar commits (HTTP $1)."
+  },
+  "api_networkError": {
+    "message": "Error de red. Comprueba tu conexión a Internet e inténtalo de nuevo."
+  },
   "api_rateLimitExceeded": {
     "message": "Límite de la API de GitHub superado. Por favor espera un momento."
+  },
+  "api_treeTruncated": {
+    "message": "El repositorio es demasiado grande para leerlo en una solicitud (GitHub truncó el árbol de archivos). La sincronización se detuvo para evitar pérdida de datos."
+  },
+  "cleanOrphans_commitMessage": {
+    "message": "Eliminar archivos de marcadores huérfanos no presentes localmente"
+  },
+  "cleanOrphans_confirm": {
+    "message": "¿Eliminar $1 archivo(s) huérfano(s) en $2 carpeta(s) de nivel superior del remoto? Los marcadores locales no cambian. No se puede deshacer desde GitSyncMarks (usa el historial de Git para restaurar)."
+  },
+  "cleanOrphans_noLocalBaseline": {
+    "message": "No hay base local de marcadores para este perfil. Cambia al perfil y sincroniza una vez, o usa Limpiar remoto en el perfil activo."
+  },
+  "cleanOrphans_none": {
+    "message": "No hay archivos de marcadores huérfanos en el remoto."
+  },
+  "cleanOrphans_previewFailed": {
+    "message": "No se pudo previsualizar los huérfanos remotos."
+  },
+  "cleanOrphans_previewResult": {
+    "message": "Se eliminarían $1 archivo(s) huérfano(s) en $2 carpeta(s) de nivel superior."
+  },
+  "cleanOrphans_remoteFetchFailed": {
+    "message": "No se pudo leer el repositorio remoto: $1"
+  },
+  "cleanOrphans_success": {
+    "message": "Se eliminaron $1 archivo(s) huérfano(s) de $2 carpeta(s) de nivel superior en el remoto."
   },
   "commands_openOptions": {
     "message": "Abrir configuración de la extensión"
@@ -82,6 +115,24 @@
   "contextMenu_notifFolderMissing": {
     "message": "La carpeta seleccionada ya no existe. Actualice la configuración de carpetas rápidas."
   },
+  "contextMenu_notifLinkwardenError": {
+    "message": "Error de Linkwarden: $1"
+  },
+  "contextMenu_notifLinkwardenGrantPermissions": {
+    "message": "Concede permisos mediante «Probar conexión» en Opciones"
+  },
+  "contextMenu_notifLinkwardenNotConfigured": {
+    "message": "Linkwarden no configurado"
+  },
+  "contextMenu_notifLinkwardenSaved": {
+    "message": "Enlace guardado en Linkwarden"
+  },
+  "contextMenu_notifLinkwardenSavedWithScreenshot": {
+    "message": "Enlace y captura guardados en Linkwarden"
+  },
+  "contextMenu_notifLinkwardenUrlInvalid": {
+    "message": "La URL de Linkwarden no es válida"
+  },
   "contextMenu_notifNoFavicon": {
     "message": "No hay favicon disponible para esta página"
   },
@@ -137,10 +188,10 @@
     "message": "Sincronizar ahora"
   },
   "extDescription": {
-    "message": "Sincronización de marcadores vía GitHub. Sinergia Linkwarden, búsqueda inteligente y app complementaria. Directo, seguro y privado."
+    "message": "Sincronización de marcadores vía GitHub, GitLab, Codeberg, Gitea y más. Linkwarden, búsqueda inteligente, app complementaria. Directo, seguro y privado."
   },
   "extDescriptionFirefox": {
-    "message": "Sincronización de marcadores vía GitHub. Sinergia Linkwarden, búsqueda inteligente y asistente de configuración. Bidireccional y seguro. Soporte nativo de Firefox."
+    "message": "Sincronización de marcadores vía GitHub, GitLab, Codeberg, Gitea y más. Linkwarden, búsqueda inteligente, asistente de configuración. Bidireccional, seguro y privado. Soporte completo en Firefox. Sin intermediarios."
   },
   "extName": {
     "message": "GitSyncMarks"
@@ -175,6 +226,12 @@
   "help_backupTitle": {
     "message": "Copia de seguridad"
   },
+  "help_cleanOrphansDesc": {
+    "message": "En la subpestaña Sincronización, previsualiza y elimina archivos de marcadores remotos que no están en tus marcadores locales (perfil activo). Útil tras carpetas duplicadas por una transferencia con fusión."
+  },
+  "help_cleanOrphansTitle": {
+    "message": "Limpiar huérfanos remotos"
+  },
   "help_conflictDesc": {
     "message": "Si local y remoto cambiaron, el popup muestra un conflicto. Elige <strong>Push</strong> (local gana) o <strong>Pull</strong> (remoto gana). No hay fusión automática."
   },
@@ -196,6 +253,12 @@
   "help_debugLogTitle": {
     "message": "Registro de depuración"
   },
+  "help_densityDesc": {
+    "message": "Usa los botones S / M / L del encabezado para cambiar entre Compacto, Mediano y Grande. El ajuste se aplica a todas las superficies de la extensión (opciones, popup, búsqueda, guardar en Linkwarden) y se sincroniza entre dispositivos."
+  },
+  "help_densityTitle": {
+    "message": "Densidad de la interfaz"
+  },
   "help_discussions": {
     "message": "Discusiones"
   },
@@ -209,7 +272,7 @@
     "message": "Archivos generados"
   },
   "help_gettingStartedIntro": {
-    "message": "Crea un repositorio GitHub para tus marcadores y un Personal Access Token (PAT) con el scope <code>repo</code> (classic) o <code>Contents: Read/Write</code> y <code>Metadata: Read</code> (fine-grained). En la pestaña GitHub, introduce token, propietario, nombre del repositorio, rama (normalmente <code>main</code>) y la ruta del directorio (por defecto: <code>bookmarks</code>). Haz clic en <strong>Probar conexión</strong> para verificar."
+    "message": "Crea un repositorio Git para tus marcadores en <strong>GitHub</strong>, <strong>GitLab</strong>, <strong>Codeberg</strong>, <strong>Gitea</strong>, <strong>Forgejo</strong> o <strong>Gogs</strong>. En <strong>Git → Conexión</strong>, elige tu proveedor, introduce un token de acceso personal, propietario/nombre del repositorio, rama (normalmente <code>main</code>) y ruta de carpeta (predeterminado: <code>bookmarks</code>). Los proveedores autoalojados necesitan una URL de servidor; permite el acceso al host cuando se solicite. Haz clic en <strong>Probar conexión</strong> para verificar."
   },
   "help_gettingStartedTitle": {
     "message": "Primeros pasos"
@@ -219,6 +282,36 @@
   },
   "help_githubReposTitle": {
     "message": "Carpeta de repos GitHub"
+  },
+  "help_headerLangDesc": {
+    "message": "El botón de idioma del encabezado cambia el idioma de visualización de la extensión. El ajuste se guarda y se sincroniza en todos tus dispositivos."
+  },
+  "help_headerLangTitle": {
+    "message": "Idioma"
+  },
+  "help_historyIntro": {
+    "message": "Cada sincronización crea un commit de Git. Puedes explorar commits recientes en la subpestaña Historial (bajo Archivos) y restaurar marcadores de una versión anterior."
+  },
+  "help_historyLoadDesc": {
+    "message": "Obtiene los últimos 20 commits que tocaron tu ruta de marcadores. El encabezado de la tabla etiqueta las columnas (fecha, hash corto del commit, id de cliente del mensaje del commit). Pasa el cursor sobre la celda del cliente para ver el mensaje completo. Cada fila tiene un icono de vista previa (lupa) y uno de restaurar."
+  },
+  "help_historyLoadLabel": {
+    "message": "Cargar historial"
+  },
+  "help_historyRestoreDesc": {
+    "message": "Reemplaza todos los marcadores locales con el estado de ese commit. En la lista, haz clic en el icono de restaurar y luego de nuevo cuando muestre la confirmación corta (o el texto completo en el panel de diff). No reescribe la rama remota — tus datos remotos actuales permanecen intactos. La próxima sincronización volverá a subir el estado local."
+  },
+  "help_historyRestoreLabel": {
+    "message": "Restaurar"
+  },
+  "help_historyTitle": {
+    "message": "Historial de sincronización y deshacer"
+  },
+  "help_historyUndoDesc": {
+    "message": "Reversión con un clic al commit anterior a la última sincronización que modificó los marcadores locales. Disponible tras cualquier pull o fusión que modificara los marcadores locales."
+  },
+  "help_historyUndoLabel": {
+    "message": "Deshacer última sincronización"
   },
   "help_links": {
     "message": "Enlaces"
@@ -237,6 +330,9 @@
   },
   "help_linkwardenTitle": {
     "message": "Linkwarden"
+  },
+  "help_menuTitle": {
+    "message": "Menú"
   },
   "help_notificationsDesc": {
     "message": "Elegir cuándo mostrar notificaciones: Todas, Solo errores u Off."
@@ -298,6 +394,18 @@
   "help_profilesTitle": {
     "message": "Perfiles"
   },
+  "help_provider_codeberg": {
+    "message": "<strong>Codeberg</strong> es un host Forgejo en <code>codeberg.org</code>. Selecciona Codeberg como proveedor; la URL del servidor está predefinida. Crea un token en Configuración de usuario → Aplicaciones."
+  },
+  "help_provider_forgejo": {
+    "message": "<strong>Forgejo</strong> usa la misma API que Gitea. Introduce la URL de tu servidor Forgejo y un token de acceso personal desde Configuración de usuario → Aplicaciones."
+  },
+  "help_provider_gitlab": {
+    "message": "<strong>GitLab</strong> admite gitlab.com e instancias autogestionadas. Para proyectos de subgrupo, usa <code>grupo/subgrupo</code> como propietario y el nombre del proyecto como repositorio. Deja la URL del servidor vacía para GitLab.com."
+  },
+  "help_provider_gogs": {
+    "message": "<strong>Gogs</strong> comparte una API similar a Gitea. Introduce la URL de tu servidor Gogs y un token de acceso desde Configuración de usuario → Aplicaciones."
+  },
   "help_quickSync": {
     "message": "Sincronizar marcadores rápidamente"
   },
@@ -340,6 +448,12 @@
   "help_themeCycleTitle": {
     "message": "Tema"
   },
+  "help_transferDesc": {
+    "message": "Usa <strong>Transferir…</strong> en la pestaña Perfil para copiar marcadores de un perfil a otro sin cambiar primero. Uso típico: migrar de GitHub a Gitea. Elige <strong>Reemplazar destino</strong> para una migración limpia; <strong>Fusionar en destino</strong> conserva los archivos existentes y puede crear carpetas duplicadas. Tras una migración desordenada, usa <strong>Limpiar huérfanos remotos</strong> en la subpestaña Sincronización. Los destinos espejo en la pestaña Conexión Git envían una copia a remotos de respaldo tras cada sincronización."
+  },
+  "help_transferTitle": {
+    "message": "Transferir marcadores entre perfiles"
+  },
   "help_voteBacklogBtn": {
     "message": "Votar en el backlog"
   },
@@ -362,10 +476,13 @@
     "message": "¿Por qué la sincronización a veces tarda?"
   },
   "help_wizardRestartDesc": {
-    "message": "Guía paso a paso para conectar tu repositorio de GitHub y realizar la primera sincronización."
+    "message": "Guía paso a paso para conectar tu repositorio Git y ejecutar la primera sincronización."
   },
   "help_wizardRestartTitle": {
     "message": "Asistente de configuración"
+  },
+  "help_wizardSyncChoice": {
+    "message": "En el asistente de configuración, <strong>Comprobar conexión</strong> solo valida el acceso — no sincroniza. Luego eliges pull, fusionar/sincronizar, push, crear estructura de carpetas u omitir, con confirmación antes de escribir en el repositorio."
   },
   "linkwardenSave_cancelBtn": {
     "message": "Cancelar"
@@ -532,6 +649,18 @@
   "options_chooseFile": {
     "message": "Elegir archivo"
   },
+  "options_cleanOrphansDesc": {
+    "message": "Elimina archivos de marcadores remotos que no están en tus marcadores locales (perfil activo). Úsalo tras una transferencia desordenada o carpetas duplicadas en el servidor."
+  },
+  "options_cleanOrphansPreview": {
+    "message": "Previsualizar huérfanos"
+  },
+  "options_cleanOrphansRun": {
+    "message": "Limpiar remoto"
+  },
+  "options_cleanOrphansTitle": {
+    "message": "Limpiar huérfanos remotos"
+  },
   "options_connectionOk": {
     "message": "¡Conexión OK! Usuario: $1, Repo: $2"
   },
@@ -636,6 +765,18 @@
   },
   "options_decryptError": {
     "message": "Descifrado fallido. ¿Contraseña incorrecta?"
+  },
+  "options_densityCompact": {
+    "message": "Compacto"
+  },
+  "options_densityGroupLabel": {
+    "message": "Densidad de la interfaz"
+  },
+  "options_densityLarge": {
+    "message": "Grande"
+  },
+  "options_densityMedium": {
+    "message": "Mediano"
   },
   "options_documentation": {
     "message": "Documentación"
@@ -754,6 +895,51 @@
   "options_generatedFilesTitle": {
     "message": "Archivos generados"
   },
+  "options_gheServerUrlEnabled": {
+    "message": "Usar URL de servidor personalizada (GitHub Enterprise)"
+  },
+  "options_gitConnection": {
+    "message": "Conexión Git"
+  },
+  "options_gitProvider": {
+    "message": "Proveedor Git"
+  },
+  "options_gitProviderGitea": {
+    "message": "Gitea / Forgejo"
+  },
+  "options_gitProviderGithub": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_codeberg": {
+    "message": "Codeberg"
+  },
+  "options_gitProvider_forgejo": {
+    "message": "Forgejo"
+  },
+  "options_gitProvider_gitea": {
+    "message": "Gitea"
+  },
+  "options_gitProvider_github": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_gitlab": {
+    "message": "GitLab"
+  },
+  "options_gitProvider_gogs": {
+    "message": "Gogs"
+  },
+  "options_giteaPermissionDenied": {
+    "message": "Se denegó el permiso de host para el servidor Gitea. Permite el acceso cuando se solicite e inténtalo de nuevo."
+  },
+  "options_giteaTokenHelpLink": {
+    "message": "Abrir configuración de usuario de Gitea (Aplicaciones)"
+  },
+  "options_giteaTokenHintHtml": {
+    "message": "Crea un token en Gitea en <strong>Configuración de usuario → Aplicaciones</strong> con acceso de lectura/escritura al repositorio. Los tokens de Gitea <em>no</em> son cadenas estilo GitHub <code>ghp_…</code>."
+  },
+  "options_giteaTokenWizardHelpHtml": {
+    "message": "En Gitea, abre <strong>Configuración de usuario → Aplicaciones → Generar nuevo token</strong>. Habilita lectura y escritura del repositorio. Copia el token — solo se muestra una vez. Los tokens de Gitea no usan prefijos de GitHub como <code>ghp_</code>."
+  },
   "options_githubConnection": {
     "message": "Conexión GitHub"
   },
@@ -786,6 +972,72 @@
   },
   "options_githubReposTitle": {
     "message": "Carpeta de repos GitHub"
+  },
+  "options_historyColActions": {
+    "message": "Acciones"
+  },
+  "options_historyColClient": {
+    "message": "Cliente"
+  },
+  "options_historyColCommit": {
+    "message": "Commit"
+  },
+  "options_historyColDate": {
+    "message": "Fecha"
+  },
+  "options_historyCurrent": {
+    "message": "actual"
+  },
+  "options_historyDesc": {
+    "message": "Explora commits de sincronización recientes y restaura marcadores de una versión anterior. Restaurar solo cambia los marcadores locales — no reescribe la rama remota."
+  },
+  "options_historyDiffAdded": {
+    "message": "Añadido"
+  },
+  "options_historyDiffChanged": {
+    "message": "Modificado"
+  },
+  "options_historyDiffClose": {
+    "message": "Cerrar"
+  },
+  "options_historyDiffLoading": {
+    "message": "Cargando vista previa…"
+  },
+  "options_historyDiffNoChanges": {
+    "message": "Sin diferencias — este commit coincide con tus marcadores actuales."
+  },
+  "options_historyDiffRemoved": {
+    "message": "Eliminado"
+  },
+  "options_historyEmpty": {
+    "message": "No se encontraron commits."
+  },
+  "options_historyLoadBtn": {
+    "message": "Cargar historial"
+  },
+  "options_historyPreviewBtn": {
+    "message": "Vista previa"
+  },
+  "options_historyRestoreBtn": {
+    "message": "Restaurar"
+  },
+  "options_historyRestoreConfirmBtn": {
+    "message": "Haz clic de nuevo para confirmar"
+  },
+  "options_historyRestoreConfirmShort": {
+    "message": "Clic de nuevo"
+  },
+  "options_historyRestoring": {
+    "message": "Restaurando…"
+  },
+  "options_historyTitle": {
+    "message": "Historial de sincronización"
+  },
+  "options_historyUndoBtn": {
+    "message": "Deshacer última sincronización"
+  },
+  "options_hostPermissionDenied": {
+    "message": "Se denegó el permiso de host para el servidor Git. Permite el acceso cuando se solicite e inténtalo de nuevo."
   },
   "options_importBookmarks": {
     "message": "Importar marcadores"
@@ -841,6 +1093,12 @@
   "options_linkwardenApiKey": {
     "message": "Clave API"
   },
+  "options_linkwardenConnectionFailed": {
+    "message": "Conexión fallida: $1"
+  },
+  "options_linkwardenConnectionOk": {
+    "message": "¡Conexión exitosa!"
+  },
   "options_linkwardenDefaultCollection": {
     "message": "Colección predeterminada"
   },
@@ -859,11 +1117,17 @@
   "options_linkwardenEnabled": {
     "message": "Habilitar Linkwarden"
   },
+  "options_linkwardenHostPermissionDenied": {
+    "message": "Permiso de host denegado. Comprueba la barra de direcciones o el bloqueador de ventanas emergentes."
+  },
   "options_linkwardenInstanceUrl": {
     "message": "URL de la instancia"
   },
   "options_linkwardenIntro": {
     "message": "Configure su instancia de Linkwarden para guardar marcadores directamente desde el menú contextual."
+  },
+  "options_linkwardenInvalidUrlFormat": {
+    "message": "Formato de URL no válido"
   },
   "options_linkwardenSyncEnabled": {
     "message": "Sincronizar colecciones con marcadores"
@@ -894,8 +1158,44 @@
   "options_linkwardenTitle": {
     "message": "Integración de Linkwarden"
   },
+  "options_linkwardenUrlTokenRequired": {
+    "message": "Se requieren URL y token"
+  },
   "options_menu_showAsSubmenu": {
     "message": "Mostrar como submenú"
+  },
+  "options_mirrorsAdd": {
+    "message": "+ Añadir espejo"
+  },
+  "options_mirrorsDesc": {
+    "message": "Copias solo de envío de archivos de marcadores a remotos Git adicionales tras cada sincronización principal exitosa. Las ediciones directas en un espejo se sobrescriben en la próxima sincronización."
+  },
+  "options_mirrorsLabel": {
+    "message": "Etiqueta"
+  },
+  "options_mirrorsPaused": {
+    "message": "En pausa"
+  },
+  "options_mirrorsPushGenerated": {
+    "message": "Incluir archivos generados (README, HTML, feed, Dashy)"
+  },
+  "options_mirrorsPushSettings": {
+    "message": "Incluir ajustes cifrados"
+  },
+  "options_mirrorsRemove": {
+    "message": "Eliminar"
+  },
+  "options_mirrorsStatusError": {
+    "message": "Error de espejo: $1"
+  },
+  "options_mirrorsStatusOk": {
+    "message": "Último push OK"
+  },
+  "options_mirrorsTest": {
+    "message": "Probar"
+  },
+  "options_mirrorsTitle": {
+    "message": "Destinos espejo"
   },
   "options_mobileAppAlert": {
     "message": "<strong>Nota para usuarios de Android:</strong> Firefox para Android no admite la sincronización directa de marcadores a través de extensiones. Debe usar la aplicación complementaria."
@@ -987,6 +1287,9 @@
   "options_onboardingWizardBack": {
     "message": "Atrás"
   },
+  "options_onboardingWizardCheckConnection": {
+    "message": "Comprobar conexión"
+  },
   "options_onboardingWizardCompleted": {
     "message": "Asistente completado correctamente."
   },
@@ -1036,7 +1339,7 @@
     "message": "Guardando estado de sincronización"
   },
   "options_onboardingWizardPhaseUploading": {
-    "message": "Subiendo marcadores a GitHub"
+    "message": "Subiendo marcadores al remoto"
   },
   "options_onboardingWizardRepoCreateFailed": {
     "message": "No se pudo crear el repositorio con este token/permisos."
@@ -1068,6 +1371,9 @@
   "options_onboardingWizardStart": {
     "message": "Iniciar asistente de configuración"
   },
+  "options_onboardingWizardStartSync": {
+    "message": "Iniciar sincronización"
+  },
   "options_onboardingWizardStepFinishText": {
     "message": "La configuración está completa. Puedes continuar con los ajustes normales."
   },
@@ -1080,6 +1386,12 @@
   "options_onboardingWizardStepHasTokenTitle": {
     "message": "¿Ya tienes un token?"
   },
+  "options_onboardingWizardStepProviderText": {
+    "message": "Selecciona GitHub, GitLab, Codeberg, Gitea, Forgejo o Gogs. Cada perfil almacena su propio proveedor y URL de servidor."
+  },
+  "options_onboardingWizardStepProviderTitle": {
+    "message": "Elige tu proveedor Git"
+  },
   "options_onboardingWizardStepRepoDecisionText": {
     "message": "Elige entre crear el repositorio automáticamente o usar uno existente."
   },
@@ -1091,6 +1403,9 @@
   },
   "options_onboardingWizardStepRepoTitle": {
     "message": "Configuración del repositorio"
+  },
+  "options_onboardingWizardStepSyncChoiceText": {
+    "message": "Elige cómo sincronizar, lee la advertencia y haz clic en Iniciar sincronización. No se escribe nada en el repositorio hasta que confirmes."
   },
   "options_onboardingWizardStepSyncTextEmpty": {
     "message": "La ruta está vacía. Crea la estructura inicial para empezar."
@@ -1114,7 +1429,7 @@
     "message": "Token de acceso"
   },
   "options_onboardingWizardStepValidateText": {
-    "message": "Ejecuta la prueba para verificar token, repositorio y acceso a la ruta."
+    "message": "Haz clic en Comprobar conexión para validar el token, el repositorio y el acceso a la ruta. En este paso no se ejecuta ninguna sincronización."
   },
   "options_onboardingWizardStepValidateTitle": {
     "message": "Probar conexión"
@@ -1125,8 +1440,68 @@
   "options_onboardingWizardStepWelcomeTitle": {
     "message": "Bienvenida"
   },
+  "options_onboardingWizardSyncConfirmRunBtn": {
+    "message": "Ejecutar"
+  },
+  "options_onboardingWizardSyncConfirmSkipBtn": {
+    "message": "Omitir"
+  },
+  "options_onboardingWizardSyncConfirm_initialize": {
+    "message": "¿Crear la estructura inicial de carpetas bookmarks/ en el repositorio remoto (sin subir marcadores locales)?"
+  },
+  "options_onboardingWizardSyncConfirm_pull": {
+    "message": "¿Descargar $2 marcador(es) del repositorio remoto a este navegador?"
+  },
+  "options_onboardingWizardSyncConfirm_pullOverwriteLocal": {
+    "message": "Pull reemplazará los $1 marcador(es) locales con $2 del repositorio remoto. ¿Continuar?"
+  },
+  "options_onboardingWizardSyncConfirm_push": {
+    "message": "¿Subir $1 marcador(es) locales al repositorio remoto?"
+  },
+  "options_onboardingWizardSyncConfirm_pushDanger": {
+    "message": "Push sobrescribirá el repositorio remoto. Pueden eliminarse $2 marcador(es) remotos; solo quedarán $1 marcador(es) locales. ¿Continuar?"
+  },
+  "options_onboardingWizardSyncConfirm_skip": {
+    "message": "¿Omitir la primera sincronización por ahora? Puedes sincronizar manualmente desde el popup más tarde."
+  },
+  "options_onboardingWizardSyncConfirm_sync": {
+    "message": "¿Ejecutar fusión/sincronización entre $1 marcador(es) local(es) y $2 remoto(s)? Puede que debas resolver conflictos después."
+  },
   "options_onboardingWizardSyncInProgress": {
     "message": "Trabajando en segundo plano, por favor espere..."
+  },
+  "options_onboardingWizardSyncModeLabel": {
+    "message": "Primera acción de sincronización"
+  },
+  "options_onboardingWizardSyncMode_initialize": {
+    "message": "Solo crear estructura de carpetas"
+  },
+  "options_onboardingWizardSyncMode_pull": {
+    "message": "Solo pull (descargar del remoto)"
+  },
+  "options_onboardingWizardSyncMode_push": {
+    "message": "Solo push (subir marcadores locales — sobrescribe remoto)"
+  },
+  "options_onboardingWizardSyncMode_skip": {
+    "message": "Omitir por ahora"
+  },
+  "options_onboardingWizardSyncMode_sync": {
+    "message": "Fusionar / sincronizar (recomendado cuando ambos lados tienen marcadores)"
+  },
+  "options_onboardingWizardSyncWarn_both": {
+    "message": "Hay marcadores en ambos lados. Fusionar/sincronizar combina cambios; pull o push sobrescribe un lado."
+  },
+  "options_onboardingWizardSyncWarn_emptyBoth": {
+    "message": "La ruta remota y el navegador están vacíos. Crea la estructura de carpetas u omite y sincroniza más tarde."
+  },
+  "options_onboardingWizardSyncWarn_localOnly": {
+    "message": "La ruta remota está vacía; los marcadores locales se subirán con push."
+  },
+  "options_onboardingWizardSyncWarn_pushDanger": {
+    "message": "Advertencia: push eliminará $1 archivo(s) de marcadores remotos no presentes localmente y reemplazará el repositorio con los marcadores de este navegador."
+  },
+  "options_onboardingWizardSyncWarn_remoteOnly": {
+    "message": "El remoto tiene marcadores; este navegador está vacío. Se recomienda pull para no sobrescribir el repositorio."
   },
   "options_onboardingWizardTitle": {
     "message": "Asistente de configuración"
@@ -1158,8 +1533,17 @@
   "options_onboardingWizardTokenValidated": {
     "message": "El token es válido y tiene el alcance requerido."
   },
+  "options_ownerHint_gitlab": {
+    "message": "Usuario, grupo o ruta grupo/subgrupo (ej. migroupo/subgrupo)."
+  },
   "options_ownerPlaceholder": {
     "message": "tu-usuario-github"
+  },
+  "options_ownerPlaceholderGitea": {
+    "message": "tu-usuario-gitea"
+  },
+  "options_ownerPlaceholder_gitlab": {
+    "message": "usuario o grupo/subgrupo"
   },
   "options_passwordPlaceholder": {
     "message": "Contraseña"
@@ -1256,6 +1640,21 @@
   },
   "options_selectFile": {
     "message": "Seleccionar archivo..."
+  },
+  "options_serverUrl": {
+    "message": "URL del servidor"
+  },
+  "options_serverUrlHint": {
+    "message": "URL base de tu servidor Git (sin sufijo /api/v1 o /api/v4)."
+  },
+  "options_serverUrlPlaceholder_github": {
+    "message": "https://github.empresa.com"
+  },
+  "options_serverUrlPlaceholder_gitlab": {
+    "message": "https://gitlab.com (dejar vacío para GitLab.com)"
+  },
+  "options_serverUrlRequired": {
+    "message": "La URL del servidor es obligatoria para este proveedor."
   },
   "options_settingsCard": {
     "message": "Configuración"
@@ -1414,6 +1813,9 @@
   "options_subTabGitAdd": {
     "message": "Git Add"
   },
+  "options_subTabHistory": {
+    "message": "Historial"
+  },
   "options_subTabMenuAdvanced": {
     "message": "Avanzado y Seguridad"
   },
@@ -1510,17 +1912,56 @@
   "options_themeAuto": {
     "message": "A Auto (sistema)"
   },
+  "options_themeAutoLabel": {
+    "message": "Auto"
+  },
   "options_themeDark": {
     "message": "☽ Oscuro"
   },
+  "options_themeDarkLabel": {
+    "message": "Oscuro"
+  },
   "options_themeLight": {
     "message": "☀ Claro"
+  },
+  "options_themeLightLabel": {
+    "message": "Claro"
   },
   "options_toggleToken": {
     "message": "Mostrar/ocultar token"
   },
   "options_tokenHint": {
     "message": "Requiere el scope <code>repo</code> (classic) o <code>Contents: Read/Write</code> y <code>Metadata: Read</code> (fine-grained). <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Crear token</a>"
+  },
+  "options_tokenHintHtml_codeberg": {
+    "message": "Crea un token en <a href=\"https://codeberg.org/user/settings/applications\" target=\"_blank\" rel=\"noopener\">Codeberg → Configuración de usuario → Aplicaciones</a> con acceso de lectura/escritura al repositorio."
+  },
+  "options_tokenHintHtml_forgejo": {
+    "message": "Crea un token en tu servidor Forgejo en <strong>Configuración de usuario → Aplicaciones</strong> con acceso de lectura/escritura al repositorio."
+  },
+  "options_tokenHintHtml_gitea": {
+    "message": "Crea un token en <strong>Configuración de usuario → Aplicaciones</strong> con acceso de lectura/escritura al repositorio."
+  },
+  "options_tokenHintHtml_gitlab": {
+    "message": "Crea un token en <a href=\"https://gitlab.com/-/user_settings/personal_access_tokens\" target=\"_blank\" rel=\"noopener\">GitLab → Configuración de usuario → Tokens de acceso</a> con alcance <code>api</code> (lectura/escritura del repositorio)."
+  },
+  "options_tokenHintHtml_gogs": {
+    "message": "Crea un token en tu servidor Gogs en <strong>Configuración de usuario → Aplicaciones</strong> con acceso de lectura/escritura al repositorio."
+  },
+  "options_tokenPlaceholderGitea": {
+    "message": "tu-token-acceso-gitea"
+  },
+  "options_tokenPlaceholderGithub": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitea": {
+    "message": "tu-token-acceso"
+  },
+  "options_tokenPlaceholder_github": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitlab": {
+    "message": "glpat-xxxxxxxxxxxxxxxxxxxx"
   },
   "options_tokenValidMissingScope": {
     "message": "Token válido ($1), pero falta el scope \"repo\"."
@@ -1530,6 +1971,51 @@
   },
   "options_tokenValidSpecifyRepo": {
     "message": "¡Token válido! Usuario: $1. Por favor especifica un repositorio."
+  },
+  "options_transferApplyLocal": {
+    "message": "Aplicar al navegador (solo si el destino está activo)"
+  },
+  "options_transferCancel": {
+    "message": "Cancelar"
+  },
+  "options_transferDesc": {
+    "message": "Copiar marcadores de un perfil a otro (ej. migración GitHub → Gitea). No cambia el navegador salvo que el perfil destino esté activo y elijas aplicar localmente."
+  },
+  "options_transferDuplicateFoldersWarning": {
+    "message": "Nombres de carpeta duplicados en el resultado de la transferencia (colisión de slug): $1. Fusiona estas carpetas en los marcadores del perfil origen antes de transferir, o los duplicados se copiarán al remoto destino."
+  },
+  "options_transferFolder": {
+    "message": "Carpeta (opcional)"
+  },
+  "options_transferFolderHint": {
+    "message": "Ruta relativa bajo la carpeta del repo, ej. toolbar/trabajo. Déjalo vacío para todos los marcadores."
+  },
+  "options_transferMergeConfirm": {
+    "message": "¿Fusionar en un destino con $1 archivo(s) existente(s)? Se conservan los marcadores remotos existentes; pueden resultar carpetas duplicadas. ¿Continuar?"
+  },
+  "options_transferMergeHint": {
+    "message": "Fusionar conserva todos los archivos destino existentes y añade marcadores origen. Puede crear carpetas duplicadas (ej. libros y libros-2). Para una migración limpia, usa Reemplazar destino."
+  },
+  "options_transferMergeWarning": {
+    "message": "El destino ya tiene $1 archivo(s) de marcadores. Fusionar los conserva todos más los archivos origen copiados — es probable que haya carpetas duplicadas."
+  },
+  "options_transferMode": {
+    "message": "Modo"
+  },
+  "options_transferModeMerge": {
+    "message": "Fusionar en destino"
+  },
+  "options_transferModeReplace": {
+    "message": "Reemplazar destino"
+  },
+  "options_transferOpen": {
+    "message": "Transferir…"
+  },
+  "options_transferPreview": {
+    "message": "Vista previa"
+  },
+  "options_transferPreviewResult": {
+    "message": "Origen: $1 ($2 archivos). El destino tiene $3 archivos existentes → $4 tras la transferencia."
   },
   "options_transferProgressApplying": {
     "message": "Aplicando en el navegador…"
@@ -1548,6 +2034,36 @@
   },
   "options_transferProgressPreparing": {
     "message": "Preparando transferencia…"
+  },
+  "options_transferPush": {
+    "message": "Push al repositorio destino"
+  },
+  "options_transferReplaceWarning": {
+    "message": "Reemplazar eliminará $1 archivo(s) remoto(s) no incluidos en el resultado de la transferencia."
+  },
+  "options_transferRun": {
+    "message": "Transferir"
+  },
+  "options_transferSource": {
+    "message": "Perfil origen"
+  },
+  "options_transferSourceBrowser": {
+    "message": "navegador"
+  },
+  "options_transferSourceCache": {
+    "message": "caché"
+  },
+  "options_transferSourceRemote": {
+    "message": "remoto"
+  },
+  "options_transferTarget": {
+    "message": "Perfil destino"
+  },
+  "options_transferTargetWarning": {
+    "message": "Advertencia: el destino ya tiene datos de marcadores."
+  },
+  "options_transferTitle": {
+    "message": "Transferir marcadores"
   },
   "options_version": {
     "message": "Versión"
@@ -1591,8 +2107,14 @@
   "popup_localToGithub": {
     "message": "Local → GitHub"
   },
+  "popup_localToRemote": {
+    "message": "Local → Remoto"
+  },
   "popup_minAgo": {
     "message": "hace $1 min"
+  },
+  "popup_mirrorStatus": {
+    "message": "Espejado: $1"
   },
   "popup_nextSyncIn": {
     "message": "Próxima sincronización en $1"
@@ -1614,6 +2136,9 @@
   },
   "popup_ready": {
     "message": "Listo"
+  },
+  "popup_remoteToLocal": {
+    "message": "Remoto → Local"
   },
   "popup_reportIssue": {
     "message": "Reportar problema"
@@ -1645,6 +2170,9 @@
   "search_openBtn": {
     "message": "Abrir"
   },
+  "search_resultsLabel": {
+    "message": "Resultados de búsqueda"
+  },
   "search_statusNoResults": {
     "message": "No se encontraron marcadores"
   },
@@ -1662,8 +2190,20 @@
   "search_subtitle": {
     "message": "Buscar marcadores locales y abrir coincidencias en una nueva pestaña."
   },
+  "search_syncComplete": {
+    "message": "Sincronización completada"
+  },
+  "search_syncFailed": {
+    "message": "Sincronización fallida: $1"
+  },
+  "search_syncing": {
+    "message": "Sincronizando…"
+  },
   "search_title": {
     "message": "Búsqueda de marcadores"
+  },
+  "search_unknownError": {
+    "message": "Error desconocido"
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – Búsqueda de marcadores"
@@ -1698,8 +2238,14 @@
   "sync_conflictRemoteModified": {
     "message": "Conflicto detectado: la versión remota también fue modificada."
   },
+  "sync_loadedFromRemote": {
+    "message": "Cargado desde el repositorio remoto."
+  },
   "sync_noBookmarksOnGithub": {
     "message": "No se encontraron marcadores en GitHub."
+  },
+  "sync_noBookmarksOnRemote": {
+    "message": "No se encontraron marcadores en el repositorio remoto."
   },
   "sync_noChanges": {
     "message": "Sin cambios desde la última sincronización."
@@ -1734,7 +2280,37 @@
   "sync_pushSuccess": {
     "message": "Marcadores enviados correctamente a GitHub."
   },
+  "sync_remoteChangedRetry": {
+    "message": "El remoto está cambiando ahora. Intenta sincronizar de nuevo en un momento."
+  },
   "sync_syncFailed": {
     "message": "Sincronización fallida: $1"
+  },
+  "transfer_commitMessage": {
+    "message": "Transferencia de marcadores desde el perfil $1"
+  },
+  "transfer_connectionLost": {
+    "message": "Conexión de transferencia perdida. Recarga la página de opciones e inténtalo de nuevo."
+  },
+  "transfer_mergeConflicts": {
+    "message": "Fusión bloqueada: $1 conflicto(s) de ruta. Resuelve archivos superpuestos o usa el modo Reemplazar."
+  },
+  "transfer_noBookmarks": {
+    "message": "No hay archivos de marcadores para transferir"
+  },
+  "transfer_profileNotFound": {
+    "message": "Perfil no encontrado"
+  },
+  "transfer_sameProfile": {
+    "message": "Origen y destino deben ser perfiles diferentes"
+  },
+  "transfer_success": {
+    "message": "Se transfirieron $1 archivo(s) de marcadores"
+  },
+  "whatsnew_close": {
+    "message": "Cerrar"
+  },
+  "whatsnew_title": {
+    "message": "Novedades en GitSyncMarks $1"
   }
 }

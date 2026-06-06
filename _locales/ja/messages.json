@@ -17,8 +17,41 @@
   "api_invalidToken": {
     "message": "無効なトークンです。Personal Access Token を確認してください。"
   },
+  "api_listCommitsFailed": {
+    "message": "コミットの一覧取得に失敗しました（HTTP $1）。"
+  },
+  "api_networkError": {
+    "message": "ネットワークエラー。インターネット接続を確認して再試行してください。"
+  },
   "api_rateLimitExceeded": {
     "message": "GitHub API のレート制限を超えました。しばらくお待ちください。"
+  },
+  "api_treeTruncated": {
+    "message": "リポジトリが大きすぎて1回のリクエストで読み取れません（GitHub がファイルツリーを切り詰めました）。データ損失を防ぐため同期を停止しました。"
+  },
+  "cleanOrphans_commitMessage": {
+    "message": "ローカルにない孤立ブックマークファイルを削除"
+  },
+  "cleanOrphans_confirm": {
+    "message": "リモートの最上位フォルダ $2 個から孤立ファイル $1 個を削除しますか？ローカルのブックマークは変更されません。GitSyncMarks からは元に戻せません（Git の履歴で復元してください）。"
+  },
+  "cleanOrphans_noLocalBaseline": {
+    "message": "このプロファイルのローカルブックマーク基準がありません。プロファイルに切り替えて一度同期するか、アクティブなプロファイルでリモートをクリーンアップしてください。"
+  },
+  "cleanOrphans_none": {
+    "message": "リモートに孤立ブックマークファイルはありません。"
+  },
+  "cleanOrphans_previewFailed": {
+    "message": "リモートの孤立ファイルをプレビューできませんでした。"
+  },
+  "cleanOrphans_previewResult": {
+    "message": "最上位フォルダ $2 個の孤立ファイル $1 個が削除されます。"
+  },
+  "cleanOrphans_remoteFetchFailed": {
+    "message": "リモートリポジトリを読み取れませんでした: $1"
+  },
+  "cleanOrphans_success": {
+    "message": "リモートの最上位フォルダ $2 個から孤立ファイル $1 個を削除しました。"
   },
   "commands_openOptions": {
     "message": "拡張機能の設定を開く"
@@ -82,6 +115,24 @@
   "contextMenu_notifFolderMissing": {
     "message": "選択したフォルダーは存在しません。クイックフォルダー設定を更新してください。"
   },
+  "contextMenu_notifLinkwardenError": {
+    "message": "Linkwarden エラー: $1"
+  },
+  "contextMenu_notifLinkwardenGrantPermissions": {
+    "message": "オプションの「接続をテスト」で権限を付与してください"
+  },
+  "contextMenu_notifLinkwardenNotConfigured": {
+    "message": "Linkwarden が設定されていません"
+  },
+  "contextMenu_notifLinkwardenSaved": {
+    "message": "リンクを Linkwarden に保存しました"
+  },
+  "contextMenu_notifLinkwardenSavedWithScreenshot": {
+    "message": "リンクとスクリーンショットを Linkwarden に保存しました"
+  },
+  "contextMenu_notifLinkwardenUrlInvalid": {
+    "message": "Linkwarden の URL が無効です"
+  },
   "contextMenu_notifNoFavicon": {
     "message": "このページのファビコンはありません"
   },
@@ -137,10 +188,10 @@
     "message": "今すぐ同期"
   },
   "extDescription": {
-    "message": "GitHub経由のブックマーク同期。Linkwarden連携、スマート検索、コンパニオンアプリ付。直接、安全、プライベート。"
+    "message": "GitHub、GitLab、Codeberg、Gitea などでブックマーク同期。Linkwarden、スマート検索、コンパニオンアプリ。直接、安全、プライベート。"
   },
   "extDescriptionFirefox": {
-    "message": "GitHub経由のブックマーク同期。Linkwarden連携、スマート検索、セットアップウィザード。双方向同期可能でFirefoxメニューにもネイティブ対応。"
+    "message": "GitHub、GitLab、Codeberg、Gitea などでブックマーク同期。Linkwarden、スマート検索、セットアップウィザード。双方向、安全でプライベート。Firefox 完全対応。仲介なし。"
   },
   "extName": {
     "message": "GitSyncMarks"
@@ -175,6 +226,12 @@
   "help_backupTitle": {
     "message": "バックアップ"
   },
+  "help_cleanOrphansDesc": {
+    "message": "同期サブタブで、ローカルブックマーク（アクティブなプロファイル）にないリモートのブックマークファイルをプレビューして削除できます。マージ転送後の重複フォルダに便利です。"
+  },
+  "help_cleanOrphansTitle": {
+    "message": "リモートの孤立ファイルをクリーンアップ"
+  },
   "help_conflictDesc": {
     "message": "ローカルとリモートの両方のブックマークが変更された場合、ポップアップに競合が表示されます。<strong>Push</strong>（ローカルが優先、リモートを上書き）または<strong>Pull</strong>（リモートが優先、ローカルを上書き）を選択してください。競合の自動マージはありません。"
   },
@@ -196,6 +253,12 @@
   "help_debugLogTitle": {
     "message": "デバッグログ"
   },
+  "help_densityDesc": {
+    "message": "ヘッダーの S / M / L ボタンでコンパクト、中、大を切り替えます。設定は拡張機能のすべての画面（オプション、ポップアップ、検索、Linkwarden 保存）に適用され、デバイス間で同期されます。"
+  },
+  "help_densityTitle": {
+    "message": "UI 密度"
+  },
   "help_discussions": {
     "message": "ディスカッション"
   },
@@ -209,7 +272,7 @@
     "message": "生成ファイル"
   },
   "help_gettingStartedIntro": {
-    "message": "ブックマーク用のGitHubリポジトリを作成し、<code>repo</code> スコープを持つ Personal Access Token (PAT) を作成します。GitHub タブでトークン、リポジトリオーナー、名前、ブランチ（通常は <code>main</code>）、フォルダパス（デフォルト: <code>bookmarks</code>）を入力します。<strong>接続テスト</strong>をクリックして確認してください。"
+    "message": "<strong>GitHub</strong>、<strong>GitLab</strong>、<strong>Codeberg</strong>、<strong>Gitea</strong>、<strong>Forgejo</strong>、<strong>Gogs</strong> でブックマーク用の Git リポジトリを作成します。<strong>Git → 接続</strong> でプロバイダーを選択し、Personal Access Token、リポジトリの所有者/名前、ブランチ（通常 <code>main</code>）、フォルダパス（デフォルト: <code>bookmarks</code>）を入力します。セルフホストにはサーバー URL が必要です。プロンプトが表示されたらホストアクセスを許可してください。<strong>接続をテスト</strong> をクリックして確認します。"
   },
   "help_gettingStartedTitle": {
     "message": "はじめに"
@@ -219,6 +282,36 @@
   },
   "help_githubReposTitle": {
     "message": "GitHub Repos フォルダ"
+  },
+  "help_headerLangDesc": {
+    "message": "ヘッダーの言語ボタンで拡張機能の表示言語を変更します。設定は保存され、すべてのデバイスで同期されます。"
+  },
+  "help_headerLangTitle": {
+    "message": "言語"
+  },
+  "help_historyIntro": {
+    "message": "各同期で Git コミットが作成されます。履歴サブタブ（ファイルの下）で最近のコミットを閲覧し、以前のバージョンからブックマークを復元できます。"
+  },
+  "help_historyLoadDesc": {
+    "message": "ブックマークパスに触れた直近20件のコミットを取得します。表ヘッダーは列（日付、短いコミットハッシュ、コミットメッセージから解析したクライアント ID）を示します。クライアントセルにホバーすると完全なメッセージが表示されます。各行にプレビュー（虫眼鏡）と復元アイコンがあります。"
+  },
+  "help_historyLoadLabel": {
+    "message": "履歴を読み込む"
+  },
+  "help_historyRestoreDesc": {
+    "message": "すべてのローカルブックマークをそのコミットの状態に置き換えます。リストで復元アイコンをクリックし、短い確認表示のときに再度クリックします（または diff パネルの完全なテキスト）。リモートブランチは書き換えられません。次の同期でローカル状態がプッシュされます。"
+  },
+  "help_historyRestoreLabel": {
+    "message": "復元"
+  },
+  "help_historyTitle": {
+    "message": "同期履歴と元に戻す"
+  },
+  "help_historyUndoDesc": {
+    "message": "ローカルブックマークを変更した直近の同期の前のコミットへワンクリックでロールバック。ローカルブックマークを変更した pull またはマージの後に利用可能です。"
+  },
+  "help_historyUndoLabel": {
+    "message": "最後の同期を元に戻す"
   },
   "help_links": {
     "message": "リンク"
@@ -237,6 +330,9 @@
   },
   "help_linkwardenTitle": {
     "message": "Linkwarden"
+  },
+  "help_menuTitle": {
+    "message": "メニュー"
   },
   "help_notificationsDesc": {
     "message": "同期通知の表示タイミングを選択: すべて（成功と失敗）、エラーのみ、またはオフ。"
@@ -298,6 +394,18 @@
   "help_profilesTitle": {
     "message": "プロファイル"
   },
+  "help_provider_codeberg": {
+    "message": "<strong>Codeberg</strong> は <code>codeberg.org</code> の Forgejo ホストです。プロバイダーに Codeberg を選択するとサーバー URL はプリセットされます。ユーザー設定 → アプリケーションでトークンを作成してください。"
+  },
+  "help_provider_forgejo": {
+    "message": "<strong>Forgejo</strong> は Gitea と同じ API を使用します。Forgejo サーバー URL とユーザー設定 → アプリケーションの Personal Access Token を入力してください。"
+  },
+  "help_provider_gitlab": {
+    "message": "<strong>GitLab</strong> は gitlab.com とセルフマネージドに対応します。サブグループプロジェクトでは所有者に <code>group/subgroup</code>、リポジトリにプロジェクト名を使用します。GitLab.com ではサーバー URL を空にしてください。"
+  },
+  "help_provider_gogs": {
+    "message": "<strong>Gogs</strong> は Gitea と類似の API を共有します。Gogs サーバー URL とユーザー設定 → アプリケーションのアクセストークンを入力してください。"
+  },
   "help_quickSync": {
     "message": "ブックマークをクイック同期"
   },
@@ -340,6 +448,12 @@
   "help_themeCycleTitle": {
     "message": "テーマ"
   },
+  "help_transferDesc": {
+    "message": "プロファイルタブの <strong>転送…</strong> で、切り替えずにプロファイル間でブックマークをコピーできます。典型的な用途: GitHub から Gitea への移行。<strong>ターゲットを置換</strong> でクリーンな移行、<strong>ターゲットにマージ</strong> は既存ファイルを保持し重複フォルダが発生する場合があります。移行後に問題がある場合は同期サブタブの <strong>リモートの孤立ファイルをクリーンアップ</strong> を使用してください。Git 接続タブのミラーは各同期後にバックアップリモートへコピーをプッシュします。"
+  },
+  "help_transferTitle": {
+    "message": "プロファイル間でブックマークを転送"
+  },
   "help_voteBacklogBtn": {
     "message": "バックログに投票"
   },
@@ -362,10 +476,13 @@
     "message": "同期に時間がかかることがあるのはなぜですか？"
   },
   "help_wizardRestartDesc": {
-    "message": "GitHubリポジトリの接続と初回同期を行うためのステップバイステップガイド。"
+    "message": "Git リポジトリを接続し、初回同期を実行するためのステップバイステップガイド。"
   },
   "help_wizardRestartTitle": {
     "message": "セットアップ・ウィザード"
+  },
+  "help_wizardSyncChoice": {
+    "message": "セットアップウィザードでは <strong>接続を確認</strong> はアクセスの検証のみで同期は行いません。その後、pull、マージ/同期、push、フォルダ構造の作成、スキップを選択し、リポジトリに書き込む前に確認します。"
   },
   "linkwardenSave_cancelBtn": {
     "message": "キャンセル"
@@ -532,6 +649,18 @@
   "options_chooseFile": {
     "message": "ファイルを選択"
   },
+  "options_cleanOrphansDesc": {
+    "message": "ローカルブックマーク（アクティブなプロファイル）にないリモートのブックマークファイルを削除します。転送の失敗やサーバー上の重複フォルダの後に使用してください。"
+  },
+  "options_cleanOrphansPreview": {
+    "message": "孤立ファイルをプレビュー"
+  },
+  "options_cleanOrphansRun": {
+    "message": "リモートをクリーンアップ"
+  },
+  "options_cleanOrphansTitle": {
+    "message": "リモートの孤立ファイルをクリーンアップ"
+  },
   "options_connectionOk": {
     "message": "接続OK！ユーザー: $1、リポジトリ: $2"
   },
@@ -636,6 +765,18 @@
   },
   "options_decryptError": {
     "message": "復号に失敗しました。パスワードが間違っていませんか？"
+  },
+  "options_densityCompact": {
+    "message": "コンパクト"
+  },
+  "options_densityGroupLabel": {
+    "message": "UI 密度"
+  },
+  "options_densityLarge": {
+    "message": "大"
+  },
+  "options_densityMedium": {
+    "message": "中"
   },
   "options_documentation": {
     "message": "ドキュメント"
@@ -754,6 +895,51 @@
   "options_generatedFilesTitle": {
     "message": "生成ファイル"
   },
+  "options_gheServerUrlEnabled": {
+    "message": "カスタムサーバー URL を使用（GitHub Enterprise）"
+  },
+  "options_gitConnection": {
+    "message": "Git 接続"
+  },
+  "options_gitProvider": {
+    "message": "Git プロバイダー"
+  },
+  "options_gitProviderGitea": {
+    "message": "Gitea / Forgejo"
+  },
+  "options_gitProviderGithub": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_codeberg": {
+    "message": "Codeberg"
+  },
+  "options_gitProvider_forgejo": {
+    "message": "Forgejo"
+  },
+  "options_gitProvider_gitea": {
+    "message": "Gitea"
+  },
+  "options_gitProvider_github": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_gitlab": {
+    "message": "GitLab"
+  },
+  "options_gitProvider_gogs": {
+    "message": "Gogs"
+  },
+  "options_giteaPermissionDenied": {
+    "message": "Gitea サーバーのホスト権限が拒否されました。プロンプトが表示されたらアクセスを許可して再試行してください。"
+  },
+  "options_giteaTokenHelpLink": {
+    "message": "Gitea ユーザー設定を開く（アプリケーション）"
+  },
+  "options_giteaTokenHintHtml": {
+    "message": "Gitea の <strong>ユーザー設定 → アプリケーション</strong> でリポジトリの読み書き権限付きトークンを作成してください。Gitea トークンは GitHub 形式の <code>ghp_…</code> 文字列では<em>ありません</em>。"
+  },
+  "options_giteaTokenWizardHelpHtml": {
+    "message": "Gitea で <strong>ユーザー設定 → アプリケーション → 新しいトークンを生成</strong> を開きます。リポジトリの読み書きを有効にし、トークンをコピーしてください（一度だけ表示されます）。Gitea トークンは <code>ghp_</code> のような GitHub プレフィックスを使用しません。"
+  },
   "options_githubConnection": {
     "message": "GitHub 接続"
   },
@@ -786,6 +972,72 @@
   },
   "options_githubReposTitle": {
     "message": "GitHub Repos フォルダ"
+  },
+  "options_historyColActions": {
+    "message": "操作"
+  },
+  "options_historyColClient": {
+    "message": "クライアント"
+  },
+  "options_historyColCommit": {
+    "message": "コミット"
+  },
+  "options_historyColDate": {
+    "message": "日付"
+  },
+  "options_historyCurrent": {
+    "message": "現在"
+  },
+  "options_historyDesc": {
+    "message": "最近の同期コミットを閲覧し、以前のバージョンからブックマークを復元します。復元はローカルブックマークのみ変更し、リモートブランチは書き換えません。"
+  },
+  "options_historyDiffAdded": {
+    "message": "追加"
+  },
+  "options_historyDiffChanged": {
+    "message": "変更"
+  },
+  "options_historyDiffClose": {
+    "message": "閉じる"
+  },
+  "options_historyDiffLoading": {
+    "message": "プレビューを読み込み中…"
+  },
+  "options_historyDiffNoChanges": {
+    "message": "差分なし — このコミットは現在のブックマークと一致します。"
+  },
+  "options_historyDiffRemoved": {
+    "message": "削除"
+  },
+  "options_historyEmpty": {
+    "message": "コミットが見つかりません。"
+  },
+  "options_historyLoadBtn": {
+    "message": "履歴を読み込む"
+  },
+  "options_historyPreviewBtn": {
+    "message": "プレビュー"
+  },
+  "options_historyRestoreBtn": {
+    "message": "復元"
+  },
+  "options_historyRestoreConfirmBtn": {
+    "message": "確認するには再度クリック"
+  },
+  "options_historyRestoreConfirmShort": {
+    "message": "再度クリック"
+  },
+  "options_historyRestoring": {
+    "message": "復元中…"
+  },
+  "options_historyTitle": {
+    "message": "同期履歴"
+  },
+  "options_historyUndoBtn": {
+    "message": "最後の同期を元に戻す"
+  },
+  "options_hostPermissionDenied": {
+    "message": "Git サーバーのホスト権限が拒否されました。プロンプトが表示されたらアクセスを許可して再試行してください。"
   },
   "options_importBookmarks": {
     "message": "ブックマークをインポート"
@@ -841,6 +1093,12 @@
   "options_linkwardenApiKey": {
     "message": "API キー"
   },
+  "options_linkwardenConnectionFailed": {
+    "message": "接続に失敗しました: $1"
+  },
+  "options_linkwardenConnectionOk": {
+    "message": "接続に成功しました！"
+  },
   "options_linkwardenDefaultCollection": {
     "message": "デフォルトコレクション"
   },
@@ -859,11 +1117,17 @@
   "options_linkwardenEnabled": {
     "message": "Linkwarden を有効にする"
   },
+  "options_linkwardenHostPermissionDenied": {
+    "message": "ホスト権限が拒否されました。アドレスバーまたはポップアップブロッカーを確認してください。"
+  },
   "options_linkwardenInstanceUrl": {
     "message": "インスタンス URL"
   },
   "options_linkwardenIntro": {
     "message": "Linkwarden インスタンスを設定して、コンテキストメニューから直接ブックマークを保存できます。"
+  },
+  "options_linkwardenInvalidUrlFormat": {
+    "message": "無効な URL 形式"
   },
   "options_linkwardenSyncEnabled": {
     "message": "コレクションをブックマークと同期する"
@@ -894,8 +1158,44 @@
   "options_linkwardenTitle": {
     "message": "Linkwarden 連携"
   },
+  "options_linkwardenUrlTokenRequired": {
+    "message": "URL とトークンが必要です"
+  },
   "options_menu_showAsSubmenu": {
     "message": "サブメニューとして表示"
+  },
+  "options_mirrorsAdd": {
+    "message": "+ ミラーを追加"
+  },
+  "options_mirrorsDesc": {
+    "message": "各プライマリ同期成功後に、追加の Git リモートへブックマークファイルのプッシュ専用コピーを送信します。ミラー上の直接編集は次の同期で上書きされます。"
+  },
+  "options_mirrorsLabel": {
+    "message": "ラベル"
+  },
+  "options_mirrorsPaused": {
+    "message": "一時停止"
+  },
+  "options_mirrorsPushGenerated": {
+    "message": "生成ファイルを含める（README、HTML、フィード、Dashy）"
+  },
+  "options_mirrorsPushSettings": {
+    "message": "暗号化設定を含める"
+  },
+  "options_mirrorsRemove": {
+    "message": "削除"
+  },
+  "options_mirrorsStatusError": {
+    "message": "ミラーエラー: $1"
+  },
+  "options_mirrorsStatusOk": {
+    "message": "最後のプッシュ OK"
+  },
+  "options_mirrorsTest": {
+    "message": "テスト"
+  },
+  "options_mirrorsTitle": {
+    "message": "ミラー先"
   },
   "options_mobileAppAlert": {
     "message": "<strong>Android ユーザーへの注意:</strong> Android 版 Firefox は拡張機能によるブックマークの直接同期をサポートしていません。コンパニオンアプリをご利用ください。"
@@ -987,6 +1287,9 @@
   "options_onboardingWizardBack": {
     "message": "戻る"
   },
+  "options_onboardingWizardCheckConnection": {
+    "message": "接続を確認"
+  },
   "options_onboardingWizardCompleted": {
     "message": "ウィザードが正常に完了しました。"
   },
@@ -1036,7 +1339,7 @@
     "message": "同期状態を保存中"
   },
   "options_onboardingWizardPhaseUploading": {
-    "message": "GitHubにブックマークをアップロード中"
+    "message": "ブックマークをリモートにアップロード中"
   },
   "options_onboardingWizardRepoCreateFailed": {
     "message": "現在のトークン/権限ではリポジトリを作成できませんでした。"
@@ -1068,6 +1371,9 @@
   "options_onboardingWizardStart": {
     "message": "セットアップウィザードを開始"
   },
+  "options_onboardingWizardStartSync": {
+    "message": "同期を開始"
+  },
   "options_onboardingWizardStepFinishText": {
     "message": "設定が完了しました。通常のsync設定を続けられます。"
   },
@@ -1080,6 +1386,12 @@
   "options_onboardingWizardStepHasTokenTitle": {
     "message": "すでにトークンを持っていますか？"
   },
+  "options_onboardingWizardStepProviderText": {
+    "message": "GitHub、GitLab、Codeberg、Gitea、Forgejo、Gogs から選択します。各プロファイルは独自のプロバイダーとサーバー URL を保存します。"
+  },
+  "options_onboardingWizardStepProviderTitle": {
+    "message": "Git プロバイダーを選択"
+  },
   "options_onboardingWizardStepRepoDecisionText": {
     "message": "リポジトリを自動作成するか、既存リポジトリを使うかを選択します。"
   },
@@ -1091,6 +1403,9 @@
   },
   "options_onboardingWizardStepRepoTitle": {
     "message": "リポジトリ設定"
+  },
+  "options_onboardingWizardStepSyncChoiceText": {
+    "message": "同期方法を選択し、警告を読んでから 同期を開始 をクリックしてください。確認するまでリポジトリには何も書き込まれません。"
   },
   "options_onboardingWizardStepSyncTextEmpty": {
     "message": "パスが空です。開始するために初期構造を作成してください。"
@@ -1114,7 +1429,7 @@
     "message": "アクセストークン"
   },
   "options_onboardingWizardStepValidateText": {
-    "message": "テストを実行して、トークン、リポジトリ、パスアクセスを確認します。"
+    "message": "接続を確認 をクリックして、トークン、リポジトリ、パスアクセスを検証します。このステップでは同期は実行されません。"
   },
   "options_onboardingWizardStepValidateTitle": {
     "message": "接続テスト"
@@ -1125,8 +1440,68 @@
   "options_onboardingWizardStepWelcomeTitle": {
     "message": "ようこそ"
   },
+  "options_onboardingWizardSyncConfirmRunBtn": {
+    "message": "実行"
+  },
+  "options_onboardingWizardSyncConfirmSkipBtn": {
+    "message": "スキップ"
+  },
+  "options_onboardingWizardSyncConfirm_initialize": {
+    "message": "リモートリポジトリに初期 bookmarks/ フォルダ構造を作成しますか（ローカルブックマークはアップロードしません）？"
+  },
+  "options_onboardingWizardSyncConfirm_pull": {
+    "message": "リモートリポジトリからこのブラウザにブックマーク $2 件をダウンロードしますか？"
+  },
+  "options_onboardingWizardSyncConfirm_pullOverwriteLocal": {
+    "message": "Pull はローカルブックマーク $1 件をすべてリモートの $2 件に置き換えます。続行しますか？"
+  },
+  "options_onboardingWizardSyncConfirm_push": {
+    "message": "ローカルブックマーク $1 件をリモートリポジトリにアップロードしますか？"
+  },
+  "options_onboardingWizardSyncConfirm_pushDanger": {
+    "message": "Push はリモートリポジトリを上書きします。リモートブックマーク $2 件が削除される可能性があり、ローカル $1 件のみが残ります。続行しますか？"
+  },
+  "options_onboardingWizardSyncConfirm_skip": {
+    "message": "初回同期を今はスキップしますか？後でポップアップから手動で同期できます。"
+  },
+  "options_onboardingWizardSyncConfirm_sync": {
+    "message": "ローカル $1 件とリモート $2 件のブックマーク間でマージ/同期を実行しますか？後で競合の解決が必要になる場合があります。"
+  },
   "options_onboardingWizardSyncInProgress": {
     "message": "バックグラウンドで作業中、お待ちください..."
+  },
+  "options_onboardingWizardSyncModeLabel": {
+    "message": "初回同期アクション"
+  },
+  "options_onboardingWizardSyncMode_initialize": {
+    "message": "フォルダ構造のみ作成"
+  },
+  "options_onboardingWizardSyncMode_pull": {
+    "message": "Pull のみ（リモートからダウンロード）"
+  },
+  "options_onboardingWizardSyncMode_push": {
+    "message": "Push のみ（ローカルブックマークをアップロード — リモートを上書き）"
+  },
+  "options_onboardingWizardSyncMode_skip": {
+    "message": "今はスキップ"
+  },
+  "options_onboardingWizardSyncMode_sync": {
+    "message": "マージ / 同期（両方にブックマークがある場合に推奨）"
+  },
+  "options_onboardingWizardSyncWarn_both": {
+    "message": "両方にブックマークがあります。マージ/同期は変更を統合します。Pull または Push は一方を上書きします。"
+  },
+  "options_onboardingWizardSyncWarn_emptyBoth": {
+    "message": "リモートパスとブラウザが空です。フォルダ構造を作成するかスキップして後で同期してください。"
+  },
+  "options_onboardingWizardSyncWarn_localOnly": {
+    "message": "リモートパスが空です。Push でローカルブックマークがアップロードされます。"
+  },
+  "options_onboardingWizardSyncWarn_pushDanger": {
+    "message": "警告: Push はローカルにないリモートブックマークファイル $1 件を削除し、このブラウザのブックマークでリポジトリを置き換えます。"
+  },
+  "options_onboardingWizardSyncWarn_remoteOnly": {
+    "message": "リモートにブックマークがあります。このブラウザは空です。リポジトリを上書きしないよう Pull を推奨します。"
   },
   "options_onboardingWizardTitle": {
     "message": "セットアップウィザード"
@@ -1158,8 +1533,17 @@
   "options_onboardingWizardTokenValidated": {
     "message": "トークンは有効で必要なスコープがあります。"
   },
+  "options_ownerHint_gitlab": {
+    "message": "ユーザー名、グループ、または group/subgroup パス（例: mygroup/subgroup）。"
+  },
   "options_ownerPlaceholder": {
     "message": "your-github-username"
+  },
+  "options_ownerPlaceholderGitea": {
+    "message": "gitea-ユーザー名"
+  },
+  "options_ownerPlaceholder_gitlab": {
+    "message": "ユーザーまたは group/subgroup"
   },
   "options_passwordPlaceholder": {
     "message": "パスワード"
@@ -1256,6 +1640,21 @@
   },
   "options_selectFile": {
     "message": "ファイルを選択..."
+  },
+  "options_serverUrl": {
+    "message": "サーバー URL"
+  },
+  "options_serverUrlHint": {
+    "message": "Git サーバーのベース URL（/api/v1 または /api/v4 サフィックスなし）。"
+  },
+  "options_serverUrlPlaceholder_github": {
+    "message": "https://github.company.com"
+  },
+  "options_serverUrlPlaceholder_gitlab": {
+    "message": "https://gitlab.com（GitLab.com は空のまま）"
+  },
+  "options_serverUrlRequired": {
+    "message": "このプロバイダーにはサーバー URL が必要です。"
   },
   "options_settingsCard": {
     "message": "設定"
@@ -1414,6 +1813,9 @@
   "options_subTabGitAdd": {
     "message": "Git Add"
   },
+  "options_subTabHistory": {
+    "message": "履歴"
+  },
   "options_subTabMenuAdvanced": {
     "message": "詳細と安全性"
   },
@@ -1510,17 +1912,56 @@
   "options_themeAuto": {
     "message": "A 自動（システム）"
   },
+  "options_themeAutoLabel": {
+    "message": "自動"
+  },
   "options_themeDark": {
     "message": "☽ ダーク"
   },
+  "options_themeDarkLabel": {
+    "message": "ダーク"
+  },
   "options_themeLight": {
     "message": "☀ ライト"
+  },
+  "options_themeLightLabel": {
+    "message": "ライト"
   },
   "options_toggleToken": {
     "message": "トークンの表示/非表示"
   },
   "options_tokenHint": {
     "message": "<code>repo</code> スコープ (classic) または <code>Contents: Read/Write</code> および <code>Metadata: Read</code> (fine-grained) が必要です。<a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">トークンを作成</a>"
+  },
+  "options_tokenHintHtml_codeberg": {
+    "message": "<a href=\"https://codeberg.org/user/settings/applications\" target=\"_blank\" rel=\"noopener\">Codeberg → ユーザー設定 → アプリケーション</a> でリポジトリ読み書き権限付きトークンを作成してください。"
+  },
+  "options_tokenHintHtml_forgejo": {
+    "message": "Forgejo サーバーの <strong>ユーザー設定 → アプリケーション</strong> でリポジトリ読み書き権限付きトークンを作成してください。"
+  },
+  "options_tokenHintHtml_gitea": {
+    "message": "<strong>ユーザー設定 → アプリケーション</strong> でリポジトリ読み書き権限付きトークンを作成してください。"
+  },
+  "options_tokenHintHtml_gitlab": {
+    "message": "<a href=\"https://gitlab.com/-/user_settings/personal_access_tokens\" target=\"_blank\" rel=\"noopener\">GitLab → ユーザー設定 → アクセストークン</a> で <code>api</code> スコープ（リポジトリ読み書き）のトークンを作成してください。"
+  },
+  "options_tokenHintHtml_gogs": {
+    "message": "Gogs サーバーの <strong>ユーザー設定 → アプリケーション</strong> でリポジトリ読み書き権限付きトークンを作成してください。"
+  },
+  "options_tokenPlaceholderGitea": {
+    "message": "gitea-アクセストークン"
+  },
+  "options_tokenPlaceholderGithub": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitea": {
+    "message": "アクセストークン"
+  },
+  "options_tokenPlaceholder_github": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitlab": {
+    "message": "glpat-xxxxxxxxxxxxxxxxxxxx"
   },
   "options_tokenValidMissingScope": {
     "message": "トークンは有効（$1）ですが、「repo」スコープがありません。"
@@ -1530,6 +1971,51 @@
   },
   "options_tokenValidSpecifyRepo": {
     "message": "トークンは有効です！ユーザー: $1。リポジトリを指定してください。"
+  },
+  "options_transferApplyLocal": {
+    "message": "ブラウザに適用（ターゲットがアクティブな場合のみ）"
+  },
+  "options_transferCancel": {
+    "message": "キャンセル"
+  },
+  "options_transferDesc": {
+    "message": "プロファイル間でブックマークをコピーします（例: GitHub → Gitea 移行）。ターゲットプロファイルがアクティブでローカル適用を選択しない限りブラウザは変更しません。"
+  },
+  "options_transferDuplicateFoldersWarning": {
+    "message": "転送結果の重複フォルダ名（スラッグ衝突）: $1。転送前にソースプロファイルのブックマークでこれらのフォルダをマージしないと、重複がターゲットリモートにコピーされます。"
+  },
+  "options_transferFolder": {
+    "message": "フォルダ（任意）"
+  },
+  "options_transferFolderHint": {
+    "message": "リポジトリフォルダ下の相対パス（例: toolbar/work）。すべてのブックマークの場合は空のまま。"
+  },
+  "options_transferMergeConfirm": {
+    "message": "既存ファイル $1 件あるターゲットにマージしますか？既存のリモートブックマークは保持され、重複フォルダが発生する場合があります。続行しますか？"
+  },
+  "options_transferMergeHint": {
+    "message": "マージは既存のすべてのターゲットファイルを保持しソースブックマークを追加します。重複フォルダが発生する場合があります（例: books と books-2）。クリーンな移行にはターゲットを置換を使用してください。"
+  },
+  "options_transferMergeWarning": {
+    "message": "ターゲットには既にブックマークファイル $1 件があります。マージはそれらすべてとコピーしたソースファイルを保持します — 重複フォルダの可能性が高いです。"
+  },
+  "options_transferMode": {
+    "message": "モード"
+  },
+  "options_transferModeMerge": {
+    "message": "ターゲットにマージ"
+  },
+  "options_transferModeReplace": {
+    "message": "ターゲットを置換"
+  },
+  "options_transferOpen": {
+    "message": "転送…"
+  },
+  "options_transferPreview": {
+    "message": "プレビュー"
+  },
+  "options_transferPreviewResult": {
+    "message": "ソース: $1（$2 ファイル）。ターゲットに既存 $3 ファイル → 転送後 $4。"
   },
   "options_transferProgressApplying": {
     "message": "ブラウザに適用中…"
@@ -1548,6 +2034,36 @@
   },
   "options_transferProgressPreparing": {
     "message": "転送を準備中…"
+  },
+  "options_transferPush": {
+    "message": "ターゲットリポジトリにプッシュ"
+  },
+  "options_transferReplaceWarning": {
+    "message": "置換は転送結果に含まれないリモートファイル $1 件を削除します。"
+  },
+  "options_transferRun": {
+    "message": "転送"
+  },
+  "options_transferSource": {
+    "message": "ソースプロファイル"
+  },
+  "options_transferSourceBrowser": {
+    "message": "ブラウザ"
+  },
+  "options_transferSourceCache": {
+    "message": "キャッシュ"
+  },
+  "options_transferSourceRemote": {
+    "message": "リモート"
+  },
+  "options_transferTarget": {
+    "message": "ターゲットプロファイル"
+  },
+  "options_transferTargetWarning": {
+    "message": "警告: ターゲットには既にブックマークデータがあります。"
+  },
+  "options_transferTitle": {
+    "message": "ブックマークを転送"
   },
   "options_version": {
     "message": "バージョン"
@@ -1591,8 +2107,14 @@
   "popup_localToGithub": {
     "message": "ローカル → GitHub"
   },
+  "popup_localToRemote": {
+    "message": "ローカル → リモート"
+  },
   "popup_minAgo": {
     "message": "$1分前"
+  },
+  "popup_mirrorStatus": {
+    "message": "ミラー: $1"
   },
   "popup_nextSyncIn": {
     "message": "次の同期まで $1"
@@ -1614,6 +2136,9 @@
   },
   "popup_ready": {
     "message": "準備完了"
+  },
+  "popup_remoteToLocal": {
+    "message": "リモート → ローカル"
   },
   "popup_reportIssue": {
     "message": "問題を報告"
@@ -1645,6 +2170,9 @@
   "search_openBtn": {
     "message": "開く"
   },
+  "search_resultsLabel": {
+    "message": "検索結果"
+  },
   "search_statusNoResults": {
     "message": "ブックマークが見つかりません"
   },
@@ -1662,8 +2190,20 @@
   "search_subtitle": {
     "message": "ローカルブックマークを検索し、一致するものを新しいタブで開きます。"
   },
+  "search_syncComplete": {
+    "message": "同期完了"
+  },
+  "search_syncFailed": {
+    "message": "同期失敗: $1"
+  },
+  "search_syncing": {
+    "message": "同期中…"
+  },
   "search_title": {
     "message": "ブックマーク検索"
+  },
+  "search_unknownError": {
+    "message": "不明なエラー"
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – ブックマーク検索"
@@ -1698,8 +2238,14 @@
   "sync_conflictRemoteModified": {
     "message": "競合が検出されました: リモートも変更されています。"
   },
+  "sync_loadedFromRemote": {
+    "message": "リモートリポジトリから読み込みました。"
+  },
   "sync_noBookmarksOnGithub": {
     "message": "GitHub にブックマークが見つかりません。"
+  },
+  "sync_noBookmarksOnRemote": {
+    "message": "リモートリポジトリにブックマークが見つかりません。"
   },
   "sync_noChanges": {
     "message": "前回の同期以降、変更はありません。"
@@ -1734,7 +2280,37 @@
   "sync_pushSuccess": {
     "message": "ブックマークを GitHub にプッシュしました。"
   },
+  "sync_remoteChangedRetry": {
+    "message": "リモートが現在変更中です。しばらくしてから再度同期してください。"
+  },
   "sync_syncFailed": {
     "message": "同期失敗: $1"
+  },
+  "transfer_commitMessage": {
+    "message": "プロファイル $1 からのブックマーク転送"
+  },
+  "transfer_connectionLost": {
+    "message": "転送接続が失われました。オプションページを再読み込みして再試行してください。"
+  },
+  "transfer_mergeConflicts": {
+    "message": "マージがブロックされました: パス競合 $1 件。重複ファイルを解決するか置換モードを使用してください。"
+  },
+  "transfer_noBookmarks": {
+    "message": "転送するブックマークファイルがありません"
+  },
+  "transfer_profileNotFound": {
+    "message": "プロファイルが見つかりません"
+  },
+  "transfer_sameProfile": {
+    "message": "ソースとターゲットは異なるプロファイルである必要があります"
+  },
+  "transfer_success": {
+    "message": "ブックマークファイル $1 件を転送しました"
+  },
+  "whatsnew_close": {
+    "message": "閉じる"
+  },
+  "whatsnew_title": {
+    "message": "GitSyncMarks $1 の新機能"
   }
 }

@@ -17,8 +17,41 @@
   "api_invalidToken": {
     "message": "Token invalide. Vérifiez votre Personal Access Token."
   },
+  "api_listCommitsFailed": {
+    "message": "Échec de la liste des commits (HTTP $1)."
+  },
+  "api_networkError": {
+    "message": "Erreur réseau. Vérifiez votre connexion Internet et réessayez."
+  },
   "api_rateLimitExceeded": {
     "message": "Limite de débit de l'API GitHub dépassée. Veuillez patienter."
+  },
+  "api_treeTruncated": {
+    "message": "Le dépôt est trop volumineux pour être lu en une requête (GitHub a tronqué l'arborescence). La synchro a été arrêtée pour éviter toute perte de données."
+  },
+  "cleanOrphans_commitMessage": {
+    "message": "Supprimer les fichiers favoris orphelins absents localement"
+  },
+  "cleanOrphans_confirm": {
+    "message": "Supprimer $1 fichier(s) orphelin(s) dans $2 dossier(s) de premier niveau du distant ? Les favoris locaux restent inchangés. Irréversible depuis GitSyncMarks (utilisez l'historique Git pour restaurer)."
+  },
+  "cleanOrphans_noLocalBaseline": {
+    "message": "Aucune base locale de favoris pour ce profil. Basculez vers le profil et synchronisez une fois, ou utilisez Nettoyer le distant sur le profil actif."
+  },
+  "cleanOrphans_none": {
+    "message": "Aucun fichier favori orphelin sur le distant."
+  },
+  "cleanOrphans_previewFailed": {
+    "message": "Impossible de prévisualiser les orphelins distants."
+  },
+  "cleanOrphans_previewResult": {
+    "message": "$1 fichier(s) orphelin(s) dans $2 dossier(s) de premier niveau seraient supprimés."
+  },
+  "cleanOrphans_remoteFetchFailed": {
+    "message": "Impossible de lire le dépôt distant : $1"
+  },
+  "cleanOrphans_success": {
+    "message": "$1 fichier(s) orphelin(s) supprimé(s) de $2 dossier(s) de premier niveau sur le distant."
   },
   "commands_openOptions": {
     "message": "Ouvrir les paramètres de l'extension"
@@ -82,6 +115,24 @@
   "contextMenu_notifFolderMissing": {
     "message": "Le dossier sélectionné n'existe plus. Actualisez vos paramètres de dossiers rapides."
   },
+  "contextMenu_notifLinkwardenError": {
+    "message": "Erreur Linkwarden : $1"
+  },
+  "contextMenu_notifLinkwardenGrantPermissions": {
+    "message": "Veuillez accorder les permissions via « Tester la connexion » dans les Options"
+  },
+  "contextMenu_notifLinkwardenNotConfigured": {
+    "message": "Linkwarden non configuré"
+  },
+  "contextMenu_notifLinkwardenSaved": {
+    "message": "Lien enregistré dans Linkwarden"
+  },
+  "contextMenu_notifLinkwardenSavedWithScreenshot": {
+    "message": "Lien et capture enregistrés dans Linkwarden"
+  },
+  "contextMenu_notifLinkwardenUrlInvalid": {
+    "message": "L'URL Linkwarden est invalide"
+  },
   "contextMenu_notifNoFavicon": {
     "message": "Aucun favicon disponible pour cette page"
   },
@@ -137,10 +188,10 @@
     "message": "Synchroniser maintenant"
   },
   "extDescription": {
-    "message": "Synchro de favoris via GitHub. Synergie Linkwarden, recherche intelligente et application mobile. Direct, sécurisé, privé."
+    "message": "Synchro de favoris via GitHub, GitLab, Codeberg, Gitea et plus. Linkwarden, recherche intelligente, application mobile. Direct, sécurisé, privé."
   },
   "extDescriptionFirefox": {
-    "message": "Synchro de favoris via GitHub. Synergie Linkwarden, recherche intelligente et assistant de config. Bidirectionnel, sécurisé, privé. Support Firefox natif."
+    "message": "Synchro de favoris via GitHub, GitLab, Codeberg, Gitea et plus. Linkwarden, recherche intelligente, assistant de config. Bidirectionnel, sécurisé et privé. Support Firefox complet. Sans intermédiaire."
   },
   "extName": {
     "message": "GitSyncMarks"
@@ -175,6 +226,12 @@
   "help_backupTitle": {
     "message": "Sauvegarde"
   },
+  "help_cleanOrphansDesc": {
+    "message": "Dans le sous-onglet Synchro, prévisualisez et supprimez les fichiers favoris distants absents de vos favoris locaux (profil actif). Utile après des dossiers en double suite à un transfert par fusion."
+  },
+  "help_cleanOrphansTitle": {
+    "message": "Nettoyer les orphelins distants"
+  },
   "help_conflictDesc": {
     "message": "Si local et distant ont changé, le popup affiche un conflit. Choisissez <strong>Push</strong> (local gagne) ou <strong>Pull</strong> (distant gagne). Pas de fusion automatique."
   },
@@ -196,6 +253,12 @@
   "help_debugLogTitle": {
     "message": "Journal de débogage"
   },
+  "help_densityDesc": {
+    "message": "Utilisez les boutons S / M / L dans l'en-tête pour basculer entre Compact, Moyen et Grand. Le réglage s'applique à toutes les surfaces de l'extension (options, popup, recherche, enregistrement Linkwarden) et se synchronise entre appareils."
+  },
+  "help_densityTitle": {
+    "message": "Densité de l'interface"
+  },
   "help_discussions": {
     "message": "Discussions"
   },
@@ -209,7 +272,7 @@
     "message": "Fichiers générés"
   },
   "help_gettingStartedIntro": {
-    "message": "Créez un dépôt GitHub pour vos favoris, puis un Personal Access Token (PAT) avec le scope <code>repo</code> (classic) ou <code>Contents: Read/Write</code> et <code>Metadata: Read</code> (fine-grained). Dans l'onglet GitHub, entrez le token, le propriétaire, le nom du dépôt, la branche (souvent <code>main</code>), et le chemin du dossier (défaut : <code>bookmarks</code>). Cliquez sur <strong>Tester la connexion</strong> pour vérifier."
+    "message": "Créez un dépôt Git pour vos favoris sur <strong>GitHub</strong>, <strong>GitLab</strong>, <strong>Codeberg</strong>, <strong>Gitea</strong>, <strong>Forgejo</strong> ou <strong>Gogs</strong>. Dans <strong>Git → Connexion</strong>, choisissez votre fournisseur, saisissez un jeton d'accès personnel, propriétaire/nom du dépôt, branche (généralement <code>main</code>) et chemin du dossier (par défaut : <code>bookmarks</code>). Les fournisseurs auto-hébergés nécessitent une URL serveur ; autorisez l'accès à l'hôte si demandé. Cliquez sur <strong>Tester la connexion</strong> pour vérifier."
   },
   "help_gettingStartedTitle": {
     "message": "Démarrage"
@@ -219,6 +282,36 @@
   },
   "help_githubReposTitle": {
     "message": "Dossier Repos GitHub"
+  },
+  "help_headerLangDesc": {
+    "message": "Le bouton de langue dans l'en-tête change la langue d'affichage de l'extension. Le réglage est enregistré et synchronisé sur tous vos appareils."
+  },
+  "help_headerLangTitle": {
+    "message": "Langue"
+  },
+  "help_historyIntro": {
+    "message": "Chaque synchro crée un commit Git. Parcourez les commits récents dans le sous-onglet Historique (sous Fichiers) et restaurez les favoris d'une version antérieure."
+  },
+  "help_historyLoadDesc": {
+    "message": "Récupère les 20 derniers commits ayant touché votre chemin de favoris. L'en-tête du tableau indique les colonnes (date, hash court, identifiant client extrait du message de commit). Survolez la cellule client pour le message complet. Chaque ligne a une icône d'aperçu (loupe) et une icône de restauration."
+  },
+  "help_historyLoadLabel": {
+    "message": "Charger l'historique"
+  },
+  "help_historyRestoreDesc": {
+    "message": "Remplace tous les favoris locaux par l'état de ce commit. Dans la liste, cliquez sur l'icône de restauration, puis cliquez à nouveau lorsque la confirmation courte s'affiche (ou le texte complet dans le panneau de diff). La branche distante n'est pas réécrite — vos données distantes actuelles restent intactes. La prochaine synchro renverra l'état local."
+  },
+  "help_historyRestoreLabel": {
+    "message": "Restaurer"
+  },
+  "help_historyTitle": {
+    "message": "Historique de synchro et annulation"
+  },
+  "help_historyUndoDesc": {
+    "message": "Retour en un clic au commit précédant la dernière synchro ayant modifié les favoris locaux. Disponible après tout pull ou fusion ayant modifié les favoris locaux."
+  },
+  "help_historyUndoLabel": {
+    "message": "Annuler la dernière synchro"
   },
   "help_links": {
     "message": "Liens"
@@ -237,6 +330,9 @@
   },
   "help_linkwardenTitle": {
     "message": "Linkwarden"
+  },
+  "help_menuTitle": {
+    "message": "Menu"
   },
   "help_notificationsDesc": {
     "message": "Choisir quand afficher les notifications : Toutes, Erreurs uniquement, ou Désactivé."
@@ -298,6 +394,18 @@
   "help_profilesTitle": {
     "message": "Profils"
   },
+  "help_provider_codeberg": {
+    "message": "<strong>Codeberg</strong> est un hébergeur Forgejo sur <code>codeberg.org</code>. Sélectionnez Codeberg comme fournisseur ; l'URL serveur est prédéfinie. Créez un jeton dans Paramètres utilisateur → Applications."
+  },
+  "help_provider_forgejo": {
+    "message": "<strong>Forgejo</strong> utilise la même API que Gitea. Saisissez l'URL de votre serveur Forgejo et un jeton d'accès personnel depuis Paramètres utilisateur → Applications."
+  },
+  "help_provider_gitlab": {
+    "message": "<strong>GitLab</strong> prend en charge gitlab.com et les instances auto-hébergées. Pour les projets de sous-groupe, utilisez <code>groupe/sous-groupe</code> comme propriétaire et le nom du projet comme dépôt. Laissez l'URL serveur vide pour GitLab.com."
+  },
+  "help_provider_gogs": {
+    "message": "<strong>Gogs</strong> partage une API similaire à Gitea. Saisissez l'URL de votre serveur Gogs et un jeton d'accès depuis Paramètres utilisateur → Applications."
+  },
   "help_quickSync": {
     "message": "Synchroniser les favoris rapidement"
   },
@@ -340,6 +448,12 @@
   "help_themeCycleTitle": {
     "message": "Thème"
   },
+  "help_transferDesc": {
+    "message": "Utilisez <strong>Transférer…</strong> dans l'onglet Profil pour copier les favoris d'un profil à un autre sans changer de profil d'abord. Usage typique : migrer de GitHub vers Gitea. Choisissez <strong>Remplacer la cible</strong> pour une migration propre ; <strong>Fusionner dans la cible</strong> conserve les fichiers existants et peut créer des dossiers en double. Après une migration désordonnée, utilisez <strong>Nettoyer les orphelins distants</strong> dans le sous-onglet Synchro. Les miroirs dans l'onglet Connexion Git envoient une copie vers des distants de sauvegarde après chaque synchro."
+  },
+  "help_transferTitle": {
+    "message": "Transférer les favoris entre profils"
+  },
   "help_voteBacklogBtn": {
     "message": "Voter sur le backlog"
   },
@@ -362,10 +476,13 @@
     "message": "Pourquoi la sync prend-elle parfois du temps ?"
   },
   "help_wizardRestartDesc": {
-    "message": "Guide étape par étape pour connecter votre dépôt GitHub et effectuer la première synchronisation."
+    "message": "Guide pas à pas pour connecter votre dépôt Git et effectuer la première synchronisation."
   },
   "help_wizardRestartTitle": {
     "message": "Assistant de configuration"
+  },
+  "help_wizardSyncChoice": {
+    "message": "Dans l'assistant de configuration, <strong>Vérifier la connexion</strong> valide uniquement l'accès — aucune synchro n'est effectuée. Vous choisissez ensuite pull, fusion/synchro, push, créer la structure de dossiers ou ignorer, avec une confirmation avant toute écriture dans le dépôt."
   },
   "linkwardenSave_cancelBtn": {
     "message": "Annuler"
@@ -532,6 +649,18 @@
   "options_chooseFile": {
     "message": "Choisir un fichier"
   },
+  "options_cleanOrphansDesc": {
+    "message": "Supprimez les fichiers favoris distants absents de vos favoris locaux (profil actif). À utiliser après un transfert désordonné ou des dossiers en double sur le serveur."
+  },
+  "options_cleanOrphansPreview": {
+    "message": "Aperçu des orphelins"
+  },
+  "options_cleanOrphansRun": {
+    "message": "Nettoyer le distant"
+  },
+  "options_cleanOrphansTitle": {
+    "message": "Nettoyer les orphelins distants"
+  },
   "options_connectionOk": {
     "message": "Connexion OK ! Utilisateur : $1, Dépôt : $2"
   },
@@ -636,6 +765,18 @@
   },
   "options_decryptError": {
     "message": "Déchiffrement échoué. Mauvais mot de passe ?"
+  },
+  "options_densityCompact": {
+    "message": "Compact"
+  },
+  "options_densityGroupLabel": {
+    "message": "Densité de l'interface"
+  },
+  "options_densityLarge": {
+    "message": "Grand"
+  },
+  "options_densityMedium": {
+    "message": "Moyen"
   },
   "options_documentation": {
     "message": "Documentation"
@@ -754,6 +895,51 @@
   "options_generatedFilesTitle": {
     "message": "Fichiers générés"
   },
+  "options_gheServerUrlEnabled": {
+    "message": "Utiliser une URL serveur personnalisée (GitHub Enterprise)"
+  },
+  "options_gitConnection": {
+    "message": "Connexion Git"
+  },
+  "options_gitProvider": {
+    "message": "Fournisseur Git"
+  },
+  "options_gitProviderGitea": {
+    "message": "Gitea / Forgejo"
+  },
+  "options_gitProviderGithub": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_codeberg": {
+    "message": "Codeberg"
+  },
+  "options_gitProvider_forgejo": {
+    "message": "Forgejo"
+  },
+  "options_gitProvider_gitea": {
+    "message": "Gitea"
+  },
+  "options_gitProvider_github": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_gitlab": {
+    "message": "GitLab"
+  },
+  "options_gitProvider_gogs": {
+    "message": "Gogs"
+  },
+  "options_giteaPermissionDenied": {
+    "message": "Permission d'hôte pour le serveur Gitea refusée. Autorisez l'accès si demandé, puis réessayez."
+  },
+  "options_giteaTokenHelpLink": {
+    "message": "Ouvrir les paramètres utilisateur Gitea (Applications)"
+  },
+  "options_giteaTokenHintHtml": {
+    "message": "Créez un jeton dans Gitea sous <strong>Paramètres utilisateur → Applications</strong> avec accès lecture/écriture au dépôt. Les jetons Gitea ne sont <em>pas</em> des chaînes de type GitHub <code>ghp_…</code>."
+  },
+  "options_giteaTokenWizardHelpHtml": {
+    "message": "Dans Gitea, ouvrez <strong>Paramètres utilisateur → Applications → Générer un nouveau jeton</strong>. Activez la lecture et l'écriture du dépôt. Copiez le jeton — il n'est affiché qu'une fois. Les jetons Gitea n'utilisent pas de préfixes GitHub comme <code>ghp_</code>."
+  },
   "options_githubConnection": {
     "message": "Connexion GitHub"
   },
@@ -786,6 +972,72 @@
   },
   "options_githubReposTitle": {
     "message": "Dossier Repos GitHub"
+  },
+  "options_historyColActions": {
+    "message": "Actions"
+  },
+  "options_historyColClient": {
+    "message": "Client"
+  },
+  "options_historyColCommit": {
+    "message": "Commit"
+  },
+  "options_historyColDate": {
+    "message": "Date"
+  },
+  "options_historyCurrent": {
+    "message": "actuel"
+  },
+  "options_historyDesc": {
+    "message": "Parcourez les commits de synchro récents et restaurez les favoris d'une version antérieure. La restauration ne modifie que les favoris locaux — la branche distante n'est pas réécrite."
+  },
+  "options_historyDiffAdded": {
+    "message": "Ajouté"
+  },
+  "options_historyDiffChanged": {
+    "message": "Modifié"
+  },
+  "options_historyDiffClose": {
+    "message": "Fermer"
+  },
+  "options_historyDiffLoading": {
+    "message": "Chargement de l'aperçu…"
+  },
+  "options_historyDiffNoChanges": {
+    "message": "Aucune différence — ce commit correspond à vos favoris actuels."
+  },
+  "options_historyDiffRemoved": {
+    "message": "Supprimé"
+  },
+  "options_historyEmpty": {
+    "message": "Aucun commit trouvé."
+  },
+  "options_historyLoadBtn": {
+    "message": "Charger l'historique"
+  },
+  "options_historyPreviewBtn": {
+    "message": "Aperçu"
+  },
+  "options_historyRestoreBtn": {
+    "message": "Restaurer"
+  },
+  "options_historyRestoreConfirmBtn": {
+    "message": "Cliquez à nouveau pour confirmer"
+  },
+  "options_historyRestoreConfirmShort": {
+    "message": "Cliquez à nouveau"
+  },
+  "options_historyRestoring": {
+    "message": "Restauration…"
+  },
+  "options_historyTitle": {
+    "message": "Historique de synchro"
+  },
+  "options_historyUndoBtn": {
+    "message": "Annuler la dernière synchro"
+  },
+  "options_hostPermissionDenied": {
+    "message": "Permission d'hôte pour le serveur Git refusée. Autorisez l'accès si demandé, puis réessayez."
   },
   "options_importBookmarks": {
     "message": "Importer des favoris"
@@ -841,6 +1093,12 @@
   "options_linkwardenApiKey": {
     "message": "Clé API"
   },
+  "options_linkwardenConnectionFailed": {
+    "message": "Échec de la connexion : $1"
+  },
+  "options_linkwardenConnectionOk": {
+    "message": "Connexion réussie !"
+  },
   "options_linkwardenDefaultCollection": {
     "message": "Collection par défaut"
   },
@@ -859,11 +1117,17 @@
   "options_linkwardenEnabled": {
     "message": "Activer Linkwarden"
   },
+  "options_linkwardenHostPermissionDenied": {
+    "message": "Permission d'hôte refusée. Vérifiez la barre d'adresse ou le bloqueur de popups."
+  },
   "options_linkwardenInstanceUrl": {
     "message": "URL de l'instance"
   },
   "options_linkwardenIntro": {
     "message": "Configurez votre instance Linkwarden pour enregistrer des marque-pages directement depuis le menu contextuel."
+  },
+  "options_linkwardenInvalidUrlFormat": {
+    "message": "Format d'URL invalide"
   },
   "options_linkwardenSyncEnabled": {
     "message": "Synchroniser les collections avec les signets"
@@ -894,8 +1158,44 @@
   "options_linkwardenTitle": {
     "message": "Intégration Linkwarden"
   },
+  "options_linkwardenUrlTokenRequired": {
+    "message": "L'URL et le jeton sont requis"
+  },
   "options_menu_showAsSubmenu": {
     "message": "Afficher comme sous-menu"
+  },
+  "options_mirrorsAdd": {
+    "message": "+ Ajouter un miroir"
+  },
+  "options_mirrorsDesc": {
+    "message": "Copies en push uniquement des fichiers favoris vers des distants Git supplémentaires après chaque synchro principale réussie. Les modifications directes sur un miroir sont écrasées à la prochaine synchro."
+  },
+  "options_mirrorsLabel": {
+    "message": "Libellé"
+  },
+  "options_mirrorsPaused": {
+    "message": "En pause"
+  },
+  "options_mirrorsPushGenerated": {
+    "message": "Inclure les fichiers générés (README, HTML, flux, Dashy)"
+  },
+  "options_mirrorsPushSettings": {
+    "message": "Inclure les paramètres chiffrés"
+  },
+  "options_mirrorsRemove": {
+    "message": "Supprimer"
+  },
+  "options_mirrorsStatusError": {
+    "message": "Erreur miroir : $1"
+  },
+  "options_mirrorsStatusOk": {
+    "message": "Dernier push OK"
+  },
+  "options_mirrorsTest": {
+    "message": "Tester"
+  },
+  "options_mirrorsTitle": {
+    "message": "Destinations miroir"
   },
   "options_mobileAppAlert": {
     "message": "<strong>Note pour les utilisateurs Android :</strong> Firefox pour Android ne prend pas en charge la synchronisation directe des marque-pages via les extensions. Vous devez utiliser l'application compagnon."
@@ -987,6 +1287,9 @@
   "options_onboardingWizardBack": {
     "message": "Retour"
   },
+  "options_onboardingWizardCheckConnection": {
+    "message": "Vérifier la connexion"
+  },
   "options_onboardingWizardCompleted": {
     "message": "Assistant terminé avec succès."
   },
@@ -1036,7 +1339,7 @@
     "message": "Enregistrement de l'état de synchronisation"
   },
   "options_onboardingWizardPhaseUploading": {
-    "message": "Téléchargement des favoris sur GitHub"
+    "message": "Téléversement des favoris vers le distant"
   },
   "options_onboardingWizardRepoCreateFailed": {
     "message": "Impossible de créer le dépôt avec ce token/ces permissions."
@@ -1068,6 +1371,9 @@
   "options_onboardingWizardStart": {
     "message": "Démarrer l'assistant de configuration"
   },
+  "options_onboardingWizardStartSync": {
+    "message": "Démarrer la synchro"
+  },
   "options_onboardingWizardStepFinishText": {
     "message": "Configuration terminée. Vous pouvez continuer avec les réglages standard."
   },
@@ -1080,6 +1386,12 @@
   "options_onboardingWizardStepHasTokenTitle": {
     "message": "Avez-vous déjà un token ?"
   },
+  "options_onboardingWizardStepProviderText": {
+    "message": "Sélectionnez GitHub, GitLab, Codeberg, Gitea, Forgejo ou Gogs. Chaque profil stocke son propre fournisseur et URL serveur."
+  },
+  "options_onboardingWizardStepProviderTitle": {
+    "message": "Choisir votre fournisseur Git"
+  },
   "options_onboardingWizardStepRepoDecisionText": {
     "message": "Choisissez entre créer automatiquement le dépôt ou utiliser un dépôt existant."
   },
@@ -1091,6 +1403,9 @@
   },
   "options_onboardingWizardStepRepoTitle": {
     "message": "Paramètres du dépôt"
+  },
+  "options_onboardingWizardStepSyncChoiceText": {
+    "message": "Choisissez comment synchroniser, lisez l'avertissement, puis cliquez sur Démarrer la synchro. Rien n'est écrit dans le dépôt tant que vous n'avez pas confirmé."
   },
   "options_onboardingWizardStepSyncTextEmpty": {
     "message": "Le chemin est vide. Créez la structure initiale pour commencer."
@@ -1114,7 +1429,7 @@
     "message": "Token d'accès"
   },
   "options_onboardingWizardStepValidateText": {
-    "message": "Lancez le test pour vérifier le token, le dépôt et l'accès au chemin."
+    "message": "Cliquez sur Vérifier la connexion pour valider le jeton, le dépôt et l'accès au chemin. Aucune synchronisation n'est effectuée à cette étape."
   },
   "options_onboardingWizardStepValidateTitle": {
     "message": "Tester la connexion"
@@ -1125,8 +1440,68 @@
   "options_onboardingWizardStepWelcomeTitle": {
     "message": "Bienvenue"
   },
+  "options_onboardingWizardSyncConfirmRunBtn": {
+    "message": "Exécuter"
+  },
+  "options_onboardingWizardSyncConfirmSkipBtn": {
+    "message": "Ignorer"
+  },
+  "options_onboardingWizardSyncConfirm_initialize": {
+    "message": "Créer la structure initiale du dossier bookmarks/ sur le dépôt distant (sans téléverser de favoris locaux) ?"
+  },
+  "options_onboardingWizardSyncConfirm_pull": {
+    "message": "Télécharger $2 favori(s) du dépôt distant dans ce navigateur ?"
+  },
+  "options_onboardingWizardSyncConfirm_pullOverwriteLocal": {
+    "message": "Le pull remplace les $1 favori(s) locaux par $2 du dépôt distant. Continuer ?"
+  },
+  "options_onboardingWizardSyncConfirm_push": {
+    "message": "Téléverser $1 favori(s) locaux vers le dépôt distant ?"
+  },
+  "options_onboardingWizardSyncConfirm_pushDanger": {
+    "message": "Le push écrasera le dépôt distant. $2 favori(s) distant(s) peuvent être supprimés ; seuls $1 favori(s) locaux resteront. Continuer ?"
+  },
+  "options_onboardingWizardSyncConfirm_skip": {
+    "message": "Ignorer la première synchro pour l'instant ? Vous pourrez synchroniser manuellement depuis le popup plus tard."
+  },
+  "options_onboardingWizardSyncConfirm_sync": {
+    "message": "Exécuter une fusion/synchro entre $1 favori(s) local(aux) et $2 distant(s) ? Des conflits pourront nécessiter une résolution ultérieure."
+  },
   "options_onboardingWizardSyncInProgress": {
     "message": "Travail en arrière-plan, veuillez patienter..."
+  },
+  "options_onboardingWizardSyncModeLabel": {
+    "message": "Première action de synchro"
+  },
+  "options_onboardingWizardSyncMode_initialize": {
+    "message": "Créer uniquement la structure de dossiers"
+  },
+  "options_onboardingWizardSyncMode_pull": {
+    "message": "Pull uniquement (télécharger depuis le distant)"
+  },
+  "options_onboardingWizardSyncMode_push": {
+    "message": "Push uniquement (téléverser les favoris locaux — écrase le distant)"
+  },
+  "options_onboardingWizardSyncMode_skip": {
+    "message": "Ignorer pour l'instant"
+  },
+  "options_onboardingWizardSyncMode_sync": {
+    "message": "Fusion / synchro (recommandé quand les deux côtés ont des favoris)"
+  },
+  "options_onboardingWizardSyncWarn_both": {
+    "message": "Des favoris existent des deux côtés. Fusion/synchro combine les changements ; pull ou push écrase un côté."
+  },
+  "options_onboardingWizardSyncWarn_emptyBoth": {
+    "message": "Le chemin distant et le navigateur sont vides. Créez la structure de dossiers ou ignorez et synchronisez plus tard."
+  },
+  "options_onboardingWizardSyncWarn_localOnly": {
+    "message": "Le chemin distant est vide ; les favoris locaux seront téléversés lors du push."
+  },
+  "options_onboardingWizardSyncWarn_pushDanger": {
+    "message": "Attention : le push supprimera $1 fichier(s) favori(s) distant(s) absents localement et remplacera le dépôt par les favoris de ce navigateur."
+  },
+  "options_onboardingWizardSyncWarn_remoteOnly": {
+    "message": "Le distant contient des favoris ; ce navigateur est vide. Le pull est recommandé pour ne pas écraser le dépôt."
   },
   "options_onboardingWizardTitle": {
     "message": "Assistant de configuration"
@@ -1158,8 +1533,17 @@
   "options_onboardingWizardTokenValidated": {
     "message": "Le token est valide et a le scope requis."
   },
+  "options_ownerHint_gitlab": {
+    "message": "Nom d'utilisateur, groupe ou chemin groupe/sous-groupe (ex. mongroupe/sousgroupe)."
+  },
   "options_ownerPlaceholder": {
     "message": "votre-identifiant-github"
+  },
+  "options_ownerPlaceholderGitea": {
+    "message": "votre-nom-gitea"
+  },
+  "options_ownerPlaceholder_gitlab": {
+    "message": "utilisateur ou groupe/sous-groupe"
   },
   "options_passwordPlaceholder": {
     "message": "Mot de passe"
@@ -1256,6 +1640,21 @@
   },
   "options_selectFile": {
     "message": "Sélectionner un fichier..."
+  },
+  "options_serverUrl": {
+    "message": "URL du serveur"
+  },
+  "options_serverUrlHint": {
+    "message": "URL de base de votre serveur Git (sans suffixe /api/v1 ou /api/v4)."
+  },
+  "options_serverUrlPlaceholder_github": {
+    "message": "https://github.entreprise.com"
+  },
+  "options_serverUrlPlaceholder_gitlab": {
+    "message": "https://gitlab.com (laisser vide pour GitLab.com)"
+  },
+  "options_serverUrlRequired": {
+    "message": "L'URL du serveur est requise pour ce fournisseur."
   },
   "options_settingsCard": {
     "message": "Paramètres"
@@ -1414,6 +1813,9 @@
   "options_subTabGitAdd": {
     "message": "Git Add"
   },
+  "options_subTabHistory": {
+    "message": "Historique"
+  },
   "options_subTabMenuAdvanced": {
     "message": "Avancé et Sécurité"
   },
@@ -1510,17 +1912,56 @@
   "options_themeAuto": {
     "message": "A Auto (système)"
   },
+  "options_themeAutoLabel": {
+    "message": "Auto"
+  },
   "options_themeDark": {
     "message": "☽ Sombre"
   },
+  "options_themeDarkLabel": {
+    "message": "Sombre"
+  },
   "options_themeLight": {
     "message": "☀ Clair"
+  },
+  "options_themeLightLabel": {
+    "message": "Clair"
   },
   "options_toggleToken": {
     "message": "Afficher/masquer le token"
   },
   "options_tokenHint": {
     "message": "Nécessite le scope <code>repo</code> (classic) ou <code>Contents: Read/Write</code> et <code>Metadata: Read</code> (fine-grained). <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Créer un token</a>"
+  },
+  "options_tokenHintHtml_codeberg": {
+    "message": "Créez un jeton sur <a href=\"https://codeberg.org/user/settings/applications\" target=\"_blank\" rel=\"noopener\">Codeberg → Paramètres utilisateur → Applications</a> avec accès lecture/écriture au dépôt."
+  },
+  "options_tokenHintHtml_forgejo": {
+    "message": "Créez un jeton sur votre serveur Forgejo sous <strong>Paramètres utilisateur → Applications</strong> avec accès lecture/écriture au dépôt."
+  },
+  "options_tokenHintHtml_gitea": {
+    "message": "Créez un jeton sous <strong>Paramètres utilisateur → Applications</strong> avec accès lecture/écriture au dépôt."
+  },
+  "options_tokenHintHtml_gitlab": {
+    "message": "Créez un jeton sur <a href=\"https://gitlab.com/-/user_settings/personal_access_tokens\" target=\"_blank\" rel=\"noopener\">GitLab → Paramètres utilisateur → Jetons d'accès</a> avec la portée <code>api</code> (lecture/écriture du dépôt)."
+  },
+  "options_tokenHintHtml_gogs": {
+    "message": "Créez un jeton sur votre serveur Gogs sous <strong>Paramètres utilisateur → Applications</strong> avec accès lecture/écriture au dépôt."
+  },
+  "options_tokenPlaceholderGitea": {
+    "message": "votre-jeton-acces-gitea"
+  },
+  "options_tokenPlaceholderGithub": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitea": {
+    "message": "votre-jeton-acces"
+  },
+  "options_tokenPlaceholder_github": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitlab": {
+    "message": "glpat-xxxxxxxxxxxxxxxxxxxx"
   },
   "options_tokenValidMissingScope": {
     "message": "Token valide ($1), mais le scope \"repo\" est manquant."
@@ -1530,6 +1971,51 @@
   },
   "options_tokenValidSpecifyRepo": {
     "message": "Token valide ! Utilisateur : $1. Veuillez préciser un dépôt."
+  },
+  "options_transferApplyLocal": {
+    "message": "Appliquer au navigateur (uniquement si la cible est active)"
+  },
+  "options_transferCancel": {
+    "message": "Annuler"
+  },
+  "options_transferDesc": {
+    "message": "Copier les favoris d'un profil à un autre (ex. migration GitHub → Gitea). Ne modifie pas le navigateur sauf si le profil cible est actif et que vous choisissez d'appliquer localement."
+  },
+  "options_transferDuplicateFoldersWarning": {
+    "message": "Noms de dossiers en double dans le résultat du transfert (collision de slug) : $1. Fusionnez ces dossiers dans les favoris du profil source avant le transfert, sinon les doublons seront copiés vers le distant cible."
+  },
+  "options_transferFolder": {
+    "message": "Dossier (optionnel)"
+  },
+  "options_transferFolderHint": {
+    "message": "Chemin relatif sous le dossier du dépôt, ex. toolbar/travail. Laissez vide pour tous les favoris."
+  },
+  "options_transferMergeConfirm": {
+    "message": "Fusionner dans une cible avec $1 fichier(s) existant(s) ? Les favoris distants existants sont conservés ; des dossiers en double peuvent en résulter. Continuer ?"
+  },
+  "options_transferMergeHint": {
+    "message": "La fusion conserve tous les fichiers cibles existants et ajoute les favoris source. Cela peut créer des dossiers en double (ex. livres et livres-2). Pour une migration propre, utilisez Remplacer la cible."
+  },
+  "options_transferMergeWarning": {
+    "message": "La cible a déjà $1 fichier(s) favori(s). La fusion les conserve tous plus les fichiers source copiés — des dossiers en double sont probables."
+  },
+  "options_transferMode": {
+    "message": "Mode"
+  },
+  "options_transferModeMerge": {
+    "message": "Fusionner dans la cible"
+  },
+  "options_transferModeReplace": {
+    "message": "Remplacer la cible"
+  },
+  "options_transferOpen": {
+    "message": "Transférer…"
+  },
+  "options_transferPreview": {
+    "message": "Aperçu"
+  },
+  "options_transferPreviewResult": {
+    "message": "Source : $1 ($2 fichiers). La cible a $3 fichiers existants → $4 après transfert."
   },
   "options_transferProgressApplying": {
     "message": "Application dans le navigateur…"
@@ -1548,6 +2034,36 @@
   },
   "options_transferProgressPreparing": {
     "message": "Préparation du transfert…"
+  },
+  "options_transferPush": {
+    "message": "Pousser vers le dépôt cible"
+  },
+  "options_transferReplaceWarning": {
+    "message": "Remplacer supprimera $1 fichier(s) distant(s) non inclus dans le résultat du transfert."
+  },
+  "options_transferRun": {
+    "message": "Transférer"
+  },
+  "options_transferSource": {
+    "message": "Profil source"
+  },
+  "options_transferSourceBrowser": {
+    "message": "navigateur"
+  },
+  "options_transferSourceCache": {
+    "message": "cache"
+  },
+  "options_transferSourceRemote": {
+    "message": "distant"
+  },
+  "options_transferTarget": {
+    "message": "Profil cible"
+  },
+  "options_transferTargetWarning": {
+    "message": "Attention : la cible contient déjà des données de favoris."
+  },
+  "options_transferTitle": {
+    "message": "Transférer les favoris"
   },
   "options_version": {
     "message": "Version"
@@ -1591,8 +2107,14 @@
   "popup_localToGithub": {
     "message": "Local → GitHub"
   },
+  "popup_localToRemote": {
+    "message": "Local → Distant"
+  },
   "popup_minAgo": {
     "message": "il y a $1 min"
+  },
+  "popup_mirrorStatus": {
+    "message": "Miroir : $1"
   },
   "popup_nextSyncIn": {
     "message": "Prochaine sync dans $1"
@@ -1614,6 +2136,9 @@
   },
   "popup_ready": {
     "message": "Prêt"
+  },
+  "popup_remoteToLocal": {
+    "message": "Distant → Local"
   },
   "popup_reportIssue": {
     "message": "Signaler un problème"
@@ -1645,6 +2170,9 @@
   "search_openBtn": {
     "message": "Ouvrir"
   },
+  "search_resultsLabel": {
+    "message": "Résultats de recherche"
+  },
   "search_statusNoResults": {
     "message": "Aucun marque-page trouvé"
   },
@@ -1662,8 +2190,20 @@
   "search_subtitle": {
     "message": "Recherchez des marque-pages locaux et ouvrez les résultats dans un nouvel onglet."
   },
+  "search_syncComplete": {
+    "message": "Synchro terminée"
+  },
+  "search_syncFailed": {
+    "message": "Échec de la synchro : $1"
+  },
+  "search_syncing": {
+    "message": "Synchronisation…"
+  },
   "search_title": {
     "message": "Recherche de marque-pages"
+  },
+  "search_unknownError": {
+    "message": "Erreur inconnue"
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – Recherche de marque-pages"
@@ -1698,8 +2238,14 @@
   "sync_conflictRemoteModified": {
     "message": "Conflit détecté : la version distante a également été modifiée."
   },
+  "sync_loadedFromRemote": {
+    "message": "Chargé depuis le dépôt distant."
+  },
   "sync_noBookmarksOnGithub": {
     "message": "Aucun favori trouvé sur GitHub."
+  },
+  "sync_noBookmarksOnRemote": {
+    "message": "Aucun favori trouvé sur le dépôt distant."
   },
   "sync_noChanges": {
     "message": "Aucun changement depuis la dernière sync."
@@ -1734,7 +2280,37 @@
   "sync_pushSuccess": {
     "message": "Favoris poussés avec succès vers GitHub."
   },
+  "sync_remoteChangedRetry": {
+    "message": "Le distant est en cours de modification. Veuillez réessayer la synchro dans un instant."
+  },
   "sync_syncFailed": {
     "message": "Synchronisation échouée : $1"
+  },
+  "transfer_commitMessage": {
+    "message": "Transfert de favoris depuis le profil $1"
+  },
+  "transfer_connectionLost": {
+    "message": "Connexion de transfert perdue. Rechargez la page des options et réessayez."
+  },
+  "transfer_mergeConflicts": {
+    "message": "Fusion bloquée : $1 conflit(s) de chemin. Résolvez les fichiers qui se chevauchent ou utilisez le mode Remplacer."
+  },
+  "transfer_noBookmarks": {
+    "message": "Aucun fichier favori à transférer"
+  },
+  "transfer_profileNotFound": {
+    "message": "Profil introuvable"
+  },
+  "transfer_sameProfile": {
+    "message": "La source et la cible doivent être des profils différents"
+  },
+  "transfer_success": {
+    "message": "$1 fichier(s) favori(s) transféré(s)"
+  },
+  "whatsnew_close": {
+    "message": "Fermer"
+  },
+  "whatsnew_title": {
+    "message": "Nouveautés dans GitSyncMarks $1"
   }
 }

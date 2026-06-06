@@ -234,9 +234,13 @@ Formats `onProgress` payloads from `sync-core` (`phase`, `current`, `total`) and
 
 After each successful primary commit, optional mirror remotes receive a push-only copy of bookmark files (not involved in merge/fetch). Loop guard skips when `lastPushedCommitSha === primaryCommitSha`.
 
+### `lib/wizard-sync-choice.js` — Wizard First-Sync Choice
+
+Pure helpers for setup-wizard first sync ([#146](https://github.com/d0dg3r/GitSyncMarks/issues/146)): `buildWizardSyncOptions()` (allowed modes + default from remote/local bookmark counts), `wizardSyncConfirmKey()`, `fetchRemoteBookmarkState()`, and `countLocalBookmarks()`. Used by [`options/wizard.js`](../options/wizard.js) so connection test and repository writes are separate steps.
+
 ### `lib/onboarding.js` — Onboarding
 
-First-time and new-profile setup when configuring GitHub:
+First-time and new-profile setup when configuring Git:
 
 | Function | Description |
 |---|---|
@@ -353,6 +357,7 @@ GitSyncMarks/
 │   ├── sync-progress.js          # Sync progress formatting + runtime port helper
 │   ├── mirror-push.js            # Push-only mirror destinations
 │   ├── onboarding.js             # checkPathSetup, initializeRemoteFolder
+│   ├── wizard-sync-choice.js     # Wizard sync mode matrix and push safety
 │   ├── remote-fetch.js           # fetchRemoteFileMap
 │   ├── crypto.js                 # Token encryption (AES-256-GCM)
 │   ├── context-menu.js           # Barrel: re-exports context menu sub-modules

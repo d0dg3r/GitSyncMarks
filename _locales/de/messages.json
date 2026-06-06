@@ -17,8 +17,41 @@
   "api_invalidToken": {
     "message": "Ungültiger Token. Bitte überprüfe deinen Personal Access Token."
   },
+  "api_listCommitsFailed": {
+    "message": "Commits konnten nicht aufgelistet werden (HTTP $1)."
+  },
+  "api_networkError": {
+    "message": "Netzwerkfehler. Bitte Internetverbindung prüfen und erneut versuchen."
+  },
   "api_rateLimitExceeded": {
     "message": "GitHub-API-Ratenlimit überschritten. Bitte warte einen Moment."
+  },
+  "api_treeTruncated": {
+    "message": "Das Repository ist zu groß, um in einer Anfrage gelesen zu werden (GitHub hat den Dateibaum gekürzt). Sync wurde gestoppt, um Datenverlust zu vermeiden."
+  },
+  "cleanOrphans_commitMessage": {
+    "message": "Verwaiste Lesezeichen-Dateien entfernen, die lokal nicht vorhanden sind"
+  },
+  "cleanOrphans_confirm": {
+    "message": "$1 verwaiste Datei(en) in $2 Ordner(n) auf oberster Ebene vom Remote löschen? Lokale Lesezeichen bleiben unverändert. Dies kann in GitSyncMarks nicht rückgängig gemacht werden (Git-Verlauf zum Wiederherstellen nutzen)."
+  },
+  "cleanOrphans_noLocalBaseline": {
+    "message": "Keine lokale Lesezeichen-Basis für dieses Profil. Wechsle zum Profil und synchronisiere einmal, oder nutze Remote bereinigen beim aktiven Profil."
+  },
+  "cleanOrphans_none": {
+    "message": "Keine verwaisten Lesezeichen-Dateien auf dem Remote."
+  },
+  "cleanOrphans_previewFailed": {
+    "message": "Vorschau der Remote-Verwaisten fehlgeschlagen."
+  },
+  "cleanOrphans_previewResult": {
+    "message": "$1 verwaiste Datei(en) in $2 Ordner(n) auf oberster Ebene würden entfernt."
+  },
+  "cleanOrphans_remoteFetchFailed": {
+    "message": "Remote-Repository konnte nicht gelesen werden: $1"
+  },
+  "cleanOrphans_success": {
+    "message": "$1 verwaiste Datei(en) aus $2 Ordner(n) auf oberster Ebene auf dem Remote entfernt."
   },
   "commands_openOptions": {
     "message": "Einstellungen öffnen"
@@ -82,6 +115,24 @@
   "contextMenu_notifFolderMissing": {
     "message": "Gewählter Ordner existiert nicht mehr. Bitte Einstellungen aktualisieren."
   },
+  "contextMenu_notifLinkwardenError": {
+    "message": "Linkwarden-Fehler: $1"
+  },
+  "contextMenu_notifLinkwardenGrantPermissions": {
+    "message": "Bitte Berechtigungen über „Verbindung testen“ in den Optionen erteilen"
+  },
+  "contextMenu_notifLinkwardenNotConfigured": {
+    "message": "Linkwarden nicht konfiguriert"
+  },
+  "contextMenu_notifLinkwardenSaved": {
+    "message": "Link in Linkwarden gespeichert"
+  },
+  "contextMenu_notifLinkwardenSavedWithScreenshot": {
+    "message": "Link & Screenshot in Linkwarden gespeichert"
+  },
+  "contextMenu_notifLinkwardenUrlInvalid": {
+    "message": "Linkwarden-URL ist ungültig"
+  },
   "contextMenu_notifNoFavicon": {
     "message": "Kein Favicon für diese Seite verfügbar"
   },
@@ -137,10 +188,10 @@
     "message": "Jetzt synchronisieren"
   },
   "extDescription": {
-    "message": "Lesezeichen-Sync via GitHub. Linkwarden-Synergie, Smart Search und Companion App. Direkt, sicher, privat."
+    "message": "Lesezeichen-Sync via GitHub, GitLab, Codeberg, Gitea & mehr. Linkwarden, Smart Search, Companion App. Direkt, sicher, privat."
   },
   "extDescriptionFirefox": {
-    "message": "Lesezeichen-Sync via GitHub. Linkwarden-Synergie, Smart Search und geführter Setup-Wizard. Bidirektional, sicher und privat. Volle Firefox-Unterstützung inklusive nativer Menü-Struktur. Kein Mittelsmann."
+    "message": "Lesezeichen-Sync via GitHub, GitLab, Codeberg, Gitea & mehr. Linkwarden, Smart Search, geführter Setup-Wizard. Bidirektional, sicher und privat. Volle Firefox-Unterstützung. Kein Mittelsmann."
   },
   "extName": {
     "message": "GitSyncMarks"
@@ -175,6 +226,12 @@
   "help_backupTitle": {
     "message": "Sicherung"
   },
+  "help_cleanOrphansDesc": {
+    "message": "Im Sync-Untertab kannst du Remote-Lesezeichen-Dateien anzeigen und entfernen, die nicht in deinen lokalen Lesezeichen sind (aktives Profil). Nützlich nach doppelten Ordnern durch einen Merge-Transfer."
+  },
+  "help_cleanOrphansTitle": {
+    "message": "Remote-Verwaiste bereinigen"
+  },
   "help_conflictDesc": {
     "message": "Wenn lokal und remote geändert wurden, erscheint im Popup ein Konflikt. Wähle <strong>Push</strong> (lokal gewinnt) oder <strong>Pull</strong> (remote gewinnt). Es gibt keine automatische Konfliktlösung."
   },
@@ -196,6 +253,12 @@
   "help_debugLogTitle": {
     "message": "Debug-Log"
   },
+  "help_densityDesc": {
+    "message": "Mit den S / M / L-Schaltflächen in der Kopfzeile wechselst du zwischen Kompakt, Mittel und Groß. Die Einstellung gilt für alle Oberflächen der Erweiterung (Optionen, Popup, Suche, Linkwarden-Speichern) und synchronisiert sich geräteübergreifend."
+  },
+  "help_densityTitle": {
+    "message": "UI-Dichte"
+  },
   "help_discussions": {
     "message": "Diskussionen"
   },
@@ -209,7 +272,7 @@
     "message": "Generierte Dateien"
   },
   "help_gettingStartedIntro": {
-    "message": "Erstelle ein GitHub-Repository für deine Lesezeichen und einen Personal Access Token (PAT) mit dem <code>repo</code>-Scope. Im GitHub-Tab gibst du Token, Repository-Inhaber, Name, Branch (meist <code>main</code>) und den Ordnergpfad (Standard: <code>bookmarks</code>) ein. Klicke auf <strong>Verbindung testen</strong> zur Prüfung."
+    "message": "Erstelle ein Git-Repository für deine Lesezeichen auf <strong>GitHub</strong>, <strong>GitLab</strong>, <strong>Codeberg</strong>, <strong>Gitea</strong>, <strong>Forgejo</strong> oder <strong>Gogs</strong>. Unter <strong>Git → Verbindung</strong> wählst du den Anbieter, gibst einen Personal Access Token, Repository-Inhaber/-Name, Branch (meist <code>main</code>) und Ordnerpfad (Standard: <code>bookmarks</code>) ein. Self-hosted Anbieter benötigen eine Server-URL; erlaube Host-Zugriff, wenn du dazu aufgefordert wirst. Klicke auf <strong>Verbindung testen</strong> zur Prüfung."
   },
   "help_gettingStartedTitle": {
     "message": "Erste Schritte"
@@ -221,10 +284,34 @@
     "message": "GitHub-Repos-Ordner"
   },
   "help_headerLangDesc": {
-    "message": "Das Menü zeigt Kurzcodes (z. B. EN, DE). Mit der Maus über eine Option fahren, um den vollen Namen zu sehen. „Auto“ nutzt die Browsersprache, wenn unterstützt."
+    "message": "Die Sprachschaltfläche in der Kopfzeile wechselt die Anzeigesprache der Erweiterung. Die Einstellung wird gespeichert und auf allen Geräten synchronisiert."
   },
   "help_headerLangTitle": {
     "message": "Sprache"
+  },
+  "help_historyIntro": {
+    "message": "Jeder Sync erzeugt einen Git-Commit. Im Verlauf-Untertab (unter Dateien) kannst du letzte Commits durchsuchen und Lesezeichen aus einer früheren Version wiederherstellen."
+  },
+  "help_historyLoadDesc": {
+    "message": "Lädt die letzten 20 Commits, die deinen Lesezeichen-Pfad betroffen haben. Die Tabellenkopfzeile beschriften die Spalten (Datum, kurzer Commit-Hash, Client-ID aus der Commit-Nachricht). Fahre über die Client-Zelle für die vollständige Nachricht. Jede Zeile hat ein Vorschau-Symbol (Lupe) für einen Diff und ein Wiederherstellen-Symbol."
+  },
+  "help_historyLoadLabel": {
+    "message": "Verlauf laden"
+  },
+  "help_historyRestoreDesc": {
+    "message": "Ersetzt alle lokalen Lesezeichen durch den Stand dieses Commits. In der Liste auf das Wiederherstellen-Symbol klicken, dann erneut klicken, wenn die kurze Bestätigung angezeigt wird (oder den vollständigen Text „Zum Bestätigen erneut klicken“ im Diff-Panel). Der Remote-Branch wird nicht überschrieben — deine aktuellen Remote-Daten bleiben unberührt. Der nächste Sync schiebt den lokalen Stand zurück."
+  },
+  "help_historyRestoreLabel": {
+    "message": "Wiederherstellen"
+  },
+  "help_historyTitle": {
+    "message": "Sync-Verlauf & Rückgängig"
+  },
+  "help_historyUndoDesc": {
+    "message": "Ein-Klick-Rollback auf den Commit vor dem letzten Sync, der lokale Lesezeichen geändert hat. Verfügbar nach jedem Pull oder Merge, der lokale Lesezeichen geändert hat."
+  },
+  "help_historyUndoLabel": {
+    "message": "Letzten Sync rückgängig"
   },
   "help_links": {
     "message": "Links"
@@ -243,6 +330,9 @@
   },
   "help_linkwardenTitle": {
     "message": "Linkwarden"
+  },
+  "help_menuTitle": {
+    "message": "Menü"
   },
   "help_notificationsDesc": {
     "message": "Festlegen, wann Sync-Benachrichtigungen angezeigt werden: Alle (Erfolg und Fehler), Nur Fehler oder Aus."
@@ -304,6 +394,18 @@
   "help_profilesTitle": {
     "message": "Profile"
   },
+  "help_provider_codeberg": {
+    "message": "<strong>Codeberg</strong> ist ein Forgejo-Host unter <code>codeberg.org</code>. Wähle Codeberg als Anbieter; die Server-URL ist voreingestellt. Erstelle einen Token unter Benutzereinstellungen → Anwendungen."
+  },
+  "help_provider_forgejo": {
+    "message": "<strong>Forgejo</strong> nutzt dieselbe API wie Gitea. Gib deine Forgejo-Server-URL und einen Personal Access Token aus Benutzereinstellungen → Anwendungen ein."
+  },
+  "help_provider_gitlab": {
+    "message": "<strong>GitLab</strong> unterstützt gitlab.com und selbst gehostete Instanzen. Für Untergruppen-Projekte nutze <code>gruppe/untergruppe</code> als Inhaber und den Projektnamen als Repository. Server-URL für GitLab.com leer lassen."
+  },
+  "help_provider_gogs": {
+    "message": "<strong>Gogs</strong> teilt eine ähnliche API mit Gitea. Gib deine Gogs-Server-URL und einen Zugriffstoken aus Benutzereinstellungen → Anwendungen ein."
+  },
   "help_quickSync": {
     "message": "Lesezeichen sofort synchronisieren"
   },
@@ -346,6 +448,12 @@
   "help_themeCycleTitle": {
     "message": "Design"
   },
+  "help_transferDesc": {
+    "message": "Nutze <strong>Transfer…</strong> im Profil-Tab, um Lesezeichen von einem Profil in ein anderes zu kopieren, ohne zuerst zu wechseln. Typisch: Migration von GitHub zu Gitea. Wähle <strong>Ziel ersetzen</strong> für eine saubere Migration; <strong>In Ziel zusammenführen</strong> behält bestehende Zieldateien und kann doppelte Ordner erzeugen. Nach einer unsauberen Migration nutze <strong>Remote-Verwaiste bereinigen</strong> im Sync-Untertab. Mirror-Ziele im Git-Verbindungs-Tab pushen nach jedem Sync eine Kopie zu Backup-Remotes."
+  },
+  "help_transferTitle": {
+    "message": "Lesezeichen zwischen Profilen übertragen"
+  },
   "help_voteBacklogBtn": {
     "message": "Backlog abstimmen"
   },
@@ -368,10 +476,13 @@
     "message": "Warum dauert der Sync manchmal lange?"
   },
   "help_wizardRestartDesc": {
-    "message": "Schritt-für-Schritt-Anleitung, um dein GitHub-Repository zu verbinden und den ersten Sync auszuführen."
+    "message": "Schritt-für-Schritt-Anleitung, um dein Git-Repository zu verbinden und den ersten Sync auszuführen."
   },
   "help_wizardRestartTitle": {
     "message": "Setup-Assistent"
+  },
+  "help_wizardSyncChoice": {
+    "message": "Im Setup-Wizard prüft <strong>Verbindung prüfen</strong> nur den Zugriff — es wird nicht synchronisiert. Danach wählst du Pull, Merge/Sync, Push, Ordnerstruktur anlegen oder Überspringen, mit einer Bestätigung, bevor etwas ins Repository geschrieben wird."
   },
   "linkwardenSave_cancelBtn": {
     "message": "Abbrechen"
@@ -538,6 +649,18 @@
   "options_chooseFile": {
     "message": "Datei wählen"
   },
+  "options_cleanOrphansDesc": {
+    "message": "Lesezeichen-Dateien auf dem Remote entfernen, die nicht in deinen lokalen Lesezeichen sind (aktives Profil). Nach einem unsauberen Transfer oder doppelten Ordnern auf dem Server nutzen."
+  },
+  "options_cleanOrphansPreview": {
+    "message": "Verwaiste anzeigen"
+  },
+  "options_cleanOrphansRun": {
+    "message": "Remote bereinigen"
+  },
+  "options_cleanOrphansTitle": {
+    "message": "Remote-Verwaiste bereinigen"
+  },
   "options_connectionOk": {
     "message": "Verbindung OK! Benutzer: $1, Repo: $2"
   },
@@ -645,6 +768,9 @@
   },
   "options_densityCompact": {
     "message": "Kompakt"
+  },
+  "options_densityGroupLabel": {
+    "message": "UI-Dichte"
   },
   "options_densityLarge": {
     "message": "Groß"
@@ -769,6 +895,51 @@
   "options_generatedFilesTitle": {
     "message": "Generierte Dateien"
   },
+  "options_gheServerUrlEnabled": {
+    "message": "Eigene Server-URL verwenden (GitHub Enterprise)"
+  },
+  "options_gitConnection": {
+    "message": "Git-Verbindung"
+  },
+  "options_gitProvider": {
+    "message": "Git-Anbieter"
+  },
+  "options_gitProviderGitea": {
+    "message": "Gitea / Forgejo"
+  },
+  "options_gitProviderGithub": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_codeberg": {
+    "message": "Codeberg"
+  },
+  "options_gitProvider_forgejo": {
+    "message": "Forgejo"
+  },
+  "options_gitProvider_gitea": {
+    "message": "Gitea"
+  },
+  "options_gitProvider_github": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_gitlab": {
+    "message": "GitLab"
+  },
+  "options_gitProvider_gogs": {
+    "message": "Gogs"
+  },
+  "options_giteaPermissionDenied": {
+    "message": "Host-Berechtigung für den Gitea-Server wurde verweigert. Erlaube den Zugriff, wenn du dazu aufgefordert wirst, und versuche es erneut."
+  },
+  "options_giteaTokenHelpLink": {
+    "message": "Gitea-Benutzereinstellungen öffnen (Anwendungen)"
+  },
+  "options_giteaTokenHintHtml": {
+    "message": "Erstelle einen Token in Gitea unter <strong>Benutzereinstellungen → Anwendungen</strong> mit Lese-/Schreibzugriff auf Repositories. Gitea-Tokens sind <em>keine</em> GitHub-artigen <code>ghp_…</code>-Zeichenketten."
+  },
+  "options_giteaTokenWizardHelpHtml": {
+    "message": "In Gitea öffne <strong>Benutzereinstellungen → Anwendungen → Neuen Token erzeugen</strong>. Aktiviere Lese- und Schreibzugriff auf Repositories. Kopiere den Token — er wird nur einmal angezeigt. Gitea-Tokens nutzen keine GitHub-Präfixe wie <code>ghp_</code>."
+  },
   "options_githubConnection": {
     "message": "GitHub-Verbindung"
   },
@@ -814,8 +985,59 @@
   "options_historyColDate": {
     "message": "Datum"
   },
+  "options_historyCurrent": {
+    "message": "aktuell"
+  },
+  "options_historyDesc": {
+    "message": "Letzte Sync-Commits durchsuchen und Lesezeichen aus einer früheren Version wiederherstellen. Wiederherstellen ändert nur lokale Lesezeichen — der Remote-Branch wird nicht überschrieben."
+  },
+  "options_historyDiffAdded": {
+    "message": "Hinzugefügt"
+  },
+  "options_historyDiffChanged": {
+    "message": "Geändert"
+  },
+  "options_historyDiffClose": {
+    "message": "Schließen"
+  },
+  "options_historyDiffLoading": {
+    "message": "Vorschau wird geladen…"
+  },
+  "options_historyDiffNoChanges": {
+    "message": "Keine Unterschiede — dieser Commit entspricht deinen aktuellen Lesezeichen."
+  },
+  "options_historyDiffRemoved": {
+    "message": "Entfernt"
+  },
+  "options_historyEmpty": {
+    "message": "Keine Commits gefunden."
+  },
+  "options_historyLoadBtn": {
+    "message": "Verlauf laden"
+  },
+  "options_historyPreviewBtn": {
+    "message": "Vorschau"
+  },
+  "options_historyRestoreBtn": {
+    "message": "Wiederherstellen"
+  },
+  "options_historyRestoreConfirmBtn": {
+    "message": "Zum Bestätigen erneut klicken"
+  },
   "options_historyRestoreConfirmShort": {
-    "message": "Bestätigen"
+    "message": "Erneut klicken"
+  },
+  "options_historyRestoring": {
+    "message": "Wird wiederhergestellt…"
+  },
+  "options_historyTitle": {
+    "message": "Sync-Verlauf"
+  },
+  "options_historyUndoBtn": {
+    "message": "Letzten Sync rückgängig"
+  },
+  "options_hostPermissionDenied": {
+    "message": "Host-Berechtigung für den Git-Server wurde verweigert. Erlaube den Zugriff, wenn du dazu aufgefordert wirst, und versuche es erneut."
   },
   "options_importBookmarks": {
     "message": "Lesezeichen importieren"
@@ -871,6 +1093,12 @@
   "options_linkwardenApiKey": {
     "message": "API-Token"
   },
+  "options_linkwardenConnectionFailed": {
+    "message": "Verbindung fehlgeschlagen: $1"
+  },
+  "options_linkwardenConnectionOk": {
+    "message": "Verbindung erfolgreich!"
+  },
   "options_linkwardenDefaultCollection": {
     "message": "Standard-Sammlung"
   },
@@ -889,11 +1117,17 @@
   "options_linkwardenEnabled": {
     "message": "Linkwarden aktivieren"
   },
+  "options_linkwardenHostPermissionDenied": {
+    "message": "Host-Berechtigung verweigert. Bitte Adressleiste/Popup-Blocker im Browser prüfen."
+  },
   "options_linkwardenInstanceUrl": {
     "message": "Instanz-URL"
   },
   "options_linkwardenIntro": {
     "message": "Konfiguriere deine Linkwarden-Instanz, um Lesezeichen direkt aus dem Kontextmenü zu speichern."
+  },
+  "options_linkwardenInvalidUrlFormat": {
+    "message": "Ungültiges URL-Format"
   },
   "options_linkwardenSyncEnabled": {
     "message": "Kollektionen mit Lesezeichen synchronisieren"
@@ -924,8 +1158,44 @@
   "options_linkwardenTitle": {
     "message": "Linkwarden-Integration"
   },
+  "options_linkwardenUrlTokenRequired": {
+    "message": "URL und Token sind erforderlich"
+  },
   "options_menu_showAsSubmenu": {
     "message": "Als Untermenü anzeigen"
+  },
+  "options_mirrorsAdd": {
+    "message": "+ Mirror hinzufügen"
+  },
+  "options_mirrorsDesc": {
+    "message": "Push-only-Kopien der Lesezeichen-Dateien zu zusätzlichen Git-Remotes nach jedem erfolgreichen primären Sync. Direkte Bearbeitungen auf einem Mirror werden beim nächsten Sync überschrieben."
+  },
+  "options_mirrorsLabel": {
+    "message": "Bezeichnung"
+  },
+  "options_mirrorsPaused": {
+    "message": "Pausiert"
+  },
+  "options_mirrorsPushGenerated": {
+    "message": "Generierte Dateien einschließen (README, HTML, Feed, Dashy)"
+  },
+  "options_mirrorsPushSettings": {
+    "message": "Verschlüsselte Einstellungen einschließen"
+  },
+  "options_mirrorsRemove": {
+    "message": "Entfernen"
+  },
+  "options_mirrorsStatusError": {
+    "message": "Mirror-Fehler: $1"
+  },
+  "options_mirrorsStatusOk": {
+    "message": "Letzter Push OK"
+  },
+  "options_mirrorsTest": {
+    "message": "Testen"
+  },
+  "options_mirrorsTitle": {
+    "message": "Mirror-Ziele"
   },
   "options_mobileAppAlert": {
     "message": "<strong>Hinweis für Android-Nutzer:</strong> Firefox für Android unterstützt keine direkte Lesezeichen-Synchronisierung über Erweiterungen. Du musst die Companion-App verwenden."
@@ -1017,6 +1287,9 @@
   "options_onboardingWizardBack": {
     "message": "Zurück"
   },
+  "options_onboardingWizardCheckConnection": {
+    "message": "Verbindung prüfen"
+  },
   "options_onboardingWizardCompleted": {
     "message": "Assistent erfolgreich abgeschlossen."
   },
@@ -1066,7 +1339,7 @@
     "message": "Sync-Status wird gespeichert"
   },
   "options_onboardingWizardPhaseUploading": {
-    "message": "Lesezeichen werden zu GitHub hochgeladen"
+    "message": "Lesezeichen werden zum Remote hochgeladen"
   },
   "options_onboardingWizardRepoCreateFailed": {
     "message": "Repository konnte mit diesem Token bzw. diesen Rechten nicht erstellt werden."
@@ -1098,6 +1371,9 @@
   "options_onboardingWizardStart": {
     "message": "Setup-Assistent starten"
   },
+  "options_onboardingWizardStartSync": {
+    "message": "Sync starten"
+  },
   "options_onboardingWizardStepFinishText": {
     "message": "Setup abgeschlossen. Du kannst mit den normalen Sync-Einstellungen weiterarbeiten."
   },
@@ -1110,6 +1386,12 @@
   "options_onboardingWizardStepHasTokenTitle": {
     "message": "Hast du bereits ein Token?"
   },
+  "options_onboardingWizardStepProviderText": {
+    "message": "Wähle GitHub, GitLab, Codeberg, Gitea, Forgejo oder Gogs. Jedes Profil speichert eigenen Anbieter und Server-URL."
+  },
+  "options_onboardingWizardStepProviderTitle": {
+    "message": "Git-Anbieter wählen"
+  },
   "options_onboardingWizardStepRepoDecisionText": {
     "message": "Wähle zwischen automatischer Repo-Erstellung oder vorhandenem Repository."
   },
@@ -1121,6 +1403,9 @@
   },
   "options_onboardingWizardStepRepoTitle": {
     "message": "Repository-Einstellungen"
+  },
+  "options_onboardingWizardStepSyncChoiceText": {
+    "message": "Wähle, wie synchronisiert werden soll, lies die Warnung und klicke dann auf Sync starten. Nichts wird ins Repository geschrieben, bis du bestätigst."
   },
   "options_onboardingWizardStepSyncTextEmpty": {
     "message": "Der Pfad ist leer. Erstelle die Grundstruktur, um mit dem Sync zu starten."
@@ -1144,7 +1429,7 @@
     "message": "Zugriffs-Token"
   },
   "options_onboardingWizardStepValidateText": {
-    "message": "Führe den Test aus, um Token-, Repository- und Pfadzugriff zu prüfen."
+    "message": "Klicke auf Verbindung prüfen, um Token, Repository und Pfadzugriff zu validieren. In diesem Schritt wird nichts synchronisiert."
   },
   "options_onboardingWizardStepValidateTitle": {
     "message": "Verbindung testen"
@@ -1155,8 +1440,68 @@
   "options_onboardingWizardStepWelcomeTitle": {
     "message": "Willkommen"
   },
+  "options_onboardingWizardSyncConfirmRunBtn": {
+    "message": "Ausführen"
+  },
+  "options_onboardingWizardSyncConfirmSkipBtn": {
+    "message": "Überspringen"
+  },
+  "options_onboardingWizardSyncConfirm_initialize": {
+    "message": "Initiale bookmarks/-Ordnerstruktur im Remote-Repository anlegen (keine lokalen Lesezeichen hochladen)?"
+  },
+  "options_onboardingWizardSyncConfirm_pull": {
+    "message": "$2 Lesezeichen vom Remote-Repository in diesen Browser herunterladen?"
+  },
+  "options_onboardingWizardSyncConfirm_pullOverwriteLocal": {
+    "message": "Pull ersetzt alle $1 lokalen Lesezeichen durch $2 vom Remote-Repository. Fortfahren?"
+  },
+  "options_onboardingWizardSyncConfirm_push": {
+    "message": "$1 lokale Lesezeichen ins Remote-Repository hochladen?"
+  },
+  "options_onboardingWizardSyncConfirm_pushDanger": {
+    "message": "Push überschreibt das Remote-Repository. $2 Remote-Lesezeichen können gelöscht werden; nur $1 lokale Lesezeichen bleiben. Fortfahren?"
+  },
+  "options_onboardingWizardSyncConfirm_skip": {
+    "message": "Ersten Sync vorerst überspringen? Du kannst später manuell im Popup synchronisieren."
+  },
+  "options_onboardingWizardSyncConfirm_sync": {
+    "message": "Merge/Sync zwischen $1 lokalen und $2 Remote-Lesezeichen ausführen? Konflikte müssen ggf. später gelöst werden."
+  },
   "options_onboardingWizardSyncInProgress": {
     "message": "Arbeitet im Hintergrund, bitte warten…"
+  },
+  "options_onboardingWizardSyncModeLabel": {
+    "message": "Erste Sync-Aktion"
+  },
+  "options_onboardingWizardSyncMode_initialize": {
+    "message": "Nur Ordnerstruktur anlegen"
+  },
+  "options_onboardingWizardSyncMode_pull": {
+    "message": "Nur Pull (vom Remote herunterladen)"
+  },
+  "options_onboardingWizardSyncMode_push": {
+    "message": "Nur Push (lokale Lesezeichen hochladen — überschreibt Remote)"
+  },
+  "options_onboardingWizardSyncMode_skip": {
+    "message": "Vorerst überspringen"
+  },
+  "options_onboardingWizardSyncMode_sync": {
+    "message": "Merge / Sync (empfohlen, wenn beide Seiten Lesezeichen haben)"
+  },
+  "options_onboardingWizardSyncWarn_both": {
+    "message": "Lesezeichen existieren auf beiden Seiten. Merge/Sync kombiniert Änderungen; Pull oder Push überschreibt eine Seite."
+  },
+  "options_onboardingWizardSyncWarn_emptyBoth": {
+    "message": "Remote-Pfad und Browser sind leer. Ordnerstruktur anlegen oder überspringen und später synchronisieren."
+  },
+  "options_onboardingWizardSyncWarn_localOnly": {
+    "message": "Remote-Pfad ist leer; lokale Lesezeichen werden beim Push hochgeladen."
+  },
+  "options_onboardingWizardSyncWarn_pushDanger": {
+    "message": "Warnung: Push löscht $1 Remote-Lesezeichen-Datei(en), die lokal nicht vorhanden sind, und ersetzt das Repository durch die Lesezeichen dieses Browsers."
+  },
+  "options_onboardingWizardSyncWarn_remoteOnly": {
+    "message": "Remote hat Lesezeichen; dieser Browser ist leer. Pull wird empfohlen, damit du das Repository nicht überschreibst."
   },
   "options_onboardingWizardTitle": {
     "message": "Setup-Assistent"
@@ -1188,8 +1533,17 @@
   "options_onboardingWizardTokenValidated": {
     "message": "Token ist gültig und hat den benötigten Umfang."
   },
+  "options_ownerHint_gitlab": {
+    "message": "Benutzername, Gruppe oder Gruppen-/Untergruppenpfad (z. B. meinegruppe/untergruppe)."
+  },
   "options_ownerPlaceholder": {
     "message": "dein-github-nutzername"
+  },
+  "options_ownerPlaceholderGitea": {
+    "message": "dein-gitea-benutzername"
+  },
+  "options_ownerPlaceholder_gitlab": {
+    "message": "Benutzer oder Gruppe/Untergruppe"
   },
   "options_passwordPlaceholder": {
     "message": "Passwort"
@@ -1286,6 +1640,21 @@
   },
   "options_selectFile": {
     "message": "Datei auswählen..."
+  },
+  "options_serverUrl": {
+    "message": "Server-URL"
+  },
+  "options_serverUrlHint": {
+    "message": "Basis-URL deines Git-Servers (ohne /api/v1 oder /api/v4)."
+  },
+  "options_serverUrlPlaceholder_github": {
+    "message": "https://github.firma.de"
+  },
+  "options_serverUrlPlaceholder_gitlab": {
+    "message": "https://gitlab.com (leer lassen für GitLab.com)"
+  },
+  "options_serverUrlRequired": {
+    "message": "Server-URL ist für diesen Anbieter erforderlich."
   },
   "options_settingsCard": {
     "message": "Einstellungen"
@@ -1543,17 +1912,56 @@
   "options_themeAuto": {
     "message": "A Auto (System)"
   },
+  "options_themeAutoLabel": {
+    "message": "Auto"
+  },
   "options_themeDark": {
     "message": "☽ Dunkel"
   },
+  "options_themeDarkLabel": {
+    "message": "Dunkel"
+  },
   "options_themeLight": {
     "message": "☀ Hell"
+  },
+  "options_themeLightLabel": {
+    "message": "Hell"
   },
   "options_toggleToken": {
     "message": "Token anzeigen/verbergen"
   },
   "options_tokenHint": {
     "message": "Benötigt den <code>repo</code>-Scope (klassisch) oder <code>Contents: Read/Write</code> und <code>Metadata: Read</code> (fine-grained). <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Token erstellen</a>"
+  },
+  "options_tokenHintHtml_codeberg": {
+    "message": "Erstelle einen Token auf <a href=\"https://codeberg.org/user/settings/applications\" target=\"_blank\" rel=\"noopener\">Codeberg → Benutzereinstellungen → Anwendungen</a> mit Lese-/Schreibzugriff auf Repositories."
+  },
+  "options_tokenHintHtml_forgejo": {
+    "message": "Erstelle einen Token auf deinem Forgejo-Server unter <strong>Benutzereinstellungen → Anwendungen</strong> mit Lese-/Schreibzugriff auf Repositories."
+  },
+  "options_tokenHintHtml_gitea": {
+    "message": "Erstelle einen Token unter <strong>Benutzereinstellungen → Anwendungen</strong> mit Lese-/Schreibzugriff auf Repositories."
+  },
+  "options_tokenHintHtml_gitlab": {
+    "message": "Erstelle einen Token auf <a href=\"https://gitlab.com/-/user_settings/personal_access_tokens\" target=\"_blank\" rel=\"noopener\">GitLab → Benutzereinstellungen → Zugriffstokens</a> mit <code>api</code>-Scope (Repository lesen/schreiben)."
+  },
+  "options_tokenHintHtml_gogs": {
+    "message": "Erstelle einen Token auf deinem Gogs-Server unter <strong>Benutzereinstellungen → Anwendungen</strong> mit Lese-/Schreibzugriff auf Repositories."
+  },
+  "options_tokenPlaceholderGitea": {
+    "message": "dein-gitea-zugriffstoken"
+  },
+  "options_tokenPlaceholderGithub": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitea": {
+    "message": "dein-zugriffstoken"
+  },
+  "options_tokenPlaceholder_github": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitlab": {
+    "message": "glpat-xxxxxxxxxxxxxxxxxxxx"
   },
   "options_tokenValidMissingScope": {
     "message": "Token gültig ($1), aber fehlender \"repo\"-Scope."
@@ -1563,6 +1971,51 @@
   },
   "options_tokenValidSpecifyRepo": {
     "message": "Token gültig! Benutzer: $1. Bitte gib ein Repository an."
+  },
+  "options_transferApplyLocal": {
+    "message": "Im Browser anwenden (nur wenn Ziel aktiv ist)"
+  },
+  "options_transferCancel": {
+    "message": "Abbrechen"
+  },
+  "options_transferDesc": {
+    "message": "Lesezeichen von einem Profil in ein anderes kopieren (z. B. GitHub → Gitea-Migration). Ändert den Browser nicht, außer das Zielprofil ist aktiv und du wählst lokale Anwendung."
+  },
+  "options_transferDuplicateFoldersWarning": {
+    "message": "Doppelte Ordnernamen im Transfer-Ergebnis (Slug-Kollision): $1. Diese Ordner in den Lesezeichen des Quellprofils zusammenführen, sonst werden die Duplikate ins Ziel-Remote kopiert."
+  },
+  "options_transferFolder": {
+    "message": "Ordner (optional)"
+  },
+  "options_transferFolderHint": {
+    "message": "Relativer Pfad unter dem Repo-Ordner, z. B. toolbar/arbeit. Leer lassen für alle Lesezeichen."
+  },
+  "options_transferMergeConfirm": {
+    "message": "In ein Ziel mit $1 bestehenden Datei(en) zusammenführen? Bestehende Remote-Lesezeichen bleiben; doppelte Ordner sind möglich. Fortfahren?"
+  },
+  "options_transferMergeHint": {
+    "message": "Merge behält alle bestehenden Zieldateien und fügt Quell-Lesezeichen hinzu. Das kann doppelte Ordner erzeugen (z. B. buecher und buecher-2). Für eine saubere Migration Ziel ersetzen nutzen."
+  },
+  "options_transferMergeWarning": {
+    "message": "Ziel hat bereits $1 Lesezeichen-Datei(en). Merge behält alle und fügt kopierte Quelldateien hinzu — doppelte Ordner sind wahrscheinlich."
+  },
+  "options_transferMode": {
+    "message": "Modus"
+  },
+  "options_transferModeMerge": {
+    "message": "In Ziel zusammenführen"
+  },
+  "options_transferModeReplace": {
+    "message": "Ziel ersetzen"
+  },
+  "options_transferOpen": {
+    "message": "Transfer…"
+  },
+  "options_transferPreview": {
+    "message": "Vorschau"
+  },
+  "options_transferPreviewResult": {
+    "message": "Quelle: $1 ($2 Dateien). Ziel hat $3 bestehende Dateien → $4 nach Transfer."
   },
   "options_transferProgressApplying": {
     "message": "Wird im Browser angewendet…"
@@ -1581,6 +2034,36 @@
   },
   "options_transferProgressPreparing": {
     "message": "Transfer wird vorbereitet…"
+  },
+  "options_transferPush": {
+    "message": "Ins Ziel-Repository pushen"
+  },
+  "options_transferReplaceWarning": {
+    "message": "Ersetzen löscht $1 Remote-Datei(en), die nicht im Transfer-Ergebnis enthalten sind."
+  },
+  "options_transferRun": {
+    "message": "Transfer"
+  },
+  "options_transferSource": {
+    "message": "Quellprofil"
+  },
+  "options_transferSourceBrowser": {
+    "message": "Browser"
+  },
+  "options_transferSourceCache": {
+    "message": "Cache"
+  },
+  "options_transferSourceRemote": {
+    "message": "Remote"
+  },
+  "options_transferTarget": {
+    "message": "Zielprofil"
+  },
+  "options_transferTargetWarning": {
+    "message": "Warnung: Ziel hat bereits Lesezeichen-Daten."
+  },
+  "options_transferTitle": {
+    "message": "Lesezeichen übertragen"
   },
   "options_version": {
     "message": "Version"
@@ -1624,8 +2107,14 @@
   "popup_localToGithub": {
     "message": "Lokal → GitHub"
   },
+  "popup_localToRemote": {
+    "message": "Lokal → Remote"
+  },
   "popup_minAgo": {
     "message": "vor $1 Min."
+  },
+  "popup_mirrorStatus": {
+    "message": "Gespiegelt: $1"
   },
   "popup_nextSyncIn": {
     "message": "Nächster Sync in $1"
@@ -1647,6 +2136,9 @@
   },
   "popup_ready": {
     "message": "Bereit"
+  },
+  "popup_remoteToLocal": {
+    "message": "Remote → Lokal"
   },
   "popup_reportIssue": {
     "message": "Problem melden"
@@ -1678,6 +2170,9 @@
   "search_openBtn": {
     "message": "Öffnen"
   },
+  "search_resultsLabel": {
+    "message": "Suchergebnisse"
+  },
   "search_statusNoResults": {
     "message": "Keine Lesezeichen gefunden"
   },
@@ -1695,8 +2190,20 @@
   "search_subtitle": {
     "message": "Lokale Lesezeichen durchsuchen und Treffer in einem neuen Tab öffnen."
   },
+  "search_syncComplete": {
+    "message": "Sync abgeschlossen"
+  },
+  "search_syncFailed": {
+    "message": "Sync fehlgeschlagen: $1"
+  },
+  "search_syncing": {
+    "message": "Synchronisiere…"
+  },
   "search_title": {
     "message": "Lesezeichen-Suche"
+  },
+  "search_unknownError": {
+    "message": "Unbekannter Fehler"
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – Lesezeichen-Suche"
@@ -1731,8 +2238,14 @@
   "sync_conflictRemoteModified": {
     "message": "Konflikt erkannt: Remote wurde ebenfalls geändert."
   },
+  "sync_loadedFromRemote": {
+    "message": "Vom Remote-Repository geladen."
+  },
   "sync_noBookmarksOnGithub": {
     "message": "Keine Lesezeichen auf GitHub gefunden."
+  },
+  "sync_noBookmarksOnRemote": {
+    "message": "Keine Lesezeichen im Remote-Repository gefunden."
   },
   "sync_noChanges": {
     "message": "Keine Änderungen seit der letzten Synchronisierung."
@@ -1767,7 +2280,37 @@
   "sync_pushSuccess": {
     "message": "Lesezeichen erfolgreich zu GitHub übertragen."
   },
+  "sync_remoteChangedRetry": {
+    "message": "Remote ändert sich gerade. Bitte in einem Moment erneut synchronisieren."
+  },
   "sync_syncFailed": {
     "message": "Synchronisierung fehlgeschlagen: $1"
+  },
+  "transfer_commitMessage": {
+    "message": "Lesezeichen-Transfer von Profil $1"
+  },
+  "transfer_connectionLost": {
+    "message": "Transfer-Verbindung verloren. Options-Seite neu laden und erneut versuchen."
+  },
+  "transfer_mergeConflicts": {
+    "message": "Merge blockiert: $1 Pfadkonflikt(e). Überlappende Dateien auflösen oder Ersetzen-Modus nutzen."
+  },
+  "transfer_noBookmarks": {
+    "message": "Keine Lesezeichen-Dateien zum Übertragen"
+  },
+  "transfer_profileNotFound": {
+    "message": "Profil nicht gefunden"
+  },
+  "transfer_sameProfile": {
+    "message": "Quelle und Ziel müssen verschiedene Profile sein"
+  },
+  "transfer_success": {
+    "message": "$1 Lesezeichen-Datei(en) übertragen"
+  },
+  "whatsnew_close": {
+    "message": "Schließen"
+  },
+  "whatsnew_title": {
+    "message": "Neu in GitSyncMarks $1"
   }
 }

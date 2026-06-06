@@ -17,8 +17,41 @@
   "api_invalidToken": {
     "message": "Geçersiz jeton. Lütfen Kişisel Erişim Jetonunuzu kontrol edin."
   },
+  "api_listCommitsFailed": {
+    "message": "Commit'ler listelenemedi (HTTP $1)."
+  },
+  "api_networkError": {
+    "message": "Ağ hatası. İnternet bağlantınızı kontrol edin ve tekrar deneyin."
+  },
   "api_rateLimitExceeded": {
     "message": "GitHub API istek sınırı aşıldı. Lütfen biraz bekleyin."
+  },
+  "api_treeTruncated": {
+    "message": "Depo tek istekte okunamayacak kadar büyük (GitHub dosya ağacını kesti). Veri kaybını önlemek için senkronizasyon durduruldu."
+  },
+  "cleanOrphans_commitMessage": {
+    "message": "Yerelde bulunmayan yetim yer imi dosyalarını kaldır"
+  },
+  "cleanOrphans_confirm": {
+    "message": "Uzak depodan $2 üst düzey klasörde $1 yetim dosya silinsin mi? Yerel yer imleri değişmez. GitSyncMarks'tan geri alınamaz (geri yüklemek için Git geçmişini kullanın)."
+  },
+  "cleanOrphans_noLocalBaseline": {
+    "message": "Bu profil için yerel yer imi tabanı yok. Profile geçip bir kez senkronize edin veya aktif profilde Uzak temizle kullanın."
+  },
+  "cleanOrphans_none": {
+    "message": "Uzak depoda yetim yer imi dosyası yok."
+  },
+  "cleanOrphans_previewFailed": {
+    "message": "Uzak yetimler önizlenemedi."
+  },
+  "cleanOrphans_previewResult": {
+    "message": "$2 üst düzey klasörde $1 yetim dosya kaldırılacak."
+  },
+  "cleanOrphans_remoteFetchFailed": {
+    "message": "Uzak depo okunamadı: $1"
+  },
+  "cleanOrphans_success": {
+    "message": "Uzak depoda $2 üst düzey klasörden $1 yetim dosya kaldırıldı."
   },
   "commands_openOptions": {
     "message": "Uzantı ayarlarını aç"
@@ -82,6 +115,24 @@
   "contextMenu_notifFolderMissing": {
     "message": "Seçilen klasör artık mevcut değil. Hızlı klasör ayarlarınızı güncelleyin."
   },
+  "contextMenu_notifLinkwardenError": {
+    "message": "Linkwarden Hatası: $1"
+  },
+  "contextMenu_notifLinkwardenGrantPermissions": {
+    "message": "Lütfen Seçenekler'de «Bağlantıyı test et» ile izin verin"
+  },
+  "contextMenu_notifLinkwardenNotConfigured": {
+    "message": "Linkwarden yapılandırılmamış"
+  },
+  "contextMenu_notifLinkwardenSaved": {
+    "message": "Bağlantı Linkwarden'e kaydedildi"
+  },
+  "contextMenu_notifLinkwardenSavedWithScreenshot": {
+    "message": "Bağlantı ve ekran görüntüsü Linkwarden'e kaydedildi"
+  },
+  "contextMenu_notifLinkwardenUrlInvalid": {
+    "message": "Linkwarden URL'si geçersiz"
+  },
   "contextMenu_notifNoFavicon": {
     "message": "Bu sayfa için favicon bulunamadı"
   },
@@ -137,10 +188,10 @@
     "message": "Şimdi Senkronize Et"
   },
   "extDescription": {
-    "message": "GitHub üzerinden yer imi senkronizasyonu. Linkwarden sinerjisi, Akıllı Arama ve Yardımcı Uygulama. Doğrudan, güvenli ve özel."
+    "message": "GitHub, GitLab, Codeberg, Gitea ve daha fazlası ile yer imi senkronizasyonu. Linkwarden, Akıllı Arama, Companion App. Doğrudan, güvenli, özel."
   },
   "extDescriptionFirefox": {
-    "message": "GitHub üzerinden yer imi senkronizasyonu. Linkwarden sinerjisi, Akıllı Arama ve rehberli kurulum. Tamamen özel. Özgün Firefox desteği."
+    "message": "GitHub, GitLab, Codeberg, Gitea ve daha fazlası ile yer imi senkronizasyonu. Linkwarden, Akıllı Arama, rehberli sihirbaz. Çift yönlü, güvenli ve özel. Tam Firefox desteği. Aracı yok."
   },
   "extName": {
     "message": "GitSyncMarks"
@@ -175,6 +226,12 @@
   "help_backupTitle": {
     "message": "Yedekleme"
   },
+  "help_cleanOrphansDesc": {
+    "message": "Senkronizasyon alt sekmesinde, yerel yer imlerinizde olmayan uzak yer imi dosyalarını önizleyin ve kaldırın (aktif profil). Birleştirme transferinden sonra yinelenen klasörler için kullanışlıdır."
+  },
+  "help_cleanOrphansTitle": {
+    "message": "Uzak yetimleri temizle"
+  },
   "help_conflictDesc": {
     "message": "Hem yerel hem de uzak yer işaretleri değiştiğinde açılır pencerede çakışma gösterilir. <strong>Gönder</strong> (yerel kazanır, uzak üzerine yazılır) veya <strong>Çek</strong> (uzak kazanır, yerel üzerine yazılır) seçin. Çakışmalar için otomatik birleştirme yoktur."
   },
@@ -196,6 +253,12 @@
   "help_debugLogTitle": {
     "message": "Hata Ayıklama Günlüğü"
   },
+  "help_densityDesc": {
+    "message": "Başlıktaki S / M / L düğmeleriyle Kompakt, Orta ve Büyük arasında geçiş yapın. Ayar tüm uzantı yüzeylerine (seçenekler, popup, arama, Linkwarden kaydet) uygulanır ve cihazlar arasında senkronize edilir."
+  },
+  "help_densityTitle": {
+    "message": "Arayüz yoğunluğu"
+  },
   "help_discussions": {
     "message": "Tartışmalar"
   },
@@ -209,7 +272,7 @@
     "message": "Oluşturulan dosyalar"
   },
   "help_gettingStartedIntro": {
-    "message": "Yer işaretleriniz için bir GitHub deposu oluşturun, ardından <code>repo</code> kapsamıyla bir Kişisel Erişim Jetonu (PAT) oluşturun. GitHub sekmesinde jeton, depo sahibi, ad, dal (genellikle <code>main</code>) ve klasör yolunu (varsayılan: <code>bookmarks</code>) girin. Doğrulamak için <strong>Bağlantıyı Test Et</strong>'e tıklayın."
+    "message": "Yer imleriniz için <strong>GitHub</strong>, <strong>GitLab</strong>, <strong>Codeberg</strong>, <strong>Gitea</strong>, <strong>Forgejo</strong> veya <strong>Gogs</strong> üzerinde bir Git deposu oluşturun. <strong>Git → Bağlantı</strong> bölümünde sağlayıcınızı seçin, Kişisel Erişim Jetonu, depo sahibi/adı, dal (genellikle <code>main</code>) ve klasör yolu (varsayılan: <code>bookmarks</code>) girin. Self-hosted sağlayıcılar sunucu URL'si gerektirir; istendiğinde ana bilgisayar erişimine izin verin. Doğrulamak için <strong>Bağlantıyı test et</strong>'e tıklayın."
   },
   "help_gettingStartedTitle": {
     "message": "Başlarken"
@@ -219,6 +282,36 @@
   },
   "help_githubReposTitle": {
     "message": "GitHub Depoları Klasörü"
+  },
+  "help_headerLangDesc": {
+    "message": "Başlıktaki dil düğmesi uzantının görüntüleme dilini değiştirir. Ayar kaydedilir ve tüm cihazlarınızda senkronize edilir."
+  },
+  "help_headerLangTitle": {
+    "message": "Dil"
+  },
+  "help_historyIntro": {
+    "message": "Her senkronizasyon bir Git commit'i oluşturur. Geçmiş alt sekmesinde (Dosyalar altında) son commit'lere göz atabilir ve önceki bir sürümden yer imlerini geri yükleyebilirsiniz."
+  },
+  "help_historyLoadDesc": {
+    "message": "Yer imi yolunuza dokunan son 20 commit'i getirir. Tablo başlığı sütunları etiketler (tarih, kısa commit hash'i, commit mesajından ayrıştırılan istemci kimliği). Tam mesaj için istemci hücresinin üzerine gelin. Her satırda diff için önizleme (büyüteç) ve geri yükleme simgesi vardır."
+  },
+  "help_historyLoadLabel": {
+    "message": "Geçmişi yükle"
+  },
+  "help_historyRestoreDesc": {
+    "message": "Tüm yerel yer imlerini bu commit'in durumuyla değiştirir. Listede geri yükleme simgesine tıklayın, ardından kısa onay göründüğünde tekrar tıklayın (veya diff panelindeki tam metin). Uzak dalı yeniden yazmaz — mevcut uzak verileriniz dokunulmaz kalır. Sonraki senkronizasyon yerel durumu geri gönderir."
+  },
+  "help_historyRestoreLabel": {
+    "message": "Geri yükle"
+  },
+  "help_historyTitle": {
+    "message": "Senkronizasyon geçmişi ve geri al"
+  },
+  "help_historyUndoDesc": {
+    "message": "Yerel yer imlerini değiştiren son senkronizasyondan önceki commit'e tek tıkla geri dönüş. Yerel yer imlerini değiştiren her pull veya birleştirmeden sonra kullanılabilir."
+  },
+  "help_historyUndoLabel": {
+    "message": "Son senkronizasyonu geri al"
   },
   "help_links": {
     "message": "Bağlantılar"
@@ -237,6 +330,9 @@
   },
   "help_linkwardenTitle": {
     "message": "Linkwarden"
+  },
+  "help_menuTitle": {
+    "message": "Menü"
   },
   "help_notificationsDesc": {
     "message": "Senkronizasyon bildirimlerinin ne zaman gösterileceğini seçin: Tümü (başarılı ve başarısız), Yalnızca hatalar veya Kapalı."
@@ -298,6 +394,18 @@
   "help_profilesTitle": {
     "message": "Profiller"
   },
+  "help_provider_codeberg": {
+    "message": "<strong>Codeberg</strong>, <code>codeberg.org</code> üzerinde bir Forgejo ana bilgisayarıdır. Sağlayıcı olarak Codeberg seçin; sunucu URL'si önceden ayarlıdır. Kullanıcı Ayarları → Uygulamalar altında jeton oluşturun."
+  },
+  "help_provider_forgejo": {
+    "message": "<strong>Forgejo</strong>, Gitea ile aynı API'yi kullanır. Forgejo sunucu URL'nizi ve Kullanıcı Ayarları → Uygulamalar'dan kişisel erişim jetonunuzu girin."
+  },
+  "help_provider_gitlab": {
+    "message": "<strong>GitLab</strong>, gitlab.com ve self-managed örnekleri destekler. Alt grup projeleri için sahip olarak <code>grup/altgrup</code> ve depo olarak proje adını kullanın. GitLab.com için sunucu URL'sini boş bırakın."
+  },
+  "help_provider_gogs": {
+    "message": "<strong>Gogs</strong>, Gitea ile benzer bir API paylaşır. Gogs sunucu URL'nizi ve Kullanıcı Ayarları → Uygulamalar'dan erişim jetonunuzu girin."
+  },
   "help_quickSync": {
     "message": "Yer işaretlerini hızlı senkronize et"
   },
@@ -340,6 +448,12 @@
   "help_themeCycleTitle": {
     "message": "Tema"
   },
+  "help_transferDesc": {
+    "message": "Önce geçiş yapmadan bir profilden diğerine yer imi kopyalamak için Profil sekmesinde <strong>Transfer…</strong> kullanın. Tipik kullanım: GitHub'dan Gitea'ya geçiş. Temiz geçiş için <strong>Hedefi değiştir</strong>; <strong>Hedefe birleştir</strong> mevcut hedef dosyalarını tutar ve yinelenen klasörler oluşturabilir. Dağınık geçişten sonra Senkronizasyon alt sekmesinde <strong>Uzak yetimleri temizle</strong> kullanın. Git Bağlantı sekmesindeki ayna hedefleri her senkronizasyondan sonra yedek uzaklara kopya gönderir."
+  },
+  "help_transferTitle": {
+    "message": "Profiller arası yer imi transferi"
+  },
   "help_voteBacklogBtn": {
     "message": "Backlog için oy ver"
   },
@@ -362,10 +476,13 @@
     "message": "Senkronizasyon neden bazen uzun sürüyor?"
   },
   "help_wizardRestartDesc": {
-    "message": "GitHub deponuzu bağlamak ve ilk senkronizasyonu gerçekleştirmek için adım adım bir kılavuz."
+    "message": "Git deponuzu bağlamak ve ilk senkronizasyonu çalıştırmak için adım adım kılavuz."
   },
   "help_wizardRestartTitle": {
     "message": "Kurulum Sihirbazı"
+  },
+  "help_wizardSyncChoice": {
+    "message": "Kurulum sihirbazında <strong>Bağlantıyı kontrol et</strong> yalnızca erişimi doğrular — senkronize etmez. Ardından pull, birleştir/senkronize et, push, klasör yapısı oluştur veya atla seçersiniz; depoya yazılmadan önce onay istenir."
   },
   "linkwardenSave_cancelBtn": {
     "message": "İptal"
@@ -532,6 +649,18 @@
   "options_chooseFile": {
     "message": "Dosya seç"
   },
+  "options_cleanOrphansDesc": {
+    "message": "Yerel yer imlerinizde olmayan uzak yer imi dosyalarını kaldırın (aktif profil). Dağınık transfer veya sunucuda yinelenen klasörlerden sonra kullanın."
+  },
+  "options_cleanOrphansPreview": {
+    "message": "Yetimleri önizle"
+  },
+  "options_cleanOrphansRun": {
+    "message": "Uzak temizle"
+  },
+  "options_cleanOrphansTitle": {
+    "message": "Uzak yetimleri temizle"
+  },
   "options_connectionOk": {
     "message": "Bağlantı başarılı! Kullanıcı: $1, Depo: $2"
   },
@@ -636,6 +765,18 @@
   },
   "options_decryptError": {
     "message": "Şifre çözme başarısız. Yanlış parola mı?"
+  },
+  "options_densityCompact": {
+    "message": "Kompakt"
+  },
+  "options_densityGroupLabel": {
+    "message": "Arayüz yoğunluğu"
+  },
+  "options_densityLarge": {
+    "message": "Büyük"
+  },
+  "options_densityMedium": {
+    "message": "Orta"
   },
   "options_documentation": {
     "message": "Belgeler"
@@ -754,6 +895,51 @@
   "options_generatedFilesTitle": {
     "message": "Oluşturulan dosyalar"
   },
+  "options_gheServerUrlEnabled": {
+    "message": "Özel sunucu URL'si kullan (GitHub Enterprise)"
+  },
+  "options_gitConnection": {
+    "message": "Git Bağlantısı"
+  },
+  "options_gitProvider": {
+    "message": "Git sağlayıcısı"
+  },
+  "options_gitProviderGitea": {
+    "message": "Gitea / Forgejo"
+  },
+  "options_gitProviderGithub": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_codeberg": {
+    "message": "Codeberg"
+  },
+  "options_gitProvider_forgejo": {
+    "message": "Forgejo"
+  },
+  "options_gitProvider_gitea": {
+    "message": "Gitea"
+  },
+  "options_gitProvider_github": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_gitlab": {
+    "message": "GitLab"
+  },
+  "options_gitProvider_gogs": {
+    "message": "Gogs"
+  },
+  "options_giteaPermissionDenied": {
+    "message": "Gitea sunucusu için ana bilgisayar izni reddedildi. İstendiğinde erişime izin verin ve tekrar deneyin."
+  },
+  "options_giteaTokenHelpLink": {
+    "message": "Gitea kullanıcı ayarlarını aç (Uygulamalar)"
+  },
+  "options_giteaTokenHintHtml": {
+    "message": "Gitea'da <strong>Kullanıcı Ayarları → Uygulamalar</strong> altında depo okuma/yazma erişimiyle jeton oluşturun. Gitea jetonları GitHub tarzı <code>ghp_…</code> dizileri <em>değildir</em>."
+  },
+  "options_giteaTokenWizardHelpHtml": {
+    "message": "Gitea'da <strong>Kullanıcı Ayarları → Uygulamalar → Yeni Jeton Oluştur</strong>'u açın. Depo okuma ve yazmayı etkinleştirin. Jetonu kopyalayın — yalnızca bir kez gösterilir. Gitea jetonları <code>ghp_</code> gibi GitHub önekleri kullanmaz."
+  },
   "options_githubConnection": {
     "message": "GitHub Bağlantısı"
   },
@@ -786,6 +972,72 @@
   },
   "options_githubReposTitle": {
     "message": "GitHub Depoları Klasörü"
+  },
+  "options_historyColActions": {
+    "message": "İşlemler"
+  },
+  "options_historyColClient": {
+    "message": "İstemci"
+  },
+  "options_historyColCommit": {
+    "message": "Commit"
+  },
+  "options_historyColDate": {
+    "message": "Tarih"
+  },
+  "options_historyCurrent": {
+    "message": "güncel"
+  },
+  "options_historyDesc": {
+    "message": "Son senkronizasyon commit'lerine göz atın ve önceki bir sürümden yer imlerini geri yükleyin. Geri yükleme yalnızca yerel yer imlerini değiştirir — uzak dalı yeniden yazmaz."
+  },
+  "options_historyDiffAdded": {
+    "message": "Eklendi"
+  },
+  "options_historyDiffChanged": {
+    "message": "Değiştirildi"
+  },
+  "options_historyDiffClose": {
+    "message": "Kapat"
+  },
+  "options_historyDiffLoading": {
+    "message": "Önizleme yükleniyor…"
+  },
+  "options_historyDiffNoChanges": {
+    "message": "Fark yok — bu commit mevcut yer imlerinizle eşleşiyor."
+  },
+  "options_historyDiffRemoved": {
+    "message": "Kaldırıldı"
+  },
+  "options_historyEmpty": {
+    "message": "Commit bulunamadı."
+  },
+  "options_historyLoadBtn": {
+    "message": "Geçmişi yükle"
+  },
+  "options_historyPreviewBtn": {
+    "message": "Önizleme"
+  },
+  "options_historyRestoreBtn": {
+    "message": "Geri yükle"
+  },
+  "options_historyRestoreConfirmBtn": {
+    "message": "Onaylamak için tekrar tıklayın"
+  },
+  "options_historyRestoreConfirmShort": {
+    "message": "Tekrar tıkla"
+  },
+  "options_historyRestoring": {
+    "message": "Geri yükleniyor…"
+  },
+  "options_historyTitle": {
+    "message": "Senkronizasyon geçmişi"
+  },
+  "options_historyUndoBtn": {
+    "message": "Son senkronizasyonu geri al"
+  },
+  "options_hostPermissionDenied": {
+    "message": "Git sunucusu için ana bilgisayar izni reddedildi. İstendiğinde erişime izin verin ve tekrar deneyin."
   },
   "options_importBookmarks": {
     "message": "Yer İşaretlerini İçe Aktar"
@@ -841,6 +1093,12 @@
   "options_linkwardenApiKey": {
     "message": "API Anahtarı"
   },
+  "options_linkwardenConnectionFailed": {
+    "message": "Bağlantı başarısız: $1"
+  },
+  "options_linkwardenConnectionOk": {
+    "message": "Bağlantı başarılı!"
+  },
   "options_linkwardenDefaultCollection": {
     "message": "Varsayılan koleksiyon"
   },
@@ -859,11 +1117,17 @@
   "options_linkwardenEnabled": {
     "message": "Linkwarden'ı etkinleştir"
   },
+  "options_linkwardenHostPermissionDenied": {
+    "message": "Ana bilgisayar izni reddedildi. Adres çubuğunu veya açılır pencere engelleyicisini kontrol edin."
+  },
   "options_linkwardenInstanceUrl": {
     "message": "Örnek URL"
   },
   "options_linkwardenIntro": {
     "message": "Bağlam menüsünden doğrudan yer imi kaydetmek için Linkwarden örneğinizi yapılandırın."
+  },
+  "options_linkwardenInvalidUrlFormat": {
+    "message": "Geçersiz URL biçimi"
   },
   "options_linkwardenSyncEnabled": {
     "message": "Koleksiyonları Yer İmleriyle Senkronize Et"
@@ -894,8 +1158,44 @@
   "options_linkwardenTitle": {
     "message": "Linkwarden Entegrasyonu"
   },
+  "options_linkwardenUrlTokenRequired": {
+    "message": "URL ve jeton gerekli"
+  },
   "options_menu_showAsSubmenu": {
     "message": "Alt menü olarak göster"
+  },
+  "options_mirrorsAdd": {
+    "message": "+ Ayna ekle"
+  },
+  "options_mirrorsDesc": {
+    "message": "Her başarılı birincil senkronizasyondan sonra yer imi dosyalarının yalnızca push kopyalarını ek Git uzaklarına gönderir. Aynadaki doğrudan düzenlemeler sonraki senkronizasyonda üzerine yazılır."
+  },
+  "options_mirrorsLabel": {
+    "message": "Etiket"
+  },
+  "options_mirrorsPaused": {
+    "message": "Duraklatıldı"
+  },
+  "options_mirrorsPushGenerated": {
+    "message": "Oluşturulan dosyaları dahil et (README, HTML, feed, Dashy)"
+  },
+  "options_mirrorsPushSettings": {
+    "message": "Şifreli ayarları dahil et"
+  },
+  "options_mirrorsRemove": {
+    "message": "Kaldır"
+  },
+  "options_mirrorsStatusError": {
+    "message": "Ayna hatası: $1"
+  },
+  "options_mirrorsStatusOk": {
+    "message": "Son push OK"
+  },
+  "options_mirrorsTest": {
+    "message": "Test"
+  },
+  "options_mirrorsTitle": {
+    "message": "Ayna hedefleri"
   },
   "options_mobileAppAlert": {
     "message": "<strong>Android kullanıcıları için not:</strong> Android için Firefox, uzantılar aracılığıyla doğrudan yer imi senkronizasyonunu desteklemiyor. Yardımcı uygulamayı kullanmalısınız."
@@ -987,6 +1287,9 @@
   "options_onboardingWizardBack": {
     "message": "Geri"
   },
+  "options_onboardingWizardCheckConnection": {
+    "message": "Bağlantıyı kontrol et"
+  },
   "options_onboardingWizardCompleted": {
     "message": "Sihirbaz başarıyla tamamlandı."
   },
@@ -1036,7 +1339,7 @@
     "message": "Senkronizasyon durumu kaydediliyor"
   },
   "options_onboardingWizardPhaseUploading": {
-    "message": "Yer imleri GitHub'a yükleniyor"
+    "message": "Yer imleri uzak depoya yükleniyor"
   },
   "options_onboardingWizardRepoCreateFailed": {
     "message": "Depo bu jeton/izinlerle oluşturulamadı."
@@ -1068,6 +1371,9 @@
   "options_onboardingWizardStart": {
     "message": "Kurulum sihirbazını başlat"
   },
+  "options_onboardingWizardStartSync": {
+    "message": "Senkronizasyonu başlat"
+  },
   "options_onboardingWizardStepFinishText": {
     "message": "Kurulum tamamlandı. Normal sync ayarlarıyla devam edebilirsiniz."
   },
@@ -1080,6 +1386,12 @@
   "options_onboardingWizardStepHasTokenTitle": {
     "message": "Zaten bir jetonunuz var mı?"
   },
+  "options_onboardingWizardStepProviderText": {
+    "message": "GitHub, GitLab, Codeberg, Gitea, Forgejo veya Gogs seçin. Her profil kendi sağlayıcısını ve sunucu URL'sini saklar."
+  },
+  "options_onboardingWizardStepProviderTitle": {
+    "message": "Git sağlayıcınızı seçin"
+  },
   "options_onboardingWizardStepRepoDecisionText": {
     "message": "Depoyu otomatik oluşturmayı ya da mevcut depoyu kullanmayı seçin."
   },
@@ -1091,6 +1403,9 @@
   },
   "options_onboardingWizardStepRepoTitle": {
     "message": "Depo ayarları"
+  },
+  "options_onboardingWizardStepSyncChoiceText": {
+    "message": "Nasıl senkronize edeceğinizi seçin, uyarıyı okuyun ve Senkronizasyonu başlat'a tıklayın. Onaylamadan depoya hiçbir şey yazılmaz."
   },
   "options_onboardingWizardStepSyncTextEmpty": {
     "message": "Yol boş. Başlamak için ilk klasör yapısını oluşturun."
@@ -1114,7 +1429,7 @@
     "message": "Erişim jetonu"
   },
   "options_onboardingWizardStepValidateText": {
-    "message": "Jeton, depo ve yol erişimini doğrulamak için testi çalıştırın."
+    "message": "Jeton, depo ve yol erişimini doğrulamak için Bağlantıyı kontrol et'e tıklayın. Bu adımda senkronizasyon çalışmaz."
   },
   "options_onboardingWizardStepValidateTitle": {
     "message": "Bağlantıyı test et"
@@ -1125,8 +1440,68 @@
   "options_onboardingWizardStepWelcomeTitle": {
     "message": "Hoş geldiniz"
   },
+  "options_onboardingWizardSyncConfirmRunBtn": {
+    "message": "Çalıştır"
+  },
+  "options_onboardingWizardSyncConfirmSkipBtn": {
+    "message": "Atla"
+  },
+  "options_onboardingWizardSyncConfirm_initialize": {
+    "message": "Uzak depoda başlangıç bookmarks/ klasör yapısı oluşturulsun mu (yerel yer imleri yüklenmeden)?"
+  },
+  "options_onboardingWizardSyncConfirm_pull": {
+    "message": "Uzak depodan bu tarayıcıya $2 yer imi indirilsin mi?"
+  },
+  "options_onboardingWizardSyncConfirm_pullOverwriteLocal": {
+    "message": "Pull, tüm $1 yerel yer imini uzak depodaki $2 ile değiştirir. Devam edilsin mi?"
+  },
+  "options_onboardingWizardSyncConfirm_push": {
+    "message": "$1 yerel yer imi uzak depoya yüklensin mi?"
+  },
+  "options_onboardingWizardSyncConfirm_pushDanger": {
+    "message": "Push uzak depoyu üzerine yazar. $2 uzak yer imi silinebilir; yalnızca $1 yerel yer imi kalır. Devam edilsin mi?"
+  },
+  "options_onboardingWizardSyncConfirm_skip": {
+    "message": "İlk senkronizasyon şimdilik atlanılsın mı? Daha sonra popup'tan manuel senkronize edebilirsiniz."
+  },
+  "options_onboardingWizardSyncConfirm_sync": {
+    "message": "$1 yerel ve $2 uzak yer imi arasında birleştirme/senkronizasyon çalıştırılsın mı? Sonra çakışmaları çözmeniz gerekebilir."
+  },
   "options_onboardingWizardSyncInProgress": {
     "message": "Arka planda çalışılıyor, lütfen bekleyin..."
+  },
+  "options_onboardingWizardSyncModeLabel": {
+    "message": "İlk senkronizasyon işlemi"
+  },
+  "options_onboardingWizardSyncMode_initialize": {
+    "message": "Yalnızca klasör yapısı oluştur"
+  },
+  "options_onboardingWizardSyncMode_pull": {
+    "message": "Yalnızca pull (uzaktan indir)"
+  },
+  "options_onboardingWizardSyncMode_push": {
+    "message": "Yalnızca push (yerel yer imlerini yükle — uzak depoyu üzerine yazar)"
+  },
+  "options_onboardingWizardSyncMode_skip": {
+    "message": "Şimdilik atla"
+  },
+  "options_onboardingWizardSyncMode_sync": {
+    "message": "Birleştir / senkronize et (her iki tarafta yer imi varken önerilir)"
+  },
+  "options_onboardingWizardSyncWarn_both": {
+    "message": "Her iki tarafta da yer imleri var. Birleştir/senkronize değişiklikleri birleştirir; pull veya push bir tarafı üzerine yazar."
+  },
+  "options_onboardingWizardSyncWarn_emptyBoth": {
+    "message": "Uzak yol ve tarayıcı boş. Klasör yapısı oluşturun veya atlayıp sonra senkronize edin."
+  },
+  "options_onboardingWizardSyncWarn_localOnly": {
+    "message": "Uzak yol boş; push ile yerel yer imleri yüklenecek."
+  },
+  "options_onboardingWizardSyncWarn_pushDanger": {
+    "message": "Uyarı: push, yerelde bulunmayan $1 uzak yer imi dosyasını siler ve depoyu bu tarayıcının yer imleriyle değiştirir."
+  },
+  "options_onboardingWizardSyncWarn_remoteOnly": {
+    "message": "Uzak depoda yer imleri var; bu tarayıcı boş. Depoyu üzerine yazmamak için pull önerilir."
   },
   "options_onboardingWizardTitle": {
     "message": "Kurulum sihirbazı"
@@ -1158,8 +1533,17 @@
   "options_onboardingWizardTokenValidated": {
     "message": "Jeton geçerli ve gerekli kapsama sahip."
   },
+  "options_ownerHint_gitlab": {
+    "message": "Kullanıcı adı, grup veya grup/altgrup yolu (ör. grubum/altgrup)."
+  },
   "options_ownerPlaceholder": {
     "message": "github-kullanıcı-adınız"
+  },
+  "options_ownerPlaceholderGitea": {
+    "message": "gitea-kullanici-adiniz"
+  },
+  "options_ownerPlaceholder_gitlab": {
+    "message": "kullanici veya grup/altgrup"
   },
   "options_passwordPlaceholder": {
     "message": "Parola"
@@ -1256,6 +1640,21 @@
   },
   "options_selectFile": {
     "message": "Dosya seçin..."
+  },
+  "options_serverUrl": {
+    "message": "Sunucu URL'si"
+  },
+  "options_serverUrlHint": {
+    "message": "Git sunucunuzun temel URL'si (/api/v1 veya /api/v4 soneki olmadan)."
+  },
+  "options_serverUrlPlaceholder_github": {
+    "message": "https://github.sirket.com"
+  },
+  "options_serverUrlPlaceholder_gitlab": {
+    "message": "https://gitlab.com (GitLab.com için boş bırakın)"
+  },
+  "options_serverUrlRequired": {
+    "message": "Bu sağlayıcı için sunucu URL'si gerekli."
   },
   "options_settingsCard": {
     "message": "Ayarlar"
@@ -1414,6 +1813,9 @@
   "options_subTabGitAdd": {
     "message": "Git Add"
   },
+  "options_subTabHistory": {
+    "message": "Geçmiş"
+  },
   "options_subTabMenuAdvanced": {
     "message": "Gelişmiş ve Güvenlik"
   },
@@ -1510,17 +1912,56 @@
   "options_themeAuto": {
     "message": "A Otomatik (sistem)"
   },
+  "options_themeAutoLabel": {
+    "message": "Otomatik"
+  },
   "options_themeDark": {
     "message": "☽ Koyu"
   },
+  "options_themeDarkLabel": {
+    "message": "Koyu"
+  },
   "options_themeLight": {
     "message": "☀ Açık"
+  },
+  "options_themeLightLabel": {
+    "message": "Açık"
   },
   "options_toggleToken": {
     "message": "Jetonu göster/gizle"
   },
   "options_tokenHint": {
     "message": "<code>repo</code> kapsamı (classic) veya <code>Contents: Read/Write</code> ve <code>Metadata: Read</code> (fine-grained) gerektirir. <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Jeton oluştur</a>"
+  },
+  "options_tokenHintHtml_codeberg": {
+    "message": "<a href=\"https://codeberg.org/user/settings/applications\" target=\"_blank\" rel=\"noopener\">Codeberg → Kullanıcı Ayarları → Uygulamalar</a> altında depo okuma/yazma erişimiyle jeton oluşturun."
+  },
+  "options_tokenHintHtml_forgejo": {
+    "message": "Forgejo sunucunuzda <strong>Kullanıcı Ayarları → Uygulamalar</strong> altında depo okuma/yazma erişimiyle jeton oluşturun."
+  },
+  "options_tokenHintHtml_gitea": {
+    "message": "<strong>Kullanıcı Ayarları → Uygulamalar</strong> altında depo okuma/yazma erişimiyle jeton oluşturun."
+  },
+  "options_tokenHintHtml_gitlab": {
+    "message": "<a href=\"https://gitlab.com/-/user_settings/personal_access_tokens\" target=\"_blank\" rel=\"noopener\">GitLab → Kullanıcı Ayarları → Erişim Jetonları</a> altında <code>api</code> kapsamıyla (depo okuma/yazma) jeton oluşturun."
+  },
+  "options_tokenHintHtml_gogs": {
+    "message": "Gogs sunucunuzda <strong>Kullanıcı Ayarları → Uygulamalar</strong> altında depo okuma/yazma erişimiyle jeton oluşturun."
+  },
+  "options_tokenPlaceholderGitea": {
+    "message": "gitea-erisim-jetonunuz"
+  },
+  "options_tokenPlaceholderGithub": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitea": {
+    "message": "erisim-jetonunuz"
+  },
+  "options_tokenPlaceholder_github": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitlab": {
+    "message": "glpat-xxxxxxxxxxxxxxxxxxxx"
   },
   "options_tokenValidMissingScope": {
     "message": "Jeton geçerli ($1), ancak \"repo\" kapsamı eksik."
@@ -1530,6 +1971,51 @@
   },
   "options_tokenValidSpecifyRepo": {
     "message": "Jeton geçerli! Kullanıcı: $1. Lütfen bir depo belirtin."
+  },
+  "options_transferApplyLocal": {
+    "message": "Tarayıcıya uygula (yalnızca hedef aktifken)"
+  },
+  "options_transferCancel": {
+    "message": "İptal"
+  },
+  "options_transferDesc": {
+    "message": "Bir profilden diğerine yer imi kopyalayın (ör. GitHub → Gitea geçişi). Hedef profil aktif değilse veya yerel uygulamayı seçmezseniz tarayıcıyı değiştirmez."
+  },
+  "options_transferDuplicateFoldersWarning": {
+    "message": "Transfer sonucunda yinelenen klasör adları (slug çakışması): $1. Transferden önce kaynak profilin yer imlerinde bu klasörleri birleştirin, aksi halde yinelenenler hedef uzak depoya kopyalanır."
+  },
+  "options_transferFolder": {
+    "message": "Klasör (isteğe bağlı)"
+  },
+  "options_transferFolderHint": {
+    "message": "Depo klasörü altında göreli yol, ör. toolbar/is. Tüm yer imleri için boş bırakın."
+  },
+  "options_transferMergeConfirm": {
+    "message": "$1 mevcut dosyalı hedefe birleştirilsin mi? Mevcut uzak yer imleri korunur; yinelenen klasörler oluşabilir. Devam edilsin mi?"
+  },
+  "options_transferMergeHint": {
+    "message": "Birleştirme tüm mevcut hedef dosyalarını tutar ve kaynak yer imlerini ekler. Yinelenen klasörler oluşturabilir (ör. kitaplar ve kitaplar-2). Temiz geçiş için Hedefi değiştir kullanın."
+  },
+  "options_transferMergeWarning": {
+    "message": "Hedefte zaten $1 yer imi dosyası var. Birleştirme hepsini ve kopyalanan kaynak dosyalarını tutar — yinelenen klasörler olasıdır."
+  },
+  "options_transferMode": {
+    "message": "Mod"
+  },
+  "options_transferModeMerge": {
+    "message": "Hedefe birleştir"
+  },
+  "options_transferModeReplace": {
+    "message": "Hedefi değiştir"
+  },
+  "options_transferOpen": {
+    "message": "Transfer…"
+  },
+  "options_transferPreview": {
+    "message": "Önizleme"
+  },
+  "options_transferPreviewResult": {
+    "message": "Kaynak: $1 ($2 dosya). Hedefte $3 mevcut dosya → transferden sonra $4."
   },
   "options_transferProgressApplying": {
     "message": "Tarayıcıya uygulanıyor…"
@@ -1548,6 +2034,36 @@
   },
   "options_transferProgressPreparing": {
     "message": "Aktarım hazırlanıyor…"
+  },
+  "options_transferPush": {
+    "message": "Hedef depoya push"
+  },
+  "options_transferReplaceWarning": {
+    "message": "Değiştirme, transfer sonucuna dahil olmayan $1 uzak dosyayı siler."
+  },
+  "options_transferRun": {
+    "message": "Transfer"
+  },
+  "options_transferSource": {
+    "message": "Kaynak profil"
+  },
+  "options_transferSourceBrowser": {
+    "message": "tarayıcı"
+  },
+  "options_transferSourceCache": {
+    "message": "önbellek"
+  },
+  "options_transferSourceRemote": {
+    "message": "uzak"
+  },
+  "options_transferTarget": {
+    "message": "Hedef profil"
+  },
+  "options_transferTargetWarning": {
+    "message": "Uyarı: hedefte zaten yer imi verisi var."
+  },
+  "options_transferTitle": {
+    "message": "Yer imlerini transfer et"
   },
   "options_version": {
     "message": "Sürüm"
@@ -1591,8 +2107,14 @@
   "popup_localToGithub": {
     "message": "Yerel → GitHub"
   },
+  "popup_localToRemote": {
+    "message": "Yerel → Uzak"
+  },
   "popup_minAgo": {
     "message": "$1 dk önce"
+  },
+  "popup_mirrorStatus": {
+    "message": "Aynalandı: $1"
   },
   "popup_nextSyncIn": {
     "message": "Sonraki senkronizasyon: $1"
@@ -1614,6 +2136,9 @@
   },
   "popup_ready": {
     "message": "Hazır"
+  },
+  "popup_remoteToLocal": {
+    "message": "Uzak → Yerel"
   },
   "popup_reportIssue": {
     "message": "Sorun Bildir"
@@ -1645,6 +2170,9 @@
   "search_openBtn": {
     "message": "Aç"
   },
+  "search_resultsLabel": {
+    "message": "Arama sonuçları"
+  },
   "search_statusNoResults": {
     "message": "Yer imi bulunamadı"
   },
@@ -1662,8 +2190,20 @@
   "search_subtitle": {
     "message": "Yerel yer imlerini arayın ve eşleşmeleri yeni sekmede açın."
   },
+  "search_syncComplete": {
+    "message": "Senkronizasyon tamamlandı"
+  },
+  "search_syncFailed": {
+    "message": "Senkronizasyon başarısız: $1"
+  },
+  "search_syncing": {
+    "message": "Senkronize ediliyor…"
+  },
   "search_title": {
     "message": "Yer İmi Arama"
+  },
+  "search_unknownError": {
+    "message": "Bilinmeyen hata"
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – Yer İmi Arama"
@@ -1698,8 +2238,14 @@
   "sync_conflictRemoteModified": {
     "message": "Çakışma tespit edildi: Uzak taraf da değiştirilmiş."
   },
+  "sync_loadedFromRemote": {
+    "message": "Uzak depodan yüklendi."
+  },
   "sync_noBookmarksOnGithub": {
     "message": "GitHub'da yer işareti bulunamadı."
+  },
+  "sync_noBookmarksOnRemote": {
+    "message": "Uzak depoda yer imi bulunamadı."
   },
   "sync_noChanges": {
     "message": "Son senkronizasyondan bu yana değişiklik yok."
@@ -1734,7 +2280,37 @@
   "sync_pushSuccess": {
     "message": "Yer işaretleri GitHub'a başarıyla gönderildi."
   },
+  "sync_remoteChangedRetry": {
+    "message": "Uzak depo şu anda değişiyor. Lütfen biraz sonra tekrar senkronize edin."
+  },
   "sync_syncFailed": {
     "message": "Senkronizasyon başarısız: $1"
+  },
+  "transfer_commitMessage": {
+    "message": "$1 profilinden yer imi transferi"
+  },
+  "transfer_connectionLost": {
+    "message": "Transfer bağlantısı kesildi. Seçenekler sayfasını yenileyin ve tekrar deneyin."
+  },
+  "transfer_mergeConflicts": {
+    "message": "Birleştirme engellendi: $1 yol çakışması. Çakışan dosyaları çözün veya Değiştir modunu kullanın."
+  },
+  "transfer_noBookmarks": {
+    "message": "Transfer edilecek yer imi dosyası yok"
+  },
+  "transfer_profileNotFound": {
+    "message": "Profil bulunamadı"
+  },
+  "transfer_sameProfile": {
+    "message": "Kaynak ve hedef farklı profiller olmalı"
+  },
+  "transfer_success": {
+    "message": "$1 yer imi dosyası transfer edildi"
+  },
+  "whatsnew_close": {
+    "message": "Kapat"
+  },
+  "whatsnew_title": {
+    "message": "GitSyncMarks $1'deki yenilikler"
   }
 }

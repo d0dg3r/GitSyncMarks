@@ -17,8 +17,41 @@
   "api_invalidToken": {
     "message": "Недействительный токен. Проверьте ваш Personal Access Token."
   },
+  "api_listCommitsFailed": {
+    "message": "Не удалось получить список коммитов (HTTP $1)."
+  },
+  "api_networkError": {
+    "message": "Сетевая ошибка. Проверьте подключение к интернету и повторите попытку."
+  },
   "api_rateLimitExceeded": {
     "message": "Превышен лимит запросов к GitHub API. Подождите немного."
+  },
+  "api_treeTruncated": {
+    "message": "Репозиторий слишком велик для чтения за один запрос (GitHub обрезал дерево файлов). Синхронизация остановлена, чтобы избежать потери данных."
+  },
+  "cleanOrphans_commitMessage": {
+    "message": "Удалить осиротевшие файлы закладок, отсутствующие локально"
+  },
+  "cleanOrphans_confirm": {
+    "message": "Удалить $1 осиротевших файл(ов) в $2 папках верхнего уровня с удалённого? Локальные закладки не изменятся. Нельзя отменить в GitSyncMarks (используйте историю Git для восстановления)."
+  },
+  "cleanOrphans_noLocalBaseline": {
+    "message": "Нет локальной базы закладок для этого профиля. Переключитесь на профиль и синхронизируйте один раз или используйте Очистить удалённый на активном профиле."
+  },
+  "cleanOrphans_none": {
+    "message": "На удалённом нет осиротевших файлов закладок."
+  },
+  "cleanOrphans_previewFailed": {
+    "message": "Не удалось показать предпросмотр осиротевших на удалённом."
+  },
+  "cleanOrphans_previewResult": {
+    "message": "Будет удалено $1 осиротевших файл(ов) в $2 папках верхнего уровня."
+  },
+  "cleanOrphans_remoteFetchFailed": {
+    "message": "Не удалось прочитать удалённый репозиторий: $1"
+  },
+  "cleanOrphans_success": {
+    "message": "Удалено $1 осиротевших файл(ов) из $2 папок верхнего уровня на удалённом."
   },
   "commands_openOptions": {
     "message": "Открыть настройки расширения"
@@ -82,6 +115,24 @@
   "contextMenu_notifFolderMissing": {
     "message": "Выбранная папка больше не существует. Обновите настройки быстрых папок."
   },
+  "contextMenu_notifLinkwardenError": {
+    "message": "Ошибка Linkwarden: $1"
+  },
+  "contextMenu_notifLinkwardenGrantPermissions": {
+    "message": "Предоставьте разрешения через «Проверить подключение» в настройках"
+  },
+  "contextMenu_notifLinkwardenNotConfigured": {
+    "message": "Linkwarden не настроен"
+  },
+  "contextMenu_notifLinkwardenSaved": {
+    "message": "Ссылка сохранена в Linkwarden"
+  },
+  "contextMenu_notifLinkwardenSavedWithScreenshot": {
+    "message": "Ссылка и скриншот сохранены в Linkwarden"
+  },
+  "contextMenu_notifLinkwardenUrlInvalid": {
+    "message": "Недопустимый URL Linkwarden"
+  },
   "contextMenu_notifNoFavicon": {
     "message": "Фавикон для этой страницы недоступен"
   },
@@ -137,10 +188,10 @@
     "message": "Синхронизировать сейчас"
   },
   "extDescription": {
-    "message": "Синхронизация закладок через GitHub. Интеграция с Linkwarden, Smart Search и приложение-компаньон. Напрямую, безопасно, приватно."
+    "message": "Синхронизация закладок через GitHub, GitLab, Codeberg, Gitea и др. Linkwarden, умный поиск, companion-приложение. Напрямую, безопасно, приватно."
   },
   "extDescriptionFirefox": {
-    "message": "Синхронизация закладок через GitHub. Интеграция Linkwarden, умный поиск и мастер настройки. Безопасно, приватно. Полная поддержка Firefox."
+    "message": "Синхронизация закладок через GitHub, GitLab, Codeberg, Gitea и др. Linkwarden, умный поиск, мастер настройки. Двунаправленно, безопасно и приватно. Полная поддержка Firefox. Без посредников."
   },
   "extName": {
     "message": "GitSyncMarks"
@@ -175,6 +226,12 @@
   "help_backupTitle": {
     "message": "Резервное копирование"
   },
+  "help_cleanOrphansDesc": {
+    "message": "На подвкладке Синхронизация просматривайте и удаляйте удалённые файлы закладок, которых нет в локальных закладках (активный профиль). Полезно после дублирующихся папок при слиянии при переносе."
+  },
+  "help_cleanOrphansTitle": {
+    "message": "Очистить осиротевшие на удалённом"
+  },
   "help_conflictDesc": {
     "message": "Когда и локальные, и удалённые закладки были изменены, всплывающее окно показывает конфликт. Выберите <strong>Push</strong> (локальные побеждают, перезаписать удалённые) или <strong>Pull</strong> (удалённые побеждают, перезаписать локальные). Автоматическое слияние конфликтов не выполняется."
   },
@@ -196,6 +253,12 @@
   "help_debugLogTitle": {
     "message": "Журнал отладки"
   },
+  "help_densityDesc": {
+    "message": "Кнопки S / M / L в заголовке переключают Компактный, Средний и Крупный режим. Настройка применяется ко всем поверхностям расширения (настройки, popup, поиск, сохранение в Linkwarden) и синхронизируется между устройствами."
+  },
+  "help_densityTitle": {
+    "message": "Плотность интерфейса"
+  },
   "help_discussions": {
     "message": "Обсуждения"
   },
@@ -209,7 +272,7 @@
     "message": "Генерируемые файлы"
   },
   "help_gettingStartedIntro": {
-    "message": "Создайте GitHub-репозиторий для закладок, затем создайте Personal Access Token (PAT) с областью <code>repo</code>. Во вкладке GitHub введите токен, владельца репозитория, имя, ветку (обычно <code>main</code>) и путь к папке (по умолчанию: <code>bookmarks</code>). Нажмите <strong>Проверить соединение</strong> для проверки."
+    "message": "Создайте Git-репозиторий для закладок на <strong>GitHub</strong>, <strong>GitLab</strong>, <strong>Codeberg</strong>, <strong>Gitea</strong>, <strong>Forgejo</strong> или <strong>Gogs</strong>. В <strong>Git → Подключение</strong> выберите провайдера, введите персональный токен доступа, владельца/имя репозитория, ветку (обычно <code>main</code>) и путь к папке (по умолчанию: <code>bookmarks</code>). Для self-hosted нужен URL сервера; разрешите доступ к хосту при запросе. Нажмите <strong>Проверить подключение</strong> для проверки."
   },
   "help_gettingStartedTitle": {
     "message": "Начало работы"
@@ -219,6 +282,36 @@
   },
   "help_githubReposTitle": {
     "message": "Папка GitHub Repos"
+  },
+  "help_headerLangDesc": {
+    "message": "Кнопка языка в заголовке меняет язык отображения расширения. Настройка сохраняется и синхронизируется на всех устройствах."
+  },
+  "help_headerLangTitle": {
+    "message": "Язык"
+  },
+  "help_historyIntro": {
+    "message": "Каждая синхронизация создаёт Git-коммит. Просматривайте последние коммиты на подвкладке История (в разделе Файлы) и восстанавливайте закладки из предыдущей версии."
+  },
+  "help_historyLoadDesc": {
+    "message": "Загружает последние 20 коммитов, затронувших путь закладок. Заголовок таблицы обозначает столбцы (дата, короткий хеш коммита, id клиента из сообщения коммита). Наведите на ячейку клиента для полного сообщения. В каждой строке есть иконка предпросмотра (лупа) и восстановления."
+  },
+  "help_historyLoadLabel": {
+    "message": "Загрузить историю"
+  },
+  "help_historyRestoreDesc": {
+    "message": "Заменяет все локальные закладки состоянием этого коммита. В списке нажмите иконку восстановления, затем снова при коротком подтверждении (или полный текст в панели diff). Удалённая ветка не перезаписывается — текущие удалённые данные остаются нетронутыми. Следующая синхронизация отправит локальное состояние обратно."
+  },
+  "help_historyRestoreLabel": {
+    "message": "Восстановить"
+  },
+  "help_historyTitle": {
+    "message": "История синхронизации и отмена"
+  },
+  "help_historyUndoDesc": {
+    "message": "Откат одним кликом к коммиту до последней синхронизации, изменившей локальные закладки. Доступно после любого pull или слияния, изменившего локальные закладки."
+  },
+  "help_historyUndoLabel": {
+    "message": "Отменить последнюю синхронизацию"
   },
   "help_links": {
     "message": "Ссылки"
@@ -237,6 +330,9 @@
   },
   "help_linkwardenTitle": {
     "message": "Linkwarden"
+  },
+  "help_menuTitle": {
+    "message": "Меню"
   },
   "help_notificationsDesc": {
     "message": "Выберите, когда показывать уведомления о синхронизации: Все (успех и ошибки), Только ошибки или Выкл."
@@ -298,6 +394,18 @@
   "help_profilesTitle": {
     "message": "Профили"
   },
+  "help_provider_codeberg": {
+    "message": "<strong>Codeberg</strong> — хост Forgejo на <code>codeberg.org</code>. Выберите Codeberg как провайдера; URL сервера задан заранее. Создайте токен в Настройках пользователя → Приложения."
+  },
+  "help_provider_forgejo": {
+    "message": "<strong>Forgejo</strong> использует тот же API, что и Gitea. Введите URL сервера Forgejo и персональный токен доступа из Настроек пользователя → Приложения."
+  },
+  "help_provider_gitlab": {
+    "message": "<strong>GitLab</strong> поддерживает gitlab.com и self-managed. Для проектов подгрупп используйте <code>группа/подгруппа</code> как владельца и имя проекта как репозиторий. Оставьте URL сервера пустым для GitLab.com."
+  },
+  "help_provider_gogs": {
+    "message": "<strong>Gogs</strong> использует похожий API с Gitea. Введите URL сервера Gogs и токен доступа из Настроек пользователя → Приложения."
+  },
   "help_quickSync": {
     "message": "Быстрая синхронизация закладок"
   },
@@ -340,6 +448,12 @@
   "help_themeCycleTitle": {
     "message": "Тема"
   },
+  "help_transferDesc": {
+    "message": "Используйте <strong>Перенос…</strong> на вкладке Профиль, чтобы копировать закладки из одного профиля в другой без предварительного переключения. Типично: миграция с GitHub на Gitea. Выберите <strong>Заменить цель</strong> для чистой миграции; <strong>Слить в цель</strong> сохраняет существующие файлы и может создать дублирующиеся папки. После неаккуратной миграции используйте <strong>Очистить осиротевшие на удалённом</strong> на подвкладке Синхронизация. Зеркала на вкладке Git-подключение отправляют копию на резервные удалённые после каждой синхронизации."
+  },
+  "help_transferTitle": {
+    "message": "Перенос закладок между профилями"
+  },
   "help_voteBacklogBtn": {
     "message": "Голосовать за бэклог"
   },
@@ -362,10 +476,13 @@
     "message": "Почему синхронизация иногда длится долго?"
   },
   "help_wizardRestartDesc": {
-    "message": "Пошаговое руководство по подключению репозитория GitHub и выполнению первой синхронизации."
+    "message": "Пошаговое руководство по подключению Git-репозитория и первой синхронизации."
   },
   "help_wizardRestartTitle": {
     "message": "Мастер настройки"
+  },
+  "help_wizardSyncChoice": {
+    "message": "В мастере настройки <strong>Проверить подключение</strong> только проверяет доступ — не синхронизирует. Затем вы выбираете pull, слияние/синхронизацию, push, создать структуру папок или пропустить, с подтверждением перед записью в репозиторий."
   },
   "linkwardenSave_cancelBtn": {
     "message": "Отмена"
@@ -532,6 +649,18 @@
   "options_chooseFile": {
     "message": "Выбрать файл"
   },
+  "options_cleanOrphansDesc": {
+    "message": "Удалите файлы закладок на удалённом, которых нет в локальных закладках (активный профиль). Используйте после неаккуратного переноса или дублирующихся папок на сервере."
+  },
+  "options_cleanOrphansPreview": {
+    "message": "Предпросмотр осиротевших"
+  },
+  "options_cleanOrphansRun": {
+    "message": "Очистить удалённый"
+  },
+  "options_cleanOrphansTitle": {
+    "message": "Очистить осиротевшие на удалённом"
+  },
   "options_connectionOk": {
     "message": "Соединение установлено! Пользователь: $1, Репозиторий: $2"
   },
@@ -636,6 +765,18 @@
   },
   "options_decryptError": {
     "message": "Ошибка расшифровки. Неверный пароль?"
+  },
+  "options_densityCompact": {
+    "message": "Компактный"
+  },
+  "options_densityGroupLabel": {
+    "message": "Плотность интерфейса"
+  },
+  "options_densityLarge": {
+    "message": "Крупный"
+  },
+  "options_densityMedium": {
+    "message": "Средний"
   },
   "options_documentation": {
     "message": "Документация"
@@ -754,6 +895,51 @@
   "options_generatedFilesTitle": {
     "message": "Генерируемые файлы"
   },
+  "options_gheServerUrlEnabled": {
+    "message": "Использовать пользовательский URL сервера (GitHub Enterprise)"
+  },
+  "options_gitConnection": {
+    "message": "Git-подключение"
+  },
+  "options_gitProvider": {
+    "message": "Git-провайдер"
+  },
+  "options_gitProviderGitea": {
+    "message": "Gitea / Forgejo"
+  },
+  "options_gitProviderGithub": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_codeberg": {
+    "message": "Codeberg"
+  },
+  "options_gitProvider_forgejo": {
+    "message": "Forgejo"
+  },
+  "options_gitProvider_gitea": {
+    "message": "Gitea"
+  },
+  "options_gitProvider_github": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_gitlab": {
+    "message": "GitLab"
+  },
+  "options_gitProvider_gogs": {
+    "message": "Gogs"
+  },
+  "options_giteaPermissionDenied": {
+    "message": "Разрешение хоста для сервера Gitea отклонено. Разрешите доступ при запросе и повторите попытку."
+  },
+  "options_giteaTokenHelpLink": {
+    "message": "Открыть настройки пользователя Gitea (Приложения)"
+  },
+  "options_giteaTokenHintHtml": {
+    "message": "Создайте токен в Gitea в <strong>Настройках пользователя → Приложения</strong> с доступом на чтение/запись репозитория. Токены Gitea <em>не</em> являются строками в стиле GitHub <code>ghp_…</code>."
+  },
+  "options_giteaTokenWizardHelpHtml": {
+    "message": "В Gitea откройте <strong>Настройки пользователя → Приложения → Создать новый токен</strong>. Включите чтение и запись репозитория. Скопируйте токен — он показывается только один раз. Токены Gitea не используют префиксы GitHub вроде <code>ghp_</code>."
+  },
   "options_githubConnection": {
     "message": "Подключение к GitHub"
   },
@@ -786,6 +972,72 @@
   },
   "options_githubReposTitle": {
     "message": "Папка GitHub Repos"
+  },
+  "options_historyColActions": {
+    "message": "Действия"
+  },
+  "options_historyColClient": {
+    "message": "Клиент"
+  },
+  "options_historyColCommit": {
+    "message": "Коммит"
+  },
+  "options_historyColDate": {
+    "message": "Дата"
+  },
+  "options_historyCurrent": {
+    "message": "текущий"
+  },
+  "options_historyDesc": {
+    "message": "Просматривайте последние коммиты синхронизации и восстанавливайте закладки из предыдущей версии. Восстановление меняет только локальные закладки — удалённая ветка не перезаписывается."
+  },
+  "options_historyDiffAdded": {
+    "message": "Добавлено"
+  },
+  "options_historyDiffChanged": {
+    "message": "Изменено"
+  },
+  "options_historyDiffClose": {
+    "message": "Закрыть"
+  },
+  "options_historyDiffLoading": {
+    "message": "Загрузка предпросмотра…"
+  },
+  "options_historyDiffNoChanges": {
+    "message": "Нет различий — этот коммит соответствует текущим закладкам."
+  },
+  "options_historyDiffRemoved": {
+    "message": "Удалено"
+  },
+  "options_historyEmpty": {
+    "message": "Коммиты не найдены."
+  },
+  "options_historyLoadBtn": {
+    "message": "Загрузить историю"
+  },
+  "options_historyPreviewBtn": {
+    "message": "Предпросмотр"
+  },
+  "options_historyRestoreBtn": {
+    "message": "Восстановить"
+  },
+  "options_historyRestoreConfirmBtn": {
+    "message": "Нажмите снова для подтверждения"
+  },
+  "options_historyRestoreConfirmShort": {
+    "message": "Нажмите снова"
+  },
+  "options_historyRestoring": {
+    "message": "Восстановление…"
+  },
+  "options_historyTitle": {
+    "message": "История синхронизации"
+  },
+  "options_historyUndoBtn": {
+    "message": "Отменить последнюю синхронизацию"
+  },
+  "options_hostPermissionDenied": {
+    "message": "Разрешение хоста для Git-сервера отклонено. Разрешите доступ при запросе и повторите попытку."
   },
   "options_importBookmarks": {
     "message": "Импорт закладок"
@@ -841,6 +1093,12 @@
   "options_linkwardenApiKey": {
     "message": "API-ключ"
   },
+  "options_linkwardenConnectionFailed": {
+    "message": "Подключение не удалось: $1"
+  },
+  "options_linkwardenConnectionOk": {
+    "message": "Подключение успешно!"
+  },
   "options_linkwardenDefaultCollection": {
     "message": "Коллекция по умолчанию"
   },
@@ -859,11 +1117,17 @@
   "options_linkwardenEnabled": {
     "message": "Включить Linkwarden"
   },
+  "options_linkwardenHostPermissionDenied": {
+    "message": "Разрешение хоста отклонено. Проверьте адресную строку или блокировщик всплывающих окон."
+  },
   "options_linkwardenInstanceUrl": {
     "message": "URL экземпляра"
   },
   "options_linkwardenIntro": {
     "message": "Настройте экземпляр Linkwarden для сохранения закладок напрямую из контекстного меню."
+  },
+  "options_linkwardenInvalidUrlFormat": {
+    "message": "Недопустимый формат URL"
   },
   "options_linkwardenSyncEnabled": {
     "message": "Синхронизировать коллекции с закладками"
@@ -894,8 +1158,44 @@
   "options_linkwardenTitle": {
     "message": "Интеграция Linkwarden"
   },
+  "options_linkwardenUrlTokenRequired": {
+    "message": "Требуются URL и токен"
+  },
   "options_menu_showAsSubmenu": {
     "message": "Показать как подменю"
+  },
+  "options_mirrorsAdd": {
+    "message": "+ Добавить зеркало"
+  },
+  "options_mirrorsDesc": {
+    "message": "Копии только push файлов закладок на дополнительные Git-удалённые после каждой успешной основной синхронизации. Прямые правки на зеркале перезаписываются при следующей синхронизации."
+  },
+  "options_mirrorsLabel": {
+    "message": "Метка"
+  },
+  "options_mirrorsPaused": {
+    "message": "Приостановлено"
+  },
+  "options_mirrorsPushGenerated": {
+    "message": "Включить сгенерированные файлы (README, HTML, feed, Dashy)"
+  },
+  "options_mirrorsPushSettings": {
+    "message": "Включить зашифрованные настройки"
+  },
+  "options_mirrorsRemove": {
+    "message": "Удалить"
+  },
+  "options_mirrorsStatusError": {
+    "message": "Ошибка зеркала: $1"
+  },
+  "options_mirrorsStatusOk": {
+    "message": "Последний push OK"
+  },
+  "options_mirrorsTest": {
+    "message": "Тест"
+  },
+  "options_mirrorsTitle": {
+    "message": "Зеркальные назначения"
   },
   "options_mobileAppAlert": {
     "message": "<strong>Примечание для пользователей Android:</strong> Firefox для Android не поддерживает прямую синхронизацию закладок через расширения. Используйте приложение-компаньон."
@@ -987,6 +1287,9 @@
   "options_onboardingWizardBack": {
     "message": "Назад"
   },
+  "options_onboardingWizardCheckConnection": {
+    "message": "Проверить подключение"
+  },
   "options_onboardingWizardCompleted": {
     "message": "Мастер успешно завершен."
   },
@@ -1036,7 +1339,7 @@
     "message": "Сохранение состояния синхронизации"
   },
   "options_onboardingWizardPhaseUploading": {
-    "message": "Загрузка закладок на GitHub"
+    "message": "Загрузка закладок на удалённый сервер"
   },
   "options_onboardingWizardRepoCreateFailed": {
     "message": "Не удалось создать репозиторий с текущим токеном/правами."
@@ -1068,6 +1371,9 @@
   "options_onboardingWizardStart": {
     "message": "Запустить мастер настройки"
   },
+  "options_onboardingWizardStartSync": {
+    "message": "Начать синхронизацию"
+  },
   "options_onboardingWizardStepFinishText": {
     "message": "Настройка завершена. Можно продолжать с обычными параметрами sync."
   },
@@ -1080,6 +1386,12 @@
   "options_onboardingWizardStepHasTokenTitle": {
     "message": "У вас уже есть токен?"
   },
+  "options_onboardingWizardStepProviderText": {
+    "message": "Выберите GitHub, GitLab, Codeberg, Gitea, Forgejo или Gogs. Каждый профиль хранит своего провайдера и URL сервера."
+  },
+  "options_onboardingWizardStepProviderTitle": {
+    "message": "Выберите Git-провайдера"
+  },
   "options_onboardingWizardStepRepoDecisionText": {
     "message": "Выберите: создать репозиторий автоматически или использовать существующий."
   },
@@ -1091,6 +1403,9 @@
   },
   "options_onboardingWizardStepRepoTitle": {
     "message": "Настройки репозитория"
+  },
+  "options_onboardingWizardStepSyncChoiceText": {
+    "message": "Выберите способ синхронизации, прочитайте предупреждение и нажмите Начать синхронизацию. В репозиторий ничего не записывается, пока вы не подтвердите."
   },
   "options_onboardingWizardStepSyncTextEmpty": {
     "message": "Путь пустой. Создайте начальную структуру, чтобы начать."
@@ -1114,7 +1429,7 @@
     "message": "Токен доступа"
   },
   "options_onboardingWizardStepValidateText": {
-    "message": "Запустите тест, чтобы проверить токен, репозиторий и доступ к пути."
+    "message": "Нажмите Проверить подключение, чтобы проверить токен, репозиторий и доступ к пути. На этом шаге синхронизация не выполняется."
   },
   "options_onboardingWizardStepValidateTitle": {
     "message": "Проверка подключения"
@@ -1125,8 +1440,68 @@
   "options_onboardingWizardStepWelcomeTitle": {
     "message": "Добро пожаловать"
   },
+  "options_onboardingWizardSyncConfirmRunBtn": {
+    "message": "Выполнить"
+  },
+  "options_onboardingWizardSyncConfirmSkipBtn": {
+    "message": "Пропустить"
+  },
+  "options_onboardingWizardSyncConfirm_initialize": {
+    "message": "Создать начальную структуру папки bookmarks/ в удалённом репозитории (без загрузки локальных закладок)?"
+  },
+  "options_onboardingWizardSyncConfirm_pull": {
+    "message": "Скачать $2 закладок из удалённого репозитория в этот браузер?"
+  },
+  "options_onboardingWizardSyncConfirm_pullOverwriteLocal": {
+    "message": "Pull заменит все $1 локальных закладок на $2 из удалённого репозитория. Продолжить?"
+  },
+  "options_onboardingWizardSyncConfirm_push": {
+    "message": "Загрузить $1 локальных закладок в удалённый репозиторий?"
+  },
+  "options_onboardingWizardSyncConfirm_pushDanger": {
+    "message": "Push перезапишет удалённый репозиторий. $2 удалённых закладок могут быть удалены; останется только $1 локальных. Продолжить?"
+  },
+  "options_onboardingWizardSyncConfirm_skip": {
+    "message": "Пропустить первую синхронизацию сейчас? Позже можно синхронизировать вручную из popup."
+  },
+  "options_onboardingWizardSyncConfirm_sync": {
+    "message": "Выполнить слияние/синхронизацию между $1 локальными и $2 удалёнными закладками? Возможно, позже потребуется разрешить конфликты."
+  },
   "options_onboardingWizardSyncInProgress": {
     "message": "Работа в фоновом режиме, подождите..."
+  },
+  "options_onboardingWizardSyncModeLabel": {
+    "message": "Первое действие синхронизации"
+  },
+  "options_onboardingWizardSyncMode_initialize": {
+    "message": "Только создать структуру папок"
+  },
+  "options_onboardingWizardSyncMode_pull": {
+    "message": "Только pull (скачать с удалённого)"
+  },
+  "options_onboardingWizardSyncMode_push": {
+    "message": "Только push (загрузить локальные закладки — перезаписывает удалённый)"
+  },
+  "options_onboardingWizardSyncMode_skip": {
+    "message": "Пропустить сейчас"
+  },
+  "options_onboardingWizardSyncMode_sync": {
+    "message": "Слияние / синхронизация (рекомендуется, когда закладки есть с обеих сторон)"
+  },
+  "options_onboardingWizardSyncWarn_both": {
+    "message": "Закладки есть с обеих сторон. Слияние/синхронизация объединяет изменения; pull или push перезаписывает одну сторону."
+  },
+  "options_onboardingWizardSyncWarn_emptyBoth": {
+    "message": "Удалённый путь и браузер пусты. Создайте структуру папок или пропустите и синхронизируйте позже."
+  },
+  "options_onboardingWizardSyncWarn_localOnly": {
+    "message": "Удалённый путь пуст; локальные закладки будут загружены при push."
+  },
+  "options_onboardingWizardSyncWarn_pushDanger": {
+    "message": "Внимание: push удалит $1 удалённых файлов закладок, отсутствующих локально, и заменит репозиторий закладками этого браузера."
+  },
+  "options_onboardingWizardSyncWarn_remoteOnly": {
+    "message": "На удалённом есть закладки; этот браузер пуст. Рекомендуется pull, чтобы не перезаписать репозиторий."
   },
   "options_onboardingWizardTitle": {
     "message": "Мастер настройки"
@@ -1158,8 +1533,17 @@
   "options_onboardingWizardTokenValidated": {
     "message": "Токен корректен и имеет нужный scope."
   },
+  "options_ownerHint_gitlab": {
+    "message": "Имя пользователя, группа или путь группа/подгруппа (напр. моягруппа/подгруппа)."
+  },
   "options_ownerPlaceholder": {
     "message": "ваше-имя-на-github"
+  },
+  "options_ownerPlaceholderGitea": {
+    "message": "ваше-имя-gitea"
+  },
+  "options_ownerPlaceholder_gitlab": {
+    "message": "пользователь или группа/подгруппа"
   },
   "options_passwordPlaceholder": {
     "message": "Пароль"
@@ -1256,6 +1640,21 @@
   },
   "options_selectFile": {
     "message": "Выберите файл..."
+  },
+  "options_serverUrl": {
+    "message": "URL сервера"
+  },
+  "options_serverUrlHint": {
+    "message": "Базовый URL Git-сервера (без суффикса /api/v1 или /api/v4)."
+  },
+  "options_serverUrlPlaceholder_github": {
+    "message": "https://github.company.com"
+  },
+  "options_serverUrlPlaceholder_gitlab": {
+    "message": "https://gitlab.com (оставьте пустым для GitLab.com)"
+  },
+  "options_serverUrlRequired": {
+    "message": "URL сервера обязателен для этого провайдера."
   },
   "options_settingsCard": {
     "message": "Настройки"
@@ -1414,6 +1813,9 @@
   "options_subTabGitAdd": {
     "message": "Git Add"
   },
+  "options_subTabHistory": {
+    "message": "История"
+  },
   "options_subTabMenuAdvanced": {
     "message": "Дополнительно и Безопасность"
   },
@@ -1510,17 +1912,56 @@
   "options_themeAuto": {
     "message": "A Авто (системная)"
   },
+  "options_themeAutoLabel": {
+    "message": "Авто"
+  },
   "options_themeDark": {
     "message": "☽ Тёмная"
   },
+  "options_themeDarkLabel": {
+    "message": "Тёмная"
+  },
   "options_themeLight": {
     "message": "☀ Светлая"
+  },
+  "options_themeLightLabel": {
+    "message": "Светлая"
   },
   "options_toggleToken": {
     "message": "Показать/скрыть токен"
   },
   "options_tokenHint": {
     "message": "Требуется область <code>repo</code> (classic) или <code>Contents: Read/Write</code> и <code>Metadata: Read</code> (fine-grained). <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">Создать токен</a>"
+  },
+  "options_tokenHintHtml_codeberg": {
+    "message": "Создайте токен на <a href=\"https://codeberg.org/user/settings/applications\" target=\"_blank\" rel=\"noopener\">Codeberg → Настройки пользователя → Приложения</a> с доступом на чтение/запись репозитория."
+  },
+  "options_tokenHintHtml_forgejo": {
+    "message": "Создайте токен на сервере Forgejo в <strong>Настройках пользователя → Приложения</strong> с доступом на чтение/запись репозитория."
+  },
+  "options_tokenHintHtml_gitea": {
+    "message": "Создайте токен в <strong>Настройках пользователя → Приложения</strong> с доступом на чтение/запись репозитория."
+  },
+  "options_tokenHintHtml_gitlab": {
+    "message": "Создайте токен на <a href=\"https://gitlab.com/-/user_settings/personal_access_tokens\" target=\"_blank\" rel=\"noopener\">GitLab → Настройки пользователя → Токены доступа</a> с областью <code>api</code> (чтение/запись репозитория)."
+  },
+  "options_tokenHintHtml_gogs": {
+    "message": "Создайте токен на сервере Gogs в <strong>Настройках пользователя → Приложения</strong> с доступом на чтение/запись репозитория."
+  },
+  "options_tokenPlaceholderGitea": {
+    "message": "ваш-токен-доступа-gitea"
+  },
+  "options_tokenPlaceholderGithub": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitea": {
+    "message": "ваш-токен-доступа"
+  },
+  "options_tokenPlaceholder_github": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitlab": {
+    "message": "glpat-xxxxxxxxxxxxxxxxxxxx"
   },
   "options_tokenValidMissingScope": {
     "message": "Токен действителен ($1), но отсутствует область «repo»."
@@ -1530,6 +1971,51 @@
   },
   "options_tokenValidSpecifyRepo": {
     "message": "Токен действителен! Пользователь: $1. Пожалуйста, укажите репозиторий."
+  },
+  "options_transferApplyLocal": {
+    "message": "Применить в браузере (только если цель активна)"
+  },
+  "options_transferCancel": {
+    "message": "Отмена"
+  },
+  "options_transferDesc": {
+    "message": "Копировать закладки из одного профиля в другой (напр. миграция GitHub → Gitea). Не меняет браузер, если целевой профиль не активен и вы не выберете локальное применение."
+  },
+  "options_transferDuplicateFoldersWarning": {
+    "message": "Дублирующиеся имена папок в результате переноса (коллизия slug): $1. Объедините эти папки в закладках исходного профиля перед переносом, иначе дубликаты будут скопированы в целевой удалённый."
+  },
+  "options_transferFolder": {
+    "message": "Папка (необязательно)"
+  },
+  "options_transferFolderHint": {
+    "message": "Относительный путь под папкой репозитория, напр. toolbar/work. Оставьте пустым для всех закладок."
+  },
+  "options_transferMergeConfirm": {
+    "message": "Слить в цель с $1 существующим(и) файлом(ами)? Существующие удалённые закладки сохраняются; возможны дублирующиеся папки. Продолжить?"
+  },
+  "options_transferMergeHint": {
+    "message": "Слияние сохраняет все существующие файлы цели и добавляет исходные закладки. Может создать дублирующиеся папки (напр. knigi и knigi-2). Для чистой миграции используйте Заменить цель."
+  },
+  "options_transferMergeWarning": {
+    "message": "В цели уже $1 файл(ов) закладок. Слияние сохраняет их все плюс скопированные исходные файлы — дублирующиеся папки вероятны."
+  },
+  "options_transferMode": {
+    "message": "Режим"
+  },
+  "options_transferModeMerge": {
+    "message": "Слить в цель"
+  },
+  "options_transferModeReplace": {
+    "message": "Заменить цель"
+  },
+  "options_transferOpen": {
+    "message": "Перенос…"
+  },
+  "options_transferPreview": {
+    "message": "Предпросмотр"
+  },
+  "options_transferPreviewResult": {
+    "message": "Источник: $1 ($2 файлов). В цели $3 существующих файлов → $4 после переноса."
   },
   "options_transferProgressApplying": {
     "message": "Применение в браузере…"
@@ -1548,6 +2034,36 @@
   },
   "options_transferProgressPreparing": {
     "message": "Подготовка переноса…"
+  },
+  "options_transferPush": {
+    "message": "Push в целевой репозиторий"
+  },
+  "options_transferReplaceWarning": {
+    "message": "Замена удалит $1 удалённых файл(ов), не включённых в результат переноса."
+  },
+  "options_transferRun": {
+    "message": "Перенести"
+  },
+  "options_transferSource": {
+    "message": "Исходный профиль"
+  },
+  "options_transferSourceBrowser": {
+    "message": "браузер"
+  },
+  "options_transferSourceCache": {
+    "message": "кэш"
+  },
+  "options_transferSourceRemote": {
+    "message": "удалённый"
+  },
+  "options_transferTarget": {
+    "message": "Целевой профиль"
+  },
+  "options_transferTargetWarning": {
+    "message": "Внимание: в цели уже есть данные закладок."
+  },
+  "options_transferTitle": {
+    "message": "Перенос закладок"
   },
   "options_version": {
     "message": "Версия"
@@ -1591,8 +2107,14 @@
   "popup_localToGithub": {
     "message": "Локальные → GitHub"
   },
+  "popup_localToRemote": {
+    "message": "Локально → Удалённо"
+  },
   "popup_minAgo": {
     "message": "$1 мин назад"
+  },
+  "popup_mirrorStatus": {
+    "message": "Зеркало: $1"
   },
   "popup_nextSyncIn": {
     "message": "Следующая синхронизация через $1"
@@ -1614,6 +2136,9 @@
   },
   "popup_ready": {
     "message": "Готово"
+  },
+  "popup_remoteToLocal": {
+    "message": "Удалённо → Локально"
   },
   "popup_reportIssue": {
     "message": "Сообщить о проблеме"
@@ -1645,6 +2170,9 @@
   "search_openBtn": {
     "message": "Открыть"
   },
+  "search_resultsLabel": {
+    "message": "Результаты поиска"
+  },
   "search_statusNoResults": {
     "message": "Закладки не найдены"
   },
@@ -1662,8 +2190,20 @@
   "search_subtitle": {
     "message": "Ищите локальные закладки и открывайте совпадения в новой вкладке."
   },
+  "search_syncComplete": {
+    "message": "Синхронизация завершена"
+  },
+  "search_syncFailed": {
+    "message": "Синхронизация не удалась: $1"
+  },
+  "search_syncing": {
+    "message": "Синхронизация…"
+  },
   "search_title": {
     "message": "Поиск закладок"
+  },
+  "search_unknownError": {
+    "message": "Неизвестная ошибка"
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – Поиск закладок"
@@ -1698,8 +2238,14 @@
   "sync_conflictRemoteModified": {
     "message": "Обнаружен конфликт: удалённая версия тоже была изменена."
   },
+  "sync_loadedFromRemote": {
+    "message": "Загружено из удалённого репозитория."
+  },
   "sync_noBookmarksOnGithub": {
     "message": "На GitHub закладки не найдены."
+  },
+  "sync_noBookmarksOnRemote": {
+    "message": "В удалённом репозитории закладки не найдены."
   },
   "sync_noChanges": {
     "message": "Нет изменений с последней синхронизации."
@@ -1734,7 +2280,37 @@
   "sync_pushSuccess": {
     "message": "Закладки успешно отправлены на GitHub."
   },
+  "sync_remoteChangedRetry": {
+    "message": "Удалённый сейчас меняется. Повторите синхронизацию через мгновение."
+  },
   "sync_syncFailed": {
     "message": "Ошибка синхронизации: $1"
+  },
+  "transfer_commitMessage": {
+    "message": "Перенос закладок из профиля $1"
+  },
+  "transfer_connectionLost": {
+    "message": "Соединение переноса потеряно. Перезагрузите страницу настроек и повторите попытку."
+  },
+  "transfer_mergeConflicts": {
+    "message": "Слияние заблокировано: $1 конфликт(ов) путей. Разрешите пересекающиеся файлы или используйте режим Заменить."
+  },
+  "transfer_noBookmarks": {
+    "message": "Нет файлов закладок для переноса"
+  },
+  "transfer_profileNotFound": {
+    "message": "Профиль не найден"
+  },
+  "transfer_sameProfile": {
+    "message": "Источник и цель должны быть разными профилями"
+  },
+  "transfer_success": {
+    "message": "Перенесено $1 файл(ов) закладок"
+  },
+  "whatsnew_close": {
+    "message": "Закрыть"
+  },
+  "whatsnew_title": {
+    "message": "Что нового в GitSyncMarks $1"
   }
 }

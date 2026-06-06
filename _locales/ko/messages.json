@@ -17,8 +17,41 @@
   "api_invalidToken": {
     "message": "유효하지 않은 토큰입니다. Personal Access Token을 확인해 주세요."
   },
+  "api_listCommitsFailed": {
+    "message": "커밋 목록을 가져오지 못했습니다(HTTP $1)."
+  },
+  "api_networkError": {
+    "message": "네트워크 오류. 인터넷 연결을 확인하고 다시 시도하세요."
+  },
   "api_rateLimitExceeded": {
     "message": "GitHub API 요청 한도를 초과했습니다. 잠시 후 다시 시도해 주세요."
+  },
+  "api_treeTruncated": {
+    "message": "저장소가 한 번의 요청으로 읽기에는 너무 큽니다(GitHub가 파일 트리를 잘랐습니다). 데이터 손실을 방지하기 위해 동기화가 중지되었습니다."
+  },
+  "cleanOrphans_commitMessage": {
+    "message": "로컬에 없는 고아 북마크 파일 제거"
+  },
+  "cleanOrphans_confirm": {
+    "message": "원격의 최상위 폴더 $2개에서 고아 파일 $1개를 삭제할까요? 로컬 북마크는 변경되지 않습니다. GitSyncMarks에서 되돌릴 수 없습니다(Git 기록으로 복원)."
+  },
+  "cleanOrphans_noLocalBaseline": {
+    "message": "이 프로필에 대한 로컬 북마크 기준이 없습니다. 프로필로 전환하여 한 번 동기화하거나 활성 프로필에서 원격 정리를 사용하세요."
+  },
+  "cleanOrphans_none": {
+    "message": "원격에 고아 북마크 파일이 없습니다."
+  },
+  "cleanOrphans_previewFailed": {
+    "message": "원격 고아 파일을 미리 볼 수 없습니다."
+  },
+  "cleanOrphans_previewResult": {
+    "message": "최상위 폴더 $2개의 고아 파일 $1개가 제거됩니다."
+  },
+  "cleanOrphans_remoteFetchFailed": {
+    "message": "원격 저장소를 읽을 수 없습니다: $1"
+  },
+  "cleanOrphans_success": {
+    "message": "원격의 최상위 폴더 $2개에서 고아 파일 $1개를 제거했습니다."
   },
   "commands_openOptions": {
     "message": "확장 프로그램 설정 열기"
@@ -82,6 +115,24 @@
   "contextMenu_notifFolderMissing": {
     "message": "선택한 폴더가 더 이상 존재하지 않습니다. 빠른 폴더 설정을 업데이트하세요."
   },
+  "contextMenu_notifLinkwardenError": {
+    "message": "Linkwarden 오류: $1"
+  },
+  "contextMenu_notifLinkwardenGrantPermissions": {
+    "message": "옵션의 «연결 테스트»로 권한을 부여하세요"
+  },
+  "contextMenu_notifLinkwardenNotConfigured": {
+    "message": "Linkwarden이 구성되지 않음"
+  },
+  "contextMenu_notifLinkwardenSaved": {
+    "message": "링크가 Linkwarden에 저장됨"
+  },
+  "contextMenu_notifLinkwardenSavedWithScreenshot": {
+    "message": "링크와 스크린샷이 Linkwarden에 저장됨"
+  },
+  "contextMenu_notifLinkwardenUrlInvalid": {
+    "message": "Linkwarden URL이 유효하지 않음"
+  },
   "contextMenu_notifNoFavicon": {
     "message": "이 페이지에 사용 가능한 파비콘이 없습니다"
   },
@@ -137,10 +188,10 @@
     "message": "지금 동기화"
   },
   "extDescription": {
-    "message": "GitHub를 통한 북마크 동기화. Linkwarden 연동, 스마트 검색 및 모바일 앱 제공. 매우 안전하고 프라이빗합니다."
+    "message": "GitHub, GitLab, Codeberg, Gitea 등으로 북마크 동기화. Linkwarden, 스마트 검색, 컴패니언 앱. 직접, 안전, 비공개."
   },
   "extDescriptionFirefox": {
-    "message": "GitHub 북마크 동기화. Linkwarden 연동, 스마트 검색 및 설정 마법사. 중간 서버 없이 완벽하게 독립적으로 Firefox 지원."
+    "message": "GitHub, GitLab, Codeberg, Gitea 등으로 북마크 동기화. Linkwarden, 스마트 검색, 설정 마법사. 양방향, 안전하고 비공개. Firefox 완전 지원. 중개 없음."
   },
   "extName": {
     "message": "GitSyncMarks"
@@ -175,6 +226,12 @@
   "help_backupTitle": {
     "message": "백업"
   },
+  "help_cleanOrphansDesc": {
+    "message": "동기화 하위 탭에서 로컬 북마크(활성 프로필)에 없는 원격 북마크 파일을 미리 보고 제거할 수 있습니다. 병합 전송 후 중복 폴더에 유용합니다."
+  },
+  "help_cleanOrphansTitle": {
+    "message": "원격 고아 파일 정리"
+  },
   "help_conflictDesc": {
     "message": "로컬과 원격 북마크가 모두 변경되면 팝업에 충돌이 표시됩니다. <strong>Push</strong>(로컬 우선, 원격 덮어쓰기) 또는 <strong>Pull</strong>(원격 우선, 로컬 덮어쓰기)을 선택하세요. 충돌에 대한 자동 병합은 없습니다."
   },
@@ -196,6 +253,12 @@
   "help_debugLogTitle": {
     "message": "디버그 로그"
   },
+  "help_densityDesc": {
+    "message": "헤더의 S / M / L 버튼으로 컴팩트, 중간, 크게 전환합니다. 설정은 확장 프로그램의 모든 화면(옵션, 팝업, 검색, Linkwarden 저장)에 적용되며 기기 간 동기화됩니다."
+  },
+  "help_densityTitle": {
+    "message": "UI 밀도"
+  },
   "help_discussions": {
     "message": "토론"
   },
@@ -209,7 +272,7 @@
     "message": "생성 파일"
   },
   "help_gettingStartedIntro": {
-    "message": "북마크용 GitHub 저장소를 만든 다음 <code>repo</code> 스코프를 가진 Personal Access Token (PAT)을 생성하세요. GitHub 탭에서 토큰, 저장소 소유자, 이름, 브랜치(보통 <code>main</code>), 폴더 경로(기본값: <code>bookmarks</code>)를 입력합니다. <strong>연결 테스트</strong>를 클릭하여 확인하세요."
+    "message": "<strong>GitHub</strong>, <strong>GitLab</strong>, <strong>Codeberg</strong>, <strong>Gitea</strong>, <strong>Forgejo</strong>, <strong>Gogs</strong>에서 북마크용 Git 저장소를 만드세요. <strong>Git → 연결</strong>에서 공급자를 선택하고, Personal Access Token, 저장소 소유자/이름, 브랜치(보통 <code>main</code>), 폴더 경로(기본값: <code>bookmarks</code>)를 입력하세요. 셀프 호스팅 공급자는 서버 URL이 필요합니다. 프롬프트가 표시되면 호스트 액세스를 허용하세요. <strong>연결 테스트</strong>를 클릭하여 확인하세요."
   },
   "help_gettingStartedTitle": {
     "message": "시작하기"
@@ -219,6 +282,36 @@
   },
   "help_githubReposTitle": {
     "message": "GitHub Repos 폴더"
+  },
+  "help_headerLangDesc": {
+    "message": "헤더의 언어 버튼은 확장 프로그램 표시 언어를 변경합니다. 설정이 저장되어 모든 기기에서 동기화됩니다."
+  },
+  "help_headerLangTitle": {
+    "message": "언어"
+  },
+  "help_historyIntro": {
+    "message": "각 동기화는 Git 커밋을 만듭니다. 기록 하위 탭(파일 아래)에서 최근 커밋을 탐색하고 이전 버전에서 북마크를 복원할 수 있습니다."
+  },
+  "help_historyLoadDesc": {
+    "message": "북마크 경로에 영향을 준 최근 20개 커밋을 가져옵니다. 표 헤더는 열(날짜, 짧은 커밋 해시, 커밋 메시지에서 파싱한 클라이언트 ID)을 표시합니다. 클라이언트 셀에 마우스를 올리면 전체 메시지를 볼 수 있습니다. 각 행에 미리 보기(돋보기)와 복원 아이콘이 있습니다."
+  },
+  "help_historyLoadLabel": {
+    "message": "기록 불러오기"
+  },
+  "help_historyRestoreDesc": {
+    "message": "모든 로컬 북마크를 해당 커밋 상태로 교체합니다. 목록에서 복원 아이콘을 클릭한 후 짧은 확인이 표시되면 다시 클릭하세요(또는 diff 패널의 전체 텍스트). 원격 브랜치는 다시 쓰지 않습니다. 다음 동기화에서 로컬 상태가 다시 푸시됩니다."
+  },
+  "help_historyRestoreLabel": {
+    "message": "복원"
+  },
+  "help_historyTitle": {
+    "message": "동기화 기록 및 실행 취소"
+  },
+  "help_historyUndoDesc": {
+    "message": "로컬 북마크를 변경한 최근 동기화 이전 커밋으로 원클릭 롤백. 로컬 북마크를 변경한 pull 또는 병합 후 사용 가능합니다."
+  },
+  "help_historyUndoLabel": {
+    "message": "마지막 동기화 실행 취소"
   },
   "help_links": {
     "message": "링크"
@@ -237,6 +330,9 @@
   },
   "help_linkwardenTitle": {
     "message": "Linkwarden"
+  },
+  "help_menuTitle": {
+    "message": "메뉴"
   },
   "help_notificationsDesc": {
     "message": "동기화 알림 표시 시점을 선택하세요: 모두 (성공 및 실패), 오류만, 또는 끄기."
@@ -298,6 +394,18 @@
   "help_profilesTitle": {
     "message": "프로필"
   },
+  "help_provider_codeberg": {
+    "message": "<strong>Codeberg</strong>는 <code>codeberg.org</code>의 Forgejo 호스트입니다. 공급자로 Codeberg를 선택하면 서버 URL이 미리 설정됩니다. 사용자 설정 → 애플리케이션에서 토큰을 만드세요."
+  },
+  "help_provider_forgejo": {
+    "message": "<strong>Forgejo</strong>는 Gitea와 동일한 API를 사용합니다. Forgejo 서버 URL과 사용자 설정 → 애플리케이션의 Personal Access Token을 입력하세요."
+  },
+  "help_provider_gitlab": {
+    "message": "<strong>GitLab</strong>은 gitlab.com과 셀프 관리형을 지원합니다. 하위 그룹 프로젝트는 소유자로 <code>group/subgroup</code>, 저장소로 프로젝트 이름을 사용하세요. GitLab.com은 서버 URL을 비워 두세요."
+  },
+  "help_provider_gogs": {
+    "message": "<strong>Gogs</strong>는 Gitea와 유사한 API를 공유합니다. Gogs 서버 URL과 사용자 설정 → 애플리케이션의 액세스 토큰을 입력하세요."
+  },
   "help_quickSync": {
     "message": "북마크 빠른 동기화"
   },
@@ -340,6 +448,12 @@
   "help_themeCycleTitle": {
     "message": "테마"
   },
+  "help_transferDesc": {
+    "message": "프로필 탭의 <strong>전송…</strong>으로 먼저 전환하지 않고 프로필 간 북마크를 복사할 수 있습니다. 일반적 용도: GitHub에서 Gitea로 마이그레이션. <strong>대상 교체</strong>로 깔끔한 마이그레이션; <strong>대상에 병합</strong>은 기존 대상 파일을 유지하고 중복 폴더가 생길 수 있습니다. 마이그레이션 후 문제가 있으면 동기화 하위 탭의 <strong>원격 고아 파일 정리</strong>를 사용하세요. Git 연결 탭의 미러는 각 동기화 후 백업 원격에 복사본을 푸시합니다."
+  },
+  "help_transferTitle": {
+    "message": "프로필 간 북마크 전송"
+  },
   "help_voteBacklogBtn": {
     "message": "백로그 투표"
   },
@@ -362,10 +476,13 @@
     "message": "동기화가 오래 걸리는 이유는?"
   },
   "help_wizardRestartDesc": {
-    "message": "GitHub 저장소를 연결하고 첫 번째 동기화를 실행하기 위한 단계별 안내입니다."
+    "message": "Git 저장소를 연결하고 첫 동기화를 실행하는 단계별 가이드."
   },
   "help_wizardRestartTitle": {
     "message": "설정 마법사"
+  },
+  "help_wizardSyncChoice": {
+    "message": "설정 마법사에서 <strong>연결 확인</strong>은 액세스만 검증합니다 — 동기화하지 않습니다. 그다음 pull, 병합/동기화, push, 폴더 구조 생성 또는 건너뛰기를 선택하고 저장소에 쓰기 전에 확인합니다."
   },
   "linkwardenSave_cancelBtn": {
     "message": "취소"
@@ -532,6 +649,18 @@
   "options_chooseFile": {
     "message": "파일 선택"
   },
+  "options_cleanOrphansDesc": {
+    "message": "로컬 북마크(활성 프로필)에 없는 원격 북마크 파일을 제거합니다. 전송 실패나 서버의 중복 폴더 후에 사용하세요."
+  },
+  "options_cleanOrphansPreview": {
+    "message": "고아 파일 미리 보기"
+  },
+  "options_cleanOrphansRun": {
+    "message": "원격 정리"
+  },
+  "options_cleanOrphansTitle": {
+    "message": "원격 고아 파일 정리"
+  },
   "options_connectionOk": {
     "message": "연결 성공! 사용자: $1, 저장소: $2"
   },
@@ -636,6 +765,18 @@
   },
   "options_decryptError": {
     "message": "복호화 실패. 비밀번호가 틀린 건 아닌가요?"
+  },
+  "options_densityCompact": {
+    "message": "컴팩트"
+  },
+  "options_densityGroupLabel": {
+    "message": "UI 밀도"
+  },
+  "options_densityLarge": {
+    "message": "크게"
+  },
+  "options_densityMedium": {
+    "message": "중간"
   },
   "options_documentation": {
     "message": "문서"
@@ -754,6 +895,51 @@
   "options_generatedFilesTitle": {
     "message": "생성 파일"
   },
+  "options_gheServerUrlEnabled": {
+    "message": "사용자 지정 서버 URL 사용(GitHub Enterprise)"
+  },
+  "options_gitConnection": {
+    "message": "Git 연결"
+  },
+  "options_gitProvider": {
+    "message": "Git 공급자"
+  },
+  "options_gitProviderGitea": {
+    "message": "Gitea / Forgejo"
+  },
+  "options_gitProviderGithub": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_codeberg": {
+    "message": "Codeberg"
+  },
+  "options_gitProvider_forgejo": {
+    "message": "Forgejo"
+  },
+  "options_gitProvider_gitea": {
+    "message": "Gitea"
+  },
+  "options_gitProvider_github": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_gitlab": {
+    "message": "GitLab"
+  },
+  "options_gitProvider_gogs": {
+    "message": "Gogs"
+  },
+  "options_giteaPermissionDenied": {
+    "message": "Gitea 서버에 대한 호스트 권한이 거부되었습니다. 프롬프트가 표시되면 액세스를 허용하고 다시 시도하세요."
+  },
+  "options_giteaTokenHelpLink": {
+    "message": "Gitea 사용자 설정 열기(애플리케이션)"
+  },
+  "options_giteaTokenHintHtml": {
+    "message": "Gitea의 <strong>사용자 설정 → 애플리케이션</strong>에서 저장소 읽기/쓰기 권한이 있는 토큰을 만드세요. Gitea 토큰은 GitHub 스타일 <code>ghp_…</code> 문자열이 <em>아닙니다</em>."
+  },
+  "options_giteaTokenWizardHelpHtml": {
+    "message": "Gitea에서 <strong>사용자 설정 → 애플리케이션 → 새 토큰 생성</strong>을 여세요. 저장소 읽기 및 쓰기를 활성화하세요. 토큰을 복사하세요 — 한 번만 표시됩니다. Gitea 토큰은 <code>ghp_</code> 같은 GitHub 접두사를 사용하지 않습니다."
+  },
   "options_githubConnection": {
     "message": "GitHub 연결"
   },
@@ -786,6 +972,72 @@
   },
   "options_githubReposTitle": {
     "message": "GitHub Repos 폴더"
+  },
+  "options_historyColActions": {
+    "message": "작업"
+  },
+  "options_historyColClient": {
+    "message": "클라이언트"
+  },
+  "options_historyColCommit": {
+    "message": "커밋"
+  },
+  "options_historyColDate": {
+    "message": "날짜"
+  },
+  "options_historyCurrent": {
+    "message": "현재"
+  },
+  "options_historyDesc": {
+    "message": "최근 동기화 커밋을 탐색하고 이전 버전에서 북마크를 복원합니다. 복원은 로컬 북마크만 변경하며 원격 브랜치는 다시 쓰지 않습니다."
+  },
+  "options_historyDiffAdded": {
+    "message": "추가됨"
+  },
+  "options_historyDiffChanged": {
+    "message": "변경됨"
+  },
+  "options_historyDiffClose": {
+    "message": "닫기"
+  },
+  "options_historyDiffLoading": {
+    "message": "미리 보기 로딩 중…"
+  },
+  "options_historyDiffNoChanges": {
+    "message": "차이 없음 — 이 커밋은 현재 북마크와 일치합니다."
+  },
+  "options_historyDiffRemoved": {
+    "message": "제거됨"
+  },
+  "options_historyEmpty": {
+    "message": "커밋을 찾을 수 없습니다."
+  },
+  "options_historyLoadBtn": {
+    "message": "기록 불러오기"
+  },
+  "options_historyPreviewBtn": {
+    "message": "미리 보기"
+  },
+  "options_historyRestoreBtn": {
+    "message": "복원"
+  },
+  "options_historyRestoreConfirmBtn": {
+    "message": "확인하려면 다시 클릭"
+  },
+  "options_historyRestoreConfirmShort": {
+    "message": "다시 클릭"
+  },
+  "options_historyRestoring": {
+    "message": "복원 중…"
+  },
+  "options_historyTitle": {
+    "message": "동기화 기록"
+  },
+  "options_historyUndoBtn": {
+    "message": "마지막 동기화 실행 취소"
+  },
+  "options_hostPermissionDenied": {
+    "message": "Git 서버에 대한 호스트 권한이 거부되었습니다. 프롬프트가 표시되면 액세스를 허용하고 다시 시도하세요."
   },
   "options_importBookmarks": {
     "message": "북마크 가져오기"
@@ -841,6 +1093,12 @@
   "options_linkwardenApiKey": {
     "message": "API 키"
   },
+  "options_linkwardenConnectionFailed": {
+    "message": "연결 실패: $1"
+  },
+  "options_linkwardenConnectionOk": {
+    "message": "연결 성공!"
+  },
   "options_linkwardenDefaultCollection": {
     "message": "기본 컨렉션"
   },
@@ -859,11 +1117,17 @@
   "options_linkwardenEnabled": {
     "message": "Linkwarden 활성화"
   },
+  "options_linkwardenHostPermissionDenied": {
+    "message": "호스트 권한이 거부되었습니다. 주소 표시줄 또는 팝업 차단기를 확인하세요."
+  },
   "options_linkwardenInstanceUrl": {
     "message": "인스턴스 URL"
   },
   "options_linkwardenIntro": {
     "message": "Linkwarden 인스턴스를 구성하여 컨텍스트 메뉴에서 직접 북마크를 저장하세요."
+  },
+  "options_linkwardenInvalidUrlFormat": {
+    "message": "잘못된 URL 형식"
   },
   "options_linkwardenSyncEnabled": {
     "message": "컬렉션을 북마크와 동기화"
@@ -894,8 +1158,44 @@
   "options_linkwardenTitle": {
     "message": "Linkwarden 통합"
   },
+  "options_linkwardenUrlTokenRequired": {
+    "message": "URL과 토큰이 필요합니다"
+  },
   "options_menu_showAsSubmenu": {
     "message": "하위 메뉴로 표시"
+  },
+  "options_mirrorsAdd": {
+    "message": "+ 미러 추가"
+  },
+  "options_mirrorsDesc": {
+    "message": "각 기본 동기화 성공 후 추가 Git 원격에 북마크 파일의 푸시 전용 복사본을 보냅니다. 미러에서 직접 편집한 내용은 다음 동기화에서 덮어씁니다."
+  },
+  "options_mirrorsLabel": {
+    "message": "레이블"
+  },
+  "options_mirrorsPaused": {
+    "message": "일시 중지"
+  },
+  "options_mirrorsPushGenerated": {
+    "message": "생성된 파일 포함(README, HTML, 피드, Dashy)"
+  },
+  "options_mirrorsPushSettings": {
+    "message": "암호화된 설정 포함"
+  },
+  "options_mirrorsRemove": {
+    "message": "제거"
+  },
+  "options_mirrorsStatusError": {
+    "message": "미러 오류: $1"
+  },
+  "options_mirrorsStatusOk": {
+    "message": "마지막 푸시 OK"
+  },
+  "options_mirrorsTest": {
+    "message": "테스트"
+  },
+  "options_mirrorsTitle": {
+    "message": "미러 대상"
   },
   "options_mobileAppAlert": {
     "message": "<strong>Android 사용자 참고:</strong> Android용 Firefox는 확장 프로그램을 통한 직접 북마크 동기화를 지원하지 않습니다. 컴패니언 앱을 사용하세요."
@@ -987,6 +1287,9 @@
   "options_onboardingWizardBack": {
     "message": "이전"
   },
+  "options_onboardingWizardCheckConnection": {
+    "message": "연결 확인"
+  },
   "options_onboardingWizardCompleted": {
     "message": "마법사가 성공적으로 완료되었습니다."
   },
@@ -1036,7 +1339,7 @@
     "message": "동기화 상태 저장 중"
   },
   "options_onboardingWizardPhaseUploading": {
-    "message": "GitHub에 즐겨찾기 업로드 중"
+    "message": "북마크를 원격에 업로드 중"
   },
   "options_onboardingWizardRepoCreateFailed": {
     "message": "현재 토큰/권한으로 저장소를 생성할 수 없습니다."
@@ -1068,6 +1371,9 @@
   "options_onboardingWizardStart": {
     "message": "설정 마법사 시작"
   },
+  "options_onboardingWizardStartSync": {
+    "message": "동기화 시작"
+  },
   "options_onboardingWizardStepFinishText": {
     "message": "설정이 완료되었습니다. 일반 sync 설정을 계속 진행할 수 있습니다."
   },
@@ -1080,6 +1386,12 @@
   "options_onboardingWizardStepHasTokenTitle": {
     "message": "이미 토큰이 있나요?"
   },
+  "options_onboardingWizardStepProviderText": {
+    "message": "GitHub, GitLab, Codeberg, Gitea, Forgejo 또는 Gogs를 선택하세요. 각 프로필은 자체 공급자와 서버 URL을 저장합니다."
+  },
+  "options_onboardingWizardStepProviderTitle": {
+    "message": "Git 공급자 선택"
+  },
   "options_onboardingWizardStepRepoDecisionText": {
     "message": "저장소 자동 생성 또는 기존 저장소 사용 중 하나를 선택하세요."
   },
@@ -1091,6 +1403,9 @@
   },
   "options_onboardingWizardStepRepoTitle": {
     "message": "저장소 설정"
+  },
+  "options_onboardingWizardStepSyncChoiceText": {
+    "message": "동기화 방법을 선택하고 경고를 읽은 후 동기화 시작을 클릭하세요. 확인하기 전까지 저장소에 아무것도 쓰이지 않습니다."
   },
   "options_onboardingWizardStepSyncTextEmpty": {
     "message": "경로가 비어 있습니다. 시작하려면 초기 구조를 생성하세요."
@@ -1114,7 +1429,7 @@
     "message": "접근 토큰"
   },
   "options_onboardingWizardStepValidateText": {
-    "message": "토큰, 저장소, 경로 접근을 확인하려면 테스트를 실행하세요."
+    "message": "연결 확인을 클릭하여 토큰, 저장소, 경로 액세스를 검증하세요. 이 단계에서는 동기화가 실행되지 않습니다."
   },
   "options_onboardingWizardStepValidateTitle": {
     "message": "연결 테스트"
@@ -1125,8 +1440,68 @@
   "options_onboardingWizardStepWelcomeTitle": {
     "message": "환영합니다"
   },
+  "options_onboardingWizardSyncConfirmRunBtn": {
+    "message": "실행"
+  },
+  "options_onboardingWizardSyncConfirmSkipBtn": {
+    "message": "건너뛰기"
+  },
+  "options_onboardingWizardSyncConfirm_initialize": {
+    "message": "원격 저장소에 초기 bookmarks/ 폴더 구조를 만들까요(로컬 북마크 업로드 없음)?"
+  },
+  "options_onboardingWizardSyncConfirm_pull": {
+    "message": "원격 저장소에서 이 브라우저로 북마크 $2개를 다운로드할까요?"
+  },
+  "options_onboardingWizardSyncConfirm_pullOverwriteLocal": {
+    "message": "Pull은 로컬 북마크 $1개를 모두 원격의 $2개로 교체합니다. 계속할까요?"
+  },
+  "options_onboardingWizardSyncConfirm_push": {
+    "message": "로컬 북마크 $1개를 원격 저장소에 업로드할까요?"
+  },
+  "options_onboardingWizardSyncConfirm_pushDanger": {
+    "message": "Push는 원격 저장소를 덮어씁니다. 원격 북마크 $2개가 삭제될 수 있으며 로컬 $1개만 남습니다. 계속할까요?"
+  },
+  "options_onboardingWizardSyncConfirm_skip": {
+    "message": "지금은 첫 동기화를 건너뛸까요? 나중에 팝업에서 수동으로 동기화할 수 있습니다."
+  },
+  "options_onboardingWizardSyncConfirm_sync": {
+    "message": "로컬 $1개와 원격 $2개 북마크 간 병합/동기화를 실행할까요? 나중에 충돌을 해결해야 할 수 있습니다."
+  },
   "options_onboardingWizardSyncInProgress": {
     "message": "백그라운드에서 작업 중, 잠시 기다려주세요..."
+  },
+  "options_onboardingWizardSyncModeLabel": {
+    "message": "첫 동기화 작업"
+  },
+  "options_onboardingWizardSyncMode_initialize": {
+    "message": "폴더 구조만 생성"
+  },
+  "options_onboardingWizardSyncMode_pull": {
+    "message": "Pull만(원격에서 다운로드)"
+  },
+  "options_onboardingWizardSyncMode_push": {
+    "message": "Push만(로컬 북마크 업로드 — 원격 덮어씀)"
+  },
+  "options_onboardingWizardSyncMode_skip": {
+    "message": "지금은 건너뛰기"
+  },
+  "options_onboardingWizardSyncMode_sync": {
+    "message": "병합 / 동기화(양쪽에 북마크가 있을 때 권장)"
+  },
+  "options_onboardingWizardSyncWarn_both": {
+    "message": "양쪽에 북마크가 있습니다. 병합/동기화는 변경을 결합합니다. Pull 또는 Push는 한쪽을 덮어씁니다."
+  },
+  "options_onboardingWizardSyncWarn_emptyBoth": {
+    "message": "원격 경로와 브라우저가 비어 있습니다. 폴더 구조를 만들거나 건너뛰고 나중에 동기화하세요."
+  },
+  "options_onboardingWizardSyncWarn_localOnly": {
+    "message": "원격 경로가 비어 있습니다. Push 시 로컬 북마크가 업로드됩니다."
+  },
+  "options_onboardingWizardSyncWarn_pushDanger": {
+    "message": "경고: Push는 로컬에 없는 원격 북마크 파일 $1개를 삭제하고 이 브라우저의 북마크로 저장소를 교체합니다."
+  },
+  "options_onboardingWizardSyncWarn_remoteOnly": {
+    "message": "원격에 북마크가 있습니다. 이 브라우저는 비어 있습니다. 저장소를 덮어쓰지 않으려면 Pull을 권장합니다."
   },
   "options_onboardingWizardTitle": {
     "message": "설정 마법사"
@@ -1158,8 +1533,17 @@
   "options_onboardingWizardTokenValidated": {
     "message": "토큰이 유효하며 필요한 범위를 갖고 있습니다."
   },
+  "options_ownerHint_gitlab": {
+    "message": "사용자 이름, 그룹 또는 group/subgroup 경로(예: mygroup/subgroup)."
+  },
   "options_ownerPlaceholder": {
     "message": "GitHub 사용자명"
+  },
+  "options_ownerPlaceholderGitea": {
+    "message": "gitea-사용자명"
+  },
+  "options_ownerPlaceholder_gitlab": {
+    "message": "사용자 또는 group/subgroup"
   },
   "options_passwordPlaceholder": {
     "message": "비밀번호"
@@ -1256,6 +1640,21 @@
   },
   "options_selectFile": {
     "message": "파일 선택..."
+  },
+  "options_serverUrl": {
+    "message": "서버 URL"
+  },
+  "options_serverUrlHint": {
+    "message": "Git 서버의 기본 URL(/api/v1 또는 /api/v4 접미사 없음)."
+  },
+  "options_serverUrlPlaceholder_github": {
+    "message": "https://github.company.com"
+  },
+  "options_serverUrlPlaceholder_gitlab": {
+    "message": "https://gitlab.com(GitLab.com은 비워 둠)"
+  },
+  "options_serverUrlRequired": {
+    "message": "이 공급자에는 서버 URL이 필요합니다."
   },
   "options_settingsCard": {
     "message": "설정"
@@ -1414,6 +1813,9 @@
   "options_subTabGitAdd": {
     "message": "Git Add"
   },
+  "options_subTabHistory": {
+    "message": "기록"
+  },
   "options_subTabMenuAdvanced": {
     "message": "고급 및 안전"
   },
@@ -1510,17 +1912,56 @@
   "options_themeAuto": {
     "message": "A 자동 (시스템)"
   },
+  "options_themeAutoLabel": {
+    "message": "자동"
+  },
   "options_themeDark": {
     "message": "☽ 다크"
   },
+  "options_themeDarkLabel": {
+    "message": "다크"
+  },
   "options_themeLight": {
     "message": "☀ 라이트"
+  },
+  "options_themeLightLabel": {
+    "message": "라이트"
   },
   "options_toggleToken": {
     "message": "토큰 표시/숨기기"
   },
   "options_tokenHint": {
     "message": "<code>repo</code> 스코프 (classic) 또는 <code>Contents: Read/Write</code> 및 <code>Metadata: Read</code> (fine-grained) 가 필요합니다. <a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">토큰 생성</a>"
+  },
+  "options_tokenHintHtml_codeberg": {
+    "message": "<a href=\"https://codeberg.org/user/settings/applications\" target=\"_blank\" rel=\"noopener\">Codeberg → 사용자 설정 → 애플리케이션</a>에서 저장소 읽기/쓰기 권한 토큰을 만드세요."
+  },
+  "options_tokenHintHtml_forgejo": {
+    "message": "Forgejo 서버의 <strong>사용자 설정 → 애플리케이션</strong>에서 저장소 읽기/쓰기 권한 토큰을 만드세요."
+  },
+  "options_tokenHintHtml_gitea": {
+    "message": "<strong>사용자 설정 → 애플리케이션</strong>에서 저장소 읽기/쓰기 권한 토큰을 만드세요."
+  },
+  "options_tokenHintHtml_gitlab": {
+    "message": "<a href=\"https://gitlab.com/-/user_settings/personal_access_tokens\" target=\"_blank\" rel=\"noopener\">GitLab → 사용자 설정 → 액세스 토큰</a>에서 <code>api</code> 범위(저장소 읽기/쓰기) 토큰을 만드세요."
+  },
+  "options_tokenHintHtml_gogs": {
+    "message": "Gogs 서버의 <strong>사용자 설정 → 애플리케이션</strong>에서 저장소 읽기/쓰기 권한 토큰을 만드세요."
+  },
+  "options_tokenPlaceholderGitea": {
+    "message": "gitea-액세스-토큰"
+  },
+  "options_tokenPlaceholderGithub": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitea": {
+    "message": "액세스-토큰"
+  },
+  "options_tokenPlaceholder_github": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitlab": {
+    "message": "glpat-xxxxxxxxxxxxxxxxxxxx"
   },
   "options_tokenValidMissingScope": {
     "message": "토큰 유효 ($1), 하지만 \"repo\" 스코프가 없습니다."
@@ -1530,6 +1971,51 @@
   },
   "options_tokenValidSpecifyRepo": {
     "message": "토큰 유효! 사용자: $1. 저장소를 지정해 주세요."
+  },
+  "options_transferApplyLocal": {
+    "message": "브라우저에 적용(대상이 활성일 때만)"
+  },
+  "options_transferCancel": {
+    "message": "취소"
+  },
+  "options_transferDesc": {
+    "message": "프로필 간 북마크 복사(예: GitHub → Gitea 마이그레이션). 대상 프로필이 활성이고 로컬 적용을 선택하지 않으면 브라우저를 변경하지 않습니다."
+  },
+  "options_transferDuplicateFoldersWarning": {
+    "message": "전송 결과의 중복 폴더 이름(slug 충돌): $1. 전송 전에 소스 프로필 북마크에서 이 폴더들을 병합하지 않으면 중복이 대상 원격에 복사됩니다."
+  },
+  "options_transferFolder": {
+    "message": "폴더(선택)"
+  },
+  "options_transferFolderHint": {
+    "message": "저장소 폴더 아래 상대 경로, 예: toolbar/work. 모든 북마크는 비워 두세요."
+  },
+  "options_transferMergeConfirm": {
+    "message": "기존 파일 $1개가 있는 대상에 병합할까요? 기존 원격 북마크는 유지되며 중복 폴더가 생길 수 있습니다. 계속할까요?"
+  },
+  "options_transferMergeHint": {
+    "message": "병합은 기존 대상 파일을 모두 유지하고 소스 북마크를 추가합니다. 중복 폴더가 생길 수 있습니다(예: books와 books-2). 깔끔한 마이그레이션에는 대상 교체를 사용하세요."
+  },
+  "options_transferMergeWarning": {
+    "message": "대상에 이미 북마크 파일 $1개가 있습니다. 병합은 모두 유지하고 복사된 소스 파일을 추가합니다 — 중복 폴더 가능성이 높습니다."
+  },
+  "options_transferMode": {
+    "message": "모드"
+  },
+  "options_transferModeMerge": {
+    "message": "대상에 병합"
+  },
+  "options_transferModeReplace": {
+    "message": "대상 교체"
+  },
+  "options_transferOpen": {
+    "message": "전송…"
+  },
+  "options_transferPreview": {
+    "message": "미리 보기"
+  },
+  "options_transferPreviewResult": {
+    "message": "소스: $1($2 파일). 대상에 기존 $3 파일 → 전송 후 $4."
   },
   "options_transferProgressApplying": {
     "message": "브라우저에 적용 중…"
@@ -1548,6 +2034,36 @@
   },
   "options_transferProgressPreparing": {
     "message": "전송 준비 중…"
+  },
+  "options_transferPush": {
+    "message": "대상 저장소에 푸시"
+  },
+  "options_transferReplaceWarning": {
+    "message": "교체는 전송 결과에 포함되지 않은 원격 파일 $1개를 삭제합니다."
+  },
+  "options_transferRun": {
+    "message": "전송"
+  },
+  "options_transferSource": {
+    "message": "소스 프로필"
+  },
+  "options_transferSourceBrowser": {
+    "message": "브라우저"
+  },
+  "options_transferSourceCache": {
+    "message": "캐시"
+  },
+  "options_transferSourceRemote": {
+    "message": "원격"
+  },
+  "options_transferTarget": {
+    "message": "대상 프로필"
+  },
+  "options_transferTargetWarning": {
+    "message": "경고: 대상에 이미 북마크 데이터가 있습니다."
+  },
+  "options_transferTitle": {
+    "message": "북마크 전송"
   },
   "options_version": {
     "message": "버전"
@@ -1591,8 +2107,14 @@
   "popup_localToGithub": {
     "message": "로컬 → GitHub"
   },
+  "popup_localToRemote": {
+    "message": "로컬 → 원격"
+  },
   "popup_minAgo": {
     "message": "$1분 전"
+  },
+  "popup_mirrorStatus": {
+    "message": "미러됨: $1"
   },
   "popup_nextSyncIn": {
     "message": "다음 동기화: $1 후"
@@ -1614,6 +2136,9 @@
   },
   "popup_ready": {
     "message": "준비 완료"
+  },
+  "popup_remoteToLocal": {
+    "message": "원격 → 로컬"
   },
   "popup_reportIssue": {
     "message": "문제 신고"
@@ -1645,6 +2170,9 @@
   "search_openBtn": {
     "message": "열기"
   },
+  "search_resultsLabel": {
+    "message": "검색 결과"
+  },
   "search_statusNoResults": {
     "message": "북마크를 찾을 수 없습니다"
   },
@@ -1662,8 +2190,20 @@
   "search_subtitle": {
     "message": "로컬 북마크를 검색하고 일치하는 항목을 새 탭에서 엽니다."
   },
+  "search_syncComplete": {
+    "message": "동기화 완료"
+  },
+  "search_syncFailed": {
+    "message": "동기화 실패: $1"
+  },
+  "search_syncing": {
+    "message": "동기화 중…"
+  },
   "search_title": {
     "message": "북마크 검색"
+  },
+  "search_unknownError": {
+    "message": "알 수 없는 오류"
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – 북마크 검색"
@@ -1698,8 +2238,14 @@
   "sync_conflictRemoteModified": {
     "message": "충돌 감지: 원격도 수정되었습니다."
   },
+  "sync_loadedFromRemote": {
+    "message": "원격 저장소에서 불러옴."
+  },
   "sync_noBookmarksOnGithub": {
     "message": "GitHub에서 북마크를 찾을 수 없습니다."
+  },
+  "sync_noBookmarksOnRemote": {
+    "message": "원격 저장소에서 북마크를 찾을 수 없습니다."
   },
   "sync_noChanges": {
     "message": "마지막 동기화 이후 변경 사항이 없습니다."
@@ -1734,7 +2280,37 @@
   "sync_pushSuccess": {
     "message": "북마크가 GitHub에 성공적으로 푸시되었습니다."
   },
+  "sync_remoteChangedRetry": {
+    "message": "원격이 지금 변경 중입니다. 잠시 후 다시 동기화해 보세요."
+  },
   "sync_syncFailed": {
     "message": "동기화 실패: $1"
+  },
+  "transfer_commitMessage": {
+    "message": "프로필 $1에서 북마크 전송"
+  },
+  "transfer_connectionLost": {
+    "message": "전송 연결이 끊어졌습니다. 옵션 페이지를 새로 고침하고 다시 시도하세요."
+  },
+  "transfer_mergeConflicts": {
+    "message": "병합 차단: 경로 충돌 $1개. 겹치는 파일을 해결하거나 교체 모드를 사용하세요."
+  },
+  "transfer_noBookmarks": {
+    "message": "전송할 북마크 파일이 없습니다"
+  },
+  "transfer_profileNotFound": {
+    "message": "프로필을 찾을 수 없습니다"
+  },
+  "transfer_sameProfile": {
+    "message": "소스와 대상은 서로 다른 프로필이어야 합니다"
+  },
+  "transfer_success": {
+    "message": "북마크 파일 $1개 전송됨"
+  },
+  "whatsnew_close": {
+    "message": "닫기"
+  },
+  "whatsnew_title": {
+    "message": "GitSyncMarks $1의 새로운 기능"
   }
 }

@@ -20,7 +20,8 @@
 > *"With a distributed tool, no single place is vital to your data."*
 > — **Linus Torvalds** (Git creator)
 
----
+> [!TIP]
+> **v3.0.0 pre-release:** Latest beta is **[v3.0.0-beta.2](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.0-beta.2)** — multi-provider sync plus **setup wizard sync confirmation** ([#146](https://github.com/d0dg3r/GitSyncMarks/issues/146)): connection check no longer pushes; you choose pull, merge/sync, push, or skip with warnings. Download Chrome/Firefox ZIPs from [Releases](https://github.com/d0dg3r/GitSyncMarks/releases). Feedback welcome before stable 3.0.0.
 
 ---
 
@@ -34,7 +35,7 @@
 - **Profile Transfer**: Copy bookmarks between profiles (replace or merge) — ideal for migrating GitHub → Gitea or similar.
 - **Push Mirrors**: Optional backup remotes receive a push-only copy after each successful primary commit.
 - **Clean Remote Orphans**: Preview and delete remote bookmark files that no longer exist locally.
-- **Guided Onboarding**: A step-by-step wizard leads you from token creation to your first successful sync.
+- **Guided Onboarding**: Step-by-step wizard from token to first sync. **Check connection** only validates access; you then choose pull, merge/sync, push, folder setup, or skip — with confirm dialogs before anything is written to the repo ([#146](https://github.com/d0dg3r/GitSyncMarks/issues/146)).
 - **Multiple Profiles**: Manage up to 10 separate profiles (e.g., Work, Personal, Research) with individual repositories.
 - **Native Integration**: Full support for native browser structures, including toolbars, menus, and context menus.
 
@@ -101,7 +102,8 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 - **New Providers**: Open **Settings → Git → Connection**, choose a provider (GitLab, Codeberg, Gitea, etc.), and run **Test Connection**. See [docs/PROVIDERS.md](docs/PROVIDERS.md).
 - **Profile Transfer**: Use **Transfer…** on the Profile tab to copy bookmarks between profiles (e.g. GitHub → Gitea migration).
 - **Push Mirrors**: Optional backup remotes on the Connection tab — configure per profile after the primary sync works.
-- **Wizard Access**: To re-verify a connection, use **Restart Wizard** in the **Help** tab.
+- **Wizard Access**: Use **Restart Wizard** in the **Help** tab to re-run setup. Connection test does not sync; pick your first action explicitly (see beta.2+ ([#146](https://github.com/d0dg3r/GitSyncMarks/issues/146))).
+- **Try the beta**: Install **[v3.0.0-beta.2](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.0-beta.2)** from GitHub Releases (Load unpacked / temporary add-on) if you want the wizard fix before the stable store build.
 
 ---
 

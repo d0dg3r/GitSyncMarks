@@ -19,7 +19,7 @@ Highlights
 - Duplicate Fix: Same-name folders no longer multiply across syncs — duplicates are automatically merged.
 - Linkwarden Synergy: Save pages or links directly to your Linkwarden instance. Includes automatic viewport screenshots, collection synchronization, and predefined tags.
 - Smart Search: A dedicated, lightning-fast search interface for your bookmarks. Supports light and dark themes and is fully keyboard-accessible.
-- Guided Setup Wizard: A step-by-step onboarding process safely guides new users through token and repository configuration to their first successful sync.
+- Guided Setup Wizard: Step-by-step onboarding; connection check only validates access. You choose pull, merge/sync, push, folder setup, or skip — with confirmation before anything is written to the repository.
 
 Key Capabilities
 

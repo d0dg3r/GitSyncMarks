@@ -17,8 +17,41 @@
   "api_invalidToken": {
     "message": "无效的令牌。请检查您的个人访问令牌。"
   },
+  "api_listCommitsFailed": {
+    "message": "无法列出提交（HTTP $1）。"
+  },
+  "api_networkError": {
+    "message": "网络错误。请检查互联网连接后重试。"
+  },
   "api_rateLimitExceeded": {
     "message": "GitHub API 请求频率超限。请稍候。"
+  },
+  "api_treeTruncated": {
+    "message": "仓库过大，无法在一次请求中读取（GitHub 截断了文件树）。已停止同步以避免数据丢失。"
+  },
+  "cleanOrphans_commitMessage": {
+    "message": "删除本地不存在的孤立书签文件"
+  },
+  "cleanOrphans_confirm": {
+    "message": "从远程删除 $2 个顶级文件夹中的 $1 个孤立文件？本地书签不变。无法从 GitSyncMarks 撤销（请使用 Git 历史恢复）。"
+  },
+  "cleanOrphans_noLocalBaseline": {
+    "message": "此配置文件没有本地书签基准。请切换到该配置文件并同步一次，或在活动配置文件上使用清理远程。"
+  },
+  "cleanOrphans_none": {
+    "message": "远程没有孤立书签文件。"
+  },
+  "cleanOrphans_previewFailed": {
+    "message": "无法预览远程孤立文件。"
+  },
+  "cleanOrphans_previewResult": {
+    "message": "将删除 $2 个顶级文件夹中的 $1 个孤立文件。"
+  },
+  "cleanOrphans_remoteFetchFailed": {
+    "message": "无法读取远程仓库：$1"
+  },
+  "cleanOrphans_success": {
+    "message": "已从远程 $2 个顶级文件夹中删除 $1 个孤立文件。"
   },
   "commands_openOptions": {
     "message": "打开扩展设置"
@@ -82,6 +115,24 @@
   "contextMenu_notifFolderMissing": {
     "message": "所选文件夹已不存在。请更新快速文件夹设置。"
   },
+  "contextMenu_notifLinkwardenError": {
+    "message": "Linkwarden 错误：$1"
+  },
+  "contextMenu_notifLinkwardenGrantPermissions": {
+    "message": "请在选项中通过「测试连接」授予权限"
+  },
+  "contextMenu_notifLinkwardenNotConfigured": {
+    "message": "Linkwarden 未配置"
+  },
+  "contextMenu_notifLinkwardenSaved": {
+    "message": "链接已保存到 Linkwarden"
+  },
+  "contextMenu_notifLinkwardenSavedWithScreenshot": {
+    "message": "链接和截图已保存到 Linkwarden"
+  },
+  "contextMenu_notifLinkwardenUrlInvalid": {
+    "message": "Linkwarden URL 无效"
+  },
   "contextMenu_notifNoFavicon": {
     "message": "此页面没有可用的网站图标"
   },
@@ -137,10 +188,10 @@
     "message": "立即同步"
   },
   "extDescription": {
-    "message": "通过GitHub同步书签。支持Linkwarden、智能搜索和配套应用。双向、安全且绝对私密。"
+    "message": "通过 GitHub、GitLab、Codeberg、Gitea 等同步书签。Linkwarden、智能搜索、配套应用。直接、安全、私密。"
   },
   "extDescriptionFirefox": {
-    "message": "通过GitHub同步书签。支持Linkwarden、智能搜索与设置向导。无第三方服务器中转，原生支持Firefox结构。"
+    "message": "通过 GitHub、GitLab、Codeberg、Gitea 等同步书签。Linkwarden、智能搜索、设置向导。双向、安全、私密。完整 Firefox 支持。无中间商。"
   },
   "extName": {
     "message": "GitSyncMarks"
@@ -175,6 +226,12 @@
   "help_backupTitle": {
     "message": "备份"
   },
+  "help_cleanOrphansDesc": {
+    "message": "在同步子标签页中预览并删除不在本地书签（活动配置文件）中的远程书签文件。合并传输后出现重复文件夹时很有用。"
+  },
+  "help_cleanOrphansTitle": {
+    "message": "清理远程孤立文件"
+  },
   "help_conflictDesc": {
     "message": "当本地和远程书签都发生更改时，弹出窗口会显示冲突。选择<strong>推送</strong>（本地优先，覆盖远程）或<strong>拉取</strong>（远程优先，覆盖本地）。冲突不会自动合并。"
   },
@@ -196,6 +253,12 @@
   "help_debugLogTitle": {
     "message": "调试日志"
   },
+  "help_densityDesc": {
+    "message": "使用标题栏中的 S / M / L 按钮在紧凑、中等和大之间切换。该设置适用于所有扩展界面（选项、弹出窗口、搜索、Linkwarden 保存）并在设备间同步。"
+  },
+  "help_densityTitle": {
+    "message": "界面密度"
+  },
   "help_discussions": {
     "message": "讨论"
   },
@@ -209,7 +272,7 @@
     "message": "生成的文件"
   },
   "help_gettingStartedIntro": {
-    "message": "创建一个 GitHub 仓库用于存储书签，然后创建一个具有 <code>repo</code> 权限范围的个人访问令牌 (PAT)。在 GitHub 选项卡中输入令牌、仓库所有者、名称、分支（通常为 <code>main</code>）和文件夹路径（默认：<code>bookmarks</code>）。点击<strong>测试连接</strong>进行验证。"
+    "message": "在 <strong>GitHub</strong>、<strong>GitLab</strong>、<strong>Codeberg</strong>、<strong>Gitea</strong>、<strong>Forgejo</strong> 或 <strong>Gogs</strong> 上为书签创建 Git 仓库。在 <strong>Git → 连接</strong> 中选择提供商，输入个人访问令牌、仓库所有者/名称、分支（通常为 <code>main</code>）和文件夹路径（默认：<code>bookmarks</code>）。自托管提供商需要服务器 URL；提示时请允许主机访问。点击 <strong>测试连接</strong> 进行验证。"
   },
   "help_gettingStartedTitle": {
     "message": "入门指南"
@@ -219,6 +282,36 @@
   },
   "help_githubReposTitle": {
     "message": "GitHub 仓库文件夹"
+  },
+  "help_headerLangDesc": {
+    "message": "标题栏中的语言按钮可更改扩展的显示语言。设置会保存并在所有设备上同步。"
+  },
+  "help_headerLangTitle": {
+    "message": "语言"
+  },
+  "help_historyIntro": {
+    "message": "每次同步都会创建一个 Git 提交。可在历史子标签页（文件下）浏览最近提交，并从先前版本恢复书签。"
+  },
+  "help_historyLoadDesc": {
+    "message": "获取最近 20 个触及书签路径的提交。表头标注列（日期、短提交哈希、从提交消息解析的客户端 ID）。悬停客户端单元格可查看完整消息。每行有预览（放大镜）和恢复图标。"
+  },
+  "help_historyLoadLabel": {
+    "message": "加载历史"
+  },
+  "help_historyRestoreDesc": {
+    "message": "将所有本地书签替换为该提交的状态。在列表中点击恢复图标，然后在显示简短确认时再次点击（或在 diff 面板中的完整文本）。不会重写远程分支 — 当前远程数据保持不变。下次同步会将本地状态推回。"
+  },
+  "help_historyRestoreLabel": {
+    "message": "恢复"
+  },
+  "help_historyTitle": {
+    "message": "同步历史与撤销"
+  },
+  "help_historyUndoDesc": {
+    "message": "一键回滚到修改本地书签的最近一次同步之前的提交。在任何修改本地书签的拉取或合并后可用。"
+  },
+  "help_historyUndoLabel": {
+    "message": "撤销上次同步"
   },
   "help_links": {
     "message": "链接"
@@ -237,6 +330,9 @@
   },
   "help_linkwardenTitle": {
     "message": "Linkwarden"
+  },
+  "help_menuTitle": {
+    "message": "菜单"
   },
   "help_notificationsDesc": {
     "message": "选择何时显示同步通知：全部（成功和失败）、仅错误或关闭。"
@@ -298,6 +394,18 @@
   "help_profilesTitle": {
     "message": "配置文件"
   },
+  "help_provider_codeberg": {
+    "message": "<strong>Codeberg</strong> 是 <code>codeberg.org</code> 上的 Forgejo 主机。选择 Codeberg 作为提供商；服务器 URL 已预设。在用户设置 → 应用程序中创建令牌。"
+  },
+  "help_provider_forgejo": {
+    "message": "<strong>Forgejo</strong> 使用与 Gitea 相同的 API。输入 Forgejo 服务器 URL 和用户设置 → 应用程序中的个人访问令牌。"
+  },
+  "help_provider_gitlab": {
+    "message": "<strong>GitLab</strong> 支持 gitlab.com 和自托管实例。对于子组项目，使用 <code>group/subgroup</code> 作为所有者，项目名称作为仓库。GitLab.com 请将服务器 URL 留空。"
+  },
+  "help_provider_gogs": {
+    "message": "<strong>Gogs</strong> 与 Gitea 共享类似 API。输入 Gogs 服务器 URL 和用户设置 → 应用程序中的访问令牌。"
+  },
   "help_quickSync": {
     "message": "快速同步书签"
   },
@@ -340,6 +448,12 @@
   "help_themeCycleTitle": {
     "message": "主题"
   },
+  "help_transferDesc": {
+    "message": "在配置文件标签页使用 <strong>传输…</strong> 在不先切换的情况下将书签从一个配置文件复制到另一个。典型用途：从 GitHub 迁移到 Gitea。选择 <strong>替换目标</strong> 进行干净迁移；<strong>合并到目标</strong> 保留现有目标文件并可能产生重复文件夹。迁移混乱后，在同步子标签页使用 <strong>清理远程孤立文件</strong>。Git 连接标签页上的镜像目标在每次同步后将副本推送到备份远程。"
+  },
+  "help_transferTitle": {
+    "message": "在配置文件之间传输书签"
+  },
   "help_voteBacklogBtn": {
     "message": "为待开发功能投票"
   },
@@ -362,10 +476,13 @@
     "message": "为什么同步有时很慢？"
   },
   "help_wizardRestartDesc": {
-    "message": "分步指南，帮助您连接 GitHub 仓库并执行首次同步。"
+    "message": "分步指南：连接 Git 仓库并执行首次同步。"
   },
   "help_wizardRestartTitle": {
     "message": "设置向导"
+  },
+  "help_wizardSyncChoice": {
+    "message": "在设置向导中，<strong>检查连接</strong> 仅验证访问 — 不同步。然后选择拉取、合并/同步、推送、创建文件夹结构或跳过，写入仓库前需确认。"
   },
   "linkwardenSave_cancelBtn": {
     "message": "取消"
@@ -532,6 +649,18 @@
   "options_chooseFile": {
     "message": "选择文件"
   },
+  "options_cleanOrphansDesc": {
+    "message": "删除不在本地书签（活动配置文件）中的远程书签文件。在传输混乱或服务器上有重复文件夹后使用。"
+  },
+  "options_cleanOrphansPreview": {
+    "message": "预览孤立文件"
+  },
+  "options_cleanOrphansRun": {
+    "message": "清理远程"
+  },
+  "options_cleanOrphansTitle": {
+    "message": "清理远程孤立文件"
+  },
   "options_connectionOk": {
     "message": "连接成功！用户：$1，仓库：$2"
   },
@@ -636,6 +765,18 @@
   },
   "options_decryptError": {
     "message": "解密失败。密码错误？"
+  },
+  "options_densityCompact": {
+    "message": "紧凑"
+  },
+  "options_densityGroupLabel": {
+    "message": "界面密度"
+  },
+  "options_densityLarge": {
+    "message": "大"
+  },
+  "options_densityMedium": {
+    "message": "中等"
   },
   "options_documentation": {
     "message": "文档"
@@ -754,6 +895,51 @@
   "options_generatedFilesTitle": {
     "message": "生成的文件"
   },
+  "options_gheServerUrlEnabled": {
+    "message": "使用自定义服务器 URL（GitHub Enterprise）"
+  },
+  "options_gitConnection": {
+    "message": "Git 连接"
+  },
+  "options_gitProvider": {
+    "message": "Git 提供商"
+  },
+  "options_gitProviderGitea": {
+    "message": "Gitea / Forgejo"
+  },
+  "options_gitProviderGithub": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_codeberg": {
+    "message": "Codeberg"
+  },
+  "options_gitProvider_forgejo": {
+    "message": "Forgejo"
+  },
+  "options_gitProvider_gitea": {
+    "message": "Gitea"
+  },
+  "options_gitProvider_github": {
+    "message": "GitHub"
+  },
+  "options_gitProvider_gitlab": {
+    "message": "GitLab"
+  },
+  "options_gitProvider_gogs": {
+    "message": "Gogs"
+  },
+  "options_giteaPermissionDenied": {
+    "message": "Gitea 服务器的主机权限被拒绝。请在提示时允许访问，然后重试。"
+  },
+  "options_giteaTokenHelpLink": {
+    "message": "打开 Gitea 用户设置（应用程序）"
+  },
+  "options_giteaTokenHintHtml": {
+    "message": "在 Gitea 的 <strong>用户设置 → 应用程序</strong> 中创建具有仓库读/写权限的令牌。Gitea 令牌<em>不是</em> GitHub 风格的 <code>ghp_…</code> 字符串。"
+  },
+  "options_giteaTokenWizardHelpHtml": {
+    "message": "在 Gitea 中打开 <strong>用户设置 → 应用程序 → 生成新令牌</strong>。启用仓库读/写。复制令牌 — 仅显示一次。Gitea 令牌不使用 <code>ghp_</code> 等 GitHub 前缀。"
+  },
   "options_githubConnection": {
     "message": "GitHub 连接"
   },
@@ -786,6 +972,72 @@
   },
   "options_githubReposTitle": {
     "message": "GitHub 仓库文件夹"
+  },
+  "options_historyColActions": {
+    "message": "操作"
+  },
+  "options_historyColClient": {
+    "message": "客户端"
+  },
+  "options_historyColCommit": {
+    "message": "提交"
+  },
+  "options_historyColDate": {
+    "message": "日期"
+  },
+  "options_historyCurrent": {
+    "message": "当前"
+  },
+  "options_historyDesc": {
+    "message": "浏览最近的同步提交并从先前版本恢复书签。恢复仅更改本地书签 — 不会重写远程分支。"
+  },
+  "options_historyDiffAdded": {
+    "message": "已添加"
+  },
+  "options_historyDiffChanged": {
+    "message": "已更改"
+  },
+  "options_historyDiffClose": {
+    "message": "关闭"
+  },
+  "options_historyDiffLoading": {
+    "message": "正在加载预览…"
+  },
+  "options_historyDiffNoChanges": {
+    "message": "无差异 — 此提交与当前书签一致。"
+  },
+  "options_historyDiffRemoved": {
+    "message": "已删除"
+  },
+  "options_historyEmpty": {
+    "message": "未找到提交。"
+  },
+  "options_historyLoadBtn": {
+    "message": "加载历史"
+  },
+  "options_historyPreviewBtn": {
+    "message": "预览"
+  },
+  "options_historyRestoreBtn": {
+    "message": "恢复"
+  },
+  "options_historyRestoreConfirmBtn": {
+    "message": "再次点击以确认"
+  },
+  "options_historyRestoreConfirmShort": {
+    "message": "再次点击"
+  },
+  "options_historyRestoring": {
+    "message": "正在恢复…"
+  },
+  "options_historyTitle": {
+    "message": "同步历史"
+  },
+  "options_historyUndoBtn": {
+    "message": "撤销上次同步"
+  },
+  "options_hostPermissionDenied": {
+    "message": "Git 服务器的主机权限被拒绝。请在提示时允许访问，然后重试。"
   },
   "options_importBookmarks": {
     "message": "导入书签"
@@ -841,6 +1093,12 @@
   "options_linkwardenApiKey": {
     "message": "API 密钥"
   },
+  "options_linkwardenConnectionFailed": {
+    "message": "连接失败：$1"
+  },
+  "options_linkwardenConnectionOk": {
+    "message": "连接成功！"
+  },
   "options_linkwardenDefaultCollection": {
     "message": "默认集合"
   },
@@ -859,11 +1117,17 @@
   "options_linkwardenEnabled": {
     "message": "启用 Linkwarden"
   },
+  "options_linkwardenHostPermissionDenied": {
+    "message": "主机权限被拒绝。请检查地址栏或弹出窗口阻止程序。"
+  },
   "options_linkwardenInstanceUrl": {
     "message": "实例 URL"
   },
   "options_linkwardenIntro": {
     "message": "配置您的 Linkwarden 实例，以便直接从右键菜单保存书签。"
+  },
+  "options_linkwardenInvalidUrlFormat": {
+    "message": "URL 格式无效"
   },
   "options_linkwardenSyncEnabled": {
     "message": "将集合同步到书签"
@@ -894,8 +1158,44 @@
   "options_linkwardenTitle": {
     "message": "Linkwarden 集成"
   },
+  "options_linkwardenUrlTokenRequired": {
+    "message": "需要 URL 和令牌"
+  },
   "options_menu_showAsSubmenu": {
     "message": "显示为子菜单"
+  },
+  "options_mirrorsAdd": {
+    "message": "+ 添加镜像"
+  },
+  "options_mirrorsDesc": {
+    "message": "每次主同步成功后，将书签文件的仅推送副本发送到额外的 Git 远程。镜像上的直接编辑将在下次同步时被覆盖。"
+  },
+  "options_mirrorsLabel": {
+    "message": "标签"
+  },
+  "options_mirrorsPaused": {
+    "message": "已暂停"
+  },
+  "options_mirrorsPushGenerated": {
+    "message": "包含生成的文件（README、HTML、订阅源、Dashy）"
+  },
+  "options_mirrorsPushSettings": {
+    "message": "包含加密设置"
+  },
+  "options_mirrorsRemove": {
+    "message": "删除"
+  },
+  "options_mirrorsStatusError": {
+    "message": "镜像错误：$1"
+  },
+  "options_mirrorsStatusOk": {
+    "message": "上次推送成功"
+  },
+  "options_mirrorsTest": {
+    "message": "测试"
+  },
+  "options_mirrorsTitle": {
+    "message": "镜像目标"
   },
   "options_mobileAppAlert": {
     "message": "<strong>Android 用户注意：</strong>Android 版 Firefox 不支持通过扩展直接同步书签。您必须使用配套应用。"
@@ -987,6 +1287,9 @@
   "options_onboardingWizardBack": {
     "message": "上一步"
   },
+  "options_onboardingWizardCheckConnection": {
+    "message": "检查连接"
+  },
   "options_onboardingWizardCompleted": {
     "message": "向导已成功完成。"
   },
@@ -1036,7 +1339,7 @@
     "message": "正在保存同步状态"
   },
   "options_onboardingWizardPhaseUploading": {
-    "message": "正在上传书签到 GitHub"
+    "message": "正在将书签上传到远程"
   },
   "options_onboardingWizardRepoCreateFailed": {
     "message": "当前令牌/权限无法创建仓库。"
@@ -1068,6 +1371,9 @@
   "options_onboardingWizardStart": {
     "message": "启动设置向导"
   },
+  "options_onboardingWizardStartSync": {
+    "message": "开始同步"
+  },
   "options_onboardingWizardStepFinishText": {
     "message": "设置已完成。你可以继续使用常规sync设置。"
   },
@@ -1080,6 +1386,12 @@
   "options_onboardingWizardStepHasTokenTitle": {
     "message": "你已经有令牌了吗？"
   },
+  "options_onboardingWizardStepProviderText": {
+    "message": "选择 GitHub、GitLab、Codeberg、Gitea、Forgejo 或 Gogs。每个配置文件存储自己的提供商和服务器 URL。"
+  },
+  "options_onboardingWizardStepProviderTitle": {
+    "message": "选择 Git 提供商"
+  },
   "options_onboardingWizardStepRepoDecisionText": {
     "message": "选择自动创建仓库，或使用现有仓库。"
   },
@@ -1091,6 +1403,9 @@
   },
   "options_onboardingWizardStepRepoTitle": {
     "message": "仓库设置"
+  },
+  "options_onboardingWizardStepSyncChoiceText": {
+    "message": "选择同步方式，阅读警告，然后点击开始同步。确认前不会写入仓库。"
   },
   "options_onboardingWizardStepSyncTextEmpty": {
     "message": "路径为空。请先创建初始目录结构后再开始。"
@@ -1114,7 +1429,7 @@
     "message": "访问令牌"
   },
   "options_onboardingWizardStepValidateText": {
-    "message": "运行测试以验证令牌、仓库和路径访问是否正常。"
+    "message": "点击检查连接以验证令牌、仓库和路径访问。此步骤不会执行同步。"
   },
   "options_onboardingWizardStepValidateTitle": {
     "message": "测试连接"
@@ -1125,8 +1440,68 @@
   "options_onboardingWizardStepWelcomeTitle": {
     "message": "欢迎"
   },
+  "options_onboardingWizardSyncConfirmRunBtn": {
+    "message": "运行"
+  },
+  "options_onboardingWizardSyncConfirmSkipBtn": {
+    "message": "跳过"
+  },
+  "options_onboardingWizardSyncConfirm_initialize": {
+    "message": "在远程仓库创建初始 bookmarks/ 文件夹结构（不上传本地书签）？"
+  },
+  "options_onboardingWizardSyncConfirm_pull": {
+    "message": "从远程仓库下载 $2 个书签到此浏览器？"
+  },
+  "options_onboardingWizardSyncConfirm_pullOverwriteLocal": {
+    "message": "拉取将用远程的 $2 个书签替换全部 $1 个本地书签。继续？"
+  },
+  "options_onboardingWizardSyncConfirm_push": {
+    "message": "将 $1 个本地书签上传到远程仓库？"
+  },
+  "options_onboardingWizardSyncConfirm_pushDanger": {
+    "message": "推送将覆盖远程仓库。可能删除 $2 个远程书签；仅保留 $1 个本地书签。继续？"
+  },
+  "options_onboardingWizardSyncConfirm_skip": {
+    "message": "暂时跳过首次同步？稍后可在弹出窗口中手动同步。"
+  },
+  "options_onboardingWizardSyncConfirm_sync": {
+    "message": "在 $1 个本地和 $2 个远程书签之间运行合并/同步？稍后可能需要解决冲突。"
+  },
   "options_onboardingWizardSyncInProgress": {
     "message": "正在后台工作，请稍候..."
+  },
+  "options_onboardingWizardSyncModeLabel": {
+    "message": "首次同步操作"
+  },
+  "options_onboardingWizardSyncMode_initialize": {
+    "message": "仅创建文件夹结构"
+  },
+  "options_onboardingWizardSyncMode_pull": {
+    "message": "仅拉取（从远程下载）"
+  },
+  "options_onboardingWizardSyncMode_push": {
+    "message": "仅推送（上传本地书签 — 覆盖远程）"
+  },
+  "options_onboardingWizardSyncMode_skip": {
+    "message": "暂时跳过"
+  },
+  "options_onboardingWizardSyncMode_sync": {
+    "message": "合并 / 同步（双方都有书签时推荐）"
+  },
+  "options_onboardingWizardSyncWarn_both": {
+    "message": "双方都有书签。合并/同步会合并更改；拉取或推送会覆盖一方。"
+  },
+  "options_onboardingWizardSyncWarn_emptyBoth": {
+    "message": "远程路径和浏览器均为空。创建文件夹结构或跳过并稍后同步。"
+  },
+  "options_onboardingWizardSyncWarn_localOnly": {
+    "message": "远程路径为空；推送时将上传本地书签。"
+  },
+  "options_onboardingWizardSyncWarn_pushDanger": {
+    "message": "警告：推送将删除本地不存在的 $1 个远程书签文件，并用此浏览器的书签替换仓库。"
+  },
+  "options_onboardingWizardSyncWarn_remoteOnly": {
+    "message": "远程有书签；此浏览器为空。建议拉取以免覆盖仓库。"
   },
   "options_onboardingWizardTitle": {
     "message": "设置向导"
@@ -1158,8 +1533,17 @@
   "options_onboardingWizardTokenValidated": {
     "message": "令牌有效且具备所需权限范围。"
   },
+  "options_ownerHint_gitlab": {
+    "message": "用户名、组或 group/subgroup 路径（例如 mygroup/subgroup）。"
+  },
   "options_ownerPlaceholder": {
     "message": "your-github-username"
+  },
+  "options_ownerPlaceholderGitea": {
+    "message": "你的-gitea-用户名"
+  },
+  "options_ownerPlaceholder_gitlab": {
+    "message": "用户或 group/subgroup"
   },
   "options_passwordPlaceholder": {
     "message": "密码"
@@ -1256,6 +1640,21 @@
   },
   "options_selectFile": {
     "message": "选择文件..."
+  },
+  "options_serverUrl": {
+    "message": "服务器 URL"
+  },
+  "options_serverUrlHint": {
+    "message": "Git 服务器的基础 URL（无 /api/v1 或 /api/v4 后缀）。"
+  },
+  "options_serverUrlPlaceholder_github": {
+    "message": "https://github.company.com"
+  },
+  "options_serverUrlPlaceholder_gitlab": {
+    "message": "https://gitlab.com（GitLab.com 留空）"
+  },
+  "options_serverUrlRequired": {
+    "message": "此提供商需要服务器 URL。"
   },
   "options_settingsCard": {
     "message": "设置"
@@ -1414,6 +1813,9 @@
   "options_subTabGitAdd": {
     "message": "Git 添加"
   },
+  "options_subTabHistory": {
+    "message": "历史"
+  },
   "options_subTabMenuAdvanced": {
     "message": "高级与安全"
   },
@@ -1510,17 +1912,56 @@
   "options_themeAuto": {
     "message": "A 自动（跟随系统）"
   },
+  "options_themeAutoLabel": {
+    "message": "自动"
+  },
   "options_themeDark": {
     "message": "☽ 深色"
   },
+  "options_themeDarkLabel": {
+    "message": "深色"
+  },
   "options_themeLight": {
     "message": "☀ 浅色"
+  },
+  "options_themeLightLabel": {
+    "message": "浅色"
   },
   "options_toggleToken": {
     "message": "显示/隐藏令牌"
   },
   "options_tokenHint": {
     "message": "需要 <code>repo</code> 权限范围 (classic) 或 <code>Contents: Read/Write</code> 和 <code>Metadata: Read</code> (fine-grained)。<a href=\"https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks\" target=\"_blank\" rel=\"noopener\">创建令牌</a>"
+  },
+  "options_tokenHintHtml_codeberg": {
+    "message": "在 <a href=\"https://codeberg.org/user/settings/applications\" target=\"_blank\" rel=\"noopener\">Codeberg → 用户设置 → 应用程序</a> 创建具有仓库读/写权限的令牌。"
+  },
+  "options_tokenHintHtml_forgejo": {
+    "message": "在 Forgejo 服务器的 <strong>用户设置 → 应用程序</strong> 创建具有仓库读/写权限的令牌。"
+  },
+  "options_tokenHintHtml_gitea": {
+    "message": "在 <strong>用户设置 → 应用程序</strong> 创建具有仓库读/写权限的令牌。"
+  },
+  "options_tokenHintHtml_gitlab": {
+    "message": "在 <a href=\"https://gitlab.com/-/user_settings/personal_access_tokens\" target=\"_blank\" rel=\"noopener\">GitLab → 用户设置 → 访问令牌</a> 创建具有 <code>api</code> 范围（仓库读/写）的令牌。"
+  },
+  "options_tokenHintHtml_gogs": {
+    "message": "在 Gogs 服务器的 <strong>用户设置 → 应用程序</strong> 创建具有仓库读/写权限的令牌。"
+  },
+  "options_tokenPlaceholderGitea": {
+    "message": "你的-gitea-访问令牌"
+  },
+  "options_tokenPlaceholderGithub": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitea": {
+    "message": "你的访问令牌"
+  },
+  "options_tokenPlaceholder_github": {
+    "message": "ghp_xxxxxxxxxxxxxxxxxxxx"
+  },
+  "options_tokenPlaceholder_gitlab": {
+    "message": "glpat-xxxxxxxxxxxxxxxxxxxx"
   },
   "options_tokenValidMissingScope": {
     "message": "令牌有效（$1），但缺少 \"repo\" 权限范围。"
@@ -1530,6 +1971,51 @@
   },
   "options_tokenValidSpecifyRepo": {
     "message": "令牌有效！用户：$1。请指定一个仓库。"
+  },
+  "options_transferApplyLocal": {
+    "message": "应用到浏览器（仅当目标处于活动状态时）"
+  },
+  "options_transferCancel": {
+    "message": "取消"
+  },
+  "options_transferDesc": {
+    "message": "将一个配置文件的书签复制到另一个（例如 GitHub → Gitea 迁移）。除非目标配置文件处于活动状态且选择本地应用，否则不会更改浏览器。"
+  },
+  "options_transferDuplicateFoldersWarning": {
+    "message": "传输结果中的重复文件夹名称（slug 冲突）：$1。传输前在源配置文件的书签中合并这些文件夹，否则重复项将复制到目标远程。"
+  },
+  "options_transferFolder": {
+    "message": "文件夹（可选）"
+  },
+  "options_transferFolderHint": {
+    "message": "仓库文件夹下的相对路径，例如 toolbar/work。留空表示所有书签。"
+  },
+  "options_transferMergeConfirm": {
+    "message": "合并到已有 $1 个文件的目标？保留现有远程书签；可能产生重复文件夹。继续？"
+  },
+  "options_transferMergeHint": {
+    "message": "合并保留所有现有目标文件并添加源书签。可能产生重复文件夹（例如 books 和 books-2）。干净迁移请使用替换目标。"
+  },
+  "options_transferMergeWarning": {
+    "message": "目标已有 $1 个书签文件。合并保留全部并加上复制的源文件 — 很可能出现重复文件夹。"
+  },
+  "options_transferMode": {
+    "message": "模式"
+  },
+  "options_transferModeMerge": {
+    "message": "合并到目标"
+  },
+  "options_transferModeReplace": {
+    "message": "替换目标"
+  },
+  "options_transferOpen": {
+    "message": "传输…"
+  },
+  "options_transferPreview": {
+    "message": "预览"
+  },
+  "options_transferPreviewResult": {
+    "message": "源：$1（$2 个文件）。目标有 $3 个现有文件 → 传输后 $4。"
   },
   "options_transferProgressApplying": {
     "message": "正在应用到浏览器…"
@@ -1548,6 +2034,36 @@
   },
   "options_transferProgressPreparing": {
     "message": "正在准备传输…"
+  },
+  "options_transferPush": {
+    "message": "推送到目标仓库"
+  },
+  "options_transferReplaceWarning": {
+    "message": "替换将删除传输结果中未包含的 $1 个远程文件。"
+  },
+  "options_transferRun": {
+    "message": "传输"
+  },
+  "options_transferSource": {
+    "message": "源配置文件"
+  },
+  "options_transferSourceBrowser": {
+    "message": "浏览器"
+  },
+  "options_transferSourceCache": {
+    "message": "缓存"
+  },
+  "options_transferSourceRemote": {
+    "message": "远程"
+  },
+  "options_transferTarget": {
+    "message": "目标配置文件"
+  },
+  "options_transferTargetWarning": {
+    "message": "警告：目标已有书签数据。"
+  },
+  "options_transferTitle": {
+    "message": "传输书签"
   },
   "options_version": {
     "message": "版本"
@@ -1591,8 +2107,14 @@
   "popup_localToGithub": {
     "message": "本地 → GitHub"
   },
+  "popup_localToRemote": {
+    "message": "本地 → 远程"
+  },
   "popup_minAgo": {
     "message": "$1 分钟前"
+  },
+  "popup_mirrorStatus": {
+    "message": "已镜像：$1"
   },
   "popup_nextSyncIn": {
     "message": "下次同步：$1"
@@ -1614,6 +2136,9 @@
   },
   "popup_ready": {
     "message": "就绪"
+  },
+  "popup_remoteToLocal": {
+    "message": "远程 → 本地"
   },
   "popup_reportIssue": {
     "message": "报告问题"
@@ -1645,6 +2170,9 @@
   "search_openBtn": {
     "message": "打开"
   },
+  "search_resultsLabel": {
+    "message": "搜索结果"
+  },
   "search_statusNoResults": {
     "message": "未找到书签"
   },
@@ -1662,8 +2190,20 @@
   "search_subtitle": {
     "message": "搜索本地书签并在新标签页中打开匹配项。"
   },
+  "search_syncComplete": {
+    "message": "同步完成"
+  },
+  "search_syncFailed": {
+    "message": "同步失败：$1"
+  },
+  "search_syncing": {
+    "message": "正在同步…"
+  },
   "search_title": {
     "message": "书签搜索"
+  },
+  "search_unknownError": {
+    "message": "未知错误"
   },
   "search_windowTitle": {
     "message": "GitSyncMarks – 书签搜索"
@@ -1698,8 +2238,14 @@
   "sync_conflictRemoteModified": {
     "message": "检测到冲突：远程也已修改。"
   },
+  "sync_loadedFromRemote": {
+    "message": "已从远程仓库加载。"
+  },
   "sync_noBookmarksOnGithub": {
     "message": "在 GitHub 上未找到书签。"
+  },
+  "sync_noBookmarksOnRemote": {
+    "message": "远程仓库中未找到书签。"
   },
   "sync_noChanges": {
     "message": "上次同步以来没有变更。"
@@ -1734,7 +2280,37 @@
   "sync_pushSuccess": {
     "message": "书签已成功推送到 GitHub。"
   },
+  "sync_remoteChangedRetry": {
+    "message": "远程正在变更。请稍后再试同步。"
+  },
   "sync_syncFailed": {
     "message": "同步失败：$1"
+  },
+  "transfer_commitMessage": {
+    "message": "来自配置文件 $1 的书签传输"
+  },
+  "transfer_connectionLost": {
+    "message": "传输连接丢失。请重新加载选项页面并重试。"
+  },
+  "transfer_mergeConflicts": {
+    "message": "合并被阻止：$1 个路径冲突。请解决重叠文件或使用替换模式。"
+  },
+  "transfer_noBookmarks": {
+    "message": "没有可传输的书签文件"
+  },
+  "transfer_profileNotFound": {
+    "message": "未找到配置文件"
+  },
+  "transfer_sameProfile": {
+    "message": "源和目标必须是不同的配置文件"
+  },
+  "transfer_success": {
+    "message": "已传输 $1 个书签文件"
+  },
+  "whatsnew_close": {
+    "message": "关闭"
+  },
+  "whatsnew_title": {
+    "message": "GitSyncMarks $1 的新功能"
   }
 }
