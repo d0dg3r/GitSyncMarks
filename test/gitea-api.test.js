@@ -54,6 +54,37 @@ describe('GiteaAPI contents ref cascade', () => {
   });
 });
 
+describe('GiteaAPI validateToken', () => {
+  it('treats 403 on /user as ambiguous valid (repo-scoped Codeberg token)', async () => {
+    const originalFetch = globalThis.fetch;
+    globalThis.fetch = async (url) => {
+      if (String(url).endsWith('/user')) {
+        return {
+          ok: false,
+          status: 403,
+          json: async () => ({ message: 'token does not have required scope(s): [read:user]' }),
+        };
+      }
+      throw new Error(`unexpected fetch: ${url}`);
+    };
+    try {
+      const api = new GiteaAPI({
+        provider: 'codeberg',
+        token: 'scoped-repo-token',
+        owner: 'o',
+        repo: 'r',
+        branch: 'main',
+      });
+      const result = await api.validateToken();
+      assert.equal(result.valid, true);
+      assert.equal(result.ambiguous, true);
+      assert.equal(result.username, null);
+    } finally {
+      globalThis.fetch = originalFetch;
+    }
+  });
+});
+
 describe('Gitea-family provider ids', () => {
   for (const provider of ['forgejo', 'codeberg', 'gogs']) {
     it(`${provider} preserves providerId and resolves API base`, () => {

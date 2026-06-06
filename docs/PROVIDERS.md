@@ -44,6 +44,10 @@ Implementation: [lib/providers/gitea-api.js](../lib/providers/gitea-api.js) (sha
 
 For Gitea-family profiles, [`lib/remote-fetch.js`](../lib/remote-fetch.js) `buildRemoteMaps()` reads bookmarks via the Contents API first. Git tree endpoints are not used for pull/sync. Ref cascade: commit SHA, branch name, then `refs/heads/{branch}`.
 
+### Gitea-family token validation
+
+Connection test calls `GET /api/v1/user` when possible. Codeberg and Gitea ≥1.22 often issue **repository-scoped** tokens (`read:repository` / `write:repository`) that return **403** on `/user` without `read:user`. `GiteaAPI.validateToken()` treats that 403 as ambiguous-valid and continues with `checkRepo()` / path checks. `GiteaAPI._fetch()` does not throw on 401/403 (unlike `GitHubAPI._fetch`).
+
 ## GitLab write path
 
 GitLab uses a **single atomic commit** via `POST /projects/{id}/repository/commits` with an `actions[]` array (`create`, `update`, `delete`). No per-file Contents-API fallback.
