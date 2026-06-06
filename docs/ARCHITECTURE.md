@@ -88,7 +88,7 @@ Full-page settings (opens in tab) with five tabs. `options.js` is the entry poin
 
 1. **Git** (sub-tabs: Profile, Connection, Repos) — Profile selector (multiple profiles with separate repos); Git provider (GitHub or Gitea), token, repository, connection test, onboarding; optional Git repos folder (GitHubRepos / GiteaRepos)
 2. **Sync** — Sync profile, auto-sync, sync on start/focus, notifications; Debug Log
-3. **Files** (sub-tabs: Generated, Settings, Export/Import, Git Add) — Generated files (README.md, bookmarks.html, feed.xml, dashy-conf.yml) with Off/Manual/Auto mode; settings sync to Git (client name + Create in one row; Refresh, profile list, Import & Apply, Sync current to selected in one row; buttons disabled until client name set; password saved after Import/Sync/Create); compact export/import (bookmarks, Dashy, settings plain/encrypted via dropdown); automation guide for adding bookmarks via Git, CLI, or GitHub Actions
+3. **Files** (sub-tabs: Generated, Settings, Export/Import, Git Add, Bitwarden Backup, History) — Generated files (README.md, bookmarks.html, feed.xml, dashy-conf.yml) with Off/Manual/Auto mode; settings sync to Git (client name + Create in one row; Refresh, profile list, Import & Apply, Sync current to selected in one row; buttons disabled until client name set; password saved after Import/Sync/Create); compact export/import (bookmarks, Dashy, settings plain/encrypted via dropdown); automation guide for adding bookmarks via Git, CLI, or GitHub Actions; **Bitwarden backup** (manual encrypted export upload, optional Git wrap, remote list/download/delete, CLI snippet)
 4. **Help** — Quick links (Vote on backlog, Documentation, Discussions, Report Issue) as pill buttons; collapsible feature sections (Getting Started with Start setup wizard button, Profiles, GitHub Repos, Popup, Sync, Files, Notifications, Conflicts, Keyboard Shortcuts)
 5. **About** — Version, links, license, mobile app
 
@@ -100,6 +100,7 @@ Sub-modules (`options/`):
 - **`history.js`** — Sync history listing (four-column header + rows: date, SHA, client id, actions; checkmark + “current” for `lastCommitSha`), diff preview, bookmark restore, undo
 - **`context-menu-config.js`** — Context menu item ordering, toggling, category submenu configuration
 - **`settings.js`** — Settings sync to Git, file export/import, generated files toggles, automation clipboard
+- **`bitwarden-backup.js`** — Bitwarden/Vaultwarden export upload, list, download, delete (manual Phase 1; no Bitwarden API)
 - **`help-shortcuts.js`** — Help tab: keyboard shortcut labels and “Customize shortcuts” link
 - **`factory-reset.js`** — Files tab: full extension data reset (sync + local `storage` clear)
 
@@ -114,6 +115,7 @@ Barrel module re-exporting from focused sub-modules:
 - **`lib/sync-history.js`** — Commit history listing (`listSyncHistory`), bookmark restore (`restoreFromCommit`), undo support (`getPreviousCommitSha`), and diff preview (`getCommitDiffPreview`)
 - **`lib/sync-commit-message.js`** — Parses standard GitSyncMarks commit subjects to extract the device/client id (`extractClientIdFromCommitMessage`) for Sync History display
 - **`lib/sync-migration.js`** — Legacy single-file format migration (`migrateFromLegacyFormat`)
+- **`lib/bitwarden-backup.js`** — Validates Bitwarden encrypted exports, pushes/lists/downloads/deletes under `backups/bitwarden/` (excluded from bookmark merge via `BITWARDEN_BACKUP_DEFAULT_PATTERN`)
 
 State is stored as `LAST_SYNC_FILES` (path → {sha, content}) and `LAST_COMMIT_SHA`.
 

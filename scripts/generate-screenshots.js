@@ -32,10 +32,11 @@ const OPTIONS_TABS = [
   { id: 'github', subtab: 'github-sync', file: '2-sync' },
   { id: 'menu', subtab: 'menu-items', file: '3-menu' },
   { id: 'linkwarden', subtab: 'linkwarden-general', file: '4-linkwarden' },
+  { id: 'files', subtab: 'files-bitwarden', file: '12-bitwarden' },
   { id: 'files', subtab: 'files-history', file: '5-history', injectHistory: true },
 ];
 
-const FIREFOX_FILES = ['1-connection', '2-sync', '3-menu', '4-linkwarden', '5-history', '6-search', '7-popup', '8-linkwarden-save', '9-wizard-welcome', '10-wizard-token', '11-wizard-repo'];
+const FIREFOX_FILES = ['1-connection', '2-sync', '3-menu', '4-linkwarden', '5-history', '12-bitwarden', '6-search', '7-popup', '8-linkwarden-save', '9-wizard-welcome', '10-wizard-token', '11-wizard-repo'];
 
 const WIZARD_STEPS_FOR_SCREENSHOTS = [
   { step: 0, file: '9-wizard-welcome' },

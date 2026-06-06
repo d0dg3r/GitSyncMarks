@@ -1,6 +1,6 @@
 # Privacy Policy for GitSyncMarks
 
-**Last updated:** February 8, 2026
+**Last updated:** June 6, 2026
 
 ## Overview
 
@@ -26,6 +26,13 @@ GitSyncMarks is an open-source browser extension (Chrome and Firefox) that syncs
 - Extension settings (repository name, branch, sync interval, etc.) are stored locally in your browser using `chrome.storage.sync`.
 - Sync state (last sync timestamp, device ID, file SHAs) is stored locally using `chrome.storage.local`.
 - A random device ID (UUID) is generated once and stored locally to identify the syncing device.
+
+### Bitwarden / Vaultwarden backup (optional)
+
+- If you use **Files → Bitwarden Backup**, you upload an export file you created in Bitwarden or Vaultwarden yourself.
+- GitSyncMarks validates that the file looks like a **password-protected encrypted JSON** export and may optionally wrap it with an additional local password (`gitsyncmarks-enc:v1`) before pushing to **your** Git repository.
+- The extension **does not** connect to Bitwarden or Vaultwarden servers, **does not** store your Bitwarden master password, and **does not** decrypt vault contents. Only ciphertext is stored in Git.
+- An optional Git backup password is kept in `chrome.storage.local` on your device only (`bitwardenBackupPassword`).
 
 ## Data NOT Collected
 

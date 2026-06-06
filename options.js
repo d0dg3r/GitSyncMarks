@@ -34,6 +34,7 @@ import { initRemoteCleanup } from './options/remote-cleanup.js';
 import { initMirrors, loadMirrorsFromProfile, saveMirrorsForActiveProfile } from './options/mirrors.js';
 import { initLinkwarden, renderLwOptionsTagChips, renderLwOptionsTagCloud, setLwOptionsSelectedTags, setLwOptionsAllTags, getLwOptionsSelectedTags } from './options/linkwarden.js';
 import { initHistory } from './options/history.js';
+import { initBitwardenBackup } from './options/bitwarden-backup.js';
 import { initContextMenuConfig, renderContextMenuConfig, DEFAULT_CONTEXT_MENU_ITEMS } from './options/context-menu-config.js';
 import { initSettings, downloadFile, updateGenerateFilesBtn, updateSettingsSyncVisibility, updateSettingsSyncButtonsState, renderSettingsProfiles, refreshSettingsProfiles } from './options/settings.js';
 import { mountWhatsNewIfPending } from './lib/whats-new-ui.js';
@@ -312,6 +313,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initMirrors();
     initLinkwarden({ saveSettings, downloadFile });
     initHistory();
+    initBitwardenBackup({ loadSettings });
     initContextMenuConfig();
     initSettings({ saveSettings, loadSettings, showOnboardingConfirm, hideOnboardingConfirm });
 
@@ -518,6 +520,7 @@ async function loadSettings() {
     linkwardenSyncEnabled: false,
     linkwardenSyncParent: 'other',
     linkwardenSyncPushToGit: false,
+    bitwardenBackupPath: 'backups/bitwarden',
   };
   const globals = { ...syncDefaults, ...(await chrome.storage.sync.get(syncDefaults)) };
 
@@ -713,6 +716,8 @@ async function saveSettings() {
       [STORAGE_KEYS.LINKWARDEN_SYNC_ENABLED]: linkwardenSyncEnabledInput.checked,
       [STORAGE_KEYS.LINKWARDEN_SYNC_PARENT]: linkwardenSyncParentSelect.value,
       [STORAGE_KEYS.LINKWARDEN_SYNC_PUSH_TO_GIT]: linkwardenSyncPushToGitInput.checked,
+      [STORAGE_KEYS.BITWARDEN_BACKUP_PATH]:
+        document.getElementById('bitwarden-backup-path')?.value?.trim() || 'backups/bitwarden',
     });
 
     try {

@@ -83,6 +83,7 @@ All regions
 - [x] `en/chrome-2-sync.png` — Sync
 - [x] `en/chrome-3-menu.png` — Menu
 - [x] `en/chrome-4-linkwarden.png` — Linkwarden
+- [x] `en/chrome-12-bitwarden.png` — Bitwarden Backup (Files sub-tab)
 - [x] `en/chrome-5-history.png` — Sync History
 - [x] `en/chrome-6-search.png` — Search
 - [x] `en/chrome-7-popup.png` — Popup
