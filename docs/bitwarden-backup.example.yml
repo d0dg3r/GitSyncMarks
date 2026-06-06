@@ -1,0 +1,41 @@
+# Example workflow — NOT active by default.
+# Copy to your bookmarks repo (or adapt paths) to automate Bitwarden CLI export + git push.
+# Requires: BW_CLIENTID, BW_CLIENTSECRET, BW_PASSWORD, BW_MASTER_PASSWORD (repository secrets).
+
+name: Bitwarden backup (example)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * 0'
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Bitwarden CLI
+        run: npm install -g @bitwarden/cli
+
+      - name: Login and export (encrypted JSON)
+        env:
+          BW_CLIENTID: ${{ secrets.BW_CLIENTID }}
+          BW_CLIENTSECRET: ${{ secrets.BW_CLIENTSECRET }}
+          BW_PASSWORD: ${{ secrets.BW_MASTER_PASSWORD }}
+          EXPORT_PASSWORD: ${{ secrets.BW_EXPORT_PASSWORD }}
+        run: |
+          bw login --apikey
+          bw unlock --passwordenv BW_PASSWORD --raw
+          mkdir -p backups/bitwarden
+          bw export --format encrypted_json --password "$EXPORT_PASSWORD" \
+            --output "backups/bitwarden/vault-$(date -u +%Y-%m-%dT%H-%M-%SZ).enc.json"
+          bw lock
+
+      - name: Commit backup
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add backups/bitwarden/
+          git diff --staged --quiet || git commit -m "Bitwarden backup $(date -u +%Y-%m-%d)"
+          git push

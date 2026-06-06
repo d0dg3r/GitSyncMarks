@@ -16,6 +16,7 @@ Highlights
 - Profile Transfer & Mirrors: Copy bookmarks between profiles (replace or merge); optional push-only backup remotes after each sync.
 - Live Sync Progress: See step text during sync (e.g. files or bookmarks uploaded while pushing or pulling) and during profile switch (`1 of 3` steps).
 - Codeberg / Gitea Performance: Fast git tree + blob reads and single-commit pushes on Gitea-family hosts (Contents API fallback when needed).
+- Bitwarden Backup (beta): Store password-protected Bitwarden/Vaultwarden exports in your Git repo with optional extra encryption; list, download, or delete remote backups.
 - Sync History & Restore: Browse past commits, preview changes with a diff view, and restore any previous bookmark state in one click.
 - Duplicate Fix: Same-name folders no longer multiply across syncs — duplicates are automatically merged.
 - Linkwarden Synergy: Save pages or links directly to your Linkwarden instance. Includes automatic viewport screenshots, collection synchronization, and predefined tags.

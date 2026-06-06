@@ -211,9 +211,16 @@ Optional. When "Sync settings to Git" is enabled, the extension writes an encryp
 
 Excluded from three-way merge (`DIFF_IGNORE_SUFFIXES` + `SETTINGS_ENC_PATTERN`).
 
+### `backups/bitwarden/` — Bitwarden / Vaultwarden exports (optional)
+
+Repo-root path (default `backups/bitwarden`, configurable as `bitwardenBackupPath`). User-uploaded **password-protected encrypted JSON** exports from Bitwarden or Vaultwarden. Optional second layer: GitSyncMarks `gitsyncmarks-enc:v1` (`.gitsyncmarks.enc` suffix). Listed, downloaded, or deleted from Files → Bitwarden Backup (Git commit on delete). Not used for bookmark sync; excluded from three-way merge (`BITWARDEN_BACKUP_DEFAULT_PATTERN` in `lib/sync-diff.js`). See [IDEAS-BITWARDEN-BACKUP.md](IDEAS-BITWARDEN-BACKUP.md).
+
 ### Complete Repository Structure
 
 ```
+backups/                    (optional — Bitwarden backup)
+  bitwarden/
+    vault-2026-06-06T14-30-00-000Z.enc.json
 bookmarks/
   _index.json
   README.md

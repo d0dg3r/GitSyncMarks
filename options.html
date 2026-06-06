@@ -665,6 +665,8 @@
         <button class="sub-tab-btn" data-subtab="files-export-import" data-i18n="options_subTabExportImport">Export /
           Import</button>
         <button class="sub-tab-btn" data-subtab="files-git-add" data-i18n="options_subTabGitAdd">Git Add</button>
+        <button class="sub-tab-btn" data-subtab="files-bitwarden" data-i18n="options_subTabBitwardenBackup">Bitwarden
+          Backup</button>
         <button class="sub-tab-btn" data-subtab="files-history" data-i18n="options_subTabHistory">History</button>
       </div>
 
@@ -914,6 +916,77 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+        </section>
+      </div>
+
+      <div class="sub-tab-content" id="subtab-files-bitwarden">
+        <section class="card backup-card">
+          <h2 data-i18n="options_bitwardenBackupTitle">Bitwarden backup</h2>
+          <p class="card-desc" data-i18n="options_bitwardenBackupDesc">Store a password-protected Bitwarden or
+            Vaultwarden export in your Git repo as a versioned backup.</p>
+          <p class="backup-warning" data-i18n="options_bitwardenBackupWarning">Export as <strong>password-protected
+              encrypted JSON</strong> in Bitwarden (not plaintext JSON/CSV or account-restricted). GitSyncMarks never
+            decrypts your vault.</p>
+
+          <div class="form-group">
+            <label for="bitwarden-backup-path" data-i18n="options_bitwardenBackupPathLabel">Backup folder in
+              repo</label>
+            <input type="text" id="bitwarden-backup-path" value="backups/bitwarden" autocomplete="off">
+            <small data-i18n="options_bitwardenBackupPathHint">Repo-root path (default: backups/bitwarden).</small>
+          </div>
+
+          <div class="form-group toggle-group">
+            <label for="bitwarden-backup-reencrypt" class="toggle-label">
+              <span data-i18n="options_bitwardenBackupReEncrypt">Additional Git encryption</span>
+              <input type="checkbox" id="bitwarden-backup-reencrypt">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div id="bitwarden-backup-reencrypt-group" class="backup-block" style="display: none;">
+            <div class="form-group">
+              <label for="bitwarden-backup-password" data-i18n="options_bitwardenBackupPasswordLabel">Git backup
+                password</label>
+              <input type="password" id="bitwarden-backup-password" autocomplete="off">
+              <small data-i18n="options_bitwardenBackupPasswordHint">Stored locally on this device only. Used to wrap the
+                export before push and unwrap on download.</small>
+            </div>
+            <button type="button" id="bitwarden-backup-save-pw-btn" class="btn btn-secondary"
+              data-i18n="options_bitwardenBackupSavePasswordBtn">Save password</button>
+          </div>
+
+          <div class="backup-block">
+            <h3 class="automation-block-title" data-i18n="options_bitwardenBackupUploadTitle">Upload export</h3>
+            <div class="backup-file-picker">
+              <input type="file" id="bitwarden-backup-file" class="backup-file-input" accept=".json,.enc,application/json">
+              <button type="button" id="bitwarden-backup-file-trigger" class="btn btn-secondary backup-file-trigger"
+                data-i18n="options_bitwardenBackupChooseFile">Choose file</button>
+              <span id="bitwarden-backup-filename" class="backup-file-name"></span>
+            </div>
+            <div class="backup-actions">
+              <button type="button" id="bitwarden-backup-push-btn" class="btn btn-primary" disabled
+                data-i18n="options_bitwardenBackupPushBtn">Upload &amp; push</button>
+              <button type="button" id="bitwarden-backup-refresh-btn" class="btn btn-secondary"
+                data-i18n="options_bitwardenBackupRefreshBtn">Refresh list</button>
+            </div>
+            <span id="bitwarden-backup-result" class="validation-result ie-result"></span>
+          </div>
+
+          <div id="bitwarden-backup-list" style="display: none;"></div>
+
+          <div class="automation-block" style="margin-top: 1.5rem;">
+            <h3 class="automation-block-title" data-i18n="options_bitwardenBackupCliTitle">CLI / Git workflow</h3>
+            <p class="automation-block-desc" data-i18n="options_bitwardenBackupCliDesc">Export with the Bitwarden CLI
+              (Vaultwarden-compatible), then commit to the same folder or upload here.</p>
+            <div class="automation-copy-wrap">
+              <pre id="bitwarden-backup-cli-block" class="code-block code-block-sm">bw login
+bw export --format encrypted_json --password 'YOUR_EXPORT_PASSWORD' --output vault.enc.json
+git add backups/bitwarden/vault.enc.json
+git commit -m "Bitwarden backup"</pre>
+              <button type="button" class="btn btn-secondary btn-sm automation-copy-btn" id="bitwarden-backup-copy-cli-btn"
+                data-i18n="options_automationCopy">Copy</button>
+            </div>
           </div>
         </section>
       </div>
@@ -1225,6 +1298,14 @@
               JSON / encrypted .enc). Import bookmarks or settings — encrypted files are decrypted with your password.
               Bookmark import replaces all local bookmarks; settings import replaces all profiles and reloads the page.
             </dd>
+            <dt data-i18n="help_bitwardenBackupTitle">Bitwarden backup to Git</dt>
+            <dd data-i18n="help_bitwardenBackupDesc">Export your vault from Bitwarden or Vaultwarden as password-protected
+              encrypted JSON, then upload it in Files → Bitwarden Backup or commit under backups/bitwarden/. List remote
+              backups and download or delete them from the table. Optional additional Git encryption uses a local password.
+              GitSyncMarks does not connect to Bitwarden or decrypt vault contents.</dd>
+            <dt data-i18n="help_bitwardenBackupCliTitle">CLI example</dt>
+            <dd data-i18n="help_bitwardenBackupCliDesc">Use the Bitwarden CLI: bw export --format encrypted_json
+              --password '…' — then git add backups/bitwarden/ and commit.</dd>
           </dl>
         </div>
       </details>

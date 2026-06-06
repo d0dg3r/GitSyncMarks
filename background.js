@@ -35,6 +35,10 @@ import {
   setSyncActivityListener,
   previewRemoteOrphans,
   cleanRemoteOrphans,
+  pushBitwardenBackup,
+  listBitwardenBackups,
+  downloadBitwardenBackup,
+  deleteBitwardenBackup,
   STORAGE_KEYS,
 } from './lib/sync-engine.js';
 import { startKeepAlive, stopKeepAlive } from './lib/keep-alive.js';
@@ -582,6 +586,42 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         sendResponse(result);
       })
       .catch(err => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'setBitwardenBackupPassword') {
+    chrome.storage.local
+      .set({ bitwardenBackupPassword: message.password || '' })
+      .then(() => sendResponse({ ok: true }))
+      .catch((err) => sendResponse({ ok: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'pushBitwardenBackup') {
+    pushBitwardenBackup({
+      content: message.content || '',
+      reEncrypt: !!message.reEncrypt,
+      password: message.password || '',
+      backupPath: message.backupPath,
+    })
+      .then((result) => sendResponse(result))
+      .catch((err) => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'listBitwardenBackups') {
+    listBitwardenBackups(message.backupPath)
+      .then((result) => sendResponse(result))
+      .catch((err) => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'downloadBitwardenBackup') {
+    downloadBitwardenBackup(message.path, message.password || '')
+      .then((result) => sendResponse(result))
+      .catch((err) => sendResponse({ success: false, message: err.message }));
+    return true;
+  }
+  if (message.action === 'deleteBitwardenBackup') {
+    deleteBitwardenBackup(message.path)
+      .then((result) => sendResponse(result))
+      .catch((err) => sendResponse({ success: false, message: err.message }));
     return true;
   }
   if (message.action === 'settingsChanged') {

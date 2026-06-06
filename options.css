@@ -1644,6 +1644,48 @@ a.help-link-btn:focus-visible {
   font-size: var(--ui-font-xs);
 }
 
+.bitwarden-backup-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 6px 0 10px;
+}
+
+.bitwarden-backup-table th,
+.bitwarden-backup-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--color-border-secondary);
+  font-size: var(--ui-font-sm);
+  vertical-align: middle;
+}
+
+.bitwarden-backup-table th:last-child,
+.bitwarden-backup-table td:last-child {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.bitwarden-backup-table td:first-child {
+  white-space: normal;
+  word-break: break-all;
+}
+
+.bitwarden-backup-table td:first-child code {
+  font-size: var(--ui-font-xs);
+}
+
+.bitwarden-backup-actions {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.bitwarden-backup-actions .btn {
+  flex-shrink: 0;
+}
+
 .help-note {
   font-size: var(--ui-font-xxs);
   color: var(--color-text-secondary);

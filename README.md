@@ -52,10 +52,11 @@ Items marked **(v3.0 beta)** require the pre-release ZIP from [GitHub Releases](
 - **Live Sync Progress (v3.0 beta)**: Popup, wizard, and options show step text during sync (e.g. `3 / 12 files` while pushing).
 - **Profile Transfer (v3.0 beta)**: Copy bookmarks between profiles (replace or merge) — ideal for migrating GitHub → Gitea or similar.
 - **Push Mirrors (v3.0 beta)**: Optional backup remotes receive a push-only copy after each successful primary commit.
+- **Bitwarden Backup (v3.0 beta)**: Upload a password-protected Bitwarden/Vaultwarden export to your Git repo (`backups/bitwarden/`) — versioned vault backup, optional extra Git encryption, list/download/delete remote backups.
 - **Clean Remote Orphans (v3.0 beta)**: Preview and delete remote bookmark files that no longer exist locally.
 - **Guided Onboarding (stable)**: Step-by-step wizard from token to first sync. **(v3.0 beta):** **Check connection** only validates access; you then choose pull, merge/sync, push, folder setup, or skip — with confirm dialogs before anything is written to the repo ([#146](https://github.com/d0dg3r/GitSyncMarks/issues/146)).
 
-### 🛡️ Privacy & Security
+### Privacy & Security
 - **Private-by-Design (stable)**: Direct communication with the Git provider API (GitHub in store builds). No third-party servers, no analytics, no tracking.
 - **You Own the Data (stable)**: Your bookmarks are stored in *your* repository, under *your* control.
 - **Human-Readable Storage (stable)**: Every bookmark is a separate, editable JSON file—perfect for versioning and manual audits.
@@ -66,7 +67,7 @@ Save any page or link directly to your **[Linkwarden](https://linkwarden.app/)**
 - **Collection Sync**: Seamlessly pull Linkwarden collections into your browser and push them to Git.
 - **Tag Management**: Organize with pre-configured tags and collection targets.
 
-### 🔍 Smart Search Popup (stable)
+### Smart Search Popup (stable)
 A dedicated, lightning-fast search interface accessible from anywhere via the extension icon or keyboard.
 - **Instant Results**: Supercharged search with immediate feedback.
 - **Theme Support**: Beautifully crafted light and dark modes.

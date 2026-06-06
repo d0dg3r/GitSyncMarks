@@ -7,9 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0-beta.6] - 2026-06-06
+
+Pre-release: Bitwarden / Vaultwarden backup to Git.
+
+### Fixed
+- **Bitwarden backup download with Git encryption**: Decrypting `.gitsyncmarks.enc` files no longer fails with a false “Wrong password” error (caused by reassigning a `const` blob). Download also uses the password field when typed, retries with a fresh prompt on mismatch, and auto-saves the password after a successful encrypted upload.
+
+### Changed
+- **Bitwarden backup list**: Each remote backup row has **Delete** next to **Download** (commits removal from the repository after confirmation). Action buttons use a dedicated table layout so Download/Delete are not squashed beside long paths.
+
+### Added
+- **Bitwarden / Vaultwarden backup to Git**: Files → Bitwarden Backup — upload a password-protected encrypted JSON export, optional additional `gitsyncmarks-enc:v1` wrap, push to `backups/bitwarden/` (configurable), list, download, and delete remote backups. CLI/Git workflow guide and example workflow [`docs/bitwarden-backup.example.yml`](docs/bitwarden-backup.example.yml). Plaintext JSON/CSV rejected; no Bitwarden API or vault decryption. See [`docs/IDEAS-BITWARDEN-BACKUP.md`](docs/IDEAS-BITWARDEN-BACKUP.md).
+
 ## [3.0.0] - 2026-06-06 (*GLaDOS*)
 
-Multi-provider Git sync (GitHub, GitLab, Codeberg, Gitea family), profile transfer, push mirrors, and live sync progress. Pre-releases: `v3.0.0-beta.1` (initial), `v3.0.0-beta.2` (wizard fix [#146](https://github.com/d0dg3r/GitSyncMarks/issues/146), full 12-language i18n), `v3.0.0-beta.3` (Codeberg repo-scoped token connection test), `v3.0.0-beta.4` (settings export/import token API), `v3.0.0-beta.5` (Codeberg CORS, Gitea sync performance, profile-switch progress).
+Multi-provider Git sync (GitHub, GitLab, Codeberg, Gitea family), profile transfer, push mirrors, and live sync progress. Pre-releases: `v3.0.0-beta.1` (initial), `v3.0.0-beta.2` (wizard fix [#146](https://github.com/d0dg3r/GitSyncMarks/issues/146), full 12-language i18n), `v3.0.0-beta.3` (Codeberg repo-scoped token connection test), `v3.0.0-beta.4` (settings export/import token API), `v3.0.0-beta.5` (Codeberg CORS, Gitea sync performance, profile-switch progress), `v3.0.0-beta.6` (Bitwarden backup to Git).
 
 ### Fixed (since `v3.0.0-beta.4` — shipped in `v3.0.0-beta.5`)
 - **Codeberg sync/push failed with CORS / “Network error”**: `https://codeberg.org/*` was missing from manifest `host_permissions`. Codeberg is a fixed public host (like GitLab.com) and does not request optional runtime permission, so API calls were blocked by the browser.

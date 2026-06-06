@@ -1,7 +1,7 @@
 import { describe, it, before } from 'node:test';
 import assert from 'node:assert/strict';
 
-let computeDiff, mergeDiffs, contentEquals;
+let computeDiff, mergeDiffs, contentEquals, filterForDiff;
 
 before(async () => {
   globalThis.chrome = {
@@ -17,6 +17,7 @@ before(async () => {
   computeDiff = mod.computeDiff;
   mergeDiffs = mod.mergeDiffs;
   contentEquals = mod.contentEquals;
+  filterForDiff = mod.filterForDiff;
 });
 
 // ---- computeDiff ----
@@ -217,5 +218,16 @@ describe('mergeDiffs', () => {
     const result = mergeDiffs(localDiff, remoteDiff, localFiles, remoteFiles);
     assert.equal(result.conflicts.length, 1);
     assert.equal(result.conflicts[0].path, 'file.json');
+  });
+});
+
+describe('filterForDiff', () => {
+  it('excludes Bitwarden backup paths under backups/bitwarden/', () => {
+    const files = {
+      'bookmarks/toolbar/foo.json': '{}',
+      'backups/bitwarden/vault.enc.json': 'encrypted',
+    };
+    const filtered = filterForDiff(files);
+    assert.deepEqual(filtered, { 'bookmarks/toolbar/foo.json': '{}' });
   });
 });
