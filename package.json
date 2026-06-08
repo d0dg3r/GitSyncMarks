@@ -2,7 +2,7 @@
   "name": "gitsyncmarks",
   "version": "3.0.0",
   "private": true,
-  "description": "Bookmark sync via GitHub. Linkwarden synergy, Smart Search, and Companion App. Direct, secure, private.",
+  "description": "Bookmark sync via GitHub, GitLab, Codeberg, Gitea & more. Linkwarden, Smart Search, Companion App. Direct, secure, private.",
   "engines": {
     "node": ">=20"
   },

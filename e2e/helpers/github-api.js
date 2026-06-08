@@ -160,9 +160,21 @@ async function ensureMinimalStructure(basePath = 'bookmarks', target = {}) {
   let indexSha = null;
   let toolbarSha = null;
   let otherSha = null;
-  try { indexSha = (await githubFetch(`/contents/${indexPath}`, {}, target)).sha || null; } catch {}
-  try { toolbarSha = (await githubFetch(`/contents/${toolbarOrderPath}`, {}, target)).sha || null; } catch {}
-  try { otherSha = (await githubFetch(`/contents/${otherOrderPath}`, {}, target)).sha || null; } catch {}
+  try {
+    indexSha = (await githubFetch(`/contents/${indexPath}`, {}, target)).sha || null;
+  } catch {
+    // File may not exist yet on a fresh repo.
+  }
+  try {
+    toolbarSha = (await githubFetch(`/contents/${toolbarOrderPath}`, {}, target)).sha || null;
+  } catch {
+    // File may not exist yet on a fresh repo.
+  }
+  try {
+    otherSha = (await githubFetch(`/contents/${otherOrderPath}`, {}, target)).sha || null;
+  } catch {
+    // File may not exist yet on a fresh repo.
+  }
 
   await createOrUpdateFile(indexPath, JSON.stringify({ version: 2 }, null, 2), `E2E: ensure index at ${basePath}`, indexSha, target);
   await createOrUpdateFile(toolbarOrderPath, JSON.stringify([], null, 2), `E2E: ensure toolbar order at ${basePath}`, toolbarSha, target);

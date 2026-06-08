@@ -177,7 +177,7 @@ async function shouldAutoOpenOnboardingWizard() {
     [ONBOARDING_WIZARD_COMPLETED]: false,
     [ONBOARDING_WIZARD_DISMISSED]: false,
   });
-  return state[ONBOARDING_WIZARD_COMPLETED] !== true && state[ONBOARDING_WIZARD_DISMISSED] !== true;
+  return state.onboardingWizardCompleted !== true && state.onboardingWizardDismissed !== true;
 }
 
 async function showNotificationIfEnabled(result) {
@@ -230,7 +230,7 @@ chrome.bookmarks.onCreated.addListener((id, bookmark) => {
   triggerAutoSync();
 });
 
-chrome.bookmarks.onRemoved.addListener((id, removeInfo) => {
+chrome.bookmarks.onRemoved.addListener((id, _removeInfo) => {
   console.log('[GitSyncMarks] Bookmark removed:', id);
   refreshContextMenuDynamicItemsDebounced();
   markLocalBookmarksModified().catch(() => {});
@@ -244,7 +244,7 @@ chrome.bookmarks.onChanged.addListener((id, changeInfo) => {
   triggerAutoSync();
 });
 
-chrome.bookmarks.onMoved.addListener((id, moveInfo) => {
+chrome.bookmarks.onMoved.addListener((id, _moveInfo) => {
   console.log('[GitSyncMarks] Bookmark moved:', id);
   refreshContextMenuDynamicItemsDebounced();
   markLocalBookmarksModified().catch(() => {});
