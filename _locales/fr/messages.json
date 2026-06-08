@@ -191,7 +191,7 @@
     "message": "Synchro de favoris via GitHub, GitLab, Codeberg, Gitea et plus. Linkwarden, recherche intelligente, application mobile. Direct, sécurisé, privé."
   },
   "extDescriptionFirefox": {
-    "message": "Synchro de favoris via GitHub, GitLab, Codeberg, Gitea et plus. Linkwarden, recherche intelligente, assistant de config. Bidirectionnel, sécurisé et privé. Support Firefox complet. Sans intermédiaire."
+    "message": "Synchro de favoris via GitHub, GitLab, Codeberg, Gitea et plus. Linkwarden, Smart Search, sauvegarde Bitwarden, assistant guidé. Bidirectionnel, sécurisé, privé. Support Firefox complet. Sans intermédiaire."
   },
   "extName": {
     "message": "GitSyncMarks"

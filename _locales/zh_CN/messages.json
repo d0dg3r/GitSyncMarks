@@ -191,7 +191,7 @@
     "message": "通过 GitHub、GitLab、Codeberg、Gitea 等同步书签。Linkwarden、智能搜索、配套应用。直接、安全、私密。"
   },
   "extDescriptionFirefox": {
-    "message": "通过 GitHub、GitLab、Codeberg、Gitea 等同步书签。Linkwarden、智能搜索、设置向导。双向、安全、私密。完整 Firefox 支持。无中间商。"
+    "message": "通过 GitHub、GitLab、Codeberg、Gitea 等同步书签。Linkwarden、Smart Search、Bitwarden 备份、引导式向导。双向、安全、私密。完整 Firefox 支持。无中间商。"
   },
   "extName": {
     "message": "GitSyncMarks"

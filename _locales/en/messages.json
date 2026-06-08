@@ -6,7 +6,7 @@
     "message": "Bookmark sync via GitHub, GitLab, Codeberg, Gitea & more. Linkwarden, Smart Search, Companion App. Direct, secure, private."
   },
   "extDescriptionFirefox": {
-    "message": "Bookmark sync via GitHub, GitLab, Codeberg, Gitea & more. Linkwarden, Smart Search, guided wizard. Bidirectional, secure, private. Full Firefox support. No middleman."
+    "message": "Bookmark sync via GitHub, GitLab, Codeberg, Gitea & more. Linkwarden, Smart Search, Bitwarden backup, guided wizard. Bidirectional, secure, private. Full Firefox support. No middleman."
   },
   "commands_quickSync": {
     "message": "Quick sync bookmarks"

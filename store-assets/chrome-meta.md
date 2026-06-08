@@ -97,6 +97,7 @@ All regions
 - [x] `de/chrome-2-sync.png` — Sync
 - [x] `de/chrome-3-menu.png` — Menu
 - [x] `de/chrome-4-linkwarden.png` — Linkwarden
+- [x] `de/chrome-12-bitwarden.png` — Bitwarden Backup (Files sub-tab)
 - [x] `de/chrome-5-history.png` — Sync History
 - [x] `de/chrome-6-search.png` — Search
 - [x] `de/chrome-7-popup.png` — Popup
@@ -110,6 +111,7 @@ All regions
 - [x] `fr/chrome-2-sync.png` — Sync
 - [x] `fr/chrome-3-menu.png` — Menu
 - [x] `fr/chrome-4-linkwarden.png` — Linkwarden
+- [x] `fr/chrome-12-bitwarden.png` — Bitwarden Backup (Files sub-tab)
 - [x] `fr/chrome-5-history.png` — Sync History
 - [x] `fr/chrome-6-search.png` — Search
 - [x] `fr/chrome-7-popup.png` — Popup
@@ -123,6 +125,7 @@ All regions
 - [x] `es/chrome-2-sync.png` — Sync
 - [x] `es/chrome-3-menu.png` — Menu
 - [x] `es/chrome-4-linkwarden.png` — Linkwarden
+- [x] `es/chrome-12-bitwarden.png` — Bitwarden Backup (Files sub-tab)
 - [x] `es/chrome-5-history.png` — Sync History
 - [x] `es/chrome-6-search.png` — Search
 - [x] `es/chrome-7-popup.png` — Popup
@@ -136,6 +139,7 @@ All regions
 - [x] `pt_BR/chrome-2-sync.png` — Sync
 - [x] `pt_BR/chrome-3-menu.png` — Menu
 - [x] `pt_BR/chrome-4-linkwarden.png` — Linkwarden
+- [x] `pt_BR/chrome-12-bitwarden.png` — Bitwarden Backup (Files sub-tab)
 - [x] `pt_BR/chrome-5-history.png` — Sync History
 - [x] `pt_BR/chrome-6-search.png` — Search
 - [x] `pt_BR/chrome-7-popup.png` — Popup
@@ -149,6 +153,7 @@ All regions
 - [x] `it/chrome-2-sync.png` — Sync
 - [x] `it/chrome-3-menu.png` — Menu
 - [x] `it/chrome-4-linkwarden.png` — Linkwarden
+- [x] `it/chrome-12-bitwarden.png` — Bitwarden Backup (Files sub-tab)
 - [x] `it/chrome-5-history.png` — Sync History
 - [x] `it/chrome-6-search.png` — Search
 - [x] `it/chrome-7-popup.png` — Popup
@@ -162,6 +167,7 @@ All regions
 - [x] `ja/chrome-2-sync.png` — Sync
 - [x] `ja/chrome-3-menu.png` — Menu
 - [x] `ja/chrome-4-linkwarden.png` — Linkwarden
+- [x] `ja/chrome-12-bitwarden.png` — Bitwarden Backup (Files sub-tab)
 - [x] `ja/chrome-5-history.png` — Sync History
 - [x] `ja/chrome-6-search.png` — Search
 - [x] `ja/chrome-7-popup.png` — Popup
@@ -175,6 +181,7 @@ All regions
 - [x] `zh_CN/chrome-2-sync.png` — Sync
 - [x] `zh_CN/chrome-3-menu.png` — Menu
 - [x] `zh_CN/chrome-4-linkwarden.png` — Linkwarden
+- [x] `zh_CN/chrome-12-bitwarden.png` — Bitwarden Backup (Files sub-tab)
 - [x] `zh_CN/chrome-5-history.png` — Sync History
 - [x] `zh_CN/chrome-6-search.png` — Search
 - [x] `zh_CN/chrome-7-popup.png` — Popup
@@ -188,6 +195,7 @@ All regions
 - [x] `ko/chrome-2-sync.png` — Sync
 - [x] `ko/chrome-3-menu.png` — Menu
 - [x] `ko/chrome-4-linkwarden.png` — Linkwarden
+- [x] `ko/chrome-12-bitwarden.png` — Bitwarden Backup (Files sub-tab)
 - [x] `ko/chrome-5-history.png` — Sync History
 - [x] `ko/chrome-6-search.png` — Search
 - [x] `ko/chrome-7-popup.png` — Popup
@@ -201,6 +209,7 @@ All regions
 - [x] `ru/chrome-2-sync.png` — Sync
 - [x] `ru/chrome-3-menu.png` — Menu
 - [x] `ru/chrome-4-linkwarden.png` — Linkwarden
+- [x] `ru/chrome-12-bitwarden.png` — Bitwarden Backup (Files sub-tab)
 - [x] `ru/chrome-5-history.png` — Sync History
 - [x] `ru/chrome-6-search.png` — Search
 - [x] `ru/chrome-7-popup.png` — Popup
@@ -214,6 +223,7 @@ All regions
 - [x] `tr/chrome-2-sync.png` — Sync
 - [x] `tr/chrome-3-menu.png` — Menu
 - [x] `tr/chrome-4-linkwarden.png` — Linkwarden
+- [x] `tr/chrome-12-bitwarden.png` — Bitwarden Backup (Files sub-tab)
 - [x] `tr/chrome-5-history.png` — Sync History
 - [x] `tr/chrome-6-search.png` — Search
 - [x] `tr/chrome-7-popup.png` — Popup
@@ -227,6 +237,7 @@ All regions
 - [x] `pl/chrome-2-sync.png` — Sync
 - [x] `pl/chrome-3-menu.png` — Menu
 - [x] `pl/chrome-4-linkwarden.png` — Linkwarden
+- [x] `pl/chrome-12-bitwarden.png` — Bitwarden Backup (Files sub-tab)
 - [x] `pl/chrome-5-history.png` — Sync History
 - [x] `pl/chrome-6-search.png` — Search
 - [x] `pl/chrome-7-popup.png` — Popup

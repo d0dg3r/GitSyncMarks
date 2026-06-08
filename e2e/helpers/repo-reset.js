@@ -52,7 +52,8 @@ function gitExec(cwd, args, label = 'git') {
     const stderr = String(err?.stderr || '').trim();
     const detail = [stdout, stderr].filter(Boolean).join('\n');
     throw new Error(
-      `repo-reset git failed (${label}): ${args.join(' ')}${detail ? `\n${detail}` : ''}`
+      `repo-reset git failed (${label}): ${args.join(' ')}${detail ? `\n${detail}` : ''}`,
+      { cause: err }
     );
   }
 }

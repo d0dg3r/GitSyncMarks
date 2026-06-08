@@ -5,32 +5,41 @@
 GitSyncMarks
 
 ### Summary (max 132 characters)
-Synchronizacja zakładek przez GitHub. Synergia z Linkwarden, inteligentne wyszukiwanie i app. Bezpośrednio i bezpiecznie.
+Sync zakładek via GitHub, GitLab, Codeberg, Gitea i więcej. Linkwarden, Smart Search, Companion App.
 
 ### Detailed Description
-GitSyncMarks to profesjonalne rozwiązanie do dwukierunkowej i automatycznej synchronizacji zakładek z repozytorium GitHub. Pełna kontrola nad danymi i całkowita prywatność – bez pośredników i bez serwerów stron trzecich.
+GitSyncMarks synchronizuje zakładki dwukierunkowo z GitHub, GitLab, Codeberg, Gitea, Forgejo lub Gogs. Zarządzaj danymi na desktopie przez Chrome i Firefox lub w podróży z GitSyncMarks Companion App. Bez pośredników, bez serwerów stron trzecich – pełna kontrola i prywatność.
 
-Najważniejsze Funkcje
+Najważniejsze
 
-- Historia synchronizacji i przywracanie: Przeglądaj poprzednie commity, sprawdź zmiany w podglądzie diff i przywróć dowolny wcześniejszy stan zakładek jednym kliknięciem.
-- Naprawa duplikatów: Foldery o tej samej nazwie nie mnożą się już podczas synchronizacji — duplikaty są automatycznie scalane.
-- Synergia z Linkwarden: Zapisuj strony bezpośrednio do swojej instancji Linkwarden. Obejmuje m.in. automatyczne zrzuty ekranu, synchronizację kolekcji i tagów.
-- Inteligentne Wyszukiwanie: Dedykowany, błyskawiczny interfejs wyszukiwania zakładek (jasny/ciemny motyw), w pełni obsługiwany z klawiatury.
-- Kreator Konfiguracji: Proces, który prowadzi nowych użytkowników przez wybór tokena i repozytorium aż do rzetelnej synchronizacji.
+- Sync Git multi-provider: GitHub, GitLab, Codeberg, Gitea, Forgejo lub Gogs — każdy profil może używać własnego providera i URL serwera.
+- Transfer profili i mirrory push: Kopiowanie zakładek między profilami (zamiana lub scalenie); opcjonalne push-only backup remotes po każdym sync.
+- Postęp sync na żywo: Tekst kroku podczas push, pull i zmiany profilu (np. `3 / 12 plików` lub `1 z 3` kroków).
+- Backup Bitwarden / Vaultwarden do Git: Przechowywanie eksportów vault chronionych hasłem w repo, opcjonalne dodatkowe szyfrowanie; listowanie, pobieranie lub usuwanie zdalnych backupów.
+- UI nested-card: Jaśniejsze grupowane sekcje w Opcjach, kreatorze, popup i wyszukiwaniu.
+- Historia sync i przywracanie: Przeglądanie przeszłych commitów, podgląd zmian przez diff i przywracanie poprzedniego stanu jednym kliknięciem.
+- Czyszczenie osieroconych zdalnych: Podgląd i usuwanie zdalnych plików zakładek, których nie ma już lokalnie.
+- Synergia Linkwarden: Zapisywanie stron lub linków bezpośrednio do instancji Linkwarden — zrzuty viewport, sync kolekcji i predefiniowane tagi.
+- Smart Search: Dedykowane, błyskawiczne wyszukiwanie zakładek z motywami jasnym/ciemnym i pełną nawigacją klawiaturową.
+- Kreator konfiguracji: Test połączenia tylko weryfikuje dostęp; wybierasz pull, merge/sync, push, konfigurację folderów lub pomiń — z potwierdzeniem przed zapisem do repozytorium.
+- Wydajność Codeberg / Gitea: Szybkie odczyty git tree + blob i single-commit push na hostach Gitea (fallback Contents API w razie potrzeby).
+- Menu kontekstowe: Szybkie foldery, popup wyszukiwania, Otwórz wszystko z folderu, kopiowanie/pobieranie favicon i akcje profilu z prawego kliknięcia.
+- Sync ustawień do Git: Zaszyfrowany backup ustawień (`settings.enc`) w repozytorium — udostępnianie konfiguracji między urządzeniami.
 
-Kluczowe Możliwości
+Kluczowe możliwości
 
-- Prywatność z Założenia: Bezpośrednia komunikacja z API GitHub. Nikt inny nie widzi Twoich danych.
-- Zapis do Pojedynczych Plików: Każda zakładka to jeden plik JSON, idealny do historii zmian na GitHubie.
-- Wiele Profili: Nawet do 10 odrębnych profili posiadających oddzielne wyznaczone repozytoria.
-- Automatyzacja: Dodawaj zakładki z CLI lub GitHub Actions; rozszerzenie scali je przy następnej synchronizacji.
-- Generowane Pliki: Automatycznie tworzy README.md, bookmarks.html lub feed RSS w Twoim repozytorium.
-- Design & i18n: Jasny, ciemny i systemowy motyw; regulowana gęstość UI (kompaktowy / średni / duży) w ustawieniach, popup, wyszukiwaniu i zapisywaniu Linkwarden; 12 języków.
+- Prywatność by design: Bezpośrednia komunikacja z API providera Git. Żadne strony trzecie nie widzą Twoich danych.
+- Merge three-way: Sync klasy przemysłowej automatycznie obsługuje równoczesne zmiany na wielu urządzeniach.
+- Przechowywanie plikowe: Każda zakładka to czytelny plik JSON – idealny do wersjonowania i ręcznej edycji.
+- Wiele profili: Do 10 oddzielnych profili dla pracy, osobistego użytku lub projektów, każdy z własnym repozytorium.
+- Automatyzacja: Dodawanie zakładek przez CLI lub GitHub Actions; rozszerzenie integruje je przy następnym sync.
+- Generowane pliki: README.md (przegląd), bookmarks.html (import przeglądarki), kanał RSS i dashy-conf.yml — opcjonalnie per plik.
+- Design i i18n: Motywy jasny, ciemny i auto-system; regulowana gęstość UI (kompaktowy / średni / duży); 12 języków.
 
-Aplikacja Pokrewna (Companion)
-Za pomocą GitSyncMarks-App dla Android, iOS i komputerów, w prosty sposób obsłużysz zakładki ze swojego telefonu.
+Aplikacja towarzysząca
+Użyj GitSyncMarks-App (Android, iOS, Desktop), aby zarządzać zakładkami bezpośrednio z repozytorium Git na urządzeniach mobilnych.
 
-GitSyncMarks to projekt Open Source: https://github.com/d0dg3r/GitSyncMarks
+GitSyncMarks jest Open Source: https://github.com/d0dg3r/GitSyncMarks
 
 ### Category
 Productivity

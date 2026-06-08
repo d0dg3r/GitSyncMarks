@@ -191,7 +191,7 @@
     "message": "GitHub、GitLab、Codeberg、Gitea などでブックマーク同期。Linkwarden、スマート検索、コンパニオンアプリ。直接、安全、プライベート。"
   },
   "extDescriptionFirefox": {
-    "message": "GitHub、GitLab、Codeberg、Gitea などでブックマーク同期。Linkwarden、スマート検索、セットアップウィザード。双方向、安全でプライベート。Firefox 完全対応。仲介なし。"
+    "message": "GitHub、GitLab、Codeberg、Gitea などでブックマーク同期。Linkwarden、Smart Search、Bitwarden バックアップ、ガイド付きウィザード。双方向、安全、プライベート。Firefox 完全対応。中間サーバーなし。"
   },
   "extName": {
     "message": "GitSyncMarks"

@@ -191,7 +191,7 @@
     "message": "Sincronización de marcadores vía GitHub, GitLab, Codeberg, Gitea y más. Linkwarden, búsqueda inteligente, app complementaria. Directo, seguro y privado."
   },
   "extDescriptionFirefox": {
-    "message": "Sincronización de marcadores vía GitHub, GitLab, Codeberg, Gitea y más. Linkwarden, búsqueda inteligente, asistente de configuración. Bidireccional, seguro y privado. Soporte completo en Firefox. Sin intermediarios."
+    "message": "Sincronización de marcadores vía GitHub, GitLab, Codeberg, Gitea y más. Linkwarden, Smart Search, backup Bitwarden, asistente guiado. Bidireccional, seguro, privado. Soporte Firefox completo. Sin intermediarios."
   },
   "extName": {
     "message": "GitSyncMarks"

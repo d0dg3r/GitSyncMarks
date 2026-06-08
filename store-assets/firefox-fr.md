@@ -5,30 +5,40 @@
 GitSyncMarks
 
 ### Summary (max 250 characters)
-Synchro de favoris via GitHub. Synergie Linkwarden, recherche intelligente et assistant de config. Bidirectionnel, sécurisé, privé. Support Firefox natif.
+Sync favoris via GitHub, GitLab, Codeberg, Gitea & plus. Linkwarden, Smart Search, sauvegarde Bitwarden, assistant guidé. Bidirectionnel, sécurisé, privé. Support Firefox complet. Sans intermédiaire.
 
 ### Detailed Description
-GitSyncMarks est une extension professionnelle pour Firefox qui synchronise de manière bidirectionnelle et automatique vos favoris avec un dépôt GitHub. Aucun intermédiaire – vos données restent entièrement sous votre contrôle.
+GitSyncMarks synchronise vos favoris de manière bidirectionnelle avec GitHub, GitLab, Codeberg, Gitea, Forgejo ou Gogs. Aucun intermédiaire, aucun serveur tiers – vos données restent entièrement sous votre contrôle.
 
-Points Forts
+Points forts
 
-- Historique de Sync & Restauration : Parcourez les commits passés, prévisualisez les changements via diff et restaurez tout état antérieur de vos favoris en un clic.
-- Correction des Doublons : Les dossiers homonymes ne se multiplient plus lors de la synchronisation — les doublons sont automatiquement fusionnés.
-- Synergie Linkwarden : Sauvegardez pages ou liens directement vers votre instance Linkwarden. Inclut captures d'écran auto, synchro des collections et tags.
-- Recherche Intelligente : Une interface de recherche dédiée et ultra-rapide pour vos favoris. Supporte thèmes clair/sombre et accessible au clavier.
-- Assistant de Configuration : Guide pas à pas les nouveaux utilisateurs dans la configuration du token et du dépôt jusqu'à la première synchro réussie.
+- Sync Git multi-fournisseur : GitHub, GitLab, Codeberg, Gitea, Forgejo ou Gogs — chaque profil peut utiliser son propre fournisseur et URL de serveur.
+- Transfert de profil & miroirs push : Copiez les favoris entre profils (remplacer ou fusionner) ; remotes de sauvegarde push-only optionnels après chaque sync.
+- Progression sync en direct : Texte d'étape pendant push, pull et changement de profil (ex. `3 / 12 fichiers` ou `1 sur 3` étapes).
+- Sauvegarde Bitwarden / Vaultwarden vers Git : Stockez des exports de coffre protégés par mot de passe dans votre dépôt, chiffrement supplémentaire optionnel ; lister, télécharger ou supprimer les sauvegardes distantes.
+- Interface nested-card : Sections groupées plus claires dans Options, assistant, popup et recherche.
+- Historique sync & restauration : Parcourez les commits passés, prévisualisez les changements via diff et restaurez tout état antérieur en un clic.
+- Nettoyage orphelins distants : Prévisualisez et supprimez les fichiers de favoris distants qui n'existent plus localement.
+- Synergie Linkwarden : Sauvegardez pages ou liens vers votre instance Linkwarden — captures viewport, sync collections et tags prédéfinis.
+- Smart Search : Recherche de favoris dédiée et ultra-rapide avec thèmes clair/sombre et navigation clavier complète.
+- Assistant de configuration guidé : Le test de connexion valide uniquement l'accès ; vous choisissez pull, merge/sync, push, configuration dossiers ou ignorer — avec confirmation avant toute écriture.
+- Performance Codeberg / Gitea : Lectures git tree + blob rapides et pushes single-commit sur hôtes Gitea (fallback Contents API si nécessaire).
+- Menu contextuel : Dossiers rapides, popup recherche favoris, Ouvrir tout du dossier, copie/téléchargement favicon et actions profil au clic droit.
+- Sync paramètres vers Git : Sauvegarde chiffrée des paramètres (`settings.enc`) dans votre dépôt — partagez la configuration entre appareils.
 
-Fonctionnalités Clés
+Fonctionnalités clés
 
-- Confidentialité à la conception : Communication directe avec l'API GitHub. Aucun tiers ne voit vos données.
-- Optimisé pour Firefox : Supporte les structures natives de favoris.
-- Stockage par fichier unique : Chaque favori est sauvegardé en format JSON lisible – idéal pour le versionnage sur GitHub.
-- Profils Multiples : Gérez jusqu'à 10 profils distincts (travail, perso) avec leurs propres dépôts.
-- Automatisation : Ajoutez des favoris via CLI ou GitHub Actions ; l'extension les intègre automatiquement.
-- Fichiers Générés : Crée automatiquement un README.md, bookmarks.html ou flux RSS dans votre dépôt.
+- Confidentialité by design : Communication directe avec l'API de votre fournisseur Git. Aucun tiers ne voit vos données.
+- Optimisé Firefox : Prend en charge les structures natives (Barre d'outils, Menu, Autres).
+- Fusion three-way : Sync de qualité industrielle gérant automatiquement les changements concurrents sur plusieurs appareils.
+- Stockage par fichier : Chaque favori est un fichier JSON lisible – idéal pour le versionnage et l'édition manuelle.
+- Profils multiples : Jusqu'à 10 profils distincts (travail, perso, projets), chacun avec son dépôt.
+- Automatisation : Ajoutez des favoris via CLI ou GitHub Actions ; l'extension les intègre au prochain sync.
+- Fichiers générés : README.md (aperçu), bookmarks.html (import), flux RSS et dashy-conf.yml — optionnel par fichier.
+- Design & i18n : Thèmes clair, sombre et auto-système ; densité UI ajustable (compact / moyen / large) ; 12 langues.
 
-Application Mobile
-Utilisez GitSyncMarks-App (Android, iOS, Bureau) pour gérer vos favoris directement depuis GitHub sur mobile. (Note : Firefox Android ne gère pas la synchro de favoris d'extensions).
+Application compagnon
+Utilisez GitSyncMarks-App (Android, iOS, Bureau) pour gérer vos favoris directement depuis votre dépôt Git sur mobile. (Note : Firefox pour Android ne prend pas en charge la sync directe des favoris via extensions – utilisez l'app.)
 
 GitSyncMarks est Open Source : https://github.com/d0dg3r/GitSyncMarks
 
@@ -36,4 +46,4 @@ GitSyncMarks est Open Source : https://github.com/d0dg3r/GitSyncMarks
 Bookmarks
 
 ### Tags
-bookmarks, sync, github, backup, automation
+favoris, sync, github, gitlab, sauvegarde, automatisation
