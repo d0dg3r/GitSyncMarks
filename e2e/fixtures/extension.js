@@ -21,42 +21,75 @@ if (!fs.existsSync(EXTENSION_PATH)) {
 }
 
 /**
+ * Wait for the MV3 service worker to start. CI runners can be slow to activate
+ * the extension background worker on a fresh profile.
+ */
+async function waitForExtensionServiceWorker(context, timeoutMs = 60000) {
+  const existing = context.serviceWorkers()[0];
+  if (existing) return existing;
+
+  const triggerPage = await context.newPage();
+  try {
+    await triggerPage.goto('about:blank', { waitUntil: 'domcontentloaded' });
+
+    const deadline = Date.now() + timeoutMs;
+    while (Date.now() < deadline) {
+      const active = context.serviceWorkers()[0];
+      if (active) return active;
+
+      const remaining = deadline - Date.now();
+      try {
+        return await context.waitForEvent('serviceworker', {
+          timeout: Math.min(2000, remaining),
+        });
+      } catch {
+        // Keep polling until the overall deadline.
+      }
+    }
+
+    throw new Error(`Extension service worker did not start within ${timeoutMs}ms`);
+  } finally {
+    await triggerPage.close().catch(() => {});
+  }
+}
+
+/**
  * Custom test with extension-loaded context and extensionId.
  * Use in tests: test('...', async ({ page, extensionId }) => { ... })
  */
 const test = base.extend({
-  context: async ({}, use) => {
-    const userDataDir = path.join(
-      require('os').tmpdir(),
-      `gitsyncmarks-e2e-${Date.now()}`
-    );
-    const args = [
-      `--disable-extensions-except=${EXTENSION_PATH}`,
-      `--load-extension=${EXTENSION_PATH}`,
-    ];
-    if (process.env.CI) {
-      args.push('--no-sandbox', '--disable-dev-shm-usage');
-    }
-    // Headed mode needed: service worker doesn't start in headless on many systems (CI, CachyOS)
-    const context = await chromium.launchPersistentContext(userDataDir, {
-      channel: 'chromium',
-      headless: false,
-      args,
-    });
-    await use(context);
-    await context.close();
-  },
-  extensionId: async ({ context }, use) => {
-    let serviceWorker = context.serviceWorkers()[0];
-    if (!serviceWorker) {
-      const triggerPage = await context.newPage();
-      await triggerPage.goto('about:blank', { waitUntil: 'domcontentloaded' });
-      await triggerPage.close();
-      serviceWorker = await context.waitForEvent('serviceworker', { timeout: 60000 });
-    }
-    const extensionId = serviceWorker.url().split('/')[2];
-    await use(extensionId);
-  },
+  context: [
+    async ({}, use) => {
+      const userDataDir = path.join(
+        require('os').tmpdir(),
+        `gitsyncmarks-e2e-${Date.now()}`
+      );
+      const args = [
+        `--disable-extensions-except=${EXTENSION_PATH}`,
+        `--load-extension=${EXTENSION_PATH}`,
+      ];
+      if (process.env.CI) {
+        args.push('--no-sandbox', '--disable-dev-shm-usage');
+      }
+      // Headed mode needed: service worker doesn't start in headless on many systems (CI, CachyOS)
+      const context = await chromium.launchPersistentContext(userDataDir, {
+        channel: 'chromium',
+        headless: false,
+        args,
+      });
+      await use(context);
+      await context.close();
+    },
+    { timeout: 120000 },
+  ],
+  extensionId: [
+    async ({ context }, use) => {
+      const serviceWorker = await waitForExtensionServiceWorker(context);
+      const extensionId = serviceWorker.url().split('/')[2];
+      await use(extensionId);
+    },
+    { timeout: 120000 },
+  ],
 });
 
 module.exports = { test };

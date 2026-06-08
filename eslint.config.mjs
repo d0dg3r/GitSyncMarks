@@ -61,6 +61,12 @@ export default [
         ...globals.node,
       },
     },
+    rules: {
+      // E2E helpers build paths from validated temp dirs and fixed segments.
+      'security/detect-non-literal-fs-filename': 'off',
+      // Playwright worker fixtures with no dependencies require `{}` destructuring.
+      'no-empty-pattern': 'off',
+    },
   },
   {
     files: ['scripts/**/*.mjs'],

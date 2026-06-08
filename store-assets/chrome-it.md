@@ -5,30 +5,39 @@
 GitSyncMarks
 
 ### Summary (max 132 characters)
-Sincronizzazione segnalibri via GitHub. Sinergia Linkwarden, ricerca intelligente e Companion App. Diretto, sicuro, privato.
+Sync segnalibri via GitHub, GitLab, Codeberg, Gitea e altro. Linkwarden, Smart Search, Companion App.
 
 ### Detailed Description
-GitSyncMarks è una soluzione professionale per sincronizzare in modo bidirezionale e automatico i tuoi segnalibri con un repository GitHub. Nessun intermediario, nessun server di terze parti: controllo totale e privacy.
+GitSyncMarks sincronizza i segnalibri bidirezionalmente con GitHub, GitLab, Codeberg, Gitea, Forgejo o Gogs. Gestisci i dati su desktop con Chrome e Firefox, o in mobilità con GitSyncMarks Companion App. Nessun intermediario, nessun server di terze parti – controllo e privacy totali.
 
-Caratteristiche Principali
+In evidenza
 
-- Cronologia Sync e Ripristino: Sfoglia i commit passati, anteprima delle modifiche con diff e ripristina qualsiasi stato precedente dei segnalibri con un clic.
-- Correzione Duplicati: Le cartelle con lo stesso nome non si moltiplicano più durante la sincronizzazione — i duplicati vengono uniti automaticamente.
-- Sinergia Linkwarden: Salva pagine o link direttamente sulla tua istanza di Linkwarden. Include screenshot automatici, sincronizzazione collezioni e tag.
-- Ricerca Intelligente: Un'interfaccia dedicata e velocissima per i segnalibri. Supporta temi (chiaro/scuro) ed è accessibile da tastiera.
-- Installazione Guidata: Un processo passo-passo che guida l'utente nella configurazione di token e repository per il primo avvio.
+- Sync Git multi-provider: GitHub, GitLab, Codeberg, Gitea, Forgejo o Gogs — ogni profilo può usare il proprio provider e URL server.
+- Trasferimento profili e mirror push: Copia segnalibri tra profili (sostituisci o unisci); remote di backup push-only opzionali dopo ogni sync.
+- Progresso sync live: Testo di fase durante push, pull e cambio profilo (es. `3 / 12 file` o `1 di 3` passi).
+- Backup Bitwarden / Vaultwarden su Git: Archivia export del vault protetti da password nel repo, crittografia extra opzionale; elenca, scarica o elimina backup remoti.
+- UI nested-card: Sezioni raggruppate più chiare in Opzioni, wizard, popup e ricerca.
+- Cronologia sync e ripristino: Sfoglia commit passati, anteprima modifiche con diff e ripristina qualsiasi stato precedente con un clic.
+- Pulizia orfani remoti: Anteprima ed elimina file segnalibri remoti che non esistono più localmente.
+- Sinergia Linkwarden: Salva pagine o link nella tua istanza Linkwarden — screenshot viewport, sync collezioni e tag predefiniti.
+- Smart Search: Ricerca segnalibri dedicata e velocissima con temi chiaro/scuro e navigazione completa da tastiera.
+- Wizard di configurazione guidato: Il test connessione valida solo l'accesso; scegli pull, merge/sync, push, setup cartelle o salta — con conferma prima di scrivere nel repository.
+- Performance Codeberg / Gitea: Letture git tree + blob rapide e push single-commit su host Gitea (fallback Contents API se necessario).
+- Menu contestuale: Cartelle rapide, popup ricerca, Apri tutto dalla cartella, copia/scarica favicon e azioni profilo con clic destro.
+- Sync impostazioni su Git: Backup crittografato impostazioni (`settings.enc`) nel repository — condividi configurazione tra dispositivi.
 
-Funzionalità Chiave
+Funzionalità chiave
 
-- Privacy by Design: Comunicazione diretta con le API di GitHub. Nessun terzo accede ai tuoi dati.
-- Archiviazione in File Singoli: Ogni segnalibro è un file JSON leggibile, perfetto per il versionamento manuale su GitHub.
-- Profili Multipli: Gestisci fino a 10 profili separati con repository propri.
-- Automazione: Aggiungi segnalibri via CLI o GitHub Actions; l'estensione li integra automaticamente.
-- File Generati: Crea automaticamente un README.md, bookmarks.html o feed RSS nel tuo repository.
-- Design & i18n: Temi chiaro, scuro e auto-sistema; densità regolabile (compatto / medio / grande) in Impostazioni, popup, ricerca e salvataggio Linkwarden; 12 lingue.
+- Privacy by design: Comunicazione diretta con l'API del provider Git. Nessun terzo vede i tuoi dati.
+- Merge three-way: Sync di livello industriale che gestisce automaticamente modifiche concorrenti su più dispositivi.
+- Archiviazione per file: Ogni segnalibro è un file JSON leggibile – ideale per versioning e modifica manuale.
+- Profili multipli: Fino a 10 profili separati per lavoro, personale o progetti, ciascuno con il proprio repository.
+- Automazione: Aggiungi segnalibri via CLI o GitHub Actions; l'estensione li integra al prossimo sync.
+- File generati: README.md (panoramica), bookmarks.html (import), feed RSS e dashy-conf.yml — opzionale per file.
+- Design e i18n: Temi chiaro, scuro e auto-sistema; densità UI regolabile (compatto / medio / grande); 12 lingue.
 
-App Complementare
-Usa GitSyncMarks-App (Android, iOS, Desktop) per gestire i segnalibri dal repository sui dispositivi mobili.
+App companion
+Usa GitSyncMarks-App (Android, iOS, Desktop) per gestire i segnalibri direttamente dal tuo repository Git su dispositivi mobili.
 
 GitSyncMarks è Open Source: https://github.com/d0dg3r/GitSyncMarks
 

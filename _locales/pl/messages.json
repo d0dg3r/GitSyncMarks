@@ -191,7 +191,7 @@
     "message": "Synchronizacja zakładek przez GitHub, GitLab, Codeberg, Gitea i inne. Linkwarden, inteligentne wyszukiwanie, aplikacja towarzysząca. Bezpośrednio, bezpiecznie, prywatnie."
   },
   "extDescriptionFirefox": {
-    "message": "Synchronizacja zakładek przez GitHub, GitLab, Codeberg, Gitea i inne. Linkwarden, inteligentne wyszukiwanie, kreator konfiguracji. Dwukierunkowo, bezpiecznie i prywatnie. Pełne wsparcie Firefox. Bez pośredników."
+    "message": "Sync zakładek via GitHub, GitLab, Codeberg, Gitea i więcej. Linkwarden, Smart Search, backup Bitwarden, kreator. Dwukierunkowy, bezpieczny, prywatny. Pełne wsparcie Firefox. Bez pośredników."
   },
   "extName": {
     "message": "GitSyncMarks"

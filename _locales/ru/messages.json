@@ -191,7 +191,7 @@
     "message": "Синхронизация закладок через GitHub, GitLab, Codeberg, Gitea и др. Linkwarden, умный поиск, companion-приложение. Напрямую, безопасно, приватно."
   },
   "extDescriptionFirefox": {
-    "message": "Синхронизация закладок через GitHub, GitLab, Codeberg, Gitea и др. Linkwarden, умный поиск, мастер настройки. Двунаправленно, безопасно и приватно. Полная поддержка Firefox. Без посредников."
+    "message": "Синхр. закладок через GitHub, GitLab, Codeberg, Gitea и др. Linkwarden, Smart Search, резерв Bitwarden, мастер настройки. Двусторонняя, безопасная, приватная. Полная поддержка Firefox. Без посредников."
   },
   "extName": {
     "message": "GitSyncMarks"

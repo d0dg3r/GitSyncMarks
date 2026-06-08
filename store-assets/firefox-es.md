@@ -5,35 +5,45 @@
 GitSyncMarks
 
 ### Summary (max 250 characters)
-Sincronización de marcadores vía GitHub. Sinergia Linkwarden, búsqueda inteligente y asistente de configuración. Bidireccional y seguro. Soporte nativo de Firefox.
+Sync marcadores via GitHub, GitLab, Codeberg, Gitea y más. Linkwarden, Smart Search, backup Bitwarden, asistente guiado. Bidireccional, seguro, privado. Soporte Firefox completo. Sin intermediarios.
 
 ### Detailed Description
-GitSyncMarks es una extensión profesional para Firefox que sincroniza bidireccional y automáticamente sus marcadores con un repositorio de GitHub. Sin intermediarios, sin servidores de terceros: sus datos permanecen completamente bajo su control.
+GitSyncMarks sincroniza sus marcadores bidireccionalmente con GitHub, GitLab, Codeberg, Gitea, Forgejo o Gogs. Sin intermediarios, sin servidores de terceros – sus datos permanecen completamente bajo su control.
 
-Aspectos Destacados
+Destacados
 
-- Historial de Sync y Restauración: Explora commits pasados, previsualiza cambios con diff y restaura cualquier estado anterior de tus marcadores con un clic.
-- Corrección de Duplicados: Las carpetas con el mismo nombre ya no se multiplican durante la sincronización — los duplicados se fusionan automáticamente.
-- Sinergia con Linkwarden: Guarde páginas o enlaces directamente en su instancia de Linkwarden. Incluye capturas de pantalla automáticas, sincronización de colecciones y etiquetas.
-- Búsqueda Inteligente (Smart Search): Una interfaz de búsqueda rápida y dedicada para sus marcadores. Soporta temas (claro/oscuro) y es accesible por teclado.
-- Asistente de Configuración: Un asistente paso a paso guía a los nuevos usuarios en la configuración del token y el repositorio hasta su primera sincronización exitosa.
+- Sync Git multi-proveedor: GitHub, GitLab, Codeberg, Gitea, Forgejo o Gogs — cada perfil puede usar su propio proveedor y URL de servidor.
+- Transferencia de perfiles y espejos push: Copie marcadores entre perfiles (reemplazar o fusionar); remotos de respaldo push-only opcionales tras cada sync.
+- Progreso de sync en vivo: Texto de paso durante push, pull y cambio de perfil (p. ej. `3 / 12 archivos` o `1 de 3` pasos).
+- Backup Bitwarden / Vaultwarden a Git: Almacene exportaciones de bóveda protegidas por contraseña en su repo, cifrado extra opcional; listar, descargar o eliminar backups remotos.
+- UI nested-card: Secciones agrupadas más claras en Opciones, asistente, popup y búsqueda.
+- Historial de sync y restauración: Explore commits anteriores, previsualice cambios con diff y restaure cualquier estado anterior con un clic.
+- Limpiar huérfanos remotos: Previsualice y elimine archivos de marcadores remotos que ya no existen localmente.
+- Sinergia Linkwarden: Guarde páginas o enlaces en su instancia Linkwarden — capturas viewport, sync de colecciones y etiquetas predefinidas.
+- Smart Search: Búsqueda de marcadores dedicada y ultrarrápida con temas claro/oscuro y navegación completa por teclado.
+- Asistente de configuración guiado: La prueba de conexión solo valida el acceso; usted elige pull, merge/sync, push, configuración de carpetas u omitir — con confirmación antes de escribir en el repositorio.
+- Rendimiento Codeberg / Gitea: Lecturas git tree + blob rápidas y pushes single-commit en hosts Gitea (fallback Contents API cuando sea necesario).
+- Menú contextual: Carpetas rápidas, popup de búsqueda, Abrir todo de carpeta, copiar/descargar favicon y acciones de perfil con clic derecho.
+- Sync de ajustes a Git: Backup cifrado de ajustes (`settings.enc`) en su repositorio — comparta configuración entre dispositivos.
 
-Características Principales
+Capacidades clave
 
-- Privacidad desde el Diseño: Comunicación directa con la API de GitHub. Ningún tercero ve sus datos.
-- Optimizado para Firefox: Soporta estructuras nativas de marcadores.
-- Almacenamiento en archivos individuales: Cada marcador se guarda como un archivo JSON legible, ideal para el control de versiones en GitHub.
-- Múltiples Perfiles: Gestione hasta 10 perfiles separados para trabajo, vida personal, etc. con sus propios repositorios.
-- Automatización: Añada marcadores vía CLI o GitHub Actions; la extensión los integra automáticamente.
-- Archivos Generados: Crea automáticamente un README.md, bookmarks.html (archivo de importación) o Feed RSS en su repositorio.
+- Privacidad by design: Comunicación directa con la API de su proveedor Git. Ningún tercero ve sus datos.
+- Optimizado para Firefox: Soporta estructuras nativas (Barra de herramientas, Menú, Otros).
+- Fusión three-way: Sync de grado industrial que maneja cambios concurrentes en varios dispositivos automáticamente.
+- Almacenamiento por archivo: Cada marcador es un archivo JSON legible – ideal para versionado y edición manual.
+- Múltiples perfiles: Hasta 10 perfiles separados para trabajo, personal o proyectos, cada uno con su repositorio.
+- Automatización: Añada marcadores vía CLI o GitHub Actions; la extensión los integra en el próximo sync.
+- Archivos generados: README.md (resumen), bookmarks.html (importación), feed RSS y dashy-conf.yml — opcional por archivo.
+- Diseño e i18n: Temas claro, oscuro y auto-sistema; densidad UI ajustable (compacto / medio / grande); 12 idiomas.
 
-Aplicación Complementaria
-Use GitSyncMarks-App (Android, iOS, Escritorio) para gestionar sus marcadores directamente desde GitHub en sus dispositivos móviles. (Nota: Firefox para Android no soporta sincronización directa de extensiones).
+App complementaria
+Use GitSyncMarks-App (Android, iOS, Escritorio) para gestionar sus marcadores directamente desde su repositorio Git en dispositivos móviles. (Nota: Firefox para Android no soporta sync directa de marcadores vía extensiones – use la app.)
 
-GitSyncMarks es de código abierto (Open Source): https://github.com/d0dg3r/GitSyncMarks
+GitSyncMarks es Open Source: https://github.com/d0dg3r/GitSyncMarks
 
 ### Categories
 Bookmarks
 
 ### Tags
-bookmarks, sync, github, backup, automation
+marcadores, sync, github, gitlab, backup, automatización

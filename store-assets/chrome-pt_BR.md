@@ -1,34 +1,43 @@
-# Chrome Web Store — GitSyncMarks (Português (Brasil))
+# Chrome Web Store — GitSyncMarks (Português Brasil)
 <!-- See chrome-meta.md for Privacy, Test Instructions, and Distribution -->
 
 ### Name
 GitSyncMarks
 
 ### Summary (max 132 characters)
-Sincronização de favoritos via GitHub. Sinergia com Linkwarden, Smart Search e app complementar. Direto, seguro, privado.
+Sync de favoritos via GitHub, GitLab, Codeberg, Gitea e mais. Linkwarden, Smart Search, Companion App.
 
 ### Detailed Description
-GitSyncMarks é uma solução profissional para sincronizar bi-direcionalmente e de forma automática seus favoritos com um repositório GitHub. Total controle e privacidade, sem servidores de terceiros ou intermediários.
+GitSyncMarks sincroniza seus favoritos bidirecionalmente com GitHub, GitLab, Codeberg, Gitea, Forgejo ou Gogs. Gerencie seus dados no desktop via Chrome e Firefox, ou em movimento com o GitSyncMarks Companion App. Sem intermediários, sem servidores de terceiros – controle e privacidade totais.
 
 Destaques
 
-- Histórico de Sync e Restauração: Navegue pelos commits passados, visualize mudanças com diff e restaure qualquer estado anterior dos seus favoritos com um clique.
-- Correção de Duplicatas: Pastas com o mesmo nome não se multiplicam mais durante a sincronização — duplicatas são automaticamente mescladas.
-- Sinergia com Linkwarden: Salve páginas diretas para seu Linkwarden, gerando capturas de tela e sincronizando coleções automaticamente.
-- Smart Search: Interface super rápida dedicada a encontrar seus links. Suporta modo claro/escuro e navegação pelo teclado.
-- Assistente Guiado: Um assistente simples demonstra em poucos passos a criação e o fluxo da sincronização inicial com Tokens.
+- Sync Git multi-provedor: GitHub, GitLab, Codeberg, Gitea, Forgejo ou Gogs — cada perfil pode usar seu próprio provedor e URL de servidor.
+- Transferência de perfis e espelhos push: Copie favoritos entre perfis (substituir ou mesclar); remotes de backup push-only opcionais após cada sync.
+- Progresso de sync ao vivo: Texto de etapa durante push, pull e troca de perfil (ex. `3 / 12 arquivos` ou `1 de 3` etapas).
+- Backup Bitwarden / Vaultwarden para Git: Armazene exportações de cofre protegidas por senha no seu repo, criptografia extra opcional; listar, baixar ou excluir backups remotos.
+- UI nested-card: Seções agrupadas mais claras em Opções, assistente, popup e busca.
+- Histórico de sync e restauração: Navegue commits anteriores, visualize mudanças com diff e restaure qualquer estado anterior com um clique.
+- Limpar órfãos remotos: Visualize e exclua arquivos de favoritos remotos que não existem mais localmente.
+- Sinergia Linkwarden: Salve páginas ou links na sua instância Linkwarden — capturas viewport, sync de coleções e tags predefinidas.
+- Smart Search: Busca de favoritos dedicada e ultrarrápida com temas claro/escuro e navegação completa por teclado.
+- Assistente de configuração guiado: O teste de conexão apenas valida o acesso; você escolhe pull, merge/sync, push, configuração de pastas ou pular — com confirmação antes de escrever no repositório.
+- Performance Codeberg / Gitea: Leituras git tree + blob rápidas e pushes single-commit em hosts Gitea (fallback Contents API quando necessário).
+- Menu de contexto: Pastas rápidas, popup de busca, Abrir tudo da pasta, copiar/baixar favicon e ações de perfil no clique direito.
+- Sync de configurações para Git: Backup criptografado de configurações (`settings.enc`) no repositório — compartilhe configuração entre dispositivos.
 
-Principais Funções
+Capacidades principais
 
-- Privado por Natureza: Conexão direta via API do GitHub apenas, seus dados ficam sob seu controle.
-- Arquivos de Armazenamento Individuais: Os favoritos são salvos em itens JSON distintos. Total controle de versões do repositório.
-- Perfis Múltiplos: Use em paralelo até 10 esquemas distintos (p.ex. Trabalho, Casa) com repositório próprio.
-- Automação: Integra facilmente via CLI; sincronizando os marcadores adicionados de volta ao navegador em passagens futuras.
-- Gerador de Arquivos: A ferramenta propicia na raiz a publicação de README.md, HTMLs e RSS Feed via push.
-- Design & i18n: Temas claro, escuro e auto-sistema; densidade ajustável (compacto / médio / grande) em Configurações, popup, busca e salvar no Linkwarden; 12 idiomas.
+- Privacidade by design: Comunicação direta com a API do seu provedor Git. Nenhum terceiro vê seus dados.
+- Merge three-way: Sync de nível industrial que trata mudanças concorrentes em vários dispositivos automaticamente.
+- Armazenamento por arquivo: Cada favorito é um arquivo JSON legível – ideal para versionamento e edição manual.
+- Múltiplos perfis: Até 10 perfis separados para trabalho, pessoal ou projetos, cada um com seu repositório.
+- Automação: Adicione favoritos via CLI ou GitHub Actions; a extensão os integra no próximo sync.
+- Arquivos gerados: README.md (visão geral), bookmarks.html (importação), feed RSS e dashy-conf.yml — opcional por arquivo.
+- Design e i18n: Temas claro, escuro e auto-sistema; densidade UI ajustável (compacto / médio / grande); 12 idiomas.
 
-App Adicional
-Acompanha o aplicativo Mobile GitSyncMarks (Android, iOS e Windows) de interface gráfica nativa capaz de manipular sem perdas na ponta de seu celular.
+App complementar
+Use o GitSyncMarks-App (Android, iOS, Desktop) para gerenciar seus favoritos diretamente do seu repositório Git em dispositivos móveis.
 
 GitSyncMarks é Open Source: https://github.com/d0dg3r/GitSyncMarks
 

@@ -5,31 +5,40 @@
 GitSyncMarks
 
 ### Summary (max 250 characters)
-Lesezeichen-Sync via GitHub. Linkwarden-Synergie, Smart Search und geführter Setup-Wizard. Bidirektional, sicher und privat. Volle Firefox-Unterstützung inklusive nativer Menü-Struktur. Kein Mittelsmann.
+Lesezeichen-Sync via GitHub, GitLab, Codeberg, Gitea & mehr. Linkwarden, Smart Search, Bitwarden-Backup, Setup-Assistent. Bidirektional, sicher, privat. Volle Firefox-Unterstützung. Ohne Mittelsmann.
 
 ### Detailed Description
-GitSyncMarks ist eine professionelle Erweiterung für Firefox, die Ihre Lesezeichen bidirektional und automatisch mit einem GitHub-Repository synchronisiert. Ohne Mittelsmann, ohne Drittserver – Ihre Daten bleiben vollständig unter Ihrer Kontrolle.
+GitSyncMarks synchronisiert Ihre Lesezeichen bidirektional mit GitHub, GitLab, Codeberg, Gitea, Forgejo oder Gogs. Ohne Mittelsmann, ohne Drittserver – Ihre Daten bleiben vollständig unter Ihrer Kontrolle.
 
 Highlights
 
+- Multi-Provider Git-Sync: GitHub, GitLab, Codeberg, Gitea, Forgejo oder Gogs — jedes Profil kann eigenen Anbieter und Server-URL nutzen.
+- Profil-Transfer & Push-Mirrors: Lesezeichen zwischen Profilen kopieren (ersetzen oder zusammenführen); optionale Push-only-Backup-Remotes nach jedem Sync.
+- Live-Sync-Fortschritt: Schritttext beim Push, Pull und Profilwechsel (z. B. `3 / 12 Dateien` oder `1 von 3` Schritte).
+- Bitwarden / Vaultwarden Backup zu Git: Passwortgeschützte Vault-Exporte im Repo speichern, optional extra verschlüsselt; Remote-Backups auflisten, herunterladen oder löschen.
+- Nested-Card-UI: Klarere gruppierte Bereiche in Einstellungen, Setup-Assistent, Popup und Suche.
 - Sync-Verlauf & Wiederherstellung: Vergangene Commits durchsuchen, Änderungen per Diff-Vorschau prüfen und jeden früheren Lesezeichen-Stand mit einem Klick wiederherstellen.
-- Duplikat-Fix: Gleichnamige Ordner vervielfachen sich nicht mehr bei der Synchronisation — Duplikate werden automatisch zusammengeführt.
-- Linkwarden-Synergie: Speichern Sie Seiten oder Links direkt in Ihrer Linkwarden-Instanz. Inklusive automatischer Viewport-Screenshots, Kollektions-Synchronisation und vordefinierten Tags.
-- Smart Search: Ein dediziertes, blitzschnelles Such-Interface für Ihre Lesezeichen. Unterstützt Themes (Hell/Dunkel) und ist vollständig tastaturbedienbar.
-- Geführter Setup-Wizard: Ein schrittweiser Onboarding-Prozess führt neue Nutzer sicher durch die Konfiguration von Token und Repository bis zum ersten erfolgreichen Sync.
+- Remote-Waisen bereinigen: Remote-Lesezeichendateien in der Vorschau anzeigen und löschen, die lokal nicht mehr existieren.
+- Linkwarden-Synergie: Seiten oder Links direkt in Ihre Linkwarden-Instanz speichern — Viewport-Screenshots, Kollektions-Sync und vordefinierte Tags.
+- Smart Search: Dedizierte, blitzschnelle Lesezeichen-Suche mit Hell/Dunkel-Themes und vollständiger Tastaturbedienung.
+- Geführter Setup-Assistent: Verbindungstest prüft nur den Zugriff; Sie wählen Pull, Merge/Sync, Push, Ordner-Setup oder Überspringen — mit Bestätigung vor jedem Schreibzugriff aufs Repository.
+- Codeberg / Gitea Performance: Schnelle Git-Tree- und Blob-Lesevorgänge sowie Single-Commit-Pushes auf Gitea-Familie-Hosts (Contents-API-Fallback bei Bedarf).
+- Kontextmenü: Schnellordner, Lesezeichen-Suche-Popup, Alle aus Ordner öffnen, Favicon kopieren/herunterladen und Profilaktionen per Rechtsklick.
+- Einstellungs-Sync zu Git: Verschlüsseltes Einstellungs-Backup (`settings.enc`) im Repository — Konfiguration geräteübergreifend teilen.
 
 Kernfunktionen
 
-- Private-by-Design: Direkte Kommunikation mit der GitHub API. Keine Drittanbieter sehen Ihre Daten.
-- Firefox-optimiert: Unterstützt native Lesezeichen-Strukturen (Symbolleiste, Menü, Andere).
-- Einzeldatei-Speicherung: Jedes Lesezeichen wird als lesbare JSON-Datei gespeichert – ideal für Versionierung und manuelle Bearbeitung auf GitHub.
-- Multiple Profile: Verwalten Sie bis zu 10 getrennte Profile (z. B. Beruf/Privat) mit jeweils eigenen Repositories.
-- Automatisierung: Fügen Sie Lesezeichen über CLI oder GitHub Actions hinzu; die Erweiterung integriert diese beim nächsten Sync automatisch.
-- Generierte Dateien: Erstellt automatisch eine README.md (Übersicht), bookmarks.html (Import-Datei) oder einen RSS-Feed in Ihrem Repository.
-
+- Private-by-Design: Direkte Kommunikation mit der Git-Provider-API. Keine Dritten sehen Ihre Daten.
+- Firefox-optimiert: Unterstützt native Lesezeichenstrukturen (Symbolleiste, Menü, Andere).
+- Three-Way-Merge: Industrietauglicher Sync behandelt gleichzeitige Änderungen auf mehreren Geräten automatisch.
+- Einzeldatei-Speicherung: Jedes Lesezeichen ist eine lesbare JSON-Datei – ideal für Versionierung und manuelle Bearbeitung im Git-Repo.
+- Multiple Profile: Bis zu 10 getrennte Profile für Beruf, Privatleben oder Projekte, jeweils mit eigenem Repository.
+- Automatisierung: Lesezeichen via CLI oder GitHub Actions hinzufügen; die Erweiterung integriert sie beim nächsten Sync.
+- Generierte Dateien: README.md (Übersicht), bookmarks.html (Import-Datei), RSS-Feed und dashy-conf.yml — optional pro Datei.
+- Design & i18n: Hell-, Dunkel- und Auto-Themes; einstellbare UI-Dichte (kompakt / mittel / groß); 12 Sprachen.
 
 Begleit-App
-Nutzen Sie die GitSyncMarks-App (Android, iOS, Desktop), um Ihre Lesezeichen direkt aus dem GitHub-Repository auf mobilen Geräten zu verwalten. (Hinweis: Firefox für Android unterstützt keinen direkten Lesezeichen-Sync durch Erweiterungen – nutzen Sie hierfür die App).
+Nutzen Sie die GitSyncMarks-App (Android, iOS, Desktop), um Ihre Lesezeichen direkt aus Ihrem Git-Repository auf mobilen Geräten zu verwalten. (Hinweis: Firefox für Android unterstützt keinen direkten Lesezeichen-Sync via Erweiterungen – nutzen Sie die App dafür.)
 
 GitSyncMarks ist Open Source: https://github.com/d0dg3r/GitSyncMarks
 
@@ -37,4 +46,4 @@ GitSyncMarks ist Open Source: https://github.com/d0dg3r/GitSyncMarks
 Lesezeichen
 
 ### Tags
-bookmarks, sync, github, backup, automation
+lesezeichen, sync, github, gitlab, backup, automatisierung

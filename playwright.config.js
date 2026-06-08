@@ -16,6 +16,8 @@ module.exports = defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   workers: 1,
+  // Extension startup in CI can exceed the default 30s when the service worker is slow.
+  timeout: process.env.CI ? 60000 : 30000,
   reporter: [
     ['list'],
     ['html', { outputFolder: 'playwright-report', open: 'never' }],
