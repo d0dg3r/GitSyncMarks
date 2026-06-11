@@ -12,6 +12,7 @@ import {
   renderProviderOptions,
 } from './lib/provider-ui.js';
 import { initI18n, applyI18n, getMessage, reloadI18n, SUPPORTED_LANGUAGES } from './lib/i18n.js';
+import { clearElement } from './lib/dom-utils.js';
 import { initTheme, applyTheme } from './lib/theme.js';
 import { initUiDensity, applyUiDensity } from './lib/ui-density.js';
 import { SYNC_PRESETS } from './lib/sync-engine.js';
@@ -362,7 +363,7 @@ function getEffectiveDebounceMs() {
 function populateLanguageDropdown() {
   const sel = languageSelect ?? document.getElementById('language-select');
   if (!sel) return;
-  sel.innerHTML = '';
+  clearElement(sel);
   const autoOption = document.createElement('option');
   autoOption.value = 'auto';
   autoOption.textContent = 'Auto';
@@ -411,7 +412,7 @@ async function loadBookmarkFolders() {
 
 function populateQuickFolderSelect(selectEl, selectedId) {
   if (!selectEl) return;
-  selectEl.innerHTML = '';
+  clearElement(selectEl);
   const noneOpt = document.createElement('option');
   noneOpt.value = '';
   noneOpt.textContent = getMessage('options_contextMenuQuickFolderNone');
@@ -436,7 +437,7 @@ async function loadSettings() {
   const profiles = await getProfiles();
   const activeId = await getActiveProfileId();
 
-  profileSelect.innerHTML = '';
+  clearElement(profileSelect);
   for (const [id, p] of Object.entries(profiles)) {
     const opt = document.createElement('option');
     opt.value = id;
@@ -563,7 +564,11 @@ async function loadSettings() {
             const collections = await api.getCollections();
             if (collections && collections.response && Array.isArray(collections.response)) {
               const currentSelection = globals.linkwardenDefaultCollection || '';
-              linkwardenDefaultCollectionSelect.innerHTML = '<option value="" data-i18n="options_none">None</option>';
+              clearElement(linkwardenDefaultCollectionSelect);
+              const noneOpt = document.createElement('option');
+              noneOpt.value = '';
+              noneOpt.dataset.i18n = 'options_none';
+              linkwardenDefaultCollectionSelect.appendChild(noneOpt);
               applyI18n();
               collections.response.forEach(c => {
                 const opt = document.createElement('option');
@@ -800,7 +805,7 @@ function closeFolderBrowser() {
 
 async function loadFolderBrowserContents(path) {
   if (!folderBrowserList || !folderBrowserEmpty || !folderBrowserLoading || !folderBrowserPath || !btnFolderUp) return;
-  folderBrowserList.innerHTML = '';
+  clearElement(folderBrowserList);
   folderBrowserEmpty.classList.add('hidden');
   folderBrowserLoading.classList.remove('hidden');
   _folderBrowserCurrentPath = path;

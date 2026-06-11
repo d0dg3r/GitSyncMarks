@@ -5,6 +5,7 @@
  */
 
 import { getMessage, applyI18n } from '../lib/i18n.js';
+import { clearElement } from '../lib/dom-utils.js';
 import { updateLinkwardenCollectionsFolder } from '../lib/linkwarden-sync.js';
 import { LinkwardenAPI } from '../lib/linkwarden-api.js';
 import { decryptToken } from '../lib/crypto.js';
@@ -70,7 +71,7 @@ function lwOptionsRemoveTag(name) {
 }
 
 export function renderLwOptionsTagChips() {
-  lwOptionsTagChips.innerHTML = '';
+  clearElement(lwOptionsTagChips);
   for (const tag of lwOptionsSelectedTags) {
     const chip = document.createElement('span');
     chip.className = 'lw-options-tag-chip';
@@ -86,7 +87,7 @@ export function renderLwOptionsTagChips() {
 }
 
 export function renderLwOptionsTagCloud(filter = '') {
-  lwOptionsTagCloud.innerHTML = '';
+  clearElement(lwOptionsTagCloud);
   const q = filter.toLowerCase().trim();
   const available = lwOptionsAllTags
     .filter(t => !lwOptionsSelectedTags.includes(t.name))
@@ -120,7 +121,11 @@ async function performLinkwardenTest(url, token) {
 
     if (collections && collections.response && Array.isArray(collections.response)) {
       const currentSelection = linkwardenDefaultCollectionSelect.value;
-      linkwardenDefaultCollectionSelect.innerHTML = '<option value="" data-i18n="options_none">None</option>';
+      clearElement(linkwardenDefaultCollectionSelect);
+      const noneOpt = document.createElement('option');
+      noneOpt.value = '';
+      noneOpt.dataset.i18n = 'options_none';
+      linkwardenDefaultCollectionSelect.appendChild(noneOpt);
       applyI18n();
       collections.response.forEach(c => {
         const opt = document.createElement('option');

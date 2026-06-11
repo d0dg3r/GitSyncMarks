@@ -5,6 +5,7 @@
  */
 
 import { getMessage } from '../lib/i18n.js';
+import { clearElement } from '../lib/dom-utils.js';
 import { formatSyncProgress, runSyncPortAction } from '../lib/sync-progress.js';
 import { serializeToJson, deserializeFromJson, bookmarkTreeToFileMap, fileMapToDashyYaml } from '../lib/bookmark-serializer.js';
 import { replaceLocalBookmarks } from '../lib/sync-engine.js';
@@ -174,7 +175,7 @@ function selectedSettingsProfile() {
 
 export function renderSettingsProfiles(configs) {
   settingsProfiles = Array.isArray(configs) ? configs : [];
-  settingsSyncDeviceList.innerHTML = '';
+  clearElement(settingsSyncDeviceList);
   if (settingsProfiles.length === 0) {
     const opt = document.createElement('option');
     opt.textContent = getMessage('options_settingsSyncImportEmpty');

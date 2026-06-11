@@ -4,6 +4,7 @@
  */
 
 import { getMessage } from '../lib/i18n.js';
+import { clearElement } from '../lib/dom-utils.js';
 import { DEFAULT_CONTEXT_MENU_ITEMS, DEFAULT_CONTEXT_MENU_SUBMENUS } from '../lib/context-menu-defaults.js';
 import { STORAGE_KEYS } from '../lib/storage-keys.js';
 
@@ -36,7 +37,7 @@ const openAllThresholdInput = document.getElementById('open-all-threshold');
 
 export async function renderContextMenuConfig(items) {
   if (!contextMenuItemsList) return;
-  contextMenuItemsList.innerHTML = '';
+  clearElement(contextMenuItemsList);
 
   const { contextMenuSubmenus = {} } = await chrome.storage.sync.get({ contextMenuSubmenus: {} });
 

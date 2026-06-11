@@ -175,7 +175,11 @@ Keeps the non-persistent background (Firefox MV3 event page / Chrome MV3 service
 
 ### `lib/i18n.js` — Internationalization
 
-Custom runtime i18n with manual language selection. `SUPPORTED_LANGUAGES` in `lib/i18n.js` lists each locale with `code`, `name`, and `short` (e.g. `EN`, `DE`); the options language `<select>` shows `short` in the label and `name` in each option’s `title`. Loads `_locales/{lang}/messages.json`, translates DOM via `data-i18n` attributes. Plain `data-i18n` sets `textContent` on each match except `<select>` elements (so `<option data-i18n>` still translates; `<select data-i18n>` is not used). English fallback.
+Custom runtime i18n with manual language selection. `SUPPORTED_LANGUAGES` in `lib/i18n.js` lists each locale with `code`, `name`, and `short` (e.g. `EN`, `DE`); the options language `<select>` shows `short` in the label and `name` in each option’s `title`. Loads `_locales/{lang}/messages.json`, translates DOM via `data-i18n` attributes. Plain `data-i18n` sets `textContent` on each match except `<select>` elements (so `<option data-i18n>` still translates; `<select data-i18n>` is not used). `data-i18n-html` uses `setTrustedHtml()` from `lib/dom-utils.js`. English fallback.
+
+### `lib/dom-utils.js` — Safe DOM helpers
+
+`clearElement(el)` removes children via `replaceChildren()`. `setTrustedHtml(el, htmlString)` inserts trusted HTML (bundled i18n) via `DOMParser` + `replaceChildren`, avoiding direct `innerHTML` assignment flagged by Firefox AMO `addons-linter`.
 
 ### `lib/theme.js` — Theme
 
@@ -351,6 +355,7 @@ GitSyncMarks/
 │   ├── git-provider.js           # Provider factory (GitHub / Gitea-family / GitLab)
 │   ├── git-provider-common.js    # PROVIDER_CAPS + URL helpers
 │   ├── provider-ui.js            # Shared provider dropdown / form UI
+│   ├── dom-utils.js              # clearElement / setTrustedHtml (AMO-safe DOM)
 │   ├── providers/
 │   │   ├── github-api.js         # GitHub REST + Git Data API
 │   │   ├── gitea-api.js          # Gitea-family adapter

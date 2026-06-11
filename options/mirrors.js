@@ -3,6 +3,7 @@
  */
 
 import { getMessage } from '../lib/i18n.js';
+import { clearElement } from '../lib/dom-utils.js';
 import { normalizeGitProvider } from '../lib/connection-settings.js';
 import { getProviderCaps, SUPPORTED_PROVIDER_IDS } from '../lib/git-provider-common.js';
 import { mirrorShowsServerUrl, providerLabelKey } from '../lib/provider-ui.js';
@@ -37,83 +38,154 @@ function emptyMirror() {
   };
 }
 
-function mirrorProviderSelectHtml(m, index) {
-  const options = SUPPORTED_PROVIDER_IDS
-    .map((id) => {
-      const key = providerLabelKey(id);
-      const label = getMessage(key);
-      const selected = (m.gitProvider || 'github') === id ? 'selected' : '';
-      return `<option value="${id}" ${selected}>${label}</option>`;
-    })
-    .join('');
-  return `<select class="mirror-provider" data-index="${index}">${options}</select>`;
+/**
+ * @param {string} tag
+ * @param {string} [className]
+ * @param {string} [text]
+ * @returns {HTMLElement}
+ */
+function el(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text != null) node.textContent = text;
+  return node;
 }
 
-function mirrorRowHtml(m, index) {
+/**
+ * @param {string} labelText
+ * @param {HTMLElement} control
+ * @returns {HTMLDivElement}
+ */
+function formGroup(labelText, control) {
+  const group = el('div', 'form-group');
+  group.appendChild(el('label', '', labelText));
+  group.appendChild(control);
+  return group;
+}
+
+/**
+ * @param {object} m
+ * @param {number} index
+ * @returns {HTMLSelectElement}
+ */
+function buildMirrorProviderSelect(m, index) {
+  const select = el('select', 'mirror-provider');
+  select.dataset.index = String(index);
+  for (const id of SUPPORTED_PROVIDER_IDS) {
+    const option = document.createElement('option');
+    option.value = id;
+    option.textContent = getMessage(providerLabelKey(id));
+    if ((m.gitProvider || 'github') === id) option.selected = true;
+    select.appendChild(option);
+  }
+  return select;
+}
+
+/**
+ * @param {object} m
+ * @param {number} index
+ * @returns {HTMLDivElement}
+ */
+function buildMirrorRow(m, index) {
+  const row = el('div', 'mirror-row card mirror-row-card');
+  row.dataset.index = String(index);
+
+  const header = el('div', 'mirror-row-header');
+  header.appendChild(el('strong', '', `${getMessage('options_mirrorsTitle')} #${index + 1}`));
+  const removeBtn = el('button', 'btn btn-secondary btn-sm mirror-remove-btn', getMessage('options_mirrorsRemove'));
+  removeBtn.type = 'button';
+  removeBtn.dataset.index = String(index);
+  header.appendChild(removeBtn);
+  row.appendChild(header);
+
+  const labelInput = el('input', 'mirror-label');
+  labelInput.type = 'text';
+  labelInput.dataset.index = String(index);
+  labelInput.value = m.label || '';
+  row.appendChild(formGroup(getMessage('options_mirrorsLabel'), labelInput));
+
+  row.appendChild(formGroup(getMessage('options_gitProvider'), buildMirrorProviderSelect(m, index)));
+
   const showServer = mirrorShowsServerUrl(m.gitProvider || 'github');
-  return `
-    <div class="mirror-row card mirror-row-card" data-index="${index}">
-      <div class="mirror-row-header">
-        <strong>${getMessage('options_mirrorsTitle')} #${index + 1}</strong>
-        <button type="button" class="btn btn-secondary btn-sm mirror-remove-btn" data-index="${index}">${getMessage('options_mirrorsRemove')}</button>
-      </div>
-      <div class="form-group">
-        <label>${getMessage('options_mirrorsLabel')}</label>
-        <input type="text" class="mirror-label" data-index="${index}" value="${escapeAttr(m.label)}">
-      </div>
-      <div class="form-group">
-        <label>${getMessage('options_gitProvider')}</label>
-        ${mirrorProviderSelectHtml(m, index)}
-      </div>
-      <div class="form-group mirror-server-group ${showServer ? '' : 'hidden'}">
-        <label>${getMessage('options_serverUrl')}</label>
-        <input type="url" class="mirror-server" data-index="${index}" value="${escapeAttr(m.serverUrl)}" placeholder="https://gitea.example.com">
-      </div>
-      <div class="form-group">
-        <label>${getMessage('options_patLabel')}</label>
-        <input type="password" class="mirror-token" data-index="${index}" placeholder="${m.hasStoredToken ? '••••••••' : ''}" autocomplete="off">
-      </div>
-      <div class="form-group">
-        <label>${getMessage('options_repoOwner')}</label>
-        <input type="text" class="mirror-owner" data-index="${index}" value="${escapeAttr(m.owner)}">
-      </div>
-      <div class="form-group">
-        <label>${getMessage('options_repoName')}</label>
-        <input type="text" class="mirror-repo" data-index="${index}" value="${escapeAttr(m.repo)}">
-      </div>
-      <div class="form-group">
-        <label>${getMessage('options_branch')}</label>
-        <input type="text" class="mirror-branch" data-index="${index}" value="${escapeAttr(m.branch || 'main')}">
-      </div>
-      <label class="mirror-option-toggle"><input type="checkbox" class="mirror-paused" data-index="${index}" ${m.paused ? 'checked' : ''}> ${getMessage('options_mirrorsPaused')}</label>
-      <label class="mirror-option-toggle"><input type="checkbox" class="mirror-push-generated" data-index="${index}" ${m.pushGenerated ? 'checked' : ''}> ${getMessage('options_mirrorsPushGenerated')}</label>
-      <label class="mirror-option-toggle"><input type="checkbox" class="mirror-push-settings" data-index="${index}" ${m.pushSettings ? 'checked' : ''}> ${getMessage('options_mirrorsPushSettings')}</label>
-      <button type="button" class="btn btn-secondary btn-sm mirror-test-btn" data-index="${index}">${getMessage('options_mirrorsTest')}</button>
-      <span class="mirror-test-result" data-index="${index}"></span>
-    </div>`;
-}
+  const serverGroup = el('div', `form-group mirror-server-group${showServer ? '' : ' hidden'}`);
+  serverGroup.appendChild(el('label', '', getMessage('options_serverUrl')));
+  const serverInput = el('input', 'mirror-server');
+  serverInput.type = 'url';
+  serverInput.dataset.index = String(index);
+  serverInput.value = m.serverUrl || '';
+  serverInput.placeholder = 'https://gitea.example.com';
+  serverGroup.appendChild(serverInput);
+  row.appendChild(serverGroup);
 
-function escapeAttr(s) {
-  return String(s || '').replace(/"/g, '&quot;');
+  const tokenInput = el('input', 'mirror-token');
+  tokenInput.type = 'password';
+  tokenInput.dataset.index = String(index);
+  tokenInput.placeholder = m.hasStoredToken ? '••••••••' : '';
+  tokenInput.autocomplete = 'off';
+  row.appendChild(formGroup(getMessage('options_patLabel'), tokenInput));
+
+  const ownerInput = el('input', 'mirror-owner');
+  ownerInput.type = 'text';
+  ownerInput.dataset.index = String(index);
+  ownerInput.value = m.owner || '';
+  row.appendChild(formGroup(getMessage('options_repoOwner'), ownerInput));
+
+  const repoInput = el('input', 'mirror-repo');
+  repoInput.type = 'text';
+  repoInput.dataset.index = String(index);
+  repoInput.value = m.repo || '';
+  row.appendChild(formGroup(getMessage('options_repoName'), repoInput));
+
+  const branchInput = el('input', 'mirror-branch');
+  branchInput.type = 'text';
+  branchInput.dataset.index = String(index);
+  branchInput.value = m.branch || 'main';
+  row.appendChild(formGroup(getMessage('options_branch'), branchInput));
+
+  for (const [cls, key, checked] of [
+    ['mirror-paused', 'options_mirrorsPaused', m.paused],
+    ['mirror-push-generated', 'options_mirrorsPushGenerated', m.pushGenerated],
+    ['mirror-push-settings', 'options_mirrorsPushSettings', m.pushSettings],
+  ]) {
+    const label = el('label', 'mirror-option-toggle');
+    const checkbox = el('input', cls);
+    checkbox.type = 'checkbox';
+    checkbox.dataset.index = String(index);
+    if (checked) checkbox.checked = true;
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(' ' + getMessage(key)));
+    row.appendChild(label);
+  }
+
+  const testBtn = el('button', 'btn btn-secondary btn-sm mirror-test-btn', getMessage('options_mirrorsTest'));
+  testBtn.type = 'button';
+  testBtn.dataset.index = String(index);
+  row.appendChild(testBtn);
+
+  const testResult = el('span', 'mirror-test-result');
+  testResult.dataset.index = String(index);
+  row.appendChild(testResult);
+
+  return row;
 }
 
 function readRowsFromDom() {
   mirrorRows = mirrorRows.map((row, index) => {
-    const el = mirrorsList?.querySelector(`.mirror-row[data-index="${index}"]`);
-    if (!el) return row;
-    const tokenInput = el.querySelector('.mirror-token');
+    const elRow = mirrorsList?.querySelector(`.mirror-row[data-index="${index}"]`);
+    if (!elRow) return row;
+    const tokenInput = elRow.querySelector('.mirror-token');
     const newToken = tokenInput?.value?.trim() || '';
     return {
       ...row,
-      label: el.querySelector('.mirror-label')?.value?.trim() || '',
-      gitProvider: normalizeGitProvider(el.querySelector('.mirror-provider')?.value),
-      serverUrl: el.querySelector('.mirror-server')?.value?.trim() || '',
-      owner: el.querySelector('.mirror-owner')?.value?.trim() || '',
-      repo: el.querySelector('.mirror-repo')?.value?.trim() || '',
-      branch: el.querySelector('.mirror-branch')?.value?.trim() || 'main',
-      paused: el.querySelector('.mirror-paused')?.checked || false,
-      pushGenerated: el.querySelector('.mirror-push-generated')?.checked || false,
-      pushSettings: el.querySelector('.mirror-push-settings')?.checked || false,
+      label: elRow.querySelector('.mirror-label')?.value?.trim() || '',
+      gitProvider: normalizeGitProvider(elRow.querySelector('.mirror-provider')?.value),
+      serverUrl: elRow.querySelector('.mirror-server')?.value?.trim() || '',
+      owner: elRow.querySelector('.mirror-owner')?.value?.trim() || '',
+      repo: elRow.querySelector('.mirror-repo')?.value?.trim() || '',
+      branch: elRow.querySelector('.mirror-branch')?.value?.trim() || 'main',
+      paused: elRow.querySelector('.mirror-paused')?.checked || false,
+      pushGenerated: elRow.querySelector('.mirror-push-generated')?.checked || false,
+      pushSettings: elRow.querySelector('.mirror-push-settings')?.checked || false,
       token: newToken,
       hasStoredToken: row.hasStoredToken || !!newToken,
     };
@@ -122,7 +194,10 @@ function readRowsFromDom() {
 
 function renderMirrors() {
   if (!mirrorsList) return;
-  mirrorsList.innerHTML = mirrorRows.map((m, i) => mirrorRowHtml(m, i)).join('');
+  clearElement(mirrorsList);
+  for (let i = 0; i < mirrorRows.length; i++) {
+    mirrorsList.appendChild(buildMirrorRow(mirrorRows[i], i));
+  }
   mirrorsList.querySelectorAll('.mirror-remove-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       readRowsFromDom();

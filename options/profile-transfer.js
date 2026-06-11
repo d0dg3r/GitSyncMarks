@@ -3,6 +3,7 @@
  */
 
 import { getMessage } from '../lib/i18n.js';
+import { clearElement } from '../lib/dom-utils.js';
 import { getProfiles, getActiveProfileId } from '../lib/profile-manager.js';
 
 const transferDialog = document.getElementById('profile-transfer-dialog');
@@ -147,7 +148,7 @@ async function populateTransferSelects() {
   const activeId = await getActiveProfileId();
   const fill = (select) => {
     if (!select) return;
-    select.innerHTML = '';
+    clearElement(select);
     for (const [id, p] of Object.entries(profiles)) {
       const opt = document.createElement('option');
       opt.value = id;
