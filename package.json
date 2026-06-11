@@ -1,6 +1,6 @@
 {
   "name": "gitsyncmarks",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "private": true,
   "description": "Bookmark sync via GitHub, GitLab, Codeberg, Gitea & more. Linkwarden, Smart Search, Companion App. Direct, secure, private.",
   "engines": {
@@ -14,6 +14,7 @@
     "generate-screenshots": "node scripts/generate-screenshots.js",
     "screenshots": "npm run build:chrome && npm run generate-screenshots",
     "lint": "npx eslint .",
+    "lint:amo": "addons-linter build/firefox --metadata-json manifest.firefox.json",
     "typecheck": "tsc -p jsconfig.json --noEmit",
     "test:unit": "node --test test/*.test.js",
     "test:e2e": "npm run build:chrome && npx playwright test",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "addons-linter": "^7.14.0",
     "@playwright/test": "^1.60.0",
     "@types/chrome": "^0.1.43",
     "dotenv": "^17.4.2",

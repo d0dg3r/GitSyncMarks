@@ -7,6 +7,7 @@
  */
 
 import { initI18n, applyI18n, getMessage } from './lib/i18n.js';
+import { clearElement } from './lib/dom-utils.js';
 import { initTheme } from './lib/theme.js';
 import { initUiDensity } from './lib/ui-density.js';
 import { LinkwardenAPI } from './lib/linkwarden-api.js';
@@ -159,7 +160,7 @@ function removeTag(name) {
 }
 
 function renderTagChips() {
-    tagChips.innerHTML = '';
+    clearElement(tagChips);
     for (const tag of selectedTags) {
         const chip = document.createElement('span');
         chip.className = 'lw-tag-chip';
@@ -175,7 +176,7 @@ function renderTagChips() {
 }
 
 function renderTagCloud(filter = '') {
-    tagCloud.innerHTML = '';
+    clearElement(tagCloud);
     const q = filter.toLowerCase().trim();
 
     // Show all existing tags (filtered, excluding already selected)

@@ -1,4 +1,5 @@
 import { initI18n, applyI18n, getMessage } from './lib/i18n.js';
+import { clearElement } from './lib/dom-utils.js';
 import { initTheme } from './lib/theme.js';
 import { initUiDensity } from './lib/ui-density.js';
 
@@ -72,7 +73,7 @@ function highlightText(text, query) {
 }
 
 function renderResults(items, query) {
-  searchResults.innerHTML = '';
+  clearElement(searchResults);
   currentItems = items;
   selectedIndex = -1;
   searchInput.removeAttribute('aria-activedescendant');

@@ -4,6 +4,7 @@
  */
 
 import { initI18n, applyI18n, getMessage } from './lib/i18n.js';
+import { clearElement } from './lib/dom-utils.js';
 import { formatSyncProgress, runSyncPortAction } from './lib/sync-progress.js';
 import { initTheme } from './lib/theme.js';
 import { initUiDensity } from './lib/ui-density.js';
@@ -84,7 +85,7 @@ function updateUI(status) {
   const profiles = status.profiles || [];
   const activeProfileId = status.activeProfileId;
   if (profiles.length >= 2) {
-    profileSelect.innerHTML = '';
+    clearElement(profileSelect);
     for (const p of profiles) {
       const opt = document.createElement('option');
       opt.value = p.id;
@@ -95,7 +96,7 @@ function updateUI(status) {
     profileSelect.style.display = '';
   } else {
     profileSelect.style.display = 'none';
-    profileSelect.innerHTML = '';
+    clearElement(profileSelect);
   }
 
   // Status message
@@ -132,7 +133,7 @@ function updateUI(status) {
       repo: status.repoName,
       commitSha: status.lastCommitSha,
     });
-    lastCommitWrap.innerHTML = '';
+    clearElement(lastCommitWrap);
     lastCommitWrap.appendChild(document.createTextNode(getMessage('popup_lastCommit') + ' '));
     const a = document.createElement('a');
     a.href = url;
@@ -143,7 +144,7 @@ function updateUI(status) {
     lastCommitWrap.appendChild(a);
     lastCommitWrap.style.display = '';
   } else {
-    lastCommitWrap.innerHTML = '';
+    clearElement(lastCommitWrap);
     lastCommitWrap.style.display = 'none';
   }
 
@@ -233,7 +234,7 @@ function showDemoUI() {
     getMessage('popup_minAgo', [5]),
   ]);
   lastDataChangeEl.style.display = '';
-  lastCommitWrap.innerHTML = '';
+  clearElement(lastCommitWrap);
   lastCommitWrap.appendChild(document.createTextNode(getMessage('popup_lastCommit') + ' '));
   const a = document.createElement('a');
   a.href = 'https://github.com/example/repo/commit/abc1234';

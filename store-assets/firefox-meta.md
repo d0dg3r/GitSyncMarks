@@ -59,6 +59,8 @@ No.
 
 No shared account needed. Create a GitHub PAT at github.com/settings/tokens (repo scope), create an empty repo, then enter both in the extension settings. Click "Sync Now" to test.
 
+**Reviewer note (3.0.1):** No test account required. This patch replaces `innerHTML` with safe DOM APIs for AMO linter compliance only; behavior is unchanged from 3.0.0.
+
 ---
 
 ## Distribution

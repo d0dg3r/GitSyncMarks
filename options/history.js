@@ -4,6 +4,7 @@
  */
 
 import { getMessage } from '../lib/i18n.js';
+import { clearElement } from '../lib/dom-utils.js';
 import { extractClientIdFromCommitMessage } from '../lib/sync-commit-message.js';
 
 const historyLoadBtn = document.getElementById('history-load-btn');
@@ -106,7 +107,7 @@ function setRestoreIconButtonArmed(button, shortLabel, fullAriaLabel) {
 }
 
 function renderHistoryList(commits) {
-  historyList.innerHTML = '';
+  clearElement(historyList);
   if (commits.length === 0) {
     historyList.style.display = 'none';
     historyStatus.textContent = getMessage('options_historyEmpty') || 'No commits found.';
@@ -248,7 +249,7 @@ async function runRestoreFromCommit(sha, wrap) {
   const diffSlot = wrap?.querySelector('.history-item-diff');
   if (diffSlot) {
     diffSlot.style.display = 'none';
-    diffSlot.innerHTML = '';
+    clearElement(diffSlot);
     diffSlot.setAttribute('aria-hidden', 'true');
   }
 
@@ -268,7 +269,7 @@ function closeOtherDiffPanels(activeWrap) {
     const slot = w.querySelector('.history-item-diff');
     if (slot) {
       slot.style.display = 'none';
-      slot.innerHTML = '';
+      clearElement(slot);
       slot.setAttribute('aria-hidden', 'true');
     }
   });
@@ -277,7 +278,7 @@ function closeOtherDiffPanels(activeWrap) {
 export function closeAllInlineDiffPanels() {
   historyList?.querySelectorAll('.history-item-diff').forEach((el) => {
     el.style.display = 'none';
-    el.innerHTML = '';
+    clearElement(el);
     el.setAttribute('aria-hidden', 'true');
   });
 }
@@ -286,7 +287,7 @@ function hideInlineDiff(wrap) {
   const slot = wrap?.querySelector('.history-item-diff');
   if (!slot) return;
   slot.style.display = 'none';
-  slot.innerHTML = '';
+  clearElement(slot);
   slot.setAttribute('aria-hidden', 'true');
 }
 
@@ -302,7 +303,7 @@ async function loadDiffPreview(sha, wrap) {
   const loading = document.createElement('p');
   loading.className = 'history-diff-loading';
   loading.textContent = getMessage('options_historyDiffLoading') || 'Loading preview…';
-  diffSlot.innerHTML = '';
+  clearElement(diffSlot);
   diffSlot.appendChild(loading);
 
   try {
@@ -324,7 +325,7 @@ function renderDiffInto(diffSlot, wrap, diff, sha) {
   const { summary, added, removed, changed } = diff;
   const total = summary.added + summary.removed + summary.changed;
 
-  diffSlot.innerHTML = '';
+  clearElement(diffSlot);
   const inner = document.createElement('div');
   inner.className = 'history-item-diff-inner';
 

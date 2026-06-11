@@ -4,6 +4,7 @@
  */
 
 import { getMessage } from '../lib/i18n.js';
+import { clearElement } from '../lib/dom-utils.js';
 import { createConnectionApi, ensureProviderHostPermission, normalizeGitProvider } from '../lib/connection-settings.js';
 import { getProviderCaps } from '../lib/git-provider-common.js';
 import {
@@ -356,7 +357,7 @@ function populateWizardSyncModeSelect() {
     wizardState.remoteBookmarkCount
   );
   const previous = onboardingWizardSyncModeSelect.value;
-  onboardingWizardSyncModeSelect.innerHTML = '';
+  clearElement(onboardingWizardSyncModeSelect);
   for (const mode of modes) {
     const opt = document.createElement('option');
     opt.value = mode;

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.1] - 2026-06-08
+
+### Fixed
+- **AMO validation**: Replaced all `innerHTML` assignments in extension code with safe DOM APIs (`lib/dom-utils.js`: `clearElement`, `setTrustedHtml`; mirrors UI rebuilt with `createElement`). No functional change. Local gate: `npm run lint:amo` (Mozilla `addons-linter`).
+
 ## [3.0.0] - 2026-06-08 (*GLaDOS*)
 
 Major release: multi-provider Git sync (GitHub, GitLab, Codeberg, Gitea family), Bitwarden / Vaultwarden backup to Git, nested-card UI, profile transfer, push mirrors, live sync progress, and full 12-language store listings. Builds on the 2.x foundation (three-way merge, Linkwarden, Smart Search, sync history, context menu, settings sync). Pre-releases: `v3.0.0-beta.1` … `v3.0.0-beta.7`.
