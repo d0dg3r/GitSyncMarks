@@ -8,7 +8,7 @@ Language-specific files: chrome-{lang}.md (e.g. chrome-en.md, chrome-de.md, ...)
 ## Privacy
 
 ### Single Purpose
-Sync browser bookmarks with GitHub, GitLab, Codeberg, Gitea, Forgejo, or Gogs.
+Sync browser bookmarks with the user's Git repository (hosted or self-hosted).
 
 ### Privacy Policy URL
 https://github.com/d0dg3r/GitSyncMarks/blob/main/PRIVACY.md
@@ -58,6 +58,8 @@ No.
 ### Additional Instructions
 
 No shared account needed. Create a GitHub PAT at github.com/settings/tokens (repo scope), create an empty repo, then enter both in the extension settings. Click "Sync Now" to test.
+
+**Reviewer note (3.0.2):** Listing and manifest descriptions updated to remove excessive provider keyword repetition (prior rejection Yellow Argon). Multi-provider support unchanged; described generically.
 
 ---
 

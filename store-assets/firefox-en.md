@@ -5,14 +5,14 @@
 GitSyncMarks
 
 ### Summary (max 250 characters)
-Bookmark sync via GitHub, GitLab, Codeberg, Gitea & more. Linkwarden, Smart Search, Bitwarden backup, guided wizard. Bidirectional, secure, private. Full Firefox support. No middleman.
+Bookmark sync to your Git repository. Linkwarden, Smart Search, Bitwarden backup, guided wizard. Bidirectional, secure, private. Full Firefox support. No middleman.
 
 ### Detailed Description
-GitSyncMarks bidirectionally synchronizes your bookmarks with GitHub, GitLab, Codeberg, Gitea, Forgejo, or Gogs. No middleman, no third-party servers – your data remains completely under your control.
+GitSyncMarks bidirectionally synchronizes your bookmarks with your own Git repository — major hosted platforms and self-hosted Git servers. No middleman, no third-party servers – your data remains completely under your control.
 
 Highlights
 
-- Multi-Provider Git Sync: GitHub, GitLab, Codeberg, Gitea, Forgejo, or Gogs — each profile can use its own provider and server URL.
+- Multi-Provider Git Sync: Connect GitHub, GitLab, or self-hosted Git — each profile can use its own provider and server URL.
 - Profile Transfer & Push Mirrors: Copy bookmarks between profiles (replace or merge); optional push-only backup remotes after each sync.
 - Live Sync Progress: Step text during push, pull, and profile switch (e.g. `3 / 12 files` or `1 of 3` steps).
 - Bitwarden / Vaultwarden Backup to Git: Store password-protected vault exports in your repo with optional extra encryption; list, download, or delete remote backups.
@@ -22,7 +22,7 @@ Highlights
 - Linkwarden Synergy: Save pages or links directly to your Linkwarden instance — viewport screenshots, collection sync, and predefined tags.
 - Smart Search: Dedicated, lightning-fast bookmark search with light/dark themes and full keyboard navigation.
 - Guided Setup Wizard: Connection check only validates access; you choose pull, merge/sync, push, folder setup, or skip — with confirmation before anything is written to the repository.
-- Codeberg / Gitea Performance: Fast git tree + blob reads and single-commit pushes on Gitea-family hosts (Contents API fallback when needed).
+- Self-Hosted Git Performance: Fast git tree + blob reads and single-commit pushes on compatible hosts (Contents API fallback when needed).
 - Context Menu: Quick folders, Search Bookmarks popup, Open All from Folder, favicon copy/download, and profile actions from right-click.
 - Settings Sync to Git: Encrypted settings backup (`settings.enc`) in your repository — share configuration across devices.
 

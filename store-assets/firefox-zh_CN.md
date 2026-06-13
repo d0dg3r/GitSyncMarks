@@ -5,14 +5,14 @@
 GitSyncMarks
 
 ### Summary (max 250 characters)
-通过 GitHub、GitLab、Codeberg、Gitea 等同步书签。Linkwarden、Smart Search、Bitwarden 备份、引导式向导。双向、安全、私密。完整 Firefox 支持。无中间商。
+书签同步到您的 Git 仓库。Linkwarden、Smart Search、Bitwarden 备份、引导式向导。双向、安全、私密。完整 Firefox 支持。无中间商。
 
 ### Detailed Description
-GitSyncMarks 与 GitHub、GitLab、Codeberg、Gitea、Forgejo 或 Gogs 双向同步您的书签。无中间商，无第三方服务器 – 您的数据完全由您掌控。
+GitSyncMarks 与您的 Git 仓库双向同步书签 — 主流托管平台和自托管 Git 服务器。无中间商，无第三方服务器 – 您的数据完全由您掌控。
 
 亮点
 
-- 多提供商 Git 同步：GitHub、GitLab、Codeberg、Gitea、Forgejo 或 Gogs — 每个配置文件可使用各自的提供商和服务器 URL。
+- 多提供商 Git 同步：连接 GitHub、GitLab 或自托管 Git — 每个配置文件可使用各自的提供商和服务器 URL。
 - 配置文件转移与推送镜像：在配置文件之间复制书签（替换或合并）；每次同步后可选仅推送备份远程。
 - 实时同步进度：推送、拉取和切换配置文件时显示步骤文本（如 `3 / 12 文件` 或 `1 / 3` 步骤）。
 - Bitwarden / Vaultwarden Git 备份：在仓库中存储密码保护的保险库导出，可选额外加密；列出、下载或删除远程备份。
@@ -22,7 +22,7 @@ GitSyncMarks 与 GitHub、GitLab、Codeberg、Gitea、Forgejo 或 Gogs 双向同
 - Linkwarden 协同：将页面或链接直接保存到 Linkwarden 实例 — 视口截图、集合同步和预定义标签。
 - Smart Search：专用极速书签搜索，支持浅色/深色主题和完整键盘导航。
 - 引导式设置向导：连接测试仅验证访问权限；您选择拉取、合并/同步、推送、文件夹设置或跳过 — 写入仓库前需确认。
-- Codeberg / Gitea 性能：Gitea 系列主机上快速的 git tree + blob 读取和单提交推送（必要时 Contents API 回退）。
+- 自托管 Git 性能：兼容主机上快速的 git tree + blob 读取和单提交推送（必要时 Contents API 回退）。
 - 上下文菜单：快速文件夹、书签搜索弹出窗口、打开文件夹全部、favicon 复制/下载及右键配置文件操作。
 - 设置 Git 同步：仓库中的加密设置备份（`settings.enc`）— 跨设备共享配置。
 

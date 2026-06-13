@@ -5,14 +5,14 @@
 GitSyncMarks
 
 ### Summary (max 250 characters)
-Lesezeichen-Sync via GitHub, GitLab, Codeberg, Gitea & mehr. Linkwarden, Smart Search, Bitwarden-Backup, Setup-Assistent. Bidirektional, sicher, privat. Volle Firefox-Unterstützung. Ohne Mittelsmann.
+Lesezeichen-Sync zu Ihrem Git-Repository. Linkwarden, Smart Search, Bitwarden-Backup, Setup-Assistent. Bidirektional, sicher, privat. Volle Firefox-Unterstützung. Ohne Mittelsmann.
 
 ### Detailed Description
-GitSyncMarks synchronisiert Ihre Lesezeichen bidirektional mit GitHub, GitLab, Codeberg, Gitea, Forgejo oder Gogs. Ohne Mittelsmann, ohne Drittserver – Ihre Daten bleiben vollständig unter Ihrer Kontrolle.
+GitSyncMarks synchronisiert Ihre Lesezeichen bidirektional mit Ihrem eigenen Git-Repository — große Hosting-Plattformen und selbst gehostete Git-Server. Ohne Mittelsmann, ohne Drittserver – Ihre Daten bleiben vollständig unter Ihrer Kontrolle.
 
 Highlights
 
-- Multi-Provider Git-Sync: GitHub, GitLab, Codeberg, Gitea, Forgejo oder Gogs — jedes Profil kann eigenen Anbieter und Server-URL nutzen.
+- Multi-Provider Git-Sync: Verbinden Sie GitHub, GitLab oder selbst gehostetes Git — jedes Profil kann eigenen Anbieter und Server-URL nutzen.
 - Profil-Transfer & Push-Mirrors: Lesezeichen zwischen Profilen kopieren (ersetzen oder zusammenführen); optionale Push-only-Backup-Remotes nach jedem Sync.
 - Live-Sync-Fortschritt: Schritttext beim Push, Pull und Profilwechsel (z. B. `3 / 12 Dateien` oder `1 von 3` Schritte).
 - Bitwarden / Vaultwarden Backup zu Git: Passwortgeschützte Vault-Exporte im Repo speichern, optional extra verschlüsselt; Remote-Backups auflisten, herunterladen oder löschen.
@@ -22,7 +22,7 @@ Highlights
 - Linkwarden-Synergie: Seiten oder Links direkt in Ihre Linkwarden-Instanz speichern — Viewport-Screenshots, Kollektions-Sync und vordefinierte Tags.
 - Smart Search: Dedizierte, blitzschnelle Lesezeichen-Suche mit Hell/Dunkel-Themes und vollständiger Tastaturbedienung.
 - Geführter Setup-Assistent: Verbindungstest prüft nur den Zugriff; Sie wählen Pull, Merge/Sync, Push, Ordner-Setup oder Überspringen — mit Bestätigung vor jedem Schreibzugriff aufs Repository.
-- Codeberg / Gitea Performance: Schnelle Git-Tree- und Blob-Lesevorgänge sowie Single-Commit-Pushes auf Gitea-Familie-Hosts (Contents-API-Fallback bei Bedarf).
+- Self-Hosted-Git-Performance: Schnelle Git-Tree- und Blob-Lesevorgänge sowie Single-Commit-Pushes auf kompatiblen Hosts (Contents-API-Fallback bei Bedarf).
 - Kontextmenü: Schnellordner, Lesezeichen-Suche-Popup, Alle aus Ordner öffnen, Favicon kopieren/herunterladen und Profilaktionen per Rechtsklick.
 - Einstellungs-Sync zu Git: Verschlüsseltes Einstellungs-Backup (`settings.enc`) im Repository — Konfiguration geräteübergreifend teilen.
 
