@@ -188,10 +188,10 @@
     "message": "지금 동기화"
   },
   "extDescription": {
-    "message": "GitHub, GitLab, Codeberg, Gitea 등으로 북마크 동기화. Linkwarden, 스마트 검색, 컴패니언 앱. 직접, 안전, 비공개."
+    "message": "Git 저장소로 북마크 동기화. Linkwarden, 스마트 검색, 컴패니언 앱. 직접, 안전, 비공개."
   },
   "extDescriptionFirefox": {
-    "message": "GitHub, GitLab, Codeberg, Gitea 등으로 북마크 동기화. Linkwarden, Smart Search, Bitwarden 백업, 안내 마법사. 양방향, 안전, 비공개. Firefox 완전 지원. 중개 없음."
+    "message": "Git 저장소로 북마크 동기화. Linkwarden, Smart Search, Bitwarden 백업, 안내 마법사. 양방향, 안전, 비공개."
   },
   "extName": {
     "message": "GitSyncMarks"

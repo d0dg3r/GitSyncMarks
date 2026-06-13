@@ -8,7 +8,7 @@ Language-specific files: firefox-{lang}.md (e.g. firefox-en.md, firefox-de.md, .
 ## Privacy
 
 ### Single Purpose
-Sync browser bookmarks with GitHub, GitLab, Codeberg, Gitea, Forgejo, or Gogs.
+Sync browser bookmarks with the user's Git repository (hosted or self-hosted).
 
 ### Privacy Policy URL
 https://github.com/d0dg3r/GitSyncMarks/blob/main/PRIVACY.md

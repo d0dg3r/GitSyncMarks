@@ -188,10 +188,10 @@
     "message": "Şimdi Senkronize Et"
   },
   "extDescription": {
-    "message": "GitHub, GitLab, Codeberg, Gitea ve daha fazlası ile yer imi senkronizasyonu. Linkwarden, Akıllı Arama, Companion App. Doğrudan, güvenli, özel."
+    "message": "Git deposuna yer imi senkronizasyonu. Linkwarden, Akıllı Arama, Companion App. Doğrudan, güvenli, özel."
   },
   "extDescriptionFirefox": {
-    "message": "GitHub, GitLab, Codeberg, Gitea ve daha fazlası ile yer imi senkronu. Linkwarden, Smart Search, Bitwarden yedek, rehberli sihirbaz. Çift yönlü, güvenli, özel. Tam Firefox desteği. Aracı yok."
+    "message": "Git deposuna yer imi senkronu. Linkwarden, Smart Search, Bitwarden yedek, rehberli sihirbaz. Çift yönlü, güvenli, özel."
   },
   "extName": {
     "message": "GitSyncMarks"

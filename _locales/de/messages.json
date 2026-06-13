@@ -188,10 +188,10 @@
     "message": "Jetzt synchronisieren"
   },
   "extDescription": {
-    "message": "Lesezeichen-Sync via GitHub, GitLab, Codeberg, Gitea & mehr. Linkwarden, Smart Search, Companion App. Direkt, sicher, privat."
+    "message": "Lesezeichen-Sync zu Ihrem Git-Repository. Linkwarden, Smart Search, Companion App. Direkt, sicher, privat."
   },
   "extDescriptionFirefox": {
-    "message": "Lesezeichen-Sync via GitHub, GitLab, Codeberg, Gitea & mehr. Linkwarden, Smart Search, Bitwarden-Backup, Setup-Assistent. Bidirektional, sicher, privat. Volle Firefox-Unterstützung. Ohne Mittelsmann."
+    "message": "Lesezeichen-Sync zu Ihrem Git-Repository. Linkwarden, Smart Search, Bitwarden-Backup, Setup-Assistent. Bidirektional, sicher, privat."
   },
   "extName": {
     "message": "GitSyncMarks"

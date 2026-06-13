@@ -5,14 +5,14 @@
 GitSyncMarks
 
 ### Summary (max 250 characters)
-Sync favoris via GitHub, GitLab, Codeberg, Gitea & plus. Linkwarden, Smart Search, sauvegarde Bitwarden, assistant guidé. Bidirectionnel, sécurisé, privé. Support Firefox complet. Sans intermédiaire.
+Sync favoris vers votre dépôt Git. Linkwarden, Smart Search, sauvegarde Bitwarden, assistant guidé. Bidirectionnel, sécurisé, privé. Support Firefox complet. Sans intermédiaire.
 
 ### Detailed Description
-GitSyncMarks synchronise vos favoris de manière bidirectionnelle avec GitHub, GitLab, Codeberg, Gitea, Forgejo ou Gogs. Aucun intermédiaire, aucun serveur tiers – vos données restent entièrement sous votre contrôle.
+GitSyncMarks synchronise vos favoris de manière bidirectionnelle avec votre propre dépôt Git — grandes plateformes hébergées et serveurs Git auto-hébergés. Aucun intermédiaire, aucun serveur tiers – vos données restent entièrement sous votre contrôle.
 
 Points forts
 
-- Sync Git multi-fournisseur : GitHub, GitLab, Codeberg, Gitea, Forgejo ou Gogs — chaque profil peut utiliser son propre fournisseur et URL de serveur.
+- Sync Git multi-fournisseur : Connectez GitHub, GitLab ou Git auto-hébergé — chaque profil peut utiliser son propre fournisseur et URL de serveur.
 - Transfert de profil & miroirs push : Copiez les favoris entre profils (remplacer ou fusionner) ; remotes de sauvegarde push-only optionnels après chaque sync.
 - Progression sync en direct : Texte d'étape pendant push, pull et changement de profil (ex. `3 / 12 fichiers` ou `1 sur 3` étapes).
 - Sauvegarde Bitwarden / Vaultwarden vers Git : Stockez des exports de coffre protégés par mot de passe dans votre dépôt, chiffrement supplémentaire optionnel ; lister, télécharger ou supprimer les sauvegardes distantes.
@@ -22,7 +22,7 @@ Points forts
 - Synergie Linkwarden : Sauvegardez pages ou liens vers votre instance Linkwarden — captures viewport, sync collections et tags prédéfinis.
 - Smart Search : Recherche de favoris dédiée et ultra-rapide avec thèmes clair/sombre et navigation clavier complète.
 - Assistant de configuration guidé : Le test de connexion valide uniquement l'accès ; vous choisissez pull, merge/sync, push, configuration dossiers ou ignorer — avec confirmation avant toute écriture.
-- Performance Codeberg / Gitea : Lectures git tree + blob rapides et pushes single-commit sur hôtes Gitea (fallback Contents API si nécessaire).
+- Performance Git auto-hébergé : Lectures git tree + blob rapides et pushes single-commit sur hôtes compatibles (fallback Contents API si nécessaire).
 - Menu contextuel : Dossiers rapides, popup recherche favoris, Ouvrir tout du dossier, copie/téléchargement favicon et actions profil au clic droit.
 - Sync paramètres vers Git : Sauvegarde chiffrée des paramètres (`settings.enc`) dans votre dépôt — partagez la configuration entre appareils.
 

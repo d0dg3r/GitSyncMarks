@@ -188,10 +188,10 @@
     "message": "今すぐ同期"
   },
   "extDescription": {
-    "message": "GitHub、GitLab、Codeberg、Gitea などでブックマーク同期。Linkwarden、スマート検索、コンパニオンアプリ。直接、安全、プライベート。"
+    "message": "Git リポジトリへのブックマーク同期。Linkwarden、スマート検索、コンパニオンアプリ。直接、安全、プライベート。"
   },
   "extDescriptionFirefox": {
-    "message": "GitHub、GitLab、Codeberg、Gitea などでブックマーク同期。Linkwarden、Smart Search、Bitwarden バックアップ、ガイド付きウィザード。双方向、安全、プライベート。Firefox 完全対応。中間サーバーなし。"
+    "message": "Git リポジトリへのブックマーク同期。Linkwarden、Smart Search、Bitwarden バックアップ、ガイド付きウィザード。双方向、安全、プライベート。"
   },
   "extName": {
     "message": "GitSyncMarks"

@@ -5,14 +5,14 @@
 GitSyncMarks
 
 ### Summary (max 250 characters)
-GitHub, GitLab, Codeberg, Gitea ve daha fazlasıyla yer imi senkronu. Linkwarden, Smart Search, Bitwarden yedek, rehberli sihirbaz. Çift yönlü, güvenli, özel. Tam Firefox desteği. Aracı yok.
+Git deposuna yer imi senkronu. Linkwarden, Smart Search, Bitwarden yedek, rehberli sihirbaz. Çift yönlü, güvenli, özel. Tam Firefox desteği. Aracı yok.
 
 ### Detailed Description
-GitSyncMarks yer imlerinizi GitHub, GitLab, Codeberg, Gitea, Forgejo veya Gogs ile çift yönlü senkronize eder. Aracı yok, üçüncü taraf sunucu yok – verileriniz tamamen sizin kontrolünüzde.
+GitSyncMarks yer imlerinizi kendi Git deponuzla çift yönlü senkronize eder — büyük barındırma platformları ve self-hosted Git sunucuları. Aracı yok, üçüncü taraf sunucu yok – verileriniz tamamen sizin kontrolünüzde.
 
 Öne Çıkanlar
 
-- Çoklu Sağlayıcı Git Senkronu: GitHub, GitLab, Codeberg, Gitea, Forgejo veya Gogs — her profil kendi sağlayıcısını ve sunucu URL'sini kullanabilir.
+- Çoklu Sağlayıcı Git Senkronu: GitHub, GitLab veya self-hosted Git bağlayın — her profil kendi sağlayıcısını ve sunucu URL'sini kullanabilir.
 - Profil Aktarımı ve Push Aynaları: Profiller arası yer imi kopyalama (değiştir veya birleştir); her senkron sonrası isteğe bağlı push-only yedek remote'lar.
 - Canlı Senkron İlerlemesi: Push, pull ve profil değişiminde adım metni (örn. `3 / 12 dosya` veya `1 / 3` adım).
 - Bitwarden / Vaultwarden Git Yedekleme: Parola korumalı vault dışa aktarmalarını depoda saklama, isteğe bağlı ek şifreleme; uzak yedekleri listeleme, indirme veya silme.
@@ -22,7 +22,7 @@ GitSyncMarks yer imlerinizi GitHub, GitLab, Codeberg, Gitea, Forgejo veya Gogs i
 - Linkwarden Sinerjisi: Sayfa veya bağlantıları Linkwarden örneğinize doğrudan kaydetme — viewport ekran görüntüleri, koleksiyon senkronu ve önceden tanımlı etiketler.
 - Smart Search: Ayrılmış, yıldırım hızında yer imi arama, açık/koyu temalar ve tam klavye navigasyonu.
 - Rehberli Kurulum Sihirbazı: Bağlantı testi yalnızca erişimi doğrular; pull, merge/sync, push, klasör kurulumu veya atlamayı seçersiniz — depoya yazmadan önce onay.
-- Codeberg / Gitea Performansı: Gitea ailesi sunucularda hızlı git tree + blob okuma ve tek commit push (gerekirse Contents API yedek).
+- Self-hosted Git Performansı: Uyumlu sunucularda hızlı git tree + blob okuma ve tek commit push (gerekirse Contents API yedek).
 - Bağlam Menüsü: Hızlı klasörler, yer imi arama popup'ı, Klasörden Tümünü Aç, favicon kopyala/indir ve sağ tık profil işlemleri.
 - Ayarları Git'e Senkron: Depodaki şifreli ayar yedeklemesi (`settings.enc`) — cihazlar arası yapılandırma paylaşımı.
 

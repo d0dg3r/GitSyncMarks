@@ -5,14 +5,14 @@
 GitSyncMarks
 
 ### Summary (max 250 characters)
-Sync segnalibri via GitHub, GitLab, Codeberg, Gitea e altro. Linkwarden, Smart Search, backup Bitwarden, wizard guidato. Bidirezionale, sicuro, privato. Supporto Firefox completo. Nessun intermediario.
+Sync segnalibri al tuo repository Git. Linkwarden, Smart Search, backup Bitwarden, wizard guidato. Bidirezionale, sicuro, privato. Supporto Firefox completo. Nessun intermediario.
 
 ### Detailed Description
-GitSyncMarks sincronizza i segnalibri bidirezionalmente con GitHub, GitLab, Codeberg, Gitea, Forgejo o Gogs. Nessun intermediario, nessun server di terze parti – i tuoi dati restano completamente sotto il tuo controllo.
+GitSyncMarks sincronizza i segnalibri bidirezionalmente con il tuo repository Git — grandi piattaforme ospitate e server Git self-hosted. Nessun intermediario, nessun server di terze parti – i tuoi dati restano completamente sotto il tuo controllo.
 
 In evidenza
 
-- Sync Git multi-provider: GitHub, GitLab, Codeberg, Gitea, Forgejo o Gogs — ogni profilo può usare il proprio provider e URL server.
+- Sync Git multi-provider: Connetti GitHub, GitLab o Git self-hosted — ogni profilo può usare il proprio provider e URL server.
 - Trasferimento profili e mirror push: Copia segnalibri tra profili (sostituisci o unisci); remote di backup push-only opzionali dopo ogni sync.
 - Progresso sync live: Testo di fase durante push, pull e cambio profilo (es. `3 / 12 file` o `1 di 3` passi).
 - Backup Bitwarden / Vaultwarden su Git: Archivia export del vault protetti da password nel repo, crittografia extra opzionale; elenca, scarica o elimina backup remoti.
@@ -22,7 +22,7 @@ In evidenza
 - Sinergia Linkwarden: Salva pagine o link nella tua istanza Linkwarden — screenshot viewport, sync collezioni e tag predefiniti.
 - Smart Search: Ricerca segnalibri dedicata e velocissima con temi chiaro/scuro e navigazione completa da tastiera.
 - Wizard di configurazione guidato: Il test connessione valida solo l'accesso; scegli pull, merge/sync, push, setup cartelle o salta — con conferma prima di scrivere nel repository.
-- Performance Codeberg / Gitea: Letture git tree + blob rapide e push single-commit su host Gitea (fallback Contents API se necessario).
+- Performance Git self-hosted: Letture git tree + blob rapide e push single-commit su host compatibili (fallback Contents API se necessario).
 - Menu contestuale: Cartelle rapide, popup ricerca, Apri tutto dalla cartella, copia/scarica favicon e azioni profilo con clic destro.
 - Sync impostazioni su Git: Backup crittografato impostazioni (`settings.enc`) nel repository — condividi configurazione tra dispositivi.
 

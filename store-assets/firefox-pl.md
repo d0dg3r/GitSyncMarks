@@ -5,14 +5,14 @@
 GitSyncMarks
 
 ### Summary (max 250 characters)
-Sync zakładek via GitHub, GitLab, Codeberg, Gitea i więcej. Linkwarden, Smart Search, backup Bitwarden, kreator. Dwukierunkowy, bezpieczny, prywatny. Pełne wsparcie Firefox. Bez pośredników.
+Sync zakładek do repozytorium Git. Linkwarden, Smart Search, backup Bitwarden, kreator. Dwukierunkowy, bezpieczny, prywatny. Pełne wsparcie Firefox. Bez pośredników.
 
 ### Detailed Description
-GitSyncMarks synchronizuje zakładki dwukierunkowo z GitHub, GitLab, Codeberg, Gitea, Forgejo lub Gogs. Bez pośredników, bez serwerów stron trzecich – Twoje dane pozostają w pełni pod Twoją kontrolą.
+GitSyncMarks synchronizuje zakładki dwukierunkowo z własnym repozytorium Git — duże platformy hostingowe i self-hosted serwery Git. Bez pośredników, bez serwerów stron trzecich – Twoje dane pozostają w pełni pod Twoją kontrolą.
 
 Najważniejsze
 
-- Sync Git multi-provider: GitHub, GitLab, Codeberg, Gitea, Forgejo lub Gogs — każdy profil może używać własnego providera i URL serwera.
+- Sync Git multi-provider: Połącz GitHub, GitLab lub self-hosted Git — każdy profil może używać własnego providera i URL serwera.
 - Transfer profili i mirrory push: Kopiowanie zakładek między profilami (zamiana lub scalenie); opcjonalne push-only backup remotes po każdym sync.
 - Postęp sync na żywo: Tekst kroku podczas push, pull i zmiany profilu (np. `3 / 12 plików` lub `1 z 3` kroków).
 - Backup Bitwarden / Vaultwarden do Git: Przechowywanie eksportów vault chronionych hasłem w repo, opcjonalne dodatkowe szyfrowanie; listowanie, pobieranie lub usuwanie zdalnych backupów.
@@ -22,7 +22,7 @@ Najważniejsze
 - Synergia Linkwarden: Zapisywanie stron lub linków bezpośrednio do instancji Linkwarden — zrzuty viewport, sync kolekcji i predefiniowane tagi.
 - Smart Search: Dedykowane, błyskawiczne wyszukiwanie zakładek z motywami jasnym/ciemnym i pełną nawigacją klawiaturową.
 - Kreator konfiguracji: Test połączenia tylko weryfikuje dostęp; wybierasz pull, merge/sync, push, konfigurację folderów lub pomiń — z potwierdzeniem przed zapisem do repozytorium.
-- Wydajność Codeberg / Gitea: Szybkie odczyty git tree + blob i single-commit push na hostach Gitea (fallback Contents API w razie potrzeby).
+- Wydajność self-hosted Git: Szybkie odczyty git tree + blob i single-commit push na kompatybilnych hostach (fallback Contents API w razie potrzeby).
 - Menu kontekstowe: Szybkie foldery, popup wyszukiwania, Otwórz wszystko z folderu, kopiowanie/pobieranie favicon i akcje profilu z prawego kliknięcia.
 - Sync ustawień do Git: Zaszyfrowany backup ustawień (`settings.enc`) w repozytorium — udostępnianie konfiguracji między urządzeniami.
 
