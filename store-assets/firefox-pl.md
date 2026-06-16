@@ -12,10 +12,10 @@ GitSyncMarks synchronizuje zakładki dwukierunkowo z własnym repozytorium Git �
 
 Najważniejsze
 
-- Sync Git multi-provider: Połącz GitHub, GitLab lub self-hosted Git — każdy profil może używać własnego providera i URL serwera.
+- Sync Git multi-provider: Połącz swój host Git lub serwer self-hosted — każdy profil używa własnego providera i URL. Pełna lista providerów: https://github.com/d0dg3r/GitSyncMarks/blob/main/docs/PROVIDERS.md
 - Transfer profili i mirrory push: Kopiowanie zakładek między profilami (zamiana lub scalenie); opcjonalne push-only backup remotes po każdym sync.
 - Postęp sync na żywo: Tekst kroku podczas push, pull i zmiany profilu (np. `3 / 12 plików` lub `1 z 3` kroków).
-- Backup Bitwarden / Vaultwarden do Git: Przechowywanie eksportów vault chronionych hasłem w repo, opcjonalne dodatkowe szyfrowanie; listowanie, pobieranie lub usuwanie zdalnych backupów.
+- Backup zgodny z Bitwarden do Git: Przechowywanie eksportów vault chronionych hasłem w repo, opcjonalne dodatkowe szyfrowanie; listowanie, pobieranie lub usuwanie zdalnych backupów.
 - UI nested-card: Jaśniejsze grupowane sekcje w Opcjach, kreatorze, popup i wyszukiwaniu.
 - Historia sync i przywracanie: Przeglądanie przeszłych commitów, podgląd zmian przez diff i przywracanie poprzedniego stanu jednym kliknięciem.
 - Czyszczenie osieroconych zdalnych: Podgląd i usuwanie zdalnych plików zakładek, których nie ma już lokalnie.
@@ -33,12 +33,12 @@ Kluczowe możliwości
 - Merge three-way: Sync klasy przemysłowej automatycznie obsługuje równoczesne zmiany na wielu urządzeniach.
 - Przechowywanie plikowe: Każda zakładka to czytelny plik JSON – idealny do wersjonowania i ręcznej edycji.
 - Wiele profili: Do 10 oddzielnych profili dla pracy, osobistego użytku lub projektów, każdy z własnym repozytorium.
-- Automatyzacja: Dodawanie zakładek przez CLI lub GitHub Actions; rozszerzenie integruje je przy następnym sync.
+- Automatyzacja: Dodawaj JSON zakładek do repozytorium przez git lub dołączony szablon GitHub Action; rozszerzenie zaimportuje je przy następnej synchronizacji.
 - Generowane pliki: README.md (przegląd), bookmarks.html (import), kanał RSS i dashy-conf.yml — opcjonalnie per plik.
 - Design i i18n: Motywy jasny, ciemny i auto-system; regulowana gęstość UI (kompaktowy / średni / duży); 12 języków.
 
 Aplikacja towarzysząca
-Użyj GitSyncMarks-App (Android, iOS, Desktop), aby zarządzać zakładkami bezpośrednio z repozytorium Git na urządzeniach mobilnych. (Uwaga: Firefox for Android nie obsługuje bezpośredniej synchronizacji zakładek przez rozszerzenia – użyj aplikacji.)
+Użyj GitSyncMarks-App (mobilne i desktop), aby zarządzać zakładkami bezpośrednio z repozytorium Git. (Uwaga: Firefox for Android nie obsługuje bezpośredniej synchronizacji zakładek przez rozszerzenia – użyj aplikacji.)
 
 GitSyncMarks jest Open Source: https://github.com/d0dg3r/GitSyncMarks
 

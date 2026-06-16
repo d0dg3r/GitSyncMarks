@@ -160,6 +160,18 @@ Files not listed in `_order.json` (e.g., manually created) are picked up automat
 
 **Orphan subfolders**: Subfolders that exist in the file map (with their own `_order.json`) but are not listed in the parent's `_order.json` are also included. All generators (README.md, bookmarks.html, feed.xml, dashy-conf.yml) and the tree builder scan for such orphans and append them. This handles manually created folders, corrupted `_order.json`, or migration from older formats.
 
+### External bookmark add
+
+Bookmarks can be added to the repository from outside the extension and imported on the next sync:
+
+1. Add a bookmark JSON file (`{ "title": ..., "url": ... }`) under a role folder, e.g. `bookmarks/toolbar/`.
+2. The role folder must contain an `_order.json` file — the tree builder (`buildFolderChildren`) only walks folders that have one. An empty array is enough; files not listed in it are picked up as orphans.
+3. Run Sync (or wait for auto-sync). The three-way merge imports the new file and normalizes its filename on the next push.
+
+Two supported paths:
+- **`git` on any host**: commit the JSON yourself. Create `_order.json` if the repo was never initialized by the extension.
+- **GitHub Action template** ([`.github/workflows/add-bookmark.yml`](../.github/workflows/add-bookmark.yml)): runs [`scripts/add-bookmark-to-repo.py`](../scripts/add-bookmark-to-repo.py), which creates the bookmark file and ensures `_index.json`, role `_order.json`, and any target subfolder entry — so it also works on a fresh, greenfield repo.
+
 ### `_index.json` — Metadata
 
 ```json

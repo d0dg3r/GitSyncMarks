@@ -12,10 +12,10 @@ GitSyncMarks 与您的 Git 仓库双向同步书签 — 主流托管平台和自
 
 亮点
 
-- 多提供商 Git 同步：连接 GitHub、GitLab 或自托管 Git — 每个配置文件可使用各自的提供商和服务器 URL。
+- 多提供商 Git 同步：连接您的 Git 主机或自托管服务器 — 每个配置文件使用各自的提供商和 URL。完整提供商列表：https://github.com/d0dg3r/GitSyncMarks/blob/main/docs/PROVIDERS.md
 - 配置文件转移与推送镜像：在配置文件之间复制书签（替换或合并）；每次同步后可选仅推送备份远程。
 - 实时同步进度：推送、拉取和切换配置文件时显示步骤文本（如 `3 / 12 文件` 或 `1 / 3` 步骤）。
-- Bitwarden / Vaultwarden Git 备份：在仓库中存储密码保护的保险库导出，可选额外加密；列出、下载或删除远程备份。
+- Bitwarden 兼容 Git 备份：在仓库中存储密码保护的保险库导出，可选额外加密；列出、下载或删除远程备份。
 - 嵌套卡片 UI：选项、设置向导、弹出窗口和搜索中更清晰的分组区域。
 - 同步历史与恢复：浏览历史提交，通过 diff 预览更改，一键恢复任何先前状态。
 - 清理远程孤立文件：预览并删除本地已不存在的远程书签文件。
@@ -33,12 +33,12 @@ GitSyncMarks 与您的 Git 仓库双向同步书签 — 主流托管平台和自
 - 三方合并：工业级同步自动处理多设备上的并发更改。
 - 单文件存储：每个书签为可读的 JSON 文件 – 适合版本控制和手动编辑。
 - 多配置文件：最多 10 个独立配置文件（工作、个人、项目），各有独立仓库。
-- 自动化：通过 CLI 或 GitHub Actions 添加书签；扩展在下次同步时自动集成。
+- 自动化：通过 git 或随附的 GitHub Action 模板将书签 JSON 添加到仓库；扩展会在下次同步时导入。
 - 生成文件：README.md（概览）、bookmarks.html（导入）、RSS 订阅和 dashy-conf.yml — 可按文件选择。
 - 设计与 i18n：浅色、深色和系统自动主题；可调 UI 密度（紧凑 / 中等 / 大）；12 种语言。
 
 配套应用
-使用 GitSyncMarks-App（Android、iOS、Desktop）在移动设备上直接从 Git 仓库管理书签。（注：Firefox for Android 不支持通过扩展直接同步书签 – 请使用应用。）
+使用 GitSyncMarks-App（移动端和桌面端）直接从 Git 仓库管理书签。（注：Firefox for Android 不支持通过扩展直接同步书签 – 请使用应用。）
 
 GitSyncMarks 是开源项目：https://github.com/d0dg3r/GitSyncMarks
 

@@ -88,7 +88,7 @@ Full-page settings (opens in tab) with five tabs. `options.js` is the entry poin
 
 1. **Git** (sub-tabs: Profile, Connection, Repos) — Profile selector (multiple profiles with separate repos); Git provider (GitHub or Gitea), token, repository, connection test, onboarding; optional Git repos folder (GitHubRepos / GiteaRepos)
 2. **Sync** — Sync profile, auto-sync, sync on start/focus, notifications; Debug Log
-3. **Files** (sub-tabs: Generated, Settings, Export/Import, Git Add, Bitwarden Backup, History) — Generated files (README.md, bookmarks.html, feed.xml, dashy-conf.yml) with Off/Manual/Auto mode; settings sync to Git (client name + Create in one row; Refresh, profile list, Import & Apply, Sync current to selected in one row; buttons disabled until client name set; password saved after Import/Sync/Create); compact export/import (bookmarks, Dashy, settings plain/encrypted via dropdown); automation guide for adding bookmarks via Git, CLI, or GitHub Actions; **Bitwarden backup** (manual encrypted export upload, optional Git wrap, remote list/download/delete, CLI snippet)
+3. **Files** (sub-tabs: Generated, Settings, Export/Import, Git Add, Bitwarden Backup, History) — Generated files (README.md, bookmarks.html, feed.xml, dashy-conf.yml) with Off/Manual/Auto mode; settings sync to Git (client name + Create in one row; Refresh, profile list, Import & Apply, Sync current to selected in one row; buttons disabled until client name set; password saved after Import/Sync/Create); compact export/import (bookmarks, Dashy, settings plain/encrypted via dropdown); automation guide for adding bookmarks via git or the GitHub Action template (the Action ensures `_index.json` and `_order.json` so greenfield repos import on the next sync); **Bitwarden backup** (manual encrypted export upload, optional Git wrap, remote list/download/delete, CLI snippet)
 4. **Help** — Quick links (Vote on backlog, Documentation, Discussions, Report Issue) as pill buttons; collapsible feature sections (Getting Started with Start setup wizard button, Profiles, GitHub Repos, Popup, Sync, Files, Notifications, Conflicts, Keyboard Shortcuts)
 5. **About** — Version, links, license, mobile app
 
@@ -207,7 +207,7 @@ Loaded after `ui-density.css` and before each page stylesheet on options, popup,
 
 ### `lib/whats-new.js` / `lib/whats-new-ui.js` — Post-update release notes
 
-On `chrome.runtime.onInstalled` with `reason === 'update'`, [background.js](../background.js) writes `showWhatsNewForVersion` (manifest version string) to `chrome.storage.local`. [popup.js](../popup.js) and [options.js](../options.js) call `mountWhatsNewIfPending()` from `whats-new-ui.js`, which shows a dismissible overlay (styled by [whats-new.css](../whats-new.css)) when the pending version matches the manifest and `whats-new.js` has copy for that version. If `.popup` is present, the overlay gets `whats-new-overlay--popup` for a compact, no-scroll layout; the options page uses the default larger panel. Closing the overlay removes the storage key. New installs do not set the flag, so onboarding stays first. Options defers the overlay until the onboarding wizard is hidden (MutationObserver on `#onboarding-wizard-screen` style).
+On `chrome.runtime.onInstalled` with `reason === 'update'`, [background.js](../background.js) writes `showWhatsNewForVersion` (manifest version string) to `chrome.storage.local`. [popup.js](../popup.js) and [options.js](../options.js) call `mountWhatsNewIfPending()` from `whats-new-ui.js`, which shows a dismissible overlay (styled by [whats-new.css](../whats-new.css)) when the pending version matches the manifest and `whats-new.js` has copy for that version. If `.popup` is present, the overlay gets `whats-new-overlay--popup` for a compact, no-scroll layout; the options page uses the default larger panel. Closing the overlay removes the storage key. New installs do not set the flag, so onboarding stays first. Options defers the overlay until the onboarding wizard is hidden (MutationObserver on `#onboarding-wizard-screen` style). Copy is keyed by exact version; `3.0.3` reuses the 3.0 feature highlights so users updating from 2.8.x (the Chrome Web Store rejected 3.0.0–3.0.2) still discover multi-provider sync and other 3.0 features in-app.
 
 ### `lib/profile-manager.js` — Profile Manager
 
@@ -403,13 +403,14 @@ GitSyncMarks/
 │   ├── fetch-app-content.sh      # Fetch App README, assets
 │   ├── build-docs.js             # Markdown → HTML for docs/
 │   ├── build-index.js            # Build index.html
+│   ├── add-bookmark-to-repo.py   # Add bookmark JSON + ensure structure (used by add-bookmark.yml)
 │   └── verify-test-repo.js       # Verify bookmark files in GitHub test repo (API)
 ├── package.json                  # npm scripts for building
 ├── .github/workflows/
 │   ├── test-e2e.yml              # E2E tests (manual trigger only)
 │   ├── release.yml               # Build ZIPs, create release on tag
 │   ├── screenshots.yml           # Generate store screenshots
-│   └── add-bookmark.yml          # Automation: add bookmark via dispatch
+│   └── add-bookmark.yml          # Automation: add bookmark via dispatch (runs scripts/add-bookmark-to-repo.py)
 ├── docs/                         # Architecture documentation
 ├── website/                      # GitHub Pages site
 ├── store-assets/                 # Store listings & screenshots (12 languages)

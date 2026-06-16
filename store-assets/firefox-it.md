@@ -12,10 +12,10 @@ GitSyncMarks sincronizza i segnalibri bidirezionalmente con il tuo repository Gi
 
 In evidenza
 
-- Sync Git multi-provider: Connetti GitHub, GitLab o Git self-hosted — ogni profilo può usare il proprio provider e URL server.
+- Sync Git multi-provider: Connetti il tuo host Git o server self-hosted — ogni profilo usa il proprio provider e URL. Elenco completo dei provider: https://github.com/d0dg3r/GitSyncMarks/blob/main/docs/PROVIDERS.md
 - Trasferimento profili e mirror push: Copia segnalibri tra profili (sostituisci o unisci); remote di backup push-only opzionali dopo ogni sync.
 - Progresso sync live: Testo di fase durante push, pull e cambio profilo (es. `3 / 12 file` o `1 di 3` passi).
-- Backup Bitwarden / Vaultwarden su Git: Archivia export del vault protetti da password nel repo, crittografia extra opzionale; elenca, scarica o elimina backup remoti.
+- Backup compatibile Bitwarden su Git: Archivia export del vault protetti da password nel repo, crittografia extra opzionale; elenca, scarica o elimina backup remoti.
 - UI nested-card: Sezioni raggruppate più chiare in Opzioni, wizard, popup e ricerca.
 - Cronologia sync e ripristino: Sfoglia commit passati, anteprima modifiche con diff e ripristina qualsiasi stato precedente con un clic.
 - Pulizia orfani remoti: Anteprima ed elimina file segnalibri remoti che non esistono più localmente.
@@ -33,12 +33,12 @@ Funzionalità chiave
 - Merge three-way: Sync di livello industriale che gestisce automaticamente modifiche concorrenti su più dispositivi.
 - Archiviazione per file: Ogni segnalibro è un file JSON leggibile – ideale per versioning e modifica manuale.
 - Profili multipli: Fino a 10 profili separati per lavoro, personale o progetti, ciascuno con il proprio repository.
-- Automazione: Aggiungi segnalibri via CLI o GitHub Actions; l'estensione li integra al prossimo sync.
+- Automazione: Aggiungi JSON dei segnalibri al repository tramite git o il modello di GitHub Action incluso; l'estensione li importa al prossimo sync.
 - File generati: README.md (panoramica), bookmarks.html (import), feed RSS e dashy-conf.yml — opzionale per file.
 - Design e i18n: Temi chiaro, scuro e auto-sistema; densità UI regolabile (compatto / medio / grande); 12 lingue.
 
 App companion
-Usa GitSyncMarks-App (Android, iOS, Desktop) per gestire i segnalibri direttamente dal tuo repository Git su dispositivi mobili. (Nota: Firefox per Android non supporta sync diretta segnalibri via estensioni – usa l'app.)
+Usa GitSyncMarks-App (mobile e desktop) per gestire i segnalibri direttamente dal tuo repository Git. (Nota: Firefox per Android non supporta sync diretta segnalibri via estensioni – usa l'app.)
 
 GitSyncMarks è Open Source: https://github.com/d0dg3r/GitSyncMarks
 
