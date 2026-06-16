@@ -12,10 +12,10 @@ GitSyncMarks bidirectionally synchronizes your bookmarks with your own Git repos
 
 Highlights
 
-- Multi-Provider Git Sync: Connect GitHub, GitLab, or self-hosted Git — each profile can use its own provider and server URL.
+- Multi-Provider Git Sync: Connect your Git host or self-hosted server — each profile uses its own provider and URL. Full provider list: https://github.com/d0dg3r/GitSyncMarks/blob/main/docs/PROVIDERS.md
 - Profile Transfer & Push Mirrors: Copy bookmarks between profiles (replace or merge); optional push-only backup remotes after each sync.
 - Live Sync Progress: Step text during push, pull, and profile switch (e.g. `3 / 12 files` or `1 of 3` steps).
-- Bitwarden / Vaultwarden Backup to Git: Store password-protected vault exports in your repo with optional extra encryption; list, download, or delete remote backups.
+- Bitwarden-Compatible Vault Backup to Git: Store password-protected vault exports in your repo with optional extra encryption; list, download, or delete remote backups.
 - Nested-Card UI: Clearer grouped sections across Options, setup wizard, popup, and search.
 - Sync History & Restore: Browse past commits, preview changes with a diff view, and restore any previous bookmark state in one click.
 - Clean Remote Orphans: Preview and delete remote bookmark files that no longer exist locally.
@@ -33,12 +33,12 @@ Key Capabilities
 - Three-Way Merge: Industrial-grade sync handles concurrent changes across multiple devices automatically.
 - Single-File Storage: Each bookmark is a readable JSON file – ideal for versioning and manual editing in your Git repo.
 - Multiple Profiles: Up to 10 separate profiles for work, personal life, or projects, each with its own repository.
-- Automation: Add bookmarks via CLI or GitHub Actions; the extension integrates them during the next sync.
+- Automation: Add bookmarks via CLI or CI/CD workflows; the extension integrates them during the next sync.
 - Generated Files: README.md (overview), bookmarks.html (import file), RSS feed, and dashy-conf.yml — optional per file.
 - Design & i18n: Light, dark, and system-auto themes; adjustable UI density (compact / medium / large); 12 languages.
 
 Companion App
-Use the GitSyncMarks-App (Android, iOS, Desktop) to manage your bookmarks directly from your Git repository on mobile devices. (Note: Firefox for Android does not support direct bookmark sync via extensions – use the app for this).
+Use the GitSyncMarks-App (mobile and desktop) to manage your bookmarks directly from your Git repository. (Note: Firefox for Android does not support direct bookmark sync via extensions – use the app for this).
 
 GitSyncMarks is Open Source: https://github.com/d0dg3r/GitSyncMarks
 

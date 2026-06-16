@@ -8,14 +8,14 @@ GitSyncMarks
 Sync marcadores a su repositorio Git. Linkwarden, Smart Search, Companion App. Directo, seguro, privado.
 
 ### Detailed Description
-GitSyncMarks sincroniza sus marcadores bidireccionalmente con su propio repositorio Git — grandes plataformas alojadas y servidores Git autohospedados. Gestione sus datos en escritorio con Chrome y Firefox, o en movilidad con la GitSyncMarks Companion App. Sin intermediarios, sin servidores de terceros – control y privacidad totales.
+GitSyncMarks sincroniza sus marcadores bidireccionalmente con su propio repositorio Git — grandes plataformas alojadas y servidores Git autohospedados. Gestione sus datos en escritorio en su navegador, o en movilidad con la GitSyncMarks Companion App. Sin intermediarios, sin servidores de terceros – control y privacidad totales.
 
 Destacados
 
-- Sync Git multi-proveedor: Conecte GitHub, GitLab o Git autohospedado — cada perfil puede usar su propio proveedor y URL de servidor.
+- Sync Git multi-proveedor: Conecte su host Git o servidor autohospedado — cada perfil usa su propio proveedor y URL. Lista completa de proveedores: https://github.com/d0dg3r/GitSyncMarks/blob/main/docs/PROVIDERS.md
 - Transferencia de perfiles y espejos push: Copie marcadores entre perfiles (reemplazar o fusionar); remotos de respaldo push-only opcionales tras cada sync.
 - Progreso de sync en vivo: Texto de paso durante push, pull y cambio de perfil (p. ej. `3 / 12 archivos` o `1 de 3` pasos).
-- Backup Bitwarden / Vaultwarden a Git: Almacene exportaciones de bóveda protegidas por contraseña en su repo, cifrado extra opcional; listar, descargar o eliminar backups remotos.
+- Backup compatible con Bitwarden a Git: Almacene exportaciones de bóveda protegidas por contraseña en su repo, cifrado extra opcional; listar, descargar o eliminar backups remotos.
 - UI nested-card: Secciones agrupadas más claras en Opciones, asistente, popup y búsqueda.
 - Historial de sync y restauración: Explore commits anteriores, previsualice cambios con diff y restaure cualquier estado anterior con un clic.
 - Limpiar huérfanos remotos: Previsualice y elimine archivos de marcadores remotos que ya no existen localmente.
@@ -32,12 +32,12 @@ Capacidades clave
 - Fusión three-way: Sync de grado industrial que maneja cambios concurrentes en varios dispositivos automáticamente.
 - Almacenamiento por archivo: Cada marcador es un archivo JSON legible – ideal para versionado y edición manual.
 - Múltiples perfiles: Hasta 10 perfiles separados para trabajo, personal o proyectos, cada uno con su repositorio.
-- Automatización: Añada marcadores vía CLI o GitHub Actions; la extensión los integra en el próximo sync.
+- Automatización: Añada marcadores vía CLI o flujos CI/CD; la extensión los integra en el próximo sync.
 - Archivos generados: README.md (resumen), bookmarks.html (importación), feed RSS y dashy-conf.yml — opcional por archivo.
 - Diseño e i18n: Temas claro, oscuro y auto-sistema; densidad UI ajustable (compacto / medio / grande); 12 idiomas.
 
 App complementaria
-Use GitSyncMarks-App (Android, iOS, Escritorio) para gestionar sus marcadores directamente desde su repositorio Git en dispositivos móviles.
+Use GitSyncMarks-App (móvil y escritorio) para gestionar sus marcadores directamente desde su repositorio Git.
 
 GitSyncMarks es Open Source: https://github.com/d0dg3r/GitSyncMarks
 

@@ -17,14 +17,14 @@ https://github.com/d0dg3r/GitSyncMarks/blob/main/PRIVACY.md
 
 | Permission | Justification |
 |------------|---------------|
-| `bookmarks` | Required to read and write the user's bookmarks for synchronization with GitHub. |
+| `bookmarks` | Required to read and write the user's bookmarks for synchronization with the user's configured Git repository. |
 | `storage` | Required to store extension settings (token, repo config) and sync state (timestamps, SHAs) locally in the browser. |
 | `alarms` | Required to schedule periodic background sync checks for remote changes. |
 | `notifications` | Required to show sync success or failure notifications (user-configurable). |
-| `host_permissions: https://api.github.com/*` | Required to communicate with the GitHub REST API to read and write bookmark files in the user's repository. |
-| `host_permissions: https://gitlab.com/*` | Required to communicate with the GitLab.com REST API when the user selects GitLab as provider. |
-| `host_permissions: https://codeberg.org/*` | Required to communicate with the Codeberg REST API when the user selects Codeberg as provider. |
-| `optional_host_permissions` (self-hosted origins) | Granted at runtime when the user configures a self-hosted Git provider or GitHub Enterprise server URL. |
+| `host_permissions: https://api.github.com/*` | Required to communicate with the GitHub REST API when GitHub is selected as the provider, to read and write bookmark files in the user's repository. |
+| `host_permissions: https://gitlab.com/*` | Required to communicate with the GitLab.com REST API when GitLab is selected as the provider. |
+| `host_permissions: https://codeberg.org/*` | Required to communicate with the Codeberg REST API when Codeberg is selected as the provider. |
+| `optional_host_permissions` (self-hosted origins) | Granted at runtime when the user enters a self-hosted Git server URL; the host is the server the user configures. |
 | `contextMenus` | Required to add right-click menu items for adding bookmarks, syncing, and favicon utilities. |
 | `activeTab` | Required to access the active tab's URL and title when adding a bookmark via the context menu. |
 | `scripting` | Required to copy the favicon URL to the clipboard via the context menu. |
@@ -60,6 +60,8 @@ No.
 No shared account needed. Create a GitHub PAT at github.com/settings/tokens (repo scope), create an empty repo, then enter both in the extension settings. Click "Sync Now" to test.
 
 **Reviewer note (3.0.1):** No test account required. This patch replaces `innerHTML` with safe DOM APIs for AMO linter compliance only; behavior is unchanged from 3.0.0.
+
+**Reviewer note (3.0.3):** Listing copy and permission justifications reworded so that no field lists more than five platform names; the full list of supported Git hosts is linked to docs/PROVIDERS.md. No functional change.
 
 ---
 

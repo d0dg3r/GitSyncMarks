@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.3] - 2026-06-17
+
+### Fixed
+- **Chrome Web Store listing**: Reworded store descriptions in all 12 locales and the developer-dashboard permission justifications so that no field lists more than five platform names (Google rejection: Keyword Stuffing / supported platform name limit). The full list of supported Git hosts now links to [docs/PROVIDERS.md](docs/PROVIDERS.md) instead of being enumerated; named browsers and operating systems were replaced with generic wording. No functional change.
+
 ## [3.0.2] - 2026-06-12
 
 ### Fixed

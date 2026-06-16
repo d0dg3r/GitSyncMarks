@@ -8,14 +8,14 @@ GitSyncMarks
 Git deposuna yer imi senkronu. Linkwarden, Smart Search, Companion App. Doğrudan, güvenli, özel.
 
 ### Detailed Description
-GitSyncMarks yer imlerinizi kendi Git deponuzla çift yönlü senkronize eder — büyük barındırma platformları ve self-hosted Git sunucuları. Chrome ve Firefox masaüstünde veya GitSyncMarks Companion App ile mobilde yönetin. Aracı yok, üçüncü taraf sunucu yok – tam kontrol ve gizlilik.
+GitSyncMarks yer imlerinizi kendi Git deponuzla çift yönlü senkronize eder — büyük barındırma platformları ve self-hosted Git sunucuları. Masaüstü tarayıcınızda veya GitSyncMarks Companion App ile mobilde yönetin. Aracı yok, üçüncü taraf sunucu yok – tam kontrol ve gizlilik.
 
 Öne Çıkanlar
 
-- Çoklu Sağlayıcı Git Senkronu: GitHub, GitLab veya self-hosted Git bağlayın — her profil kendi sağlayıcısını ve sunucu URL'sini kullanabilir.
+- Çoklu Sağlayıcı Git Senkronu: Git ana makinenizi veya self-hosted sunucunuzu bağlayın — her profil kendi sağlayıcısını ve URL'sini kullanır. Tam sağlayıcı listesi: https://github.com/d0dg3r/GitSyncMarks/blob/main/docs/PROVIDERS.md
 - Profil Aktarımı ve Push Aynaları: Profiller arası yer imi kopyalama (değiştir veya birleştir); her senkron sonrası isteğe bağlı push-only yedek remote'lar.
 - Canlı Senkron İlerlemesi: Push, pull ve profil değişiminde adım metni (örn. `3 / 12 dosya` veya `1 / 3` adım).
-- Bitwarden / Vaultwarden Git Yedekleme: Parola korumalı vault dışa aktarmalarını depoda saklama, isteğe bağlı ek şifreleme; uzak yedekleri listeleme, indirme veya silme.
+- Bitwarden Uyumlu Git Yedekleme: Parola korumalı vault dışa aktarmalarını depoda saklama, isteğe bağlı ek şifreleme; uzak yedekleri listeleme, indirme veya silme.
 - Nested-card UI: Seçenekler, kurulum sihirbazı, popup ve aramada daha net gruplandırılmış bölümler.
 - Senkron Geçmişi ve Geri Yükleme: Geçmiş commit'leri inceleme, diff önizlemesi ve tek tıkla önceki duruma dönme.
 - Uzak Yetim Temizliği: Yerelde artık bulunmayan uzak yer imi dosyalarını önizleme ve silme.
@@ -32,12 +32,12 @@ Temel Yetenekler
 - Üç yönlü birleştirme: Endüstriyel düzeyde senkron, birden fazla cihazdaki eşzamanlı değişiklikleri otomatik işler.
 - Tek dosya depolama: Her yer imi okunabilir bir JSON dosyası – sürümleme ve manuel düzenleme için ideal.
 - Çoklu profiller: İş, kişisel veya projeler için en fazla 10 ayrı profil, her biri kendi deposuyla.
-- Otomasyon: CLI veya GitHub Actions ile yer imi ekleme; eklenti bir sonraki senkronda entegre eder.
+- Otomasyon: CLI veya CI/CD iş akışları ile yer imi ekleme; eklenti bir sonraki senkronda entegre eder.
 - Oluşturulan dosyalar: README.md (genel bakış), bookmarks.html (tarayıcı içe aktarma), RSS beslemesi ve dashy-conf.yml — dosya başına isteğe bağlı.
 - Tasarım ve i18n: Açık, koyu ve sistem otomatik temalar; ayarlanabilir UI yoğunluğu (kompakt / orta / büyük); 12 dil.
 
 Companion App
-GitSyncMarks-App (Android, iOS, Desktop) ile mobil cihazlarda Git deponuzdan yer imlerini doğrudan yönetin.
+GitSyncMarks-App (mobil ve masaüstü) ile Git deponuzdan yer imlerini doğrudan yönetin.
 
 GitSyncMarks Açık Kaynak: https://github.com/d0dg3r/GitSyncMarks
 
