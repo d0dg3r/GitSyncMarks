@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 import { describe, it, before, after } from 'node:test';
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, rmSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import { mkdtempSync, rmSync, readFileSync, readdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -17,9 +17,9 @@ function runScript(basePath, args) {
 function readFileMap(root) {
   const files = {};
   const walk = (dir) => {
-    for (const name of readdirSync(dir)) {
-      const full = join(dir, name);
-      if (statSync(full).isDirectory()) walk(full);
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) walk(full);
       else files[relative(root, full).split('\\').join('/')] = readFileSync(full, 'utf-8');
     }
   };
