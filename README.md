@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="store-assets/marquee_promo_tile_linkwarden.png" width="960" alt="GitSyncMarks — Bookmark sync via GitHub, GitLab, Codeberg, Gitea & Linkwarden">
+  <img src="store-assets/promo-marquee.png" width="960" alt="GitSyncMarks — bookmark sync to your Git repository">
 </p>
 
 <p align="center">
