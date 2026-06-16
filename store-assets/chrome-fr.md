@@ -32,7 +32,7 @@ Fonctionnalités clés
 - Fusion three-way : Sync de qualité industrielle gérant automatiquement les changements concurrents sur plusieurs appareils.
 - Stockage par fichier : Chaque favori est un fichier JSON lisible – idéal pour le versionnage et l'édition manuelle.
 - Profils multiples : Jusqu'à 10 profils distincts (travail, perso, projets), chacun avec son dépôt.
-- Automatisation : Ajoutez des favoris via CLI ou workflows CI/CD ; l'extension les intègre au prochain sync.
+- Automatisation : Ajoutez du JSON de favoris à votre dépôt via git ou le modèle d'action GitHub inclus ; l'extension les importe au prochain sync.
 - Fichiers générés : README.md (aperçu), bookmarks.html (import navigateur), flux RSS et dashy-conf.yml — optionnel par fichier.
 - Design & i18n : Thèmes clair, sombre et auto-système ; densité UI ajustable (compact / moyen / large) ; 12 langues.
 

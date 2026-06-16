@@ -37,6 +37,11 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Download add-bookmark script
+        run: |
+          curl -fsSL -o /tmp/add-bookmark-to-repo.py \
+            https://raw.githubusercontent.com/d0dg3r/GitSyncMarks/main/scripts/add-bookmark-to-repo.py
+
       - name: Add bookmark file
         env:
           INPUT_URL: ${{ inputs.url }}
@@ -45,46 +50,12 @@ jobs:
           INPUT_FOLDER: ${{ inputs.folder }}
           INPUT_PATH: ${{ inputs.path }}
         run: |
-          URL="$INPUT_URL"
-          TITLE="$INPUT_TITLE"
-          BASE_PATH="$INPUT_BASE_PATH"
-          FOLDER="$INPUT_FOLDER"
-          SUBFOLDER="$INPUT_PATH"
-
-          # Use URL as title if not provided
-          if [ -z "$TITLE" ]; then
-            TITLE="$URL"
-          fi
-
-          # Build target directory
-          TARGET_DIR="${BASE_PATH}/${FOLDER}"
-          if [ -n "$SUBFOLDER" ]; then
-            TARGET_DIR="${TARGET_DIR}/${SUBFOLDER}"
-          fi
-          mkdir -p "$TARGET_DIR"
-
-          # Generate a simple filename from the title
-          SLUG=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-//;s/-$//' | cut -c1-40)
-          FILENAME="${SLUG}.json"
-
-          # Avoid overwriting existing files
-          if [ -f "${TARGET_DIR}/${FILENAME}" ]; then
-            FILENAME="${SLUG}-$(date +%s).json"
-          fi
-
-          # Create the bookmark file
-          cat > "${TARGET_DIR}/${FILENAME}" <<BEOF
-          {
-            "title": $(echo "$TITLE" | python3 -c "import sys,json; print(json.dumps(sys.stdin.read().strip()))"),
-            "url": $(echo "$URL" | python3 -c "import sys,json; print(json.dumps(sys.stdin.read().strip()))")
-          }
-          BEOF
-
-          # Clean up indentation from heredoc
-          sed -i 's/^          //' "${TARGET_DIR}/${FILENAME}"
-
-          echo "Created: ${TARGET_DIR}/${FILENAME}"
-          cat "${TARGET_DIR}/${FILENAME}"
+          python3 /tmp/add-bookmark-to-repo.py \
+            --url "$INPUT_URL" \
+            --title "$INPUT_TITLE" \
+            --base-path "$INPUT_BASE_PATH" \
+            --folder "$INPUT_FOLDER" \
+            --path "$INPUT_PATH"
 
       - name: Commit and push
         env:

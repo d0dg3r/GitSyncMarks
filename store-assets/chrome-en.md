@@ -32,7 +32,7 @@ Key Capabilities
 - Three-Way Merge: Industrial-grade sync handles concurrent changes across multiple devices automatically.
 - Single-File Storage: Each bookmark is a readable JSON file – ideal for versioning and manual editing in your Git repo.
 - Multiple Profiles: Up to 10 separate profiles for work, personal life, or projects, each with its own repository.
-- Automation: Add bookmarks via CLI or CI/CD workflows; the extension integrates them during the next sync.
+- Automation: Add bookmark JSON to your repo via git or the included GitHub Action template; the extension imports them on the next sync.
 - Generated Files: README.md (overview), bookmarks.html (browser import), RSS feed, and dashy-conf.yml — optional per file.
 - Design & i18n: Light, dark, and system-auto themes; adjustable UI density (compact / medium / large); 12 languages.
 

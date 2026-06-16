@@ -851,8 +851,11 @@
       <div class="sub-tab-content" id="subtab-files-git-add">
         <section class="card automation-card">
           <h2 data-i18n="options_automationTitle">Add Bookmarks via Git</h2>
-          <p class="card-desc" data-i18n="options_automationIntro">Add bookmarks directly in your repository. The
-            extension picks them up on the next sync and normalizes filenames automatically.</p>
+          <p class="card-desc" data-i18n="options_automationIntro">Add bookmark JSON to your repository — commit it with
+            git or use the GitHub Action template. Run Sync (or wait for auto-sync) and the extension imports the
+            bookmarks, normalizing filenames on the next push.</p>
+          <p class="card-desc" data-i18n="options_automationPrereq">Works on any Git host: commit JSON with git from
+            anywhere. The GitHub Action template is GitHub-only.</p>
 
           <section class="card card-nested">
             <h3 data-i18n="options_automationCreateFileTitle">Create file in repo</h3>
@@ -1301,6 +1304,11 @@ git commit -m "Bitwarden backup"</pre>
         </summary>
         <div class="help-details-body">
           <dl class="help-dl">
+            <dt data-i18n="help_gitAddTitle">Add bookmarks via Git</dt>
+            <dd data-i18n="help_gitAddDesc">In Files -&gt; Git Add you can add bookmarks straight to the repository —
+              commit a JSON file with git on any host, or use the GitHub Action template. The section's _order.json
+              (created by extension setup or the Action) lists which files belong to it; run Sync afterwards and the new
+              bookmarks appear in your browser.</dd>
             <dt data-i18n="help_generatedFilesTitle">Generated files</dt>
             <dd data-i18n="help_generatedFilesDesc">README.md, bookmarks.html, feed.xml, and dashy-conf.yml can be
               created during sync. Choose Off, Manual, or Auto per file in the Files tab.</dd>

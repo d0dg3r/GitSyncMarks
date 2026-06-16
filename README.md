@@ -65,7 +65,7 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 - **Direct Access**: Connects directly to your Git repository for mobile management.
 
 ### Developer & Power User Tools
-- **Automation Ready**: Use provided GitHub Actions (`add-bookmark.yml`) or CLI tools to add bookmarks programmatically.
+- **Automation Ready**: Add bookmark JSON to your repo with `git` or the included GitHub Action template (`add-bookmark.yml`); the extension imports them on the next sync.
 - **GitHub Repos Folder**: Automatically keep a folder of all your own repositories synced as bookmarks.
 - **Auto-Generated Files**: Every sync can generate `README.md` (index), `bookmarks.html` (netscape), `feed.xml` (RSS), and `dashy-conf.yml`.
 - **Context Menu**: Quick folders, Search Bookmarks popup, Open All from Folder, favicon copy/download, and profile actions.

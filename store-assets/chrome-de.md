@@ -32,7 +32,7 @@ Kernfunktionen
 - Three-Way-Merge: Industrietauglicher Sync behandelt gleichzeitige Änderungen auf mehreren Geräten automatisch.
 - Einzeldatei-Speicherung: Jedes Lesezeichen ist eine lesbare JSON-Datei – ideal für Versionierung und manuelle Bearbeitung im Git-Repo.
 - Multiple Profile: Bis zu 10 getrennte Profile für Beruf, Privatleben oder Projekte, jeweils mit eigenem Repository.
-- Automatisierung: Lesezeichen via CLI oder CI/CD-Workflows hinzufügen; die Erweiterung integriert sie beim nächsten Sync.
+- Automatisierung: Lesezeichen-JSON per git oder mit der enthaltenen GitHub-Action-Vorlage zum Repo hinzufügen; die Erweiterung importiert sie beim nächsten Sync.
 - Generierte Dateien: README.md (Übersicht), bookmarks.html (Browser-Import), RSS-Feed und dashy-conf.yml — optional pro Datei.
 - Design & i18n: Hell-, Dunkel- und Auto-Themes; einstellbare UI-Dichte (kompakt / mittel / groß); 12 Sprachen.
 

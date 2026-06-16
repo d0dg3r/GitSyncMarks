@@ -32,7 +32,7 @@ Capacidades clave
 - Fusión three-way: Sync de grado industrial que maneja cambios concurrentes en varios dispositivos automáticamente.
 - Almacenamiento por archivo: Cada marcador es un archivo JSON legible – ideal para versionado y edición manual.
 - Múltiples perfiles: Hasta 10 perfiles separados para trabajo, personal o proyectos, cada uno con su repositorio.
-- Automatización: Añada marcadores vía CLI o flujos CI/CD; la extensión los integra en el próximo sync.
+- Automatización: Añada JSON de marcadores a su repositorio mediante git o la plantilla de acción de GitHub incluida; la extensión los importa en el próximo sync.
 - Archivos generados: README.md (resumen), bookmarks.html (importación), feed RSS y dashy-conf.yml — opcional por archivo.
 - Diseño e i18n: Temas claro, oscuro y auto-sistema; densidad UI ajustable (compacto / medio / grande); 12 idiomas.
 

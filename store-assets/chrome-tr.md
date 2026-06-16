@@ -32,7 +32,7 @@ Temel Yetenekler
 - Üç yönlü birleştirme: Endüstriyel düzeyde senkron, birden fazla cihazdaki eşzamanlı değişiklikleri otomatik işler.
 - Tek dosya depolama: Her yer imi okunabilir bir JSON dosyası – sürümleme ve manuel düzenleme için ideal.
 - Çoklu profiller: İş, kişisel veya projeler için en fazla 10 ayrı profil, her biri kendi deposuyla.
-- Otomasyon: CLI veya CI/CD iş akışları ile yer imi ekleme; eklenti bir sonraki senkronda entegre eder.
+- Otomasyon: Yer imi JSON'unu git ile veya birlikte gelen GitHub Action şablonuyla deponuza ekleyin; eklenti bir sonraki senkronizasyonda içe aktarır.
 - Oluşturulan dosyalar: README.md (genel bakış), bookmarks.html (tarayıcı içe aktarma), RSS beslemesi ve dashy-conf.yml — dosya başına isteğe bağlı.
 - Tasarım ve i18n: Açık, koyu ve sistem otomatik temalar; ayarlanabilir UI yoğunluğu (kompakt / orta / büyük); 12 dil.
 

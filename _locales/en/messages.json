@@ -1759,6 +1759,12 @@
   "help_generatedFilesDesc": {
     "message": "README.md, bookmarks.html, feed.xml, and dashy-conf.yml can be created during sync. Choose Off, Manual, or Auto per file in the Files tab."
   },
+  "help_gitAddTitle": {
+    "message": "Add bookmarks via Git"
+  },
+  "help_gitAddDesc": {
+    "message": "In Files -> Git Add you can add bookmarks straight to the repository — commit a JSON file with git on any host, or use the GitHub Action template. The section's _order.json (created by extension setup or the Action) lists which files belong to it; run Sync afterwards and the new bookmarks appear in your browser."
+  },
   "help_settingsSyncTitle": {
     "message": "Settings File"
   },
@@ -1991,7 +1997,10 @@
     "message": "Add Bookmarks via Git"
   },
   "options_automationIntro": {
-    "message": "Add bookmarks directly in your repository. The extension picks them up on the next sync and normalizes filenames automatically."
+    "message": "Add bookmark JSON to your repository — commit it with git or use the GitHub Action template. Run Sync (or wait for auto-sync) and the extension imports the bookmarks, normalizing filenames on the next push."
+  },
+  "options_automationPrereq": {
+    "message": "Works on any Git host: commit JSON with git from anywhere. The GitHub Action template is GitHub-only."
   },
   "options_automationFormatTitle": {
     "message": "File format"
@@ -2012,7 +2021,7 @@
     "message": "Create file in repo"
   },
   "options_automationCreateFileDesc": {
-    "message": "Add a new JSON file in <code>bookmarks/toolbar/</code> or <code>bookmarks/other/</code> (or a subfolder). Use your extension's File Path if different."
+    "message": "Add a new JSON file in <code>bookmarks/toolbar/</code> or <code>bookmarks/other/</code> (or a subfolder). Use your extension's File Path if different. Each section needs an <code>_order.json</code> file — it is created automatically by extension setup or the GitHub Action, and once it exists your added files import on the next sync."
   },
   "options_automationCopy": {
     "message": "Copy"

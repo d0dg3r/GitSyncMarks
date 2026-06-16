@@ -33,7 +33,7 @@ Funzionalità chiave
 - Merge three-way: Sync di livello industriale che gestisce automaticamente modifiche concorrenti su più dispositivi.
 - Archiviazione per file: Ogni segnalibro è un file JSON leggibile – ideale per versioning e modifica manuale.
 - Profili multipli: Fino a 10 profili separati per lavoro, personale o progetti, ciascuno con il proprio repository.
-- Automazione: Aggiungi segnalibri via CLI o workflow CI/CD; l'estensione li integra al prossimo sync.
+- Automazione: Aggiungi JSON dei segnalibri al repository tramite git o il modello di GitHub Action incluso; l'estensione li importa al prossimo sync.
 - File generati: README.md (panoramica), bookmarks.html (import), feed RSS e dashy-conf.yml — opzionale per file.
 - Design e i18n: Temi chiaro, scuro e auto-sistema; densità UI regolabile (compatto / medio / grande); 12 lingue.
 

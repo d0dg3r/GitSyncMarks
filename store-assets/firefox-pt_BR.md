@@ -33,7 +33,7 @@ Capacidades principais
 - Merge three-way: Sync de nível industrial que trata mudanças concorrentes em vários dispositivos automaticamente.
 - Armazenamento por arquivo: Cada favorito é um arquivo JSON legível – ideal para versionamento e edição manual.
 - Múltiplos perfis: Até 10 perfis separados para trabalho, pessoal ou projetos, cada um com seu repositório.
-- Automação: Adicione favoritos via CLI ou fluxos CI/CD; a extensão os integra no próximo sync.
+- Automação: Adicione JSON de favoritos ao repositório via git ou pelo modelo de GitHub Action incluído; a extensão os importa no próximo sync.
 - Arquivos gerados: README.md (visão geral), bookmarks.html (importação), feed RSS e dashy-conf.yml — opcional por arquivo.
 - Design e i18n: Temas claro, escuro e auto-sistema; densidade UI ajustável (compacto / médio / grande); 12 idiomas.
 

@@ -9,8 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.0.3] - 2026-06-17
 
+### Added
+- **What's new overlay for 3.0 catch-up**: Added 3.0.3 release-notes copy (`lib/whats-new.js`) so users updating from 2.8.x — who never received the 3.0.0 store release Google rejected — see the 3.0 highlights (multi-provider Git sync, Bitwarden backup to Git, profile transfer, push mirrors, nested-card UI) in the popup or Settings after updating.
+
 ### Fixed
 - **Chrome Web Store listing**: Reworded store descriptions in all 12 locales and the developer-dashboard permission justifications so that no field lists more than five platform names (Google rejection: Keyword Stuffing / supported platform name limit). The full list of supported Git hosts now links to [docs/PROVIDERS.md](docs/PROVIDERS.md) instead of being enumerated; named browsers and operating systems were replaced with generic wording. No functional change.
+- **Add-bookmark automation for fresh repos**: The `add-bookmark.yml` GitHub Action now runs [`scripts/add-bookmark-to-repo.py`](scripts/add-bookmark-to-repo.py), which creates `_index.json`, role `_order.json`, and any target subfolder entry alongside the bookmark JSON. Previously it wrote a lone JSON file with no `_order.json`, so externally added bookmarks were never imported in greenfield repositories (folders without an `_order.json` are skipped by the tree builder). Filenames now match the extension's `generateFilename`, avoiding rename churn on the next push.
+
+### Changed
+- **Automation docs and copy**: Aligned the automation wording across the Git Add tab, in-app Help, README, store listings (12 locales), and developer docs (`DATA-FLOW.md`, `ARCHITECTURE.md`) so it accurately describes adding bookmark JSON via git on any host or the included GitHub Action template, and the `_order.json` prerequisite for import. Non-English store/Help copy falls back to English for the new strings.
 
 ## [3.0.2] - 2026-06-12
 

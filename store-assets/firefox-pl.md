@@ -33,7 +33,7 @@ Kluczowe możliwości
 - Merge three-way: Sync klasy przemysłowej automatycznie obsługuje równoczesne zmiany na wielu urządzeniach.
 - Przechowywanie plikowe: Każda zakładka to czytelny plik JSON – idealny do wersjonowania i ręcznej edycji.
 - Wiele profili: Do 10 oddzielnych profili dla pracy, osobistego użytku lub projektów, każdy z własnym repozytorium.
-- Automatyzacja: Dodawanie zakładek przez CLI lub przepływy CI/CD; rozszerzenie integruje je przy następnym sync.
+- Automatyzacja: Dodawaj JSON zakładek do repozytorium przez git lub dołączony szablon GitHub Action; rozszerzenie zaimportuje je przy następnej synchronizacji.
 - Generowane pliki: README.md (przegląd), bookmarks.html (import), kanał RSS i dashy-conf.yml — opcjonalnie per plik.
 - Design i i18n: Motywy jasny, ciemny i auto-system; regulowana gęstość UI (kompaktowy / średni / duży); 12 języków.
 
