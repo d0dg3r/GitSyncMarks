@@ -39,8 +39,9 @@ jobs:
 
       - name: Download add-bookmark script
         run: |
+          # Pinned commit for deterministic runs; switch to @v3.0.3 tag after release.
           curl -fsSL -o /tmp/add-bookmark-to-repo.py \
-            https://raw.githubusercontent.com/d0dg3r/GitSyncMarks/main/scripts/add-bookmark-to-repo.py
+            https://raw.githubusercontent.com/d0dg3r/GitSyncMarks/a77601c4f9d1745e3aa27adf66d4f7e71ad2278b/scripts/add-bookmark-to-repo.py
 
       - name: Add bookmark file
         env:

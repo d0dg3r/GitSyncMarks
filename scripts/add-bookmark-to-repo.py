@@ -18,6 +18,31 @@ import re
 import unicodedata
 
 SYNC_ROLES = ("toolbar", "other")
+FOLDER_NAME_RE = re.compile(r"^[a-z0-9][a-z0-9-]*$", re.IGNORECASE)
+
+
+def validate_role(role):
+    if role not in SYNC_ROLES:
+        raise ValueError(f"Invalid --folder {role!r}: must be one of {', '.join(SYNC_ROLES)}")
+
+
+def validate_subfolder(name):
+    if not name:
+        return
+    if name in (".", "..") or "/" in name or "\\" in name or ".." in name:
+        raise ValueError(f"Invalid --path {name!r}: must be a single folder name without separators or '..'")
+    if not FOLDER_NAME_RE.match(name):
+        raise ValueError(f"Invalid --path {name!r}: use letters, numbers, and hyphens only")
+
+
+def validate_base_path(base_path):
+    base = (base_path or "bookmarks").replace("\\", "/").strip()
+    if not base.strip("/"):
+        raise ValueError("Invalid --base-path: must not be empty")
+    for part in base.split("/"):
+        if part in (".", ".."):
+            raise ValueError(f"Invalid --base-path {base_path!r}: path traversal not allowed")
+    return base.rstrip("/")
 
 
 def slugify(value):
@@ -103,8 +128,10 @@ def folder_entry_present(order, dir_name):
 
 
 def add_bookmark(base_path, role, subfolder, url, title):
-    base = (base_path or "bookmarks").rstrip("/")
+    base = validate_base_path(base_path)
     role = role or "toolbar"
+    validate_role(role)
+    validate_subfolder(subfolder)
     title = title if title else url
 
     # Base structure: _index.json + role order files (mirror createMinimalBookmarkStructure)
@@ -149,13 +176,16 @@ def main():
     parser.add_argument("--path", default="")
     args = parser.parse_args()
 
-    file_path = add_bookmark(
-        base_path=args.base_path,
-        role=args.folder,
-        subfolder=args.path,
-        url=args.url,
-        title=args.title,
-    )
+    try:
+        file_path = add_bookmark(
+            base_path=args.base_path,
+            role=args.folder,
+            subfolder=args.path,
+            url=args.url,
+            title=args.title,
+        )
+    except ValueError as err:
+        parser.error(str(err))
     print(f"Created: {file_path}")
 
 

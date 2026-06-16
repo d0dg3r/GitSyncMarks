@@ -13,6 +13,13 @@ function runScript(basePath, args) {
   execFileSync('python3', [SCRIPT, '--base-path', basePath, ...args], { stdio: 'pipe' });
 }
 
+function runScriptExpectFail(basePath, args) {
+  assert.throws(
+    () => execFileSync('python3', [SCRIPT, '--base-path', basePath, ...args], { stdio: 'pipe' }),
+    (err) => err.status !== 0,
+  );
+}
+
 /** Read a repo directory into a path->content file map relative to its root. */
 function readFileMap(root) {
   const files = {};
@@ -93,5 +100,13 @@ describe('add-bookmark-to-repo.py', () => {
 
     const order = JSON.parse(readFileMap(base)['toolbar/_order.json']);
     assert.equal(order.length, 1, 'filename not duplicated in order');
+  });
+
+  it('rejects invalid folder and path inputs', () => {
+    const base = join(workdir, 'validation', 'bookmarks');
+    runScriptExpectFail(base, ['--url', 'https://example.com', '--folder', 'mobile']);
+    runScriptExpectFail(base, ['--url', 'https://example.com', '--path', '../escape']);
+    runScriptExpectFail(base, ['--url', 'https://example.com', '--path', 'a/b']);
+    runScriptExpectFail(base, ['--url', 'https://example.com', '--base-path', '../outside']);
   });
 });
