@@ -1,22 +1,39 @@
 import assert from 'node:assert';
 import { describe, it, before, after } from 'node:test';
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, rmSync, readFileSync, readdirSync } from 'node:fs';
+import { mkdtempSync, rmSync, readFileSync, readdirSync, mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fileMapToBookmarkTree } from '../lib/bookmark-serializer.js';
 
 const SCRIPT = fileURLToPath(new URL('../scripts/add-bookmark-to-repo.py', import.meta.url));
+const BOOKMARKS = 'bookmarks';
 
-function runScript(basePath, args) {
-  execFileSync('python3', [SCRIPT, '--base-path', basePath, ...args], { stdio: 'pipe' });
+function repoRoot(workdir, name) {
+  const root = join(workdir, name);
+  mkdirSync(root, { recursive: true });
+  return root;
 }
 
-function runScriptExpectFail(basePath, args) {
+function bookmarkDir(workdir, name) {
+  return join(workdir, name, BOOKMARKS);
+}
+
+function runScript(workdir, repoName, args, basePath = BOOKMARKS) {
+  execFileSync('python3', [SCRIPT, '--base-path', basePath, ...args], {
+    cwd: repoRoot(workdir, repoName),
+    stdio: 'pipe',
+  });
+}
+
+function runScriptExpectFail(workdir, repoName, args, basePath = BOOKMARKS) {
   assert.throws(
-    () => execFileSync('python3', [SCRIPT, '--base-path', basePath, ...args], { stdio: 'pipe' }),
-    (err) => err.status !== 0,
+    () => execFileSync('python3', [SCRIPT, '--base-path', basePath, ...args], {
+      cwd: repoRoot(workdir, repoName),
+      stdio: 'pipe',
+    }),
+    (err) => typeof err.status === 'number' && err.status !== 0,
   );
 }
 
@@ -46,9 +63,9 @@ describe('add-bookmark-to-repo.py', () => {
   });
 
   it('initializes structure in a greenfield repo', () => {
-    const base = join(workdir, 'greenfield', 'bookmarks');
-    runScript(base, ['--url', 'https://github.com', '--title', 'GitHub', '--folder', 'toolbar']);
+    runScript(workdir, 'greenfield', ['--url', 'https://github.com', '--title', 'GitHub', '--folder', 'toolbar']);
 
+    const base = bookmarkDir(workdir, 'greenfield');
     const files = readFileMap(base);
     assert.deepEqual(JSON.parse(files['_index.json']), { version: 2 });
     assert.ok('other/_order.json' in files, 'other/_order.json created');
@@ -64,11 +81,9 @@ describe('add-bookmark-to-repo.py', () => {
   });
 
   it('imports back into a bookmark tree', () => {
-    const base = join(workdir, 'roundtrip', 'bookmarks');
-    runScript(base, ['--url', 'https://github.com', '--title', 'GitHub', '--folder', 'toolbar']);
+    runScript(workdir, 'roundtrip', ['--url', 'https://github.com', '--title', 'GitHub', '--folder', 'toolbar']);
 
-    // Prefix with base dir name so fileMapToBookmarkTree can resolve roles
-    const raw = readFileMap(base);
+    const raw = readFileMap(bookmarkDir(workdir, 'roundtrip'));
     const fileMap = {};
     for (const [path, content] of Object.entries(raw)) fileMap[`bookmarks/${path}`] = content;
 
@@ -79,10 +94,11 @@ describe('add-bookmark-to-repo.py', () => {
   });
 
   it('registers a subfolder as a folder entry in the parent order', () => {
-    const base = join(workdir, 'subfolder', 'bookmarks');
-    runScript(base, ['--url', 'https://example.com', '--title', 'Example', '--folder', 'toolbar', '--path', 'dev-tools']);
+    runScript(workdir, 'subfolder', [
+      '--url', 'https://example.com', '--title', 'Example', '--folder', 'toolbar', '--path', 'dev-tools',
+    ]);
 
-    const files = readFileMap(base);
+    const files = readFileMap(bookmarkDir(workdir, 'subfolder'));
     const parentOrder = JSON.parse(files['toolbar/_order.json']);
     const folderEntry = parentOrder.find((e) => typeof e === 'object' && e.dir === 'dev-tools');
     assert.ok(folderEntry, 'parent order has folder entry for dev-tools');
@@ -94,19 +110,18 @@ describe('add-bookmark-to-repo.py', () => {
   });
 
   it('is idempotent for the same bookmark', () => {
-    const base = join(workdir, 'idempotent', 'bookmarks');
-    runScript(base, ['--url', 'https://github.com', '--title', 'GitHub', '--folder', 'toolbar']);
-    runScript(base, ['--url', 'https://github.com', '--title', 'GitHub', '--folder', 'toolbar']);
+    runScript(workdir, 'idempotent', ['--url', 'https://github.com', '--title', 'GitHub', '--folder', 'toolbar']);
+    runScript(workdir, 'idempotent', ['--url', 'https://github.com', '--title', 'GitHub', '--folder', 'toolbar']);
 
-    const order = JSON.parse(readFileMap(base)['toolbar/_order.json']);
+    const order = JSON.parse(readFileMap(bookmarkDir(workdir, 'idempotent'))['toolbar/_order.json']);
     assert.equal(order.length, 1, 'filename not duplicated in order');
   });
 
   it('rejects invalid folder and path inputs', () => {
-    const base = join(workdir, 'validation', 'bookmarks');
-    runScriptExpectFail(base, ['--url', 'https://example.com', '--folder', 'mobile']);
-    runScriptExpectFail(base, ['--url', 'https://example.com', '--path', '../escape']);
-    runScriptExpectFail(base, ['--url', 'https://example.com', '--path', 'a/b']);
-    runScriptExpectFail(base, ['--url', 'https://example.com', '--base-path', '../outside']);
+    runScriptExpectFail(workdir, 'validation', ['--url', 'https://example.com', '--folder', 'mobile']);
+    runScriptExpectFail(workdir, 'validation', ['--url', 'https://example.com', '--path', '../escape']);
+    runScriptExpectFail(workdir, 'validation', ['--url', 'https://example.com', '--path', 'a/b']);
+    runScriptExpectFail(workdir, 'validation', ['--url', 'https://example.com'], '../outside');
+    runScriptExpectFail(workdir, 'validation', ['--url', 'https://example.com'], '/tmp/bookmarks');
   });
 });

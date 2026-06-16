@@ -36,13 +36,17 @@ def validate_subfolder(name):
 
 
 def validate_base_path(base_path):
-    base = (base_path or "bookmarks").replace("\\", "/").strip()
-    if not base.strip("/"):
+    if base_path is None or not str(base_path).strip():
+        base_path = "bookmarks"
+    if os.path.isabs(base_path):
+        raise ValueError(f"Invalid --base-path {base_path!r}: must be a relative repo path")
+    base = base_path.replace("\\", "/").strip().rstrip("/")
+    if not base:
         raise ValueError("Invalid --base-path: must not be empty")
     for part in base.split("/"):
         if part in (".", ".."):
             raise ValueError(f"Invalid --base-path {base_path!r}: path traversal not allowed")
-    return base.rstrip("/")
+    return base
 
 
 def slugify(value):
