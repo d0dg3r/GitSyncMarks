@@ -516,10 +516,19 @@
     "message": "Branch"
   },
   "options_filePath": {
-    "message": "File Path in Repository"
+    "message": "Folder Path in Repository"
   },
   "options_filePathHint": {
-    "message": "Folder where bookmark files will be stored."
+    "message": "Folder where bookmark files are stored (for example: bookmarks). Do not use a .json filename."
+  },
+  "options_filePathInvalidEmpty": {
+    "message": "Folder path is empty. Enter a folder name like \"bookmarks\"."
+  },
+  "options_filePathInvalidAbsolute": {
+    "message": "Folder path must be relative to the repository root (for example: bookmarks)."
+  },
+  "options_filePathInvalidJsonFile": {
+    "message": "Folder path must be a folder (for example: bookmarks), not a .json file name."
   },
   "options_browseFolder": {
     "message": "Browse"
@@ -1001,6 +1010,9 @@
   "options_onboardingWizardSyncWarn_emptyBoth": {
     "message": "Remote path and browser are empty. Create the folder structure or skip and sync later."
   },
+  "options_onboardingWizardSyncWarn_structureReady": {
+    "message": "Folder structure already exists and there are no bookmarks yet. You can continue and sync later."
+  },
   "options_onboardingWizardSyncWarn_pushDanger": {
     "message": "Warning: push will delete $1 remote bookmark file(s) not present locally and replace the repository with this browser's bookmarks."
   },
@@ -1153,6 +1165,9 @@
   },
   "options_onboardingWizardEnvironmentChecked": {
     "message": "Repository and path check completed."
+  },
+  "options_onboardingWizardAutoSeedSuccess": {
+    "message": "Created initial folder structure at \"$1\". Setup can continue."
   },
   "options_onboardingWizardSyncInProgress": {
     "message": "Working in background, please wait..."
@@ -1646,7 +1661,7 @@
     "message": "Getting Started"
   },
   "help_gettingStartedIntro": {
-    "message": "Create a Git repository for your bookmarks on <strong>GitHub</strong>, <strong>GitLab</strong>, <strong>Codeberg</strong>, <strong>Gitea</strong>, <strong>Forgejo</strong>, or <strong>Gogs</strong>. In <strong>Git → Connection</strong>, choose your provider, enter a Personal Access Token, repository owner/name, branch (usually <code>main</code>), and folder path (default: <code>bookmarks</code>). Self-hosted providers need a server URL; allow host access when prompted. Click <strong>Test Connection</strong> to verify."
+    "message": "Create a Git repository for your bookmarks on <strong>GitHub</strong>, <strong>GitLab</strong>, <strong>Codeberg</strong>, <strong>Gitea</strong>, <strong>Forgejo</strong>, or <strong>Gogs</strong>. In <strong>Git → Connection</strong>, choose your provider, enter a Personal Access Token, repository owner/name, branch (usually <code>main</code>), and folder path (default: <code>bookmarks</code>, not a <code>.json</code> filename). Self-hosted providers need a server URL; allow host access when prompted. Click <strong>Test Connection</strong> to verify."
   },
   "help_onboarding": {
     "message": "If the folder is empty, you can create the base structure (toolbar, other). If bookmarks already exist in the repo, you can pull them into this browser."

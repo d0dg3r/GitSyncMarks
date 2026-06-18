@@ -69,6 +69,27 @@ async function seedLocalBookmarksForToolbarAndOther(page, suffix) {
   }, { suffixArg: suffix });
 }
 
+async function clearLocalBookmarks(page) {
+  await page.evaluate(async () => {
+    const roots = await chrome.bookmarks.getChildren('0');
+    for (const root of roots) {
+      if (!root?.id) continue;
+      const children = await chrome.bookmarks.getChildren(root.id);
+      for (const node of children) {
+        try {
+          if (node.children) {
+            await chrome.bookmarks.removeTree(node.id);
+          } else {
+            await chrome.bookmarks.remove(node.id);
+          }
+        } catch {
+          // Ignore managed or undeletable nodes in test profile.
+        }
+      }
+    }
+  });
+}
+
 async function openWizardAndAdvanceToRepoDetails(page) {
   const wizard = page.locator('#onboarding-wizard-screen');
   if (!(await wizard.isVisible())) {
@@ -187,6 +208,23 @@ test.describe('Connection', () => {
     await test.expect(page.locator('#onboarding-wizard-step-title')).toContainText(/Repository setup mode/i);
   });
 
+  test.skip(!hasTokenOnly(), 'Missing token for path validation test');
+  test('Wizard blocks file-like base path values', async ({ page, extensionId }) => {
+    await openOptions(page, extensionId);
+    await openWizardAndAdvanceToRepoDetails(page);
+
+    await page.locator('#onboarding-wizard-repo-flow').selectOption('manual');
+    await page.locator('#onboarding-wizard-next-btn').click(); // repoDecision -> repoDetails
+    await page.locator('#onboarding-wizard-owner').fill('owner');
+    await page.locator('#onboarding-wizard-repo').fill('repo');
+    await page.locator('#onboarding-wizard-path').fill('bookmarks.json');
+
+    await page.locator('#onboarding-wizard-next-btn').click();
+
+    await test.expect(page.locator('#onboarding-wizard-step-title')).toContainText(/Repository details|Repository setup/i);
+    await test.expect(page.locator('#onboarding-wizard-hint')).toContainText(/folder path must be a folder/i);
+  });
+
   test.describe('Invalid token', () => {
     test('Test Connection fails with invalid token', async ({ page, extensionId }) => {
       await page.goto(`chrome-extension://${extensionId}/options.html`);
@@ -208,6 +246,43 @@ test.describe('Connection', () => {
 
   test.describe('Valid credentials', () => {
     test.skip(!hasTokenAndOwner(), 'Missing token/owner for onboarding bootstrap auto-create test');
+    test('Bootstrap scenario A0: auto-created empty repo auto-seeds structure', async ({ page, extensionId }, testInfo) => {
+      test.setTimeout(90000);
+      const token = process.env.GITSYNCMARKS_TEST_PAT;
+      const owner = process.env.GITSYNCMARKS_TEST_REPO_OWNER;
+      const createdRepo = `gitsyncmarks-e2e-autoseed-${Date.now()}`;
+      const basePath = 'bookmarks';
+      await openOptions(page, extensionId);
+      await disableAutoSync(page);
+      await clearLocalBookmarks(page);
+
+      try {
+        await openWizardAndAdvanceToRepoDetails(page);
+        await page.locator('#onboarding-wizard-repo-flow').selectOption('autoCreate');
+        await page.locator('#onboarding-wizard-next-btn').click(); // repoDecision -> repoDetails
+        await page.locator('#onboarding-wizard-repo').fill(createdRepo);
+        await page.locator('#onboarding-wizard-branch').fill('main');
+        await page.locator('#onboarding-wizard-path').fill(basePath);
+        await page.locator('#onboarding-wizard-next-btn').click(); // repoDetails -> environment
+        await page.locator('#onboarding-wizard-next-btn').click(); // environment -> auto-seed check
+        await page.locator('#onboarding-wizard-next-btn').click(); // environment -> finish
+        await test.expect(page.locator('#onboarding-wizard-step-title')).toContainText(/all set|fertig|ready|finish/i, { timeout: 60000 });
+
+        const repoTarget = { owner, repo: createdRepo };
+        await githubFetch(`/contents/${basePath}/_index.json`, {}, repoTarget);
+      } finally {
+        const cleanupResult = await deleteE2eRepoIfSafe({ token, owner, repo: createdRepo });
+        await testInfo.attach('autoseed-repo-cleanup', {
+          contentType: 'application/json',
+          body: Buffer.from(JSON.stringify({
+            owner,
+            repo: createdRepo,
+            ...cleanupResult,
+          }, null, 2)),
+        });
+      }
+    });
+
     test('Bootstrap scenario A: auto-created repo syncs toolbar + other bookmarks', async ({ page, extensionId }, testInfo) => {
       test.setTimeout(90000);
       const token = process.env.GITSYNCMARKS_TEST_PAT;
