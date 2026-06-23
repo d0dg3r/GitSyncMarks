@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.4] - 2026-06-24
+
 ### Fixed
 - **Onboarding wizard empty-repo flow** ([#173](https://github.com/d0dg3r/GitSyncMarks/issues/173)): Auto-created repositories with no commits no longer get stuck on step 7/8. The wizard now treats zero-commit repositories as empty, auto-creates the initial bookmark folder structure for greenfield auto-create setups, and recognizes structure-only remotes as ready (`structureReady`). Connection/path validation now blocks file-like base paths such as `bookmarks.json` and requires a folder path (for example `bookmarks`).
 

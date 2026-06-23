@@ -41,6 +41,7 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 
 | Version | Codename | Description |
 |---|---|---|
+| `3.0.4` | — | **Onboarding patch (2026-06-24).** Fixed: setup wizard no longer gets stuck on step 7/8 for auto-created empty repositories ([#173](https://github.com/d0dg3r/GitSyncMarks/issues/173)) — zero-commit repos treated as empty, greenfield auto-create seeds minimal `bookmarks/` structure automatically, `structureReady` status for structure-only remotes, folder-path validation rejects file-like values such as `bookmarks.json`. |
 | `3.0.3` | — | **Store copy patch (2026-06-17).** Fixed: Chrome Web Store rejection for listing more than five supported platform names — reworded all 12 Chrome/Firefox store locales and the dashboard permission justifications to drop browser/OS/Git-host enumerations and link the full provider list to [docs/PROVIDERS.md](PROVIDERS.md). No functional change. |
 | `3.0.2` | — | **Store copy patch (2026-06-12).** Fixed: Chrome Web Store rejection for excessive provider keywords in listing and manifest descriptions — generic Git-repo wording in all 12 Chrome/Firefox store locales and `_locales` `extDescription` keys. No functional change. |
 | `3.0.1` | — | **AMO patch (2026-06-08).** Fixed: removed unsafe `innerHTML` assignments for Firefox Add-ons linter compliance (`lib/dom-utils.js`, DOM APIs throughout options/popup/search UI). No functional change. |

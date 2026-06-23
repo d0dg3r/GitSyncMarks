@@ -1,6 +1,6 @@
 {
   "name": "gitsyncmarks",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "private": true,
   "description": "Bookmark sync to your Git repository. Linkwarden, Smart Search, Companion App. Direct, secure, private.",
   "engines": {
