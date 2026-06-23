@@ -12,7 +12,12 @@ import {
   providerNeedsHostPermission,
   renderProviderOptions,
 } from '../lib/provider-ui.js';
-import { checkPathSetup, initializeRemoteFolder, waitForRemoteBaseline } from '../lib/onboarding.js';
+import {
+  checkPathSetup,
+  initializeRemoteFolder,
+  validateSyncBasePath,
+  waitForRemoteBaseline,
+} from '../lib/onboarding.js';
 import { formatSyncProgress, runSyncPortAction } from '../lib/sync-progress.js';
 import {
   buildWizardSyncOptions,
@@ -351,7 +356,7 @@ export function renderOnboardingWizardStep() {
 
 function populateWizardSyncModeSelect() {
   if (!onboardingWizardSyncModeSelect) return;
-  const { modes, defaultMode, warningKey } = buildWizardSyncOptions(
+  const { modes, defaultMode } = buildWizardSyncOptions(
     wizardState.pathStatus,
     wizardState.localBookmarkCount,
     wizardState.remoteBookmarkCount
@@ -429,7 +434,12 @@ async function executeWizardSyncAction(mode) {
   syncWizardFieldsToConnectionForm();
   await _saveSettings();
   const fields = getWizardConnectionFields();
-  const basePath = onboardingWizardPathInput.value.trim() || 'bookmarks';
+  const basePathValidation = validateSyncBasePath(onboardingWizardPathInput.value);
+  if (!basePathValidation.valid) {
+    setWizardResult(getMessage(basePathValidation.errorKey || 'options_filePathInvalidEmpty'), 'error');
+    return false;
+  }
+  const basePath = basePathValidation.normalizedPath;
   const api = createConnectionApi(fields);
   const connection = getConnectionFormFieldsFromPage();
   const onProgress = (payload) => {
@@ -552,7 +562,6 @@ async function initializePathAndRunFirstPush(onProgress) {
 }
 
 async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
-  await _saveSettings();
   const fields = getConnectionFormFieldsFromPage();
 
   if (!fields.token) {
@@ -566,6 +575,15 @@ async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
   if (!(await ensureWizardHostPermission(fields))) {
     return { ok: false };
   }
+  const basePathValidation = validateSyncBasePath(filepathInput.value);
+  if (!basePathValidation.valid) {
+    hideConnectionPathInitAction();
+    showValidation(getMessage(basePathValidation.errorKey || 'options_filePathInvalidEmpty'), 'error');
+    return { ok: false };
+  }
+  const basePath = basePathValidation.normalizedPath;
+  filepathInput.value = basePath;
+  await _saveSettings();
 
   showValidation(getMessage('options_checking'), 'loading');
 
@@ -595,7 +613,6 @@ async function validateAndInspectRepo({ offerInteractiveActions = true } = {}) {
         showValidation(getMessage('options_tokenValidRepoNotFound', [tokenResult.username, `${fields.owner}/${fields.repo}`]), 'error');
         return { ok: false };
       }
-      const basePath = filepathInput.value.trim() || 'bookmarks';
       const pathCheck = await checkPathSetup(api, basePath);
       if (offerInteractiveActions && (pathCheck.status === 'unreachable' || pathCheck.status === 'empty')) {
         showConnectionPathInitAction(basePath);
@@ -726,11 +743,17 @@ async function runWizardEnvironmentCheck() {
     return false;
   }
 
+  const basePathValidation = validateSyncBasePath(onboardingWizardPathInput.value);
+  if (!basePathValidation.valid) {
+    setWizardResult(getMessage(basePathValidation.errorKey || 'options_filePathInvalidEmpty'), 'error');
+    return false;
+  }
+  onboardingWizardPathInput.value = basePathValidation.normalizedPath;
   syncWizardFieldsToConnectionForm();
   await _saveSettings();
 
   const fields = getWizardConnectionFields();
-  const basePath = onboardingWizardPathInput.value.trim() || 'bookmarks';
+  const basePath = basePathValidation.normalizedPath;
   if (!fields.owner || !fields.repo) {
     setWizardResult(getMessage('options_onboardingWizardRepoRequired'), 'error');
     return false;
@@ -787,13 +810,51 @@ async function runWizardEnvironmentCheck() {
     stopPathPulse();
   }
 
+  const localBookmarkCount = await countLocalBookmarks();
+  let remoteBookmarkCount = countRemoteBookmarks(pathCheck.fileMap);
+  let pathStatus = pathCheck.status;
+  let firstSyncDone = false;
+
+  const shouldAutoSeedStructure = (
+    onboardingWizardRepoFlowSelect.value === 'autoCreate' &&
+    (pathStatus === 'empty' || pathStatus === 'unreachable') &&
+    localBookmarkCount === 0 &&
+    remoteBookmarkCount === 0
+  );
+
+  if (shouldAutoSeedStructure) {
+    const stopAutoSeedPulse = startProgressPulse([
+      'Preparing repository baseline',
+      'Creating initial folder structure',
+    ], 2500);
+    try {
+      await waitForRemoteBaseline(api);
+      await initializeRemoteFolder(api, basePath);
+      pathCheck = await checkPathSetup(api, basePath);
+      pathStatus = pathCheck.status;
+      remoteBookmarkCount = countRemoteBookmarks(pathCheck.fileMap);
+      firstSyncDone = true;
+    } finally {
+      stopAutoSeedPulse();
+    }
+  }
+
+  if (!firstSyncDone && pathStatus === 'structureReady' && localBookmarkCount === 0) {
+    firstSyncDone = true;
+  }
+
   wizardState.repoRef = `${fields.owner}/${fields.repo}`;
-  wizardState.pathStatus = pathCheck.status;
-  wizardState.remoteBookmarkCount = countRemoteBookmarks(pathCheck.fileMap);
-  wizardState.localBookmarkCount = await countLocalBookmarks();
-  wizardState.firstSyncDone = false;
+  wizardState.pathStatus = pathStatus;
+  wizardState.remoteBookmarkCount = remoteBookmarkCount;
+  wizardState.localBookmarkCount = localBookmarkCount;
+  wizardState.firstSyncDone = firstSyncDone;
   wizardState.environmentChecked = true;
-  setWizardResult(getMessage('options_onboardingWizardEnvironmentChecked'), 'success');
+  setWizardResult(
+    firstSyncDone
+      ? getMessage('options_onboardingWizardAutoSeedSuccess', [basePath])
+      : getMessage('options_onboardingWizardEnvironmentChecked'),
+    'success'
+  );
   renderOnboardingWizardStep();
   return true;
 }
@@ -870,7 +931,14 @@ export function initWizard({ saveSettings }) {
 
   connectionPathInitBtn.addEventListener('click', async () => {
     const fields = getConnectionFormFieldsFromPage();
-    const basePath = connectionPathInitGroup.dataset.path || filepathInput.value.trim() || 'bookmarks';
+    const basePathValidation = validateSyncBasePath(
+      connectionPathInitGroup.dataset.path || filepathInput.value
+    );
+    if (!basePathValidation.valid) {
+      showValidation(getMessage(basePathValidation.errorKey || 'options_filePathInvalidEmpty'), 'error');
+      return;
+    }
+    const basePath = basePathValidation.normalizedPath;
     if (!fields.token || !fields.owner || !fields.repo) {
       showValidation(getMessage('options_browseFolderNotConfigured'), 'error');
       return;
@@ -892,7 +960,12 @@ export function initWizard({ saveSettings }) {
       }
       showValidation(getMessage('popup_syncing'), 'loading');
       if (gate.mode === 'initialize') {
+        await waitForRemoteBaseline(api);
         await initializeRemoteFolder(api, basePath);
+      } else if (gate.mode === 'skip') {
+        hideConnectionPathInitAction();
+        showValidation(getMessage('options_onboardingWizardAutoSeedSuccess', [basePath]), 'success');
+        return;
       } else if (gate.mode === 'push') {
         await assertSafeWizardPush(api, basePath);
         const pushResult = await runSyncPortAction('push', {}, (payload) => {
@@ -1023,6 +1096,14 @@ export function initWizard({ saveSettings }) {
       }
       if (stepKey === 'repoDecision') {
         wizardState.repoFlow = onboardingWizardRepoFlowSelect.value;
+      }
+      if (stepKey === 'repoDetails') {
+        const basePathValidation = validateSyncBasePath(onboardingWizardPathInput.value);
+        if (!basePathValidation.valid) {
+          setWizardResult(getMessage(basePathValidation.errorKey || 'options_filePathInvalidEmpty'), 'error');
+          return;
+        }
+        onboardingWizardPathInput.value = basePathValidation.normalizedPath;
       }
       if (stepKey === 'environment') {
         if (!wizardState.environmentChecked) {

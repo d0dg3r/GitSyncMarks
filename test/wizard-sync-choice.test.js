@@ -33,6 +33,18 @@ describe('buildWizardSyncOptions', () => {
     assert.equal(opts.defaultMode, 'initialize');
     assert.deepEqual(opts.modes, ['initialize', 'skip']);
   });
+
+  it('defaults to skip when structure exists and local is empty', () => {
+    const opts = buildWizardSyncOptions('structureReady', 0, 0);
+    assert.equal(opts.defaultMode, 'skip');
+    assert.deepEqual(opts.modes, ['skip']);
+  });
+
+  it('offers push when structure exists and local has bookmarks', () => {
+    const opts = buildWizardSyncOptions('structureReady', 2, 0);
+    assert.equal(opts.defaultMode, 'push');
+    assert.deepEqual(opts.modes, ['push', 'skip']);
+  });
 });
 
 describe('remoteHasBookmarkPayload', () => {
