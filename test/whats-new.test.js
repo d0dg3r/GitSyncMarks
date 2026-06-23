@@ -13,6 +13,13 @@ describe('whats-new', () => {
     assert.ok(c.bullets.length >= 3);
   });
 
+  it('getWhatsNewContent returns bullets for 3.0.4', () => {
+    const c = getWhatsNewContent('3.0.4');
+    assert.ok(c);
+    assert.ok(Array.isArray(c.bullets));
+    assert.ok(c.bullets.some((b) => b.includes('Onboarding wizard')));
+  });
+
   it('getWhatsNewContent returns bullets for 3.0.3', () => {
     const c = getWhatsNewContent('3.0.3');
     assert.ok(c);
