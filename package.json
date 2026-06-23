@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "addons-linter": "^7.14.0",
+    "addons-linter": "^10.7.0",
     "@playwright/test": "^1.60.0",
     "@types/chrome": "^0.1.43",
     "dotenv": "^17.4.2",
