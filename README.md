@@ -21,7 +21,7 @@
 > — **Linus Torvalds** (Git creator)
 
 > [!IMPORTANT]
-> **GitSyncMarks 3.0.0 is now stable** — [v3.0.0 (*GLaDOS*)](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.0) adds **multi-provider Git sync** (GitHub, GitLab, Codeberg, Gitea, Forgejo, Gogs), **Bitwarden backup to Git**, **profile transfer**, **push mirrors**, **live sync progress**, and a refreshed **nested-card UI**. Existing GitHub profiles keep working — no breaking bookmark format changes. Chrome Web Store and Firefox Add-ons listing updates are prepared with this release; store approval may take a few days after submission.
+> **GitSyncMarks 3.0 is stable** — latest release [v3.0.4](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.4) includes **multi-provider Git sync** (see [docs/PROVIDERS.md](docs/PROVIDERS.md)), **Bitwarden backup to Git**, **profile transfer**, **push mirrors**, **live sync progress**, and a refreshed **nested-card UI**. Existing GitHub profiles keep working — no breaking bookmark format changes.
 
 ---
 
@@ -121,7 +121,7 @@ Take your bookmarks everywhere with the **[GitSyncMarks-App](https://github.com/
 
 ### 1. Browser extension
 
-- **Chrome/Edge/Brave**: [Chrome Web Store](https://chromewebstore.google.com/detail/kogijidhfkoibgihpiaiippajhgdgmif) or download **[v3.0.0](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.0)** and **Load unpacked**
+- **Chrome/Edge/Brave**: [Chrome Web Store](https://chromewebstore.google.com/detail/kogijidhfkoibgihpiaiippajhgdgmif) or download the [latest release](https://github.com/d0dg3r/GitSyncMarks/releases/latest) and **Load unpacked**
 - **Firefox**: [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/gitsyncmarks/) or install from the release ZIP via **Install temporary add-on** in `about:debugging`
 
 ### 2. Git configuration

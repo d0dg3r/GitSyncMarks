@@ -26,6 +26,7 @@ cp store-assets/en/chrome-1-connection.png \
    store-assets/en/chrome-8-linkwarden-save.png \
    store-assets/en/chrome-9-wizard-welcome.png \
    store-assets/en/chrome-10-wizard-token.png \
-   store-assets/en/chrome-11-wizard-repo.png _site/assets/screenshots/
+   store-assets/en/chrome-11-wizard-repo.png \
+   store-assets/en/chrome-12-bitwarden.png _site/assets/screenshots/
 
 echo "Website prepared in _site/"

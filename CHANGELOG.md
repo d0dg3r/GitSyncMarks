@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Website (gitsyncmarks.com)**: Updated landing page for 3.0 — multi-provider Git sync, Bitwarden backup, profile transfer, push mirrors, live sync progress, sync history, clean orphans, and automation; provider-neutral setup steps; Bitwarden screenshot; v3.0.4 release notice. README stable-release banner points to v3.0.4.
+
 ## [3.0.4] - 2026-06-24
 
 ### Fixed

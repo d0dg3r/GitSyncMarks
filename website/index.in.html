@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="GitSyncMarks — Your bookmarks, safe on GitHub. Per-file storage, three-way merge sync, works on Chrome & Firefox. No middleman.">
-  <title>GitSyncMarks — Effortless Bookmark Sync via GitHub</title>
+  <meta name="description" content="GitSyncMarks — Bookmark sync to your Git repository. Multi-provider Git sync, Bitwarden backup, Linkwarden, Smart Search, Companion App. Direct, secure, private.">
+  <title>GitSyncMarks — Bookmark Sync to Your Git Repository</title>
   <!-- Open Graph -->
-  <meta property="og:title" content="GitSyncMarks — Effortless Bookmark Sync via GitHub">
-  <meta property="og:description" content="Your bookmarks, safe on GitHub. Per-file storage, three-way merge sync, works on Chrome & Firefox. No middleman.">
+  <meta property="og:title" content="GitSyncMarks — Bookmark Sync to Your Git Repository">
+  <meta property="og:description" content="Bidirectional bookmark sync with your Git provider. Multi-provider support, Bitwarden vault backup, profile transfer, three-way merge. No middleman.">
   <meta property="og:image" content="https://gitsyncmarks.com/assets/promo-marquee.png">
   <meta property="og:url" content="https://gitsyncmarks.com/">
   <meta property="og:type" content="website">
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="GitSyncMarks — Effortless Bookmark Sync via GitHub">
-  <meta name="twitter:description" content="Your bookmarks, safe on GitHub. Per-file storage, three-way merge sync, works on Chrome & Firefox. No middleman.">
+  <meta name="twitter:title" content="GitSyncMarks — Bookmark Sync to Your Git Repository">
+  <meta name="twitter:description" content="Bidirectional bookmark sync with your Git provider. Multi-provider support, Bitwarden vault backup, profile transfer, three-way merge. No middleman.">
   <meta name="twitter:image" content="https://gitsyncmarks.com/assets/promo-marquee.png">
   <link rel="icon" href="assets/favicon.ico" sizes="any">
   <link rel="icon" href="assets/favicon-32x32.png" type="image/png" sizes="32x32">
@@ -26,7 +26,8 @@
   <header class="hero">
     <img src="assets/promo-marquee.png" alt="GitSyncMarks — bookmark sync to your Git repository" class="hero-image" width="960">
     <div class="hero-content">
-      <p class="beta-cta"><strong>Become a beta tester</strong> — try pre-releases and help shape GitSyncMarks. <a href="https://github.com/d0dg3r/GitSyncMarks/releases?q=pre" target="_blank" rel="noopener noreferrer">Extension</a> · <a href="https://github.com/d0dg3r/GitSyncMarks-App/issues/new?template=beta-signup.md&labels=beta-signup" target="_blank" rel="noopener noreferrer">App</a></p>
+      <p class="release-notice"><strong>v3.0.4</strong> — Multi-provider Git sync, Bitwarden backup to Git, profile transfer, push mirrors, live sync progress, and nested-card UI. <a href="https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.4" target="_blank" rel="noopener noreferrer">Release notes</a></p>
+      <p class="beta-cta"><strong>Pre-releases</strong> — try betas and help shape the next version. <a href="https://github.com/d0dg3r/GitSyncMarks/releases?q=pre" target="_blank" rel="noopener noreferrer">Extension</a> · <a href="https://github.com/d0dg3r/GitSyncMarks-App/issues/new?template=beta-signup.md&labels=beta-signup" target="_blank" rel="noopener noreferrer">App</a></p>
       <nav class="client-tabs">
         <button type="button" class="tab-btn active" data-tab="extension">Browser Extension</button>
         <button type="button" class="tab-btn" data-tab="app">Companion App</button>
@@ -66,6 +67,22 @@
       <h2>Features</h2>
       <div class="feature-grid">
         <article class="feature-card">
+          <h3>Multi-Provider Git Sync</h3>
+          <p>Connect your Git host or self-hosted server — each profile uses its own provider and URL. <a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/docs/PROVIDERS.md" target="_blank" rel="noopener noreferrer">Full provider list</a></p>
+        </article>
+        <article class="feature-card">
+          <h3>Profile Transfer &amp; Push Mirrors</h3>
+          <p>Copy bookmarks between profiles (replace or merge). Optional push-only backup remotes after each successful sync.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Bitwarden Vault Backup</h3>
+          <p>Store password-protected vault exports in your repo with optional extra encryption. List, download, or delete remote backups.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Live Sync Progress</h3>
+          <p>Step text during push, pull, and profile switch — e.g. <code>3 / 12 files</code> or <code>1 of 3</code> steps in popup and settings.</p>
+        </article>
+        <article class="feature-card">
           <h3>Linkwarden Synergy</h3>
           <p>Save any page or link directly to Linkwarden with automatic viewport screenshots, collection sync, and tag management.</p>
         </article>
@@ -74,35 +91,39 @@
           <p>Dedicated lightning-fast search interface with theme support and full keyboard navigation. Find any bookmark in milliseconds.</p>
         </article>
         <article class="feature-card">
-          <h3>No middleman</h3>
-          <p>Communicates directly with the GitHub API. No third-party server, no backend. Your data stays between your browser and your GitHub repo.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Per-file storage</h3>
-          <p>Each bookmark is stored as an individual JSON file in your Git repo — human-readable, diff-friendly, and easy to edit or version on GitHub.</p>
+          <h3>Sync History &amp; Restore</h3>
+          <p>Browse past commits, preview changes with a diff view, and restore any previous bookmark state in one click.</p>
         </article>
         <article class="feature-card">
           <h3>Three-way merge</h3>
           <p>Automatic conflict-free sync when changes happen on both sides simultaneously. No manual merge needed in most cases.</p>
         </article>
         <article class="feature-card">
-          <h3>Cross-browser</h3>
-          <p>Works with Chrome, Chromium, Brave, Edge, and Firefox. Same extension logic, same bookmark format across all.</p>
+          <h3>Clean Remote Orphans</h3>
+          <p>Preview and delete remote bookmark files that no longer exist locally — keep your repository tidy.</p>
         </article>
         <article class="feature-card">
-          <h3>Auto-sync</h3>
-          <p>Syncs automatically on every bookmark change. Configurable debounce so rapid edits are bundled into one sync.</p>
+          <h3>Private by design</h3>
+          <p>Direct communication with your Git provider's API. No third-party servers, no analytics. Your data stays in your repository.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Per-file storage</h3>
+          <p>Each bookmark is a readable JSON file in your Git repo — diff-friendly, versioned, and easy to edit manually.</p>
         </article>
         <article class="feature-card">
           <h3>Multiple profiles</h3>
-          <p>Up to 10 profiles (work, personal, projects). Each has its own GitHub repo config and bookmark set.</p>
+          <p>Up to 10 profiles (work, personal, projects). Each has its own provider, repository, and bookmark set.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Automation ready</h3>
+          <p>Add bookmark JSON via git or the included GitHub Action template; the extension imports them on the next sync.</p>
         </article>
         <article class="feature-card">
           <h3>Context menu</h3>
-          <p>Right-click power: Add to Toolbar, Add to Other Bookmarks, Sync Now, Save to Linkwarden, or manage site favicons.</p>
+          <p>Quick folders, Search Bookmarks popup, Open All from Folder, Save to Linkwarden, favicon copy/download, and profile actions.</p>
         </article>
       </div>
-      <p class="wizard-hint"><strong>Setup wizard:</strong> After installation, a setup wizard opens automatically and guides you through token, repository, and first sync — no manual configuration needed.</p>
+      <p class="wizard-hint"><strong>Setup wizard:</strong> After installation, the wizard guides you through provider, token, and repository setup. Connection check only validates access — you choose pull, merge, push, folder setup, or skip before anything is written.</p>
     </section>
 
     <section class="screenshots" id="screenshots">
@@ -152,17 +173,22 @@
           <img src="assets/screenshots/chrome-11-wizard-repo.png" alt="Setup wizard repository" width="220">
           <figcaption>11. Wizard (Repository)</figcaption>
         </figure>
+        <figure>
+          <img src="assets/screenshots/chrome-12-bitwarden.png" alt="Bitwarden backup settings" width="220">
+          <figcaption>12. Bitwarden Backup</figcaption>
+        </figure>
       </div>
     </section>
 
     <section class="how-it-works" id="how-it-works">
       <h2>Configure the Extension</h2>
-      <p class="wizard-intro"><strong>Prefer a guided setup?</strong> The built-in setup wizard opens on first install and walks you through token creation, repo setup (auto-create or existing), and your first sync. You can restart it anytime from Settings → GitHub → <strong>Start setup wizard</strong>.</p>
+      <p class="wizard-intro"><strong>Prefer a guided setup?</strong> The built-in setup wizard opens on first install and walks you through provider selection, token creation, repo setup (auto-create or existing), and your first sync action. Restart it anytime from Settings → Help → <strong>Start setup wizard</strong>.</p>
       <ol class="steps">
-        <li>Create a GitHub repository for your bookmarks</li>
-        <li>Generate a <a href="https://github.com/settings/tokens/new?scopes=repo&description=GitSyncMarks+Sync">GitHub Token</a> (Classic <code>repo</code> scope or Fine-grained <code>Contents: R/W</code>)</li>
-        <li>Install the extension and configure token, repo owner, repo name, and branch</li>
-        <li>Click <strong>Sync Now</strong> — your bookmarks are pushed as individual JSON files</li>
+        <li>Open <strong>Settings → Git → Connection</strong> and choose your Git provider (<a href="https://github.com/d0dg3r/GitSyncMarks/blob/main/docs/PROVIDERS.md" target="_blank" rel="noopener noreferrer">full list</a>)</li>
+        <li>Create a repository for your bookmarks (or let the wizard auto-create one on supported hosts)</li>
+        <li>Generate a personal access token with repository read/write scope (provider-specific — see provider docs)</li>
+        <li>Enter token, owner, repository, branch, and bookmark folder path (e.g. <code>bookmarks</code>)</li>
+        <li>Run <strong>Check connection</strong>, then choose pull, merge/sync, push, initialize structure, or skip</li>
       </ol>
     </section>
     </div>
