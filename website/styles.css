@@ -174,11 +174,27 @@ body {
   color: var(--text-muted);
 }
 
-.beta-cta {
+.release-notice {
   text-align: center;
   margin: 0.75rem 0 0;
   padding: 0.5rem 1rem;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.release-notice strong {
+  color: var(--success);
+}
+
+.release-notice a {
+  font-weight: 500;
+}
+
+.beta-cta {
+  text-align: center;
+  margin: 0.35rem 0 0;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
 }
 
