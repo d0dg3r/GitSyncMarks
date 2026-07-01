@@ -186,10 +186,16 @@ function setWizardBusy(isBusy, loadingMessage = '') {
     wizardStatusEl.className = 'wizard-status';
     wizardStatusEl.style.display = 'flex';
   } else {
-    wizardStatusEl.style.display = 'none';
-    onboardingWizardHint.textContent = '';
-    onboardingWizardElapsed.textContent = '';
+    hideWizardBusyStatus();
   }
+}
+
+/** Hide spinner/status only; keep wizard action buttons disabled while a confirm dialog is open. */
+function hideWizardBusyStatus() {
+  wizardStatusEl.style.display = 'none';
+  onboardingWizardHint.textContent = '';
+  onboardingWizardElapsed.textContent = '';
+  onboardingWizardSpinner.style.display = 'none';
 }
 
 function isGiteaFamilyProvider(provider) {
@@ -415,9 +421,16 @@ async function confirmWizardSyncAction(mode) {
   const yesLabel = mode === 'skip'
     ? getMessage('options_onboardingWizardSyncConfirmSkipBtn')
     : getMessage('options_onboardingWizardSyncConfirmRunBtn');
-  const confirmed = await showOnboardingConfirm(body, yesLabel);
-  hideOnboardingConfirm();
-  return confirmed;
+  hideWizardBusyStatus();
+  const originalParent = onboardingConfirm.parentNode;
+  const originalNext = onboardingConfirm.nextSibling;
+  onboardingWizardScreen.insertBefore(onboardingConfirm, wizardStatusEl);
+  try {
+    return await showOnboardingConfirm(body, yesLabel);
+  } finally {
+    hideOnboardingConfirm();
+    originalParent.insertBefore(onboardingConfirm, originalNext);
+  }
 }
 
 async function assertSafeWizardPush(api, basePath) {
