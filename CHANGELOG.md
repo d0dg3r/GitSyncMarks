@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - **Developer tooling**: Added `.tools/` to `.gitignore` for local Node/npm installs used during development.
+- **Dev dependencies**: Bumped `eslint` to 10.6.0, `playwright` and `@playwright/test` to 1.61.1, `@types/chrome` to 0.2.0, and `globals` to 17.7.0 (supersedes Dependabot PRs [#183](https://github.com/d0dg3r/GitSyncMarks/pull/183)–[#187](https://github.com/d0dg3r/GitSyncMarks/pull/187)).
 
 ## [3.0.4] - 2026-06-24
 
