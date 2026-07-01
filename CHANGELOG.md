@@ -10,6 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - **Website (gitsyncmarks.com)**: Updated landing page for 3.0 — multi-provider Git sync, Bitwarden backup, profile transfer, push mirrors, live sync progress, sync history, clean orphans, and automation; provider-neutral setup steps; Bitwarden screenshot; v3.0.4 release notice. README stable-release banner points to v3.0.4.
 
+## [3.0.5] - 2026-07-01
+
+### Fixed
+- **Onboarding wizard first-sync hang**: The wizard's first sync (pull/push/sync) no longer spins forever with no error. The confirmation prompt was rendered by the shared `#onboarding-confirm` element, which lives inside `#settings-shell` — hidden while the wizard is active — so its Yes/No buttons were invisible and the awaited confirmation promise never resolved. `confirmWizardSyncAction()` now hides the busy spinner and temporarily moves the confirm dialog into the visible wizard screen while prompting, then restores it for the Git-tab flow.
+
+### Changed
+- **Developer tooling**: Added `.tools/` to `.gitignore` for local Node/npm installs used during development.
+
 ## [3.0.4] - 2026-06-24
 
 ### Fixed

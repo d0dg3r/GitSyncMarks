@@ -25,6 +25,7 @@ docs/ANNOUNCEMENT_v2.2.0.md
 
 # Node (falls spaeter benoetigt)
 node_modules/
+.tools/
 
 # E2E test credentials (never commit)
 .env

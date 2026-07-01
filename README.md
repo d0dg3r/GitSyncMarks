@@ -21,7 +21,7 @@
 > — **Linus Torvalds** (Git creator)
 
 > [!IMPORTANT]
-> **GitSyncMarks 3.0 is stable** — latest release [v3.0.4](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.4) includes **multi-provider Git sync** (see [docs/PROVIDERS.md](docs/PROVIDERS.md)), **Bitwarden backup to Git**, **profile transfer**, **push mirrors**, **live sync progress**, and a refreshed **nested-card UI**. Existing GitHub profiles keep working — no breaking bookmark format changes.
+> **GitSyncMarks 3.0 is stable** — latest release [v3.0.5](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.5) includes **multi-provider Git sync** (see [docs/PROVIDERS.md](docs/PROVIDERS.md)), **Bitwarden backup to Git**, **profile transfer**, **push mirrors**, **live sync progress**, and a refreshed **nested-card UI**. Existing GitHub profiles keep working — no breaking bookmark format changes.
 
 ---
 

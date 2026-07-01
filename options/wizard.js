@@ -415,9 +415,16 @@ async function confirmWizardSyncAction(mode) {
   const yesLabel = mode === 'skip'
     ? getMessage('options_onboardingWizardSyncConfirmSkipBtn')
     : getMessage('options_onboardingWizardSyncConfirmRunBtn');
-  const confirmed = await showOnboardingConfirm(body, yesLabel);
-  hideOnboardingConfirm();
-  return confirmed;
+  setWizardBusy(false);
+  const originalParent = onboardingConfirm.parentNode;
+  const originalNext = onboardingConfirm.nextSibling;
+  onboardingWizardScreen.insertBefore(onboardingConfirm, wizardStatusEl);
+  try {
+    return await showOnboardingConfirm(body, yesLabel);
+  } finally {
+    hideOnboardingConfirm();
+    originalParent.insertBefore(onboardingConfirm, originalNext);
+  }
 }
 
 async function assertSafeWizardPush(api, basePath) {
