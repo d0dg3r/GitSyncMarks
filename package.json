@@ -35,7 +35,7 @@
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.61.1",
     "@types/chrome": "^0.2.0",
-    "addons-linter": "^10.7.0",
+    "addons-linter": "^10.8.1",
     "dotenv": "^17.4.2",
     "eslint": "^10.6.0",
     "eslint-plugin-security": "^4.0.1",
