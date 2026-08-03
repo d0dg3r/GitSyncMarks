@@ -13,9 +13,11 @@ permissions:
   contents: read
   actions: read
 
+# CodeQL + security-events are GitHub-hosted; Forgejo mirrors lack github/codeql-action.
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
+    if: ${{ github.server_url == 'https://github.com' }}
     runs-on: ubuntu-latest
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true

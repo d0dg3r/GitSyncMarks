@@ -23,8 +23,10 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+# GitHub Pages actions are not mirrored on data.forgejo.org.
 jobs:
   build:
+    if: ${{ github.server_url == 'https://github.com' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -41,6 +43,7 @@ jobs:
           path: _site
 
   deploy:
+    if: ${{ github.server_url == 'https://github.com' }}
     environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
