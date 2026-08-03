@@ -37,7 +37,7 @@
     "@types/chrome": "^0.2.2",
     "addons-linter": "^10.8.1",
     "dotenv": "^17.4.2",
-    "eslint": "^10.6.0",
+    "eslint": "^10.8.0",
     "eslint-plugin-security": "^4.0.1",
     "globals": "^17.7.0",
     "marked": "^18.0.6",
