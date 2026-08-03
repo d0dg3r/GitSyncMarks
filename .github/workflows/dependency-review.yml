@@ -10,6 +10,7 @@ permissions:
 jobs:
   dependency-review:
     name: Review dependencies
+    if: ${{ github.server_url == 'https://github.com' }}
     runs-on: ubuntu-latest
 
     steps:

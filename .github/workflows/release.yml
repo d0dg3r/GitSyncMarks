@@ -9,9 +9,12 @@ permissions:
   contents: write
   discussions: write
 
+# Releases, Discussions, and third-party actions (extract-release-notes, softprops)
+# target GitHub; Forgejo action mirrors do not ship those repos.
 jobs:
   quality:
     name: Lint, Typecheck & Unit Tests
+    if: ${{ github.server_url == 'https://github.com' }}
     runs-on: ubuntu-latest
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -38,6 +41,7 @@ jobs:
         run: npm run test:unit
 
   build-and-release:
+    if: ${{ github.server_url == 'https://github.com' }}
     needs: quality
     runs-on: ubuntu-latest
     env:
