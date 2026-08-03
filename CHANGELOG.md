@@ -10,6 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - **Website (gitsyncmarks.com)**: Updated landing page for 3.0 — multi-provider Git sync, Bitwarden backup, profile transfer, push mirrors, live sync progress, sync history, clean orphans, and automation; provider-neutral setup steps; Bitwarden screenshot; v3.0.4 release notice. README stable-release banner points to v3.0.4.
 
+## [3.0.6] - 2026-08-03
+
+### Security
+- **Transitive npm CVEs**: Cleared Dependabot alerts for `fast-uri` (→ 3.1.4), `js-yaml` (→ 4.3.1), and `brace-expansion` (1.1.18 / 5.0.9) via `package.json` overrides. No change to extension runtime behavior.
+
+### Changed
+- **Dev dependencies**: Bumped `sharp` to 0.35.3, `@types/chrome` to 0.2.2, `marked` to 18.0.6, and `addons-linter` to ^10.8.1 (supersedes Dependabot PRs [#191](https://github.com/d0dg3r/GitSyncMarks/pull/191)–[#195](https://github.com/d0dg3r/GitSyncMarks/pull/195), [#198](https://github.com/d0dg3r/GitSyncMarks/pull/198)).
+- **CI / release Actions**: `actions/setup-node` v7 and `softprops/action-gh-release` 3.0.2 (supersedes [#196](https://github.com/d0dg3r/GitSyncMarks/pull/196)–[#197](https://github.com/d0dg3r/GitSyncMarks/pull/197)).
+
 ## [3.0.5] - 2026-07-01
 
 ### Fixed
