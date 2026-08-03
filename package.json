@@ -34,16 +34,22 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.61.1",
-    "@types/chrome": "^0.2.0",
-    "addons-linter": "^10.7.0",
+    "@types/chrome": "^0.2.2",
+    "addons-linter": "^10.8.1",
     "dotenv": "^17.4.2",
     "eslint": "^10.6.0",
     "eslint-plugin-security": "^4.0.1",
     "globals": "^17.7.0",
-    "marked": "^18.0.5",
+    "marked": "^18.0.6",
     "playwright": "^1.61.1",
     "png-to-ico": "^3.0.1",
-    "sharp": "^0.35.2",
+    "sharp": "^0.35.3",
     "typescript": "~6.0.3"
+  },
+  "overrides": {
+    "fast-uri": "3.1.4",
+    "js-yaml": "4.3.1",
+    "brace-expansion@1": "1.1.18",
+    "brace-expansion@5": "5.0.9"
   }
 }
