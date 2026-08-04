@@ -28,7 +28,7 @@ import {
   MAX_PROFILES,
 } from './lib/profile-manager.js';
 
-import { initWizard, wizardState, startOnboardingWizard, renderOnboardingWizardStep, hideConnectionPathInitAction, showOnboardingConfirm, hideOnboardingConfirm, showValidation } from './options/wizard.js';
+import { initWizard, wizardState, startOnboardingWizard, renderOnboardingWizardStep, hideConnectionPathInitAction, showOnboardingConfirmInVisibleContainer, hideOnboardingConfirm, showValidation } from './options/wizard.js';
 import { initProfiles } from './options/profiles.js';
 import { initProfileTransfer } from './options/profile-transfer.js';
 import { initRemoteCleanup } from './options/remote-cleanup.js';
@@ -316,7 +316,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initHistory();
     initBitwardenBackup({ loadSettings });
     initContextMenuConfig();
-    initSettings({ saveSettings, loadSettings, showOnboardingConfirm, hideOnboardingConfirm });
+    initSettings({ saveSettings, loadSettings, showOnboardingConfirm: showOnboardingConfirmInVisibleContainer, hideOnboardingConfirm });
 
     await loadSettings();
     loadShortcuts();

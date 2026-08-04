@@ -1993,6 +1993,12 @@
   "options_exportPasswordPrompt": {
     "message": "Enter a password to encrypt the settings file."
   },
+  "options_importNoFile": {
+    "message": "Choose a file first."
+  },
+  "options_importPasswordCancelled": {
+    "message": "Import cancelled — no password entered."
+  },
   "options_importPasswordPrompt": {
     "message": "Enter the password to decrypt the settings file."
   },
@@ -2004,6 +2010,9 @@
   },
   "options_exportEncryptedSuccess": {
     "message": "Encrypted export successful!"
+  },
+  "options_exportMissingTokens": {
+    "message": "Cannot export settings: these configured profiles have no token saved: $1. Open Git → Connection, save each profile token, then export again."
   },
   "options_tabAutomation": {
     "message": "Automation"

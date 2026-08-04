@@ -10,7 +10,12 @@ import { formatSyncProgress, runSyncPortAction } from '../lib/sync-progress.js';
 import { serializeToJson, deserializeFromJson, bookmarkTreeToFileMap, fileMapToDashyYaml } from '../lib/bookmark-serializer.js';
 import { replaceLocalBookmarks } from '../lib/sync-engine.js';
 import { encryptToken, encryptWithPassword, decryptWithPassword, PASSWORD_ENC_PREFIX } from '../lib/crypto.js';
-import { getProfileToken, setEncryptedProfileToken } from '../lib/profile-manager.js';
+import { setEncryptedProfileToken } from '../lib/profile-manager.js';
+import {
+  buildExportedProfileMap,
+  listConfiguredProfilesMissingToken,
+  restoreProfileTokensFromExport,
+} from '../lib/settings-export.js';
 import { LOCAL_STORAGE_KEYS } from '../lib/storage-keys.js';
 
 let _saveSettings = null;
@@ -219,16 +224,25 @@ export async function refreshSettingsProfiles() {
 async function buildSettingsExportData() {
   const syncSettings = await chrome.storage.sync.get(null);
   const profiles = syncSettings.profiles || {};
-  const exportedProfiles = {};
-  for (const [id, p] of Object.entries(profiles)) {
-    const token = await getProfileToken(id, 'primary');
-    exportedProfiles[id] = { ...p, token };
-  }
+  const exportedProfiles = await buildExportedProfileMap(profiles);
   return { ...syncSettings, profiles: exportedProfiles };
+}
+
+function getVisibleOptionsContainer() {
+  return document.querySelector('.tab-content.active .sub-tab-content.active')
+    || document.querySelector('.tab-content.active')
+    || document.body;
 }
 
 export function showPasswordDialog(promptKey, confirmKey) {
   return new Promise((resolve) => {
+    // Keep the dialog in the active Files sub-tab so it is never below the fold
+    // or trapped under a display:none ancestor.
+    const target = getVisibleOptionsContainer();
+    const originalParent = passwordDialog.parentNode;
+    const originalNext = passwordDialog.nextSibling;
+    target.appendChild(passwordDialog);
+
     passwordDialogPrompt.textContent = getMessage(promptKey);
     passwordDialogConfirmBtn.textContent = getMessage(confirmKey);
     passwordDialogInput.value = '';
@@ -241,6 +255,9 @@ export function showPasswordDialog(promptKey, confirmKey) {
       passwordDialogConfirmBtn.removeEventListener('click', onConfirm);
       passwordDialogCancelBtn.removeEventListener('click', onCancel);
       passwordDialogInput.removeEventListener('keydown', onKeyDown);
+      if (originalParent) {
+        originalParent.insertBefore(passwordDialog, originalNext);
+      }
       resolve(password);
     };
 
@@ -281,20 +298,58 @@ function reloadAfterSettingsImport(delayMs = 800) {
   }, delayMs);
 }
 
+/**
+ * Ask to reload after settings import. If the confirm dialog is invisible
+ * (or never answered), auto-reload after a short delay so import cannot hang.
+ */
 export async function confirmReloadAfterImport() {
-  const shouldReload = await _showOnboardingConfirm(
-    getMessage('options_settingsSyncImportReloadConfirm'),
-    getMessage('options_settingsSyncImportReloadConfirmBtn')
-  );
+  let answered = false;
+  const dialogResult = Promise.resolve(
+    _showOnboardingConfirm(
+      getMessage('options_settingsSyncImportReloadConfirm'),
+      getMessage('options_settingsSyncImportReloadConfirmBtn')
+    )
+  ).then((value) => {
+    answered = true;
+    return value;
+  });
+
+  const autoReloadFallback = new Promise((resolve) => {
+    setTimeout(() => {
+      if (!answered) resolve(true);
+    }, 2500);
+  });
+
+  const shouldReload = await Promise.race([dialogResult, autoReloadFallback]);
   _hideOnboardingConfirm();
   if (shouldReload) reloadAfterSettingsImport();
 }
 
 async function applyImportedSettings(settings) {
-  if (settings.profiles && Object.keys(settings.profiles).length > 0) {
+  if (!settings || typeof settings !== 'object' || Array.isArray(settings)) {
+    throw new Error('Invalid settings format.');
+  }
+
+  const {
+    profiles: importedProfiles,
+    token: _topToken,
+    githubToken: _topGithubToken,
+    ...rest
+  } = settings;
+
+  if (importedProfiles && Object.keys(importedProfiles).length > 0) {
     const profilesToSave = {};
-    for (const [id, p] of Object.entries(settings.profiles)) {
+    for (const [id, p] of Object.entries(importedProfiles)) {
+      const {
+        token: _profileToken,
+        githubToken: _profileGithubToken,
+        mirrorTokens: _mirrorTokens,
+        repoOwner: _repoOwner,
+        repoName: _repoName,
+        ...profileFields
+      } = p;
       profilesToSave[id] = {
+        ...profileFields,
         id: p.id || id,
         name: p.name || 'Default',
         gitProvider: p.gitProvider || 'github',
@@ -306,30 +361,22 @@ async function applyImportedSettings(settings) {
         githubReposEnabled: p.githubReposEnabled ?? false,
         githubReposParent: p.githubReposParent ?? 'other',
         githubReposUsername: p.githubReposUsername ?? '',
+        mirrors: Array.isArray(p.mirrors) ? p.mirrors : [],
+        contextQuickFolderIds: Array.isArray(p.contextQuickFolderIds)
+          ? p.contextQuickFolderIds.slice(0, 3)
+          : [],
       };
-      const plainToken = p.token || p.githubToken || '';
-      if (plainToken) {
-        await setEncryptedProfileToken(id, await encryptToken(plainToken), 'primary');
-      }
+      await restoreProfileTokensFromExport(id, p, encryptToken, setEncryptedProfileToken);
     }
+
+    const hasConfiguredProfile = Object.values(profilesToSave).some((p) => p.owner && p.repo);
     await chrome.storage.sync.set({
+      ...rest,
       profiles: profilesToSave,
       activeProfileId: settings.activeProfileId || Object.keys(profilesToSave)[0],
-      autoSync: settings.autoSync !== false,
-      syncInterval: settings.syncInterval ?? 15,
-      syncOnStartup: settings.syncOnStartup || false,
-      syncOnFocus: settings.syncOnFocus || false,
-      syncProfile: settings.syncProfile || 'normal',
-      debounceDelay: settings.debounceDelay ?? 5000,
-      notificationsMode: settings.notificationsMode || 'all',
-      language: settings.language || 'auto',
-      theme: settings.theme || 'auto',
-      profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
-      generateReadmeMd: settings.generateReadmeMd !== false,
-      generateBookmarksHtml: settings.generateBookmarksHtml !== false,
-      generateFeedXml: settings.generateFeedXml ?? 'auto',
-      generateDashyYml: settings.generateDashyYml ?? 'off',
-      settingsSyncGlobalWriteEnabled: settings.settingsSyncGlobalWriteEnabled === true,
+      // Prefer backup flags; if the backup restored a real connection, skip the wizard.
+      onboardingWizardCompleted: settings.onboardingWizardCompleted === true || hasConfiguredProfile,
+      onboardingWizardDismissed: settings.onboardingWizardDismissed === true,
     });
   } else {
     const defaultProfile = {
@@ -337,33 +384,34 @@ async function applyImportedSettings(settings) {
       name: 'Default',
       gitProvider: settings.gitProvider || 'github',
       serverUrl: settings.serverUrl || '',
-      owner: settings.repoOwner || '',
-      repo: settings.repoName || '',
+      owner: settings.owner || settings.repoOwner || '',
+      repo: settings.repo || settings.repoName || '',
       branch: settings.branch || 'main',
       filePath: settings.filePath || 'bookmarks',
+      githubReposEnabled: settings.githubReposEnabled ?? false,
+      githubReposParent: settings.githubReposParent ?? 'other',
+      githubReposUsername: settings.githubReposUsername ?? '',
+      mirrors: Array.isArray(settings.mirrors) ? settings.mirrors : [],
+      contextQuickFolderIds: Array.isArray(settings.contextQuickFolderIds)
+        ? settings.contextQuickFolderIds.slice(0, 3)
+        : [],
     };
-    if (settings.githubToken || settings.token) {
-      const plainToken = settings.githubToken || settings.token || '';
-      await setEncryptedProfileToken('default', await encryptToken(plainToken), 'primary');
+    const plainToken = settings.githubToken || settings.token || '';
+    if (plainToken) {
+      await restoreProfileTokensFromExport(
+        'default',
+        { token: plainToken, mirrorTokens: settings.mirrorTokens },
+        encryptToken,
+        setEncryptedProfileToken
+      );
     }
+    const hasConfiguredProfile = !!(defaultProfile.owner && defaultProfile.repo);
     await chrome.storage.sync.set({
+      ...rest,
       profiles: { default: defaultProfile },
       activeProfileId: 'default',
-      autoSync: settings.autoSync !== false,
-      syncInterval: settings.syncInterval ?? 15,
-      syncOnStartup: settings.syncOnStartup || false,
-      syncOnFocus: settings.syncOnFocus || false,
-      syncProfile: settings.syncProfile || 'normal',
-      debounceDelay: settings.debounceDelay ?? 5000,
-      notificationsMode: settings.notificationsMode || 'all',
-      language: settings.language || 'auto',
-      theme: settings.theme || 'auto',
-      profileSwitchWithoutConfirm: settings.profileSwitchWithoutConfirm ?? false,
-      generateReadmeMd: settings.generateReadmeMd !== false,
-      generateBookmarksHtml: settings.generateBookmarksHtml !== false,
-      generateFeedXml: settings.generateFeedXml ?? 'auto',
-      generateDashyYml: settings.generateDashyYml ?? 'off',
-      settingsSyncGlobalWriteEnabled: settings.settingsSyncGlobalWriteEnabled === true,
+      onboardingWizardCompleted: settings.onboardingWizardCompleted === true || hasConfiguredProfile,
+      onboardingWizardDismissed: settings.onboardingWizardDismissed === true,
     });
   }
   await chrome.runtime.sendMessage({ action: 'settingsChanged' });
@@ -478,7 +526,12 @@ export function initSettings({ saveSettings, loadSettings, showOnboardingConfirm
     settingsSyncImportResult.textContent = '';
     try {
       const password = await showPasswordDialog('options_settingsRegistryActionPasswordPrompt', 'options_settingsRegistryImportApplyBtn');
-      if (!password) return;
+      if (!password) {
+        settingsSyncImportResult.textContent = getMessage('options_importPasswordCancelled');
+        settingsSyncImportResult.className = 'validation-result error';
+        settingsSyncImportBtn.disabled = false;
+        return;
+      }
       const resp = await chrome.runtime.sendMessage({ action: 'importSettingsProfile', filename, password });
       if (resp.success) {
         await saveSettingsSyncPasswordAndUpdateUI(password);
@@ -611,12 +664,22 @@ export function initSettings({ saveSettings, loadSettings, showOnboardingConfirm
         showResult(exportResult, getMessage('options_exportSuccess'), 'success');
       } else if (type === 'settings-plain') {
         const exportData = await buildSettingsExportData();
+        const missing = listConfiguredProfilesMissingToken(exportData.profiles);
+        if (missing.length) {
+          showResult(exportResult, getMessage('options_exportMissingTokens', [missing.join(', ')]), 'error');
+          return;
+        }
         downloadFile(`gitsyncmarks-settings-${date}.json`, JSON.stringify(exportData, null, 2), 'application/json');
         showResult(exportResult, getMessage('options_exportSuccess'), 'success');
       } else if (type === 'settings-encrypted') {
         const password = await showPasswordDialog('options_exportPasswordPrompt', 'options_exportBtn');
         if (!password) return;
         const exportData = await buildSettingsExportData();
+        const missing = listConfiguredProfilesMissingToken(exportData.profiles);
+        if (missing.length) {
+          showResult(exportResult, getMessage('options_exportMissingTokens', [missing.join(', ')]), 'error');
+          return;
+        }
         const json = JSON.stringify(exportData, null, 2);
         const encrypted = await encryptWithPassword(json, password);
         downloadFile(`gitsyncmarks-settings-${date}.enc`, encrypted, 'application/octet-stream');
@@ -629,7 +692,10 @@ export function initSettings({ saveSettings, loadSettings, showOnboardingConfirm
 
   importBtn.addEventListener('click', async () => {
     const file = importFile.files[0];
-    if (!file) return;
+    if (!file) {
+      showResult(importResult, getMessage('options_importNoFile'), 'error');
+      return;
+    }
     const isSettings = importTypeSelect.value === 'settings';
 
     try {
@@ -638,12 +704,21 @@ export function initSettings({ saveSettings, loadSettings, showOnboardingConfirm
       if (isSettings) {
         if (text.trim().startsWith(PASSWORD_ENC_PREFIX)) {
           const password = await showPasswordDialog('options_importPasswordPrompt', 'options_importBtn');
-          if (!password) return;
+          if (!password) {
+            showResult(importResult, getMessage('options_importPasswordCancelled'), 'error');
+            return;
+          }
           text = await decryptWithPassword(text, password);
         }
         const settings = JSON.parse(text);
         if (typeof settings !== 'object' || Array.isArray(settings)) {
           throw new Error('Invalid settings format.');
+        }
+        const looksLikeBookmarks = Array.isArray(settings.bookmarks)
+          || Array.isArray(settings.roots)
+          || (settings.toolbar && typeof settings.toolbar === 'object' && !settings.profiles);
+        if (looksLikeBookmarks) {
+          throw new Error('This file looks like a bookmarks export. Choose Import type “Bookmarks”.');
         }
         await applyImportedSettings(settings);
         showResult(importResult, getMessage('options_importSuccess'), 'success');

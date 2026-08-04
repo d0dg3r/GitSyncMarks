@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - **Website (gitsyncmarks.com)**: Updated landing page for 3.0 — multi-provider Git sync, Bitwarden backup, profile transfer, push mirrors, live sync progress, sync history, clean orphans, and automation; provider-neutral setup steps; Bitwarden screenshot; v3.0.4 release notice. README stable-release banner points to v3.0.4.
 
+## [3.0.7] - 2026-08-04
+
+### Fixed
+- **Settings import reload confirmation invisible on Files tab**: After a successful encrypted settings import (Files → Export/Import or Files → Settings Sync), the "reload now?" prompt used the shared `#onboarding-confirm` dialog that lives inside the hidden Git Connection sub-tab. Yes/No were invisible, the awaited confirmation never resolved, and `chrome.runtime.reload()` never ran — so imported settings appeared not to apply. The dialog is now temporarily relocated into the active tab/sub-tab (same pattern as the v3.0.5 wizard fix). Auto-reload after 2.5s if the prompt is not answered. Password prompt is relocated into the active sub-tab; Import without a file or cancelling the password now shows an error instead of failing silently.
+- **Settings import dropped most backup fields**: Local `.enc`/JSON settings import only restored a small whitelist (and coerced Generated-file modes to booleans), so profiles lost mirrors/quick-folders and globals like Linkwarden, sync-to-Git, and onboarding flags. Import now restores the full payload (plus profile mirrors), tolerates already-encrypted tokens, and marks onboarding complete when a configured profile is restored.
+- **Settings export could silently omit profile tokens**: Pre-`9f32c86` export passed object-shaped `profileTokens[id]` (`{ primary, mirrors }`) into `decryptToken()`, which threw and produced empty `token: ""` fields (seen in 2026-06-06 backups). Primary tokens already use `getProfileToken()`; export now also includes mirror tokens, blocks download / settings-sync push when configured profiles lack a primary token, and has a regression test for the nested token layout. June-era backups without tokens cannot recreate PATs — re-enter tokens after importing structure, then re-export.
+
 ## [3.0.6] - 2026-08-03
 
 ### Security

@@ -422,15 +422,10 @@ async function confirmWizardSyncAction(mode) {
     ? getMessage('options_onboardingWizardSyncConfirmSkipBtn')
     : getMessage('options_onboardingWizardSyncConfirmRunBtn');
   hideWizardBusyStatus();
-  const originalParent = onboardingConfirm.parentNode;
-  const originalNext = onboardingConfirm.nextSibling;
-  onboardingWizardScreen.insertBefore(onboardingConfirm, wizardStatusEl);
-  try {
-    return await showOnboardingConfirm(body, yesLabel);
-  } finally {
-    hideOnboardingConfirm();
-    originalParent.insertBefore(onboardingConfirm, originalNext);
-  }
+  return showOnboardingConfirmInVisibleContainer(body, yesLabel, {
+    container: onboardingWizardScreen,
+    before: wizardStatusEl,
+  });
 }
 
 async function assertSafeWizardPush(api, basePath) {
@@ -544,6 +539,39 @@ export function showOnboardingConfirm(message, yesButtonLabel) {
     onboardingConfirmYesBtn.addEventListener('click', handleYes);
     onboardingConfirmNoBtn.addEventListener('click', handleNo);
   });
+}
+
+/**
+ * Show the shared #onboarding-confirm dialog inside a visible container.
+ * The dialog lives in #subtab-github-connection, which is display:none when the
+ * user is on another tab/sub-tab (or when the wizard screen is active). Without
+ * relocating it, Yes/No are invisible and the awaited promise never resolves.
+ *
+ * @param {string} message
+ * @param {string} yesButtonLabel
+ * @param {{ container?: HTMLElement, before?: HTMLElement }} [opts]
+ * @returns {Promise<boolean>}
+ */
+export async function showOnboardingConfirmInVisibleContainer(message, yesButtonLabel, { container, before } = {}) {
+  const target = container
+    || document.querySelector('.tab-content.active .sub-tab-content.active')
+    || document.querySelector('.tab-content.active')
+    || document.body;
+  const originalParent = onboardingConfirm.parentNode;
+  const originalNext = onboardingConfirm.nextSibling;
+  if (before && before.parentNode === target) {
+    target.insertBefore(onboardingConfirm, before);
+  } else {
+    target.appendChild(onboardingConfirm);
+  }
+  try {
+    return await showOnboardingConfirm(message, yesButtonLabel);
+  } finally {
+    hideOnboardingConfirm();
+    if (originalParent) {
+      originalParent.insertBefore(onboardingConfirm, originalNext);
+    }
+  }
 }
 
 export function hideOnboardingConfirm() {

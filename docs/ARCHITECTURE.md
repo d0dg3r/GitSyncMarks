@@ -111,6 +111,7 @@ Barrel module re-exporting from focused sub-modules:
 - **`lib/storage-keys.js`** — Single source for `STORAGE_KEYS` and `LOCAL_STORAGE_KEYS` string names; re-exported from `sync-settings.js` / `sync-engine.js` for the rest of the app
 - **`lib/context-menu-defaults.js`** — Default context menu item list, submenu flags, and `ensureContextMenuItemDefaults()` (shared by options and `context-menu-setup.js`)
 - **`lib/sync-settings.js`** — Re-exports `STORAGE_KEYS` and `LOCAL_STORAGE_KEYS` from `storage-keys.js`; `SYNC_PRESETS`, settings accessors (`getSettings`, `isConfigured`, `createApi`, `getDeviceId`), local bookmark access (`getLocalFileMap`), file map filtering (`filterForDiff`, `addGeneratedFiles`), and encrypted settings sync (`buildEncryptedSettings`, `applyEncryptedSettings`, profile CRUD)
+- **`lib/settings-export.js`** — Shared settings backup helpers: build exported profile maps with primary + mirror tokens, detect configured profiles missing tokens, restore tokens on import (used by options Export/Import and Git settings sync)
 - **`lib/sync-core.js`** — Core sync operations (`push`, `pull`, `sync`, `pushForProfile`, `previewRemoteOrphans`, `cleanRemoteOrphans`), three-way merge (`computeDiff`, `mergeDiffs`, `mergeOrderJson`), sync state management (`saveSyncState`, `getSyncStatus`, `isSyncInProgress`), debounced auto-sync (`debouncedSync`, `bootstrapFirstSync`), Linkwarden mirroring, mirror fan-out hook (`invokePushToMirrors`), and a sync-activity listener (`setSyncActivityListener`) the background uses to keep the worker alive during long operations
 - **`lib/sync-history.js`** — Commit history listing (`listSyncHistory`), bookmark restore (`restoreFromCommit`), undo support (`getPreviousCommitSha`), and diff preview (`getCommitDiffPreview`)
 - **`lib/sync-commit-message.js`** — Parses standard GitSyncMarks commit subjects to extract the device/client id (`extractClientIdFromCommitMessage`) for Sync History display
@@ -348,6 +349,7 @@ GitSyncMarks/
 │   ├── sync-engine.js            # Barrel: re-exports sync sub-modules
 │   ├── storage-keys.js           # STORAGE_KEYS / LOCAL_STORAGE_KEYS (source of truth)
 │   ├── sync-settings.js          # Re-exports keys; settings, encrypted settings sync
+│   ├── settings-export.js        # Settings backup profile/token helpers (export/import)
 │   ├── sync-core.js              # Push/pull/sync, three-way merge, auto-sync
 │   ├── sync-history.js           # Commit history, restore, diff preview
 │   ├── sync-commit-message.js    # Parse commit subject → client id (history UI)
