@@ -21,6 +21,7 @@ const lastDataChangeEl = document.getElementById('last-data-change');
 const lastCommitWrap = document.getElementById('last-commit-wrap');
 const mirrorStatusEl = document.getElementById('mirror-status');
 const conflictBox = document.getElementById('conflict-box');
+const conflictDescription = document.getElementById('conflict-description');
 const autoSyncDot = document.getElementById('auto-sync-dot');
 const autoSyncText = document.getElementById('auto-sync-text');
 
@@ -103,6 +104,14 @@ function updateUI(status) {
   if (status.hasConflict) {
     setStatus('⚠️', getMessage('popup_conflictDetected'), 'status-warning');
     conflictBox.style.display = 'block';
+    if (status.conflictReason === 'bulkDelete' && status.pendingDelete) {
+      conflictDescription.textContent = getMessage('popup_bulkDeleteWarning', [
+        String(status.pendingDelete.count),
+        String(status.pendingDelete.total),
+      ]);
+    } else {
+      conflictDescription.textContent = getMessage('popup_conflictDescription');
+    }
   } else if (status.lastError) {
     setStatus('❌', status.lastError, 'status-error');
     conflictBox.style.display = 'none';

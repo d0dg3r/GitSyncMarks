@@ -121,7 +121,9 @@ flowchart LR
 - **Sync Now**: Calls `sync()` directly (same as popup sync button).
 - **Copy Favicon URL**: Resolves favicon via `getFaviconUrl(tab)` — uses `tab.favIconUrl` if available, falls back to Google's favicon service (`https://www.google.com/s2/favicons?domain={domain}&sz=64`). Then uses `chrome.scripting.executeScript()` to run `navigator.clipboard.writeText()` in the active tab context (clipboard API is not available in service workers).
 - **Download Favicon**: Same favicon resolution as Copy. Uses `chrome.downloads.download()` with `saveAs: true`; filename is `favicon_{hostname}.png`.
-- **Switch Profile**: Reads all profiles via `getProfiles()`, calls `switchProfile(targetId)` which diff-pushes the current profile (skip commit when unchanged), loads the target from cache when remote HEAD matches `lastCommitSha` or delta-pulls when it differs, applies bookmarks via `replaceLocalBookmarks()`, then refreshes the context menu radio items.
+- **Switch Profile**: Reads all profiles via `getProfiles()`, calls `switchProfile(targetId)` in `lib/profile-switch.js` (diff-push current profile when unchanged skip commit, load target from cache when remote HEAD matches `lastCommitSha` or delta-pull when it differs, apply bookmarks via `replaceLocalBookmarks()`), then refreshes the context menu radio items. Profile switch uses only static imports so it runs from the MV3 service worker (popup/context menu), not only the options page.
+
+**MV3 constraint:** `background.js` and `lib/**` must not use dynamic `import()` — Chrome/Edge service workers throw `import() is disallowed on ServiceWorkerGlobalScope`. Mirror push, profile switch, profile transfer, and Bitwarden password storage were affected before 3.0.8.
 
 ## File Formats
 

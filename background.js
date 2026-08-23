@@ -44,10 +44,12 @@ import {
 import { startKeepAlive, stopKeepAlive } from './lib/keep-alive.js';
 import { log as debugLog, getLogAsString, getDebugLogExportContent } from './lib/debug-log.js';
 import { createApi } from './lib/sync-settings.js';
+import { bitwardenBackupPasswordKey } from './lib/storage-keys.js';
 import { previewTransfer, transferBookmarks } from './lib/profile-transfer.js';
 import { testMirrorConnection } from './lib/mirror-push.js';
 import { migrateTokenIfNeeded } from './lib/crypto.js';
-import { migrateToProfiles, getActiveProfileId, getActiveProfile, getProfiles, switchProfile, getSyncState, markLocalBookmarksModified } from './lib/profile-manager.js';
+import { migrateToProfiles, getActiveProfileId, getActiveProfile, getProfiles, getSyncState, markLocalBookmarksModified } from './lib/profile-manager.js';
+import { switchProfile } from './lib/profile-switch.js';
 import {
   setupContextMenus,
   handleContextMenuClick,
@@ -589,11 +591,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
   if (message.action === 'setBitwardenBackupPassword') {
-    import('./lib/storage-keys.js')
-      .then(({ bitwardenBackupPasswordKey }) => {
-        const key = bitwardenBackupPasswordKey(message.profileId);
-        return chrome.storage.local.set({ [key]: message.password || '' });
-      })
+    const key = bitwardenBackupPasswordKey(message.profileId);
+    chrome.storage.local.set({ [key]: message.password || '' })
       .then(() => sendResponse({ ok: true }))
       .catch((err) => sendResponse({ ok: false, message: err.message }));
     return true;

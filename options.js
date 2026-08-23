@@ -130,6 +130,8 @@ const syncIntervalInput = document.getElementById('sync-interval');
 const debounceDelayInput = document.getElementById('debounce-delay');
 const syncOnStartupInput = document.getElementById('sync-on-startup');
 const syncOnFocusInput = document.getElementById('sync-on-focus');
+const deleteGuardEnabledInput = document.getElementById('delete-guard-enabled');
+const deleteGuardMaxPercentInput = document.getElementById('delete-guard-max-percent');
 const generateReadmeMdSelect = document.getElementById('generate-readme-md');
 const generateBookmarksHtmlSelect = document.getElementById('generate-bookmarks-html');
 const generateFeedXmlSelect = document.getElementById('generate-feed-xml');
@@ -533,6 +535,12 @@ async function loadSettings() {
   syncCustomFields.style.display = profile === 'custom' ? 'block' : 'none';
   syncOnStartupInput.checked = globals.syncOnStartup === true;
   syncOnFocusInput.checked = globals.syncOnFocus === true;
+  deleteGuardEnabledInput.checked = activeProfile?.deleteGuardEnabled !== false;
+  const maxFraction =
+    typeof activeProfile?.deleteGuardMaxFraction === 'number'
+      ? activeProfile.deleteGuardMaxFraction
+      : 0.15;
+  deleteGuardMaxPercentInput.value = String(Math.round(maxFraction * 100));
   generateReadmeMdSelect.value = normalizeGenMode(globals.generateReadmeMd);
 
   // Linkwarden settings
@@ -691,6 +699,9 @@ async function saveSettings() {
         quickFolderSelect2.value,
         quickFolderSelect3.value,
       ].filter(Boolean),
+      deleteGuardEnabled: deleteGuardEnabledInput.checked,
+      deleteGuardMaxFraction:
+        Math.min(90, Math.max(5, parseInt(deleteGuardMaxPercentInput.value, 10) || 15)) / 100,
     });
     await saveMirrorsForActiveProfile();
 
@@ -990,6 +1001,8 @@ syncIntervalInput?.addEventListener('change', saveSettings);
 debounceDelayInput?.addEventListener('change', saveSettings);
 syncOnStartupInput?.addEventListener('change', saveSettings);
 syncOnFocusInput?.addEventListener('change', saveSettings);
+deleteGuardEnabledInput?.addEventListener('change', saveSettings);
+deleteGuardMaxPercentInput?.addEventListener('change', saveSettings);
 notificationsModeSelect?.addEventListener('change', saveSettings);
 
 // ==============================

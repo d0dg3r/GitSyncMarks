@@ -10,8 +10,8 @@ import {
   saveProfile,
   addProfile,
   deleteProfile,
-  switchProfile,
 } from '../lib/profile-manager.js';
+import { switchProfile } from '../lib/profile-switch.js';
 
 const profileSelect = document.getElementById('profile-select');
 const profileAddBtn = document.getElementById('profile-add-btn');

@@ -218,10 +218,25 @@ Multiple bookmark profiles (Work/Personal) with separate GitHub repo config:
 |---|---|
 | `getProfiles()` / `getActiveProfileId()` | List profiles, get current active profile |
 | `addProfile()` / `deleteProfile()` / `saveProfile()` | CRUD for profiles |
-| `switchProfile(targetId)` | Diff-push current profile (skip when unchanged), HEAD-check target cache, delta-pull when remote advanced, replace local bookmarks |
 | `migrateToProfiles()` | Migrate legacy single-config to profiles format |
 
-State stored in `chrome.storage.sync` (profiles, activeProfileId, optional `mirrors[]` per profile) and `chrome.storage.local` (nested per-profile tokens `{ primary, mirrors: { id: enc } }`, sync state including `mirrors` push metadata).
+State stored in `chrome.storage.sync` (profiles, activeProfileId, optional `mirrors[]` and delete-guard settings per profile) and `chrome.storage.local` (nested per-profile tokens `{ primary, mirrors: { id: enc } }`, sync state including `mirrors` push metadata and optional `conflictReason` / `pendingDelete`).
+
+### `lib/profile-switch.js` — Profile Switch
+
+| Function | Description |
+|---|---|
+| `switchProfile(targetId)` | Diff-push current profile (skip when unchanged), HEAD-check target cache, delta-pull when remote advanced, replace local bookmarks |
+
+Uses static imports into `lib/commit-bookmarks.js` and `lib/sync-core.js` so profile switch works from the MV3 service worker (popup/context menu).
+
+### `lib/commit-bookmarks.js` — Git Commits
+
+Leaf module: `commitBookmarkChanges()` and Gitea Contents API fallback. Imported by `sync-core`, `mirror-push`, `bitwarden-backup`, and `profile-switch` without circular imports.
+
+### `lib/deletion-guard.js` — Bulk-Deletion Safety
+
+Pure helpers for the sync bulk-deletion guard ([#210](https://github.com/d0dg3r/GitSyncMarks/issues/210)): `listPayloadDeletions()`, `assessDeletionGuard()`, `assessLocalShrink()`, `assessFileChangesDeletionGuard()`.
 
 ### `lib/profile-switch-logic.js` — Fast Profile Switch
 
@@ -351,6 +366,8 @@ GitSyncMarks/
 │   ├── sync-settings.js          # Re-exports keys; settings, encrypted settings sync
 │   ├── settings-export.js        # Settings backup profile/token helpers (export/import)
 │   ├── sync-core.js              # Push/pull/sync, three-way merge, auto-sync
+│   ├── commit-bookmarks.js       # commitBookmarkChanges (leaf, no sync-core cycle)
+│   ├── deletion-guard.js         # Bulk-deletion safety checks
 │   ├── sync-history.js           # Commit history, restore, diff preview
 │   ├── sync-commit-message.js    # Parse commit subject → client id (history UI)
 │   ├── sync-migration.js         # Legacy format migration
@@ -369,7 +386,8 @@ GitSyncMarks/
 │   ├── bookmark-serializer.js    # Per-file bookmark conversion
 │   ├── bookmark-replace.js       # Replace local bookmarks
 │   ├── github-repos.js           # GitHub Repos folder
-│   ├── profile-manager.js        # Multiple profiles, switchProfile
+│   ├── profile-manager.js        # Multiple profiles, CRUD, tokens
+│   ├── profile-switch.js         # switchProfile (service-worker-safe)
 │   ├── profile-switch-logic.js   # Fast switch: diff push, HEAD check, delta pull
 │   ├── sync-diff.js              # computeDiff, filterForDiff, isBitwardenBackupDiffPath (no profile-manager dep)
 │   ├── profile-transfer.js       # Cross-profile bookmark copy

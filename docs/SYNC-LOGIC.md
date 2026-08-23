@@ -227,6 +227,12 @@ When only remote changes exist (path 8), the API response may be cached or event
 
 Bookmark events call `markLocalBookmarksModified()` in `background.js`; successful sync clears the flag.
 
+## Bulk-Deletion Guard
+
+When bidirectional sync would delete a large share of bookmark payload files on the remote (default **≥15%** and **≥10 files**, per profile in Settings → Sync), the engine blocks the commit instead of wiping the shared repo. It sets `hasConflict` with `conflictReason: bulkDelete` and shows a popup warning naming how many files would be deleted. Resolve with **Local → Remote** (force push) or **Remote → Local** (force pull). Explicit **Push** and **Pull** are not guarded.
+
+Checks run on sync path 7 (local-only), path 8 (stale-base push), and path 9 (three-way merge, including the remote orphan sweep). Before path 9 merge, a local-shrink check compares the browser tree to `lastSyncFiles` (same threshold). Implementation: `lib/deletion-guard.js`.
+
 ## Truncated-Tree Guard
 
 GitHub truncates the recursive tree listing for very large repositories (>100k entries or >7 MB). `GitHubAPI.getTree()` surfaces the `truncated` flag and `fetchRemoteFileMap()` aborts with `api_treeTruncated` rather than acting on a partial tree, which would otherwise misread missing entries as deletions and risk wiping remote data during cleanup.
@@ -281,7 +287,7 @@ Before any operation that applies remote changes locally (`pull()`, sync path 8,
 
 ## Profile Switch
 
-`switchProfile()` in `lib/profile-manager.js` uses helpers in `lib/profile-switch-logic.js` and diff utilities in `lib/sync-diff.js`. Optional `onProgress` reports three steps (save current profile, load target, apply to browser); step 1 also forwards per-file push progress on Gitea-family providers. The options page displays this as `Switching profile — $step of 3` (and `$current of $total files` during push).
+`switchProfile()` in `lib/profile-switch.js` uses helpers in `lib/profile-switch-logic.js` and diff utilities in `lib/sync-diff.js`. Optional `onProgress` reports three steps (save current profile, load target, apply to browser); step 1 also forwards per-file push progress on Gitea-family providers. The options page displays this as `Switching profile — $step of 3` (and `$current of $total files` during push).
 
 **Leaving the current profile:**
 

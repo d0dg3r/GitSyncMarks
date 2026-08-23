@@ -45,6 +45,19 @@ export default [
     },
   },
   {
+    files: ['lib/**/*.js', 'background.js'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'ImportExpression',
+          message:
+            'Dynamic import() is disallowed in MV3 service workers (ServiceWorkerGlobalScope). Use static imports.',
+        },
+      ],
+    },
+  },
+  {
     files: ['test/**/*.js'],
     languageOptions: {
       sourceType: 'module',

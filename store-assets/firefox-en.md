@@ -30,7 +30,7 @@ Key Capabilities
 
 - Private-by-Design: Direct communication with your Git provider's API. No third parties see your data.
 - Firefox-Optimized: Supports native bookmark structures (Toolbar, Menu, Other).
-- Three-Way Merge: Industrial-grade sync handles concurrent changes across multiple devices automatically.
+- Three-Way Merge: Industrial-grade sync handles concurrent changes across multiple devices automatically; bulk-deletion guard blocks risky mass deletions until you choose Local → Remote or Remote → Local in the popup.
 - Single-File Storage: Each bookmark is a readable JSON file – ideal for versioning and manual editing in your Git repo.
 - Multiple Profiles: Up to 10 separate profiles for work, personal life, or projects, each with its own repository.
 - Automation: Add bookmark JSON to your repo via git or the included GitHub Action template; the extension imports them on the next sync.

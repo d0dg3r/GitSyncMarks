@@ -219,6 +219,22 @@ describe('mergeDiffs', () => {
     assert.equal(result.conflicts.length, 1);
     assert.equal(result.conflicts[0].path, 'file.json');
   });
+
+  it('local-only removals become push deletes when remote unchanged (#210 family)', () => {
+    const removed = ['bookmarks/toolbar/tts/a.json', 'bookmarks/toolbar/llm/b.json'];
+    const localDiff = { added: {}, removed, modified: {} };
+    const remoteDiff = { added: {}, removed: [], modified: {} };
+    const localFiles = {};
+    const remoteFiles = {
+      'bookmarks/toolbar/tts/a.json': '{"url":"https://a"}',
+      'bookmarks/toolbar/llm/b.json': '{"url":"https://b"}',
+    };
+
+    const result = mergeDiffs(localDiff, remoteDiff, localFiles, remoteFiles, remoteFiles);
+    assert.equal(result.conflicts.length, 0);
+    assert.equal(result.toPush['bookmarks/toolbar/tts/a.json'], null);
+    assert.equal(result.toPush['bookmarks/toolbar/llm/b.json'], null);
+  });
 });
 
 describe('filterForDiff', () => {

@@ -494,6 +494,21 @@
               </label>
             </div>
 
+            <div class="form-group toggle-group">
+              <label for="delete-guard-enabled" class="toggle-label">
+                <span data-i18n="options_deleteGuardEnabled">Block risky bulk deletions during sync</span>
+                <input type="checkbox" id="delete-guard-enabled" checked>
+                <span class="toggle-slider"></span>
+              </label>
+              <small data-i18n="options_deleteGuardEnabledHint">Raises a conflict instead of pushing many bookmark deletions when your local tree looks incomplete.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="delete-guard-max-percent" data-i18n="options_deleteGuardMaxPercent">Bulk deletion threshold (%)</label>
+              <input type="number" id="delete-guard-max-percent" min="5" max="90" step="1" value="15">
+              <small data-i18n="options_deleteGuardMaxPercentHint">Minimum share of bookmark files that would be deleted before sync is blocked (also requires at least 10 files).</small>
+            </div>
+
             <div class="form-group">
               <label for="notifications-mode" data-i18n="options_notifications">Sync notifications</label>
               <select id="notifications-mode">
@@ -1263,6 +1278,8 @@ git commit -m "Bitwarden backup"</pre>
             <dt data-i18n="help_syncStartup">Sync on startup / focus</dt>
             <dd data-i18n="help_syncStartupDesc">Optional: sync when the browser starts or when you return to the
               browser window (with cooldown).</dd>
+            <dt data-i18n="help_deleteGuardTitle">Bulk-deletion guard</dt>
+            <dd data-i18n="help_deleteGuardDesc">When enabled, bidirectional sync blocks pushes that would delete a large share of bookmark files on the remote (default 15%, minimum 10 files). Use the popup conflict buttons to force Local → Remote or Remote → Local. Explicit Push and Pull are not blocked.</dd>
             <dt data-i18n="help_debugLogTitle">Debug Log</dt>
             <dd data-i18n="help_debugLogDesc">Enable in the Sync tab to record detailed sync diagnostics — diffs, merge
               decisions, and commit hashes. Export the log to share for troubleshooting.</dd>
