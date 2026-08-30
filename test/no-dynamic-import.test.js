@@ -17,10 +17,24 @@ function listJsFiles(dir, acc = []) {
   return acc;
 }
 
+/** Strip comments and string literals so copy mentioning import() does not false-positive. */
+function stripNoise(src) {
+  return src
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/(^|[^:])\/\/.*$/gm, '$1')
+    .replace(/'(?:\\.|[^'\\])*'/g, "''")
+    .replace(/"(?:\\.|[^"\\])*"/g, '""')
+    .replace(/`(?:\\.|[^`\\])*`/g, '``');
+}
+
+function hasDynamicImport(src) {
+  return /\bimport\s*\(/.test(stripNoise(src));
+}
+
 describe('no dynamic import in service worker graph', () => {
   it('background.js has no import()', () => {
     const src = fs.readFileSync(path.join(ROOT, 'background.js'), 'utf8');
-    assert.equal(/(?<!\/\/.*)\bimport\s*\(/.test(src.replace(/\/\*[\s\S]*?\*\//g, '')), false);
+    assert.equal(hasDynamicImport(src), false);
   });
 
   it('lib/**/*.js has no import()', () => {
@@ -28,8 +42,8 @@ describe('no dynamic import in service worker graph', () => {
     const files = listJsFiles(libDir);
     const offenders = [];
     for (const file of files) {
-      const src = fs.readFileSync(file, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
-      if (/\bimport\s*\(/.test(src)) {
+      const src = fs.readFileSync(file, 'utf8');
+      if (hasDynamicImport(src)) {
         offenders.push(path.relative(ROOT, file));
       }
     }
