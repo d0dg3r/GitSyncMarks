@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - **Website (gitsyncmarks.com)**: Updated landing page for 3.0 — multi-provider Git sync, Bitwarden backup, profile transfer, push mirrors, live sync progress, sync history, clean orphans, and automation; provider-neutral setup steps; Bitwarden screenshot; v3.0.4 release notice. README stable-release banner points to v3.0.4.
 
-## [3.0.8] - Unreleased
+## [3.0.8] - 2026-08-31
 
 ### Fixed
 - **Mirror push `import()` error with zero mirrors ([#214](https://github.com/d0dg3r/GitSyncMarks/issues/214))**: Removed illegal dynamic `import()` from the MV3 service worker. Mirror fan-out uses static imports; empty mirror lists skip quietly. The same pattern also broke profile-switch push from the popup/context menu, profile transfer “apply to browser”, and the Bitwarden backup password handler in Chrome/Edge — all now use static module graph (`lib/commit-bookmarks.js`, `lib/profile-switch.js`). ESLint and a unit test block regressions.
