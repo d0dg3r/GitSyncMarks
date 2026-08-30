@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.0.8] - 2026-08-31
 
+### Security
+- **Transitive npm CVEs**: Cleared Dependabot alerts for `fast-uri` (→ 3.1.5) and `undici` (→ 7.29.0) via `package.json` overrides. Dev-only (`addons-linter` / `ajv` / `cheerio`); no change to extension runtime behavior. Bumped `addons-linter` to ^10.10.0.
+
 ### Fixed
 - **Mirror push `import()` error with zero mirrors ([#214](https://github.com/d0dg3r/GitSyncMarks/issues/214))**: Removed illegal dynamic `import()` from the MV3 service worker. Mirror fan-out uses static imports; empty mirror lists skip quietly. The same pattern also broke profile-switch push from the popup/context menu, profile transfer “apply to browser”, and the Bitwarden backup password handler in Chrome/Edge — all now use static module graph (`lib/commit-bookmarks.js`, `lib/profile-switch.js`). ESLint and a unit test block regressions.
 - **Three-way merge bulk deletions ([#210](https://github.com/d0dg3r/GitSyncMarks/issues/210))**: Bidirectional sync no longer silently pushes large bookmark deletions when the local browser tree looks incomplete vs its own sync base. A per-profile bulk-deletion guard (default 15%, minimum 10 files, Settings → Sync) blocks the commit, sets `hasConflict`, and shows a popup warning with Local → Remote / Remote → Local. Explicit Push and Pull remain unguarded.
