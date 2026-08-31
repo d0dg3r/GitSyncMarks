@@ -43,7 +43,7 @@
     "marked": "^18.0.6",
     "playwright": "^1.61.1",
     "png-to-ico": "^3.0.1",
-    "sharp": "^0.35.3",
+    "sharp": "^0.35.4",
     "typescript": "~6.0.3"
   },
   "overrides": {
