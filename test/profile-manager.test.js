@@ -2,6 +2,7 @@ import { describe, it, beforeEach, before } from 'node:test';
 import assert from 'node:assert/strict';
 
 let getSyncState, setSyncState, getHasConflict, getActiveProfileId;
+let addPendingLocalDeletes, getPendingLocalDeletes, clearPendingLocalDeletes, deleteProfile;
 
 function resolveGet(store, query) {
   if (query == null) return { ...store };
@@ -45,6 +46,10 @@ before(async () => {
   setSyncState = mod.setSyncState;
   getHasConflict = mod.getHasConflict;
   getActiveProfileId = mod.getActiveProfileId;
+  addPendingLocalDeletes = mod.addPendingLocalDeletes;
+  getPendingLocalDeletes = mod.getPendingLocalDeletes;
+  clearPendingLocalDeletes = mod.clearPendingLocalDeletes;
+  deleteProfile = mod.deleteProfile;
 });
 
 beforeEach(() => {
@@ -88,5 +93,34 @@ describe('profile sync state', () => {
     await setSyncState('p1', { lastSyncFiles: { 'a.json': { sha: 's', content: 'c' } } });
     await setSyncState('p1', { lastSyncFiles: null });
     assert.equal((await getSyncState('p1')).lastSyncFiles, null);
+  });
+
+  it('strips the legacy localModifiedSinceSync flag on write', async () => {
+    await setSyncState('p1', { lastCommitSha: 'abc', localModifiedSinceSync: true });
+    assert.equal('localModifiedSinceSync' in (await getSyncState('p1')), false);
+  });
+});
+
+describe('pending local deletes', () => {
+  it('stores filenames without touching lastSyncFiles', async () => {
+    await setSyncState('p1', { lastCommitSha: 'abc', lastSyncFiles: { 'a.json': { sha: 's', content: 'c' } } });
+    await addPendingLocalDeletes(['foo.json', 'bar.json'], 'p1');
+    assert.deepEqual((await getPendingLocalDeletes('p1')).sort(), ['bar.json', 'foo.json']);
+    assert.deepEqual((await getSyncState('p1')).lastSyncFiles, { 'a.json': { sha: 's', content: 'c' } });
+    await clearPendingLocalDeletes('p1');
+    assert.deepEqual(await getPendingLocalDeletes('p1'), []);
+  });
+});
+
+describe('deleteProfile', () => {
+  it('refuses to delete the active profile', async () => {
+    await chrome.storage.sync.set({
+      profiles: {
+        default: { id: 'default', name: 'A' },
+        other: { id: 'other', name: 'B' },
+      },
+      activeProfileId: 'default',
+    });
+    await assert.rejects(() => deleteProfile('default'), /options_profileDeleteActive/);
   });
 });

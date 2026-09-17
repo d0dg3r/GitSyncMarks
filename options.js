@@ -4,7 +4,7 @@
  */
 
 import { getAppVersion } from './lib/display-version.js';
-import { createConnectionApi, ensureProviderHostPermission, isConnectionFormConfigured, normalizeGitProvider } from './lib/connection-settings.js';
+import { createConnectionApi, requestProviderHostPermission, isConnectionFormConfigured, normalizeGitProvider } from './lib/connection-settings.js';
 import { getProviderCaps } from './lib/git-provider-common.js';
 import {
   applyProviderFormUi,
@@ -72,12 +72,12 @@ function updateProviderUi() {
   );
 }
 
-async function ensureConnectionHostPermission(fields = getConnectionFormFields()) {
+async function requestConnectionHostPermission(fields = getConnectionFormFields()) {
   const caps = getProviderCaps(fields.gitProvider);
   const serverUrl = fields.serverUrl || caps.defaultServerUrl || '';
   if (!providerNeedsHostPermission(fields.gitProvider, serverUrl)) return true;
   if (!serverUrl) return false;
-  const { granted } = await ensureProviderHostPermission(fields.gitProvider, serverUrl);
+  const { granted } = await requestProviderHostPermission(fields.gitProvider, serverUrl);
   if (!granted) {
     showSaveResult(getMessage('options_hostPermissionDenied'), 'error');
   }
@@ -432,12 +432,16 @@ function populateQuickFolderSelect(selectEl, selectedId) {
 // Load Settings
 // ==============================
 
+let formProfileId = null;
+let settingsSavingDepth = 0;
+
 async function loadSettings() {
   await migrateTokenIfNeeded();
   await migrateToProfiles();
 
   const profiles = await getProfiles();
   const activeId = await getActiveProfileId();
+  formProfileId = activeId;
 
   clearElement(profileSelect);
   for (const [id, p] of Object.entries(profiles)) {
@@ -671,7 +675,19 @@ async function loadSettings() {
 
 async function saveSettings() {
   try {
+    const fieldsForPerm = getConnectionFormFields();
+    if (providerNeedsHostPermission(fieldsForPerm.gitProvider, fieldsForPerm.serverUrl || getProviderCaps(fieldsForPerm.gitProvider).defaultServerUrl)) {
+      const granted = await requestConnectionHostPermission(fieldsForPerm);
+      if (!granted) return;
+    }
+
+    settingsSavingDepth += 1;
     const activeId = await getActiveProfileId();
+    if (formProfileId && formProfileId !== activeId) {
+      showSaveResult(getMessage('options_formProfileChanged'), 'error');
+      await loadSettings();
+      return;
+    }
     const profiles = await getProfiles();
     const currentProfile = profiles[activeId];
     const oldPath = (currentProfile?.filePath || 'bookmarks').replace(/\/+$/, '');
@@ -679,10 +695,6 @@ async function saveSettings() {
     const pathChanged = newPath !== oldPath;
 
     const fields = getConnectionFormFields();
-    if (providerNeedsHostPermission(fields.gitProvider, fields.serverUrl || getProviderCaps(fields.gitProvider).defaultServerUrl)) {
-      const granted = await ensureConnectionHostPermission(fields);
-      if (!granted) return;
-    }
 
     await saveProfile(activeId, {
       gitProvider: fields.gitProvider,
@@ -751,8 +763,19 @@ async function saveSettings() {
     githubReposCard.style.display = isConf ? 'block' : 'none';
   } catch (err) {
     showSaveResult(getMessage('options_error', [err.message]), 'error');
+  } finally {
+    settingsSavingDepth = Math.max(0, settingsSavingDepth - 1);
   }
 }
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area !== 'sync') return;
+  if (settingsSavingDepth > 0) return;
+  if (!changes.activeProfileId && !changes.profiles) return;
+  void loadSettings().then(() => {
+    showSaveResult(getMessage('options_formProfileChanged'), 'success');
+  });
+});
 
 function showSaveResult(message, type) {
   saveGitHubResult.textContent = message;

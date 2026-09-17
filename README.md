@@ -21,7 +21,7 @@
 > — **Linus Torvalds** (Git creator)
 
 > [!IMPORTANT]
-> **GitSyncMarks 3.0 is stable** — latest release [v3.0.7](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.7) includes **multi-provider Git sync** (see [docs/PROVIDERS.md](docs/PROVIDERS.md)), **Bitwarden backup to Git**, **profile transfer**, **push mirrors**, **live sync progress**, and a refreshed **nested-card UI**. Existing GitHub profiles keep working — no breaking bookmark format changes.
+> **GitSyncMarks 3.0 is stable** — latest release [v3.0.8](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.8) includes **multi-provider Git sync** (see [docs/PROVIDERS.md](docs/PROVIDERS.md)), **Bitwarden backup to Git**, **profile transfer**, **push mirrors**, **live sync progress**, and a refreshed **nested-card UI**. Existing GitHub profiles keep working — no breaking bookmark format changes.
 
 ---
 
@@ -29,7 +29,7 @@
 
 ### Core Sync & Workflow
 - **Bidirectional & Automatic**: Syncs bookmarks seamlessly with GitHub, GitLab, Codeberg, Gitea, Forgejo, or Gogs across Chrome, Firefox, Edge, and Brave.
-- **Three-Way Merge**: Industrial-grade reliability. Handles concurrent changes across multiple devices automatically.
+- **Three-Way Merge**: Industrial-grade reliability. Handles concurrent changes across multiple devices automatically. A bidirectional Delete Guard blocks risky mass deletions in either direction until you choose Local → Remote or Remote → Local.
 - **Multiple Profiles**: Manage up to 10 separate profiles (e.g., Work, Personal, Research) with individual repositories.
 - **Native Integration**: Full support for native browser structures, including toolbars, menus, and context menus.
 - **Multi-Provider Git Sync**: Each profile can use its own provider and server URL. See [docs/PROVIDERS.md](docs/PROVIDERS.md).

@@ -36,3 +36,7 @@ test-results/
 
 # Log files
 *.log
+
+# Local scratch / generated portfolio
+tmp/
+docs/portfolio/*.pdf

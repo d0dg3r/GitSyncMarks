@@ -104,7 +104,12 @@ function updateUI(status) {
   if (status.hasConflict) {
     setStatus('⚠️', getMessage('popup_conflictDetected'), 'status-warning');
     conflictBox.style.display = 'block';
-    if (status.conflictReason === 'bulkDelete' && status.pendingDelete) {
+    if (status.conflictReason === 'remoteBulkDelete' && status.pendingDelete) {
+      conflictDescription.textContent = getMessage('popup_remoteBulkDeleteWarning', [
+        String(status.pendingDelete.count),
+        String(status.pendingDelete.total),
+      ]);
+    } else if (status.conflictReason === 'bulkDelete' && status.pendingDelete) {
       conflictDescription.textContent = getMessage('popup_bulkDeleteWarning', [
         String(status.pendingDelete.count),
         String(status.pendingDelete.total),

@@ -95,12 +95,15 @@ Full-page settings (opens in tab) with five tabs. `options.js` is the entry poin
 Sub-modules (`options/`):
 
 - **`wizard.js`** — Onboarding wizard flow (token validation, repo setup, environment check, first sync)
-- **`profiles.js`** — Profile switching, add/rename/delete with confirmation dialogs
+- **`profiles.js`** — Profile switching, add/rename/delete with confirmation dialogs (Delete disabled for the active profile)
 - **`linkwarden.js`** — Linkwarden tab: connection test, tag picker, sync, debug log export
 - **`history.js`** — Sync history listing (four-column header + rows: date, SHA, client id, actions; checkmark + “current” for `lastCommitSha`), diff preview, bookmark restore, undo
 - **`context-menu-config.js`** — Context menu item ordering, toggling, category submenu configuration
 - **`settings.js`** — Settings sync to Git, file export/import, generated files toggles, automation clipboard
 - **`bitwarden-backup.js`** — Bitwarden/Vaultwarden export upload, list, download, delete (manual Phase 1; no Bitwarden API)
+- **`mirrors.js`** — Push-mirror destination list and pause/resume
+- **`profile-transfer.js`** — Cross-profile bookmark copy UI
+- **`remote-cleanup.js`** — Preview and clean remote orphan bookmark files
 - **`help-shortcuts.js`** — Help tab: keyboard shortcut labels and “Customize shortcuts” link
 - **`factory-reset.js`** — Files tab: full extension data reset (sync + local `storage` clear)
 
@@ -112,7 +115,7 @@ Barrel module re-exporting from focused sub-modules:
 - **`lib/context-menu-defaults.js`** — Default context menu item list, submenu flags, and `ensureContextMenuItemDefaults()` (shared by options and `context-menu-setup.js`)
 - **`lib/sync-settings.js`** — Re-exports `STORAGE_KEYS` and `LOCAL_STORAGE_KEYS` from `storage-keys.js`; `SYNC_PRESETS`, settings accessors (`getSettings`, `isConfigured`, `createApi`, `getDeviceId`), local bookmark access (`getLocalFileMap`), file map filtering (`filterForDiff`, `addGeneratedFiles`), and encrypted settings sync (`buildEncryptedSettings`, `applyEncryptedSettings`, profile CRUD)
 - **`lib/settings-export.js`** — Shared settings backup helpers: build exported profile maps with primary + mirror tokens, detect configured profiles missing tokens, restore tokens on import (used by options Export/Import and Git settings sync)
-- **`lib/sync-core.js`** — Core sync operations (`push`, `pull`, `sync`, `pushForProfile`, `previewRemoteOrphans`, `cleanRemoteOrphans`), three-way merge (`computeDiff`, `mergeDiffs`, `mergeOrderJson`), sync state management (`saveSyncState`, `getSyncStatus`, `isSyncInProgress`), debounced auto-sync (`debouncedSync`, `bootstrapFirstSync`), Linkwarden mirroring, mirror fan-out hook (`invokePushToMirrors`), and a sync-activity listener (`setSyncActivityListener`) the background uses to keep the worker alive during long operations
+- **`lib/sync-core.js`** — Core sync operations (`push`, `pull`, `sync`, `pushForProfile`, `previewRemoteOrphans`, `cleanRemoteOrphans`, `recoverPartialApplyIfNeeded`), three-way merge (`computeDiff`, `mergeDiffs`, `mergeOrderJson`), sync state management (`saveSyncState` via tree-only SHA map, `getSyncStatus`, `isSyncInProgress`), debounced auto-sync (`debouncedSync`, `bootstrapFirstSync`), Linkwarden mirroring, mirror fan-out hook (`invokePushToMirrors`), and a sync-activity listener (`setSyncActivityListener`) the background uses to keep the worker alive during long operations
 - **`lib/sync-history.js`** — Commit history listing (`listSyncHistory`), bookmark restore (`restoreFromCommit`), undo support (`getPreviousCommitSha`), and diff preview (`getCommitDiffPreview`)
 - **`lib/sync-commit-message.js`** — Parses standard GitSyncMarks commit subjects to extract the device/client id (`extractClientIdFromCommitMessage`) for Sync History display
 - **`lib/sync-migration.js`** — Legacy single-file format migration (`migrateFromLegacyFormat`)
@@ -220,13 +223,13 @@ Multiple bookmark profiles (Work/Personal) with separate GitHub repo config:
 | `addProfile()` / `deleteProfile()` / `saveProfile()` | CRUD for profiles |
 | `migrateToProfiles()` | Migrate legacy single-config to profiles format |
 
-State stored in `chrome.storage.sync` (profiles, activeProfileId, optional `mirrors[]` and delete-guard settings per profile) and `chrome.storage.local` (nested per-profile tokens `{ primary, mirrors: { id: enc } }`, sync state including `mirrors` push metadata and optional `conflictReason` / `pendingDelete`).
+State stored in `chrome.storage.sync` (profiles, activeProfileId, optional `mirrors[]` and delete-guard settings per profile) and `chrome.storage.local` (nested per-profile tokens `{ primary, mirrors: { id: enc } }`, `syncState` including `mirrors` push metadata and optional `conflictReason` / `pendingDelete`, `syncFlags.pendingLocalDeletes`, and `applyInProgress`). `setSyncState` / flag writes are serialized through a module-level promise chain. `deleteProfile()` refuses the active profile and removes that profile's tokens, sync state, flags, and Bitwarden wrap password.
 
 ### `lib/profile-switch.js` — Profile Switch
 
 | Function | Description |
 |---|---|
-| `switchProfile(targetId)` | Diff-push current profile (skip when unchanged), HEAD-check target cache, delta-pull when remote advanced, replace local bookmarks |
+| `switchProfile(targetId)` | Acquires the sync lock (returns `alreadyInProgress` if held), suppresses auto-sync, sets the active profile id, then replaces bookmarks |
 
 Uses static imports into `lib/commit-bookmarks.js` and `lib/sync-core.js` so profile switch works from the MV3 service worker (popup/context menu).
 
@@ -236,7 +239,7 @@ Leaf module: `commitBookmarkChanges()` and Gitea Contents API fallback. Imported
 
 ### `lib/deletion-guard.js` — Bulk-Deletion Safety
 
-Pure helpers for the sync bulk-deletion guard ([#210](https://github.com/d0dg3r/GitSyncMarks/issues/210)): `listPayloadDeletions()`, `assessDeletionGuard()`, `assessLocalShrink()`, `assessFileChangesDeletionGuard()`.
+Pure helpers for the bidirectional sync bulk-deletion guard ([#210](https://github.com/d0dg3r/GitSyncMarks/issues/210)): `listPayloadDeletions()`, `assessDeletionGuard()`, `assessLocalShrink()`, `assessFileChangesDeletionGuard()`. Pull-side empty/shrink checks live in `sync-core` (`remoteBulkDelete`).
 
 ### `lib/profile-switch-logic.js` — Fast Profile Switch
 
@@ -300,11 +303,24 @@ Fetches the authenticated user's repos via GitHub REST API and maintains a "GitH
 | `fetchUserRepos(token)` | Paginated `{ full_name, html_url, private }`; delegates to `GitHubAPI.listUserRepos()` |
 | `updateGitHubReposFolder(token, parentRole, username?, onUsername?)` | Find/create folder, diff existing bookmarks with API list, add/remove/update; optional callback to persist username on first run |
 
+### `lib/bookmark-helpers.js` — Bookmark Folder Helpers
+
+Shared root-role lookup (`getRootRoleForBookmarkId`) and find-or-create folder helpers used by `github-repos.js` and `linkwarden-sync.js`.
+
+### `lib/linkwarden-sync.js` — Linkwarden Folder Sync
+
+Maintains a local `Linkwarden` bookmark folder from collections/links (`updateLinkwardenCollectionsFolder`). Used when Linkwarden sync is enabled on a profile.
+
+### `lib/display-version.js` — Display Version
+
+`DISPLAY_VERSION` overlay plus `getAppVersion(manifestVersion)` for the About tab and debug exports. Release builds may overwrite the overlay via `scripts/build.sh`.
+
 ### `lib/remote-fetch.js` — Remote File Map
 
 | Function | Description |
 |---|---|
 | `fetchRemoteFileMap(api, basePath, baseFiles)` | Fetch bookmark files via git tree + batched blobs; Gitea-family falls back to Contents API through `buildRemoteMaps()` |
+| `fetchRemoteShaMap(api, basePath, commitSha)` | Tree-only path → blob SHA map (no blob downloads); used after push to persist `lastSyncFiles` SHAs |
 | `buildRemoteMaps(api, basePath, baseFiles, commitSha)` | Tree+blob first for all providers with `getRecursiveTreeForCommit`; Contents API fallback for Gitea-family |
 | `fetchRemoteFileMapAtCommit(api, basePath, commitSha, options?)` | Fetch file map at a specific commit SHA (history restore/preview); batched `getBlob` (concurrency 5); optional short-lived in-memory cache per owner/repo/path/commit |
 
@@ -358,6 +374,10 @@ GitSyncMarks/
 │   ├── history.js                # Sync history & restore
 │   ├── context-menu-config.js    # Context menu configuration
 │   ├── settings.js               # Settings sync, export/import, file generation
+│   ├── bitwarden-backup.js       # Bitwarden export upload / list / download
+│   ├── mirrors.js                # Push-mirror destinations
+│   ├── profile-transfer.js       # Cross-profile bookmark copy UI
+│   ├── remote-cleanup.js         # Remote orphan preview / clean
 │   ├── help-shortcuts.js         # Help tab keyboard shortcuts
 │   └── factory-reset.js          # Full data reset
 ├── lib/
@@ -384,8 +404,11 @@ GitSyncMarks/
 │   ├── github-api.js             # Re-export shim
 │   ├── github-tree-batch.js      # Chunk file changes for tree API (inline blob content)
 │   ├── bookmark-serializer.js    # Per-file bookmark conversion
-│   ├── bookmark-replace.js       # Replace local bookmarks
+│   ├── bookmark-replace.js       # Replace local bookmarks (per-node try/catch + apply marker)
+│   ├── bookmark-helpers.js       # Root-role lookup / find-or-create folder
 │   ├── github-repos.js           # GitHub Repos folder
+│   ├── linkwarden-sync.js        # Linkwarden collections folder sync
+│   ├── display-version.js        # About/debug display version overlay
 │   ├── profile-manager.js        # Multiple profiles, CRUD, tokens
 │   ├── profile-switch.js         # switchProfile (service-worker-safe)
 │   ├── profile-switch-logic.js   # Fast switch: diff push, HEAD check, delta pull
@@ -395,7 +418,7 @@ GitSyncMarks/
 │   ├── mirror-push.js            # Push-only mirror destinations
 │   ├── onboarding.js             # checkPathSetup, initializeRemoteFolder
 │   ├── wizard-sync-choice.js     # Wizard sync mode matrix and push safety
-│   ├── remote-fetch.js           # fetchRemoteFileMap
+│   ├── remote-fetch.js           # fetchRemoteFileMap / fetchRemoteShaMap (tree-only)
 │   ├── crypto.js                 # Token encryption (AES-256-GCM)
 │   ├── context-menu.js           # Barrel: re-exports context menu sub-modules
 │   ├── context-menu-constants.js # Menu IDs, categories, prefixes
@@ -427,10 +450,15 @@ GitSyncMarks/
 │   └── verify-test-repo.js       # Verify bookmark files in GitHub test repo (API)
 ├── package.json                  # npm scripts for building
 ├── .github/workflows/
+│   ├── ci.yml                    # Lint, typecheck, unit tests
 │   ├── test-e2e.yml              # E2E tests (manual trigger only)
 │   ├── release.yml               # Build ZIPs, create release on tag
 │   ├── screenshots.yml           # Generate store screenshots
-│   └── add-bookmark.yml          # Automation: add bookmark via dispatch (runs scripts/add-bookmark-to-repo.py)
+│   ├── add-bookmark.yml          # Automation: add bookmark via dispatch (runs scripts/add-bookmark-to-repo.py)
+│   ├── pages.yml                 # GitHub Pages site
+│   ├── codeql.yml                # CodeQL analysis
+│   ├── dependency-review.yml     # PR dependency review
+│   └── dependabot-manual.yml     # Manual Dependabot helper
 ├── docs/                         # Architecture documentation
 ├── website/                      # GitHub Pages site
 ├── store-assets/                 # Store listings & screenshots (12 languages)

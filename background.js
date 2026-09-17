@@ -20,6 +20,7 @@ import {
   generateFilesNow,
   isSyncInProgress,
   isAutoSyncSuppressed,
+  recoverPartialApplyIfNeeded,
   migrateFromLegacyFormat,
   listRemoteDeviceConfigs,
   importDeviceConfig,
@@ -48,7 +49,9 @@ import { bitwardenBackupPasswordKey } from './lib/storage-keys.js';
 import { previewTransfer, transferBookmarks } from './lib/profile-transfer.js';
 import { testMirrorConnection } from './lib/mirror-push.js';
 import { migrateTokenIfNeeded } from './lib/crypto.js';
-import { migrateToProfiles, getActiveProfileId, getActiveProfile, getProfiles, getSyncState, markLocalBookmarksModified } from './lib/profile-manager.js';
+import { migrateToProfiles, getActiveProfileId, getActiveProfile, getProfiles, getSyncState, addPendingLocalDeletes } from './lib/profile-manager.js';
+import { collectBookmarkFilenames, generateFilename, SYNC_ROLES } from './lib/bookmark-serializer.js';
+import { getRootRoleForBookmarkId } from './lib/bookmark-helpers.js';
 import { switchProfile } from './lib/profile-switch.js';
 import {
   setupContextMenus,
@@ -183,6 +186,7 @@ async function shouldAutoOpenOnboardingWizard() {
 }
 
 async function showNotificationIfEnabled(result) {
+  if (!result || result.alreadyInProgress) return;
   try {
     const settings = await getSettings();
     const mode = settings[STORAGE_KEYS.NOTIFICATIONS_MODE] ?? 'all';
@@ -205,6 +209,7 @@ async function showNotificationIfEnabled(result) {
  * Orange badge '!' for errors, clear for success.
  */
 async function updateSyncStatusBadge(result) {
+  if (!result || result.alreadyInProgress) return;
   try {
     if (result.success) {
       await chrome.action.setBadgeText({ text: '' });
@@ -221,35 +226,66 @@ async function updateSyncStatusBadge(result) {
 
 // ---- Context menu click handler (top-level for SW persistence) ----
 
-browserObj.contextMenus.onClicked.addListener(handleContextMenuClick);
+browserObj.contextMenus?.onClicked?.addListener(handleContextMenuClick);
 
 // ---- Bookmark event listeners ----
+
+async function shouldRecordLocalDelete() {
+  return !isSyncInProgress() && !isAutoSyncSuppressed();
+}
+
+async function recordPendingDeletes(filenames) {
+  if (!filenames?.length) return;
+  if (!(await shouldRecordLocalDelete())) return;
+  await addPendingLocalDeletes(filenames);
+}
 
 chrome.bookmarks.onCreated.addListener((id, bookmark) => {
   console.log('[GitSyncMarks] Bookmark created:', bookmark.title);
   refreshContextMenuDynamicItemsDebounced();
-  markLocalBookmarksModified().catch(() => {});
   triggerAutoSync();
 });
 
-chrome.bookmarks.onRemoved.addListener((id, _removeInfo) => {
+chrome.bookmarks.onRemoved.addListener((id, removeInfo) => {
   console.log('[GitSyncMarks] Bookmark removed:', id);
   refreshContextMenuDynamicItemsDebounced();
-  markLocalBookmarksModified().catch(() => {});
+  void (async () => {
+    if (!(await shouldRecordLocalDelete())) return;
+    const parentRole = await getRootRoleForBookmarkId(removeInfo?.parentId);
+    if (!SYNC_ROLES.includes(parentRole)) return;
+    const names = collectBookmarkFilenames(removeInfo?.node);
+    await recordPendingDeletes(names);
+  })();
   triggerAutoSync();
 });
 
 chrome.bookmarks.onChanged.addListener((id, changeInfo) => {
   console.log('[GitSyncMarks] Bookmark changed:', id, changeInfo);
   refreshContextMenuDynamicItemsDebounced();
-  markLocalBookmarksModified().catch(() => {});
   triggerAutoSync();
 });
 
-chrome.bookmarks.onMoved.addListener((id, _moveInfo) => {
+chrome.bookmarks.onMoved.addListener((id, moveInfo) => {
   console.log('[GitSyncMarks] Bookmark moved:', id);
   refreshContextMenuDynamicItemsDebounced();
-  markLocalBookmarksModified().catch(() => {});
+  void (async () => {
+    if (!(await shouldRecordLocalDelete())) return;
+    const [oldRole, newRole] = await Promise.all([
+      getRootRoleForBookmarkId(moveInfo?.oldParentId),
+      getRootRoleForBookmarkId(moveInfo?.parentId),
+    ]);
+    if (SYNC_ROLES.includes(oldRole) && !SYNC_ROLES.includes(newRole)) {
+      try {
+        const [node] = await chrome.bookmarks.getSubTree(id);
+        const names = node?.url
+          ? [generateFilename(node.title || '', node.url)]
+          : collectBookmarkFilenames(node);
+        await recordPendingDeletes(names);
+      } catch {
+        /* node may already be gone */
+      }
+    }
+  })();
   triggerAutoSync();
 });
 
@@ -290,7 +326,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 
 const FOCUS_SYNC_COOLDOWN_MS = 60000; // 60 seconds
 
-chrome.windows.onFocusChanged.addListener(async (windowId) => {
+chrome.windows?.onFocusChanged?.addListener(async (windowId) => {
   if (windowId === chrome.windows.WINDOW_ID_NONE || windowId < 0) return;
 
   const settings = await getSettings();
@@ -453,7 +489,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       return false;
     }
     switchProfile(targetId)
-      .then(async () => {
+      .then(async (result) => {
+        if (result?.alreadyInProgress) {
+          sendResponse({ success: false, message: result.message });
+          return;
+        }
         await refreshProfileMenuItems();
         sendResponse({ success: true, message: getMessage('sync_loadedFromRemote') });
       })
@@ -740,11 +780,17 @@ chrome.runtime.onStartup.addListener(async () => {
 });
 
 // Initial setup — every service worker start (not only install/update)
-migrateTokenIfNeeded().then(() =>
-  migrateToProfiles().then(() => {
-    initI18n();
+migrateTokenIfNeeded()
+  .then(() => migrateToProfiles())
+  .then(() => initI18n())
+  .then(() => {
     setupContextMenus();
     setupAlarm();
     checkAndMigrate();
+    recoverPartialApplyIfNeeded().catch((err) => {
+      console.warn('[GitSyncMarks] Partial-apply recovery failed:', err);
+    });
   })
-);
+  .catch((err) => {
+    console.warn('[GitSyncMarks] Background init failed:', err);
+  });

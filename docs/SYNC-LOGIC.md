@@ -215,23 +215,30 @@ Uses **role-based mapping** for cross-browser compatibility:
 3. For each local root folder, get its role and the corresponding remote data:
    a. Only roles in `SYNC_ROLES` (toolbar, other) are processed; menu and mobile are ignored.
    b. **GitHub Repos preservation**: When `githubReposEnabled` is on and the target role matches `githubReposParent`, and Git data does not contain a folder titled `GitHubRepos (username)` (or any `GitHubRepos (` prefix when username is unknown), the local GitHubRepos folder is preserved and merged into the data before replacement
-   c. Remove all existing children (reverse order)
-   d. Recursively recreate from merged remote data
+   c. Set `applyInProgress` (`profileId`, `commitSha`, `startedAt`) in `chrome.storage.local` before the first `removeTree`
+   d. Remove all existing children (reverse order)
+   e. Recursively recreate from merged remote data; each node is try/caught so one rejected URL does not abort siblings (`replaceLocalBookmarks` returns `{ created, failed[] }`)
+   f. Clear the marker after `saveSyncStateFromMaps`. If the worker dies mid-apply, the next `sync()` / SW init runs `recoverPartialApplyIfNeeded()` → `pull({ fromSync: true })`
 4. Result: All bookmarks appear in both browsers; GitHubRepos folder is kept on pull when not in Git
 
 ## Stable-Snapshot Guard (Path 8)
 
 When only remote changes exist (path 8), the API response may be cached or eventually consistent. To avoid overwriting local state with stale data (e.g. right after our own push), `getLatestCommitSha()` is re-checked before applying. If the branch HEAD advanced since our fetch, the engine re-fetches a fresh remote snapshot (up to 3 attempts). If the remote is still moving after the retries, the sync does **not** report "all in sync" (which previously hid pending remote changes); instead it returns `sync_remoteChangedRetry` so the user can retry.
 
-**Stale-base guard:** If `localModifiedSinceSync` is set (bookmark create/remove/change/move since last successful sync) and the remote diff vs base only adds paths that are absent from local, sync pushes deletes to the remote instead of pulling. This recovers when `lastSyncFiles` was shrunk without a matching remote commit (e.g. profile-switch cache update). Normal path-8 pull still applies when the user did not edit bookmarks locally (remote changes from another device).
+**Stale-base guard (pending local deletes):** Path 8 only treats a remote-only path as a local deletion when that file's basename is in `syncFlags[profileId].pendingLocalDeletes`. The set is filled from user `bookmarks.onRemoved` (and moves out of a synced root) using `generateFilename(title, url)` on the removed subtree. Events fired while `isSyncInProgress()` or `isAutoSyncSuppressed()` are ignored. A successful `sync()`, `push()`, `pull()`, `pushForProfile()`, `restoreFromCommit()`, or `switchProfile()` clears the set. With an empty pending set, remote additions from other devices are applied locally.
 
-Bookmark events call `markLocalBookmarksModified()` in `background.js`; successful sync clears the flag.
+If the remote snapshot is `null` (branch 404/409) and a base still exists, sync returns `sync_branchNotFound` and does not enter path 8/9.
 
 ## Bulk-Deletion Guard
 
-When bidirectional sync would delete a large share of bookmark payload files on the remote (default **≥15%** and **≥10 files**, per profile in Settings → Sync), the engine blocks the commit instead of wiping the shared repo. It sets `hasConflict` with `conflictReason: bulkDelete` and shows a popup warning naming how many files would be deleted. Resolve with **Local → Remote** (force push) or **Remote → Local** (force pull). Explicit **Push** and **Pull** are not guarded.
+Bidirectional. When sync would delete a large share of bookmark payload files — either **pushing** local deletes or **applying** a shrunken/empty remote — the engine blocks instead of wiping the other side (default **≥15%** and **≥10 files**, per profile in Settings → Sync). An empty remote with a non-empty base is always blocked on pull-side paths.
 
-Checks run on sync path 7 (local-only), path 8 (stale-base push), and path 9 (three-way merge, including the remote orphan sweep). Before path 9 merge, a local-shrink check compares the browser tree to `lastSyncFiles` (same threshold). Implementation: `lib/deletion-guard.js`.
+| Direction | `conflictReason` | Paths |
+|---|---|---|
+| Local → remote | `bulkDelete` | 7, 8 (stale-base push), 9 (merge + orphan sweep); local-shrink check before path 9 |
+| Remote → local | `remoteBulkDelete` | 8 (apply), 9 |
+
+The popup shows the matching warning and **Local → Remote** / **Remote → Local**. Explicit **Push** and **Pull** are not guarded. Implementation: `lib/deletion-guard.js` plus `blockIfRemoteBulkDeletion()` in `lib/sync-core.js`.
 
 ## Truncated-Tree Guard
 
@@ -250,6 +257,8 @@ GitHub API requests use `cache: no-store` to reduce cache-related staleness.
    - **SHA differs** → `getBlob()` (1 call per changed file)
 
 In the common case (few files changed), this is 3 + N calls where N is the number of changed files.
+
+After a successful push, `saveSyncState()` calls `fetchRemoteShaMap()` (tree listing only) so `lastSyncFiles` SHAs stay current without re-downloading every blob.
 
 **Blob GET concurrency:** `getBlob` requests run in batches of five parallel calls (not all at once). Large repositories (hundreds of bookmarks) previously issued one concurrent request per file; GitHub’s secondary rate limits treat that as abusive.
 

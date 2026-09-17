@@ -297,17 +297,19 @@ Per-profile keys (repo config, githubRepos) live in `profiles[id]`; others are g
 
 ### `chrome.storage.local` — Sync State + Token
 
+Per-profile blobs (legacy top-level `lastSyncFiles` / `githubToken` are migrated into these maps):
+
 | Key | Type | Description |
 |---|---|---|
-| `githubToken` | `string` | Encrypted PAT (`enc:v1:<iv>:<ciphertext>`) |
+| `profileTokens` | `object` | `{ [profileId]: { primary, mirrors } }` encrypted PATs (`enc:v1:…`) |
+| `syncState` | `object` | Per-profile `{ lastSyncFiles, lastCommitSha, lastSyncTime, hasConflict, conflictReason, pendingDelete, lastError, previousCommitSha, mirrors }` |
+| `syncFlags` | `object` | Per-profile `{ pendingLocalDeletes: string[] }` — bookmark filenames deleted locally since last successful sync. Separate from `syncState` so event writes never RMW `lastSyncFiles` |
+| `applyInProgress` | `object\|null` | `{ profileId, commitSha, startedAt }` set before `removeTree`; cleared after the new base is saved. Present → recover via `pull()` |
 | `deviceId` | `string` | UUID for this device |
-| `lastSyncFiles` | `object` | `{ [path]: { sha, content } }` — snapshot at last sync |
-| `lastCommitSha` | `string` | Git commit SHA at last sync |
-| `lastSyncTime` | `string` | ISO 8601 timestamp of last sync |
-| `hasConflict` | `boolean` | Whether a conflict was detected |
 | `settingsSyncPassword` | `string` | Password for settings.enc encryption (device-local, never synced) |
+| `bitwardenBackupPassword:<id>` | `string` | Optional Git wrap password for that profile's Bitwarden backup |
 
-The `lastSyncFiles` object is the **base state** for three-way merge. It maps each file path to its blob SHA (for remote change detection) and content (for local change detection).
+`syncState[id].lastSyncFiles` is the **base state** for three-way merge. It maps each file path to its blob SHA (for remote change detection) and content (for local change detection). `conflictReason` is `bulkDelete` (push-side) or `remoteBulkDelete` (pull-side).
 
 ## GitHub Git Data API Interaction
 

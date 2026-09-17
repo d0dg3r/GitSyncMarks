@@ -38,6 +38,9 @@
   "popup_bulkDeleteWarning": {
     "message": "Sync would delete $1 of $2 bookmark files on the remote. Your local bookmarks may be incomplete. Choose a resolution:"
   },
+  "popup_remoteBulkDeleteWarning": {
+    "message": "Sync would apply a remote tree that is missing $1 of $2 bookmark files. The remote may be incomplete. Choose a resolution:"
+  },
   "popup_localToRemote": {
     "message": "Local → Remote"
   },
@@ -292,6 +295,33 @@
   },
   "options_ownerPlaceholderGitea": {
     "message": "your-gitea-username"
+  },
+  "options_ownerPlaceholder_gitea": {
+    "message": "your-gitea-username"
+  },
+  "options_none": {
+    "message": "None"
+  },
+  "options_cancel": {
+    "message": "Cancel"
+  },
+  "options_parentToolbar": {
+    "message": "Bookmarks Bar"
+  },
+  "options_parentOther": {
+    "message": "Other Bookmarks"
+  },
+  "options_linkwardenSyncDesc": {
+    "message": "Sync your Linkwarden collections directly to your browser's bookmark folders."
+  },
+  "options_linkwardenStatusDisabled": {
+    "message": "Linkwarden integration is disabled. Enable it in the General tab to use sync."
+  },
+  "options_profileDeleteActive": {
+    "message": "Switch to another profile before deleting this one."
+  },
+  "options_formProfileChanged": {
+    "message": "The active profile changed. The form was reloaded."
   },
   "options_transferTitle": {
     "message": "Transfer bookmarks"
@@ -627,7 +657,7 @@
     "message": "Block risky bulk deletions during sync"
   },
   "options_deleteGuardEnabledHint": {
-    "message": "Raises a conflict instead of pushing many bookmark deletions when your local tree looks incomplete."
+    "message": "Raises a conflict instead of pushing or pulling many bookmark deletions when one side looks incomplete."
   },
   "options_deleteGuardMaxPercent": {
     "message": "Bulk deletion threshold (%)"
@@ -1286,6 +1316,15 @@
   "sync_bulkDeleteBlocked": {
     "message": "Sync blocked: would delete $1 of $2 bookmark files on the remote. Open the popup and choose Local → Remote or Remote → Local."
   },
+  "sync_remoteBulkDeleteBlocked": {
+    "message": "Sync blocked: remote is missing $1 of $2 bookmark files. Open the popup and choose Local → Remote or Remote → Local."
+  },
+  "sync_branchNotFound": {
+    "message": "Remote branch was not found. Check the repository and branch, then try again."
+  },
+  "sync_applyPartialFailures": {
+    "message": "$1 bookmark(s) could not be created (invalid URL) and were skipped."
+  },
   "sync_syncFailed": {
     "message": "Sync failed: $1"
   },
@@ -1790,7 +1829,7 @@
     "message": "Bulk-deletion guard"
   },
   "help_deleteGuardDesc": {
-    "message": "When enabled, bidirectional sync blocks pushes that would delete a large share of bookmark files on the remote (default 15%, minimum 10 files). Use the popup conflict buttons to force Local → Remote or Remote → Local. Explicit Push and Pull are not blocked."
+    "message": "When enabled, bidirectional sync blocks both pushes and pulls that would delete a large share of bookmark files (default 15%, minimum 10 files). Use the popup conflict buttons to force Local → Remote or Remote → Local. Explicit Push and Pull are not blocked."
   },
   "help_generatedFilesTitle": {
     "message": "Generated files"
@@ -2252,6 +2291,12 @@
   },
   "search_unknownError": {
     "message": "Unknown error"
+  },
+  "contextMenu_addToToolbar": {
+    "message": "Bookmarks Bar"
+  },
+  "contextMenu_addToOther": {
+    "message": "Other Bookmarks"
   },
   "contextMenu_addToToolbar_chrome": {
     "message": "Add to Bookmarks Bar"

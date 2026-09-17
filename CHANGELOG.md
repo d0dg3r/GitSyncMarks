@@ -7,8 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Silent remote deletes from a stale-base heuristic**: Bookmark create/change events (including the extension's own `replaceLocalBookmarks`) no longer flip a boolean that treated every remote-only file as a local deletion. Sync now tracks explicit `pendingLocalDeletes` filenames from user `onRemoved` / move-out events and only pushes those deletes.
+- **Pull-side bulk-deletion guard**: An emptied or heavily shrunken remote is no longer applied locally on sync paths 8/9. Bidirectional sync sets `conflictReason: remoteBulkDelete`; explicit Pull stays unguarded. A missing remote branch with an existing base returns `sync_branchNotFound` instead of throwing.
+- **Restore / switch / apply races**: `restoreFromCommit()` saves the three-way base against remote HEAD so the restored tree is a local change. `switchProfile()` takes the sync lock, suppresses auto-sync, and sets the active profile id before replacing bookmarks. `createBookmarkTree` continues after a rejected URL; an `applyInProgress` marker recovers a partial tree via pull.
+- **Firefox Android + options integrity**: Optional `contextMenus` / `windows` / `action` APIs are guarded. The options form binds to the profile loaded at `loadSettings()` and reloads on `storage.onChanged`. Deleting the active profile is blocked. Host permission requests run synchronously from the click/Next handler. Missing i18n keys (including Delete Guard UI) are present in all 12 locales.
+
 ### Changed
-- **Website (gitsyncmarks.com)**: Updated landing page for 3.0 — multi-provider Git sync, Bitwarden backup, profile transfer, push mirrors, live sync progress, sync history, clean orphans, and automation; provider-neutral setup steps; Bitwarden screenshot; v3.0.4 release notice. README stable-release banner points to v3.0.4.
+- **Post-push SHA map**: `saveSyncState()` uses a tree-only `fetchRemoteShaMap()` and no longer re-downloads every blob after a push.
+- **Sync-state writes**: `setSyncState` / `setSyncFlags` are serialized; pending deletes live in `syncFlags` so event writes never touch `lastSyncFiles`.
+- **Delete Guard**: Bidirectional — push-side mass deletes and pull-side remote wipes both surface in the popup.
+- **Dev hygiene**: `.gitignore` covers `tmp/` and generated portfolio PDFs; npm overrides pin patched `fast-uri` / `js-yaml` and `sharp` 0.35.4.
 
 ## [3.0.8] - 2026-08-31
 
