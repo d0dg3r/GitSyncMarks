@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.9] - 2026-09-18
+
 ### Fixed
 - **Silent remote deletes from a stale-base heuristic**: Bookmark create/change events (including the extension's own `replaceLocalBookmarks`) no longer flip a boolean that treated every remote-only file as a local deletion. Sync now tracks explicit `pendingLocalDeletes` filenames from user `onRemoved` / move-out events and only pushes those deletes.
 - **Pull-side bulk-deletion guard**: An emptied or heavily shrunken remote is no longer applied locally on sync paths 8/9. Bidirectional sync sets `conflictReason: remoteBulkDelete`; explicit Pull stays unguarded. A missing remote branch with an existing base returns `sync_branchNotFound` instead of throwing.

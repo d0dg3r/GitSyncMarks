@@ -20,6 +20,13 @@ describe('whats-new', () => {
     assert.ok(c.bullets.some((b) => b.includes('first sync')));
   });
 
+  it('getWhatsNewContent returns bullets for 3.0.9', () => {
+    const c = getWhatsNewContent('3.0.9');
+    assert.ok(c);
+    assert.ok(Array.isArray(c.bullets));
+    assert.ok(c.bullets.some((b) => b.includes('Delete Guard')));
+  });
+
   it('getWhatsNewContent returns bullets for 3.0.7', () => {
     const c = getWhatsNewContent('3.0.7');
     assert.ok(c);
