@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.10] - 2026-09-18
+
+### Fixed
+- **Release CI lint gate**: `replaceLocalBookmarks` no longer references an undefined `username` when preserving the GitHubRepos folder. Options folder browser and GitHub Repos refresh call `requestConnectionHostPermission` instead of a missing `ensureConnectionHostPermission` helper (both were `no-undef` errors that skipped the GitHub ZIP/release job).
+
 ## [3.0.9] - 2026-09-18
 
 ### Fixed

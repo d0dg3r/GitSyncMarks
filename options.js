@@ -855,7 +855,7 @@ async function loadFolderBrowserContents(path) {
       return;
     }
     if (providerNeedsHostPermission(fields.gitProvider, fields.serverUrl || getProviderCaps(fields.gitProvider).defaultServerUrl)) {
-      const granted = await ensureConnectionHostPermission(fields);
+      const granted = await requestConnectionHostPermission(fields);
       if (!granted) {
         folderBrowserLoading.classList.add('hidden');
         folderBrowserEmpty.textContent = getMessage('options_hostPermissionDenied');
@@ -973,7 +973,7 @@ githubReposRefreshBtn?.addEventListener('click', async () => {
     return;
   }
   if (providerNeedsHostPermission(fields.gitProvider, fields.serverUrl || getProviderCaps(fields.gitProvider).defaultServerUrl)) {
-    const granted = await ensureConnectionHostPermission(fields);
+    const granted = await requestConnectionHostPermission(fields);
     if (!granted) return;
   }
   try {
