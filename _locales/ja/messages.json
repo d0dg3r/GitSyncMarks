@@ -2477,5 +2477,14 @@
   },
   "options_linkwardenStatusDisabled": {
     "message": "Linkwarden 連携は無効です。「一般」タブで有効にしてください。"
+  },
+  "popup_offline": {
+    "message": "オフラインです。オンラインに戻ると同期を再開します。"
+  },
+  "popup_tokenExpiring": {
+    "message": "トークンは $1 日後に期限切れになります。設定で新しいトークンを作成してください。"
+  },
+  "popup_tokenExpired": {
+    "message": "トークンの期限が切れています。設定で新しいトークンを作成してください。"
   }
 }

@@ -2477,5 +2477,14 @@
   },
   "options_linkwardenStatusDisabled": {
     "message": "Linkwarden 集成已禁用。请在“常规”标签页中启用后再使用同步。"
+  },
+  "popup_offline": {
+    "message": "离线 — 恢复网络连接后将继续同步。"
+  },
+  "popup_tokenExpiring": {
+    "message": "令牌将在 $1 天后过期。请在设置中创建新令牌。"
+  },
+  "popup_tokenExpired": {
+    "message": "令牌已过期。请在设置中创建新令牌。"
   }
 }

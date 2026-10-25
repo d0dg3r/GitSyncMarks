@@ -20,6 +20,8 @@ const statusMessage = document.getElementById('status-message');
 const lastDataChangeEl = document.getElementById('last-data-change');
 const lastCommitWrap = document.getElementById('last-commit-wrap');
 const mirrorStatusEl = document.getElementById('mirror-status');
+const tokenExpiryEl = document.getElementById('token-expiry');
+const offlineStatusEl = document.getElementById('offline-status');
 const conflictBox = document.getElementById('conflict-box');
 const conflictDescription = document.getElementById('conflict-description');
 const autoSyncDot = document.getElementById('auto-sync-dot');
@@ -91,6 +93,7 @@ function updateUI(status) {
     showNotConfigured();
     return;
   }
+  setSyncControlsDisabled(isSyncing);
 
   notConfiguredEl.style.display = 'none';
   configuredEl.style.display = 'block';
@@ -168,6 +171,22 @@ function updateUI(status) {
   } else {
     clearElement(lastCommitWrap);
     lastCommitWrap.style.display = 'none';
+  }
+
+  // Token expiry (GitHub fine-grained tokens): warn in the last two weeks and once expired.
+  if (status.tokenExpiresAt) {
+    const daysLeft = Math.ceil((new Date(status.tokenExpiresAt).getTime() - Date.now()) / 86400000);
+    if (daysLeft <= 0) {
+      tokenExpiryEl.textContent = getMessage('popup_tokenExpired');
+      tokenExpiryEl.style.display = '';
+    } else if (daysLeft <= 14) {
+      tokenExpiryEl.textContent = getMessage('popup_tokenExpiring', [String(daysLeft)]);
+      tokenExpiryEl.style.display = '';
+    } else {
+      tokenExpiryEl.style.display = 'none';
+    }
+  } else {
+    tokenExpiryEl.style.display = 'none';
   }
 
   if (mirrorStatusEl) {
@@ -323,13 +342,23 @@ function formatRelativeTime(date) {
 
 // ---- Button handlers ----
 
+/** Sync buttons are unusable while a sync runs or while the browser is offline. */
+function setSyncControlsDisabled(busy) {
+  const disabled = busy || navigator.onLine === false;
+  syncBtn.disabled = disabled;
+  pushBtn.disabled = disabled;
+  pullBtn.disabled = disabled;
+  forcePushBtn.disabled = disabled;
+  forcePullBtn.disabled = disabled;
+  offlineStatusEl.style.display = navigator.onLine === false ? '' : 'none';
+}
+
+window.addEventListener('online', () => setSyncControlsDisabled(isSyncing));
+window.addEventListener('offline', () => setSyncControlsDisabled(isSyncing));
+
 function setLoading(loading, progressText = null) {
   isSyncing = loading;
-  syncBtn.disabled = loading;
-  pushBtn.disabled = loading;
-  pullBtn.disabled = loading;
-  forcePushBtn.disabled = loading;
-  forcePullBtn.disabled = loading;
+  setSyncControlsDisabled(loading);
   profileSelect.disabled = loading;
   syncSpinner.style.display = loading ? 'inline-block' : 'none';
   const label = progressText || (loading ? getMessage('popup_syncing') : getMessage('popup_syncNow'));

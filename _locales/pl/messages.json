@@ -2477,5 +2477,14 @@
   },
   "options_linkwardenStatusDisabled": {
     "message": "Integracja z Linkwarden jest wyłączona. Włącz ją na karcie Ogólne, aby korzystać z synchronizacji."
+  },
+  "popup_offline": {
+    "message": "Offline — synchronizacja wznowi się po powrocie do sieci."
+  },
+  "popup_tokenExpiring": {
+    "message": "Token wygasa za $1 dni. Utwórz nowy token w ustawieniach."
+  },
+  "popup_tokenExpired": {
+    "message": "Token wygasł. Utwórz nowy token w ustawieniach."
   }
 }

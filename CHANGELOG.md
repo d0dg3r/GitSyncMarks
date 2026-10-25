@@ -29,6 +29,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **History Undo asks for a second click**, like row restore.
 - **Context menu** shows the correct "Bookmarks Bar" / "Other Bookmarks" label (it showed a raw message key).
 - Missing UI texts (None, Cancel, Linkwarden hints, Bookmarks Bar / Other Bookmarks) are translated in all locales.
+- **Popup shows when you are offline** and disables the sync buttons until the connection is back.
+- **Popup warns when a GitHub token expires within 14 days** (or has expired), using GitHub's expiry header.
+- **Firefox AMO lint runs in CI.** Bookmark reorder listener is optional, so Firefox no longer fails to load it.
 
 ### Security
 - Dependency overrides updated (fast-uri, undici, js-yaml, brace-expansion, source-map-js, @humanfs/node, image-size) and sharp bumped; resolves the open Dependabot alerts. `npm audit`: 0 vulnerabilities.

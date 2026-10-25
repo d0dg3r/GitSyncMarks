@@ -41,6 +41,9 @@ jobs:
       - name: Unit tests
         run: npm run test:unit
 
+      - name: Firefox AMO lint (addons-linter)
+        run: npm run build:firefox && npm run lint:amo
+
       - name: npm audit (production)
         run: npm audit --omit=dev --audit-level=moderate
 

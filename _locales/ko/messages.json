@@ -2477,5 +2477,14 @@
   },
   "options_linkwardenStatusDisabled": {
     "message": "Linkwarden 연동이 비활성화되어 있습니다. 동기화를 사용하려면 '일반' 탭에서 활성화하세요."
+  },
+  "popup_offline": {
+    "message": "오프라인입니다. 다시 온라인이 되면 동기화가 재개됩니다."
+  },
+  "popup_tokenExpiring": {
+    "message": "토큰이 $1일 후 만료됩니다. 설정에서 새 토큰을 만드세요."
+  },
+  "popup_tokenExpired": {
+    "message": "토큰이 만료되었습니다. 설정에서 새 토큰을 만드세요."
   }
 }

@@ -2524,5 +2524,14 @@
   },
   "options_linkwardenStatusDisabled": {
     "message": "Linkwarden integration is disabled. Enable it in the General tab to use sync."
+  },
+  "popup_offline": {
+    "message": "Offline — sync resumes when you are back online."
+  },
+  "popup_tokenExpiring": {
+    "message": "Token expires in $1 day(s). Create a new token in Settings."
+  },
+  "popup_tokenExpired": {
+    "message": "Token has expired. Create a new token in Settings."
   }
 }

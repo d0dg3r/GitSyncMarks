@@ -239,8 +239,9 @@ chrome.bookmarks.onImportEnded?.addListener(() => {
   triggerAutoSync();
 });
 
-// Reordering changes _order.json, so it is a real change for sync.
-chrome.bookmarks.onChildrenReordered.addListener(() => {
+// Reordering changes _order.json, so it is a real change for sync. Firefox has no such event,
+// so the listener is optional: a plain call would throw while the background loads.
+chrome.bookmarks.onChildrenReordered?.addListener(() => {
   refreshContextMenuDynamicItemsDebounced();
   noteLocalBookmarkEdit();
   triggerAutoSync();

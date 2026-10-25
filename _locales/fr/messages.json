@@ -2477,5 +2477,14 @@
   },
   "options_linkwardenStatusDisabled": {
     "message": "L'intégration Linkwarden est désactivée. Activez-la dans l'onglet Général pour l'utiliser."
+  },
+  "popup_offline": {
+    "message": "Hors ligne — la synchronisation reprendra dès que vous serez de nouveau en ligne."
+  },
+  "popup_tokenExpiring": {
+    "message": "Le jeton expire dans $1 jour(s). Créez un nouveau jeton dans les paramètres."
+  },
+  "popup_tokenExpired": {
+    "message": "Le jeton a expiré. Créez un nouveau jeton dans les paramètres."
   }
 }

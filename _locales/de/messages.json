@@ -2483,5 +2483,14 @@
   },
   "options_linkwardenStatusDisabled": {
     "message": "Die Linkwarden-Integration ist deaktiviert. Aktiviere sie im Tab „Allgemein“, um sie zu nutzen."
+  },
+  "popup_offline": {
+    "message": "Offline — die Synchronisierung wird fortgesetzt, sobald du wieder online bist."
+  },
+  "popup_tokenExpiring": {
+    "message": "Token läuft in $1 Tag(en) ab. Erstelle in den Einstellungen einen neuen Token."
+  },
+  "popup_tokenExpired": {
+    "message": "Token ist abgelaufen. Erstelle in den Einstellungen einen neuen Token."
   }
 }

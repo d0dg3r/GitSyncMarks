@@ -2477,5 +2477,14 @@
   },
   "options_linkwardenStatusDisabled": {
     "message": "L'integrazione con Linkwarden è disattivata. Attivala nella scheda Generale per usarla."
+  },
+  "popup_offline": {
+    "message": "Offline — la sincronizzazione riprende quando torni online."
+  },
+  "popup_tokenExpiring": {
+    "message": "Il token scade tra $1 giorno/i. Crea un nuovo token nelle impostazioni."
+  },
+  "popup_tokenExpired": {
+    "message": "Il token è scaduto. Crea un nuovo token nelle impostazioni."
   }
 }

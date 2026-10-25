@@ -2477,5 +2477,14 @@
   },
   "options_linkwardenStatusDisabled": {
     "message": "La integración de Linkwarden está desactivada. Actívala en la pestaña General para usarla."
+  },
+  "popup_offline": {
+    "message": "Sin conexión — la sincronización continúa cuando vuelvas a estar en línea."
+  },
+  "popup_tokenExpiring": {
+    "message": "El token caduca en $1 día(s). Crea un token nuevo en Ajustes."
+  },
+  "popup_tokenExpired": {
+    "message": "El token ha caducado. Crea un token nuevo en Ajustes."
   }
 }

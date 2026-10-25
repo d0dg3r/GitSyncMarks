@@ -2477,5 +2477,14 @@
   },
   "options_linkwardenStatusDisabled": {
     "message": "Linkwarden entegrasyonu devre dışı. Senkronizasyonu kullanmak için Genel sekmesinden etkinleştirin."
+  },
+  "popup_offline": {
+    "message": "Çevrimdışı — çevrimiçi olduğunuzda senkronizasyon devam eder."
+  },
+  "popup_tokenExpiring": {
+    "message": "Token $1 gün içinde sona erecek. Ayarlardan yeni bir token oluşturun."
+  },
+  "popup_tokenExpired": {
+    "message": "Tokenin süresi doldu. Ayarlardan yeni bir token oluşturun."
   }
 }
