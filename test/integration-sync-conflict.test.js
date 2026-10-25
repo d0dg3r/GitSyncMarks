@@ -176,6 +176,19 @@ describe('two browsers, one repository: per-file conflict choice', () => {
     assert.notEqual(result.remoteMoved, true);
   });
 
+  it('pulling a rename keeps the local bookmark ID (no delete and recreate)', async () => {
+    const { a, b } = env;
+    useBrowser(b);
+    const [{ id: idBefore }] = b.bookmarks.toolbarSnapshot();
+    useBrowser(a);
+    a.bookmarks.renameByUrl(URL_SAME, 'Renamed');
+    assert.equal((await sync()).success, true);
+    useBrowser(b);
+    assert.equal((await sync()).success, true);
+    assert.deepEqual(b.bookmarks.toolbarSnapshot(), [{ id: idBefore, title: 'Renamed', url: URL_SAME }]);
+    assert.equal(b.bookmarks.calls.removeTree, 0);
+  });
+
   it('the fake GitHub served every request the adapter made', () => {
     assert.deepEqual(env.github.unknownRoutes, []);
   });

@@ -38,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Push and pull preview the changes**: the confirmation says how many bookmarks would be added and removed (compared by URL, so moves are not counted as changes). Costs one extra read of the remote before each push or pull.
 - **Moved folders do not trigger the bulk-delete guard**: a bookmark whose URL is written at a new path in the same sync counts as a move, not a deletion.
 - **Diagnostics**: "Copy diagnostics" in the popup footer copies a plain-text summary (versions, last sync, error, token expiry, mirrors, backup). It contains no tokens and no repository names.
+- **Pull and sync no longer delete and recreate all bookmarks.** The local tree is reconciled: unchanged bookmarks are left alone and keep their IDs (quick folders and other extensions keep working), renamed ones are updated in place, reordering uses moves. Only real additions and removals create or delete bookmarks. Moving a bookmark into another folder is still a remove plus a create.
 - A retry after "remote moved during sync" happens only for that case (not for every HTTP 409) and at most three times in a row.
 - The push/pull preview reuses unchanged files from the stored base instead of downloading every bookmark.
 - The popup reads only backup metadata; the restore question names the backup's date; the sync buttons stay locked while a preview loads.

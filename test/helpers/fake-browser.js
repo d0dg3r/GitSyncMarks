@@ -34,7 +34,7 @@ function createArea(data) {
 }
 
 /** Bookmark tree with the two sync roots (toolbar id "1", other "2"), as Chrome creates them. */
-function createBookmarks() {
+function createBookmarks(moveSemantics) {
   const nodes = new Map([
     ['0', { id: '0', title: '', children: [] }],
     ['1', { id: '1', parentId: '0', title: 'Bookmarks bar', children: [] }],
@@ -42,6 +42,10 @@ function createBookmarks() {
   ]);
   nodes.get('0').children = [nodes.get('1'), nodes.get('2')];
   let nextId = 100;
+  /** Number of calls per mutating API, so tests can assert "nothing was recreated". */
+  const calls = { create: 0, removeTree: 0, update: 0, move: 0 };
+  /** URL prefixes this fake browser refuses (like Chrome refusing Firefox-only schemes). */
+  const rejectedUrlPrefixes = [];
 
   const toTree = (node) => {
     const out = { id: node.id, parentId: node.parentId, title: node.title };
@@ -54,15 +58,44 @@ function createBookmarks() {
     async getTree() {
       return [toTree(nodes.get('0'))];
     },
-    async create({ parentId, title, url }) {
+    async create({ parentId, index, title, url }) {
+      calls.create += 1;
       const parent = nodes.get(parentId);
       if (!parent) throw new Error(`No parent folder ${parentId}`);
+      if (url && rejectedUrlPrefixes.some((prefix) => url.startsWith(prefix))) throw new Error(`Invalid URL ${url}`);
       const node = { id: String(nextId++), parentId, title: title || '', ...(url ? { url } : { children: [] }) };
       nodes.set(node.id, node);
-      parent.children.push(node);
+      const at = index === undefined ? parent.children.length : Math.min(index, parent.children.length);
+      parent.children.splice(at, 0, node);
+      return toTree(node);
+    },
+    async update(id, { title, url }) {
+      calls.update += 1;
+      const node = nodes.get(id);
+      if (!node) throw new Error(`No node ${id}`);
+      if (title !== undefined) node.title = title;
+      if (url !== undefined) node.url = url;
+      return toTree(node);
+    },
+    /**
+     * Chrome: inside the same folder the index counts positions before removal.
+     * Firefox: the index is the final position. Both agree for upward moves.
+     */
+    async move(id, { parentId, index }) {
+      calls.move += 1;
+      const node = nodes.get(id);
+      const from = nodes.get(node.parentId);
+      const to = nodes.get(parentId);
+      const oldIndex = from.children.indexOf(node);
+      from.children.splice(oldIndex, 1);
+      let at = index === undefined ? to.children.length : index;
+      if (moveSemantics === 'chrome' && from === to && index !== undefined && index > oldIndex) at -= 1;
+      to.children.splice(Math.min(at, to.children.length), 0, node);
+      node.parentId = parentId;
       return toTree(node);
     },
     async removeTree(id) {
+      calls.removeTree += 1;
       const node = nodes.get(id);
       if (!node) throw new Error(`No node ${id}`);
       const parent = nodes.get(node.parentId);
@@ -83,13 +116,23 @@ function createBookmarks() {
     toolbarBookmarks() {
       return nodes.get('1').children.filter((c) => c.url).map((c) => ({ title: c.title, url: c.url }));
     },
+    /** Test helper: the toolbar as plain data, including IDs (folders with their children). */
+    toolbarSnapshot() {
+      const snap = (node) => (node.url
+        ? { id: node.id, title: node.title, url: node.url }
+        : { id: node.id, title: node.title, children: node.children.map(snap) });
+      return nodes.get('1').children.map(snap);
+    },
+    calls,
+    rejectedUrlPrefixes,
   };
 }
 
-export function createFakeBrowser() {
+/** @param {{ moveSemantics?: 'chrome' | 'firefox' }} [options] */
+export function createFakeBrowser({ moveSemantics = 'chrome' } = {}) {
   const local = {};
   const sync = {};
-  const bookmarks = createBookmarks();
+  const bookmarks = createBookmarks(moveSemantics);
   const chrome = {
     storage: {
       local: createArea(local),
@@ -99,6 +142,8 @@ export function createFakeBrowser() {
     bookmarks: {
       getTree: bookmarks.getTree,
       create: bookmarks.create,
+      update: bookmarks.update,
+      move: bookmarks.move,
       removeTree: bookmarks.removeTree,
     },
     runtime: {
