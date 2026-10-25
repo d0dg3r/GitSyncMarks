@@ -2467,22 +2467,22 @@
     "message": "your-gitea-username"
   },
   "options_none": {
-    "message": "None"
+    "message": "Brak"
   },
   "options_cancel": {
-    "message": "Cancel"
+    "message": "Anuluj"
   },
   "options_parentToolbar": {
-    "message": "Bookmarks Bar"
+    "message": "Pasek zakładek"
   },
   "options_parentOther": {
-    "message": "Other Bookmarks"
+    "message": "Inne zakładki"
   },
   "options_linkwardenSyncDesc": {
-    "message": "Sync your Linkwarden collections directly to your browser's bookmark folders."
+    "message": "Synchronizuj kolekcje Linkwarden bezpośrednio z folderami zakładek przeglądarki."
   },
   "options_linkwardenStatusDisabled": {
-    "message": "Linkwarden integration is disabled. Enable it in the General tab to use sync."
+    "message": "Integracja z Linkwarden jest wyłączona. Włącz ją na karcie Ogólne, aby korzystać z synchronizacji."
   },
   "options_profileDeleteActive": {
     "message": "Switch to another profile before deleting this one."
@@ -2558,5 +2558,62 @@
   },
   "contextMenu_addToOther": {
     "message": "Other Bookmarks"
+  },
+  "popup_confirmPush": {
+    "message": "Nadpisać zdalne repozytorium zakładkami z tej przeglądarki?"
+  },
+  "popup_confirmPull": {
+    "message": "Zastąpić zakładki tej przeglądarki zakładkami ze zdalnego repozytorium?"
+  },
+  "popup_confirmBtn": {
+    "message": "Potwierdź"
+  },
+  "popup_offline": {
+    "message": "Offline — synchronizacja wznowi się po powrocie do sieci."
+  },
+  "popup_tokenExpiring": {
+    "message": "Token wygasa za $1 dni. Utwórz nowy token w ustawieniach."
+  },
+  "popup_tokenExpired": {
+    "message": "Token wygasł. Utwórz nowy token w ustawieniach."
+  },
+  "popup_restoreBackup": {
+    "message": "Przywróć lokalną kopię zapasową"
+  },
+  "popup_confirmRestoreBackup": {
+    "message": "Przywrócić zakładki ze stanu z $1 (sprzed ostatniej synchronizacji lub pobrania)? Obecny stan również zostanie zapisany jako kopia."
+  },
+  "popup_backupRestored": {
+    "message": "Przywrócono lokalną kopię zapasową. Następna synchronizacja potraktuje te zakładki jako zmiany."
+  },
+  "popup_previewPull": {
+    "message": "Pobieranie: w tej przeglądarce zostanie dodanych $1 i usuniętych $2 zakładek. Kontynuować?"
+  },
+  "popup_previewPush": {
+    "message": "Wysyłanie: w repozytorium zostanie dodanych $1 i usuniętych $2 zakładek. Kontynuować?"
+  },
+  "popup_checkingChanges": {
+    "message": "Sprawdzanie zmian…"
+  },
+  "popup_diagnostics": {
+    "message": "Kopiuj diagnostykę"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "Diagnostyka skopiowana do schowka."
+  },
+  "popup_keepLocal": {
+    "message": "Zachowaj wersję z tej przeglądarki"
+  },
+  "popup_keepRemote": {
+    "message": "Zachowaj wersję z repozytorium"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "Ta przeglądarka: $1"
+  },
+  "popup_conflictRepository": {
+    "message": "Repozytorium: $1"
+  },
+  "popup_conflictDeleted": {
+    "message": "(usunięte)"
   }
 }

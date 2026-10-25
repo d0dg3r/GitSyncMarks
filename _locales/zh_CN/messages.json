@@ -2467,22 +2467,22 @@
     "message": "your-gitea-username"
   },
   "options_none": {
-    "message": "None"
+    "message": "无"
   },
   "options_cancel": {
-    "message": "Cancel"
+    "message": "取消"
   },
   "options_parentToolbar": {
-    "message": "Bookmarks Bar"
+    "message": "书签栏"
   },
   "options_parentOther": {
-    "message": "Other Bookmarks"
+    "message": "其他书签"
   },
   "options_linkwardenSyncDesc": {
-    "message": "Sync your Linkwarden collections directly to your browser's bookmark folders."
+    "message": "将 Linkwarden 集合直接同步到浏览器的书签文件夹。"
   },
   "options_linkwardenStatusDisabled": {
-    "message": "Linkwarden integration is disabled. Enable it in the General tab to use sync."
+    "message": "Linkwarden 集成已禁用。请在“常规”标签页中启用后再使用同步。"
   },
   "options_profileDeleteActive": {
     "message": "Switch to another profile before deleting this one."
@@ -2558,5 +2558,62 @@
   },
   "contextMenu_addToOther": {
     "message": "Other Bookmarks"
+  },
+  "popup_confirmPush": {
+    "message": "用此浏览器的书签覆盖远程仓库？"
+  },
+  "popup_confirmPull": {
+    "message": "用远程仓库的书签替换此浏览器的书签？"
+  },
+  "popup_confirmBtn": {
+    "message": "确认"
+  },
+  "popup_offline": {
+    "message": "离线 — 恢复网络连接后将继续同步。"
+  },
+  "popup_tokenExpiring": {
+    "message": "令牌将在 $1 天后过期。请在设置中创建新令牌。"
+  },
+  "popup_tokenExpired": {
+    "message": "令牌已过期。请在设置中创建新令牌。"
+  },
+  "popup_restoreBackup": {
+    "message": "恢复本地备份"
+  },
+  "popup_confirmRestoreBackup": {
+    "message": "恢复到 $1 的书签状态（最近一次同步或拉取之前）吗？当前状态也会保存为备份。"
+  },
+  "popup_backupRestored": {
+    "message": "已恢复本地备份。下次同步会将这些书签视为更改。"
+  },
+  "popup_previewPull": {
+    "message": "拉取：此浏览器将新增 $1 个书签、删除 $2 个书签。继续吗？"
+  },
+  "popup_previewPush": {
+    "message": "推送：仓库将新增 $1 个书签、删除 $2 个书签。继续吗？"
+  },
+  "popup_checkingChanges": {
+    "message": "正在检查更改…"
+  },
+  "popup_diagnostics": {
+    "message": "复制诊断信息"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "诊断信息已复制到剪贴板。"
+  },
+  "popup_keepLocal": {
+    "message": "保留此浏览器的版本"
+  },
+  "popup_keepRemote": {
+    "message": "保留仓库中的版本"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "此浏览器：$1"
+  },
+  "popup_conflictRepository": {
+    "message": "仓库：$1"
+  },
+  "popup_conflictDeleted": {
+    "message": "（已删除）"
   }
 }

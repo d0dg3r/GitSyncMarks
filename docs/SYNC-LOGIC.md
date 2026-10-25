@@ -167,13 +167,18 @@ Deduplication uses the `orderEntryKey` function: bookmark filenames are keyed by
 
 ## Conflict Detection and Resolution
 
-When `mergeDiffs` finds conflicts (same file changed differently on both sides):
+A conflict is one bookmark changed differently on both sides. There are two kinds:
 
-1. `hasConflict` flag is set in `chrome.storage.local`
-2. Popup shows conflict warning with resolution buttons:
-   - **Local → GitHub** (force push) — overwrites remote
-   - **GitHub → Local** (force pull) — overwrites local
-3. The chosen operation clears the conflict flag
+- **Same path:** `mergeDiffs` finds the same file changed differently, for example a case-only title change ("Test" vs "test"), or edited on one side and deleted on the other.
+- **Rename by URL:** a title change gives a bookmark a new file name, because the slug is part of it. `lib/bookmark-renames.js` (`extractRenameConflicts`) detects renames by URL: removed at one path, added at another, with exactly one match. If both sides renamed the same bookmark to different paths, that is **one** conflict (`path` = old path, `localPath`, `remotePath`) instead of two bookmarks. The involved paths are taken out of both diffs before `mergeDiffs`.
+
+On a conflict:
+
+1. The sync state stores `hasConflict: true` and `conflicts: [{ path, local: {title, url}, remote: {title, url} }]` (null = deleted).
+2. The popup lists each conflict with **Keep this browser's version** / **Keep repository version**. A click stores the choice in `conflictChoices[path]` (`resolveConflictFile`) and runs a sync.
+3. The next sync applies the choices (`lib/conflict-choices.js`, `applyConflictChoices`): "local" pushes the local version, "remote" applies the remote version locally. For a rename conflict, the other side's renamed copy is removed. Conflicts without a choice stay open.
+4. A sync without open conflicts clears `hasConflict`, `conflicts` and `conflictChoices`.
+5. **Local → Remote** (force push) and **Remote → Local** (force pull) still resolve everything at once.
 
 ### First Sync Special Cases
 
@@ -199,12 +204,15 @@ Bookmark event → triggerAutoSync() → debouncedSync(5000ms)
 - Default delay: 5 seconds
 - Each new event resets the timer
 - Uses `sync()` (three-way merge), not just push
-- Suppressed for 10 seconds after a pull (to ignore bookmark events from `replaceLocalBookmarks`)
+- Suppressed for 30 seconds after the extension applies remote changes (to ignore the bookmark events its own writes cause)
+- A pending debounce holds a service-worker keep-alive, so a delayed sync is not lost when the browser idles
+- **Edits during a sync:** `noteLocalBookmarkEdit()` counts user edits (outside the suppression window). A sync that sees the count change before it applies remote content stops and returns `sync_remoteChangedRetry`; the debounced follow-up sync picks the edit up.
+- Bulk imports (`onImportBegan/Ended`, Chrome) hold auto-sync until the import ends; reordering (`onChildrenReordered`, not in Firefox) counts as a change
 - **Overlap coalescing**: if the debounce fires while a sync is already running, the run is re-armed (bounded by the max-wait timer) instead of being dropped, so edits made during an in-flight sync are not lost
 
 ### Re-Entrancy Guard
 
-A module-level `isSyncing` boolean prevents concurrent operations. `background.js` also checks `isSyncInProgress()` and `isAutoSyncSuppressed()` before triggering auto-sync.
+A module-level `isSyncing` boolean prevents concurrent operations. `background.js` checks `isAutoSyncSuppressed()` before triggering auto-sync; a running sync does not drop the trigger (the debounce re-arms). The startup migration and `restoreLocalBackup()` take the same lock. Sync-state writes (`setSyncState`) are serialised in a promise queue so overlapping writes cannot roll the stored base back.
 
 ## The `replaceLocalBookmarks` Algorithm
 
@@ -215,11 +223,18 @@ Uses **role-based mapping** for cross-browser compatibility:
 3. For each local root folder, get its role and the corresponding remote data:
    a. Only roles in `SYNC_ROLES` (toolbar, other) are processed; menu and mobile are ignored.
    b. **GitHub Repos preservation**: When `githubReposEnabled` is on and the target role matches `githubReposParent`, and Git data does not contain a folder titled `GitHubRepos (username)` (or any `GitHubRepos (` prefix when username is unknown), the local GitHubRepos folder is preserved and merged into the data before replacement
-   c. Set `applyInProgress` (`profileId`, `commitSha`, `startedAt`) in `chrome.storage.local` before the first `removeTree`
-   d. Remove all existing children (reverse order)
-   e. Recursively recreate from merged remote data; each node is try/caught so one rejected URL does not abort siblings (`replaceLocalBookmarks` returns `{ created, failed[] }`)
-   f. Clear the marker after `saveSyncStateFromMaps`. If the worker dies mid-apply, the next `sync()` / SW init runs `recoverPartialApplyIfNeeded()` → `pull({ fromSync: true })`
-4. Result: All bookmarks appear in both browsers; GitHubRepos folder is kept on pull when not in Git
+   c. Set `applyInProgress` (`profileId`, `commitSha`, `startedAt`) in `chrome.storage.local` before changing anything
+   d. **Reconcile** the folder with the target (`reconcileChildren`), instead of deleting and recreating everything:
+      - Match existing nodes to target nodes, each used once: bookmark with the same URL and title (folder: same title), then same URL (title changed → `bookmarks.update`), then same title (URL changed → `bookmarks.update`)
+      - Remove unmatched existing nodes; create unmatched targets at their index
+      - Put matched nodes in order with `bookmarks.move`, **upward only**: Chrome and Firefox read the index of a downward move inside the same folder differently, an upward move means the same in both
+      - Recurse into matched folders
+      - A node the browser rejects (e.g. a `place:` URL in Chrome) is recorded in `failed[]` and skipped; the rest is still applied
+   e. A role the remote does not provide is left untouched (not emptied)
+   f. The caller clears the marker after `saveSyncStateFromMaps`. If the worker dies mid-apply, the next `sync()` / SW init runs `recoverPartialApplyIfNeeded()` → `pull({ fromSync: true })`
+4. Result: the local tree equals the remote. Unchanged bookmarks keep their IDs and `dateAdded`, so quick folders and other extensions keep working and the browser's own sync sees few changes. `replaceLocalBookmarks` returns `{ created, removed, updated, moved, failed[] }`; the debug log records the counts. Moving a bookmark into another folder is still a remove plus a create.
+
+Before every apply that replaces local content (pull, sync path 8 and the path-9 merge), the local file map is saved as a **local backup** (`lib/local-backup.js`, last three snapshots). The popup's **Restore local backup** applies the newest one and saves the current state first, so a restore can be undone.
 
 ## Stable-Snapshot Guard (Path 8)
 
@@ -227,7 +242,17 @@ When only remote changes exist (path 8), the API response may be cached or event
 
 **Stale-base guard (pending local deletes):** Path 8 only treats a remote-only path as a local deletion when that file's basename is in `syncFlags[profileId].pendingLocalDeletes`. The set is filled from user `bookmarks.onRemoved` (and moves out of a synced root) using `generateFilename(title, url)` on the removed subtree. Events fired while `isSyncInProgress()` or `isAutoSyncSuppressed()` are ignored. A successful `sync()`, `push()`, `pull()`, `pushForProfile()`, `restoreFromCommit()`, or `switchProfile()` clears the set. With an empty pending set, remote additions from other devices are applied locally.
 
+Bookmark events call `noteLocalBookmarkEdit()` (in-memory edit count, see Auto-Sync) and, for removals and moves out of a synced root, `addPendingLocalDeletes()`.
+
 If the remote snapshot is `null` (branch 404/409) and a base still exists, sync returns `sync_branchNotFound` and does not enter path 8/9.
+
+## Remote-Moved Guard (GitHub)
+
+A sync plans its commit against the remote head it fetched. `atomicCommit(…, { expectedParentSha })` refuses to commit if the branch has moved since. In that case it does not re-apply full file contents on top of another device's commit, which would overwrite that device's changes and corrupt the stored base. The error carries `remoteMoved: true`. `sync()` returns `sync_remoteChangedRetry` and schedules a new sync after 3 s, at most three times in a row. Other HTTP 409 errors are reported as errors and do not retry. The Gitea-family and GitLab adapters do not use the guard yet.
+
+## Push/Pull Preview
+
+Before Push or Pull, the popup calls `previewSync()`: it fetches the remote (reusing blobs from the stored base) and counts how many bookmarks each direction would add and remove, compared by URL (`lib/sync-preview.js`). The confirmation shows these counts.
 
 ## Bulk-Deletion Guard
 
@@ -239,6 +264,8 @@ Bidirectional. When sync would delete a large share of bookmark payload files �
 | Remote → local | `remoteBulkDelete` | 8 (apply), 9 |
 
 The popup shows the matching warning and **Local → Remote** / **Remote → Local**. Explicit **Push** and **Pull** are not guarded. Implementation: `lib/deletion-guard.js` plus `blockIfRemoteBulkDeletion()` in `lib/sync-core.js`.
+
+Checks run on sync path 7 (local-only), path 8 (stale-base push), and path 9 (three-way merge, including the remote orphan sweep). In path 9 the check runs **before** the local tree is changed. Before path 9 merge, a local-shrink check compares the browser tree to `lastSyncFiles` (same threshold). A deletion whose URL is written at a new path in the same change set is a move (e.g. a renamed folder) and does not count (`listRealPayloadDeletions`). Implementation: `lib/deletion-guard.js`.
 
 ## Truncated-Tree Guard
 

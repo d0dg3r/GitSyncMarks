@@ -2467,22 +2467,22 @@
     "message": "your-gitea-username"
   },
   "options_none": {
-    "message": "None"
+    "message": "Нет"
   },
   "options_cancel": {
-    "message": "Cancel"
+    "message": "Отмена"
   },
   "options_parentToolbar": {
-    "message": "Bookmarks Bar"
+    "message": "Панель закладок"
   },
   "options_parentOther": {
-    "message": "Other Bookmarks"
+    "message": "Прочие закладки"
   },
   "options_linkwardenSyncDesc": {
-    "message": "Sync your Linkwarden collections directly to your browser's bookmark folders."
+    "message": "Синхронизируйте коллекции Linkwarden непосредственно с папками закладок браузера."
   },
   "options_linkwardenStatusDisabled": {
-    "message": "Linkwarden integration is disabled. Enable it in the General tab to use sync."
+    "message": "Интеграция с Linkwarden отключена. Включите её на вкладке «Общие», чтобы использовать синхронизацию."
   },
   "options_profileDeleteActive": {
     "message": "Switch to another profile before deleting this one."
@@ -2558,5 +2558,62 @@
   },
   "contextMenu_addToOther": {
     "message": "Other Bookmarks"
+  },
+  "popup_confirmPush": {
+    "message": "Перезаписать удалённый репозиторий закладками этого браузера?"
+  },
+  "popup_confirmPull": {
+    "message": "Заменить закладки этого браузера закладками из удалённого репозитория?"
+  },
+  "popup_confirmBtn": {
+    "message": "Подтвердить"
+  },
+  "popup_offline": {
+    "message": "Нет сети — синхронизация возобновится при подключении."
+  },
+  "popup_tokenExpiring": {
+    "message": "Токен истекает через $1 дн. Создайте новый токен в настройках."
+  },
+  "popup_tokenExpired": {
+    "message": "Срок действия токена истёк. Создайте новый токен в настройках."
+  },
+  "popup_restoreBackup": {
+    "message": "Восстановить локальную копию"
+  },
+  "popup_confirmRestoreBackup": {
+    "message": "Восстановить закладки в состоянии на $1 (до последней синхронизации или загрузки)? Текущее состояние тоже сохранится как копия."
+  },
+  "popup_backupRestored": {
+    "message": "Локальная копия восстановлена. Следующая синхронизация будет считать эти закладки изменениями."
+  },
+  "popup_previewPull": {
+    "message": "Загрузка: в этом браузере будет добавлено закладок: $1, удалено: $2. Продолжить?"
+  },
+  "popup_previewPush": {
+    "message": "Отправка: в репозитории будет добавлено закладок: $1, удалено: $2. Продолжить?"
+  },
+  "popup_checkingChanges": {
+    "message": "Проверка изменений…"
+  },
+  "popup_diagnostics": {
+    "message": "Скопировать диагностику"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "Диагностика скопирована в буфер обмена."
+  },
+  "popup_keepLocal": {
+    "message": "Оставить версию этого браузера"
+  },
+  "popup_keepRemote": {
+    "message": "Оставить версию из репозитория"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "Этот браузер: $1"
+  },
+  "popup_conflictRepository": {
+    "message": "Репозиторий: $1"
+  },
+  "popup_conflictDeleted": {
+    "message": "(удалено)"
   }
 }

@@ -114,6 +114,33 @@ body {
   background: var(--color-error-bg);
 }
 
+.conflict-files {
+  list-style: none;
+  margin: 8px 0;
+  padding: 0;
+}
+
+.conflict-file {
+  margin-bottom: 10px;
+}
+
+.conflict-file-title {
+  font-weight: 600;
+}
+
+.conflict-file-versions {
+  font-size: var(--ui-font-sm);
+  opacity: 0.8;
+  word-break: break-all;
+  margin: 2px 0 6px;
+}
+
+.status-area.status-warning {
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  background: var(--color-warning-bg);
+}
+
 .status-area.status-loading {
   opacity: 0.85;
 }

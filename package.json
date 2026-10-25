@@ -1,6 +1,6 @@
 {
   "name": "gitsyncmarks",
-  "version": "3.0.10",
+  "version": "3.1.0",
   "private": true,
   "description": "Bookmark sync to your Git repository. Linkwarden, Smart Search, Companion App. Direct, secure, private.",
   "engines": {
@@ -14,6 +14,7 @@
     "generate-screenshots": "node scripts/generate-screenshots.js",
     "screenshots": "npm run build:chrome && npm run generate-screenshots",
     "lint": "npx eslint .",
+    "check:i18n": "node scripts/check-i18n.mjs",
     "lint:amo": "addons-linter build/firefox --metadata-json manifest.firefox.json",
     "typecheck": "tsc -p jsconfig.json --noEmit",
     "test:unit": "node --test test/*.test.js",
@@ -29,6 +30,7 @@
     "test:gitea-benchmark": "node scripts/benchmark-gitea-sync.js",
     "test:gitea-benchmark:estimate": "node scripts/benchmark-gitea-sync.js --estimate-only",
     "verify-test-repo": "node scripts/verify-test-repo.js",
+    "test:settings-file": "node scripts/make-test-settings.mjs",
     "website:preview": "bash scripts/prepare-website.sh && npx --yes serve _site -p 3000"
   },
   "devDependencies": {
@@ -47,10 +49,13 @@
     "typescript": "~6.0.3"
   },
   "overrides": {
-    "fast-uri": "3.1.8",
-    "undici": "7.29.0",
+    "fast-uri": "3.1.9",
+    "undici": "7.30.1",
     "js-yaml": "4.3.2",
-    "brace-expansion@1": "1.1.18",
-    "brace-expansion@5": "5.0.9"
+    "brace-expansion@1": "1.1.21",
+    "brace-expansion@5": "5.0.12",
+    "source-map-js": "1.2.2",
+    "@humanfs/node": "0.16.8",
+    "image-size": "2.0.4"
   }
 }

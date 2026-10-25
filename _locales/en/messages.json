@@ -2542,5 +2542,62 @@
   },
   "options_linkwardenHostPermissionDenied": {
     "message": "Host permission denied. Please check your browser address bar/popup blocker."
+  },
+  "popup_confirmPush": {
+    "message": "Overwrite the remote repository with this browser's bookmarks?"
+  },
+  "popup_confirmPull": {
+    "message": "Replace this browser's bookmarks with the remote repository's?"
+  },
+  "popup_confirmBtn": {
+    "message": "Confirm"
+  },
+  "popup_offline": {
+    "message": "Offline — sync resumes when you are back online."
+  },
+  "popup_tokenExpiring": {
+    "message": "Token expires in $1 day(s). Create a new token in Settings."
+  },
+  "popup_tokenExpired": {
+    "message": "Token has expired. Create a new token in Settings."
+  },
+  "popup_restoreBackup": {
+    "message": "Restore local backup"
+  },
+  "popup_confirmRestoreBackup": {
+    "message": "Restore the bookmarks from $1 (before the last sync or pull)? The current state is kept as a backup too."
+  },
+  "popup_backupRestored": {
+    "message": "Local backup restored. The next sync treats these bookmarks as changes."
+  },
+  "popup_previewPull": {
+    "message": "Pull: $1 bookmark(s) would be added and $2 removed in this browser. Continue?"
+  },
+  "popup_previewPush": {
+    "message": "Push: $1 bookmark(s) would be added and $2 removed in the repository. Continue?"
+  },
+  "popup_checkingChanges": {
+    "message": "Checking changes…"
+  },
+  "popup_diagnostics": {
+    "message": "Copy diagnostics"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "Diagnostics copied to the clipboard."
+  },
+  "popup_keepLocal": {
+    "message": "Keep this browser's version"
+  },
+  "popup_keepRemote": {
+    "message": "Keep repository version"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "This browser: $1"
+  },
+  "popup_conflictRepository": {
+    "message": "Repository: $1"
+  },
+  "popup_conflictDeleted": {
+    "message": "(deleted)"
   }
 }

@@ -6,7 +6,11 @@ Contributions and ideas welcome — open an issue or pull request.
 
 ---
 
-## Planned for v2.6.0 (*Link*) — Linkwarden Integration
+## Linkwarden Integration — shipped (2.x)
+
+Context menu, options tab, tags and screenshots shipped with the Linkwarden integration. Remaining reference: [docs/IDEAS-LINKWARDEN.md](docs/IDEAS-LINKWARDEN.md).
+
+<!-- Original plan kept below for reference -->
 
 - **Linkwarden context menu** — Save current page or right-clicked link directly to Linkwarden; "Save with screenshot" captures visible viewport and uploads to link archive
 - **Options tab: Linkwarden** — Instance URL, API key, default collection, default tags; test connection; enable/disable
@@ -41,6 +45,7 @@ Outcome of the 2026 code analysis. Tiers 1–3 (correctness, performance, qualit
 
 ## Recently completed
 
+- **3.1.0 (unreleased)** — Sync integrity: no blind overwrite on concurrent remote changes, edits made during a sync are kept, bulk-delete guard recognises moved folders; local backups with one-click restore; push/pull preview with counts; offline state and GitHub token-expiry warning; diagnostics copy; settings and Bitwarden passwords encrypted at rest; export format v2 (600k PBKDF2 iterations); inline confirmations for destructive popup actions; i18n key check in CI.
 - **v2.5.0** *Cortana* — Context menu (Add to Toolbar/Other, Sync Now, Switch Profile, Copy Favicon URL, Download Favicon); profile switching via context menu; favicon tools (copy URL / download PNG); 8 new languages (PT-BR, IT, JA, ZH-CN, KO, RU, TR, PL — 12 total); dynamic keyboard shortcuts; factory reset; folder browser for path selection; CI screenshot workflow; feature lists reordered; "No middleman" replaces "No server needed"
 - **v2.4.0** *R2-D2* — Settings sync to Git (encrypted `settings.enc`); RSS feed export (`feed.xml`); dashy-conf.yml (Dashy dashboard); generated files mode selector (Off/Manual/Auto per file); options reorganized to 5 tabs with sub-tabs (GitHub, Sync, Files, Help, About); Debug Log moved to Sync tab; backlog voting; 6 store screenshots per language
 - **v2.3.0** *Data* — Encrypted settings export (password-protected .enc); plain JSON and encrypted supported; import with password prompt; Sync tab shortened to "Sync" in all languages; browser import files (`bookmarks.html`)
@@ -63,8 +68,9 @@ Outcome of the 2026 code analysis. Tiers 1–3 (correctness, performance, qualit
 | **Tab-Profile** | Named sets of URLs (from bookmark folder, current tabs, or manual). Open in current window (replace/append) or new window. Stored in repo (`tab-profiles.json`). See [docs/IDEAS-TAB-PROFILES.md](docs/IDEAS-TAB-PROFILES.md). | Large |
 | **Additional sync sources (read-only)** | Add extra folders from centrally maintained repos (e.g. team bookmarks). Your personal bookmarks stay in your repo; the shared folder is merged in read-only. Assemble bookmarks from multiple sources in one place | Medium |
 | **Selective folder sync** | Sync only specific bookmark folders instead of all | Medium |
-| **Sync history / rollback** | Restore previous sync states (requires storing commit history) | Medium |
-| **Conflict resolution UI** | Diff view for merge conflicts instead of force push/pull only | Medium |
+| **Sync history / rollback** | Shipped in part: sync history and undo of the last remote change exist; local backups (last three) restore the bookmarks before the last pull or merge. Restoring older commits remains open. | Done (partly) |
+| **Conflict resolution UI** | Shipped in part (3.1.0): per-file "keep this browser / keep repository" in the popup. Open: a diff view of the two versions. | Small |
+| **Incremental apply** | Shipped in 3.1.0 (unreleased): remote changes are applied as create/update/move/remove; unchanged bookmarks keep their IDs. Open: moving a bookmark between folders still removes and recreates it; browser test pending. | Done (partly) |
 | **Automation: Bulk add from URLs** | Paste list of URLs → generate multiple JSON files or script for batch add | Medium |
 | **AI + Bookmarks** | User enters API token (OpenAI, Anthropic, Gemini, Groq, Qwen). Ideas: auto-categorize, semantic search, summaries, duplicate detection, title improvement, virtual folders, smart cleanup. Privacy/cost disclaimer; optional AI tab in options. | Large |
 | **Context Menu: Add to Folder** | Dynamic "Add to…" submenu that lists the user's actual bookmark folders (like the profile switcher does with profiles). Right-click a page or link and pick the exact target folder instead of only "Toolbar" / "Other Bookmarks". Build nested folder submenus recursively via `chrome.bookmarks.getTree()` with `parentId` chaining. Refresh the submenu when bookmark folders change (`chrome.bookmarks.onCreated/onRemoved/onMoved`). | Medium |

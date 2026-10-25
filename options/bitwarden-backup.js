@@ -6,6 +6,7 @@ import { getMessage } from '../lib/i18n.js';
 import { downloadFile, showPasswordDialog } from './settings.js';
 import { STORAGE_KEYS, bitwardenBackupPasswordKey } from '../lib/storage-keys.js';
 import { getActiveProfileId } from '../lib/profile-manager.js';
+import { encryptToken, decryptToken } from '../lib/crypto.js';
 import { DEFAULT_BITWARDEN_BACKUP_PATH } from '../lib/bitwarden-backup.js';
 
 const fileInput = document.getElementById('bitwarden-backup-file');
@@ -31,14 +32,16 @@ let pendingDeletePath = null;
 async function getStoredBackupPassword(profileId) {
   const key = bitwardenBackupPasswordKey(profileId);
   const local = await chrome.storage.local.get({ [key]: '' });
-  return local[key] || '';
+  return decryptToken(local[key] || '');
 }
 
 async function migrateLegacyBackupPassword(profileId) {
   const key = bitwardenBackupPasswordKey(profileId);
   const local = await chrome.storage.local.get({ [key]: '', bitwardenBackupPassword: '' });
   if (!local[key] && local.bitwardenBackupPassword) {
-    await chrome.storage.local.set({ [key]: local.bitwardenBackupPassword });
+    // Re-store the legacy plain-text value encrypted; the legacy key is removed afterwards.
+    await chrome.storage.local.set({ [key]: await encryptToken(local.bitwardenBackupPassword) });
+    await chrome.storage.local.remove('bitwardenBackupPassword');
   }
 }
 

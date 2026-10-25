@@ -7,6 +7,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Upgrade note
+- **Update every device before syncing settings or Bitwarden backups.** `settings.enc` and Bitwarden backups are now written in the encrypted format v2 (PBKDF2-SHA256, 600,000 iterations). Version 3.0.10 and older cannot read v2: on a device that is not updated yet, settings sync and backup restore fail until it is updated. This version still reads v1 files.
+
+### Fixed
+- **Sync no longer overwrites concurrent changes**: a commit is refused (and the sync re-runs) when the remote branch moved after the sync planned it, instead of re-applying full file contents on top of another device's commit (GitHub).
+- **Local edits made during a sync are kept**: a sync that sees a bookmark edit mid-run retries before replacing the local tree; auto-sync is no longer skipped while a sync runs, so such edits schedule a follow-up sync.
+- **Pull does not wipe local bookmarks** when the remote holds only metadata, or lacks a root folder.
+- **Bookmarks with colliding file names are kept** (numeric suffix) instead of being dropped; affects empty and non-Latin titles.
+- Bulk-delete guard runs before the local tree is replaced during a merge.
+- **Password-triggered settings push runs a sync** instead of a plain push, so it no longer overwrites files another device added.
+- **Periodic alarm is no longer reset** on every service-worker start.
+- **Pending auto-sync debounce keeps the service worker alive**, so a delayed sync is not lost when the browser idles.
+- **Bulk imports and reorders** are handled: a bulk import triggers one sync at its end; reordering bookmarks syncs.
+- **Startup migration runs under the sync lock** and can no longer overlap a sync.
+- **GitLab and Gitea honour short rate-limit waits** (Retry-After) like GitHub.
+- Pull reuses unchanged blobs from the stored base, so large repositories need fewer requests.
+- Runtime messages are accepted only from the extension itself; a failing sync always answers the caller.
+- **Popup asks before Push, Pull and profile switch** (inline confirmation, respects "switch without confirmation"). Sync Now still runs directly.
+- **Popup updates live** while a background sync changes the state, and shows "Sync already in progress" as information, not as an error.
+- **History Undo asks for a second click**, like row restore.
+- **Context menu** shows the correct "Bookmarks Bar" / "Other Bookmarks" label (it showed a raw message key).
+- Missing UI texts (None, Cancel, Linkwarden hints, Bookmarks Bar / Other Bookmarks) are translated in all locales.
+- **Popup shows when you are offline** and disables the sync buttons until the connection is back.
+- **Popup warns when a GitHub token expires within 14 days** (or has expired), using GitHub's expiry header.
+- **Firefox AMO lint runs in CI.** Bookmark reorder listener is optional, so Firefox no longer fails to load it.
+- **Push and pull preview the changes**: the confirmation says how many bookmarks would be added and removed (compared by URL, so moves are not counted as changes). Costs one extra read of the remote before each push or pull.
+- **Moved folders do not trigger the bulk-delete guard**: a bookmark whose URL is written at a new path in the same sync counts as a move, not a deletion.
+- **Diagnostics**: "Copy diagnostics" in the popup footer copies a plain-text summary (versions, last sync, error, token expiry, mirrors, backup). It contains no tokens and no repository names.
+- **Pull and sync no longer delete and recreate all bookmarks.** The local tree is reconciled: unchanged bookmarks are left alone and keep their IDs (quick folders and other extensions keep working), renamed ones are updated in place, reordering uses moves. Only real additions and removals create or delete bookmarks. Moving a bookmark into another folder is still a remove plus a create.
+- A retry after "remote moved during sync" happens only for that case (not for every HTTP 409) and at most three times in a row.
+- The push/pull preview reuses unchanged files from the stored base instead of downloading every bookmark.
+- The popup reads only backup metadata; the restore question names the backup's date; the sync buttons stay locked while a preview loads.
+- Diagnostics number mirrors instead of printing their names.
+- **Renamed bookmarks conflict by URL**: when the same bookmark (same URL) got different new titles on both sides, sync reports one conflict instead of keeping two bookmarks. Choosing one side removes the other side's copy.
+- **Per-file conflict choice**: when the same bookmark changed on both sides, the popup lists it with "Keep this browser's version" or "Keep repository version". The choice is applied on the next sync; other conflicts stay open.
+- **Local backups before a remote is applied**: the last three local snapshots are kept (pull, sync merge, remote-only sync). The popup offers "Restore local backup" to undo the last replace; the state being replaced is kept as well.
+
+### Security
+- Dependency overrides updated (fast-uri, undici, js-yaml, brace-expansion, source-map-js, @humanfs/node, image-size) and sharp bumped; resolves the open Dependabot alerts. `npm audit`: 0 vulnerabilities.
+- **Settings-sync and Bitwarden backup passwords are encrypted at rest** with the device key (they were plain text in local storage). Existing values are still read.
+- **Password-encrypted exports use format v2**: PBKDF2-SHA256 with 600,000 iterations, and the iteration count is stored in the file. v1 files (100,000 iterations) still import.
+- **Plain-JSON settings export contains no tokens.** Use the password-encrypted export to move PATs between devices.
+- **`http://` server URLs are upgraded to `https://`** for public hosts, so a PAT is never sent in clear text. Loopback, private-network and `.lan`/`.local` hosts keep `http://`.
+- **Debug log masks tokens** (GitHub, GitLab, bearer tokens and `token=`/`password=` values).
+
 ## [3.0.10] - 2026-09-18
 
 ### Fixed

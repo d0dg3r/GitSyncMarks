@@ -2467,22 +2467,22 @@
     "message": "your-gitea-username"
   },
   "options_none": {
-    "message": "None"
+    "message": "없음"
   },
   "options_cancel": {
-    "message": "Cancel"
+    "message": "취소"
   },
   "options_parentToolbar": {
-    "message": "Bookmarks Bar"
+    "message": "북마크 막대"
   },
   "options_parentOther": {
-    "message": "Other Bookmarks"
+    "message": "기타 북마크"
   },
   "options_linkwardenSyncDesc": {
-    "message": "Sync your Linkwarden collections directly to your browser's bookmark folders."
+    "message": "Linkwarden 컬렉션을 브라우저의 북마크 폴더와 직접 동기화합니다."
   },
   "options_linkwardenStatusDisabled": {
-    "message": "Linkwarden integration is disabled. Enable it in the General tab to use sync."
+    "message": "Linkwarden 연동이 비활성화되어 있습니다. 동기화를 사용하려면 '일반' 탭에서 활성화하세요."
   },
   "options_profileDeleteActive": {
     "message": "Switch to another profile before deleting this one."
@@ -2558,5 +2558,62 @@
   },
   "contextMenu_addToOther": {
     "message": "Other Bookmarks"
+  },
+  "popup_confirmPush": {
+    "message": "이 브라우저의 북마크로 원격 저장소를 덮어쓸까요?"
+  },
+  "popup_confirmPull": {
+    "message": "이 브라우저의 북마크를 원격 저장소의 북마크로 바꿀까요?"
+  },
+  "popup_confirmBtn": {
+    "message": "확인"
+  },
+  "popup_offline": {
+    "message": "오프라인입니다. 다시 온라인이 되면 동기화가 재개됩니다."
+  },
+  "popup_tokenExpiring": {
+    "message": "토큰이 $1일 후 만료됩니다. 설정에서 새 토큰을 만드세요."
+  },
+  "popup_tokenExpired": {
+    "message": "토큰이 만료되었습니다. 설정에서 새 토큰을 만드세요."
+  },
+  "popup_restoreBackup": {
+    "message": "로컬 백업 복원"
+  },
+  "popup_confirmRestoreBackup": {
+    "message": "$1 시점(마지막 동기화 또는 가져오기 이전)의 북마크를 복원할까요? 현재 상태도 백업으로 보관됩니다."
+  },
+  "popup_backupRestored": {
+    "message": "로컬 백업을 복원했습니다. 다음 동기화에서 이 북마크는 변경 사항으로 처리됩니다."
+  },
+  "popup_previewPull": {
+    "message": "가져오기: 이 브라우저에서 북마크 $1개가 추가되고 $2개가 삭제됩니다. 계속할까요?"
+  },
+  "popup_previewPush": {
+    "message": "푸시: 저장소에서 북마크 $1개가 추가되고 $2개가 삭제됩니다. 계속할까요?"
+  },
+  "popup_checkingChanges": {
+    "message": "변경 사항 확인 중…"
+  },
+  "popup_diagnostics": {
+    "message": "진단 정보 복사"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "진단 정보를 클립보드에 복사했습니다."
+  },
+  "popup_keepLocal": {
+    "message": "이 브라우저의 버전 유지"
+  },
+  "popup_keepRemote": {
+    "message": "저장소 버전 유지"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "이 브라우저: $1"
+  },
+  "popup_conflictRepository": {
+    "message": "저장소: $1"
+  },
+  "popup_conflictDeleted": {
+    "message": "(삭제됨)"
   }
 }

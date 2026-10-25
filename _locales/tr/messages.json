@@ -2467,22 +2467,22 @@
     "message": "your-gitea-username"
   },
   "options_none": {
-    "message": "None"
+    "message": "Yok"
   },
   "options_cancel": {
-    "message": "Cancel"
+    "message": "İptal"
   },
   "options_parentToolbar": {
-    "message": "Bookmarks Bar"
+    "message": "Yer imleri çubuğu"
   },
   "options_parentOther": {
-    "message": "Other Bookmarks"
+    "message": "Diğer yer imleri"
   },
   "options_linkwardenSyncDesc": {
-    "message": "Sync your Linkwarden collections directly to your browser's bookmark folders."
+    "message": "Linkwarden koleksiyonlarınızı doğrudan tarayıcının yer imi klasörleriyle senkronize edin."
   },
   "options_linkwardenStatusDisabled": {
-    "message": "Linkwarden integration is disabled. Enable it in the General tab to use sync."
+    "message": "Linkwarden entegrasyonu devre dışı. Senkronizasyonu kullanmak için Genel sekmesinden etkinleştirin."
   },
   "options_profileDeleteActive": {
     "message": "Switch to another profile before deleting this one."
@@ -2558,5 +2558,62 @@
   },
   "contextMenu_addToOther": {
     "message": "Other Bookmarks"
+  },
+  "popup_confirmPush": {
+    "message": "Uzak depo bu tarayıcının yer imleriyle üzerine yazılsın mı?"
+  },
+  "popup_confirmPull": {
+    "message": "Bu tarayıcının yer imleri uzak depodakilerle değiştirilsin mi?"
+  },
+  "popup_confirmBtn": {
+    "message": "Onayla"
+  },
+  "popup_offline": {
+    "message": "Çevrimdışı — çevrimiçi olduğunuzda senkronizasyon devam eder."
+  },
+  "popup_tokenExpiring": {
+    "message": "Token $1 gün içinde sona erecek. Ayarlardan yeni bir token oluşturun."
+  },
+  "popup_tokenExpired": {
+    "message": "Tokenin süresi doldu. Ayarlardan yeni bir token oluşturun."
+  },
+  "popup_restoreBackup": {
+    "message": "Yerel yedeği geri yükle"
+  },
+  "popup_confirmRestoreBackup": {
+    "message": "Yer imleri $1 tarihli duruma (son senkronizasyon veya çekme öncesi) geri yüklensin mi? Mevcut durum da yedek olarak saklanır."
+  },
+  "popup_backupRestored": {
+    "message": "Yerel yedek geri yüklendi. Sonraki senkronizasyon bu yer imlerini değişiklik olarak ele alır."
+  },
+  "popup_previewPull": {
+    "message": "Çekme: bu tarayıcıda $1 yer imi eklenecek ve $2 yer imi kaldırılacak. Devam edilsin mi?"
+  },
+  "popup_previewPush": {
+    "message": "Gönderme: depoda $1 yer imi eklenecek ve $2 yer imi kaldırılacak. Devam edilsin mi?"
+  },
+  "popup_checkingChanges": {
+    "message": "Değişiklikler kontrol ediliyor…"
+  },
+  "popup_diagnostics": {
+    "message": "Tanılamayı kopyala"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "Tanılama panoya kopyalandı."
+  },
+  "popup_keepLocal": {
+    "message": "Bu tarayıcının sürümünü tut"
+  },
+  "popup_keepRemote": {
+    "message": "Depodaki sürümü tut"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "Bu tarayıcı: $1"
+  },
+  "popup_conflictRepository": {
+    "message": "Depo: $1"
+  },
+  "popup_conflictDeleted": {
+    "message": "(silindi)"
   }
 }

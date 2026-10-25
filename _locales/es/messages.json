@@ -2467,22 +2467,22 @@
     "message": "your-gitea-username"
   },
   "options_none": {
-    "message": "None"
+    "message": "Ninguno"
   },
   "options_cancel": {
-    "message": "Cancel"
+    "message": "Cancelar"
   },
   "options_parentToolbar": {
-    "message": "Bookmarks Bar"
+    "message": "Barra de marcadores"
   },
   "options_parentOther": {
-    "message": "Other Bookmarks"
+    "message": "Otros marcadores"
   },
   "options_linkwardenSyncDesc": {
-    "message": "Sync your Linkwarden collections directly to your browser's bookmark folders."
+    "message": "Sincroniza tus colecciones de Linkwarden directamente con las carpetas de marcadores de tu navegador."
   },
   "options_linkwardenStatusDisabled": {
-    "message": "Linkwarden integration is disabled. Enable it in the General tab to use sync."
+    "message": "La integración de Linkwarden está desactivada. Actívala en la pestaña General para usarla."
   },
   "options_profileDeleteActive": {
     "message": "Switch to another profile before deleting this one."
@@ -2558,5 +2558,62 @@
   },
   "contextMenu_addToOther": {
     "message": "Other Bookmarks"
+  },
+  "popup_confirmPush": {
+    "message": "¿Sobrescribir el repositorio remoto con los marcadores de este navegador?"
+  },
+  "popup_confirmPull": {
+    "message": "¿Reemplazar los marcadores de este navegador con los del repositorio remoto?"
+  },
+  "popup_confirmBtn": {
+    "message": "Confirmar"
+  },
+  "popup_offline": {
+    "message": "Sin conexión — la sincronización continúa cuando vuelvas a estar en línea."
+  },
+  "popup_tokenExpiring": {
+    "message": "El token caduca en $1 día(s). Crea un token nuevo en Ajustes."
+  },
+  "popup_tokenExpired": {
+    "message": "El token ha caducado. Crea un token nuevo en Ajustes."
+  },
+  "popup_restoreBackup": {
+    "message": "Restaurar copia local"
+  },
+  "popup_confirmRestoreBackup": {
+    "message": "¿Restaurar los marcadores del estado de $1 (antes de la última sincronización o descarga)? El estado actual también se guarda como copia."
+  },
+  "popup_backupRestored": {
+    "message": "Copia local restaurada. La próxima sincronización trata estos marcadores como cambios."
+  },
+  "popup_previewPull": {
+    "message": "Descarga: se añadirían $1 marcador(es) y se quitarían $2 en este navegador. ¿Continuar?"
+  },
+  "popup_previewPush": {
+    "message": "Subida: se añadirían $1 marcador(es) y se quitarían $2 en el repositorio. ¿Continuar?"
+  },
+  "popup_checkingChanges": {
+    "message": "Comprobando cambios…"
+  },
+  "popup_diagnostics": {
+    "message": "Copiar diagnóstico"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "Diagnóstico copiado al portapapeles."
+  },
+  "popup_keepLocal": {
+    "message": "Mantener la versión de este navegador"
+  },
+  "popup_keepRemote": {
+    "message": "Mantener la versión del repositorio"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "Este navegador: $1"
+  },
+  "popup_conflictRepository": {
+    "message": "Repositorio: $1"
+  },
+  "popup_conflictDeleted": {
+    "message": "(eliminado)"
   }
 }

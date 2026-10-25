@@ -13,7 +13,7 @@
   <div class="popup">
     <header class="popup-header">
       <div class="popup-header-left">
-        <img src="icons/icon48-plain.png" alt="Icon" class="popup-icon">
+        <img src="icons/icon48-plain.png" alt="" class="popup-icon">
         <h1>GitSyncMarks</h1>
       </div>
       <select id="profile-select" class="profile-select header-profile" style="display: none;"></select>
@@ -39,6 +39,8 @@
           <span id="last-data-change" class="status-meta-item" style="display: none;"></span>
           <span id="last-commit-wrap" class="status-meta-item last-commit-wrap" style="display: none;"></span>
           <span id="mirror-status" class="status-meta-item" style="display: none;"></span>
+          <span id="token-expiry" class="status-meta-item" style="display: none;"></span>
+          <span id="offline-status" class="status-meta-item" style="display: none;" data-i18n="popup_offline">Offline — sync resumes when you are back online.</span>
         </div>
       </div>
 
@@ -49,9 +51,19 @@
           <strong data-i18n="popup_conflictDetected">Conflict detected</strong>
         </div>
         <p id="conflict-description" data-i18n="popup_conflictDescription">Both local and remote bookmarks were modified. Choose a resolution:</p>
+        <ul id="conflict-files" class="conflict-files"></ul>
         <div class="conflict-actions">
           <button id="force-push-btn" class="btn btn-small btn-warning" data-i18n="popup_localToRemote">Local → Remote</button>
           <button id="force-pull-btn" class="btn btn-small btn-secondary" data-i18n="popup_remoteToLocal">Remote → Local</button>
+        </div>
+      </div>
+
+      <!-- Inline confirmation before an overwrite or a profile switch -->
+      <div id="confirm-box" class="conflict-box panel-compact" role="alertdialog" aria-labelledby="confirm-text" style="display: none;">
+        <p id="confirm-text"></p>
+        <div class="conflict-actions">
+          <button id="confirm-yes-btn" class="btn btn-small btn-warning" data-i18n="popup_confirmBtn">Confirm</button>
+          <button id="confirm-no-btn" class="btn btn-small btn-secondary" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
         </div>
       </div>
 
@@ -63,6 +75,7 @@
             <span id="sync-text" data-i18n="popup_syncNow">Sync Now</span>
           </span>
         </button>
+        <button id="restore-backup-btn" class="btn btn-secondary btn-full" style="display: none;" data-i18n="popup_restoreBackup">Restore local backup</button>
         <div class="action-row">
           <button id="push-btn" class="btn btn-secondary btn-half" data-i18n="popup_pushUp">Push ↑</button>
           <button id="pull-btn" class="btn btn-secondary btn-half" data-i18n="popup_pullDown">Pull ↓</button>
@@ -83,6 +96,8 @@
       <a href="https://gitsyncmarks.com" target="_blank" rel="noopener" data-i18n="popup_website">Website</a>
       <span class="footer-sep">·</span>
       <a href="https://github.com/d0dg3r/GitSyncMarks" target="_blank" rel="noopener">GitHub</a>
+      <span class="footer-sep">·</span>
+      <a id="diagnostics-link" href="#" data-i18n="popup_diagnostics">Copy diagnostics</a>
       <span class="footer-sep">·</span>
       <a href="https://github.com/d0dg3r/GitSyncMarks/issues" target="_blank" rel="noopener" data-i18n="popup_reportIssue">Report Issue</a>
     </footer>

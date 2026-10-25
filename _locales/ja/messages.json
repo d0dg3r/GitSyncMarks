@@ -2467,22 +2467,22 @@
     "message": "your-gitea-username"
   },
   "options_none": {
-    "message": "None"
+    "message": "なし"
   },
   "options_cancel": {
-    "message": "Cancel"
+    "message": "キャンセル"
   },
   "options_parentToolbar": {
-    "message": "Bookmarks Bar"
+    "message": "ブックマークバー"
   },
   "options_parentOther": {
-    "message": "Other Bookmarks"
+    "message": "その他のブックマーク"
   },
   "options_linkwardenSyncDesc": {
-    "message": "Sync your Linkwarden collections directly to your browser's bookmark folders."
+    "message": "Linkwarden のコレクションをブラウザーのブックマークフォルダーに直接同期します。"
   },
   "options_linkwardenStatusDisabled": {
-    "message": "Linkwarden integration is disabled. Enable it in the General tab to use sync."
+    "message": "Linkwarden 連携は無効です。「一般」タブで有効にしてください。"
   },
   "options_profileDeleteActive": {
     "message": "Switch to another profile before deleting this one."
@@ -2558,5 +2558,62 @@
   },
   "contextMenu_addToOther": {
     "message": "Other Bookmarks"
+  },
+  "popup_confirmPush": {
+    "message": "このブラウザーのブックマークでリモートリポジトリを上書きしますか？"
+  },
+  "popup_confirmPull": {
+    "message": "このブラウザーのブックマークをリモートリポジトリの内容で置き換えますか？"
+  },
+  "popup_confirmBtn": {
+    "message": "確認"
+  },
+  "popup_offline": {
+    "message": "オフラインです。オンラインに戻ると同期を再開します。"
+  },
+  "popup_tokenExpiring": {
+    "message": "トークンは $1 日後に期限切れになります。設定で新しいトークンを作成してください。"
+  },
+  "popup_tokenExpired": {
+    "message": "トークンの期限が切れています。設定で新しいトークンを作成してください。"
+  },
+  "popup_restoreBackup": {
+    "message": "ローカルバックアップを復元"
+  },
+  "popup_confirmRestoreBackup": {
+    "message": "$1 時点（直前の同期または取得より前）のブックマークを復元しますか？現在の状態もバックアップとして保存されます。"
+  },
+  "popup_backupRestored": {
+    "message": "ローカルバックアップを復元しました。次の同期では、これらのブックマークを変更として扱います。"
+  },
+  "popup_previewPull": {
+    "message": "取得: このブラウザーでブックマークが $1 件追加され、$2 件削除されます。続けますか？"
+  },
+  "popup_previewPush": {
+    "message": "プッシュ: リポジトリでブックマークが $1 件追加され、$2 件削除されます。続けますか？"
+  },
+  "popup_checkingChanges": {
+    "message": "変更を確認中…"
+  },
+  "popup_diagnostics": {
+    "message": "診断情報をコピー"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "診断情報をクリップボードにコピーしました。"
+  },
+  "popup_keepLocal": {
+    "message": "このブラウザーの版を残す"
+  },
+  "popup_keepRemote": {
+    "message": "リポジトリの版を残す"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "このブラウザー: $1"
+  },
+  "popup_conflictRepository": {
+    "message": "リポジトリ: $1"
+  },
+  "popup_conflictDeleted": {
+    "message": "(削除済み)"
   }
 }

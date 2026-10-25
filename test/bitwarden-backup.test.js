@@ -80,7 +80,7 @@ describe('bitwarden backup helpers', () => {
   it('re-encrypt roundtrip via prepareBackupPayload', async () => {
     const { content, mode } = await prepareBackupPayload(ENCRYPTED_FIXTURE, true, 'wrap-secret');
     assert.equal(mode, 'gitsyncmarks');
-    assert.ok(content.startsWith('gitsyncmarks-enc:v1'));
+    assert.ok(content.startsWith('gitsyncmarks-enc:v2'));
     const plain = await decryptWithPassword(content, 'wrap-secret');
     assert.equal(plain, ENCRYPTED_FIXTURE);
   });

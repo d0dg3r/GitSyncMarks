@@ -32,11 +32,17 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: i18n keys used in code exist in en
+        run: npm run check:i18n
+
       - name: Typecheck (checkJs)
         run: npm run typecheck
 
       - name: Unit tests
         run: npm run test:unit
+
+      - name: Firefox AMO lint (addons-linter)
+        run: npm run build:firefox && npm run lint:amo
 
       - name: npm audit (production)
         run: npm audit --omit=dev --audit-level=moderate

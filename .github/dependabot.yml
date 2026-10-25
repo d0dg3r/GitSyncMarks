@@ -8,6 +8,11 @@ updates:
       time: "08:00"
       timezone: "Europe/Berlin"
     open-pull-requests-limit: 5
+    # Dev tooling (addons-linter, eslint, sharp) in one PR; overrides in package.json
+    # are re-checked there so pinned transitive fixes do not silently go stale.
+    groups:
+      dev-dependencies:
+        dependency-type: "development"
     labels:
       - "dependencies"
 

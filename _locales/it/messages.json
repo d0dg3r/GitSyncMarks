@@ -2467,22 +2467,22 @@
     "message": "your-gitea-username"
   },
   "options_none": {
-    "message": "None"
+    "message": "Nessuno"
   },
   "options_cancel": {
-    "message": "Cancel"
+    "message": "Annulla"
   },
   "options_parentToolbar": {
-    "message": "Bookmarks Bar"
+    "message": "Barra dei segnalibri"
   },
   "options_parentOther": {
-    "message": "Other Bookmarks"
+    "message": "Altri segnalibri"
   },
   "options_linkwardenSyncDesc": {
-    "message": "Sync your Linkwarden collections directly to your browser's bookmark folders."
+    "message": "Sincronizza le tue collezioni Linkwarden direttamente nelle cartelle dei segnalibri del browser."
   },
   "options_linkwardenStatusDisabled": {
-    "message": "Linkwarden integration is disabled. Enable it in the General tab to use sync."
+    "message": "L'integrazione con Linkwarden è disattivata. Attivala nella scheda Generale per usarla."
   },
   "options_profileDeleteActive": {
     "message": "Switch to another profile before deleting this one."
@@ -2558,5 +2558,62 @@
   },
   "contextMenu_addToOther": {
     "message": "Other Bookmarks"
+  },
+  "popup_confirmPush": {
+    "message": "Sovrascrivere il repository remoto con i segnalibri di questo browser?"
+  },
+  "popup_confirmPull": {
+    "message": "Sostituire i segnalibri di questo browser con quelli del repository remoto?"
+  },
+  "popup_confirmBtn": {
+    "message": "Conferma"
+  },
+  "popup_offline": {
+    "message": "Offline — la sincronizzazione riprende quando torni online."
+  },
+  "popup_tokenExpiring": {
+    "message": "Il token scade tra $1 giorno/i. Crea un nuovo token nelle impostazioni."
+  },
+  "popup_tokenExpired": {
+    "message": "Il token è scaduto. Crea un nuovo token nelle impostazioni."
+  },
+  "popup_restoreBackup": {
+    "message": "Ripristina backup locale"
+  },
+  "popup_confirmRestoreBackup": {
+    "message": "Ripristinare i segnalibri allo stato di $1 (prima dell’ultima sincronizzazione o pull)? Anche lo stato attuale viene salvato come backup."
+  },
+  "popup_backupRestored": {
+    "message": "Backup locale ripristinato. La prossima sincronizzazione considererà questi segnalibri come modifiche."
+  },
+  "popup_previewPull": {
+    "message": "Pull: $1 segnalibro/i verrebbero aggiunti e $2 rimossi in questo browser. Continuare?"
+  },
+  "popup_previewPush": {
+    "message": "Push: $1 segnalibro/i verrebbero aggiunti e $2 rimossi nel repository. Continuare?"
+  },
+  "popup_checkingChanges": {
+    "message": "Verifica delle modifiche…"
+  },
+  "popup_diagnostics": {
+    "message": "Copia diagnostica"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "Diagnostica copiata negli appunti."
+  },
+  "popup_keepLocal": {
+    "message": "Mantieni la versione di questo browser"
+  },
+  "popup_keepRemote": {
+    "message": "Mantieni la versione del repository"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "Questo browser: $1"
+  },
+  "popup_conflictRepository": {
+    "message": "Repository: $1"
+  },
+  "popup_conflictDeleted": {
+    "message": "(eliminato)"
   }
 }

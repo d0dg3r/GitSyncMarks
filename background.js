@@ -11,6 +11,8 @@ import { WHATS_NEW_STORAGE_KEY } from './lib/whats-new.js';
 import {
   debouncedSync,
   sync,
+  _acquireSyncLock,
+  _releaseSyncLock,
   push,
   pull,
   bootstrapFirstSync,
@@ -20,6 +22,7 @@ import {
   generateFilesNow,
   isSyncInProgress,
   isAutoSyncSuppressed,
+  noteLocalBookmarkEdit,
   recoverPartialApplyIfNeeded,
   migrateFromLegacyFormat,
   listRemoteDeviceConfigs,
@@ -31,6 +34,9 @@ import {
   deleteSettingsProfile,
   listSyncHistory,
   restoreFromCommit,
+  restoreLocalBackup,
+  previewSync,
+  resolveConflictFile,
   getPreviousCommitSha,
   getCommitDiffPreview,
   setSyncActivityListener,
@@ -48,10 +54,12 @@ import { createApi } from './lib/sync-settings.js';
 import { bitwardenBackupPasswordKey } from './lib/storage-keys.js';
 import { previewTransfer, transferBookmarks } from './lib/profile-transfer.js';
 import { testMirrorConnection } from './lib/mirror-push.js';
-import { migrateTokenIfNeeded } from './lib/crypto.js';
+import { migrateTokenIfNeeded, encryptToken } from './lib/crypto.js';
 import { migrateToProfiles, getActiveProfileId, getActiveProfile, getProfiles, getSyncState, addPendingLocalDeletes } from './lib/profile-manager.js';
 import { collectBookmarkFilenames, generateFilename, SYNC_ROLES } from './lib/bookmark-serializer.js';
 import { getRootRoleForBookmarkId } from './lib/bookmark-helpers.js';
+import { getLatestLocalBackupInfo } from './lib/local-backup.js';
+import { buildDiagnosticsText } from './lib/diagnostics.js';
 import { switchProfile } from './lib/profile-switch.js';
 import {
   setupContextMenus,
@@ -240,15 +248,36 @@ async function recordPendingDeletes(filenames) {
   await addPendingLocalDeletes(filenames);
 }
 
+// Bulk imports (Chrome only) fire one event per bookmark. Hold auto-sync while they run.
+let bookmarkImportRunning = false;
+chrome.bookmarks.onImportBegan?.addListener(() => {
+  bookmarkImportRunning = true;
+});
+chrome.bookmarks.onImportEnded?.addListener(() => {
+  bookmarkImportRunning = false;
+  noteLocalBookmarkEdit();
+  triggerAutoSync();
+});
+
+// Reordering changes _order.json, so it is a real change for sync. Firefox has no such event,
+// so the listener is optional: a plain call would throw while the background loads.
+chrome.bookmarks.onChildrenReordered?.addListener(() => {
+  refreshContextMenuDynamicItemsDebounced();
+  noteLocalBookmarkEdit();
+  triggerAutoSync();
+});
+
 chrome.bookmarks.onCreated.addListener((id, bookmark) => {
   console.log('[GitSyncMarks] Bookmark created:', bookmark.title);
   refreshContextMenuDynamicItemsDebounced();
+  noteLocalBookmarkEdit();
   triggerAutoSync();
 });
 
 chrome.bookmarks.onRemoved.addListener((id, removeInfo) => {
   console.log('[GitSyncMarks] Bookmark removed:', id);
   refreshContextMenuDynamicItemsDebounced();
+  noteLocalBookmarkEdit();
   void (async () => {
     if (!(await shouldRecordLocalDelete())) return;
     const parentRole = await getRootRoleForBookmarkId(removeInfo?.parentId);
@@ -262,12 +291,14 @@ chrome.bookmarks.onRemoved.addListener((id, removeInfo) => {
 chrome.bookmarks.onChanged.addListener((id, changeInfo) => {
   console.log('[GitSyncMarks] Bookmark changed:', id, changeInfo);
   refreshContextMenuDynamicItemsDebounced();
+  noteLocalBookmarkEdit();
   triggerAutoSync();
 });
 
 chrome.bookmarks.onMoved.addListener((id, moveInfo) => {
   console.log('[GitSyncMarks] Bookmark moved:', id);
   refreshContextMenuDynamicItemsDebounced();
+  noteLocalBookmarkEdit();
   void (async () => {
     if (!(await shouldRecordLocalDelete())) return;
     const [oldRole, newRole] = await Promise.all([
@@ -294,8 +325,11 @@ chrome.bookmarks.onMoved.addListener((id, moveInfo) => {
  * Now uses debouncedSync (three-way merge) instead of debouncedPush.
  */
 async function triggerAutoSync() {
-  if (isSyncInProgress()) return;
+  // Not skipped while a sync runs: debouncedSync re-arms itself, so edits made mid-sync
+  // still schedule a follow-up sync instead of waiting for the next alarm.
   if (isAutoSyncSuppressed()) return;
+  // A bulk import fires one event per bookmark; sync once when it has finished instead.
+  if (bookmarkImportRunning) return;
 
   const settings = await getSettings();
   if (settings[STORAGE_KEYS.AUTO_SYNC] && isConfigured(settings)) {
@@ -352,10 +386,16 @@ chrome.windows?.onFocusChanged?.addListener(async (windowId) => {
 async function setupAlarm() {
   const settings = await getSettings();
   const interval = settings[STORAGE_KEYS.SYNC_INTERVAL] || 15;
+  const enabled = !!(settings[STORAGE_KEYS.AUTO_SYNC] && isConfigured(settings));
+
+  // Re-creating the alarm restarts its period. This runs on every service-worker start,
+  // so keep an existing alarm with the same period instead of resetting it.
+  const existing = await chrome.alarms.get(ALARM_NAME);
+  if (enabled && existing?.periodInMinutes === interval) return;
 
   await chrome.alarms.clear(ALARM_NAME);
 
-  if (settings[STORAGE_KEYS.AUTO_SYNC] && isConfigured(settings)) {
+  if (enabled) {
     chrome.alarms.create(ALARM_NAME, { periodInMinutes: interval });
     console.log(`[GitSyncMarks] Periodic sync alarm set: every ${interval} minutes`);
   }
@@ -378,7 +418,15 @@ async function checkAndMigrate() {
     const api = createApi(settings);
     const basePath = settings[STORAGE_KEYS.FILE_PATH] || 'bookmarks';
 
-    const migrated = await migrateFromLegacyFormat(api, basePath);
+    // Migration commits to the remote, so it takes the same lock as a sync. Otherwise it can
+    // overlap a sync started at the same time, or a second service-worker start.
+    if (!_acquireSyncLock()) return;
+    let migrated;
+    try {
+      migrated = await migrateFromLegacyFormat(api, basePath);
+    } finally {
+      _releaseSyncLock();
+    }
     if (migrated) {
       console.log('[GitSyncMarks] Successfully migrated to per-file format');
     }
@@ -390,12 +438,15 @@ async function checkAndMigrate() {
 // ---- Message handler for popup/options ----
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  // Only extension pages (popup, options, search) may drive the background.
+  if (sender.id !== chrome.runtime.id) return;
+
   if (message.action === 'sync') {
     sync().then(async (result) => {
       await updateSyncStatusBadge(result);
       await showNotificationIfEnabled(result);
       sendResponse(result);
-    });
+    }).catch((err) => sendResponse({ success: false, message: err?.message || String(err) }));
     return true;
   }
   if (message.action === 'push') {
@@ -436,20 +487,55 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
   if (message.action === 'getStatus') {
-    Promise.all([getSyncStatus(), getActiveProfile(), getProfiles(), getActiveProfileId()])
-      .then(([status, profile, profiles, activeProfileId]) => {
+    Promise.all([getSyncStatus(), getActiveProfile(), getProfiles(), getActiveProfileId(), getSettings(), getLatestLocalBackupInfo()])
+      .then(([status, profile, profiles, activeProfileId, settings, localBackup]) => {
         const profileList = Object.entries(profiles || {}).map(([id, p]) => ({ id, name: p.name || id }));
         sendResponse({
           ...status,
           profileName: profile?.name || null,
           profiles: profileList,
           activeProfileId: activeProfileId || null,
+          profileSwitchWithoutConfirm: !!settings.profileSwitchWithoutConfirm,
+          localBackup,
         });
       })
       .catch((err) => {
         console.error('[GitSyncMarks] getStatus failed:', err);
         sendResponse({ configured: false, hasConflict: false, profileName: null, profiles: [], activeProfileId: null });
       });
+    return true;
+  }
+  if (message.action === 'getDiagnostics') {
+    Promise.all([getSyncStatus(), getLatestLocalBackupInfo()])
+      .then(([status, localBackup]) => sendResponse({
+        success: true,
+        text: buildDiagnosticsText({
+          version: chrome.runtime.getManifest().version,
+          browser: typeof browser !== 'undefined' ? 'firefox' : 'chrome',
+          status,
+          localBackup,
+        }),
+      }))
+      .catch((err) => sendResponse({ success: false, message: err?.message || String(err) }));
+    return true;
+  }
+  if (message.action === 'resolveConflictFile') {
+    resolveConflictFile(message.path, message.choice)
+      .then(() => sendResponse({ success: true }))
+      .catch((err) => sendResponse({ success: false, message: err?.message || String(err) }));
+    return true;
+  }
+  if (message.action === 'previewSync') {
+    previewSync().then((result) => sendResponse(result));
+    return true;
+  }
+  if (message.action === 'restoreLocalBackup') {
+    restoreLocalBackup()
+      .then(async (result) => {
+        await updateSyncStatusBadge(result);
+        sendResponse(result);
+      })
+      .catch((err) => sendResponse({ success: false, message: err?.message || String(err) }));
     return true;
   }
   if (message.action === 'previewTransfer') {
@@ -539,14 +625,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
   if (message.action === 'setSettingsSyncPassword') {
-    chrome.storage.local.set({ settingsSyncPassword: message.password }).then(async () => {
+    // Stored encrypted with the device key: the password unlocks every settings.enc in the repo.
+    const storedPassword = message.password ? encryptToken(message.password) : Promise.resolve('');
+    storedPassword.then((value) => chrome.storage.local.set({ settingsSyncPassword: value })).then(async () => {
       if (message.triggerPush) {
-        const result = await push();
+        // sync(), not push(): a plain push overwrites remote files that another device added.
+        const result = await sync();
         sendResponse(result);
       } else {
         sendResponse({ ok: true });
       }
-    });
+    }).catch((err) => sendResponse({ ok: false, message: err?.message || String(err) }));
     return true;
   }
   if (message.action === 'clearSettingsSyncPassword') {
@@ -632,7 +721,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
   if (message.action === 'setBitwardenBackupPassword') {
     const key = bitwardenBackupPasswordKey(message.profileId);
-    chrome.storage.local.set({ [key]: message.password || '' })
+    const storedPassword = message.password ? encryptToken(message.password) : Promise.resolve('');
+    storedPassword.then((value) => chrome.storage.local.set({ [key]: value }))
       .then(() => sendResponse({ ok: true }))
       .catch((err) => sendResponse({ ok: false, message: err.message }));
     return true;

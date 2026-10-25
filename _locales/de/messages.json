@@ -2467,22 +2467,22 @@
     "message": "your-gitea-username"
   },
   "options_none": {
-    "message": "None"
+    "message": "Keine"
   },
   "options_cancel": {
-    "message": "Cancel"
+    "message": "Abbrechen"
   },
   "options_parentToolbar": {
-    "message": "Bookmarks Bar"
+    "message": "Lesezeichenleiste"
   },
   "options_parentOther": {
-    "message": "Other Bookmarks"
+    "message": "Weitere Lesezeichen"
   },
   "options_linkwardenSyncDesc": {
-    "message": "Sync your Linkwarden collections directly to your browser's bookmark folders."
+    "message": "Synchronisiere deine Linkwarden-Sammlungen direkt in die Lesezeichenordner deines Browsers."
   },
   "options_linkwardenStatusDisabled": {
-    "message": "Linkwarden integration is disabled. Enable it in the General tab to use sync."
+    "message": "Die Linkwarden-Integration ist deaktiviert. Aktiviere sie im Tab „Allgemein“, um sie zu nutzen."
   },
   "options_profileDeleteActive": {
     "message": "Switch to another profile before deleting this one."
@@ -2558,5 +2558,62 @@
   },
   "contextMenu_addToOther": {
     "message": "Other Bookmarks"
+  },
+  "popup_confirmPush": {
+    "message": "Remote-Repository mit den Lesezeichen dieses Browsers überschreiben?"
+  },
+  "popup_confirmPull": {
+    "message": "Lesezeichen dieses Browsers durch die des Remote-Repositorys ersetzen?"
+  },
+  "popup_confirmBtn": {
+    "message": "Bestätigen"
+  },
+  "popup_offline": {
+    "message": "Offline — die Synchronisierung wird fortgesetzt, sobald du wieder online bist."
+  },
+  "popup_tokenExpiring": {
+    "message": "Token läuft in $1 Tag(en) ab. Erstelle in den Einstellungen einen neuen Token."
+  },
+  "popup_tokenExpired": {
+    "message": "Token ist abgelaufen. Erstelle in den Einstellungen einen neuen Token."
+  },
+  "popup_restoreBackup": {
+    "message": "Lokales Backup wiederherstellen"
+  },
+  "popup_confirmRestoreBackup": {
+    "message": "Lesezeichen vom Stand $1 (vor dem letzten Sync oder Pull) wiederherstellen? Der aktuelle Stand wird ebenfalls als Backup gesichert."
+  },
+  "popup_backupRestored": {
+    "message": "Lokales Backup wiederhergestellt. Der nächste Sync behandelt diese Lesezeichen als Änderungen."
+  },
+  "popup_previewPull": {
+    "message": "Pull: $1 Lesezeichen würden in diesem Browser hinzugefügt und $2 entfernt. Fortfahren?"
+  },
+  "popup_previewPush": {
+    "message": "Push: $1 Lesezeichen würden im Repository hinzugefügt und $2 entfernt. Fortfahren?"
+  },
+  "popup_checkingChanges": {
+    "message": "Änderungen werden geprüft…"
+  },
+  "popup_diagnostics": {
+    "message": "Diagnose kopieren"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "Diagnose in die Zwischenablage kopiert."
+  },
+  "popup_keepLocal": {
+    "message": "Version dieses Browsers behalten"
+  },
+  "popup_keepRemote": {
+    "message": "Version aus dem Repository behalten"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "Dieser Browser: $1"
+  },
+  "popup_conflictRepository": {
+    "message": "Repository: $1"
+  },
+  "popup_conflictDeleted": {
+    "message": "(gelöscht)"
   }
 }

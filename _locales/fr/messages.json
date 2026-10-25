@@ -2467,22 +2467,22 @@
     "message": "your-gitea-username"
   },
   "options_none": {
-    "message": "None"
+    "message": "Aucun"
   },
   "options_cancel": {
-    "message": "Cancel"
+    "message": "Annuler"
   },
   "options_parentToolbar": {
-    "message": "Bookmarks Bar"
+    "message": "Barre de favoris"
   },
   "options_parentOther": {
-    "message": "Other Bookmarks"
+    "message": "Autres favoris"
   },
   "options_linkwardenSyncDesc": {
-    "message": "Sync your Linkwarden collections directly to your browser's bookmark folders."
+    "message": "Synchronisez vos collections Linkwarden directement dans les dossiers de favoris de votre navigateur."
   },
   "options_linkwardenStatusDisabled": {
-    "message": "Linkwarden integration is disabled. Enable it in the General tab to use sync."
+    "message": "L'intégration Linkwarden est désactivée. Activez-la dans l'onglet Général pour l'utiliser."
   },
   "options_profileDeleteActive": {
     "message": "Switch to another profile before deleting this one."
@@ -2558,5 +2558,62 @@
   },
   "contextMenu_addToOther": {
     "message": "Other Bookmarks"
+  },
+  "popup_confirmPush": {
+    "message": "Remplacer le dépôt distant par les favoris de ce navigateur ?"
+  },
+  "popup_confirmPull": {
+    "message": "Remplacer les favoris de ce navigateur par ceux du dépôt distant ?"
+  },
+  "popup_confirmBtn": {
+    "message": "Confirmer"
+  },
+  "popup_offline": {
+    "message": "Hors ligne — la synchronisation reprendra dès que vous serez de nouveau en ligne."
+  },
+  "popup_tokenExpiring": {
+    "message": "Le jeton expire dans $1 jour(s). Créez un nouveau jeton dans les paramètres."
+  },
+  "popup_tokenExpired": {
+    "message": "Le jeton a expiré. Créez un nouveau jeton dans les paramètres."
+  },
+  "popup_restoreBackup": {
+    "message": "Restaurer la sauvegarde locale"
+  },
+  "popup_confirmRestoreBackup": {
+    "message": "Restaurer les favoris de l’état du $1 (avant la dernière synchronisation ou récupération) ? L’état actuel est aussi sauvegardé."
+  },
+  "popup_backupRestored": {
+    "message": "Sauvegarde locale restaurée. La prochaine synchronisation traitera ces favoris comme des modifications."
+  },
+  "popup_previewPull": {
+    "message": "Récupération : $1 favori(s) seraient ajoutés et $2 supprimés dans ce navigateur. Continuer ?"
+  },
+  "popup_previewPush": {
+    "message": "Envoi : $1 favori(s) seraient ajoutés et $2 supprimés dans le dépôt. Continuer ?"
+  },
+  "popup_checkingChanges": {
+    "message": "Vérification des modifications…"
+  },
+  "popup_diagnostics": {
+    "message": "Copier le diagnostic"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "Diagnostic copié dans le presse-papiers."
+  },
+  "popup_keepLocal": {
+    "message": "Garder la version de ce navigateur"
+  },
+  "popup_keepRemote": {
+    "message": "Garder la version du dépôt"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "Ce navigateur : $1"
+  },
+  "popup_conflictRepository": {
+    "message": "Dépôt : $1"
+  },
+  "popup_conflictDeleted": {
+    "message": "(supprimé)"
   }
 }
