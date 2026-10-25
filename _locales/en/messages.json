@@ -2557,5 +2557,20 @@
   },
   "popup_diagnosticsCopied": {
     "message": "Diagnostics copied to the clipboard."
+  },
+  "popup_keepLocal": {
+    "message": "Keep this browser's version"
+  },
+  "popup_keepRemote": {
+    "message": "Keep repository version"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "This browser: $1"
+  },
+  "popup_conflictRepository": {
+    "message": "Repository: $1"
+  },
+  "popup_conflictDeleted": {
+    "message": "(deleted)"
   }
 }

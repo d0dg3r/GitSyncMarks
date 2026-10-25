@@ -69,7 +69,7 @@ Outcome of the 2026 code analysis. Tiers 1–3 (correctness, performance, qualit
 | **Additional sync sources (read-only)** | Add extra folders from centrally maintained repos (e.g. team bookmarks). Your personal bookmarks stay in your repo; the shared folder is merged in read-only. Assemble bookmarks from multiple sources in one place | Medium |
 | **Selective folder sync** | Sync only specific bookmark folders instead of all | Medium |
 | **Sync history / rollback** | Shipped in part: sync history and undo of the last remote change exist; local backups (last three) restore the bookmarks before the last pull or merge. Restoring older commits remains open. | Done (partly) |
-| **Conflict resolution UI** | Diff view for merge conflicts instead of force push/pull only. Open: needs a design for per-file choices. | Medium |
+| **Conflict resolution UI** | Shipped in part (3.0.9): per-file "keep this browser / keep repository" in the popup. Open: a diff view of the two versions. | Small |
 | **Incremental apply** | Apply remote changes as create/remove/move instead of deleting and recreating the whole tree (stable IDs, fewer browser events). Needs browser testing. | Large |
 | **Automation: Bulk add from URLs** | Paste list of URLs → generate multiple JSON files or script for batch add | Medium |
 | **AI + Bookmarks** | User enters API token (OpenAI, Anthropic, Gemini, Groq, Qwen). Ideas: auto-categorize, semantic search, summaries, duplicate detection, title improvement, virtual folders, smart cleanup. Privacy/cost disclaimer; optional AI tab in options. | Large |

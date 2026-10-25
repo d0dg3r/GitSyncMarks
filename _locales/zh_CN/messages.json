@@ -2510,5 +2510,20 @@
   },
   "popup_diagnosticsCopied": {
     "message": "诊断信息已复制到剪贴板。"
+  },
+  "popup_keepLocal": {
+    "message": "保留此浏览器的版本"
+  },
+  "popup_keepRemote": {
+    "message": "保留仓库中的版本"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "此浏览器：$1"
+  },
+  "popup_conflictRepository": {
+    "message": "仓库：$1"
+  },
+  "popup_conflictDeleted": {
+    "message": "（已删除）"
   }
 }

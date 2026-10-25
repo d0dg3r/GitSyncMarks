@@ -2510,5 +2510,20 @@
   },
   "popup_diagnosticsCopied": {
     "message": "Tanılama panoya kopyalandı."
+  },
+  "popup_keepLocal": {
+    "message": "Bu tarayıcının sürümünü tut"
+  },
+  "popup_keepRemote": {
+    "message": "Depodaki sürümü tut"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "Bu tarayıcı: $1"
+  },
+  "popup_conflictRepository": {
+    "message": "Depo: $1"
+  },
+  "popup_conflictDeleted": {
+    "message": "(silindi)"
   }
 }

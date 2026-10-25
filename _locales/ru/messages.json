@@ -2510,5 +2510,20 @@
   },
   "popup_diagnosticsCopied": {
     "message": "Диагностика скопирована в буфер обмена."
+  },
+  "popup_keepLocal": {
+    "message": "Оставить версию этого браузера"
+  },
+  "popup_keepRemote": {
+    "message": "Оставить версию из репозитория"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "Этот браузер: $1"
+  },
+  "popup_conflictRepository": {
+    "message": "Репозиторий: $1"
+  },
+  "popup_conflictDeleted": {
+    "message": "(удалено)"
   }
 }

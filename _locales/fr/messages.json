@@ -2510,5 +2510,20 @@
   },
   "popup_diagnosticsCopied": {
     "message": "Diagnostic copié dans le presse-papiers."
+  },
+  "popup_keepLocal": {
+    "message": "Garder la version de ce navigateur"
+  },
+  "popup_keepRemote": {
+    "message": "Garder la version du dépôt"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "Ce navigateur : $1"
+  },
+  "popup_conflictRepository": {
+    "message": "Dépôt : $1"
+  },
+  "popup_conflictDeleted": {
+    "message": "(supprimé)"
   }
 }

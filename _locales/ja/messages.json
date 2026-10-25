@@ -2510,5 +2510,20 @@
   },
   "popup_diagnosticsCopied": {
     "message": "診断情報をクリップボードにコピーしました。"
+  },
+  "popup_keepLocal": {
+    "message": "このブラウザーの版を残す"
+  },
+  "popup_keepRemote": {
+    "message": "リポジトリの版を残す"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "このブラウザー: $1"
+  },
+  "popup_conflictRepository": {
+    "message": "リポジトリ: $1"
+  },
+  "popup_conflictDeleted": {
+    "message": "(削除済み)"
   }
 }

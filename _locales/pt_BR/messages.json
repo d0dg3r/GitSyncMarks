@@ -2510,5 +2510,20 @@
   },
   "popup_diagnosticsCopied": {
     "message": "Diagnóstico copiado para a área de transferência."
+  },
+  "popup_keepLocal": {
+    "message": "Manter a versão deste navegador"
+  },
+  "popup_keepRemote": {
+    "message": "Manter a versão do repositório"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "Este navegador: $1"
+  },
+  "popup_conflictRepository": {
+    "message": "Repositório: $1"
+  },
+  "popup_conflictDeleted": {
+    "message": "(excluído)"
   }
 }

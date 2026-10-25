@@ -2510,5 +2510,20 @@
   },
   "popup_diagnosticsCopied": {
     "message": "Diagnostyka skopiowana do schowka."
+  },
+  "popup_keepLocal": {
+    "message": "Zachowaj wersję z tej przeglądarki"
+  },
+  "popup_keepRemote": {
+    "message": "Zachowaj wersję z repozytorium"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "Ta przeglądarka: $1"
+  },
+  "popup_conflictRepository": {
+    "message": "Repozytorium: $1"
+  },
+  "popup_conflictDeleted": {
+    "message": "(usunięte)"
   }
 }

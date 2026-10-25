@@ -24,6 +24,7 @@ const tokenExpiryEl = document.getElementById('token-expiry');
 const offlineStatusEl = document.getElementById('offline-status');
 const conflictBox = document.getElementById('conflict-box');
 const conflictDescription = document.getElementById('conflict-description');
+const conflictFilesEl = document.getElementById('conflict-files');
 const autoSyncDot = document.getElementById('auto-sync-dot');
 const autoSyncText = document.getElementById('auto-sync-text');
 
@@ -130,6 +131,7 @@ function updateUI(status) {
     } else {
       conflictDescription.textContent = getMessage('popup_conflictDescription');
     }
+    renderConflictFiles(status.conflicts || [], status.conflictChoices || {});
   } else if (status.lastError) {
     setStatus('❌', status.lastError, 'status-error');
     conflictBox.style.display = 'none';
@@ -296,6 +298,56 @@ function setStatus(_icon, message, boxClass) {
   statusMessage.textContent = message;
   const stateClass = boxClass === 'status-error' || boxClass === 'status-warning' ? ` ${boxClass}` : '';
   statusArea.className = `status-area${stateClass}`;
+}
+
+/** Readable form of one side of a conflict: its URL, or "(deleted)". */
+function describeConflictSide(side) {
+  return side ? side.url || side.title || '' : getMessage('popup_conflictDeleted');
+}
+
+/**
+ * One row per conflicting bookmark with "keep this browser" / "keep repository".
+ * A choice is stored and a sync runs at once, so the conflict clears as soon as every file is decided.
+ */
+function renderConflictFiles(conflicts, choices) {
+  clearElement(conflictFilesEl);
+  for (const conflict of conflicts) {
+    const item = document.createElement('li');
+    item.className = 'conflict-file';
+
+    const title = document.createElement('div');
+    title.className = 'conflict-file-title';
+    title.textContent = conflict.local?.title || conflict.remote?.title || conflict.path.split('/').pop();
+
+    const versions = document.createElement('div');
+    versions.className = 'conflict-file-versions';
+    versions.textContent = [
+      getMessage('popup_conflictThisBrowser', [describeConflictSide(conflict.local)]),
+      getMessage('popup_conflictRepository', [describeConflictSide(conflict.remote)]),
+    ].join(' · ');
+
+    const actions = document.createElement('div');
+    actions.className = 'conflict-actions';
+    const keepButton = (label, choice) => {
+      const button = document.createElement('button');
+      button.className = choices[conflict.path] === choice ? 'btn btn-small btn-warning' : 'btn btn-small btn-secondary';
+      button.textContent = label;
+      button.addEventListener('click', async () => {
+        if (isSyncing) return;
+        await chrome.runtime.sendMessage({ action: 'resolveConflictFile', path: conflict.path, choice });
+        await handleAction('sync');
+        await loadStatus();
+      });
+      return button;
+    };
+    actions.append(
+      keepButton(getMessage('popup_keepLocal'), 'local'),
+      keepButton(getMessage('popup_keepRemote'), 'remote')
+    );
+
+    item.append(title, versions, actions);
+    conflictFilesEl.appendChild(item);
+  }
 }
 
 /**

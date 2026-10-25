@@ -35,6 +35,7 @@ import {
   restoreFromCommit,
   restoreLocalBackup,
   previewSync,
+  resolveConflictFile,
   getPreviousCommitSha,
   getCommitDiffPreview,
   setSyncActivityListener,
@@ -475,6 +476,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           localBackup,
         }),
       }))
+      .catch((err) => sendResponse({ success: false, message: err?.message || String(err) }));
+    return true;
+  }
+  if (message.action === 'resolveConflictFile') {
+    resolveConflictFile(message.path, message.choice)
+      .then(() => sendResponse({ success: true }))
       .catch((err) => sendResponse({ success: false, message: err?.message || String(err) }));
     return true;
   }

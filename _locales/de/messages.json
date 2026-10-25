@@ -2516,5 +2516,20 @@
   },
   "popup_diagnosticsCopied": {
     "message": "Diagnose in die Zwischenablage kopiert."
+  },
+  "popup_keepLocal": {
+    "message": "Version dieses Browsers behalten"
+  },
+  "popup_keepRemote": {
+    "message": "Version aus dem Repository behalten"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "Dieser Browser: $1"
+  },
+  "popup_conflictRepository": {
+    "message": "Repository: $1"
+  },
+  "popup_conflictDeleted": {
+    "message": "(gelöscht)"
   }
 }

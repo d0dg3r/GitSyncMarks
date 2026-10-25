@@ -2510,5 +2510,20 @@
   },
   "popup_diagnosticsCopied": {
     "message": "진단 정보를 클립보드에 복사했습니다."
+  },
+  "popup_keepLocal": {
+    "message": "이 브라우저의 버전 유지"
+  },
+  "popup_keepRemote": {
+    "message": "저장소 버전 유지"
+  },
+  "popup_conflictThisBrowser": {
+    "message": "이 브라우저: $1"
+  },
+  "popup_conflictRepository": {
+    "message": "저장소: $1"
+  },
+  "popup_conflictDeleted": {
+    "message": "(삭제됨)"
   }
 }
