@@ -9,6 +9,10 @@ npm run test:e2e:smoke    # Smoke tests (no credentials)
 npm run test:e2e:options  # Options page UI only: tabs, language dropdown, Help links, sub-tabs (no credentials)
 ```
 
+## Automated sync integration test (no credentials, no browser)
+
+`test/integration-sync-conflict.test.js` runs the real sync code with two simulated browsers against an in-memory GitHub (`test/helpers/fake-browser.js`, `test/helpers/fake-github.js`). It covers the first push and pull, a per-file conflict, and both "keep" choices. It runs with `npm run test:unit`.
+
 ## Sync Tests (Connection, Push, Pull)
 
 Sync tests require a private GitHub repo and a Personal Access Token.
