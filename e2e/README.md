@@ -9,6 +9,10 @@ npm run test:e2e:smoke    # Smoke tests (no credentials)
 npm run test:e2e:options  # Options page UI only: tabs, language dropdown, Help links, sub-tabs (no credentials)
 ```
 
+## Settings file for manual tests
+
+`npm run test:settings-file` writes `build/test-settings/gitsyncmarks-test-settings.json` from the `.env` values above (`--password <pw>` writes an encrypted `.enc` instead). Import it in each test browser (Options → Files → Import, type "Settings"): the profile points at the test repo, auto-sync is off and the debug log is on. The file lives in the ignored `build/` folder; the plain variant contains the token, so delete it after importing. Importing replaces that browser's profiles, so use dedicated test browser profiles.
+
 ## Automated sync integration test (no credentials, no browser)
 
 `test/integration-sync-conflict.test.js` runs the real sync code with two simulated browsers against an in-memory GitHub (`test/helpers/fake-browser.js`, `test/helpers/fake-github.js`). It covers the first push and pull, a per-file conflict, and both "keep" choices. It runs with `npm run test:unit`.

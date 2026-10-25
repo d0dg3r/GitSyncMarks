@@ -30,6 +30,7 @@
     "test:gitea-benchmark": "node scripts/benchmark-gitea-sync.js",
     "test:gitea-benchmark:estimate": "node scripts/benchmark-gitea-sync.js --estimate-only",
     "verify-test-repo": "node scripts/verify-test-repo.js",
+    "test:settings-file": "node scripts/make-test-settings.mjs",
     "website:preview": "bash scripts/prepare-website.sh && npx --yes serve _site -p 3000"
   },
   "devDependencies": {
