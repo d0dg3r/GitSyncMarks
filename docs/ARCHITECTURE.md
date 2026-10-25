@@ -238,6 +238,26 @@ Leaf module: `commitBookmarkChanges()` and Gitea Contents API fallback. Imported
 
 Pure helpers for the sync bulk-deletion guard ([#210](https://github.com/d0dg3r/GitSyncMarks/issues/210)): `listPayloadDeletions()`, `assessDeletionGuard()`, `assessLocalShrink()`, `assessFileChangesDeletionGuard()`.
 
+### `lib/local-backup.js` — Local Backups
+
+`saveLocalBackup()` stores the local bookmark file map before remote content is applied (last three, `localBackups`), with metadata in `localBackupsInfo` so status reads stay small. `getLatestLocalBackupInfo()`, `getLocalBackup()`. Restore: `restoreLocalBackup()` in `sync-core`.
+
+### `lib/sync-preview.js` — Push/Pull Preview
+
+`summarizeBookmarkDifference(from, to, isBookmarkFile)`: bookmarks added and removed between two file maps, compared by URL. Used by `previewSync()` in `sync-core`.
+
+### `lib/bookmark-renames.js` — Rename Detection
+
+`findRenames()` and `extractRenameConflicts()`: detect renames by URL and turn different renames of the same bookmark on both sides into one conflict before the path-based merge.
+
+### `lib/conflict-choices.js` — Per-File Conflict Choices
+
+`applyConflictChoices()`: applies the popup's "keep this browser" / "keep repository" choices to the merge result, including rename conflicts with two paths.
+
+### `lib/diagnostics.js` — Diagnostics Text
+
+`buildDiagnosticsText()`: plain-text summary for bug reports (popup footer "Copy diagnostics"). It contains no tokens or repository names, and error text goes through `redactSecrets()` from `lib/debug-log.js`.
+
 ### `lib/profile-switch-logic.js` — Fast Profile Switch
 
 Testable helpers used by `switchProfile()` and sync path 8: `buildSwitchPushChanges()`, `mergeLocalIntoSyncFiles()` (preserves removed paths in base until push), `buildStaleBasePushChanges()`, `loadTargetFileMapForSwitch()` (HEAD check + delta pull).
@@ -384,7 +404,12 @@ GitSyncMarks/
 │   ├── github-api.js             # Re-export shim
 │   ├── github-tree-batch.js      # Chunk file changes for tree API (inline blob content)
 │   ├── bookmark-serializer.js    # Per-file bookmark conversion
-│   ├── bookmark-replace.js       # Replace local bookmarks
+│   ├── bookmark-replace.js       # Reconcile local bookmarks with a role map (stable IDs)
+│   ├── bookmark-renames.js       # Rename detection by URL, rename conflicts
+│   ├── conflict-choices.js       # Apply per-file conflict choices
+│   ├── local-backup.js           # Local snapshots before remote content is applied
+│   ├── sync-preview.js           # Push/pull preview counts
+│   ├── diagnostics.js            # Diagnostics text for bug reports
 │   ├── github-repos.js           # GitHub Repos folder
 │   ├── profile-manager.js        # Multiple profiles, CRUD, tokens
 │   ├── profile-switch.js         # switchProfile (service-worker-safe)

@@ -74,6 +74,96 @@ This is **not** a substitute for Playwright. **`npm run test:e2e*`** is **Chrome
 
 ---
 
+## Unit and Integration Tests (no browser)
+
+```bash
+npm run test:unit      # all node:test files in test/
+npm run typecheck
+npm run check:i18n     # every i18n key used in code exists in _locales/en
+npm run lint
+npm run build:firefox && npm run lint:amo   # Mozilla addons-linter (also in CI)
+```
+
+- **Integration tests** run the real sync code against in-memory fakes, with no credentials and no browser: `test/helpers/fake-browser.js` (storage and bookmarks; `moveSemantics: 'chrome' | 'firefox'`) and `test/helpers/fake-github.js` (Git Data API, request log, `failNext()` for forced HTTP errors).
+- `test/integration-sync-conflict.test.js`: two browsers and one repository. Covers the first push and pull, per-file conflicts, rename conflicts, stable bookmark IDs on pull, the preview reusing the base, and a plain 409 that does not retry.
+- `test/bookmark-reconcile.test.js`: `replaceLocalBookmarks` reconcile rules, plus a property test over random trees with Chrome and Firefox move semantics.
+
+These tests do **not** click the popup or options UI, and they do not run in a real browser. Use the manual checklist below for that.
+
+---
+
+## Manual Sync Test (Checklist)
+
+Use this checklist before a release, or after changes to sync, conflicts or `replaceLocalBookmarks`. It needs two browser profiles (A and B), for example two Chrome profiles, or Chrome and Firefox.
+
+### 1. Setup
+
+1. **Build with a visible pre-release version.** The browser's extensions page shows the manifest version. The About tab shows the display version.
+   ```bash
+   VERSION_FOR_DISPLAY=3.0.9-beta.1 npm run build   # build/chrome/ and build/firefox/
+   ```
+   Load `build/chrome/` (chrome://extensions → Load unpacked) or `build/firefox/manifest.json` (about:debugging → Load Temporary Add-on). Disable the store version in the same profile, otherwise both sync against the same repository.
+2. **Test repository:** `.env` holds `GITSYNCMARKS_TEST_PAT`, `GITSYNCMARKS_TEST_REPO_OWNER`, `GITSYNCMARKS_TEST_REPO` (see `.env.example`). Never use a repository with real bookmarks.
+3. **Reset the test repository** to the empty layout (git clone, replace `bookmarks/`, force-push):
+   ```bash
+   node -r dotenv/config -e "require('./e2e/helpers/repo-reset.js').resetTestRepo().then(() => console.log('reset done'))"
+   node -r dotenv/config scripts/verify-test-repo.js     # expect: 0 toolbar bookmark files
+   ```
+4. **Generate the settings file** for both browsers:
+   ```bash
+   npm run test:settings-file                      # build/test-settings/gitsyncmarks-test-settings.json
+   npm run test:settings-file -- --password <pw>   # encrypted .enc instead
+   ```
+   The profile "Test repo" points at the test repository, with auto-sync off, the debug log on and the wizard skipped. The plain file contains the token: it is written to the git-ignored `build/` folder with mode 600, but delete it after importing. Import it in A and B via Options → Files → Import, type **Settings**. Importing replaces that browser's profiles.
+5. In both browsers, check that the About tab shows the pre-release version. Keep **Options → Sync → Debug log** open: every apply logs `replaceLocalBookmarks() created=… removed=… updated=… moved=… skipped=…`.
+
+### 2. Checklist
+
+Blocks 1–3 cover the sync core. Do them first.
+
+| # | Step | Expected |
+|---|---|---|
+| **1 Basics** | | |
+| 1.1 | A: add 5–10 bookmarks in the bookmarks bar, including a folder with a subfolder. Sync Now | Success; `bookmarks/` exists in the repository |
+| 1.2 | B (empty): Sync Now | All of A's bookmarks appear in B, in the same order |
+| **2 Incremental apply** | | |
+| 2.1 | A: rename a bookmark, sync. B: sync | B shows the new title; log `updated=1 created=0 removed=0` |
+| 2.2 | A: reorder by drag and drop, sync. B: sync | Same order in B; log `moved>0 created=0 removed=0` |
+| 2.3 | B: set a bookmark as a context-menu quick folder, then repeat 2.1 | Quick folder still works (the ID stays the same) |
+| 2.4 | A: move a bookmark into the subfolder, sync. B: sync | It appears in the subfolder in B, exactly once |
+| 2.5 | A: delete one bookmark and add one, sync. B: sync | B equals A |
+| 2.6 | No change, sync in A and B | Log shows all counters `0` |
+| 2.7 | Chrome + Firefox only: Firefox adds a `place:` bookmark, sync. Chrome: sync | Chrome applies the rest; log `skipped=1`, no abort |
+| **3 Conflicts** | | |
+| 3.1 | A: rename "Test" to "test", sync. B: rename "Test" to "TEST", sync | Popup in B lists one conflict with both versions |
+| 3.2 | B: "Keep this browser's version" | Conflict clears; after syncing A, both show "TEST" |
+| 3.3 | A: rename a bookmark to "Alpha", sync. B: rename the same one to "Beta", sync | Exactly **one** conflict, not two bookmarks |
+| 3.4 | B: "Keep repository version" | B shows "Alpha" once; the repository has one file for it |
+| **4 Preview and confirmations** | | |
+| 4.1 | A: add 2 bookmarks, Push ↑ | "Checking changes…", then "2 added, 0 removed" |
+| 4.2 | Cancel | Nothing changes in the repository |
+| 4.3 | B: Pull ↓ | Confirmation with counts; nothing changes before Confirm |
+| 4.4 | Double-click Push | Only one confirmation |
+| 4.5 | With 2+ profiles: switch the profile in the popup | Confirmation, unless "Switch without confirmation" is on |
+| **5 Local backups** | | |
+| 5.1 | After a pull in B: Restore local backup | The question names date and time; the state before the pull returns |
+| 5.2 | Restore again | The state before 5.1 returns (restore is undoable) |
+| **6 Bulk-deletion guard** | | |
+| 6.1 | A: rename a folder with ≥10 bookmarks, sync | Goes through, **no** bulk-delete warning |
+| 6.2 | A: delete ≥10 bookmarks (≥15 %), sync | Bulk-delete warning; nothing is deleted |
+| **7 Other** | | |
+| 7.1 | Disconnect the network, open the popup | Offline note; sync buttons disabled |
+| 7.2 | Auto-sync on: start a sync and add a bookmark meanwhile | Bookmark stays and is pushed shortly after |
+| 7.3 | Popup footer → Copy diagnostics | No token and no repository or mirror names in the text |
+| 7.4 | Export settings as plain JSON | The file contains no token |
+| 7.5 | Settings sync with password | Works; 3.0.8 devices cannot read the v2 `settings.enc` |
+
+### 3. Reporting a failure
+
+Note the block and step, what you expected and what you saw. Attach the debug log lines around the step (Options → Sync → Debug log → Export) and, if useful, the copied diagnostics.
+
+---
+
 ## Firefox — Manual Testing
 
 Automated E2E tests run only on Chrome. **Test Firefox manually** before each release:
