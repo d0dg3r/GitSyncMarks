@@ -100,7 +100,7 @@ Use this checklist before a release, or after changes to sync, conflicts or `rep
 
 1. **Build with a visible pre-release version.** The browser's extensions page shows the manifest version. The About tab shows the display version.
    ```bash
-   VERSION_FOR_DISPLAY=3.0.9-beta.1 npm run build   # build/chrome/ and build/firefox/
+   VERSION_FOR_DISPLAY=3.1.0-beta.1 npm run build   # build/chrome/ and build/firefox/
    ```
    Load `build/chrome/` (chrome://extensions → Load unpacked) or `build/firefox/manifest.json` (about:debugging → Load Temporary Add-on). Disable the store version in the same profile, otherwise both sync against the same repository.
 2. **Test repository:** `.env` holds `GITSYNCMARKS_TEST_PAT`, `GITSYNCMARKS_TEST_REPO_OWNER`, `GITSYNCMARKS_TEST_REPO` (see `.env.example`). Never use a repository with real bookmarks.

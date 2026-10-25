@@ -6,6 +6,7 @@
  * dataset.i18n = '…') and checks it against _locales/<lang>/messages.json.
  *  - A key used in code but missing from `en` is an error (the user sees the raw key).
  *  - A key missing from another locale is reported as a count; it falls back to English.
+ *  - A key that appears twice in one locale file is an error (addons-linter rejects it).
  * Dynamic keys (template strings) cannot be checked statically and are skipped.
  *
  * Usage: node scripts/check-i18n.mjs            (exit 1 on errors)
@@ -63,11 +64,27 @@ function collectUsedKeys() {
   return used;
 }
 
+/** Top-level keys that occur more than once. JSON.parse keeps the last one silently,
+ * but Mozilla's addons-linter rejects the file (e.g. after a text merge of two branches). */
+function findDuplicateKeys(text) {
+  const seen = new Set();
+  const dups = new Set();
+  for (const match of text.matchAll(/^ {2}"([^"]+)":/gm)) {
+    if (seen.has(match[1])) dups.add(match[1]);
+    seen.add(match[1]);
+  }
+  return [...dups];
+}
+
+const duplicateErrors = [];
+
 function loadLocales() {
   const locales = new Map();
   for (const lang of readdirSync(localesDir)) {
     const file = join(localesDir, lang, 'messages.json');
-    locales.set(lang, new Set(Object.keys(JSON.parse(readFileSync(file, 'utf8')))));
+    const text = readFileSync(file, 'utf8');
+    for (const key of findDuplicateKeys(text)) duplicateErrors.push(`${key}  (duplicate key in _locales/${lang}/messages.json)`);
+    locales.set(lang, new Set(Object.keys(JSON.parse(text))));
   }
   return locales;
 }
@@ -76,7 +93,7 @@ const used = collectUsedKeys();
 const locales = loadLocales();
 const en = locales.get('en');
 
-const errors = [];
+const errors = [...duplicateErrors];
 for (const [key, file] of used) {
   if (!en.has(key)) errors.push(`${key}  (used in ${file}, missing from _locales/en)`);
 }

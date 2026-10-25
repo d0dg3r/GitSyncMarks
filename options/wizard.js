@@ -5,7 +5,7 @@
 
 import { getMessage } from '../lib/i18n.js';
 import { clearElement } from '../lib/dom-utils.js';
-import { createConnectionApi, ensureProviderHostPermission, normalizeGitProvider } from '../lib/connection-settings.js';
+import { createConnectionApi, ensureProviderHostPermission, requestProviderHostPermission, normalizeGitProvider } from '../lib/connection-settings.js';
 import { getProviderCaps } from '../lib/git-provider-common.js';
 import {
   applyProviderFormUi,
@@ -1102,6 +1102,20 @@ export function initWizard({ saveSettings }) {
   onboardingWizardNextBtn.addEventListener('click', async () => {
     if (!wizardState.active) return;
     const stepKey = WIZARD_STEPS[wizardState.stepIndex];
+    if (stepKey === 'provider') {
+      const providerFields = getWizardConnectionFields();
+      const caps = getProviderCaps(providerFields.gitProvider);
+      const serverUrl = providerFields.serverUrl || caps.defaultServerUrl || '';
+      if (providerNeedsHostPermission(providerFields.gitProvider, serverUrl)) {
+        const { granted } = await requestProviderHostPermission(providerFields.gitProvider, serverUrl);
+        if (!granted) {
+          const msg = getMessage('options_hostPermissionDenied');
+          showValidation(msg, 'error');
+          setWizardResult(msg, 'error');
+          return;
+        }
+      }
+    }
     const shouldShowBusy = stepKey === 'tokenInput' || stepKey === 'environment';
     if (shouldShowBusy) {
       const loadingMsg = stepKey === 'environment'

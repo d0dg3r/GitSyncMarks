@@ -241,6 +241,30 @@ export function initProfiles({ loadSettings, saveSettings, showSaveResult }) {
     if (!selectedId) return;
 
     try {
+      const profiles = await getProfiles();
+      const activeId = await getActiveProfileId();
+      if (selectedId === activeId) {
+        const otherId = Object.keys(profiles).find((id) => id !== selectedId);
+        if (!otherId) return;
+        setProfileButtonsEnabled(false);
+        profileSpinner.style.display = 'inline-block';
+        updateProfileSwitchProgress({ step: 1, totalSteps: 3 });
+        profileSwitchingMsg.style.display = '';
+        try {
+          const switchResult = await switchProfile(otherId, {
+            skipConfirm: true,
+            onProgress: updateProfileSwitchProgress,
+          });
+          if (switchResult?.alreadyInProgress) {
+            showProfileMessage(switchResult.message || getMessage('sync_alreadyInProgress'));
+            return;
+          }
+        } finally {
+          setProfileButtonsEnabled(true);
+          profileSpinner.style.display = 'none';
+          profileSwitchingMsg.style.display = 'none';
+        }
+      }
       await deleteProfile(selectedId);
       await _loadSettings();
     } catch (err) {

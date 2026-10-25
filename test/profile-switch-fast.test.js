@@ -86,10 +86,30 @@ describe('buildStaleBasePushChanges', () => {
       remoteDiff,
       localFiles,
       remoteFiles,
-      () => false
+      () => false,
+      undefined,
+      ['dup.json']
     );
     assert.equal(shouldPush, true);
     assert.equal(fileChanges['bookmarks/toolbar/dup.json'], null);
+  });
+
+  it('does not delete remote-only additions without a pending local delete', () => {
+    const remoteDiff = {
+      added: { 'bookmarks/toolbar/new.json': '{"title":"new"}' },
+      removed: [],
+      modified: {},
+    };
+    const { shouldPush, fileChanges } = buildStaleBasePushChanges(
+      remoteDiff,
+      {},
+      { 'bookmarks/toolbar/new.json': '{"title":"new"}' },
+      () => false,
+      undefined,
+      []
+    );
+    assert.equal(shouldPush, false);
+    assert.deepEqual(fileChanges, {});
   });
 
   it('returns shouldPush false when remote additions exist in local', () => {

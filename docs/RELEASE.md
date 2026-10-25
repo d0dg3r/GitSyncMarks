@@ -41,6 +41,8 @@ The version is declared in `manifest.json` → `"version"`. It must match `manif
 
 | Version | Codename | Description |
 |---|---|---|
+| `3.0.10` | — | **Release-CI patch (2026-09-18).** Fixed: undefined `username` when preserving the GitHubRepos folder; options folder browser and GitHub Repos refresh now call the existing host-permission helper. Unblocks the GitHub `release.yml` lint gate (v3.0.9 tag had no GitHub Release artifacts). |
+| `3.0.9` | — | **Stability patch (2026-09-18).** Fixed: silent remote deletes from the stale-base boolean heuristic (explicit `pendingLocalDeletes`); pull-side bulk-deletion guard for emptied/shrunken remotes; restore/switch/apply races; Firefox Android optional API guards; options form bound to the loaded profile; host permission request in the user-gesture path; missing i18n keys in 12 locales. **Changed:** tree-only post-push SHA map, serialized sync-state writes, bidirectional Delete Guard. |
 | `3.0.8` | — | **GA release (2026-08-31).** Fixed: illegal dynamic `import()` in MV3 service worker ([#214](https://github.com/d0dg3r/GitSyncMarks/issues/214)) — mirror push, profile switch from popup, profile transfer apply-to-browser, Bitwarden password handler; bulk-deletion guard for three-way merge ([#210](https://github.com/d0dg3r/GitSyncMarks/issues/210)). Security: Dependabot lockfile cleanup (`fast-uri` 3.1.5, `undici` 7.29.0 overrides). Pre-release: `v3.0.8-beta.1`. |
 | `3.0.7` | — | **Settings backup patch (2026-08-04).** Fixed: settings import reload confirmation was invisible on the Files tab (hang after import); import now restores the full settings payload including mirrors/onboarding flags; export no longer silently writes empty profile tokens (nested `profileTokens` layout), includes mirror tokens, and blocks export/settings-sync push when configured profiles lack a PAT. |
 | `3.0.6` | — | **Security / tooling patch (2026-08-03).** Cleared Dependabot alerts for transitive `fast-uri`, `js-yaml`, and `brace-expansion` via npm overrides. **Changed:** bumped `sharp`, `@types/chrome`, `marked`, `addons-linter`; CI `setup-node` v7 and `action-gh-release` 3.0.2. No extension runtime change. |
@@ -115,14 +117,14 @@ Create a **Poll** in [Discussions → Polls](https://github.com/d0dg3r/GitSyncMa
 gh api repos/<org>/<repo>/commits/<tag> -q .sha
 ```
 
-### 3.0.9 Preparation Checklist
+### 3.1.0 Preparation Checklist
 
-Code is merged and the version is 3.0.9 (no tag yet). Open before tagging `v3.0.9`:
+Code is merged and the version is 3.1.0 (no tag yet). Open before tagging `v3.1.0`:
 
 - [ ] **Browser test** with the manual checklist in [TESTING.md](TESTING.md#manual-sync-test-checklist), Chrome and Firefox (blocks 1–3 at least)
-- [ ] `lib/whats-new.js`: add a `3.0.9` entry (otherwise the overlay is skipped), update `test/whats-new.test.js` if needed
-- [ ] `CHANGELOG.md`: rename `[Unreleased]` to `[3.0.9] - <date>` and keep the **Upgrade note** (v2 encryption format: update every device)
-- [ ] Version History above: add 3.0.9
+- [ ] `lib/whats-new.js`: add a `3.1.0` entry (otherwise the overlay is skipped), update `test/whats-new.test.js` if needed
+- [ ] `CHANGELOG.md`: rename `[Unreleased]` to `[3.1.0] - <date>` and keep the **Upgrade note** (v2 encryption format: update every device)
+- [ ] Version History above: add 3.1.0
 - [ ] New UI (popup confirmations, preview counts, restore local backup, conflict list, offline note, copy diagnostics): README features, Help tab (`help_*` keys), `store-assets/chrome-en.md` / `firefox-en.md`
 - [ ] New permission `unlimitedStorage`: permission justification in `store-assets/chrome-meta.md` and `firefox-meta.md` and the store dashboards
 - [ ] `npm run screenshots` (popup changed)

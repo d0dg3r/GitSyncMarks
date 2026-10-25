@@ -8,15 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Upgrade note
-- **Update every device before syncing settings or Bitwarden backups.** `settings.enc` and Bitwarden backups are now written in the encrypted format v2 (PBKDF2-SHA256, 600,000 iterations). Version 3.0.8 and older cannot read v2: on a device that is not updated yet, settings sync and backup restore fail until it is updated. This version still reads v1 files.
+- **Update every device before syncing settings or Bitwarden backups.** `settings.enc` and Bitwarden backups are now written in the encrypted format v2 (PBKDF2-SHA256, 600,000 iterations). Version 3.0.10 and older cannot read v2: on a device that is not updated yet, settings sync and backup restore fail until it is updated. This version still reads v1 files.
 
 ### Fixed
 - **Sync no longer overwrites concurrent changes**: a commit is refused (and the sync re-runs) when the remote branch moved after the sync planned it, instead of re-applying full file contents on top of another device's commit (GitHub).
 - **Local edits made during a sync are kept**: a sync that sees a bookmark edit mid-run retries before replacing the local tree; auto-sync is no longer skipped while a sync runs, so such edits schedule a follow-up sync.
-- **Sync state writes are serialised**: bookmark events can no longer roll back the saved sync base; redundant "modified" writes are skipped.
-- **Bookmarks the browser rejects no longer abort the whole local update**: the rest of the tree is still created.
 - **Pull does not wipe local bookmarks** when the remote holds only metadata, or lacks a root folder.
-- **Remote unreadable with a stored base** now fails with an error instead of being treated as an empty repository.
 - **Bookmarks with colliding file names are kept** (numeric suffix) instead of being dropped; affects empty and non-Latin titles.
 - Bulk-delete guard runs before the local tree is replaced during a merge.
 - **Password-triggered settings push runs a sync** instead of a plain push, so it no longer overwrites files another device added.
@@ -55,8 +52,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`http://` server URLs are upgraded to `https://`** for public hosts, so a PAT is never sent in clear text. Loopback, private-network and `.lan`/`.local` hosts keep `http://`.
 - **Debug log masks tokens** (GitHub, GitLab, bearer tokens and `token=`/`password=` values).
 
+## [3.0.10] - 2026-09-18
+
+### Fixed
+- **Release CI lint gate**: `replaceLocalBookmarks` no longer references an undefined `username` when preserving the GitHubRepos folder. Options folder browser and GitHub Repos refresh call `requestConnectionHostPermission` instead of a missing `ensureConnectionHostPermission` helper (both were `no-undef` errors that skipped the GitHub ZIP/release job).
+
+## [3.0.9] - 2026-09-18
+
+### Fixed
+- **Silent remote deletes from a stale-base heuristic**: Bookmark create/change events (including the extension's own `replaceLocalBookmarks`) no longer flip a boolean that treated every remote-only file as a local deletion. Sync now tracks explicit `pendingLocalDeletes` filenames from user `onRemoved` / move-out events and only pushes those deletes.
+- **Pull-side bulk-deletion guard**: An emptied or heavily shrunken remote is no longer applied locally on sync paths 8/9. Bidirectional sync sets `conflictReason: remoteBulkDelete`; explicit Pull stays unguarded. A missing remote branch with an existing base returns `sync_branchNotFound` instead of throwing.
+- **Restore / switch / apply races**: `restoreFromCommit()` saves the three-way base against remote HEAD so the restored tree is a local change. `switchProfile()` takes the sync lock, suppresses auto-sync, and sets the active profile id before replacing bookmarks. `createBookmarkTree` continues after a rejected URL; an `applyInProgress` marker recovers a partial tree via pull.
+- **Firefox Android + options integrity**: Optional `contextMenus` / `windows` / `action` APIs are guarded. The options form binds to the profile loaded at `loadSettings()` and reloads on `storage.onChanged`. Deleting the active profile is blocked. Host permission requests run synchronously from the click/Next handler. Missing i18n keys (including Delete Guard UI) are present in all 12 locales.
+
 ### Changed
-- **Website (gitsyncmarks.com)**: Updated landing page for 3.0 — multi-provider Git sync, Bitwarden backup, profile transfer, push mirrors, live sync progress, sync history, clean orphans, and automation; provider-neutral setup steps; Bitwarden screenshot; v3.0.4 release notice. README stable-release banner points to v3.0.4.
+- **Post-push SHA map**: `saveSyncState()` uses a tree-only `fetchRemoteShaMap()` and no longer re-downloads every blob after a push.
+- **Sync-state writes**: `setSyncState` / `setSyncFlags` are serialized; pending deletes live in `syncFlags` so event writes never touch `lastSyncFiles`.
+- **Delete Guard**: Bidirectional — push-side mass deletes and pull-side remote wipes both surface in the popup.
+- **Dev hygiene**: `.gitignore` covers `tmp/` and generated portfolio PDFs; npm overrides pin patched `fast-uri` / `js-yaml` and `sharp` 0.35.4.
 
 ## [3.0.8] - 2026-08-31
 

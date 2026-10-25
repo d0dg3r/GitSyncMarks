@@ -92,7 +92,8 @@ describe('replaceLocalBookmarks reconciles in place', () => {
     await seedToolbar([]);
     const stats = await apply([bm('A', 'https://a.test/'), bm('Q', 'place:sort=8'), bm('B', 'https://b.test/')]);
     assert.deepEqual(toolbarShape(), [bm('A', 'https://a.test/'), bm('B', 'https://b.test/')]);
-    assert.equal(stats.skipped, 1);
+    assert.equal(stats.failed.length, 1);
+    assert.equal(stats.failed[0].url, 'place:sort=8');
   });
 
   it('keeps duplicate bookmarks', async () => {
