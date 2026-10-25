@@ -9,6 +9,7 @@
   "permissions": [
     "bookmarks",
     "storage",
+    "unlimitedStorage",
     "alarms",
     "notifications",
     "contextMenus",

@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Sync no longer overwrites concurrent changes**: a commit is refused (and the sync re-runs) when the remote branch moved after the sync planned it, instead of re-applying full file contents on top of another device's commit (GitHub).
+- **Local edits made during a sync are kept**: a sync that sees a bookmark edit mid-run retries before replacing the local tree; auto-sync is no longer skipped while a sync runs, so such edits schedule a follow-up sync.
+- **Sync state writes are serialised**: bookmark events can no longer roll back the saved sync base; redundant "modified" writes are skipped.
+- **Bookmarks the browser rejects no longer abort the whole local update**: the rest of the tree is still created.
+- **Pull does not wipe local bookmarks** when the remote holds only metadata, or lacks a root folder.
+- **Remote unreadable with a stored base** now fails with an error instead of being treated as an empty repository.
+- **Bookmarks with colliding file names are kept** (numeric suffix) instead of being dropped; affects empty and non-Latin titles.
+- Bulk-delete guard runs before the local tree is replaced during a merge.
+- **Password-triggered settings push runs a sync** instead of a plain push, so it no longer overwrites files another device added.
+- **Periodic alarm is no longer reset** on every service-worker start.
+- **Pending auto-sync debounce keeps the service worker alive**, so a delayed sync is not lost when the browser idles.
+- **Bulk imports and reorders** are handled: a bulk import triggers one sync at its end; reordering bookmarks syncs.
+- **Startup migration runs under the sync lock** and can no longer overlap a sync.
+- **GitLab and Gitea honour short rate-limit waits** (Retry-After) like GitHub.
+- Pull reuses unchanged blobs from the stored base, so large repositories need fewer requests.
+- Runtime messages are accepted only from the extension itself; a failing sync always answers the caller.
+
+### Security
+- Dependency overrides updated (fast-uri, undici, js-yaml, brace-expansion, source-map-js, @humanfs/node, image-size) and sharp bumped; resolves the open Dependabot alerts. `npm audit`: 0 vulnerabilities.
+
 ### Changed
 - **Website (gitsyncmarks.com)**: Updated landing page for 3.0 — multi-provider Git sync, Bitwarden backup, profile transfer, push mirrors, live sync progress, sync history, clean orphans, and automation; provider-neutral setup steps; Bitwarden screenshot; v3.0.4 release notice. README stable-release banner points to v3.0.4.
 
