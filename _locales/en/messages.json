@@ -2551,5 +2551,11 @@
   },
   "popup_checkingChanges": {
     "message": "Checking changes…"
+  },
+  "popup_diagnostics": {
+    "message": "Copy diagnostics"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "Diagnostics copied to the clipboard."
   }
 }

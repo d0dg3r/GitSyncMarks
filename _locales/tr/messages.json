@@ -2504,5 +2504,11 @@
   },
   "popup_checkingChanges": {
     "message": "Değişiklikler kontrol ediliyor…"
+  },
+  "popup_diagnostics": {
+    "message": "Tanılamayı kopyala"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "Tanılama panoya kopyalandı."
   }
 }

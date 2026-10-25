@@ -33,6 +33,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Popup warns when a GitHub token expires within 14 days** (or has expired), using GitHub's expiry header.
 - **Firefox AMO lint runs in CI.** Bookmark reorder listener is optional, so Firefox no longer fails to load it.
 - **Push and pull preview the changes**: the confirmation says how many bookmarks would be added and removed (compared by URL, so moves are not counted as changes). Costs one extra read of the remote before each push or pull.
+- **Moved folders do not trigger the bulk-delete guard**: a bookmark whose URL is written at a new path in the same sync counts as a move, not a deletion.
+- **Diagnostics**: "Copy diagnostics" in the popup footer copies a plain-text summary (versions, last sync, error, token expiry, mirrors, backup). It contains no tokens and no repository names.
 - **Local backups before a remote is applied**: the last three local snapshots are kept (pull, sync merge, remote-only sync). The popup offers "Restore local backup" to undo the last replace; the state being replaced is kept as well.
 
 ### Security

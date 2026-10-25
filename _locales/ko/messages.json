@@ -2504,5 +2504,11 @@
   },
   "popup_checkingChanges": {
     "message": "변경 사항 확인 중…"
+  },
+  "popup_diagnostics": {
+    "message": "진단 정보 복사"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "진단 정보를 클립보드에 복사했습니다."
   }
 }

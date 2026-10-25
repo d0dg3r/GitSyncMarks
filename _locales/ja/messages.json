@@ -2504,5 +2504,11 @@
   },
   "popup_checkingChanges": {
     "message": "変更を確認中…"
+  },
+  "popup_diagnostics": {
+    "message": "診断情報をコピー"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "診断情報をクリップボードにコピーしました。"
   }
 }

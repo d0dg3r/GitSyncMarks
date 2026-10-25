@@ -2504,5 +2504,11 @@
   },
   "popup_checkingChanges": {
     "message": "正在检查更改…"
+  },
+  "popup_diagnostics": {
+    "message": "复制诊断信息"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "诊断信息已复制到剪贴板。"
   }
 }

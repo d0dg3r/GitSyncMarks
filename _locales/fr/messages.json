@@ -2504,5 +2504,11 @@
   },
   "popup_checkingChanges": {
     "message": "Vérification des modifications…"
+  },
+  "popup_diagnostics": {
+    "message": "Copier le diagnostic"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "Diagnostic copié dans le presse-papiers."
   }
 }

@@ -2504,5 +2504,11 @@
   },
   "popup_checkingChanges": {
     "message": "Проверка изменений…"
+  },
+  "popup_diagnostics": {
+    "message": "Скопировать диагностику"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "Диагностика скопирована в буфер обмена."
   }
 }

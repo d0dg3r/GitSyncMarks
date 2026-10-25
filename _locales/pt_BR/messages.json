@@ -2504,5 +2504,11 @@
   },
   "popup_checkingChanges": {
     "message": "Verificando alterações…"
+  },
+  "popup_diagnostics": {
+    "message": "Copiar diagnóstico"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "Diagnóstico copiado para a área de transferência."
   }
 }

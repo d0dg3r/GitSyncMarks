@@ -2510,5 +2510,11 @@
   },
   "popup_checkingChanges": {
     "message": "Änderungen werden geprüft…"
+  },
+  "popup_diagnostics": {
+    "message": "Diagnose kopieren"
+  },
+  "popup_diagnosticsCopied": {
+    "message": "Diagnose in die Zwischenablage kopiert."
   }
 }

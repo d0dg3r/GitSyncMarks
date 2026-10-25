@@ -508,6 +508,19 @@ openSettingsBtn.addEventListener('click', () => {
   window.close();
 });
 
+// Copies a plain-text summary for bug reports (no tokens, no repository names).
+document.getElementById('diagnostics-link').addEventListener('click', async (e) => {
+  e.preventDefault();
+  try {
+    const result = await chrome.runtime.sendMessage({ action: 'getDiagnostics' });
+    if (!result?.success) throw new Error(result?.message || 'diagnostics');
+    await navigator.clipboard.writeText(result.text);
+    setStatus('✅', getMessage('popup_diagnosticsCopied'), 'status-ok');
+  } catch (err) {
+    setStatus('❌', getMessage('popup_error', [err.message]), 'status-error');
+  }
+});
+
 settingsLink.addEventListener('click', (e) => {
   e.preventDefault();
   chrome.runtime.openOptionsPage();

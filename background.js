@@ -55,6 +55,7 @@ import { testMirrorConnection } from './lib/mirror-push.js';
 import { migrateTokenIfNeeded, encryptToken } from './lib/crypto.js';
 import { migrateToProfiles, getActiveProfileId, getActiveProfile, getProfiles, getSyncState } from './lib/profile-manager.js';
 import { getLatestLocalBackupInfo } from './lib/local-backup.js';
+import { buildDiagnosticsText } from './lib/diagnostics.js';
 import { switchProfile } from './lib/profile-switch.js';
 import {
   setupContextMenus,
@@ -461,6 +462,20 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         console.error('[GitSyncMarks] getStatus failed:', err);
         sendResponse({ configured: false, hasConflict: false, profileName: null, profiles: [], activeProfileId: null });
       });
+    return true;
+  }
+  if (message.action === 'getDiagnostics') {
+    Promise.all([getSyncStatus(), getLatestLocalBackupInfo()])
+      .then(([status, localBackup]) => sendResponse({
+        success: true,
+        text: buildDiagnosticsText({
+          version: chrome.runtime.getManifest().version,
+          browser: typeof browser !== 'undefined' ? 'firefox' : 'chrome',
+          status,
+          localBackup,
+        }),
+      }))
+      .catch((err) => sendResponse({ success: false, message: err?.message || String(err) }));
     return true;
   }
   if (message.action === 'previewSync') {
