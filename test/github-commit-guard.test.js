@@ -21,7 +21,7 @@ describe('GitHubAPI.atomicCommit expectedParentSha guard', () => {
     const { api, calls } = makeApi('head-2');
     await assert.rejects(
       api.atomicCommit('msg', changes, undefined, { expectedParentSha: 'head-1' }),
-      (err) => err.message === REMOTE_MOVED_MESSAGE && err.statusCode === 409
+      (err) => err.message === REMOTE_MOVED_MESSAGE && err.statusCode === 409 && err.remoteMoved === true
     );
     assert.equal(calls.updateRef, 0, 'no ref must be written when the head moved');
   });

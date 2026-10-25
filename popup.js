@@ -48,6 +48,8 @@ const ALARM_NAME = 'bookmarkSyncPull';
 let countdownInterval = null;
 
 let isSyncing = false;
+/** True while a push/pull preview is loading (see confirmedAction). */
+let isPreviewing = false;
 
 // Demo mode: show configured UI for screenshots without real storage (?demo=1)
 const isDemoMode = () =>
@@ -398,7 +400,7 @@ function formatRelativeTime(date) {
 
 /** Sync buttons are unusable while a sync runs or while the browser is offline. */
 function setSyncControlsDisabled(busy) {
-  const disabled = busy || navigator.onLine === false;
+  const disabled = busy || isPreviewing || navigator.onLine === false;
   syncBtn.disabled = disabled;
   pushBtn.disabled = disabled;
   pullBtn.disabled = disabled;
@@ -478,11 +480,21 @@ async function confirmationFor(action) {
 }
 
 async function confirmedAction(action) {
-  if (isSyncing) return;
+  if (isSyncing || isPreviewing) return;
   if (CONFIRM_MESSAGE_KEYS[action]) {
-    setStatus('⏳', getMessage('popup_checkingChanges'), 'status-ok');
-    const message = await confirmationFor(action);
-    await loadStatus();
+    // The preview reads the remote; keep the sync buttons locked so a double click cannot
+    // open a second confirmation.
+    isPreviewing = true;
+    setSyncControlsDisabled(true);
+    let message;
+    try {
+      setStatus('⏳', getMessage('popup_checkingChanges'), 'status-ok');
+      message = await confirmationFor(action);
+      await loadStatus();
+    } finally {
+      isPreviewing = false;
+      setSyncControlsDisabled(isSyncing);
+    }
     if (!(await askConfirm(message))) return;
   }
   await handleAction(action);
@@ -495,7 +507,8 @@ restoreBackupBtn.addEventListener('click', async () => {
   if (isSyncing) return;
   const latest = await chrome.runtime.sendMessage({ action: 'getStatus' }).catch(() => null);
   if (!latest?.localBackup) return;
-  if (!(await askConfirm(getMessage('popup_confirmRestoreBackup')))) return;
+  const when = new Date(latest.localBackup.createdAt).toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' });
+  if (!(await askConfirm(getMessage('popup_confirmRestoreBackup', [when])))) return;
   setLoading(true);
   try {
     const result = await chrome.runtime.sendMessage({ action: 'restoreLocalBackup' });

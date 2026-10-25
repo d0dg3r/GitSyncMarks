@@ -2497,7 +2497,7 @@
     "message": "Lokales Backup wiederherstellen"
   },
   "popup_confirmRestoreBackup": {
-    "message": "Lesezeichen von vor dem letzten Sync oder Pull wiederherstellen? Der aktuelle Stand wird ebenfalls als Backup gesichert."
+    "message": "Lesezeichen vom Stand $1 (vor dem letzten Sync oder Pull) wiederherstellen? Der aktuelle Stand wird ebenfalls als Backup gesichert."
   },
   "popup_backupRestored": {
     "message": "Lokales Backup wiederhergestellt. Der nächste Sync behandelt diese Lesezeichen als Änderungen."

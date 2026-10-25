@@ -19,8 +19,8 @@ describe('buildDiagnosticsText', () => {
         repoOwner: 'alice',
         repoName: 'secret-repo',
         lastError: 'Request failed for token=ghp_abcdefghijklmnopqrstuvwx',
-        mirrorStatuses: [],
-        mirrorSummary: null,
+        mirrorStatuses: [{ id: 'm1', label: 'alice/secret-mirror', paused: false, lastError: null }],
+        mirrorSummary: '1/1',
       },
       localBackup: null,
     });
@@ -29,6 +29,8 @@ describe('buildDiagnosticsText', () => {
     assert.match(text, /Local backup: none/);
     assert.ok(!text.includes('alice'));
     assert.ok(!text.includes('secret-repo'));
+    assert.ok(!text.includes('secret-mirror'), 'mirror labels can be repository names');
+    assert.match(text, /Mirror 1: ok/);
     assert.ok(!text.includes('ghp_abcdef'));
     assert.match(text, /token=\[redacted\]/);
   });

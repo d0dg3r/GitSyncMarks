@@ -2491,7 +2491,7 @@
     "message": "Restaurer la sauvegarde locale"
   },
   "popup_confirmRestoreBackup": {
-    "message": "Restaurer les favoris d’avant la dernière synchronisation ou récupération ? L’état actuel est aussi sauvegardé."
+    "message": "Restaurer les favoris de l’état du $1 (avant la dernière synchronisation ou récupération) ? L’état actuel est aussi sauvegardé."
   },
   "popup_backupRestored": {
     "message": "Sauvegarde locale restaurée. La prochaine synchronisation traitera ces favoris comme des modifications."

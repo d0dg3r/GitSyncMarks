@@ -2538,7 +2538,7 @@
     "message": "Restore local backup"
   },
   "popup_confirmRestoreBackup": {
-    "message": "Restore the bookmarks from before the last sync or pull? The current state is kept as a backup too."
+    "message": "Restore the bookmarks from $1 (before the last sync or pull)? The current state is kept as a backup too."
   },
   "popup_backupRestored": {
     "message": "Local backup restored. The next sync treats these bookmarks as changes."

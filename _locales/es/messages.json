@@ -2491,7 +2491,7 @@
     "message": "Restaurar copia local"
   },
   "popup_confirmRestoreBackup": {
-    "message": "¿Restaurar los marcadores de antes de la última sincronización o descarga? El estado actual también se guarda como copia."
+    "message": "¿Restaurar los marcadores del estado de $1 (antes de la última sincronización o descarga)? El estado actual también se guarda como copia."
   },
   "popup_backupRestored": {
     "message": "Copia local restaurada. La próxima sincronización trata estos marcadores como cambios."

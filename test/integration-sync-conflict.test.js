@@ -9,13 +9,13 @@ import assert from 'node:assert/strict';
 import { createFakeBrowser } from './helpers/fake-browser.js';
 import { createFakeGitHub } from './helpers/fake-github.js';
 
-let sync, resolveConflictFile, getSyncState;
+let sync, resolveConflictFile, getSyncState, previewSync;
 const realFetch = globalThis.fetch;
 
 before(async () => {
   // The modules read the global `chrome` when they run, so install one browser first.
   globalThis.chrome = createFakeBrowser().chrome;
-  ({ sync, resolveConflictFile } = await import('../lib/sync-core.js'));
+  ({ sync, resolveConflictFile, previewSync } = await import('../lib/sync-core.js'));
   ({ getSyncState } = await import('../lib/profile-manager.js'));
 });
 
@@ -148,6 +148,32 @@ describe('two browsers, one repository: per-file conflict choice', () => {
     assert.deepEqual(b.bookmarks.toolbarBookmarks(), [{ title: 'Alpha', url: URL_SAME }]);
     assert.equal(bookmarkFiles(github.files()).length, 1, 'no duplicate after choosing remote');
     useBrowser(a);
+  });
+
+  it('preview after a sync reuses the base: no bookmark file is downloaded', async () => {
+    const { b, github } = env;
+    useBrowser(b);
+    const before = github.requests.length;
+    const preview = await previewSync();
+    assert.equal(preview.success, true);
+    assert.deepEqual(preview.pull, { added: 0, removed: 0 });
+    // Generated files (README, bookmarks.html, feed) are not part of the base and are fetched;
+    // their number is fixed. Bookmark files must come from the base.
+    const downloaded = github.requests
+      .slice(before)
+      .filter((r) => r.startsWith('GET ') && r.includes('/git/blobs/'))
+      .map((r) => github.pathOfBlob(r.split('/git/blobs/')[1]));
+    assert.deepEqual(bookmarkFiles(Object.fromEntries(downloaded.map((p) => [p, '']))), []);
+  });
+
+  it('a plain 409 from GitHub is an error, not a "remote moved" retry', async () => {
+    const { a, github } = env;
+    useBrowser(a);
+    await a.bookmarks.create({ parentId: '1', title: 'New', url: 'https://new.test/' });
+    github.failNext('POST', '/git/trees', 409);
+    const result = await sync();
+    assert.equal(result.success, false);
+    assert.notEqual(result.remoteMoved, true);
   });
 
   it('the fake GitHub served every request the adapter made', () => {

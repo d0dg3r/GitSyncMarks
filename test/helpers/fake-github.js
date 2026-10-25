@@ -16,6 +16,8 @@ export function createFakeGitHub({ owner = 'alice', repo = 'marks', branch = 'ma
   let head = null; // commit sha of the branch, null while the repo is empty
   let counter = 0;
   const unknown = [];
+  const requests = []; // "METHOD /path" of every request, in order
+  const failures = new Map(); // "METHOD /path-prefix" → HTTP status to answer once
 
   const json = (status, body) =>
     new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } });
@@ -43,6 +45,14 @@ export function createFakeGitHub({ owner = 'alice', repo = 'marks', branch = 'ma
 
   async function handle(method, path, body) {
     const base = `/repos/${owner}/${repo}`;
+    requests.push(`${method} ${path}`);
+    for (const [key, status] of failures) {
+      const [failMethod, failPrefix] = key.split(' ');
+      if (method === failMethod && path.startsWith(base + failPrefix)) {
+        failures.delete(key);
+        return json(status, { message: `fake GitHub: forced ${status}` });
+      }
+    }
     if (method === 'GET' && path === '/user') return json(200, { login: owner });
     if (method === 'GET' && path === base) return json(200, { name: repo, default_branch: branch });
     if (method === 'GET' && path === `${base}/git/ref/heads/${branch}`) {
@@ -104,5 +114,19 @@ export function createFakeGitHub({ owner = 'alice', repo = 'marks', branch = 'ma
     },
     /** Requests the fake could not serve; should stay empty. */
     unknownRoutes: unknown,
+    /** Every request as "METHOD /path", in order. */
+    requests,
+    /** Path of a blob in the branch head (for checking which files were downloaded). */
+    pathOfBlob(sha) {
+      if (!head) return null;
+      for (const [path, entry] of treeOf(commits.get(head).treeSha)) {
+        if (entry.sha === sha) return path;
+      }
+      return null;
+    },
+    /** Answer the next request matching method and repo-relative path prefix with `status`. */
+    failNext(method, pathPrefix, status) {
+      failures.set(`${method} ${pathPrefix}`, status);
+    },
   };
 }

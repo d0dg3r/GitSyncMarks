@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Upgrade note
+- **Update every device before syncing settings or Bitwarden backups.** `settings.enc` and Bitwarden backups are now written in the encrypted format v2 (PBKDF2-SHA256, 600,000 iterations). Version 3.0.8 and older cannot read v2: on a device that is not updated yet, settings sync and backup restore fail until it is updated. This version still reads v1 files.
+
 ### Fixed
 - **Sync no longer overwrites concurrent changes**: a commit is refused (and the sync re-runs) when the remote branch moved after the sync planned it, instead of re-applying full file contents on top of another device's commit (GitHub).
 - **Local edits made during a sync are kept**: a sync that sees a bookmark edit mid-run retries before replacing the local tree; auto-sync is no longer skipped while a sync runs, so such edits schedule a follow-up sync.
@@ -35,6 +38,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Push and pull preview the changes**: the confirmation says how many bookmarks would be added and removed (compared by URL, so moves are not counted as changes). Costs one extra read of the remote before each push or pull.
 - **Moved folders do not trigger the bulk-delete guard**: a bookmark whose URL is written at a new path in the same sync counts as a move, not a deletion.
 - **Diagnostics**: "Copy diagnostics" in the popup footer copies a plain-text summary (versions, last sync, error, token expiry, mirrors, backup). It contains no tokens and no repository names.
+- A retry after "remote moved during sync" happens only for that case (not for every HTTP 409) and at most three times in a row.
+- The push/pull preview reuses unchanged files from the stored base instead of downloading every bookmark.
+- The popup reads only backup metadata; the restore question names the backup's date; the sync buttons stay locked while a preview loads.
+- Diagnostics number mirrors instead of printing their names.
 - **Renamed bookmarks conflict by URL**: when the same bookmark (same URL) got different new titles on both sides, sync reports one conflict instead of keeping two bookmarks. Choosing one side removes the other side's copy.
 - **Per-file conflict choice**: when the same bookmark changed on both sides, the popup lists it with "Keep this browser's version" or "Keep repository version". The choice is applied on the next sync; other conflicts stay open.
 - **Local backups before a remote is applied**: the last three local snapshots are kept (pull, sync merge, remote-only sync). The popup offers "Restore local backup" to undo the last replace; the state being replaced is kept as well.

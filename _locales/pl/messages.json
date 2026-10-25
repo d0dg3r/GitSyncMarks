@@ -2491,7 +2491,7 @@
     "message": "Przywróć lokalną kopię zapasową"
   },
   "popup_confirmRestoreBackup": {
-    "message": "Przywrócić zakładki sprzed ostatniej synchronizacji lub pobrania? Obecny stan również zostanie zapisany jako kopia."
+    "message": "Przywrócić zakładki ze stanu z $1 (sprzed ostatniej synchronizacji lub pobrania)? Obecny stan również zostanie zapisany jako kopia."
   },
   "popup_backupRestored": {
     "message": "Przywrócono lokalną kopię zapasową. Następna synchronizacja potraktuje te zakładki jako zmiany."

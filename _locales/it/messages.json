@@ -2491,7 +2491,7 @@
     "message": "Ripristina backup locale"
   },
   "popup_confirmRestoreBackup": {
-    "message": "Ripristinare i segnalibri di prima dell’ultima sincronizzazione o pull? Anche lo stato attuale viene salvato come backup."
+    "message": "Ripristinare i segnalibri allo stato di $1 (prima dell’ultima sincronizzazione o pull)? Anche lo stato attuale viene salvato come backup."
   },
   "popup_backupRestored": {
     "message": "Backup locale ripristinato. La prossima sincronizzazione considererà questi segnalibri come modifiche."

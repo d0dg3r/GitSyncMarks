@@ -2491,7 +2491,7 @@
     "message": "Yerel yedeği geri yükle"
   },
   "popup_confirmRestoreBackup": {
-    "message": "Son senkronizasyon veya çekme işleminden önceki yer imleri geri yüklensin mi? Mevcut durum da yedek olarak saklanır."
+    "message": "Yer imleri $1 tarihli duruma (son senkronizasyon veya çekme öncesi) geri yüklensin mi? Mevcut durum da yedek olarak saklanır."
   },
   "popup_backupRestored": {
     "message": "Yerel yedek geri yüklendi. Sonraki senkronizasyon bu yer imlerini değişiklik olarak ele alır."

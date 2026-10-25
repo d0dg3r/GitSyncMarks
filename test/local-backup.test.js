@@ -32,6 +32,15 @@ describe('local backups', () => {
     assert.equal((await getLocalBackup(1)).reason, 'before-pull');
   });
 
+  it('reads the newest metadata without the snapshot contents', async () => {
+    await saveLocalBackup({ 'bm/toolbar/a.json': '{}' }, 'before-pull');
+    assert.deepEqual(store.localBackupsInfo.map((i) => i.reason), ['before-pull']);
+    delete store.localBackups; // metadata must be enough for the status
+    const info = await getLatestLocalBackupInfo();
+    assert.equal(info.reason, 'before-pull');
+    assert.equal(info.fileCount, 1);
+  });
+
   it('keeps only the most recent snapshots', async () => {
     for (let i = 0; i < MAX_LOCAL_BACKUPS + 2; i += 1) {
       await saveLocalBackup({ 'bm/x': String(i) }, `r${i}`);
