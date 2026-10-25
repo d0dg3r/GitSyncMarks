@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Push and pull preview the changes**: the confirmation says how many bookmarks would be added and removed (compared by URL, so moves are not counted as changes). Costs one extra read of the remote before each push or pull.
 - **Moved folders do not trigger the bulk-delete guard**: a bookmark whose URL is written at a new path in the same sync counts as a move, not a deletion.
 - **Diagnostics**: "Copy diagnostics" in the popup footer copies a plain-text summary (versions, last sync, error, token expiry, mirrors, backup). It contains no tokens and no repository names.
+- **Renamed bookmarks conflict by URL**: when the same bookmark (same URL) got different new titles on both sides, sync reports one conflict instead of keeping two bookmarks. Choosing one side removes the other side's copy.
 - **Per-file conflict choice**: when the same bookmark changed on both sides, the popup lists it with "Keep this browser's version" or "Keep repository version". The choice is applied on the next sync; other conflicts stay open.
 - **Local backups before a remote is applied**: the last three local snapshots are kept (pull, sync merge, remote-only sync). The popup offers "Restore local backup" to undo the last replace; the state being replaced is kept as well.
 

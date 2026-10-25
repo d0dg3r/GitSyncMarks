@@ -25,6 +25,10 @@ after(() => {
 
 const URL_SAME = 'https://same.test/';
 
+/** Bookmark files only (no _order.json / _index.json) in a repository file map. */
+const bookmarkFiles = (files) =>
+  Object.keys(files).filter((path) => path.endsWith('.json') && !/_(order|index)\.json$/.test(path));
+
 /** Profile that points at the fake repository; the token is stored as plain text (legacy form). */
 function seedProfile(browser) {
   browser.sync.profiles = {
@@ -123,6 +127,27 @@ describe('two browsers, one repository: per-file conflict choice', () => {
     const state = await getSyncState('default');
     assert.equal(state.conflicts.length, 1);
     assert.equal(state.conflicts[0].path, conflict.path);
+  });
+
+  it('two different new titles for one bookmark are one conflict, not two bookmarks', async () => {
+    const { a, b, github } = env;
+    useBrowser(a);
+    a.bookmarks.renameByUrl(URL_SAME, 'Alpha');
+    assert.equal((await sync()).success, true, 'A pushes Alpha');
+
+    useBrowser(b);
+    b.bookmarks.renameByUrl(URL_SAME, 'Beta');
+    const result = await sync();
+    assert.equal(result.conflict, true, 'B reports one conflict');
+    const state = await getSyncState('default');
+    assert.equal(state.conflicts.length, 1);
+    assert.equal(bookmarkFiles(github.files()).length, 1, 'remote still has one bookmark file');
+
+    await resolveConflictFile(state.conflicts[0].path, 'remote');
+    assert.equal((await sync()).success, true);
+    assert.deepEqual(b.bookmarks.toolbarBookmarks(), [{ title: 'Alpha', url: URL_SAME }]);
+    assert.equal(bookmarkFiles(github.files()).length, 1, 'no duplicate after choosing remote');
+    useBrowser(a);
   });
 
   it('the fake GitHub served every request the adapter made', () => {
