@@ -9,12 +9,13 @@ import { clearElement } from '../lib/dom-utils.js';
 import { formatSyncProgress, runSyncPortAction } from '../lib/sync-progress.js';
 import { serializeToJson, deserializeFromJson, bookmarkTreeToFileMap, fileMapToDashyYaml } from '../lib/bookmark-serializer.js';
 import { replaceLocalBookmarks } from '../lib/sync-engine.js';
-import { encryptToken, encryptWithPassword, decryptWithPassword, PASSWORD_ENC_PREFIX } from '../lib/crypto.js';
+import { encryptToken, encryptWithPassword, decryptWithPassword, isPasswordEncrypted } from '../lib/crypto.js';
 import { setEncryptedProfileToken } from '../lib/profile-manager.js';
 import {
   buildExportedProfileMap,
   listConfiguredProfilesMissingToken,
   restoreProfileTokensFromExport,
+  stripExportTokens,
 } from '../lib/settings-export.js';
 import { LOCAL_STORAGE_KEYS } from '../lib/storage-keys.js';
 
@@ -663,12 +664,8 @@ export function initSettings({ saveSettings, loadSettings, showOnboardingConfirm
         downloadFile(`dashy-conf-${date}.yml`, yaml, 'text/yaml');
         showResult(exportResult, getMessage('options_exportSuccess'), 'success');
       } else if (type === 'settings-plain') {
-        const exportData = await buildSettingsExportData();
-        const missing = listConfiguredProfilesMissingToken(exportData.profiles);
-        if (missing.length) {
-          showResult(exportResult, getMessage('options_exportMissingTokens', [missing.join(', ')]), 'error');
-          return;
-        }
+        // Unencrypted file: no PATs in it, so no missing-token check either.
+        const exportData = stripExportTokens(await buildSettingsExportData());
         downloadFile(`gitsyncmarks-settings-${date}.json`, JSON.stringify(exportData, null, 2), 'application/json');
         showResult(exportResult, getMessage('options_exportSuccess'), 'success');
       } else if (type === 'settings-encrypted') {
@@ -702,7 +699,7 @@ export function initSettings({ saveSettings, loadSettings, showOnboardingConfirm
       let text = await file.text();
 
       if (isSettings) {
-        if (text.trim().startsWith(PASSWORD_ENC_PREFIX)) {
+        if (isPasswordEncrypted(text)) {
           const password = await showPasswordDialog('options_importPasswordPrompt', 'options_importBtn');
           if (!password) {
             showResult(importResult, getMessage('options_importPasswordCancelled'), 'error');

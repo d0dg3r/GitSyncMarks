@@ -27,6 +27,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 - Dependency overrides updated (fast-uri, undici, js-yaml, brace-expansion, source-map-js, @humanfs/node, image-size) and sharp bumped; resolves the open Dependabot alerts. `npm audit`: 0 vulnerabilities.
+- **Settings-sync and Bitwarden backup passwords are encrypted at rest** with the device key (they were plain text in local storage). Existing values are still read.
+- **Password-encrypted exports use format v2**: PBKDF2-SHA256 with 600,000 iterations, and the iteration count is stored in the file. v1 files (100,000 iterations) still import.
+- **Plain-JSON settings export contains no tokens.** Use the password-encrypted export to move PATs between devices.
+- **`http://` server URLs are upgraded to `https://`** for public hosts, so a PAT is never sent in clear text. Loopback, private-network and `.lan`/`.local` hosts keep `http://`.
+- **Debug log masks tokens** (GitHub, GitLab, bearer tokens and `token=`/`password=` values).
 
 ### Changed
 - **Website (gitsyncmarks.com)**: Updated landing page for 3.0 — multi-provider Git sync, Bitwarden backup, profile transfer, push mirrors, live sync progress, sync history, clean orphans, and automation; provider-neutral setup steps; Bitwarden screenshot; v3.0.4 release notice. README stable-release banner points to v3.0.4.

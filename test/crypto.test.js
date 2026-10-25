@@ -19,11 +19,12 @@ describe('encryptWithPassword / decryptWithPassword', () => {
     assert.equal(decrypted, plaintext);
   });
 
-  it('produces the documented header and four lines', async () => {
+  it('produces the documented v2 header with the iteration count and five lines', async () => {
     const encrypted = await encryptWithPassword('data', 'pw');
     const lines = encrypted.split('\n');
-    assert.equal(lines.length, 4);
+    assert.equal(lines.length, 5);
     assert.equal(lines[0], PASSWORD_ENC_PREFIX);
+    assert.equal(lines[1], '600000');
   });
 
   it('uses a fresh salt/iv so identical inputs differ', async () => {

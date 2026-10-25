@@ -50,7 +50,7 @@ import { createApi } from './lib/sync-settings.js';
 import { bitwardenBackupPasswordKey } from './lib/storage-keys.js';
 import { previewTransfer, transferBookmarks } from './lib/profile-transfer.js';
 import { testMirrorConnection } from './lib/mirror-push.js';
-import { migrateTokenIfNeeded } from './lib/crypto.js';
+import { migrateTokenIfNeeded, encryptToken } from './lib/crypto.js';
 import { migrateToProfiles, getActiveProfileId, getActiveProfile, getProfiles, getSyncState } from './lib/profile-manager.js';
 import { switchProfile } from './lib/profile-switch.js';
 import {
@@ -540,7 +540,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
   if (message.action === 'setSettingsSyncPassword') {
-    chrome.storage.local.set({ settingsSyncPassword: message.password }).then(async () => {
+    // Stored encrypted with the device key: the password unlocks every settings.enc in the repo.
+    const storedPassword = message.password ? encryptToken(message.password) : Promise.resolve('');
+    storedPassword.then((value) => chrome.storage.local.set({ settingsSyncPassword: value })).then(async () => {
       if (message.triggerPush) {
         // sync(), not push(): a plain push overwrites remote files that another device added.
         const result = await sync();
@@ -548,7 +550,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       } else {
         sendResponse({ ok: true });
       }
-    });
+    }).catch((err) => sendResponse({ ok: false, message: err?.message || String(err) }));
     return true;
   }
   if (message.action === 'clearSettingsSyncPassword') {
@@ -634,7 +636,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
   if (message.action === 'setBitwardenBackupPassword') {
     const key = bitwardenBackupPasswordKey(message.profileId);
-    chrome.storage.local.set({ [key]: message.password || '' })
+    const storedPassword = message.password ? encryptToken(message.password) : Promise.resolve('');
+    storedPassword.then((value) => chrome.storage.local.set({ [key]: value }))
       .then(() => sendResponse({ ok: true }))
       .catch((err) => sendResponse({ ok: false, message: err.message }));
     return true;
