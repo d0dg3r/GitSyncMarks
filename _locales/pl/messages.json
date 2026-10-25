@@ -2495,5 +2495,14 @@
   },
   "popup_backupRestored": {
     "message": "Przywrócono lokalną kopię zapasową. Następna synchronizacja potraktuje te zakładki jako zmiany."
+  },
+  "popup_previewPull": {
+    "message": "Pobieranie: w tej przeglądarce zostanie dodanych $1 i usuniętych $2 zakładek. Kontynuować?"
+  },
+  "popup_previewPush": {
+    "message": "Wysyłanie: w repozytorium zostanie dodanych $1 i usuniętych $2 zakładek. Kontynuować?"
+  },
+  "popup_checkingChanges": {
+    "message": "Sprawdzanie zmian…"
   }
 }

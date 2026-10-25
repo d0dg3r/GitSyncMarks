@@ -2495,5 +2495,14 @@
   },
   "popup_backupRestored": {
     "message": "Copia local restaurada. La próxima sincronización trata estos marcadores como cambios."
+  },
+  "popup_previewPull": {
+    "message": "Descarga: se añadirían $1 marcador(es) y se quitarían $2 en este navegador. ¿Continuar?"
+  },
+  "popup_previewPush": {
+    "message": "Subida: se añadirían $1 marcador(es) y se quitarían $2 en el repositorio. ¿Continuar?"
+  },
+  "popup_checkingChanges": {
+    "message": "Comprobando cambios…"
   }
 }

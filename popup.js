@@ -415,11 +415,24 @@ async function handleAction(action) {
 
 // Push and pull replace the whole other side, so they ask first. Sync Now merges and does not.
 const CONFIRM_MESSAGE_KEYS = { push: 'popup_confirmPush', pull: 'popup_confirmPull' };
+const PREVIEW_MESSAGE_KEYS = { push: 'popup_previewPush', pull: 'popup_previewPull' };
+
+/** Question shown before a push or pull: exact counts when the preview works, generic text otherwise. */
+async function confirmationFor(action) {
+  const preview = await chrome.runtime.sendMessage({ action: 'previewSync' }).catch(() => null);
+  const counts = preview?.success ? preview[action] : null;
+  if (counts) return getMessage(PREVIEW_MESSAGE_KEYS[action], [String(counts.added), String(counts.removed)]);
+  return getMessage(CONFIRM_MESSAGE_KEYS[action]);
+}
 
 async function confirmedAction(action) {
   if (isSyncing) return;
-  const messageKey = CONFIRM_MESSAGE_KEYS[action];
-  if (messageKey && !(await askConfirm(getMessage(messageKey)))) return;
+  if (CONFIRM_MESSAGE_KEYS[action]) {
+    setStatus('⏳', getMessage('popup_checkingChanges'), 'status-ok');
+    const message = await confirmationFor(action);
+    await loadStatus();
+    if (!(await askConfirm(message))) return;
+  }
   await handleAction(action);
 }
 

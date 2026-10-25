@@ -34,6 +34,7 @@ import {
   listSyncHistory,
   restoreFromCommit,
   restoreLocalBackup,
+  previewSync,
   getPreviousCommitSha,
   getCommitDiffPreview,
   setSyncActivityListener,
@@ -460,6 +461,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         console.error('[GitSyncMarks] getStatus failed:', err);
         sendResponse({ configured: false, hasConflict: false, profileName: null, profiles: [], activeProfileId: null });
       });
+    return true;
+  }
+  if (message.action === 'previewSync') {
+    previewSync().then((result) => sendResponse(result));
     return true;
   }
   if (message.action === 'restoreLocalBackup') {

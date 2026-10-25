@@ -2495,5 +2495,14 @@
   },
   "popup_backupRestored": {
     "message": "Backup locale ripristinato. La prossima sincronizzazione considererà questi segnalibri come modifiche."
+  },
+  "popup_previewPull": {
+    "message": "Pull: $1 segnalibro/i verrebbero aggiunti e $2 rimossi in questo browser. Continuare?"
+  },
+  "popup_previewPush": {
+    "message": "Push: $1 segnalibro/i verrebbero aggiunti e $2 rimossi nel repository. Continuare?"
+  },
+  "popup_checkingChanges": {
+    "message": "Verifica delle modifiche…"
   }
 }

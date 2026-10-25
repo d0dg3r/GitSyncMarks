@@ -2495,5 +2495,14 @@
   },
   "popup_backupRestored": {
     "message": "Backup local restaurado. A próxima sincronização trata estes favoritos como alterações."
+  },
+  "popup_previewPull": {
+    "message": "Pull: $1 favorito(s) seriam adicionados e $2 removidos neste navegador. Continuar?"
+  },
+  "popup_previewPush": {
+    "message": "Push: $1 favorito(s) seriam adicionados e $2 removidos no repositório. Continuar?"
+  },
+  "popup_checkingChanges": {
+    "message": "Verificando alterações…"
   }
 }

@@ -2495,5 +2495,14 @@
   },
   "popup_backupRestored": {
     "message": "已恢复本地备份。下次同步会将这些书签视为更改。"
+  },
+  "popup_previewPull": {
+    "message": "拉取：此浏览器将新增 $1 个书签、删除 $2 个书签。继续吗？"
+  },
+  "popup_previewPush": {
+    "message": "推送：仓库将新增 $1 个书签、删除 $2 个书签。继续吗？"
+  },
+  "popup_checkingChanges": {
+    "message": "正在检查更改…"
   }
 }

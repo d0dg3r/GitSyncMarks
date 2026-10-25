@@ -2495,5 +2495,14 @@
   },
   "popup_backupRestored": {
     "message": "Sauvegarde locale restaurée. La prochaine synchronisation traitera ces favoris comme des modifications."
+  },
+  "popup_previewPull": {
+    "message": "Récupération : $1 favori(s) seraient ajoutés et $2 supprimés dans ce navigateur. Continuer ?"
+  },
+  "popup_previewPush": {
+    "message": "Envoi : $1 favori(s) seraient ajoutés et $2 supprimés dans le dépôt. Continuer ?"
+  },
+  "popup_checkingChanges": {
+    "message": "Vérification des modifications…"
   }
 }

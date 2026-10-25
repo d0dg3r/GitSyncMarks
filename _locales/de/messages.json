@@ -2501,5 +2501,14 @@
   },
   "popup_backupRestored": {
     "message": "Lokales Backup wiederhergestellt. Der nächste Sync behandelt diese Lesezeichen als Änderungen."
+  },
+  "popup_previewPull": {
+    "message": "Pull: $1 Lesezeichen würden in diesem Browser hinzugefügt und $2 entfernt. Fortfahren?"
+  },
+  "popup_previewPush": {
+    "message": "Push: $1 Lesezeichen würden im Repository hinzugefügt und $2 entfernt. Fortfahren?"
+  },
+  "popup_checkingChanges": {
+    "message": "Änderungen werden geprüft…"
   }
 }

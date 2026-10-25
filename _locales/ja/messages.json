@@ -2495,5 +2495,14 @@
   },
   "popup_backupRestored": {
     "message": "ローカルバックアップを復元しました。次の同期では、これらのブックマークを変更として扱います。"
+  },
+  "popup_previewPull": {
+    "message": "取得: このブラウザーでブックマークが $1 件追加され、$2 件削除されます。続けますか？"
+  },
+  "popup_previewPush": {
+    "message": "プッシュ: リポジトリでブックマークが $1 件追加され、$2 件削除されます。続けますか？"
+  },
+  "popup_checkingChanges": {
+    "message": "変更を確認中…"
   }
 }

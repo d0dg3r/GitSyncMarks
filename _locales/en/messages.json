@@ -2542,5 +2542,14 @@
   },
   "popup_backupRestored": {
     "message": "Local backup restored. The next sync treats these bookmarks as changes."
+  },
+  "popup_previewPull": {
+    "message": "Pull: $1 bookmark(s) would be added and $2 removed in this browser. Continue?"
+  },
+  "popup_previewPush": {
+    "message": "Push: $1 bookmark(s) would be added and $2 removed in the repository. Continue?"
+  },
+  "popup_checkingChanges": {
+    "message": "Checking changes…"
   }
 }

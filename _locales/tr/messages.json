@@ -2495,5 +2495,14 @@
   },
   "popup_backupRestored": {
     "message": "Yerel yedek geri yüklendi. Sonraki senkronizasyon bu yer imlerini değişiklik olarak ele alır."
+  },
+  "popup_previewPull": {
+    "message": "Çekme: bu tarayıcıda $1 yer imi eklenecek ve $2 yer imi kaldırılacak. Devam edilsin mi?"
+  },
+  "popup_previewPush": {
+    "message": "Gönderme: depoda $1 yer imi eklenecek ve $2 yer imi kaldırılacak. Devam edilsin mi?"
+  },
+  "popup_checkingChanges": {
+    "message": "Değişiklikler kontrol ediliyor…"
   }
 }
