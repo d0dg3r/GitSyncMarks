@@ -156,7 +156,7 @@ Blocks 1–3 cover the sync core. Do them first.
 | 7.2 | Auto-sync on: start a sync and add a bookmark meanwhile | Bookmark stays and is pushed shortly after |
 | 7.3 | Popup footer → Copy diagnostics | No token and no repository or mirror names in the text |
 | 7.4 | Export settings as plain JSON | The file contains no token |
-| 7.5 | Settings sync with password | Works; 3.0.8 devices cannot read the v2 `settings.enc` |
+| 7.5 | Settings sync with password | Works; devices on 3.0.10 or older cannot read the v2 `settings.enc` |
 
 ### 3. Reporting a failure
 
