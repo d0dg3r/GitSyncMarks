@@ -2450,5 +2450,32 @@
   },
   "whatsnew_title": {
     "message": "Novedades en GitSyncMarks $1"
+  },
+  "popup_confirmPush": {
+    "message": "¿Sobrescribir el repositorio remoto con los marcadores de este navegador?"
+  },
+  "popup_confirmPull": {
+    "message": "¿Reemplazar los marcadores de este navegador con los del repositorio remoto?"
+  },
+  "popup_confirmBtn": {
+    "message": "Confirmar"
+  },
+  "options_none": {
+    "message": "Ninguno"
+  },
+  "options_cancel": {
+    "message": "Cancelar"
+  },
+  "options_parentToolbar": {
+    "message": "Barra de marcadores"
+  },
+  "options_parentOther": {
+    "message": "Otros marcadores"
+  },
+  "options_linkwardenSyncDesc": {
+    "message": "Sincroniza tus colecciones de Linkwarden directamente con las carpetas de marcadores de tu navegador."
+  },
+  "options_linkwardenStatusDisabled": {
+    "message": "La integración de Linkwarden está desactivada. Actívala en la pestaña General para usarla."
   }
 }

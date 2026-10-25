@@ -525,7 +525,25 @@ export function initHistory() {
     }
   });
 
+  // Undo rewrites the bookmarks like a restore does, so it uses the same two-step confirm.
+  const undoLabel = historyUndoBtn?.textContent;
+  let undoArmed = false;
+  let undoResetTimer = null;
+  function disarmUndo() {
+    undoArmed = false;
+    if (undoResetTimer) clearTimeout(undoResetTimer);
+    undoResetTimer = null;
+    if (historyUndoBtn) historyUndoBtn.textContent = undoLabel;
+  }
+
   historyUndoBtn?.addEventListener('click', async () => {
+    if (!undoArmed) {
+      undoArmed = true;
+      historyUndoBtn.textContent = getMessage('options_historyRestoreConfirmBtn') || 'Click again to confirm';
+      undoResetTimer = setTimeout(disarmUndo, 5000);
+      return;
+    }
+    disarmUndo();
     let sha = historyUndoBtn.dataset.sha;
     if (!sha) {
       const resp = await chrome.runtime.sendMessage({ action: 'getPreviousCommitSha' });
@@ -536,7 +554,7 @@ export function initHistory() {
     historyStatus.textContent = getMessage('options_historyRestoring') || 'Restoring…';
     try {
       const resp = await chrome.runtime.sendMessage({ action: 'restoreFromCommit', commitSha: sha });
-      historyStatus.textContent = resp.message || '';
+      historyStatus.textContent = resp?.message || '';
     } catch (err) {
       historyStatus.textContent = err.message;
     } finally {

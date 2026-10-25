@@ -2450,5 +2450,32 @@
   },
   "whatsnew_title": {
     "message": "Novità in GitSyncMarks $1"
+  },
+  "popup_confirmPush": {
+    "message": "Sovrascrivere il repository remoto con i segnalibri di questo browser?"
+  },
+  "popup_confirmPull": {
+    "message": "Sostituire i segnalibri di questo browser con quelli del repository remoto?"
+  },
+  "popup_confirmBtn": {
+    "message": "Conferma"
+  },
+  "options_none": {
+    "message": "Nessuno"
+  },
+  "options_cancel": {
+    "message": "Annulla"
+  },
+  "options_parentToolbar": {
+    "message": "Barra dei segnalibri"
+  },
+  "options_parentOther": {
+    "message": "Altri segnalibri"
+  },
+  "options_linkwardenSyncDesc": {
+    "message": "Sincronizza le tue collezioni Linkwarden direttamente nelle cartelle dei segnalibri del browser."
+  },
+  "options_linkwardenStatusDisabled": {
+    "message": "L'integrazione con Linkwarden è disattivata. Attivala nella scheda Generale per usarla."
   }
 }

@@ -2450,5 +2450,32 @@
   },
   "whatsnew_title": {
     "message": "GitSyncMarks $1'deki yenilikler"
+  },
+  "popup_confirmPush": {
+    "message": "Uzak depo bu tarayıcının yer imleriyle üzerine yazılsın mı?"
+  },
+  "popup_confirmPull": {
+    "message": "Bu tarayıcının yer imleri uzak depodakilerle değiştirilsin mi?"
+  },
+  "popup_confirmBtn": {
+    "message": "Onayla"
+  },
+  "options_none": {
+    "message": "Yok"
+  },
+  "options_cancel": {
+    "message": "İptal"
+  },
+  "options_parentToolbar": {
+    "message": "Yer imleri çubuğu"
+  },
+  "options_parentOther": {
+    "message": "Diğer yer imleri"
+  },
+  "options_linkwardenSyncDesc": {
+    "message": "Linkwarden koleksiyonlarınızı doğrudan tarayıcının yer imi klasörleriyle senkronize edin."
+  },
+  "options_linkwardenStatusDisabled": {
+    "message": "Linkwarden entegrasyonu devre dışı. Senkronizasyonu kullanmak için Genel sekmesinden etkinleştirin."
   }
 }

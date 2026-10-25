@@ -2497,5 +2497,32 @@
   },
   "options_linkwardenHostPermissionDenied": {
     "message": "Host permission denied. Please check your browser address bar/popup blocker."
+  },
+  "popup_confirmPush": {
+    "message": "Overwrite the remote repository with this browser's bookmarks?"
+  },
+  "popup_confirmPull": {
+    "message": "Replace this browser's bookmarks with the remote repository's?"
+  },
+  "popup_confirmBtn": {
+    "message": "Confirm"
+  },
+  "options_none": {
+    "message": "None"
+  },
+  "options_cancel": {
+    "message": "Cancel"
+  },
+  "options_parentToolbar": {
+    "message": "Bookmarks Bar"
+  },
+  "options_parentOther": {
+    "message": "Other Bookmarks"
+  },
+  "options_linkwardenSyncDesc": {
+    "message": "Sync your Linkwarden collections directly to your browser's bookmark folders."
+  },
+  "options_linkwardenStatusDisabled": {
+    "message": "Linkwarden integration is disabled. Enable it in the General tab to use sync."
   }
 }

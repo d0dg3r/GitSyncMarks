@@ -2456,5 +2456,32 @@
   },
   "whatsnew_title": {
     "message": "Neu in GitSyncMarks $1"
+  },
+  "popup_confirmPush": {
+    "message": "Remote-Repository mit den Lesezeichen dieses Browsers überschreiben?"
+  },
+  "popup_confirmPull": {
+    "message": "Lesezeichen dieses Browsers durch die des Remote-Repositorys ersetzen?"
+  },
+  "popup_confirmBtn": {
+    "message": "Bestätigen"
+  },
+  "options_none": {
+    "message": "Keine"
+  },
+  "options_cancel": {
+    "message": "Abbrechen"
+  },
+  "options_parentToolbar": {
+    "message": "Lesezeichenleiste"
+  },
+  "options_parentOther": {
+    "message": "Weitere Lesezeichen"
+  },
+  "options_linkwardenSyncDesc": {
+    "message": "Synchronisiere deine Linkwarden-Sammlungen direkt in die Lesezeichenordner deines Browsers."
+  },
+  "options_linkwardenStatusDisabled": {
+    "message": "Die Linkwarden-Integration ist deaktiviert. Aktiviere sie im Tab „Allgemein“, um sie zu nutzen."
   }
 }

@@ -13,7 +13,7 @@
   <div class="popup">
     <header class="popup-header">
       <div class="popup-header-left">
-        <img src="icons/icon48-plain.png" alt="Icon" class="popup-icon">
+        <img src="icons/icon48-plain.png" alt="" class="popup-icon">
         <h1>GitSyncMarks</h1>
       </div>
       <select id="profile-select" class="profile-select header-profile" style="display: none;"></select>
@@ -52,6 +52,15 @@
         <div class="conflict-actions">
           <button id="force-push-btn" class="btn btn-small btn-warning" data-i18n="popup_localToRemote">Local → Remote</button>
           <button id="force-pull-btn" class="btn btn-small btn-secondary" data-i18n="popup_remoteToLocal">Remote → Local</button>
+        </div>
+      </div>
+
+      <!-- Inline confirmation before an overwrite or a profile switch -->
+      <div id="confirm-box" class="conflict-box panel-compact" role="alertdialog" aria-labelledby="confirm-text" style="display: none;">
+        <p id="confirm-text"></p>
+        <div class="conflict-actions">
+          <button id="confirm-yes-btn" class="btn btn-small btn-warning" data-i18n="popup_confirmBtn">Confirm</button>
+          <button id="confirm-no-btn" class="btn btn-small btn-secondary" data-i18n="options_profileSwitchCancelBtn">Cancel</button>
         </div>
       </div>
 

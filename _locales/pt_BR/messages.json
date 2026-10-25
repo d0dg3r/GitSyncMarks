@@ -2450,5 +2450,32 @@
   },
   "whatsnew_title": {
     "message": "Novidades no GitSyncMarks $1"
+  },
+  "popup_confirmPush": {
+    "message": "Sobrescrever o repositório remoto com os favoritos deste navegador?"
+  },
+  "popup_confirmPull": {
+    "message": "Substituir os favoritos deste navegador pelos do repositório remoto?"
+  },
+  "popup_confirmBtn": {
+    "message": "Confirmar"
+  },
+  "options_none": {
+    "message": "Nenhum"
+  },
+  "options_cancel": {
+    "message": "Cancelar"
+  },
+  "options_parentToolbar": {
+    "message": "Barra de favoritos"
+  },
+  "options_parentOther": {
+    "message": "Outros favoritos"
+  },
+  "options_linkwardenSyncDesc": {
+    "message": "Sincronize suas coleções do Linkwarden diretamente nas pastas de favoritos do navegador."
+  },
+  "options_linkwardenStatusDisabled": {
+    "message": "A integração com o Linkwarden está desativada. Ative-a na aba Geral para usar a sincronização."
   }
 }

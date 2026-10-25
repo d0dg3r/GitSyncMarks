@@ -2450,5 +2450,32 @@
   },
   "whatsnew_title": {
     "message": "Что нового в GitSyncMarks $1"
+  },
+  "popup_confirmPush": {
+    "message": "Перезаписать удалённый репозиторий закладками этого браузера?"
+  },
+  "popup_confirmPull": {
+    "message": "Заменить закладки этого браузера закладками из удалённого репозитория?"
+  },
+  "popup_confirmBtn": {
+    "message": "Подтвердить"
+  },
+  "options_none": {
+    "message": "Нет"
+  },
+  "options_cancel": {
+    "message": "Отмена"
+  },
+  "options_parentToolbar": {
+    "message": "Панель закладок"
+  },
+  "options_parentOther": {
+    "message": "Прочие закладки"
+  },
+  "options_linkwardenSyncDesc": {
+    "message": "Синхронизируйте коллекции Linkwarden непосредственно с папками закладок браузера."
+  },
+  "options_linkwardenStatusDisabled": {
+    "message": "Интеграция с Linkwarden отключена. Включите её на вкладке «Общие», чтобы использовать синхронизацию."
   }
 }

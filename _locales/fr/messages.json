@@ -2450,5 +2450,32 @@
   },
   "whatsnew_title": {
     "message": "Nouveautés dans GitSyncMarks $1"
+  },
+  "popup_confirmPush": {
+    "message": "Remplacer le dépôt distant par les favoris de ce navigateur ?"
+  },
+  "popup_confirmPull": {
+    "message": "Remplacer les favoris de ce navigateur par ceux du dépôt distant ?"
+  },
+  "popup_confirmBtn": {
+    "message": "Confirmer"
+  },
+  "options_none": {
+    "message": "Aucun"
+  },
+  "options_cancel": {
+    "message": "Annuler"
+  },
+  "options_parentToolbar": {
+    "message": "Barre de favoris"
+  },
+  "options_parentOther": {
+    "message": "Autres favoris"
+  },
+  "options_linkwardenSyncDesc": {
+    "message": "Synchronisez vos collections Linkwarden directement dans les dossiers de favoris de votre navigateur."
+  },
+  "options_linkwardenStatusDisabled": {
+    "message": "L'intégration Linkwarden est désactivée. Activez-la dans l'onglet Général pour l'utiliser."
   }
 }

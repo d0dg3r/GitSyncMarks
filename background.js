@@ -441,14 +441,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
   if (message.action === 'getStatus') {
-    Promise.all([getSyncStatus(), getActiveProfile(), getProfiles(), getActiveProfileId()])
-      .then(([status, profile, profiles, activeProfileId]) => {
+    Promise.all([getSyncStatus(), getActiveProfile(), getProfiles(), getActiveProfileId(), getSettings()])
+      .then(([status, profile, profiles, activeProfileId, settings]) => {
         const profileList = Object.entries(profiles || {}).map(([id, p]) => ({ id, name: p.name || id }));
         sendResponse({
           ...status,
           profileName: profile?.name || null,
           profiles: profileList,
           activeProfileId: activeProfileId || null,
+          profileSwitchWithoutConfirm: !!settings.profileSwitchWithoutConfirm,
         });
       })
       .catch((err) => {

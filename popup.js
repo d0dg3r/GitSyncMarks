@@ -33,6 +33,10 @@ const pullBtn = document.getElementById('pull-btn');
 const forcePushBtn = document.getElementById('force-push-btn');
 const forcePullBtn = document.getElementById('force-pull-btn');
 const openSettingsBtn = document.getElementById('open-settings-btn');
+const confirmBox = document.getElementById('confirm-box');
+const confirmText = document.getElementById('confirm-text');
+const confirmYesBtn = document.getElementById('confirm-yes-btn');
+const confirmNoBtn = document.getElementById('confirm-no-btn');
 const settingsLink = document.getElementById('settings-link');
 const nextSyncCountdownEl = document.getElementById('next-sync-countdown');
 
@@ -61,6 +65,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     getMessage,
     manifestVersion: chrome.runtime.getManifest().version,
   });
+});
+
+// Keep the popup in step with background syncs (auto-sync, alarm, context menu) while it is open.
+// Key of the per-profile sync state in chrome.storage.local (see lib/profile-manager.js).
+const SYNC_STATE_KEY = 'syncState';
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === 'local' && changes[SYNC_STATE_KEY] && !isSyncing) {
+    loadStatus();
+  }
 });
 
 async function loadStatus() {
@@ -260,7 +273,34 @@ function showDemoUI() {
 
 function setStatus(_icon, message, boxClass) {
   statusMessage.textContent = message;
-  statusArea.className = 'status-area' + (boxClass === 'status-error' ? ' status-error' : '');
+  const stateClass = boxClass === 'status-error' || boxClass === 'status-warning' ? ` ${boxClass}` : '';
+  statusArea.className = `status-area${stateClass}`;
+}
+
+/**
+ * Inline confirmation (no native dialog). Resolves true when the user confirms.
+ * @param {string} message
+ * @param {string} [confirmKey] - i18n key for the confirm button label
+ * @returns {Promise<boolean>}
+ */
+function askConfirm(message, confirmKey = 'popup_confirmBtn') {
+  return new Promise((resolve) => {
+    confirmText.textContent = message;
+    confirmYesBtn.textContent = getMessage(confirmKey);
+    confirmBox.style.display = 'block';
+    confirmNoBtn.focus();
+
+    const finish = (answer) => {
+      confirmBox.style.display = 'none';
+      confirmYesBtn.removeEventListener('click', onYes);
+      confirmNoBtn.removeEventListener('click', onNo);
+      resolve(answer);
+    };
+    const onYes = () => finish(true);
+    const onNo = () => finish(false);
+    confirmYesBtn.addEventListener('click', onYes);
+    confirmNoBtn.addEventListener('click', onNo);
+  });
 }
 
 function formatRelativeTime(date) {
@@ -324,6 +364,9 @@ async function handleAction(action) {
       await loadStatus();
       setStatus('✅', result.message, 'status-ok');
       conflictBox.style.display = 'none';
+    } else if (result.alreadyInProgress) {
+      // A background sync holds the lock; this is information, not an error.
+      setStatus('⏳', result.message, 'status-warning');
     } else {
       if (result.conflict) {
         setStatus('⚠️', result.message, 'status-warning');
@@ -339,9 +382,19 @@ async function handleAction(action) {
   }
 }
 
+// Push and pull replace the whole other side, so they ask first. Sync Now merges and does not.
+const CONFIRM_MESSAGE_KEYS = { push: 'popup_confirmPush', pull: 'popup_confirmPull' };
+
+async function confirmedAction(action) {
+  if (isSyncing) return;
+  const messageKey = CONFIRM_MESSAGE_KEYS[action];
+  if (messageKey && !(await askConfirm(getMessage(messageKey)))) return;
+  await handleAction(action);
+}
+
 syncBtn.addEventListener('click', () => handleAction('sync'));
-pushBtn.addEventListener('click', () => handleAction('push'));
-pullBtn.addEventListener('click', () => handleAction('pull'));
+pushBtn.addEventListener('click', () => confirmedAction('push'));
+pullBtn.addEventListener('click', () => confirmedAction('pull'));
 
 // Profile switch
 profileSelect.addEventListener('change', async (e) => {
@@ -352,6 +405,18 @@ profileSelect.addEventListener('change', async (e) => {
   if (isSyncing) {
     profileSelect.value = activeId;
     return;
+  }
+  // Switching replaces the local bookmarks, so honour the "switch without confirmation" setting.
+  if (!status?.profileSwitchWithoutConfirm) {
+    const targetName = profileSelect.options[profileSelect.selectedIndex]?.textContent || targetId;
+    const confirmed = await askConfirm(
+      getMessage('options_profileSwitchConfirm', [targetName]),
+      'options_profileSwitchConfirmBtn'
+    );
+    if (!confirmed) {
+      profileSelect.value = activeId;
+      return;
+    }
   }
   setLoading(true);
   syncText.textContent = getMessage('popup_profileSwitching');
@@ -372,8 +437,8 @@ profileSelect.addEventListener('change', async (e) => {
     setLoading(false);
   }
 });
-forcePushBtn.addEventListener('click', () => handleAction('push'));
-forcePullBtn.addEventListener('click', () => handleAction('pull'));
+forcePushBtn.addEventListener('click', () => confirmedAction('push'));
+forcePullBtn.addEventListener('click', () => confirmedAction('pull'));
 
 // Settings links (close popup after opening options)
 openSettingsBtn.addEventListener('click', () => {

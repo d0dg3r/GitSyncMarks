@@ -2450,5 +2450,32 @@
   },
   "whatsnew_title": {
     "message": "GitSyncMarks $1 的新功能"
+  },
+  "popup_confirmPush": {
+    "message": "用此浏览器的书签覆盖远程仓库？"
+  },
+  "popup_confirmPull": {
+    "message": "用远程仓库的书签替换此浏览器的书签？"
+  },
+  "popup_confirmBtn": {
+    "message": "确认"
+  },
+  "options_none": {
+    "message": "无"
+  },
+  "options_cancel": {
+    "message": "取消"
+  },
+  "options_parentToolbar": {
+    "message": "书签栏"
+  },
+  "options_parentOther": {
+    "message": "其他书签"
+  },
+  "options_linkwardenSyncDesc": {
+    "message": "将 Linkwarden 集合直接同步到浏览器的书签文件夹。"
+  },
+  "options_linkwardenStatusDisabled": {
+    "message": "Linkwarden 集成已禁用。请在“常规”标签页中启用后再使用同步。"
   }
 }

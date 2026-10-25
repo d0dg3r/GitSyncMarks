@@ -2450,5 +2450,32 @@
   },
   "whatsnew_title": {
     "message": "Co nowego w GitSyncMarks $1"
+  },
+  "popup_confirmPush": {
+    "message": "Nadpisać zdalne repozytorium zakładkami z tej przeglądarki?"
+  },
+  "popup_confirmPull": {
+    "message": "Zastąpić zakładki tej przeglądarki zakładkami ze zdalnego repozytorium?"
+  },
+  "popup_confirmBtn": {
+    "message": "Potwierdź"
+  },
+  "options_none": {
+    "message": "Brak"
+  },
+  "options_cancel": {
+    "message": "Anuluj"
+  },
+  "options_parentToolbar": {
+    "message": "Pasek zakładek"
+  },
+  "options_parentOther": {
+    "message": "Inne zakładki"
+  },
+  "options_linkwardenSyncDesc": {
+    "message": "Synchronizuj kolekcje Linkwarden bezpośrednio z folderami zakładek przeglądarki."
+  },
+  "options_linkwardenStatusDisabled": {
+    "message": "Integracja z Linkwarden jest wyłączona. Włącz ją na karcie Ogólne, aby korzystać z synchronizacji."
   }
 }

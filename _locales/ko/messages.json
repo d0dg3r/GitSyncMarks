@@ -2450,5 +2450,32 @@
   },
   "whatsnew_title": {
     "message": "GitSyncMarks $1의 새로운 기능"
+  },
+  "popup_confirmPush": {
+    "message": "이 브라우저의 북마크로 원격 저장소를 덮어쓸까요?"
+  },
+  "popup_confirmPull": {
+    "message": "이 브라우저의 북마크를 원격 저장소의 북마크로 바꿀까요?"
+  },
+  "popup_confirmBtn": {
+    "message": "확인"
+  },
+  "options_none": {
+    "message": "없음"
+  },
+  "options_cancel": {
+    "message": "취소"
+  },
+  "options_parentToolbar": {
+    "message": "북마크 막대"
+  },
+  "options_parentOther": {
+    "message": "기타 북마크"
+  },
+  "options_linkwardenSyncDesc": {
+    "message": "Linkwarden 컬렉션을 브라우저의 북마크 폴더와 직접 동기화합니다."
+  },
+  "options_linkwardenStatusDisabled": {
+    "message": "Linkwarden 연동이 비활성화되어 있습니다. 동기화를 사용하려면 '일반' 탭에서 활성화하세요."
   }
 }

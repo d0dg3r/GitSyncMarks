@@ -2450,5 +2450,32 @@
   },
   "whatsnew_title": {
     "message": "GitSyncMarks $1 の新機能"
+  },
+  "popup_confirmPush": {
+    "message": "このブラウザーのブックマークでリモートリポジトリを上書きしますか？"
+  },
+  "popup_confirmPull": {
+    "message": "このブラウザーのブックマークをリモートリポジトリの内容で置き換えますか？"
+  },
+  "popup_confirmBtn": {
+    "message": "確認"
+  },
+  "options_none": {
+    "message": "なし"
+  },
+  "options_cancel": {
+    "message": "キャンセル"
+  },
+  "options_parentToolbar": {
+    "message": "ブックマークバー"
+  },
+  "options_parentOther": {
+    "message": "その他のブックマーク"
+  },
+  "options_linkwardenSyncDesc": {
+    "message": "Linkwarden のコレクションをブラウザーのブックマークフォルダーに直接同期します。"
+  },
+  "options_linkwardenStatusDisabled": {
+    "message": "Linkwarden 連携は無効です。「一般」タブで有効にしてください。"
   }
 }

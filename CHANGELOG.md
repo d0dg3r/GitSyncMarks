@@ -24,6 +24,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **GitLab and Gitea honour short rate-limit waits** (Retry-After) like GitHub.
 - Pull reuses unchanged blobs from the stored base, so large repositories need fewer requests.
 - Runtime messages are accepted only from the extension itself; a failing sync always answers the caller.
+- **Popup asks before Push, Pull and profile switch** (inline confirmation, respects "switch without confirmation"). Sync Now still runs directly.
+- **Popup updates live** while a background sync changes the state, and shows "Sync already in progress" as information, not as an error.
+- **History Undo asks for a second click**, like row restore.
+- **Context menu** shows the correct "Bookmarks Bar" / "Other Bookmarks" label (it showed a raw message key).
+- Missing UI texts (None, Cancel, Linkwarden hints, Bookmarks Bar / Other Bookmarks) are translated in all locales.
 
 ### Security
 - Dependency overrides updated (fast-uri, undici, js-yaml, brace-expansion, source-map-js, @humanfs/node, image-size) and sharp bumped; resolves the open Dependabot alerts. `npm audit`: 0 vulnerabilities.

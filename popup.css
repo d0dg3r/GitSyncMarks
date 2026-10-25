@@ -114,6 +114,12 @@ body {
   background: var(--color-error-bg);
 }
 
+.status-area.status-warning {
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  background: var(--color-warning-bg);
+}
+
 .status-area.status-loading {
   opacity: 0.85;
 }
