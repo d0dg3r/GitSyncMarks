@@ -2486,5 +2486,14 @@
   },
   "popup_tokenExpired": {
     "message": "Tokenin süresi doldu. Ayarlardan yeni bir token oluşturun."
+  },
+  "popup_restoreBackup": {
+    "message": "Yerel yedeği geri yükle"
+  },
+  "popup_confirmRestoreBackup": {
+    "message": "Son senkronizasyon veya çekme işleminden önceki yer imleri geri yüklensin mi? Mevcut durum da yedek olarak saklanır."
+  },
+  "popup_backupRestored": {
+    "message": "Yerel yedek geri yüklendi. Sonraki senkronizasyon bu yer imlerini değişiklik olarak ele alır."
   }
 }

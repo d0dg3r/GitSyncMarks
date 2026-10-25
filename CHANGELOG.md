@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Popup shows when you are offline** and disables the sync buttons until the connection is back.
 - **Popup warns when a GitHub token expires within 14 days** (or has expired), using GitHub's expiry header.
 - **Firefox AMO lint runs in CI.** Bookmark reorder listener is optional, so Firefox no longer fails to load it.
+- **Local backups before a remote is applied**: the last three local snapshots are kept (pull, sync merge, remote-only sync). The popup offers "Restore local backup" to undo the last replace; the state being replaced is kept as well.
 
 ### Security
 - Dependency overrides updated (fast-uri, undici, js-yaml, brace-expansion, source-map-js, @humanfs/node, image-size) and sharp bumped; resolves the open Dependabot alerts. `npm audit`: 0 vulnerabilities.

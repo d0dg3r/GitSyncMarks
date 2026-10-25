@@ -2486,5 +2486,14 @@
   },
   "popup_tokenExpired": {
     "message": "トークンの期限が切れています。設定で新しいトークンを作成してください。"
+  },
+  "popup_restoreBackup": {
+    "message": "ローカルバックアップを復元"
+  },
+  "popup_confirmRestoreBackup": {
+    "message": "直前の同期または取得より前のブックマークを復元しますか？現在の状態もバックアップとして保存されます。"
+  },
+  "popup_backupRestored": {
+    "message": "ローカルバックアップを復元しました。次の同期では、これらのブックマークを変更として扱います。"
   }
 }

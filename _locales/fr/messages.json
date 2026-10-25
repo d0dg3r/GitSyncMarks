@@ -2486,5 +2486,14 @@
   },
   "popup_tokenExpired": {
     "message": "Le jeton a expiré. Créez un nouveau jeton dans les paramètres."
+  },
+  "popup_restoreBackup": {
+    "message": "Restaurer la sauvegarde locale"
+  },
+  "popup_confirmRestoreBackup": {
+    "message": "Restaurer les favoris d’avant la dernière synchronisation ou récupération ? L’état actuel est aussi sauvegardé."
+  },
+  "popup_backupRestored": {
+    "message": "Sauvegarde locale restaurée. La prochaine synchronisation traitera ces favoris comme des modifications."
   }
 }

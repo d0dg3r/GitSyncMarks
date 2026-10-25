@@ -35,6 +35,7 @@ const pullBtn = document.getElementById('pull-btn');
 const forcePushBtn = document.getElementById('force-push-btn');
 const forcePullBtn = document.getElementById('force-pull-btn');
 const openSettingsBtn = document.getElementById('open-settings-btn');
+const restoreBackupBtn = document.getElementById('restore-backup-btn');
 const confirmBox = document.getElementById('confirm-box');
 const confirmText = document.getElementById('confirm-text');
 const confirmYesBtn = document.getElementById('confirm-yes-btn');
@@ -94,6 +95,7 @@ function updateUI(status) {
     return;
   }
   setSyncControlsDisabled(isSyncing);
+  restoreBackupBtn.style.display = status.localBackup ? '' : 'none';
 
   notConfiguredEl.style.display = 'none';
   configuredEl.style.display = 'block';
@@ -422,6 +424,24 @@ async function confirmedAction(action) {
 }
 
 syncBtn.addEventListener('click', () => handleAction('sync'));
+
+// Undo for the last local replace: restores the snapshot taken before the last pull or merge.
+restoreBackupBtn.addEventListener('click', async () => {
+  if (isSyncing) return;
+  const latest = await chrome.runtime.sendMessage({ action: 'getStatus' }).catch(() => null);
+  if (!latest?.localBackup) return;
+  if (!(await askConfirm(getMessage('popup_confirmRestoreBackup')))) return;
+  setLoading(true);
+  try {
+    const result = await chrome.runtime.sendMessage({ action: 'restoreLocalBackup' });
+    await loadStatus();
+    setStatus(result?.success ? '✅' : '❌', result?.message || '', result?.success ? 'status-ok' : 'status-error');
+  } catch (err) {
+    setStatus('❌', getMessage('popup_error', [err.message]), 'status-error');
+  } finally {
+    setLoading(false);
+  }
+});
 pushBtn.addEventListener('click', () => confirmedAction('push'));
 pullBtn.addEventListener('click', () => confirmedAction('pull'));
 

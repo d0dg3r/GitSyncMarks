@@ -2486,5 +2486,14 @@
   },
   "popup_tokenExpired": {
     "message": "令牌已过期。请在设置中创建新令牌。"
+  },
+  "popup_restoreBackup": {
+    "message": "恢复本地备份"
+  },
+  "popup_confirmRestoreBackup": {
+    "message": "恢复最近一次同步或拉取之前的书签吗？当前状态也会保存为备份。"
+  },
+  "popup_backupRestored": {
+    "message": "已恢复本地备份。下次同步会将这些书签视为更改。"
   }
 }

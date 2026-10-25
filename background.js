@@ -33,6 +33,7 @@ import {
   deleteSettingsProfile,
   listSyncHistory,
   restoreFromCommit,
+  restoreLocalBackup,
   getPreviousCommitSha,
   getCommitDiffPreview,
   setSyncActivityListener,
@@ -52,6 +53,7 @@ import { previewTransfer, transferBookmarks } from './lib/profile-transfer.js';
 import { testMirrorConnection } from './lib/mirror-push.js';
 import { migrateTokenIfNeeded, encryptToken } from './lib/crypto.js';
 import { migrateToProfiles, getActiveProfileId, getActiveProfile, getProfiles, getSyncState } from './lib/profile-manager.js';
+import { getLatestLocalBackupInfo } from './lib/local-backup.js';
 import { switchProfile } from './lib/profile-switch.js';
 import {
   setupContextMenus,
@@ -442,8 +444,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
   if (message.action === 'getStatus') {
-    Promise.all([getSyncStatus(), getActiveProfile(), getProfiles(), getActiveProfileId(), getSettings()])
-      .then(([status, profile, profiles, activeProfileId, settings]) => {
+    Promise.all([getSyncStatus(), getActiveProfile(), getProfiles(), getActiveProfileId(), getSettings(), getLatestLocalBackupInfo()])
+      .then(([status, profile, profiles, activeProfileId, settings, localBackup]) => {
         const profileList = Object.entries(profiles || {}).map(([id, p]) => ({ id, name: p.name || id }));
         sendResponse({
           ...status,
@@ -451,12 +453,22 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           profiles: profileList,
           activeProfileId: activeProfileId || null,
           profileSwitchWithoutConfirm: !!settings.profileSwitchWithoutConfirm,
+          localBackup,
         });
       })
       .catch((err) => {
         console.error('[GitSyncMarks] getStatus failed:', err);
         sendResponse({ configured: false, hasConflict: false, profileName: null, profiles: [], activeProfileId: null });
       });
+    return true;
+  }
+  if (message.action === 'restoreLocalBackup') {
+    restoreLocalBackup()
+      .then(async (result) => {
+        await updateSyncStatusBadge(result);
+        sendResponse(result);
+      })
+      .catch((err) => sendResponse({ success: false, message: err?.message || String(err) }));
     return true;
   }
   if (message.action === 'previewTransfer') {

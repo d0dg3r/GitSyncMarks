@@ -2486,5 +2486,14 @@
   },
   "popup_tokenExpired": {
     "message": "Token wygasł. Utwórz nowy token w ustawieniach."
+  },
+  "popup_restoreBackup": {
+    "message": "Przywróć lokalną kopię zapasową"
+  },
+  "popup_confirmRestoreBackup": {
+    "message": "Przywrócić zakładki sprzed ostatniej synchronizacji lub pobrania? Obecny stan również zostanie zapisany jako kopia."
+  },
+  "popup_backupRestored": {
+    "message": "Przywrócono lokalną kopię zapasową. Następna synchronizacja potraktuje te zakładki jako zmiany."
   }
 }

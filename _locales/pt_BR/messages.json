@@ -2486,5 +2486,14 @@
   },
   "popup_tokenExpired": {
     "message": "O token expirou. Crie um novo token nas configurações."
+  },
+  "popup_restoreBackup": {
+    "message": "Restaurar backup local"
+  },
+  "popup_confirmRestoreBackup": {
+    "message": "Restaurar os favoritos de antes da última sincronização ou pull? O estado atual também fica salvo como backup."
+  },
+  "popup_backupRestored": {
+    "message": "Backup local restaurado. A próxima sincronização trata estes favoritos como alterações."
   }
 }

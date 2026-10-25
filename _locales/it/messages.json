@@ -2486,5 +2486,14 @@
   },
   "popup_tokenExpired": {
     "message": "Il token è scaduto. Crea un nuovo token nelle impostazioni."
+  },
+  "popup_restoreBackup": {
+    "message": "Ripristina backup locale"
+  },
+  "popup_confirmRestoreBackup": {
+    "message": "Ripristinare i segnalibri di prima dell’ultima sincronizzazione o pull? Anche lo stato attuale viene salvato come backup."
+  },
+  "popup_backupRestored": {
+    "message": "Backup locale ripristinato. La prossima sincronizzazione considererà questi segnalibri come modifiche."
   }
 }
