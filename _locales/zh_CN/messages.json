@@ -245,7 +245,7 @@
     "message": "清理远程孤立文件"
   },
   "help_conflictDesc": {
-    "message": "当本地和远程书签都发生更改时，弹出窗口会显示冲突。选择<strong>推送</strong>（本地优先，覆盖远程）或<strong>拉取</strong>（远程优先，覆盖本地）。冲突不会自动合并。"
+    "message": "同一书签两侧都有修改时，弹出窗口会列出它。请为每一项选择<strong>保留此浏览器的版本</strong>或<strong>保留仓库中的版本</strong>；下次同步会应用你的选择。<strong>推送</strong>和<strong>拉取</strong>仍会覆盖另一侧的全部内容。不会自动合并。"
   },
   "help_conflictTitle": {
     "message": "冲突"
@@ -2615,5 +2615,14 @@
   },
   "popup_conflictDeleted": {
     "message": "（已删除）"
+  },
+  "help_previewDesc": {
+    "message": "推送或拉取前，确认窗口会显示将新增和删除的书签数量。"
+  },
+  "help_localBackupTitle": {
+    "message": "本地备份"
+  },
+  "help_localBackupDesc": {
+    "message": "拉取或合并替换书签前，会在此浏览器中保留之前的状态（最近三份）。弹出窗口中的<strong>恢复本地备份</strong>可恢复最新一份；恢复前会先保存当前状态，因此恢复本身也可以撤销。备份仅保存在此设备上。"
   }
 }

@@ -245,7 +245,7 @@
     "message": "Nettoyer les orphelins distants"
   },
   "help_conflictDesc": {
-    "message": "Si local et distant ont changé, le popup affiche un conflit. Choisissez <strong>Push</strong> (local gagne) ou <strong>Pull</strong> (distant gagne). Pas de fusion automatique."
+    "message": "Lorsque le même favori a changé des deux côtés, le popup le signale. Pour chacun, choisissez <strong>Garder la version de ce navigateur</strong> ou <strong>Garder la version du dépôt</strong> ; la prochaine synchronisation applique votre choix. <strong>Envoyer</strong> et <strong>Récupérer</strong> écrasent toujours tout de l'autre côté. Il n'y a pas de fusion automatique."
   },
   "help_conflictTitle": {
     "message": "Conflits"
@@ -2615,5 +2615,14 @@
   },
   "popup_conflictDeleted": {
     "message": "(supprimé)"
+  },
+  "help_previewDesc": {
+    "message": "Avant l'envoi ou la récupération, la confirmation indique combien de favoris seraient ajoutés et supprimés."
+  },
+  "help_localBackupTitle": {
+    "message": "Sauvegarde locale"
+  },
+  "help_localBackupDesc": {
+    "message": "Avant qu'une récupération ou une fusion ne remplace vos favoris, l'état précédent est conservé sur ce navigateur (les trois dernières). <strong>Restaurer la sauvegarde locale</strong> dans le popup rétablit la plus récente ; l'état actuel est sauvegardé avant, la restauration peut donc aussi être annulée. Les sauvegardes restent sur cet appareil."
   }
 }

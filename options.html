@@ -1365,9 +1365,24 @@ git commit -m "Bitwarden backup"</pre>
           <h2 data-i18n="help_conflictTitle">Conflicts</h2>
         </summary>
         <div class="help-details-body">
-          <p data-i18n-html="help_conflictDesc">When both local and remote bookmarks changed, the popup shows a
-            conflict. Choose <strong>Push</strong> (local wins, overwrite remote) or <strong>Pull</strong> (remote wins,
-            overwrite local). There is no automatic merge for conflicts.</p>
+          <p data-i18n-html="help_conflictDesc">When the same bookmark changed on both sides, the popup lists it. For
+            each one choose <strong>Keep this browser's version</strong> or <strong>Keep repository version</strong>; the
+            next sync applies your choice. <strong>Push</strong> and <strong>Pull</strong> still overwrite everything on
+            the other side. There is no automatic merge.</p>
+          <p data-i18n="help_previewDesc">Before Push or Pull, the confirmation shows how many bookmarks would be added
+            and removed.</p>
+        </div>
+      </details>
+
+      <details class="help-details card">
+        <summary>
+          <h2 data-i18n="help_localBackupTitle">Local backup</h2>
+        </summary>
+        <div class="help-details-body">
+          <p data-i18n-html="help_localBackupDesc">Before a pull or merge replaces your bookmarks, the previous state is
+            kept on this browser (the last three). <strong>Restore local backup</strong> in the popup brings back the
+            newest one. The current state is saved first, so the restore can be undone too. Backups stay on this device
+            only.</p>
         </div>
       </details>
 

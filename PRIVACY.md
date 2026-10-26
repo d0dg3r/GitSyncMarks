@@ -26,13 +26,22 @@ GitSyncMarks is an open-source browser extension (Chrome and Firefox) that syncs
 - Extension settings (repository name, branch, sync interval, etc.) are stored locally in your browser using `chrome.storage.sync`.
 - Sync state (last sync timestamp, device ID, file SHAs) is stored locally using `chrome.storage.local`.
 - A random device ID (UUID) is generated once and stored locally to identify the syncing device.
+- **Local backups**: before a pull or merge replaces your bookmarks, the previous bookmark files are kept in `chrome.storage.local` on your device (the last three). They never leave the device, and you can restore them from the popup.
+- **Token expiry**: for GitHub fine-grained tokens, the expiry date is read from the API response and stored locally, so the popup can warn you before the token stops working.
+- **Diagnostics**: "Copy diagnostics" copies a plain-text summary to your clipboard, for example for a bug report. It contains no token and no repository or mirror names. Nothing is sent anywhere by the extension.
 
 ### Bitwarden / Vaultwarden backup (optional)
 
 - If you use **Files → Bitwarden Backup**, you upload an export file you created in Bitwarden or Vaultwarden yourself.
-- GitSyncMarks validates that the file looks like a **password-protected encrypted JSON** export and may optionally wrap it with an additional local password (`gitsyncmarks-enc:v1`) before pushing to **your** Git repository.
+- GitSyncMarks validates that the file looks like a **password-protected encrypted JSON** export and may optionally wrap it with an additional password (`gitsyncmarks-enc:v2`) before pushing to **your** Git repository.
 - The extension **does not** connect to Bitwarden or Vaultwarden servers, **does not** store your Bitwarden master password, and **does not** decrypt vault contents. Only ciphertext is stored in Git.
-- An optional Git backup password is kept in `chrome.storage.local` on your device only, per profile (`bitwardenBackupPassword:{profileId}`).
+- An optional Git backup password is kept in `chrome.storage.local` on your device only, per profile (`bitwardenBackupPassword:{profileId}`), encrypted with a key that stays in the browser's IndexedDB.
+
+### Settings sync and exports
+
+- The settings sync password (`settingsSyncPassword`) is encrypted on your device in the same way and is never synced.
+- Settings files written to your repository (`settings.enc`) and password-protected exports use the `gitsyncmarks-enc:v2` format: PBKDF2-SHA256 with 600,000 iterations, and the iteration count is stored in the file. Files written by older versions (v1) can still be read.
+- The plain-JSON settings export contains **no** tokens. To move tokens to another device, use the password-encrypted export.
 
 ## Data NOT Collected
 

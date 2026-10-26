@@ -245,7 +245,7 @@
     "message": "Limpiar huérfanos remotos"
   },
   "help_conflictDesc": {
-    "message": "Si local y remoto cambiaron, el popup muestra un conflicto. Elige <strong>Push</strong> (local gana) o <strong>Pull</strong> (remoto gana). No hay fusión automática."
+    "message": "Cuando el mismo marcador cambió en ambos lados, el popup lo muestra. Para cada uno elige <strong>Mantener la versión de este navegador</strong> o <strong>Mantener la versión del repositorio</strong>; la siguiente sincronización aplica tu elección. <strong>Subir</strong> y <strong>Descargar</strong> siguen sobrescribiendo todo en el otro lado. No hay fusión automática."
   },
   "help_conflictTitle": {
     "message": "Conflictos"
@@ -2615,5 +2615,14 @@
   },
   "popup_conflictDeleted": {
     "message": "(eliminado)"
+  },
+  "help_previewDesc": {
+    "message": "Antes de subir o descargar, la confirmación muestra cuántos marcadores se añadirían y eliminarían."
+  },
+  "help_localBackupTitle": {
+    "message": "Copia de seguridad local"
+  },
+  "help_localBackupDesc": {
+    "message": "Antes de que una descarga o fusión reemplace tus marcadores, el estado anterior se guarda en este navegador (las últimas tres). <strong>Restaurar copia local</strong> en el popup recupera la más reciente; el estado actual se guarda antes, así que la restauración también se puede deshacer. Las copias solo se quedan en este dispositivo."
   }
 }

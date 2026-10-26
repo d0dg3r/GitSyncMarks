@@ -245,7 +245,7 @@
     "message": "Remote-Verwaiste bereinigen"
   },
   "help_conflictDesc": {
-    "message": "Wenn lokal und remote geändert wurden, erscheint im Popup ein Konflikt. Wähle <strong>Push</strong> (lokal gewinnt) oder <strong>Pull</strong> (remote gewinnt). Es gibt keine automatische Konfliktlösung."
+    "message": "Wenn dasselbe Lesezeichen auf beiden Seiten geändert wurde, zeigt das Popup es an. Wähle für jedes <strong>Version dieses Browsers behalten</strong> oder <strong>Version aus dem Repository behalten</strong>; der nächste Sync übernimmt deine Wahl. <strong>Push</strong> und <strong>Pull</strong> überschreiben weiterhin alles auf der anderen Seite. Es gibt keine automatische Zusammenführung."
   },
   "help_conflictTitle": {
     "message": "Konflikte"
@@ -2615,5 +2615,14 @@
   },
   "popup_conflictDeleted": {
     "message": "(gelöscht)"
+  },
+  "help_previewDesc": {
+    "message": "Vor Push oder Pull zeigt die Bestätigung, wie viele Lesezeichen hinzukommen und wegfallen würden."
+  },
+  "help_localBackupTitle": {
+    "message": "Lokales Backup"
+  },
+  "help_localBackupDesc": {
+    "message": "Bevor ein Pull oder Merge deine Lesezeichen ersetzt, wird der bisherige Stand auf diesem Browser aufbewahrt (die letzten drei). Mit <strong>Lokales Backup wiederherstellen</strong> im Popup holst du den neuesten zurück; vorher wird der aktuelle Stand gesichert, die Wiederherstellung ist also selbst rückgängig zu machen. Backups bleiben nur auf diesem Gerät."
   }
 }

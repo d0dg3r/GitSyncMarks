@@ -63,6 +63,7 @@ This prevents `eval()`, inline scripts, and remote script loading on all extensi
 | `scripting` | Inject content scripts for bookmark actions |
 | `downloads` | Export bookmarks as file |
 | **host_permissions** `https://api.github.com/*`, `https://gitlab.com/*`, `https://codeberg.org/*` | GitHub, GitLab.com, and Codeberg API access for sync |
+| `unlimitedStorage` | Keeps local bookmark backups and the sync base for large bookmark collections (more than the default 10 MB of local storage) |
 | **optional_host_permissions** `<all_urls>` (Chrome) / `https://*/* http://*/*` (Firefox) | Self-hosted Git providers and Linkwarden; granted at runtime by user consent |
 
 ## Security Considerations
@@ -70,5 +71,10 @@ This prevents `eval()`, inline scripts, and remote script loading on all extensi
 GitSyncMarks handles sensitive data:
 
 - **Git Personal Access Token** — stored encrypted (AES-256-GCM) in browser local storage; only sent to configured Git provider APIs
+- **Stored passwords** — the settings sync password and the optional Bitwarden backup password are stored encrypted on the device, not in plain text
+- **Password-encrypted files** — new files use `gitsyncmarks-enc:v2` (PBKDF2-SHA256, 600,000 iterations, iteration count in the file); older v1 files remain readable. Files encrypted with v2 cannot be read by versions 3.0.10 and older
+- **Plain exports** — the plain-JSON settings export contains no tokens
+- **Transport** — an `http://` server URL is upgraded to `https://` for public hosts, so a token is not sent in clear text; `http://` remains allowed for localhost, private networks and `.lan` / `.local` names
+- **Debug log** — token-like values (GitHub, GitLab, bearer tokens, `token=` / `password=`) are masked before they are stored
 - **Bookmarks** — synced to your Git repository; no third-party servers
 - **No analytics or tracking** — see [PRIVACY.md](PRIVACY.md)

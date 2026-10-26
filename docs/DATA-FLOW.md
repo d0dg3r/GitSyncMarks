@@ -217,7 +217,7 @@ Auto-generated on push when mode is Auto. Produces YAML sections with bookmark l
 
 ### `profiles/<alias>/settings.enc` — Encrypted Settings
 
-Optional. When "Sync settings to Git" is enabled, the extension writes an encrypted copy of all settings (profiles, tokens, sync preferences) to the repo. Uses the same `gitsyncmarks-enc:v1` format as the manual encrypted export (PBKDF2 + AES-256-GCM). The password is stored locally per device in `chrome.storage.local` and never synced.
+Optional. When "Sync settings to Git" is enabled, the extension writes an encrypted copy of all settings (profiles, tokens, sync preferences) to the repo. Uses the same `gitsyncmarks-enc:v2 (PBKDF2-SHA256, 600,000 iterations; v1 with 100,000 iterations stays readable)` format as the manual encrypted export (PBKDF2 + AES-256-GCM). The password is stored locally per device in `chrome.storage.local` and never synced.
 
 **Individual mode** (current): Each device writes to `profiles/<alias>/settings.enc` where `<alias>` is the slugified client name (e.g. `base-chrome`). Other devices can list and import individual device configs via the UI.
 
@@ -227,7 +227,7 @@ Excluded from three-way merge (`DIFF_IGNORE_SUFFIXES` + `SETTINGS_ENC_PATTERN`).
 
 ### `backups/bitwarden/` — Bitwarden / Vaultwarden exports (optional)
 
-Repo-root path (default `backups/bitwarden`, configurable as `bitwardenBackupPath`). User-uploaded **password-protected encrypted JSON** exports from Bitwarden or Vaultwarden. Optional second layer: GitSyncMarks `gitsyncmarks-enc:v1` (`.gitsyncmarks.enc` suffix). Listed, downloaded, or deleted from Files → Bitwarden Backup (Git commit on delete). Not used for bookmark sync; excluded from three-way merge (`BITWARDEN_BACKUP_DEFAULT_PATTERN` in `lib/sync-diff.js`). See [IDEAS-BITWARDEN-BACKUP.md](IDEAS-BITWARDEN-BACKUP.md).
+Repo-root path (default `backups/bitwarden`, configurable as `bitwardenBackupPath`). User-uploaded **password-protected encrypted JSON** exports from Bitwarden or Vaultwarden. Optional second layer: GitSyncMarks `gitsyncmarks-enc:v2 (PBKDF2-SHA256, 600,000 iterations; v1 with 100,000 iterations stays readable)` (`.gitsyncmarks.enc` suffix). Listed, downloaded, or deleted from Files → Bitwarden Backup (Git commit on delete). Not used for bookmark sync; excluded from three-way merge (`BITWARDEN_BACKUP_DEFAULT_PATTERN` in `lib/sync-diff.js`). See [IDEAS-BITWARDEN-BACKUP.md](IDEAS-BITWARDEN-BACKUP.md).
 
 ### Complete Repository Structure
 
@@ -302,12 +302,14 @@ Per-profile blobs (legacy top-level `lastSyncFiles` / `githubToken` are migrated
 | Key | Type | Description |
 |---|---|---|
 | `profileTokens` | `object` | `{ [profileId]: { primary, mirrors } }` encrypted PATs (`enc:v1:…`) |
-| `syncState` | `object` | Per-profile `{ lastSyncFiles, lastCommitSha, lastSyncTime, hasConflict, conflictReason, pendingDelete, lastError, previousCommitSha, mirrors }` |
+| `syncState` | `object` | Per-profile `{ lastSyncFiles, lastCommitSha, lastSyncTime, hasConflict, conflictReason, conflicts, conflictChoices, pendingDelete, lastError, previousCommitSha, tokenExpiresAt, mirrors }`. `conflicts` lists the open per-bookmark conflicts (`path`, `local`, `remote`); `conflictChoices` maps a conflict path to `local` or `remote` until the next sync applies it |
 | `syncFlags` | `object` | Per-profile `{ pendingLocalDeletes: string[] }` — bookmark filenames deleted locally since last successful sync. Separate from `syncState` so event writes never RMW `lastSyncFiles` |
-| `applyInProgress` | `object\|null` | `{ profileId, commitSha, startedAt }` set before `removeTree`; cleared after the new base is saved. Present → recover via `pull()` |
+| `applyInProgress` | `object\|null` | `{ profileId, commitSha, startedAt }` set before the local bookmarks are reconciled; cleared after the new base is saved. Present → recover via `pull()` |
+| `localBackups` | `array` | Up to three snapshots `{ createdAt, reason, files }` of the local bookmark files, taken before a pull, merge or remote apply. Used by "Restore local backup" |
+| `localBackupsInfo` | `array` | Metadata only (`createdAt`, `reason`, `fileCount`) of the same snapshots, so status reads stay small |
 | `deviceId` | `string` | UUID for this device |
-| `settingsSyncPassword` | `string` | Password for settings.enc encryption (device-local, never synced) |
-| `bitwardenBackupPassword:<id>` | `string` | Optional Git wrap password for that profile's Bitwarden backup |
+| `settingsSyncPassword` | `string` | Password for settings.enc encryption (device-local, never synced); stored encrypted (`enc:v1:…`) |
+| `bitwardenBackupPassword:<id>` | `string` | Optional Git wrap password for that profile's Bitwarden backup; stored encrypted (`enc:v1:…`) |
 
 `syncState[id].lastSyncFiles` is the **base state** for three-way merge. It maps each file path to its blob SHA (for remote change detection) and content (for local change detection). `conflictReason` is `bulkDelete` (push-side) or `remoteBulkDelete` (pull-side).
 

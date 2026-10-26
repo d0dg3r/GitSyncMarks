@@ -245,7 +245,7 @@
     "message": "Uzak yetimleri temizle"
   },
   "help_conflictDesc": {
-    "message": "Hem yerel hem de uzak yer işaretleri değiştiğinde açılır pencerede çakışma gösterilir. <strong>Gönder</strong> (yerel kazanır, uzak üzerine yazılır) veya <strong>Çek</strong> (uzak kazanır, yerel üzerine yazılır) seçin. Çakışmalar için otomatik birleştirme yoktur."
+    "message": "Aynı yer imi iki tarafta da değiştiyse popup bunu gösterir. Her biri için <strong>Bu tarayıcının sürümünü tut</strong> veya <strong>Depodaki sürümü tut</strong> seçin; bir sonraki senkronizasyon seçiminizi uygular. <strong>Gönder</strong> ve <strong>Çek</strong> karşı taraftaki her şeyin üzerine yazmaya devam eder. Otomatik birleştirme yoktur."
   },
   "help_conflictTitle": {
     "message": "Çakışmalar"
@@ -2615,5 +2615,14 @@
   },
   "popup_conflictDeleted": {
     "message": "(silindi)"
+  },
+  "help_previewDesc": {
+    "message": "Gönder veya Çek öncesinde onay, kaç yer iminin eklenip kaldırılacağını gösterir."
+  },
+  "help_localBackupTitle": {
+    "message": "Yerel yedek"
+  },
+  "help_localBackupDesc": {
+    "message": "Çekme veya birleştirme yer imlerinizin yerini almadan önce, önceki durum bu tarayıcıda saklanır (son üç). Popup'taki <strong>Yerel yedeği geri yükle</strong> en yenisini geri getirir; geri yüklemeden önce mevcut durum da kaydedilir, bu yüzden geri yükleme de geri alınabilir. Yedekler yalnızca bu cihazda kalır."
   }
 }

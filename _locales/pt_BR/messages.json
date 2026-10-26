@@ -245,7 +245,7 @@
     "message": "Limpar órfãos remotos"
   },
   "help_conflictDesc": {
-    "message": "Quando ambos os favoritos locais e remotos foram alterados, o popup exibe um conflito. Escolha <strong>Enviar</strong> (local prevalece, sobrescreve remoto) ou <strong>Baixar</strong> (remoto prevalece, sobrescreve local). Não há merge automático para conflitos."
+    "message": "Quando o mesmo favorito mudou dos dois lados, o popup o mostra. Para cada um, escolha <strong>Manter a versão deste navegador</strong> ou <strong>Manter a versão do repositório</strong>; a próxima sincronização aplica sua escolha. <strong>Enviar</strong> e <strong>Baixar</strong> continuam sobrescrevendo tudo do outro lado. Não há mesclagem automática."
   },
   "help_conflictTitle": {
     "message": "Conflitos"
@@ -2615,5 +2615,14 @@
   },
   "popup_conflictDeleted": {
     "message": "(excluído)"
+  },
+  "help_previewDesc": {
+    "message": "Antes de enviar ou baixar, a confirmação mostra quantos favoritos seriam adicionados e removidos."
+  },
+  "help_localBackupTitle": {
+    "message": "Backup local"
+  },
+  "help_localBackupDesc": {
+    "message": "Antes de um download ou mesclagem substituir seus favoritos, o estado anterior fica guardado neste navegador (os últimos três). <strong>Restaurar backup local</strong> no popup traz de volta o mais recente; o estado atual é salvo antes, então a restauração também pode ser desfeita. Os backups ficam apenas neste dispositivo."
   }
 }

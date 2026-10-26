@@ -245,7 +245,7 @@
     "message": "Wyczyść osierocone na zdalnym"
   },
   "help_conflictDesc": {
-    "message": "Gdy zarówno lokalne, jak i zdalne zakładki zostały zmienione, popup pokazuje konflikt. Wybierz <strong>Wyślij</strong> (lokalne wygrywają, nadpisz zdalne) lub <strong>Pobierz</strong> (zdalne wygrywają, nadpisz lokalne). Nie ma automatycznego scalania dla konfliktów."
+    "message": "Gdy ta sama zakładka zmieniła się po obu stronach, popup ją pokazuje. Dla każdej wybierz <strong>Zachowaj wersję z tej przeglądarki</strong> lub <strong>Zachowaj wersję z repozytorium</strong>; następna synchronizacja zastosuje wybór. <strong>Wyślij</strong> i <strong>Pobierz</strong> nadal nadpisują wszystko po drugiej stronie. Nie ma automatycznego scalania."
   },
   "help_conflictTitle": {
     "message": "Konflikty"
@@ -2615,5 +2615,14 @@
   },
   "popup_conflictDeleted": {
     "message": "(usunięte)"
+  },
+  "help_previewDesc": {
+    "message": "Przed wysłaniem lub pobraniem potwierdzenie pokazuje, ile zakładek zostanie dodanych i usuniętych."
+  },
+  "help_localBackupTitle": {
+    "message": "Lokalna kopia zapasowa"
+  },
+  "help_localBackupDesc": {
+    "message": "Zanim pobieranie lub scalanie zastąpi zakładki, poprzedni stan jest zachowany w tej przeglądarce (ostatnie trzy). <strong>Przywróć lokalną kopię zapasową</strong> w popupie przywraca najnowszą; wcześniej zapisywany jest bieżący stan, więc to przywracanie też można cofnąć. Kopie zostają tylko na tym urządzeniu."
   }
 }

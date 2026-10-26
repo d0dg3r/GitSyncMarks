@@ -245,7 +245,7 @@
     "message": "Pulisci orfani remoti"
   },
   "help_conflictDesc": {
-    "message": "Quando sia i segnalibri locali che quelli remoti sono stati modificati, il popup mostra un conflitto. Scegli <strong>Push</strong> (vince il locale, sovrascrive il remoto) o <strong>Pull</strong> (vince il remoto, sovrascrive il locale). Non c'è merge automatico per i conflitti."
+    "message": "Quando lo stesso segnalibro è cambiato su entrambi i lati, il popup lo mostra. Per ciascuno scegli <strong>Mantieni la versione di questo browser</strong> o <strong>Mantieni la versione del repository</strong>; la prossima sincronizzazione applica la scelta. <strong>Push</strong> e <strong>Pull</strong> continuano a sovrascrivere tutto dall'altra parte. Non c'è una fusione automatica."
   },
   "help_conflictTitle": {
     "message": "Conflitti"
@@ -2615,5 +2615,14 @@
   },
   "popup_conflictDeleted": {
     "message": "(eliminato)"
+  },
+  "help_previewDesc": {
+    "message": "Prima di Push o Pull, la conferma mostra quanti segnalibri verrebbero aggiunti e rimossi."
+  },
+  "help_localBackupTitle": {
+    "message": "Backup locale"
+  },
+  "help_localBackupDesc": {
+    "message": "Prima che un pull o una fusione sostituisca i tuoi segnalibri, lo stato precedente viene conservato su questo browser (gli ultimi tre). <strong>Ripristina backup locale</strong> nel popup riporta indietro il più recente; prima viene salvato lo stato attuale, quindi anche il ripristino si può annullare. I backup restano solo su questo dispositivo."
   }
 }

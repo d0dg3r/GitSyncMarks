@@ -18,6 +18,7 @@ Highlights
 - Bitwarden-Compatible Vault Backup to Git: Store password-protected vault exports in your repo with optional extra encryption; list, download, or delete remote backups.
 - Nested-Card UI: Clearer grouped sections across Options, setup wizard, popup, and search.
 - Sync History & Restore: Browse past commits, preview changes with a diff view, and restore any previous bookmark state in one click.
+- Local Backups & Previews: Before a pull or merge replaces your bookmarks, the previous state is kept on the device (last three) and can be restored. Push and pull show how many bookmarks would change first.
 - Clean Remote Orphans: Preview and delete remote bookmark files that no longer exist locally.
 - Linkwarden Synergy: Save pages or links directly to your Linkwarden instance — viewport screenshots, collection sync, and predefined tags.
 - Smart Search: Dedicated, lightning-fast bookmark search with light/dark themes and full keyboard navigation.
@@ -30,7 +31,7 @@ Key Capabilities
 
 - Private-by-Design: Direct communication with your Git provider's API. No third parties see your data.
 - Firefox-Optimized: Supports native bookmark structures (Toolbar, Menu, Other).
-- Three-Way Merge: Industrial-grade sync handles concurrent changes across multiple devices automatically; the bidirectional Delete Guard blocks risky mass deletions in either direction until you choose Local → Remote or Remote → Local in the popup.
+- Three-Way Merge: Industrial-grade sync handles concurrent changes across multiple devices automatically; the bidirectional Delete Guard blocks risky mass deletions in either direction until you choose Local → Remote or Remote → Local in the popup. When the same bookmark changed on both sides, you choose the version to keep, per bookmark.
 - Single-File Storage: Each bookmark is a readable JSON file – ideal for versioning and manual editing in your Git repo.
 - Multiple Profiles: Up to 10 separate profiles for work, personal life, or projects, each with its own repository.
 - Automation: Add bookmark JSON to your repo via git or the included GitHub Action template; the extension imports them on the next sync.

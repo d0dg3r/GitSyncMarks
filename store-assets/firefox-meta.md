@@ -19,6 +19,7 @@ https://github.com/d0dg3r/GitSyncMarks/blob/main/PRIVACY.md
 |------------|---------------|
 | `bookmarks` | Required to read and write the user's bookmarks for synchronization with the user's configured Git repository. |
 | `storage` | Required to store extension settings (token, repo config) and sync state (timestamps, SHAs) locally in the browser. |
+| `unlimitedStorage` | Required to keep the sync base (the stored bookmark files and their SHAs) and up to three local backups of the user's bookmarks in the browser. For large bookmark collections this exceeds the default storage quota of about 10 MB. Nothing is sent anywhere; the data stays on the device. |
 | `alarms` | Required to schedule periodic background sync checks for remote changes. |
 | `notifications` | Required to show sync success or failure notifications (user-configurable). |
 | `host_permissions: https://api.github.com/*` | Required to communicate with the GitHub REST API when GitHub is selected as the provider, to read and write bookmark files in the user's repository. |

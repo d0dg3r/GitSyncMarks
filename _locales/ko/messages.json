@@ -245,7 +245,7 @@
     "message": "원격 고아 파일 정리"
   },
   "help_conflictDesc": {
-    "message": "로컬과 원격 북마크가 모두 변경되면 팝업에 충돌이 표시됩니다. <strong>Push</strong>(로컬 우선, 원격 덮어쓰기) 또는 <strong>Pull</strong>(원격 우선, 로컬 덮어쓰기)을 선택하세요. 충돌에 대한 자동 병합은 없습니다."
+    "message": "같은 북마크가 양쪽에서 변경되면 팝업에 표시됩니다. 각 항목마다 <strong>이 브라우저의 버전 유지</strong> 또는 <strong>저장소 버전 유지</strong>를 선택하세요. 다음 동기화에서 선택이 적용됩니다. <strong>푸시</strong>와 <strong>가져오기</strong>는 여전히 반대쪽의 모든 내용을 덮어씁니다. 자동 병합은 없습니다."
   },
   "help_conflictTitle": {
     "message": "충돌"
@@ -2615,5 +2615,14 @@
   },
   "popup_conflictDeleted": {
     "message": "(삭제됨)"
+  },
+  "help_previewDesc": {
+    "message": "푸시 또는 가져오기 전에 확인 창에 추가·삭제될 북마크 수가 표시됩니다."
+  },
+  "help_localBackupTitle": {
+    "message": "로컬 백업"
+  },
+  "help_localBackupDesc": {
+    "message": "가져오기나 병합으로 북마크가 바뀌기 전에 이전 상태를 이 브라우저에 보관합니다(최근 3개). 팝업의 <strong>로컬 백업 복원</strong>으로 가장 최근 것을 되돌릴 수 있습니다. 복원 전 현재 상태도 저장되므로 복원도 취소할 수 있습니다. 백업은 이 기기에만 남습니다."
   }
 }

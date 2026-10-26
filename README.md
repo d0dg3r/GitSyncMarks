@@ -40,6 +40,12 @@
 - **Clean Remote Orphans**: Preview and delete remote bookmark files that no longer exist locally.
 - **Guided Onboarding**: Step-by-step wizard from token to first sync. **Check connection** only validates access; you then choose pull, merge/sync, push, folder setup, or skip — with confirm dialogs before anything is written to the repo ([#146](https://github.com/d0dg3r/GitSyncMarks/issues/146)).
 - **Sync History & Restore**: Browse past commits, preview diffs, and restore any previous bookmark state.
+- **Per-Bookmark Conflicts**: When the same bookmark changed on both sides, the popup lists it and you choose which version to keep, per bookmark. Renames of one bookmark on both sides count as one conflict.
+- **Push/Pull Preview**: Before anything changes, the confirmation shows how many bookmarks would be added and removed.
+- **Local Backups**: The last three local states are kept on your device before a pull or merge; restore them from the popup, and the restore itself can be undone.
+- **Stable Bookmark IDs**: A pull changes only what differs, so quick folders and other extensions that point at your bookmarks keep working.
+- **Offline & Token Awareness**: The popup shows when you are offline, and warns before a GitHub fine-grained token expires.
+- **Copy Diagnostics**: A plain-text summary for bug reports, without tokens or repository names.
 
 ### Privacy & Security
 - **Private-by-Design**: Direct communication with your Git provider's API. No third-party servers, no analytics, no tracking.
