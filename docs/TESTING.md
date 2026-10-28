@@ -9,18 +9,25 @@ This document describes how to test the extension on Chrome and Firefox (desktop
 GitSyncMarks uses Playwright for automated end-to-end tests. **Chrome only** — Firefox extension loading is not supported by Playwright.
 
 ```bash
-npm run test:e2e           # All tests (smoke + connection + sync)
-npm run test:e2e:smoke    # Smoke tests only (no GitHub config)
-npm run test:e2e:options  # Options page UI only (tabs, language, Help; no GitHub config)
-npm run test:e2e:sync     # Connection and sync tests
-npm run test:e2e:report   # Open HTML report after a run
+npm run test:e2e              # All tests (smoke + connection + sync)
+npm run test:e2e:smoke        # Smoke tests only (no GitHub config)
+npm run test:e2e:options      # Options page UI only (tabs, language, Help; no GitHub config)
+npm run test:e2e:sync         # Connection and sync tests (GitHub)
+npm run test:e2e:onboarding   # Dual-host onboarding matrix (GitHub + Forgejo; skips incomplete env)
+npm run test:e2e:report       # Open HTML report after a run
+npm run create:test-repo -- --host=all   # Create stable GitSyncMarks-test-sync fixtures
+npm run cleanup:e2e-repos                # Delete orphaned gitsyncmarks-e2e-* on both hosts
 ```
 
 **Prerequisites:** `npm run build:chrome` (run automatically by test scripts).
 
-**Sync tests** require a private test repo and credentials — see [e2e/README.md](../e2e/README.md) if present, or `.env.example`.
+**Sync tests** require a private GitHub test repo and credentials — see [e2e/README.md](../e2e/README.md) or `.env.example`.
 
-**CI (GitHub Actions):** Smoke and options-UI E2E tests run automatically on every push/PR to `main` (in the `ci.yml` workflow). These tests require no secrets. Full E2E tests (connection + sync) require a PAT and test repo and can be triggered manually via Actions → E2E Tests → Run workflow.
+**Dual-host onboarding** uses a stable fixture repo (`GitSyncMarks-test-sync`) on GitHub and Homelab Forgejo (`GITSYNCMARKS_FORGEJO_*`, default `https://forgejo.lan`), plus ephemeral `gitsyncmarks-e2e-*` repos (autoCreate and zero-commit `createEmptyRepo`). Forgejo runs locally (or on a runner that reaches `.lan`); CI smoke stays secret-free. Details and **wizard matrix A–D**: [e2e/README.md](../e2e/README.md).
+
+**Wizard empty remotes:** both autoCreate and “use existing” seed the minimal `bookmarks/` structure when the remote has no commits (branch + `_index.json` / `_order.json`), including when the browser already has bookmarks. With local bookmarks, environment check still leaves a Push step; without local bookmarks, the wizard can finish after auto-seed. Empty-repo HTTP 409 must surface as “no commits yet” (not a concurrent-edit conflict), and Push/Sync must fall back to the Contents API instead of failing after git-data retries. E2E covers structure-ready (C), path-empty on fixture (B), autoCreate (A), and zero-commit existing (D).
+
+**CI (Forgejo Actions on forgejo.lan):** Smoke and options-UI E2E run on every push/PR to `main` (`.forgejo/workflows/ci.yml`, no secrets). Full E2E + dual-host onboarding run via `.forgejo/workflows/test-e2e.yml` with `GITSYNCMARKS_GITHUB_*` / `GITSYNCMARKS_FORGEJO_*` secrets and variables (see `.env.example`). GitHub Actions stubs for CI/E2E/release/screenshots are disabled.
 
 ### Chrome DevTools MCP (optional, Cursor)
 
@@ -103,7 +110,7 @@ Use this checklist before a release, or after changes to sync, conflicts or `rep
    VERSION_FOR_DISPLAY=3.1.0-beta.1 npm run build   # build/chrome/ and build/firefox/
    ```
    Load `build/chrome/` (chrome://extensions → Load unpacked) or `build/firefox/manifest.json` (about:debugging → Load Temporary Add-on). Disable the store version in the same profile, otherwise both sync against the same repository.
-2. **Test repository:** `.env` holds `GITSYNCMARKS_TEST_PAT`, `GITSYNCMARKS_TEST_REPO_OWNER`, `GITSYNCMARKS_TEST_REPO` (see `.env.example`). Never use a repository with real bookmarks.
+2. **Test repository:** `.env` holds `GITSYNCMARKS_GITHUB_PAT`, `GITSYNCMARKS_GITHUB_OWNER`, `GITSYNCMARKS_GITHUB_REPO` (see `.env.example`). Never use a repository with real bookmarks.
 3. **Reset the test repository** to the empty layout (git clone, replace `bookmarks/`, force-push):
    ```bash
    node -r dotenv/config -e "require('./e2e/helpers/repo-reset.js').resetTestRepo().then(() => console.log('reset done'))"

@@ -4,7 +4,7 @@
  */
 
 import { getAppVersion } from './lib/display-version.js';
-import { createConnectionApi, requestProviderHostPermission, isConnectionFormConfigured, normalizeGitProvider } from './lib/connection-settings.js';
+import { createConnectionApi, requestProviderHostPermission, isConnectionFormConfigured, normalizeGitProvider, DEFAULT_REPO_NAME } from './lib/connection-settings.js';
 import { getProviderCaps } from './lib/git-provider-common.js';
 import {
   applyProviderFormUi,
@@ -469,7 +469,7 @@ async function loadSettings() {
       gheServerUrlEnabledInput.checked = !!(profileSettings.serverUrl && (profileSettings.gitProvider || 'github') === 'github');
     }
     ownerInput.value = profileSettings.repoOwner || '';
-    repoInput.value = profileSettings.repoName || '';
+    repoInput.value = profileSettings.repoName || DEFAULT_REPO_NAME;
     branchInput.value = profileSettings.branch || 'main';
     filepathInput.value = profileSettings.filePath || 'bookmarks';
     githubReposEnabledInput.checked = activeProfile?.githubReposEnabled ?? false;

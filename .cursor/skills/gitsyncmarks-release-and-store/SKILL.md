@@ -28,12 +28,14 @@ Run **before** tagging (see also `.cursor/rules/release-pre-check.mdc`):
 2. `CHANGELOG.md` + `docs/RELEASE.md` version history
 3. Clean tree on `main`, tag `vX.Y.Z` not yet created
 4. `npm run build` (Chrome + Firefox ZIPs)
-5. UI changed → `npm run screenshots` → commit `store-assets/`
+5. UI changed → `npm run screenshots` (or Forgejo Actions screenshots) → commit `store-assets/`
 6. `npm run test:unit`; optional `npm run test:e2e:smoke`
 7. **CWS**: re-scan store text + dashboard permission justifications (see below)
-8. Ask user before commit/tag; push tag triggers `release.yml`
+8. Ask user before commit/tag; push tag to **forgejo.lan** (`origin`) → `.forgejo/workflows/release.yml` builds, publishes Forgejo release, copies ZIPs to GitHub
 
 **Version assignment:** Released tags are fixed. Work on `develop/X.Y.Z` or `release/vX.Y.Z` belongs to the next patch/minor, not an already-tagged version.
+
+**CI SoT:** forgejo.lan (`.forgejo/workflows/`). GitHub does not build releases.
 
 ---
 

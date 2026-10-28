@@ -1,45 +1,12 @@
-name: Generate Screenshots
+# Screenshots SoT moved to forgejo.lan (.forgejo/workflows/screenshots.yml).
+name: Generate Screenshots (disabled — runs on forgejo.lan)
 
 on:
   workflow_dispatch:
-    inputs:
-      branch:
-        description: "Branch to generate screenshots on (leave empty for current)"
-        required: false
-        default: ""
-
-permissions:
-  contents: write
 
 jobs:
-  screenshots:
+  skipped:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-        with:
-          ref: ${{ github.event.inputs.branch || github.ref }}
-
-      - uses: actions/setup-node@v7
-        with:
-          node-version: "20"
-
-      - run: npm ci
-
-      - name: Install Playwright Chromium
-        run: npx playwright install chromium --with-deps
-
-      - name: Build Chrome extension
-        run: npm run build:chrome
-
-      - name: Generate screenshots
-        run: npm run generate-screenshots
-        env:
-          CI: "true"
-
-      - name: Commit and push screenshots
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add store-assets/
-          git diff --cached --quiet || git commit -m "chore: update store screenshots"
-          git push
+      - name: Point to Forgejo
+        run: echo "Screenshot generation runs on forgejo.lan (.forgejo/workflows/screenshots.yml)."

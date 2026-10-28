@@ -2,10 +2,10 @@
 /**
  * List blob paths in the E2E / onboarding test repo (branch main) and verify GitSyncMarks layout.
  *
- * Requires: GITSYNCMARKS_TEST_PAT, GITSYNCMARKS_TEST_REPO_OWNER, GITSYNCMARKS_TEST_REPO
+ * Requires: GITSYNCMARKS_GITHUB_PAT, GITSYNCMARKS_GITHUB_OWNER, GITSYNCMARKS_GITHUB_REPO
  *
  * Usage:
- *   GITSYNCMARKS_TEST_PAT=… GITSYNCMARKS_TEST_REPO_OWNER=… GITSYNCMARKS_TEST_REPO=… \
+ *   GITSYNCMARKS_GITHUB_PAT=… GITSYNCMARKS_GITHUB_OWNER=… GITSYNCMARKS_GITHUB_REPO=… \
  *     node scripts/verify-test-repo.js [--verbose] [--base-path bookmarks] [--min-bookmarks N]
  *
  * Options:
@@ -21,12 +21,12 @@
 const API_BASE = 'https://api.github.com';
 
 function getEnv() {
-  const token = process.env.GITSYNCMARKS_TEST_PAT;
-  const owner = process.env.GITSYNCMARKS_TEST_REPO_OWNER;
-  const repo = process.env.GITSYNCMARKS_TEST_REPO;
+  const token = process.env.GITSYNCMARKS_GITHUB_PAT;
+  const owner = process.env.GITSYNCMARKS_GITHUB_OWNER;
+  const repo = process.env.GITSYNCMARKS_GITHUB_REPO;
   if (!token || !owner || !repo) {
     console.error(
-      'Missing env: GITSYNCMARKS_TEST_PAT, GITSYNCMARKS_TEST_REPO_OWNER, GITSYNCMARKS_TEST_REPO\n' +
+      'Missing env: GITSYNCMARKS_GITHUB_PAT, GITSYNCMARKS_GITHUB_OWNER, GITSYNCMARKS_GITHUB_REPO\n' +
         'See e2e/README.md and .env.example'
     );
     process.exit(1);

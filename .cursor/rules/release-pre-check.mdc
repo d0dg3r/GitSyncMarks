@@ -15,8 +15,8 @@ When the user asks to create a release, tag a version, or check release readines
 4. **Git state** — working tree clean, on `main`, up to date with `origin/main`
 5. **Tag not yet created** — `git tag -l vX.Y.Z` returns empty
 6. **Build** — `npm run build` succeeds (creates both Chrome and Firefox ZIPs)
-7. **Screenshots** — if UI changed: run CI workflow (Actions > Generate Screenshots > Run workflow on `main`) or locally (`npm run screenshots`); verify committed to `store-assets/`
-8. **E2E tests** (optional) — `npm run test:e2e:smoke` locally if available
+7. **Screenshots** — if UI changed: Forgejo Actions → Generate Screenshots, or locally (`npm run screenshots`); verify committed to `store-assets/`
+8. **E2E tests** (optional) — `npm run test:e2e:smoke` locally; full matrix runs on forgejo.lan
 
 ## Verification commands
 
@@ -30,6 +30,6 @@ npm run build
 ## After all checks pass
 
 1. Ask user for approval before committing or tagging
-2. Tag: `git tag vX.Y.Z && git push origin vX.Y.Z`
-3. GitHub Actions (`release.yml`) builds ZIPs and creates the GitHub Release automatically
-4. Verify at `https://github.com/d0dg3r/GitSyncMarks/releases`
+2. Tag on Forgejo SoT: `git tag vX.Y.Z && git push origin vX.Y.Z` (`origin` = forgejo.lan)
+3. Forgejo Actions (`.forgejo/workflows/release.yml`) builds ZIPs, creates the Forgejo release, and copies ZIPs to GitHub
+4. Verify Forgejo release and `https://github.com/d0dg3r/GitSyncMarks/releases`

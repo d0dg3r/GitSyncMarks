@@ -1,135 +1,16 @@
-name: Build & Release Extension
+# Release build SoT moved to forgejo.lan (.forgejo/workflows/release.yml).
+# Forgejo builds ZIPs, creates a Forgejo release, then copies assets to this GitHub repo.
+# Keep this workflow disabled so a mirrored tag does not rebuild or race the copy.
+name: Build & Release Extension (disabled — runs on forgejo.lan)
 
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_dispatch:
 
-permissions:
-  contents: write
-  discussions: write
-
-# Releases, Discussions, and third-party actions (extract-release-notes, softprops)
-# target GitHub; Forgejo action mirrors do not ship those repos.
 jobs:
-  quality:
-    name: Lint, Typecheck & Unit Tests
-    if: ${{ github.server_url == 'https://github.com' }}
+  skipped:
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v7
-
-      - name: Setup Node
-        uses: actions/setup-node@v7
-        with:
-          node-version: '22'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Typecheck (checkJs)
-        run: npm run typecheck
-
-      - name: Unit tests
-        run: npm run test:unit
-
-  build-and-release:
-    if: ${{ github.server_url == 'https://github.com' }}
-    needs: quality
-    runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-    # Third-party actions below are pinned to full commit SHAs (CodeQL: actions/unpinned-tag).
-    # Refresh: gh api repos/<org>/<repo>/commits/<tag> -q .sha
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-          fetch-tags: true
-
-      - name: Get version from tag
-        id: version
-        run: echo "VERSION=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
-
-      - name: Detect prerelease
-        id: prerelease
+      - name: Point to Forgejo
         run: |
-          if [[ "${{ steps.version.outputs.VERSION }}" =~ -(pre|alpha|beta|rc)[.-][0-9]+$ ]]; then
-            echo "prerelease=true" >> $GITHUB_OUTPUT
-          else
-            echo "prerelease=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Extract changelog
-        id: changelog
-        uses: ffurrer2/extract-release-notes@273da39a24fb7db106a35526c8162815faffd31d # v3
-        with:
-          changelog_file: CHANGELOG.md
-
-      - name: Setup Node
-        uses: actions/setup-node@v7
-        with:
-          node-version: '22'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build extension packages
-        run: bash scripts/build.sh
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # v3
-        with:
-          name: "GitSyncMarks ${{ steps.version.outputs.VERSION }}"
-          prerelease: ${{ steps.prerelease.outputs.prerelease }}
-          body: |
-            ${{ steps.changelog.outputs.release_notes }}
-
-            ---
-
-            ## Installation
-
-            ### Chrome / Chromium / Edge / Brave
-
-            1. Download `GitSyncMarks-${{ steps.version.outputs.VERSION }}-chrome.zip`
-            2. Extract the ZIP
-            3. Open `chrome://extensions/`
-            4. Enable **Developer mode** (toggle in the top right)
-            5. Click **Load unpacked**
-            6. Select the extracted folder
-
-            ### Firefox
-
-            1. Download `GitSyncMarks-${{ steps.version.outputs.VERSION }}-firefox.zip`
-            2. Open `about:debugging#/runtime/this-firefox`
-            3. Click **Load Temporary Add-on...**
-            4. Select the ZIP file or the `manifest.json` inside the extracted folder
-
-            More info: [README](https://github.com/${{ github.repository }}/blob/main/README.md)
-          files: |
-            build/GitSyncMarks-${{ steps.version.outputs.VERSION }}-chrome.zip
-            build/GitSyncMarks-${{ steps.version.outputs.VERSION }}-firefox.zip
-          draft: false
-
-      - name: Create Release Discussion
-        if: success()
-        uses: abirismyname/create-discussion@c2b7c825241769dda523865ae444a879f6bbd0e0 # v2.1.0
-        with:
-          title: "${{ steps.version.outputs.VERSION }} — Released"
-          body: |
-            ${{ steps.changelog.outputs.release_notes }}
-
-            [Release](https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}) · [Changelog](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)
-          repository-id: R_kgDORLqm_w # GraphQL node ID of this repository (github.repository); retrieve via `gh api graphql -f query='query { repository(owner:"<owner>", name:"<name>"){ id } }'`
-          category-id: DIC_kwDORLqm_84C2fI- # GraphQL node ID of the Discussions category used for releases; retrieve via `gh api graphql -f query='query { repository(owner:"<owner>", name:"<name>"){ discussionCategories(first:50){ nodes{ id, name } } } }'`
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          echo "Release builds run on forgejo.lan (.forgejo/workflows/release.yml)."
+          echo "GitHub only receives copied ZIPs via GITSYNCMARKS_RELEASE_PAT."

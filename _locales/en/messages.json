@@ -1004,6 +1004,12 @@
   "options_onboardingWizardStepRepoText": {
     "message": "Fill repository owner, repository name, branch, and base path."
   },
+  "options_onboardingWizardStepRepoText_autoCreate": {
+    "message": "Choose a name for the new repository, plus branch and bookmarks folder path. The extension will create the repository for you."
+  },
+  "options_onboardingWizardStepRepoText_manual": {
+    "message": "Enter the owner, name, branch, and bookmarks folder path of a repository that already exists."
+  },
   "options_onboardingWizardStepTokenTitle": {
     "message": "Access token"
   },
@@ -1016,7 +1022,25 @@
   "options_onboardingWizardStepValidateText": {
     "message": "Click Check connection to validate token, repository, and path access. No sync runs in this step."
   },
+  "options_onboardingWizardStepValidateTitle_autoCreate": {
+    "message": "Create repository"
+  },
+  "options_onboardingWizardStepValidateText_autoCreate": {
+    "message": "Creates the repository if needed and prepares the bookmarks folder. Your bookmarks are not uploaded yet."
+  },
+  "options_onboardingWizardStepValidateTitle_manual": {
+    "message": "Test connection"
+  },
+  "options_onboardingWizardStepValidateText_manual": {
+    "message": "Validates your token, the existing repository, and path access. No sync runs in this step."
+  },
   "options_onboardingWizardCheckConnection": {
+    "message": "Check connection"
+  },
+  "options_onboardingWizardCheckConnection_autoCreate": {
+    "message": "Create and prepare"
+  },
+  "options_onboardingWizardCheckConnection_manual": {
     "message": "Check connection"
   },
   "options_onboardingWizardStartSync": {
@@ -1024,6 +1048,9 @@
   },
   "options_onboardingWizardStepSyncChoiceText": {
     "message": "Choose how to sync, read the warning, then click Start sync. Nothing is written to the repository until you confirm."
+  },
+  "options_onboardingWizardStepSyncChoiceText_autoCreate": {
+    "message": "Repository is ready. Choose how to upload your bookmarks, then click Start sync. Nothing is written until you confirm."
   },
   "options_onboardingWizardSyncModeLabel": {
     "message": "First sync action"
@@ -1185,16 +1212,16 @@
     "message": "Repository setup mode"
   },
   "options_onboardingWizardStepRepoDecisionText": {
-    "message": "Choose auto-create repository or manual existing repository flow."
+    "message": "Create a new repository, or connect to one that already exists."
   },
   "options_onboardingWizardRepoFlowLabel": {
     "message": "Repository setup mode"
   },
   "options_onboardingWizardRepoFlowAuto": {
-    "message": "Auto-create repository"
+    "message": "Create a new repository"
   },
   "options_onboardingWizardRepoFlowManual": {
-    "message": "Use existing repository"
+    "message": "Use an existing repository"
   },
   "options_onboardingWizardActionCheckEnvironment": {
     "message": "Check repository and path"
@@ -1211,8 +1238,32 @@
   "options_onboardingWizardEnvironmentChecked": {
     "message": "Repository and path check completed."
   },
+  "options_onboardingWizardEnvironmentChecked_autoCreate": {
+    "message": "Repository ready. Choose how to upload your bookmarks."
+  },
   "options_onboardingWizardAutoSeedSuccess": {
     "message": "Created initial folder structure at \"$1\". Setup can continue."
+  },
+  "options_onboardingWizardAutoSeedFailed": {
+    "message": "Could not finish preparing the new repository. Wait a moment and try again."
+  },
+  "options_onboardingWizardEmptyRepoSeedFailed": {
+    "message": "This repository has no commits yet. Could not prepare the bookmarks folder. Wait a moment and try again, or add a first commit on the host."
+  },
+  "options_onboardingWizardPushFailed": {
+    "message": "Push failed. Check the repository and try again."
+  },
+  "options_onboardingWizardPreparingBaseline": {
+    "message": "Preparing repository baseline"
+  },
+  "options_onboardingWizardCreatingStructure": {
+    "message": "Creating initial folder structure"
+  },
+  "options_onboardingWizardCheckingPath": {
+    "message": "Checking repository path"
+  },
+  "options_onboardingWizardInspectingStructure": {
+    "message": "Inspecting remote folder structure"
   },
   "options_onboardingWizardSyncInProgress": {
     "message": "Working in background, please wait..."
@@ -1246,6 +1297,12 @@
   },
   "api_conflict": {
     "message": "Conflict: The file was modified in the meantime."
+  },
+  "api_repoEmpty": {
+    "message": "The repository has no commits yet (no branch). Create the initial folder structure or push bookmarks first."
+  },
+  "api_emptyRepoInitFailed": {
+    "message": "Could not create the initial branch after several attempts. Wait a moment and try again, or create a first commit in the repository."
   },
   "api_networkError": {
     "message": "Network error. Please check your internet connection and try again."
@@ -1718,7 +1775,7 @@
     "message": "Getting Started"
   },
   "help_gettingStartedIntro": {
-    "message": "Create a Git repository for your bookmarks on <strong>GitHub</strong>, <strong>GitLab</strong>, <strong>Codeberg</strong>, <strong>Gitea</strong>, <strong>Forgejo</strong>, or <strong>Gogs</strong>. In <strong>Git → Connection</strong>, choose your provider, enter a Personal Access Token, repository owner/name, branch (usually <code>main</code>), and folder path (default: <code>bookmarks</code>, not a <code>.json</code> filename). Self-hosted providers need a server URL; allow host access when prompted. Click <strong>Test Connection</strong> to verify."
+    "message": "Create a Git repository for your bookmarks on <strong>GitHub</strong>, <strong>GitLab</strong>, <strong>Codeberg</strong>, <strong>Gitea</strong>, <strong>Forgejo</strong>, or <strong>Gogs</strong>. In <strong>Git → Connection</strong>, choose your provider, enter a Personal Access Token, repository owner, repository name (default: <code>my-bookmarks</code>), branch (usually <code>main</code>), and folder path (default: <code>bookmarks</code>, not a <code>.json</code> filename). Self-hosted providers need a server URL; allow host access when prompted. Click <strong>Test Connection</strong> to verify."
   },
   "help_onboarding": {
     "message": "If the folder is empty, you can create the base structure (toolbar, other). If bookmarks already exist in the repo, you can pull them into this browser."

@@ -109,14 +109,12 @@ Create a **Poll** in [Discussions → Polls](https://github.com/d0dg3r/GitSyncMa
 | 4 | Update version history in `docs/RELEASE.md` |
 | 5 | Open PR from `release/v2.2.0` to `main` |
 | 6 | Merge (main now has the release version) |
-| 7 | Tag and push: `git tag v2.2.0 && git push origin v2.2.0` |
-| 8 | GitHub Actions creates the release with ZIPs |
+| 7 | Tag and push to **forgejo.lan** SoT: `git tag v2.2.0 && git push origin v2.2.0` (`origin` = Forgejo) |
+| 8 | Forgejo Actions (`.forgejo/workflows/release.yml`) builds ZIPs, creates the Forgejo release, then **copies** the same ZIPs to GitHub (`d0dg3r/GitSyncMarks`) via `GITSYNCMARKS_RELEASE_PAT` |
 
-**Third-party Actions in `release.yml`:** Pin each non-`actions/*` `uses:` reference to a full commit SHA (not only a moving tag) so CodeQL’s `actions/unpinned-tag` stays satisfied. Resolve a tag to the current commit with:
+**CI SoT:** Builds, E2E, and screenshots run on **forgejo.lan** under `.forgejo/workflows/`. GitHub workflow stubs under `.github/workflows/{ci,test-e2e,release,screenshots}.yml` are no-ops so a push mirror cannot double-build. GitHub still hosts CodeQL, Dependabot, Pages, and the user-facing `add-bookmark.yml` template.
 
-```bash
-gh api repos/<org>/<repo>/commits/<tag> -q .sha
-```
+**Forgejo Actions secrets / variables** (release + E2E): see `.env.example`. Tokens are Secrets (`GITSYNCMARKS_GITHUB_PAT`, `GITSYNCMARKS_FORGEJO_TOKEN`, `GITSYNCMARKS_RELEASE_PAT`); owner/repo/URL are Variables. Secret names must not start with `GITHUB_`, `FORGEJO_`, or `GITEA_`.
 
 ### 3.1.0 Preparation Checklist
 
@@ -238,16 +236,16 @@ git tag v1.4.0
 git push origin v1.4.0
 ```
 
-This triggers the **GitHub Actions workflow** automatically.
+This triggers the **Forgejo Actions** workflow on forgejo.lan (push `origin` must be Forgejo).
 
 ### 4. Wait for the workflow
 
-The GitHub Actions workflow will:
+The Forgejo workflow (`.forgejo/workflows/release.yml`) will:
 1. Check out the code and detect prerelease (Pre-tags: `-pre.N`, `-alpha.N`, etc.)
 2. Extract changelog from `CHANGELOG.md` for the released version
 3. Build both ZIPs (`GitSyncMarks-vX.X.X-chrome.zip`, `GitSyncMarks-vX.X.X-firefox.zip`)
-4. Create the GitHub Release (changelog + installation instructions in the body)
-5. Create a Discussion post in the **Announcements** category (requires Discussions enabled and Announcements category to exist)
+4. Create the Forgejo release with those ZIPs
+5. Copy the same ZIPs to the GitHub release (`d0dg3r/GitSyncMarks`) via `GITSYNCMARKS_RELEASE_PAT`
 
 E2E tests and screenshot generation in CI are currently disabled (see [ROADMAP.md](../ROADMAP.md) backlog). Run them locally before tagging.
 
@@ -273,9 +271,9 @@ Tags with a pre-release suffix (`-pre.N`, `-alpha.N`, `-beta.N`, `-rc.N`) trigge
 
 Supported suffixes: `-pre.N`, `-alpha.N`, `-beta.N`, `-rc.N` (e.g. `v2.1.0-rc.3`).
 
-## GitHub Actions Workflow
+## Forgejo Actions Release Workflow
 
-The workflow is defined in `.github/workflows/release.yml`.
+SoT: [`.forgejo/workflows/release.yml`](../.forgejo/workflows/release.yml) on forgejo.lan. GitHub’s `.github/workflows/release.yml` is a disabled stub.
 
 ### Trigger
 
@@ -286,22 +284,23 @@ on:
       - 'v*'
 ```
 
-It runs **only** when a tag matching `v*` (e.g., `v1.3.0`) is pushed.
+It runs **only** when a tag matching `v*` (e.g., `v1.3.0`) is pushed to Forgejo.
 
 ### What it does
 
-1. **Setup:** Checkout, detect prerelease, install Node
+1. **Quality:** Lint, typecheck, unit tests
 2. **Build:** `build.sh` creates both ZIP packages (Chrome and Firefox)
-3. **Release:** Create GitHub Release with both ZIPs attached
+3. **Forgejo release:** Attach ZIPs on forgejo.lan
+4. **GitHub copy:** Same ZIPs via `scripts/publish-release.sh` + secret `GITSYNCMARKS_RELEASE_PAT`
 
-E2E tests and screenshot generation are disabled in CI (see [ROADMAP.md](../ROADMAP.md) backlog).
+E2E and screenshots are separate Forgejo workflows (`.forgejo/workflows/test-e2e.yml`, `screenshots.yml`).
 
 ```mermaid
 flowchart TD
-    Tag["Push tag v*"] --> Checkout["Checkout, detect prerelease"]
-    Checkout --> Setup["Setup Node"]
-    Setup --> Build["Build both ZIPs"]
-    Build --> Release["Create GitHub Release"]
+    Tag["Push tag v* to forgejo.lan"] --> Quality["Lint typecheck unit"]
+    Quality --> Build["Build both ZIPs"]
+    Build --> FjRel["Forgejo Release"]
+    Build --> GhCopy["Copy ZIPs to GitHub"]
 ```
 
 The Chrome package uses `manifest.json`, the Firefox package uses `manifest.firefox.json` (renamed to `manifest.json` during build).

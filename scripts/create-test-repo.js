@@ -1,67 +1,98 @@
 #!/usr/bin/env node
 /**
- * Create the private test repository for GitSyncMarks E2E tests.
+ * Create the private stable fixture repository for GitSyncMarks E2E tests.
  *
- * Creates GitSyncMarks-test-sync as a private repo.
- * Optionally initializes with minimal bookmark structure.
+ * Creates GitSyncMarks-test-sync (private, auto_init) on GitHub and/or Forgejo.
  *
- * Requires: GITSYNCMARKS_TEST_PAT (GitHub PAT with repo scope)
+ * Usage:
+ *   node scripts/create-test-repo.js --host=github
+ *   node scripts/create-test-repo.js --host=forgejo
+ *   node scripts/create-test-repo.js --host=all
  *
- * Usage: GITSYNCMARKS_TEST_PAT=ghp_xxx node scripts/create-test-repo.js
+ * Env:
+ *   GitHub:  GITSYNCMARKS_GITHUB_PAT, optional GITSYNCMARKS_GITHUB_OWNER
+ *   Forgejo: GITSYNCMARKS_FORGEJO_TOKEN, GITSYNCMARKS_FORGEJO_OWNER,
+ *            GITSYNCMARKS_FORGEJO_SERVER_URL (default https://forgejo.lan)
  */
 
-const REPO_NAME = 'GitSyncMarks-test-sync';
+require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
-async function createRepo(token) {
-  const res = await fetch('https://api.github.com/user/repos', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      name: REPO_NAME,
-      private: true,
-      description: 'Private test repo for GitSyncMarks E2E tests',
-      auto_init: true,
-    }),
-  });
+const {
+  STABLE_FIXTURE_REPO,
+  getGithubHostConfig,
+  getForgejoHostConfig,
+  createFixtureRepo,
+} = require('../e2e/helpers/git-host.js');
 
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({ message: res.statusText }));
-    if (res.status === 422 && err.message?.includes('already exists')) {
-      console.log(`Repo ${REPO_NAME} already exists. Nothing to do.`);
-      return;
-    }
-    throw new Error(`Failed to create repo: ${res.status} ${JSON.stringify(err)}`);
+function parseHostArg(argv) {
+  const raw = argv.find((a) => a.startsWith('--host='))?.slice('--host='.length)
+    || (argv.includes('--host') ? argv[argv.indexOf('--host') + 1] : null)
+    || 'github';
+  const host = String(raw).toLowerCase();
+  if (!['github', 'forgejo', 'all'].includes(host)) {
+    throw new Error(`Unknown --host=${raw}. Use github, forgejo, or all.`);
   }
+  return host;
+}
 
-  const repo = await res.json();
-  console.log(`Created private repo: ${repo.full_name}`);
-  return repo;
+async function createForHost(label, host) {
+  if (!host) {
+    console.error(`Skipping ${label}: credentials incomplete.`);
+    return false;
+  }
+  const result = await createFixtureRepo(host, STABLE_FIXTURE_REPO);
+  if (result.alreadyExists) {
+    console.log(`[${label}] Repo ${result.fullName} already exists. Nothing to do.`);
+  } else {
+    console.log(`[${label}] Created private repo: ${result.fullName}`);
+  }
+  return true;
 }
 
 async function main() {
-  const token = process.env.GITSYNCMARKS_TEST_PAT;
-  if (!token) {
-    console.error(
-      'Missing GITSYNCMARKS_TEST_PAT. Set it before running:\n' +
-        '  GITSYNCMARKS_TEST_PAT=ghp_xxx node scripts/create-test-repo.js'
-    );
-    process.exit(1);
+  const which = parseHostArg(process.argv.slice(2));
+  let ok = true;
+
+  if (which === 'github' || which === 'all') {
+    const host = getGithubHostConfig();
+    if (!host?.token) {
+      console.error(
+        'Missing GITSYNCMARKS_GITHUB_PAT for GitHub.\n' +
+          '  GITSYNCMARKS_GITHUB_PAT=ghp_xxx node scripts/create-test-repo.js --host=github'
+      );
+      ok = false;
+    } else if (!(await createForHost('github', host))) {
+      ok = false;
+    } else {
+      console.log('  Configure: GITSYNCMARKS_GITHUB_OWNER=<user> GITSYNCMARKS_GITHUB_REPO=' + STABLE_FIXTURE_REPO);
+    }
   }
 
-  try {
-    await createRepo(token);
-    console.log('Done. Use this repo for E2E tests. Configure:');
-    console.log(`  GITSYNCMARKS_TEST_REPO_OWNER=<your-username>`);
-    console.log(`  GITSYNCMARKS_TEST_REPO=${REPO_NAME}`);
-  } catch (err) {
-    console.error(err.message);
-    process.exit(1);
+  if (which === 'forgejo' || which === 'all') {
+    const host = getForgejoHostConfig();
+    if (!host) {
+      console.error(
+        'Missing Forgejo env. Set:\n' +
+          '  GITSYNCMARKS_FORGEJO_TOKEN=\n' +
+          '  GITSYNCMARKS_FORGEJO_OWNER=\n' +
+          '  GITSYNCMARKS_FORGEJO_SERVER_URL=https://forgejo.lan\n' +
+          '  GITSYNCMARKS_FORGEJO_REPO=' + STABLE_FIXTURE_REPO
+      );
+      ok = false;
+    } else if (!(await createForHost('forgejo', host))) {
+      ok = false;
+    } else {
+      console.log(
+        `  Configure: GITSYNCMARKS_FORGEJO_* (SERVER_URL=${host.serverUrl}, REPO=${STABLE_FIXTURE_REPO})`
+      );
+    }
   }
+
+  if (!ok) process.exit(1);
+  console.log('Done.');
 }
 
-main();
+main().catch((err) => {
+  console.error(err.message || err);
+  process.exit(1);
+});

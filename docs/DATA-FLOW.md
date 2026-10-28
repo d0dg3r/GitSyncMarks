@@ -335,7 +335,7 @@ POST /repos/{owner}/{repo}/git/commits                → create commit
 PATCH /repos/{owner}/{repo}/git/refs/heads/{branch}   → update branch
 ```
 
-For empty repos (no branch yet), `POST /git/refs` creates the initial branch.
+For empty repos (no branch yet), `POST /git/refs` creates the initial branch. If git-data writes keep returning empty-repo 409, `commitBookmarkChanges` / `initializeRemoteFolder` fall back to Contents `PUT …/contents/{path}` (creates the first commit).
 
 ### Efficiency
 

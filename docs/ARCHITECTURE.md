@@ -235,7 +235,7 @@ Uses static imports into `lib/commit-bookmarks.js` and `lib/sync-core.js` so pro
 
 ### `lib/commit-bookmarks.js` — Git Commits
 
-Leaf module: `commitBookmarkChanges()` and Gitea Contents API fallback. Imported by `sync-core`, `mirror-push`, `bitwarden-backup`, and `profile-switch` without circular imports.
+Leaf module: `commitBookmarkChanges()` with Gitea Contents API fallback and empty-repo Contents `createOrUpdateFile` fallback (GitHub/GitLab when git-data createTree stays 409). Imported by `sync-core`, `mirror-push`, `bitwarden-backup`, and `profile-switch` without circular imports.
 
 ### `lib/deletion-guard.js` — Bulk-Deletion Safety
 
@@ -474,11 +474,13 @@ GitSyncMarks/
 │   ├── add-bookmark-to-repo.py   # Add bookmark JSON + ensure structure (used by add-bookmark.yml)
 │   └── verify-test-repo.js       # Verify bookmark files in GitHub test repo (API)
 ├── package.json                  # npm scripts for building
+├── .forgejo/workflows/           # CI SoT (forgejo.lan)
+│   ├── ci.yml                    # Lint, typecheck, unit, AMO, smoke E2E
+│   ├── test-e2e.yml              # Full E2E + dual-host onboarding
+│   ├── release.yml               # Build ZIPs; Forgejo release; copy ZIPs to GitHub
+│   └── screenshots.yml           # Generate store screenshots
 ├── .github/workflows/
-│   ├── ci.yml                    # Lint, typecheck, unit tests
-│   ├── test-e2e.yml              # E2E tests (manual trigger only)
-│   ├── release.yml               # Build ZIPs, create release on tag
-│   ├── screenshots.yml           # Generate store screenshots
+│   ├── ci.yml / test-e2e.yml / release.yml / screenshots.yml  # Disabled stubs (SoT is Forgejo)
 │   ├── add-bookmark.yml          # Automation: add bookmark via dispatch (runs scripts/add-bookmark-to-repo.py)
 │   ├── pages.yml                 # GitHub Pages site
 │   ├── codeql.yml                # CodeQL analysis

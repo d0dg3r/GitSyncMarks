@@ -1,12 +1,18 @@
 /**
  * Connection test: Configure GitHub credentials and verify "Test Connection" succeeds.
  * Save Settings test: Sync tab settings can be saved.
- * Requires: GITSYNCMARKS_TEST_PAT, GITSYNCMARKS_TEST_REPO_OWNER, GITSYNCMARKS_TEST_REPO (for credentials + save tests)
+ * Requires: GITSYNCMARKS_GITHUB_PAT, GITSYNCMARKS_GITHUB_OWNER, GITSYNCMARKS_GITHUB_REPO (for credentials + save tests)
  */
 
 const { test } = require('./fixtures/extension.js');
 const { deleteE2eRepoIfSafe } = require('./helpers/e2e-repo-cleanup.js');
-const { countBookmarkFilesInFolder, ensureMinimalStructure, githubFetch } = require('./helpers/github-api.js');
+const { ephemeralRepoName } = require('./helpers/e2e-repo-names.js');
+const {
+  countBookmarkFilesInFolder,
+  ensureMinimalStructure,
+  githubFetch,
+  createEmptyRepo,
+} = require('./helpers/github-api.js');
 
 async function skipWizardIfVisible(page) {
   const wizard = page.locator('#onboarding-wizard-screen');
@@ -31,9 +37,9 @@ async function configureExtension(page, extensionId) {
   await openOptions(page, extensionId);
   await skipWizardIfVisible(page);
   await page.locator('.sub-tab-btn[data-subtab="github-connection"]').click();
-  await page.locator('#token').fill(process.env.GITSYNCMARKS_TEST_PAT);
-  await page.locator('#owner').fill(process.env.GITSYNCMARKS_TEST_REPO_OWNER);
-  await page.locator('#repo').fill(process.env.GITSYNCMARKS_TEST_REPO);
+  await page.locator('#token').fill(process.env.GITSYNCMARKS_GITHUB_PAT);
+  await page.locator('#owner').fill(process.env.GITSYNCMARKS_GITHUB_OWNER);
+  await page.locator('#repo').fill(process.env.GITSYNCMARKS_GITHUB_REPO);
   await page.locator('#repo').dispatchEvent('change');
   await test.expect(page.locator('#save-github-result')).toHaveClass(/success/, { timeout: 5000 });
 }
@@ -98,12 +104,14 @@ async function openWizardAndAdvanceToRepoDetails(page) {
   }
   await test.expect(wizard).toBeVisible();
 
-  await page.locator('#onboarding-wizard-next-btn').click(); // welcome -> tokenHelp
+  await page.locator('#onboarding-wizard-next-btn').click(); // welcome -> provider
+  await page.locator('#onboarding-wizard-next-btn').click(); // provider -> tokenHelp (github default)
   await page.locator('#onboarding-wizard-next-btn').click(); // tokenHelp -> hasToken
   await page.locator('#onboarding-wizard-has-token').selectOption('yes');
   await page.locator('#onboarding-wizard-next-btn').click(); // hasToken -> tokenInput
-  await page.locator('#onboarding-wizard-token').fill(process.env.GITSYNCMARKS_TEST_PAT);
+  await page.locator('#onboarding-wizard-token').fill(process.env.GITSYNCMARKS_GITHUB_PAT);
   await page.locator('#onboarding-wizard-next-btn').click(); // tokenInput -> repoDecision
+  await test.expect(page.locator('#onboarding-wizard-step-title')).toContainText(/Repository setup mode/i);
 }
 
 async function runWizardBootstrapFlow({ page, owner, repo, path, repoFlow }) {
@@ -116,6 +124,35 @@ async function runWizardBootstrapFlow({ page, owner, repo, path, repoFlow }) {
   await page.locator('#onboarding-wizard-next-btn').click(); // repoDetails -> environment
   await page.locator('#onboarding-wizard-next-btn').click(); // environment -> check + bootstrap + finish
   await test.expect(page.locator('#onboarding-wizard-step-title')).toContainText(/all set|fertig|ready|finish/i, { timeout: 60000 });
+}
+
+/** Advance past sync choice / confirm Push until the wizard finish step. */
+async function advanceWizardUntilFinish(page, { timeoutMs = 60000 } = {}) {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    const title = await page.locator('#onboarding-wizard-step-title').textContent();
+    if (/all set|fertig|ready|finish/i.test(String(title || ''))) return;
+    const status = page.locator('#wizard-status');
+    if (await status.isVisible().catch(() => false)) {
+      const cls = await status.getAttribute('class');
+      if (cls && /\berror\b/.test(cls)) {
+        const text = await status.textContent();
+        throw new Error(`Wizard failed before finish: ${text || '(no status text)'}`);
+      }
+    }
+    const confirmYes = page.locator('#onboarding-confirm-yes-btn');
+    if (await confirmYes.isVisible().catch(() => false)) {
+      await confirmYes.click();
+      continue;
+    }
+    const next = page.locator('#onboarding-wizard-next-btn');
+    if (await next.isEnabled().catch(() => false)) {
+      await next.click();
+      continue;
+    }
+    await page.waitForTimeout(400);
+  }
+  throw new Error('Timed out waiting for wizard finish step');
 }
 
 async function disableAutoSync(page) {
@@ -177,13 +214,13 @@ async function waitForRemoteProfileMissing(filename, timeoutMs = 15000) {
 }
 
 const hasTestCredentials = () =>
-  process.env.GITSYNCMARKS_TEST_PAT &&
-  process.env.GITSYNCMARKS_TEST_REPO_OWNER &&
-  process.env.GITSYNCMARKS_TEST_REPO;
-const hasTokenOnly = () => !!process.env.GITSYNCMARKS_TEST_PAT;
+  process.env.GITSYNCMARKS_GITHUB_PAT &&
+  process.env.GITSYNCMARKS_GITHUB_OWNER &&
+  process.env.GITSYNCMARKS_GITHUB_REPO;
+const hasTokenOnly = () => !!process.env.GITSYNCMARKS_GITHUB_PAT;
 const hasTokenAndOwner = () =>
-  process.env.GITSYNCMARKS_TEST_PAT &&
-  process.env.GITSYNCMARKS_TEST_REPO_OWNER;
+  process.env.GITSYNCMARKS_GITHUB_PAT &&
+  process.env.GITSYNCMARKS_GITHUB_OWNER;
 
 test.describe('Connection', () => {
   test.skip(!hasTokenOnly(), 'Missing token for wizard-next validation test');
@@ -197,12 +234,13 @@ test.describe('Connection', () => {
     }
     await test.expect(wizard).toBeVisible();
 
-    await page.locator('#onboarding-wizard-next-btn').click(); // welcome -> tokenHelp
+    await page.locator('#onboarding-wizard-next-btn').click(); // welcome -> provider
+    await page.locator('#onboarding-wizard-next-btn').click(); // provider -> tokenHelp
     await page.locator('#onboarding-wizard-next-btn').click(); // tokenHelp -> hasToken
     await page.locator('#onboarding-wizard-has-token').selectOption('yes');
     await page.locator('#onboarding-wizard-next-btn').click(); // hasToken -> tokenInput
 
-    await page.locator('#onboarding-wizard-token').fill(process.env.GITSYNCMARKS_TEST_PAT);
+    await page.locator('#onboarding-wizard-token').fill(process.env.GITSYNCMARKS_GITHUB_PAT);
     await page.locator('#onboarding-wizard-next-btn').click(); // tokenInput validates + moves on
 
     await test.expect(page.locator('#onboarding-wizard-step-title')).toContainText(/Repository setup mode/i);
@@ -248,9 +286,9 @@ test.describe('Connection', () => {
     test.skip(!hasTokenAndOwner(), 'Missing token/owner for onboarding bootstrap auto-create test');
     test('Bootstrap scenario A0: auto-created empty repo auto-seeds structure', async ({ page, extensionId }, testInfo) => {
       test.setTimeout(90000);
-      const token = process.env.GITSYNCMARKS_TEST_PAT;
-      const owner = process.env.GITSYNCMARKS_TEST_REPO_OWNER;
-      const createdRepo = `gitsyncmarks-e2e-autoseed-${Date.now()}`;
+      const token = process.env.GITSYNCMARKS_GITHUB_PAT;
+      const owner = process.env.GITSYNCMARKS_GITHUB_OWNER;
+      const createdRepo = ephemeralRepoName('autoseed');
       const basePath = 'bookmarks';
       await openOptions(page, extensionId);
       await disableAutoSync(page);
@@ -285,9 +323,9 @@ test.describe('Connection', () => {
 
     test('Bootstrap scenario A: auto-created repo syncs toolbar + other bookmarks', async ({ page, extensionId }, testInfo) => {
       test.setTimeout(90000);
-      const token = process.env.GITSYNCMARKS_TEST_PAT;
-      const owner = process.env.GITSYNCMARKS_TEST_REPO_OWNER;
-      const createdRepo = `gitsyncmarks-e2e-bootstrap-${Date.now()}`;
+      const token = process.env.GITSYNCMARKS_GITHUB_PAT;
+      const owner = process.env.GITSYNCMARKS_GITHUB_OWNER;
+      const createdRepo = ephemeralRepoName('bootstrap');
       const basePath = 'bookmarks';
       await openOptions(page, extensionId);
       await disableAutoSync(page);
@@ -308,7 +346,20 @@ test.describe('Connection', () => {
         await page.locator('#onboarding-wizard-branch').fill('main');
         await page.locator('#onboarding-wizard-path').fill(basePath);
         await page.locator('#onboarding-wizard-next-btn').click(); // repoDetails -> environment
-        await page.locator('#onboarding-wizard-next-btn').click(); // environment -> (processing) -> finish
+        await page.locator('#onboarding-wizard-next-btn').click(); // environment -> auto-seed structure
+        // Local bookmarks remain: wizard still offers Push after seed. Confirm + advance to finish.
+        for (let i = 0; i < 4; i += 1) {
+          const title = await page.locator('#onboarding-wizard-step-title').textContent();
+          if (/all set|fertig|ready|finish/i.test(String(title || ''))) break;
+          const confirmYes = page.locator('#onboarding-confirm-yes-btn');
+          if (await confirmYes.isVisible().catch(() => false)) {
+            await confirmYes.click();
+            continue;
+          }
+          const next = page.locator('#onboarding-wizard-next-btn');
+          if (await next.isEnabled()) await next.click();
+          else break;
+        }
         await test.expect(page.locator('#onboarding-wizard-step-title')).toContainText(/all set|fertig|ready|finish/i, { timeout: 60000 });
         const repoTarget = { owner, repo: createdRepo };
         const toolbarCount = await countBookmarkFilesInFolder(basePath, 'toolbar', repoTarget);
@@ -330,8 +381,8 @@ test.describe('Connection', () => {
 
     test.skip(!hasTestCredentials(), 'Missing test credentials for existing empty repo test');
     test('Bootstrap scenario B: existing repo without bookmarks folder syncs toolbar + other', async ({ page, extensionId }) => {
-      const owner = process.env.GITSYNCMARKS_TEST_REPO_OWNER;
-      const repo = process.env.GITSYNCMARKS_TEST_REPO;
+      const owner = process.env.GITSYNCMARKS_GITHUB_OWNER;
+      const repo = process.env.GITSYNCMARKS_GITHUB_REPO;
       const basePath = `bookmarks-e2e-empty-${Date.now()}`;
       await openOptions(page, extensionId);
       await disableAutoSync(page);
@@ -356,8 +407,8 @@ test.describe('Connection', () => {
 
     test.skip(!hasTestCredentials(), 'Missing test credentials for existing structured repo test');
     test('Bootstrap scenario C: existing repo with folder structure syncs toolbar + other', async ({ page, extensionId }) => {
-      const owner = process.env.GITSYNCMARKS_TEST_REPO_OWNER;
-      const repo = process.env.GITSYNCMARKS_TEST_REPO;
+      const owner = process.env.GITSYNCMARKS_GITHUB_OWNER;
+      const repo = process.env.GITSYNCMARKS_GITHUB_REPO;
       const basePath = `bookmarks-e2e-struct-${Date.now()}`;
       await ensureMinimalStructure(basePath);
       await openOptions(page, extensionId);
@@ -381,6 +432,57 @@ test.describe('Connection', () => {
       test.expect(otherCount).toBeGreaterThan(0);
     });
 
+    test.skip(!hasTokenAndOwner(), 'Missing token/owner for zero-commit existing-repo test');
+    test('Bootstrap scenario D: existing zero-commit repo (manual) seeds and syncs toolbar + other', async ({
+      page,
+      extensionId,
+    }, testInfo) => {
+      test.setTimeout(120000);
+      const token = process.env.GITSYNCMARKS_GITHUB_PAT;
+      const owner = process.env.GITSYNCMARKS_GITHUB_OWNER;
+      const createdRepo = ephemeralRepoName('emptyinit');
+      const basePath = 'bookmarks';
+      await openOptions(page, extensionId);
+      await disableAutoSync(page);
+      const seeded = await seedLocalBookmarksForToolbarAndOther(page, `d-${Date.now()}`);
+      test.expect(Boolean(seeded?.toolbarBookmarkId)).toBeTruthy();
+      test.expect(Boolean(seeded?.otherBookmarkId)).toBeTruthy();
+      const localCounts = await getLocalFileMapCounts(page);
+      test.expect(localCounts.toolbarCount).toBeGreaterThan(0);
+      test.expect(localCounts.otherCount).toBeGreaterThan(0);
+
+      try {
+        await createEmptyRepo(createdRepo);
+        await openWizardAndAdvanceToRepoDetails(page);
+        await page.locator('#onboarding-wizard-repo-flow').selectOption('manual');
+        await page.locator('#onboarding-wizard-next-btn').click(); // repoDecision -> repoDetails
+        await page.locator('#onboarding-wizard-owner').fill(owner);
+        await page.locator('#onboarding-wizard-repo').fill(createdRepo);
+        await page.locator('#onboarding-wizard-branch').fill('main');
+        await page.locator('#onboarding-wizard-path').fill(basePath);
+        await page.locator('#onboarding-wizard-next-btn').click(); // repoDetails -> environment
+        await page.locator('#onboarding-wizard-next-btn').click(); // environment -> seed empty remote
+        await advanceWizardUntilFinish(page);
+
+        const repoTarget = { owner, repo: createdRepo };
+        await githubFetch(`/contents/${basePath}/_index.json`, {}, repoTarget);
+        const toolbarCount = await countBookmarkFilesInFolder(basePath, 'toolbar', repoTarget);
+        const otherCount = await countBookmarkFilesInFolder(basePath, 'other', repoTarget);
+        test.expect(toolbarCount).toBeGreaterThan(0);
+        test.expect(otherCount).toBeGreaterThan(0);
+      } finally {
+        const cleanupResult = await deleteE2eRepoIfSafe({ token, owner, repo: createdRepo });
+        await testInfo.attach('emptyinit-repo-cleanup', {
+          contentType: 'application/json',
+          body: Buffer.from(JSON.stringify({
+            owner,
+            repo: createdRepo,
+            ...cleanupResult,
+          }, null, 2)),
+        });
+      }
+    });
+
     test.skip(!hasTestCredentials(), 'Missing test credentials (PAT, REPO_OWNER, REPO)');
 
     test('Test Connection succeeds with valid credentials', async ({
@@ -392,9 +494,9 @@ test.describe('Connection', () => {
     await skipWizardIfVisible(page);
     await page.locator('.sub-tab-btn[data-subtab="github-connection"]').click();
 
-    await page.locator('#token').fill(process.env.GITSYNCMARKS_TEST_PAT);
-    await page.locator('#owner').fill(process.env.GITSYNCMARKS_TEST_REPO_OWNER);
-    await page.locator('#repo').fill(process.env.GITSYNCMARKS_TEST_REPO);
+    await page.locator('#token').fill(process.env.GITSYNCMARKS_GITHUB_PAT);
+    await page.locator('#owner').fill(process.env.GITSYNCMARKS_GITHUB_OWNER);
+    await page.locator('#repo').fill(process.env.GITSYNCMARKS_GITHUB_REPO);
 
     await page.locator('#validate-btn').click();
 
@@ -435,9 +537,9 @@ test.describe('Connection', () => {
       await skipWizardIfVisible(page);
       await page.locator('.sub-tab-btn[data-subtab="github-connection"]').click();
 
-      await page.locator('#token').fill(process.env.GITSYNCMARKS_TEST_PAT);
-      await page.locator('#owner').fill(process.env.GITSYNCMARKS_TEST_REPO_OWNER);
-      await page.locator('#repo').fill(process.env.GITSYNCMARKS_TEST_REPO);
+      await page.locator('#token').fill(process.env.GITSYNCMARKS_GITHUB_PAT);
+      await page.locator('#owner').fill(process.env.GITSYNCMARKS_GITHUB_OWNER);
+      await page.locator('#repo').fill(process.env.GITSYNCMARKS_GITHUB_REPO);
       await page.locator('#filepath').fill(`bookmarks-e2e-init-${Date.now()}`);
 
       await page.locator('#validate-btn').click();
@@ -453,14 +555,14 @@ test.describe('Connection', () => {
       await page.goto(`chrome-extension://${extensionId}/options.html`);
       await page.waitForLoadState('networkidle');
 
-      const token = process.env.GITSYNCMARKS_TEST_PAT;
-      const mismatchedOwner = `${process.env.GITSYNCMARKS_TEST_REPO_OWNER}-mismatch`;
+      const token = process.env.GITSYNCMARKS_GITHUB_PAT;
+      const mismatchedOwner = `${process.env.GITSYNCMARKS_GITHUB_OWNER}-mismatch`;
       const response = await page.evaluate(async ({ token: tokenArg, ownerArg }) => {
         return chrome.runtime.sendMessage({
           action: 'createRepository',
           token: tokenArg,
           owner: ownerArg,
-          repo: `gitsyncmarks-e2e-mismatch-${Date.now()}`,
+          repo: ephemeralRepoName('mismatch'),
           branch: 'main',
         });
       }, { token, ownerArg: mismatchedOwner });

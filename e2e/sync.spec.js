@@ -1,6 +1,6 @@
 /**
  * Sync tests: Push and Pull.
- * Requires: GITSYNCMARKS_TEST_PAT, GITSYNCMARKS_TEST_REPO_OWNER, GITSYNCMARKS_TEST_REPO
+ * Requires: GITSYNCMARKS_GITHUB_PAT, GITSYNCMARKS_GITHUB_OWNER, GITSYNCMARKS_GITHUB_REPO
  *
  * Sync three-way merge.
  */
@@ -15,9 +15,9 @@ const {
 } = require('./helpers/github-api.js');
 
 const hasTestCredentials = () =>
-  process.env.GITSYNCMARKS_TEST_PAT &&
-  process.env.GITSYNCMARKS_TEST_REPO_OWNER &&
-  process.env.GITSYNCMARKS_TEST_REPO;
+  process.env.GITSYNCMARKS_GITHUB_PAT &&
+  process.env.GITSYNCMARKS_GITHUB_OWNER &&
+  process.env.GITSYNCMARKS_GITHUB_REPO;
 
 async function skipWizardIfVisible(page) {
   const wizard = page.locator('#onboarding-wizard-screen');
@@ -35,9 +35,9 @@ async function configureExtension(page, extensionId) {
   await page.locator('.sub-tab-btn[data-subtab="github-connection"]').click();
   await test.expect(page.locator('#subtab-github-connection')).toHaveClass(/active/);
 
-  await page.locator('#token').fill(process.env.GITSYNCMARKS_TEST_PAT);
-  await page.locator('#owner').fill(process.env.GITSYNCMARKS_TEST_REPO_OWNER);
-  await page.locator('#repo').fill(process.env.GITSYNCMARKS_TEST_REPO);
+  await page.locator('#token').fill(process.env.GITSYNCMARKS_GITHUB_PAT);
+  await page.locator('#owner').fill(process.env.GITSYNCMARKS_GITHUB_OWNER);
+  await page.locator('#repo').fill(process.env.GITSYNCMARKS_GITHUB_REPO);
   await page.locator('#repo').dispatchEvent('change');
   await test.expect(page.locator('#save-github-result')).toHaveClass(/success/, { timeout: 5000 });
 }

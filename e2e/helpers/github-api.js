@@ -4,11 +4,11 @@
  */
 
 async function githubFetch(path, options = {}, target = {}) {
-  const token = process.env.GITSYNCMARKS_TEST_PAT;
-  const owner = target.owner || process.env.GITSYNCMARKS_TEST_REPO_OWNER;
-  const repo = target.repo || process.env.GITSYNCMARKS_TEST_REPO;
+  const token = process.env.GITSYNCMARKS_GITHUB_PAT;
+  const owner = target.owner || process.env.GITSYNCMARKS_GITHUB_OWNER;
+  const repo = target.repo || process.env.GITSYNCMARKS_GITHUB_REPO;
   if (!token || !owner || !repo) {
-    throw new Error('Missing GITSYNCMARKS_TEST_* env vars');
+    throw new Error('Missing GITSYNCMARKS_GITHUB_* env vars');
   }
   const url = `https://api.github.com/repos/${owner}/${repo}${path}`;
   const res = await fetch(url, {
@@ -152,6 +152,20 @@ async function countBookmarkFilesInFolder(basePath, folder, target = {}) {
   return entries.filter((e) => e.name.endsWith('.json') && !e.name.startsWith('_')).length;
 }
 
+/**
+ * Create an ephemeral GitHub repo with no initial commit (auto_init: false).
+ * @param {string} name - must be gitsyncmarks-e2e-*
+ * @returns {Promise<{ created: true, fullName: string, owner: string, repo: string }>}
+ */
+async function createEmptyRepo(name) {
+  const { getGithubHostConfig, createEmptyRepo: createOnHost } = require('./git-host.js');
+  const host = getGithubHostConfig();
+  if (!host?.token || !host?.owner) {
+    throw new Error('Missing GITSYNCMARKS_GITHUB_PAT / GITSYNCMARKS_GITHUB_OWNER');
+  }
+  return createOnHost(host, name);
+}
+
 async function ensureMinimalStructure(basePath = 'bookmarks', target = {}) {
   const indexPath = `${basePath}/_index.json`;
   const toolbarOrderPath = `${basePath}/toolbar/_order.json`;
@@ -206,4 +220,5 @@ module.exports = {
   countBookmarkFilesInToolbar,
   countBookmarkFilesInFolder,
   ensureMinimalStructure,
+  createEmptyRepo,
 };

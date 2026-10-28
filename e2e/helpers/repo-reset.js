@@ -2,7 +2,7 @@
  * Reset the test repo to minimal bookmark structure before sync tests.
  * Uses git clone, replace bookmarks/, commit, force-push.
  *
- * Requires: GITSYNCMARKS_TEST_PAT, GITSYNCMARKS_TEST_REPO_OWNER, GITSYNCMARKS_TEST_REPO
+ * Requires: GITSYNCMARKS_GITHUB_PAT, GITSYNCMARKS_GITHUB_OWNER, GITSYNCMARKS_GITHUB_REPO
  */
 
 const fs = require('fs');
@@ -79,19 +79,19 @@ function hasStagedChanges(cloneDir) {
  * @returns {Promise<void>}
  */
 async function resetTestRepo() {
-  const token = process.env.GITSYNCMARKS_TEST_PAT;
-  const owner = process.env.GITSYNCMARKS_TEST_REPO_OWNER;
-  const repo = process.env.GITSYNCMARKS_TEST_REPO;
+  const token = process.env.GITSYNCMARKS_GITHUB_PAT;
+  const owner = process.env.GITSYNCMARKS_GITHUB_OWNER;
+  const repo = process.env.GITSYNCMARKS_GITHUB_REPO;
 
   if (!token || !owner || !repo) {
     throw new Error(
-      'Missing env: GITSYNCMARKS_TEST_PAT, GITSYNCMARKS_TEST_REPO_OWNER, GITSYNCMARKS_TEST_REPO'
+      'Missing env: GITSYNCMARKS_GITHUB_PAT, GITSYNCMARKS_GITHUB_OWNER, GITSYNCMARKS_GITHUB_REPO'
     );
   }
 
   if (!SAFE_REPO_SEGMENT.test(owner) || !SAFE_REPO_SEGMENT.test(repo)) {
     throw new Error(
-      'Invalid GITSYNCMARKS_TEST_REPO_OWNER or GITSYNCMARKS_TEST_REPO (use [a-zA-Z0-9._-]+ only)'
+      'Invalid GITSYNCMARKS_GITHUB_OWNER or GITSYNCMARKS_GITHUB_REPO (use [a-zA-Z0-9._-]+ only)'
     );
   }
 

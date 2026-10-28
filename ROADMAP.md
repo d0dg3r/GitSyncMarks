@@ -63,7 +63,7 @@ Outcome of the 2026 code analysis. Tiers 1–3 (correctness, performance, qualit
 
 | Idea | Description | Effort |
 |------|-------------|--------|
-| **CI E2E Tests** | Smoke + options-UI E2E run automatically in `ci.yml` (no secrets). Full sync E2E (connection + sync specs) still manual via `test-e2e.yml` (requires PAT + test repo). | Medium |
+| **CI E2E Tests** | Smoke + options-UI on forgejo.lan `.forgejo/workflows/ci.yml` (no secrets). Full sync + dual-host onboarding on `.forgejo/workflows/test-e2e.yml` with `GITSYNCMARKS_GITHUB_*` / `GITSYNCMARKS_FORGEJO_*` secrets/vars. | Done (Forgejo SoT) |
 | **Open tabs sync** | Save open tabs to Git; full history in repo for restore/jump-back; default tabs per profile. | Large |
 | **Tab-Profile** | Named sets of URLs (from bookmark folder, current tabs, or manual). Open in current window (replace/append) or new window. Stored in repo (`tab-profiles.json`). See [docs/IDEAS-TAB-PROFILES.md](docs/IDEAS-TAB-PROFILES.md). | Large |
 | **Additional sync sources (read-only)** | Add extra folders from centrally maintained repos (e.g. team bookmarks). Your personal bookmarks stay in your repo; the shared folder is merged in read-only. Assemble bookmarks from multiple sources in one place | Medium |

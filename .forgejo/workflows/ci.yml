@@ -1,0 +1,89 @@
+# SoT CI on forgejo.lan (lint, unit, AMO, smoke). GitHub Actions CI is disabled.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-test-audit:
+    name: Lint, Test & Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: i18n keys used in code exist in en
+        run: npm run check:i18n
+
+      - name: Typecheck (checkJs)
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm run test:unit
+
+      - name: Firefox AMO lint (addons-linter)
+        run: npm run build:firefox && npm run lint:amo
+
+      - name: npm audit (production)
+        run: npm audit --omit=dev --audit-level=moderate
+
+  e2e-smoke:
+    name: E2E Smoke & Options UI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Start virtual display
+        run: |
+          if command -v apt-get >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y xvfb
+          fi
+          echo 'DISPLAY=:99' >> "$GITHUB_ENV"
+          Xvfb :99 -screen 0 1280x1024x24 &
+          sleep 2
+
+      - name: Build Chrome extension
+        run: npm run build:chrome
+
+      - name: Run smoke and options E2E tests
+        env:
+          DISPLAY: ':99'
+        run: npx playwright test e2e/smoke.spec.js e2e/options-ui.spec.js
+
+      - name: Upload report on failure
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: e2e-smoke-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

@@ -10,7 +10,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Upgrade note
 - **Update every device before syncing settings or Bitwarden backups.** `settings.enc` and Bitwarden backups are now written in the encrypted format v2 (PBKDF2-SHA256, 600,000 iterations). Version 3.0.10 and older cannot read v2: on a device that is not updated yet, settings sync and backup restore fail until it is updated. This version still reads v1 files.
 
+### Added
+- **Forgejo Actions SoT** (`.forgejo/workflows/`): CI, full E2E + dual-host onboarding, screenshots, and tag release build on forgejo.lan; GitHub receives copied release ZIPs via `GITSYNCMARKS_RELEASE_PAT` (`scripts/publish-release.sh`).
+- **Wizard bootstrap E2E matrix A–D**: documents and covers structure-ready (C), empty path on fixture (B), autoCreate (A), and zero-commit existing repo via `createEmptyRepo` + manual flow (D) in `connection.spec` / `onboarding-hosts`. Connection wizard helpers advance through the provider step.
+- **Dual-host onboarding E2E harness** (GitHub + Homelab Forgejo): stable `GitSyncMarks-test-sync` fixtures, ephemeral `gitsyncmarks-e2e-*` repos with random suffixes, `npm run test:e2e:onboarding`, `npm run create:test-repo -- --host=github|forgejo|all`, and dual-host `cleanup:e2e-repos`.
+
+### Changed
+- E2E env vars renamed: `GITSYNCMARKS_TEST_PAT` / `REPO_OWNER` / `REPO` → `GITSYNCMARKS_GITHUB_PAT` / `OWNER` / `REPO` (`.env.example`, helpers, docs). Tokens are Forgejo Actions Secrets; owner/repo/URL are Variables.
+- GitHub workflows for CI, E2E, release, and screenshots are disabled stubs; build SoT is forgejo.lan.
+- Wizard progress/error fallbacks for path check, auto-seed, and push use i18n keys (English source; other locales fall back). Follow-up: Bitwarden/`crypto.js`/settings-import/profile-manager still have some English-only throws.
+- **Wizard copy distinguishes create vs existing repository**: auto-create uses «Create and prepare» and prepare-oriented errors; existing-repo flow keeps «Check connection». Seed failures no longer show the low-level empty-repo API text.
+
 ### Fixed
+- **Empty existing repos (manual create, no first commit) can be used in the wizard and Push**: environment check seeds the bookmarks folder for empty remotes in both create and existing-repo flows; Push falls back to the Contents API after empty-repo 409 on GitHub; provider errors no longer dump stack traces into the UI message.
+- **Auto-created empty repos no longer fail the first push with a fake conflict**: wizard autoCreate always seeds the minimal bookmark folder structure (even when local bookmarks exist), waits for a remote baseline before push, and maps empty-repo HTTP 409 to a clear “repository has no commits” message instead of “modified in the meantime”. Initial seed retries git-data writes on empty-repo 409 and falls back to the Contents API when needed.
+- **Onboarding wizard / Test Connection no longer look filled with grey placeholders** ([#267](https://github.com/d0dg3r/GitSyncMarks/issues/267)): Repository Name is prefilled with `my-bookmarks` (same pattern as branch and folder path). Check connection keeps error messages instead of clearing them after the spinner. Test Connection treats a missing owner or repo as an error, not a green success.
+- Ephemeral E2E cleanup now deletes all `gitsyncmarks-e2e-*` repos (not only `…-bootstrap-…`), so autoseed/mismatch leftovers are removed.
 - **Sync no longer overwrites concurrent changes**: a commit is refused (and the sync re-runs) when the remote branch moved after the sync planned it, instead of re-applying full file contents on top of another device's commit (GitHub).
 - **Local edits made during a sync are kept**: a sync that sees a bookmark edit mid-run retries before replacing the local tree; auto-sync is no longer skipped while a sync runs, so such edits schedule a follow-up sync.
 - **Pull does not wipe local bookmarks** when the remote holds only metadata, or lacks a root folder.
@@ -241,7 +256,7 @@ Reliability, performance and quality release (code-analysis Tiers 1–3). First 
 
 ### Improved
 - **Onboarding / large-repo diagnostic**: `scripts/test-onboarding-rate-limit.js` adds `--parallel-only` and `--sequential-only` (single API pass). Default two-pass mode warns when simulating very large bookmark counts. New `npm run test:onboarding-scale` entry point; `e2e/README.md` documents simulating ~5000 bookmarks against a disposable GitHub repo.
-- **`npm run test:onboarding-scale` provisions the repo**: passes `--ensure-repo` — **DELETE** `GITSYNCMARKS_TEST_REPO` if it exists, then **POST /user/repos** (or org equivalent) to recreate it. Override with `--no-ensure-repo`. Classic PATs need **`delete_repo`**; see `.env.example` and `e2e/README.md`.
+- **`npm run test:onboarding-scale` provisions the repo**: passes `--ensure-repo` — **DELETE** `GITSYNCMARKS_GITHUB_REPO` if it exists, then **POST /user/repos** (or org equivalent) to recreate it. Override with `--no-ensure-repo`. Classic PATs need **`delete_repo`**; see `.env.example` and `e2e/README.md`.
 - **`npm run verify-test-repo`**: reads `main`’s recursive git tree via the GitHub API, prints blob count, checks required `bookmarks/` layout, optional `--min-bookmarks N` and `--verbose` (`scripts/verify-test-repo.js`, `e2e/README.md`).
 
 ### Fixed

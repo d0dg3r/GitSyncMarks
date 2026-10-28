@@ -9,9 +9,9 @@
  * This reproduces the scenario from GitHub Issue #51.
  *
  * USAGE:
- *   GITSYNCMARKS_TEST_PAT=ghp_xxx \
- *   GITSYNCMARKS_TEST_REPO_OWNER=your-username \
- *   GITSYNCMARKS_TEST_REPO=my-empty-repo \
+ *   GITSYNCMARKS_GITHUB_PAT=ghp_xxx \
+ *   GITSYNCMARKS_GITHUB_OWNER=your-username \
+ *   GITSYNCMARKS_GITHUB_REPO=my-empty-repo \
  *   node scripts/test-onboarding-rate-limit.js [--bookmark-count 50] [--reset]
  *
  * OPTIONS:
@@ -28,7 +28,7 @@
  *   against the hourly REST limit (5000 for standard PAT).
  *
  * WHAT IT DOES:
- *   0. With --ensure-repo: DELETE repo if it exists, then CREATE a fresh private repo (same name as GITSYNCMARKS_TEST_REPO)
+ *   0. With --ensure-repo: DELETE repo if it exists, then CREATE a fresh private repo (same name as GITSYNCMARKS_GITHUB_REPO)
  *   1. Checks current rate-limit headroom
  *   2. Optionally resets the repo to empty (--reset; one commit to Git’s canonical empty tree)
  *   3. Simulates generating N bookmark files (like the onboarding push would)
@@ -89,16 +89,16 @@ const callLog = [];
 
 // ---- GitHub API wrapper with call counting ----
 function getEnv() {
-    const token = process.env.GITSYNCMARKS_TEST_PAT;
-    const owner = process.env.GITSYNCMARKS_TEST_REPO_OWNER;
-    const repo = process.env.GITSYNCMARKS_TEST_REPO;
+    const token = process.env.GITSYNCMARKS_GITHUB_PAT;
+    const owner = process.env.GITSYNCMARKS_GITHUB_OWNER;
+    const repo = process.env.GITSYNCMARKS_GITHUB_REPO;
     if (!token || !owner || !repo) {
         console.error(
             `${c.red}Missing environment variables.${c.reset}\n` +
             'Required:\n' +
-            '  GITSYNCMARKS_TEST_PAT=ghp_xxx\n' +
-            '  GITSYNCMARKS_TEST_REPO_OWNER=your-username\n' +
-            '  GITSYNCMARKS_TEST_REPO=empty-repo-name\n\n' +
+            '  GITSYNCMARKS_GITHUB_PAT=ghp_xxx\n' +
+            '  GITSYNCMARKS_GITHUB_OWNER=your-username\n' +
+            '  GITSYNCMARKS_GITHUB_REPO=empty-repo-name\n\n' +
             'Create the repo first:\n' +
             '  node scripts/create-test-repo.js\n' +
             'Or run with --ensure-repo (needs delete_repo on the PAT).\n'
@@ -178,7 +178,7 @@ function sleep(ms) {
 }
 
 /**
- * Delete GITSYNCMARKS_TEST_REPO if present, then create it (private, auto_init).
+ * Delete GITSYNCMARKS_GITHUB_REPO if present, then create it (private, auto_init).
  * Requires PAT scope delete_repo for user-owned repos (classic PAT).
  */
 async function ensureFreshTestRepository() {

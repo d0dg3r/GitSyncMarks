@@ -3,7 +3,7 @@
  * Build a settings file for manual tests: import it in each test browser
  * (Options → Files → Import, type "Settings") and both use the test repository.
  *
- * Reads GITSYNCMARKS_TEST_PAT, GITSYNCMARKS_TEST_REPO_OWNER, GITSYNCMARKS_TEST_REPO from .env.
+ * Reads GITSYNCMARKS_GITHUB_PAT, GITSYNCMARKS_GITHUB_OWNER, GITSYNCMARKS_GITHUB_REPO from .env.
  * Writes to build/test-settings/ (ignored by git), so the token never lands in the repository.
  *
  * Usage:
@@ -23,11 +23,11 @@ import { encryptWithPassword } from '../lib/crypto.js';
 const root = resolve(fileURLToPath(new URL('..', import.meta.url)));
 dotenv.config({ path: join(root, '.env'), quiet: true });
 
-const token = process.env.GITSYNCMARKS_TEST_PAT;
-const owner = process.env.GITSYNCMARKS_TEST_REPO_OWNER;
-const repo = process.env.GITSYNCMARKS_TEST_REPO;
+const token = process.env.GITSYNCMARKS_GITHUB_PAT;
+const owner = process.env.GITSYNCMARKS_GITHUB_OWNER;
+const repo = process.env.GITSYNCMARKS_GITHUB_REPO;
 if (!token || !owner || !repo) {
-  console.error('Missing GITSYNCMARKS_TEST_PAT / GITSYNCMARKS_TEST_REPO_OWNER / GITSYNCMARKS_TEST_REPO in .env (see .env.example).');
+  console.error('Missing GITSYNCMARKS_GITHUB_PAT / GITSYNCMARKS_GITHUB_OWNER / GITSYNCMARKS_GITHUB_REPO in .env (see .env.example).');
   process.exit(1);
 }
 

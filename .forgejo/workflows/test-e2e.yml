@@ -1,0 +1,85 @@
+# Full E2E + dual-host onboarding on forgejo.lan.
+# Secrets: GITSYNCMARKS_GITHUB_PAT, GITSYNCMARKS_FORGEJO_TOKEN
+# Variables: GITSYNCMARKS_GITHUB_OWNER/REPO, GITSYNCMARKS_FORGEJO_OWNER/REPO/SERVER_URL
+name: E2E Tests
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Start virtual display (xvfb)
+        run: |
+          if command -v apt-get >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y xvfb
+          fi
+          echo 'DISPLAY=:99' >> "$GITHUB_ENV"
+          Xvfb :99 -screen 0 1280x1024x24 &
+          sleep 2
+
+      - name: Set git user for resetTestRepo
+        run: |
+          git config --global user.name "GitSyncMarks CI"
+          git config --global user.email "ci@gitsyncmarks.local"
+
+      - name: Run E2E tests (GitHub fixture + matrix A-D)
+        env:
+          DISPLAY: ':99'
+          GITSYNCMARKS_GITHUB_PAT: ${{ secrets.GITSYNCMARKS_GITHUB_PAT }}
+          GITSYNCMARKS_GITHUB_OWNER: ${{ vars.GITSYNCMARKS_GITHUB_OWNER }}
+          GITSYNCMARKS_GITHUB_REPO: ${{ vars.GITSYNCMARKS_GITHUB_REPO }}
+          GITSYNCMARKS_FORGEJO_TOKEN: ${{ secrets.GITSYNCMARKS_FORGEJO_TOKEN }}
+          GITSYNCMARKS_FORGEJO_OWNER: ${{ vars.GITSYNCMARKS_FORGEJO_OWNER }}
+          GITSYNCMARKS_FORGEJO_REPO: ${{ vars.GITSYNCMARKS_FORGEJO_REPO }}
+          GITSYNCMARKS_FORGEJO_SERVER_URL: ${{ vars.GITSYNCMARKS_FORGEJO_SERVER_URL }}
+        run: npm run test:e2e
+
+      - name: Run dual-host onboarding E2E
+        env:
+          DISPLAY: ':99'
+          GITSYNCMARKS_GITHUB_PAT: ${{ secrets.GITSYNCMARKS_GITHUB_PAT }}
+          GITSYNCMARKS_GITHUB_OWNER: ${{ vars.GITSYNCMARKS_GITHUB_OWNER }}
+          GITSYNCMARKS_GITHUB_REPO: ${{ vars.GITSYNCMARKS_GITHUB_REPO }}
+          GITSYNCMARKS_FORGEJO_TOKEN: ${{ secrets.GITSYNCMARKS_FORGEJO_TOKEN }}
+          GITSYNCMARKS_FORGEJO_OWNER: ${{ vars.GITSYNCMARKS_FORGEJO_OWNER }}
+          GITSYNCMARKS_FORGEJO_REPO: ${{ vars.GITSYNCMARKS_FORGEJO_REPO }}
+          GITSYNCMARKS_FORGEJO_SERVER_URL: ${{ vars.GITSYNCMARKS_FORGEJO_SERVER_URL }}
+        run: npm run test:e2e:onboarding
+
+      - name: Upload report and results on failure
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
+
+      - name: Cleanup orphaned E2E repos
+        if: always()
+        env:
+          GITSYNCMARKS_GITHUB_PAT: ${{ secrets.GITSYNCMARKS_GITHUB_PAT }}
+          GITSYNCMARKS_GITHUB_OWNER: ${{ vars.GITSYNCMARKS_GITHUB_OWNER }}
+          GITSYNCMARKS_FORGEJO_TOKEN: ${{ secrets.GITSYNCMARKS_FORGEJO_TOKEN }}
+          GITSYNCMARKS_FORGEJO_OWNER: ${{ vars.GITSYNCMARKS_FORGEJO_OWNER }}
+          GITSYNCMARKS_FORGEJO_SERVER_URL: ${{ vars.GITSYNCMARKS_FORGEJO_SERVER_URL }}
+        run: npm run cleanup:e2e-repos || true

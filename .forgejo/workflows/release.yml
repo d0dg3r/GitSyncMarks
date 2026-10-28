@@ -1,0 +1,90 @@
+# Build on forgejo.lan; create Forgejo release; copy ZIPs to GitHub (no GitHub build).
+name: Build & Release Extension
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  quality:
+    name: Lint, Typecheck & Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck (checkJs)
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm run test:unit
+
+  build-and-release:
+    needs: quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+
+      - name: Detect prerelease
+        id: prerelease
+        run: |
+          if [[ "${{ steps.version.outputs.VERSION }}" =~ -(pre|alpha|beta|rc)[.-][0-9]+$ ]]; then
+            echo "prerelease=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "prerelease=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install gh CLI
+        run: |
+          if ! command -v gh >/dev/null 2>&1; then
+            if command -v apt-get >/dev/null 2>&1; then
+              sudo apt-get update && sudo apt-get install -y gh
+            else
+              echo "::error::gh CLI required to publish GitHub release copy"
+              exit 1
+            fi
+          fi
+          command -v jq >/dev/null 2>&1 || sudo apt-get install -y jq
+
+      - name: Build extension packages
+        run: bash scripts/build.sh
+
+      - name: Publish Forgejo release + copy to GitHub
+        env:
+          VERSION: ${{ steps.version.outputs.VERSION }}
+          PRERELEASE: ${{ steps.prerelease.outputs.prerelease }}
+          FORGEJO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FORGEJO_API: https://forgejo.lan/api/v1
+          GITSYNCMARKS_RELEASE_PAT: ${{ secrets.GITSYNCMARKS_RELEASE_PAT }}
+          GITHUB_RELEASE_OWNER: d0dg3r
+          GITHUB_RELEASE_REPO: GitSyncMarks
+        run: bash scripts/publish-release.sh
