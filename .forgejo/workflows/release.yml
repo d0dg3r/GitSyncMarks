@@ -83,7 +83,8 @@ jobs:
           VERSION: ${{ steps.version.outputs.VERSION }}
           PRERELEASE: ${{ steps.prerelease.outputs.prerelease }}
           FORGEJO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          FORGEJO_API: https://forgejo.lan/api/v1
+          FORGEJO_API: ${{ github.api_url }}
+          FORGEJO_INSECURE: "1"
           GITSYNCMARKS_RELEASE_PAT: ${{ secrets.GITSYNCMARKS_RELEASE_PAT }}
           GITHUB_RELEASE_OWNER: d0dg3r
           GITHUB_RELEASE_REPO: GitSyncMarks

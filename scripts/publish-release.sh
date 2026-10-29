@@ -14,7 +14,7 @@ set -euo pipefail
 
 VERSION="${VERSION:?VERSION required}"
 PRERELEASE="${PRERELEASE:-false}"
-FORGEJO_API="${FORGEJO_API:-https://forgejo.lan/api/v1}"
+FORGEJO_API="${FORGEJO_API:-${GITHUB_API_URL:-https://forgejo.lan/api/v1}}"
 FORGEJO_TOKEN="${FORGEJO_TOKEN:?FORGEJO_TOKEN required}"
 
 if [[ -n "${GITHUB_REPOSITORY:-}" ]]; then
@@ -28,6 +28,12 @@ fi
 GITHUB_RELEASE_OWNER="${GITHUB_RELEASE_OWNER:-d0dg3r}"
 GITHUB_RELEASE_REPO="${GITHUB_RELEASE_REPO:-GitSyncMarks}"
 GITSYNCMARKS_RELEASE_PAT="${GITSYNCMARKS_RELEASE_PAT:?GITSYNCMARKS_RELEASE_PAT required}"
+
+# Runner containers often lack the Homelab LAN CA; allow insecure TLS for *.lan / explicit opt-in.
+CURL_OPTS=(-fsS)
+if [[ "${FORGEJO_INSECURE:-}" == "1" || "${FORGEJO_API}" == *".lan"* ]]; then
+  CURL_OPTS+=(-k)
+fi
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
@@ -80,7 +86,7 @@ CREATE_PAYLOAD="$(jq -n \
   --argjson pre "$( [[ "$PRERELEASE" == true ]] && echo true || echo false )" \
   '{tag_name:$tag, name:$name, body:$body, prerelease:$pre, draft:false}')"
 
-CREATE_RESP="$(curl -fsS -X POST \
+CREATE_RESP="$(curl "${CURL_OPTS[@]}" -X POST \
   -H "Authorization: token ${FORGEJO_TOKEN}" \
   -H "Content-Type: application/json" \
   -d "$CREATE_PAYLOAD" \
@@ -97,7 +103,7 @@ upload_forgejo_asset() {
   local name
   name="$(basename "$file")"
   echo "[publish] Upload Forgejo asset ${name}"
-  curl -fsS -X POST \
+  curl "${CURL_OPTS[@]}" -X POST \
     -H "Authorization: token ${FORGEJO_TOKEN}" \
     -H "Content-Type: application/octet-stream" \
     --data-binary @"${file}" \
