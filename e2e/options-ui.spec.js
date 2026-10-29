@@ -7,7 +7,12 @@
 
 const { expect } = require('@playwright/test');
 const { test: extTest } = require('./fixtures/extension.js');
-const { openOptionsPage } = require('./helpers/options-page.js');
+const {
+  openOptionsPage,
+  clickReady,
+  activateMainTab,
+  activateSubTab,
+} = require('./helpers/options-page.js');
 
 extTest.describe('Options page UI', () => {
   extTest('language select is populated', async ({ page, extensionId }) => {
@@ -26,7 +31,7 @@ extTest.describe('Options page UI', () => {
     await expect(selector).toBeVisible();
     const btns = selector.locator('.seg-btn');
     await expect(btns).toHaveCount(3);
-    await btns.nth(1).click();
+    await clickReady(btns.nth(1));
     await expect(btns.nth(1)).toHaveClass(/active/);
   });
 
@@ -34,51 +39,57 @@ extTest.describe('Options page UI', () => {
     await openOptionsPage(page, extensionId);
     const tabs = ['github', 'files', 'menu', 'linkwarden', 'help', 'about'];
     for (const id of tabs) {
-      await page.locator(`.tab-btn[data-tab="${id}"]`).click();
-      await expect(page.locator(`#tab-${id}`)).toHaveClass(/active/, { timeout: 3000 });
+      await activateMainTab(page, id);
     }
   });
 
   extTest('Git sub-tabs switch panels', async ({ page, extensionId }) => {
     await openOptionsPage(page, extensionId);
-    await page.locator('.tab-btn[data-tab="github"]').click();
+    await activateMainTab(page, 'github');
     for (const sub of ['github-profile', 'github-connection', 'github-sync', 'github-repos']) {
-      await page.locator(`.sub-tab-btn[data-subtab="${sub}"]`).click();
-      await expect(page.locator(`#subtab-${sub}`)).toHaveClass(/active/, { timeout: 3000 });
+      await activateSubTab(page, sub);
     }
   });
 
-  extTest('Help quick links (no data-subtab) do not break the page', async ({ page, extensionId }) => {
+  extTest('Help quick links (no data-subtab) do not break the page', async ({ page, extensionId, context }) => {
     await openOptionsPage(page, extensionId);
-    await page.locator('.tab-btn[data-tab="help"]').click();
+    await activateMainTab(page, 'help');
 
     const website = page.locator('.help-quick-links a.help-link-btn').first();
     await expect(website).toHaveAttribute('href', /^https?:\/\/gitsyncmarks\.com(\/|$)/);
-    await website.click();
+
+    // target=_blank — close the popup so it cannot starve the headed CI browser.
+    const popupPromise = context.waitForEvent('page', { timeout: 10000 }).catch(() => null);
+    await clickReady(website);
+    const popup = await popupPromise;
+    if (popup) await popup.close().catch(() => {});
 
     await expect(page.locator('#language-select')).toBeVisible();
-    await page.locator('.tab-btn[data-tab="about"]').click();
-    await expect(page.locator('#tab-about')).toHaveClass(/active/);
+    await activateMainTab(page, 'about');
   });
 
   extTest('Files sub-tabs include Bitwarden backup panel', async ({ page, extensionId }) => {
     await openOptionsPage(page, extensionId);
-    await page.locator('.tab-btn[data-tab="files"]').click();
-    await page.locator('.sub-tab-btn[data-subtab="files-bitwarden"]').click();
+    await activateMainTab(page, 'files');
+    await activateSubTab(page, 'files-bitwarden');
     const panel = page.locator('#subtab-files-bitwarden');
-    await expect(panel).toHaveClass(/active/, { timeout: 3000 });
     await expect(panel.locator('#bitwarden-backup-path')).toBeVisible();
     await expect(panel.locator('.card-nested')).toHaveCount(3, { timeout: 3000 });
     await expect(panel.locator('#bitwarden-backup-push-btn')).toBeVisible();
   });
 
-  extTest('Customize shortcuts button does not throw', async ({ page, extensionId }) => {
+  extTest('Customize shortcuts button does not throw', async ({ page, extensionId, context }) => {
     await openOptionsPage(page, extensionId);
-    await page.locator('.tab-btn[data-tab="help"]').click();
-    await page.locator('details:has(#btn-customize-shortcuts)').locator('summary').click();
+    await activateMainTab(page, 'help');
+    await clickReady(page.locator('details:has(#btn-customize-shortcuts)').locator('summary'));
     const btn = page.locator('#btn-customize-shortcuts');
     await expect(btn).toBeVisible();
-    await btn.click();
+
+    const extraPromise = context.waitForEvent('page', { timeout: 10000 }).catch(() => null);
+    await clickReady(btn);
+    const extra = await extraPromise;
+    if (extra) await extra.close().catch(() => {});
+
     await expect(page.locator('#language-select')).toBeVisible();
   });
 });

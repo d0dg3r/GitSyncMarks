@@ -4,7 +4,7 @@
  */
 
 const { test } = require('./fixtures/extension.js');
-const { skipWizardIfVisible } = require('./helpers/options-page.js');
+const { skipWizardIfVisible, clickReady, activateMainTab } = require('./helpers/options-page.js');
 
 test.describe('Smoke', () => {
   test('Popup loads with header and main content', async ({
@@ -32,7 +32,7 @@ test.describe('Smoke', () => {
     await test.expect(gitTab).toBeVisible();
     await test.expect(gitTab).toHaveClass(/active/);
 
-    await page.locator('.sub-tab-btn[data-subtab="github-connection"]').click();
+    await clickReady(page.locator('.sub-tab-btn[data-subtab="github-connection"]'));
     await test.expect(page.locator('#git-provider')).toBeVisible();
     await test.expect(page.locator('#git-provider option[value="gitlab"]')).toHaveCount(1);
     await test.expect(page.locator('#git-provider option[value="codeberg"]')).toHaveCount(1);
@@ -48,11 +48,7 @@ test.describe('Smoke', () => {
 
     const tabs = ['files', 'menu', 'linkwarden', 'help', 'about', 'github'];
     for (const tabId of tabs) {
-      const tab = page.locator(`.tab-btn[data-tab="${tabId}"]`);
-
-      await tab.click();
-      const content = page.locator(`#tab-${tabId}`);
-      await test.expect(content).toHaveClass(/active/, { timeout: 2000 });
+      await activateMainTab(page, tabId);
     }
   });
 

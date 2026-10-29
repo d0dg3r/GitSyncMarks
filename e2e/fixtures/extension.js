@@ -69,7 +69,13 @@ const test = base.extend({
         `--load-extension=${EXTENSION_PATH}`,
       ];
       if (process.env.CI) {
-        args.push('--no-sandbox', '--disable-dev-shm-usage');
+        // Xvfb + extension: avoid /dev/shm OOM and GPU flakiness that close the browser mid-click.
+        args.push(
+          '--no-sandbox',
+          '--disable-dev-shm-usage',
+          '--disable-gpu',
+          '--disable-software-rasterizer'
+        );
       }
       // Headed mode needed: service worker doesn't start in headless on many systems (CI, CachyOS)
       const context = await chromium.launchPersistentContext(userDataDir, {
