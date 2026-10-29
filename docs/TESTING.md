@@ -27,7 +27,7 @@ npm run cleanup:e2e-repos                # Delete orphaned gitsyncmarks-e2e-* on
 
 **Wizard empty remotes:** both autoCreate and “use existing” seed the minimal `bookmarks/` structure when the remote has no commits (branch + `_index.json` / `_order.json`), including when the browser already has bookmarks. With local bookmarks, environment check still leaves a Push step; without local bookmarks, the wizard can finish after auto-seed. Empty-repo HTTP 409 must surface as “no commits yet” (not a concurrent-edit conflict), and Push/Sync must fall back to the Contents API instead of failing after git-data retries. E2E covers structure-ready (C), path-empty on fixture (B), autoCreate (A), and zero-commit existing (D).
 
-**CI (Forgejo Actions on forgejo.lan):** Smoke and options-UI E2E run on every push/PR to `main` (`.forgejo/workflows/ci.yml`, no secrets). Full E2E + dual-host onboarding run via `.forgejo/workflows/test-e2e.yml` with `GITSYNCMARKS_GITHUB_*` / `GITSYNCMARKS_FORGEJO_*` secrets and variables (see `.env.example`). GitHub Actions stubs for CI/E2E/release/screenshots are disabled.
+**CI (Forgejo Actions on forgejo.lan):** Smoke and options-UI E2E run on every push/PR to `main` (`.forgejo/workflows/ci.yml`, no secrets). Full E2E + dual-host onboarding run via `.forgejo/workflows/test-e2e.yml` with `GITSYNCMARKS_GITHUB_*` / `GITSYNCMARKS_FORGEJO_*` secrets and variables (see `.env.example`). Build/E2E/release/screenshots are Forgejo-only (no GitHub duplicates).
 
 ### Chrome DevTools MCP (optional, Cursor)
 
@@ -212,7 +212,7 @@ Output: `store-assets/{en,de,fr,es,pt_BR,it,ja,zh_CN,ko,ru,tr,pl}/` — each wit
 
 ### CI Screenshot Generation
 
-Screenshots can also be generated via GitHub Actions. The `screenshots.yml` workflow runs on `ubuntu-latest`, builds the extension, generates all 144 screenshots, and commits them back to the repo.
+Screenshots can also be generated via Forgejo Actions (`.forgejo/workflows/screenshots.yml`): builds the extension, generates store screenshots, and commits them back to the repo.
 
 **Trigger manually:**
 

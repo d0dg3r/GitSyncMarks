@@ -112,7 +112,7 @@ Create a **Poll** in [Discussions → Polls](https://github.com/d0dg3r/GitSyncMa
 | 7 | Tag and push to **forgejo.lan** SoT: `git tag v2.2.0 && git push origin v2.2.0` (`origin` = Forgejo) |
 | 8 | Forgejo Actions (`.forgejo/workflows/release.yml`) builds ZIPs, creates the Forgejo release, then **copies** the same ZIPs to GitHub (`d0dg3r/GitSyncMarks`) via `GITSYNCMARKS_RELEASE_PAT` |
 
-**CI SoT:** Builds, E2E, and screenshots run on **forgejo.lan** under `.forgejo/workflows/`. GitHub workflow stubs under `.github/workflows/{ci,test-e2e,release,screenshots}.yml` are no-ops so a push mirror cannot double-build. GitHub still hosts CodeQL, Dependabot, Pages, and the user-facing `add-bookmark.yml` template.
+**CI SoT:** Builds, E2E, release, and screenshots run on **forgejo.lan** under `.forgejo/workflows/`. GitHub has no duplicate CI/release workflows (removed so a push mirror cannot double-build). GitHub still hosts CodeQL, Dependabot, dependency-review, Pages, and the user-facing `add-bookmark.yml` template.
 
 **GitHub mirror health:** Forgejo push-mirrors `main` (and tags) to `github.com/d0dg3r/GitSyncMarks`. Dependabot and CodeQL only see what is on GitHub `main` — after a Forgejo push, confirm GitHub `main` tip matches Forgejo (repo → Settings → Mirror Settings → last sync / no `last_error`, or `gh api repos/d0dg3r/GitSyncMarks/commits/main --jq .sha`). If the mirror stalls on GitHub ruleset CodeQL waits, the repo ruleset **Basis** allows Repository Admin bypass; re-run **Synchronize Now** or one-shot push with an admin PAT. Open Dependabot alerts clear only after the patched `package-lock.json` is on GitHub `main`.
 
@@ -275,7 +275,7 @@ Supported suffixes: `-pre.N`, `-alpha.N`, `-beta.N`, `-rc.N` (e.g. `v2.1.0-rc.3`
 
 ## Forgejo Actions Release Workflow
 
-SoT: [`.forgejo/workflows/release.yml`](../.forgejo/workflows/release.yml) on forgejo.lan. GitHub’s `.github/workflows/release.yml` is a disabled stub.
+SoT: [`.forgejo/workflows/release.yml`](../.forgejo/workflows/release.yml) on forgejo.lan. There is no GitHub `release.yml` — Forgejo builds and copies ZIPs to GitHub.
 
 ### Trigger
 

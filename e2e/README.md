@@ -118,7 +118,7 @@ SoT: [`.forgejo/workflows/`](../.forgejo/workflows/). On `main` / `workflow_disp
 **Secrets** (tokens only): `GITSYNCMARKS_GITHUB_PAT`, `GITSYNCMARKS_FORGEJO_TOKEN`  
 **Variables**: `GITSYNCMARKS_GITHUB_OWNER`, `GITSYNCMARKS_GITHUB_REPO`, `GITSYNCMARKS_FORGEJO_OWNER`, `GITSYNCMARKS_FORGEJO_REPO`, `GITSYNCMARKS_FORGEJO_SERVER_URL`
 
-Same names as [`.env.example`](../.env.example). Local `.env` stays for workstation runs; Actions does not read it. GitHub workflow stubs are no-ops.
+Same names as [`.env.example`](../.env.example). Local `.env` stays for workstation runs; Actions does not read it. E2E CI runs on forgejo.lan only.
 
 ## Test Reports
 

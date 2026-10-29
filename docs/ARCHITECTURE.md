@@ -479,8 +479,7 @@ GitSyncMarks/
 │   ├── test-e2e.yml              # Full E2E + dual-host onboarding
 │   ├── release.yml               # Build ZIPs; Forgejo release; copy ZIPs to GitHub
 │   └── screenshots.yml           # Generate store screenshots
-├── .github/workflows/
-│   ├── ci.yml / test-e2e.yml / release.yml / screenshots.yml  # Disabled stubs (SoT is Forgejo)
+├── .github/workflows/            # GitHub-only (no CI/release duplicates)
 │   ├── add-bookmark.yml          # Automation: add bookmark via dispatch (runs scripts/add-bookmark-to-repo.py)
 │   ├── pages.yml                 # GitHub Pages site
 │   ├── codeql.yml                # CodeQL analysis

@@ -17,12 +17,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - E2E env vars renamed: `GITSYNCMARKS_TEST_PAT` / `REPO_OWNER` / `REPO` → `GITSYNCMARKS_GITHUB_PAT` / `OWNER` / `REPO` (`.env.example`, helpers, docs). Tokens are Forgejo Actions Secrets; owner/repo/URL are Variables.
-- GitHub workflows for CI, E2E, release, and screenshots are disabled stubs; build SoT is forgejo.lan.
+- GitHub workflows for CI, E2E, release, and screenshots removed (were disabled stubs); build SoT is forgejo.lan. GitHub keeps CodeQL, Pages, Dependabot/dependency-review, and `add-bookmark.yml`.
 - Wizard progress/error fallbacks for path check, auto-seed, and push use i18n keys (English source; other locales fall back). Follow-up: Bitwarden/`crypto.js`/settings-import/profile-manager still have some English-only throws.
 - **Wizard copy distinguishes create vs existing repository**: auto-create uses «Create and prepare» and prepare-oriented errors; existing-repo flow keeps «Check connection». Seed failures no longer show the low-level empty-repo API text.
 
 ### Fixed
 - **CI options-ui E2E no longer times out on tab clicks under Xvfb**: force-click helpers skip Playwright CSS-transition stability waits; Help/shortcuts tests close `target=_blank` / `chrome.tabs.create` pages; Chromium gets `--disable-gpu` in CI.
+- Removed unused GitHub Actions stubs (`ci`, `test-e2e`, `release`, `screenshots`); those jobs live only under `.forgejo/workflows/`.
 - **Empty existing repos (manual create, no first commit) can be used in the wizard and Push**: environment check seeds the bookmarks folder for empty remotes in both create and existing-repo flows; Push falls back to the Contents API after empty-repo 409 on GitHub; provider errors no longer dump stack traces into the UI message.
 - **Auto-created empty repos no longer fail the first push with a fake conflict**: wizard autoCreate always seeds the minimal bookmark folder structure (even when local bookmarks exist), waits for a remote baseline before push, and maps empty-repo HTTP 409 to a clear “repository has no commits” message instead of “modified in the meantime”. Initial seed retries git-data writes on empty-repo 409 and falls back to the Contents API when needed.
 - **Onboarding wizard / Test Connection no longer look filled with grey placeholders** ([#267](https://github.com/d0dg3r/GitSyncMarks/issues/267)): Repository Name is prefilled with `my-bookmarks` (same pattern as branch and folder path). Check connection keeps error messages instead of clearing them after the spinner. Test Connection treats a missing owner or repo as an error, not a green success.
