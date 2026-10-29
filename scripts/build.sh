@@ -24,19 +24,21 @@ BUILD_DIR="$ROOT_DIR/build"
 MANIFEST_VERSION=$(grep '"version"' "$ROOT_DIR/manifest.json" | head -1 | sed 's/.*: *"\(.*\)".*/\1/')
 
 # ZIP name / display: tag version or manifest + suffix
-# Fallbacks: GITHUB_REF_NAME in CI; VERSION_FOR_DISPLAY for local pre-release (e.g. VERSION_FOR_DISPLAY=2.3.0-pre.1)
+# Prefer GITHUB_REF_NAME in CI (authoritative for the triggering tag). git describe is ambiguous
+# when several tags point at the same commit (e.g. beta.1 and beta.2).
+# Fallbacks: exact-match tag; VERSION_FOR_DISPLAY for local pre-release.
 if [[ -n "${RELEASE:-}" ]]; then
   ZIP_VERSION="$MANIFEST_VERSION"
   DISPLAY_VERSION=""
-elif TAG=$(cd "$ROOT_DIR" && git describe --tags --exact-match 2>/dev/null); then
-  ZIP_VERSION="${TAG#v}"
+elif [[ -n "${GITHUB_REF_NAME:-}" && "$GITHUB_REF_NAME" =~ ^v[0-9] ]]; then
+  ZIP_VERSION="${GITHUB_REF_NAME#v}"
   if [[ "$ZIP_VERSION" =~ -(pre|alpha|beta|rc)[.-][0-9]+$ ]]; then
     DISPLAY_VERSION="$ZIP_VERSION"
   else
     DISPLAY_VERSION=""
   fi
-elif [[ -n "${GITHUB_REF_NAME:-}" && "$GITHUB_REF_NAME" =~ ^v[0-9] ]]; then
-  ZIP_VERSION="${GITHUB_REF_NAME#v}"
+elif TAG=$(cd "$ROOT_DIR" && git describe --tags --exact-match 2>/dev/null); then
+  ZIP_VERSION="${TAG#v}"
   if [[ "$ZIP_VERSION" =~ -(pre|alpha|beta|rc)[.-][0-9]+$ ]]; then
     DISPLAY_VERSION="$ZIP_VERSION"
   else

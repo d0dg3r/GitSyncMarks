@@ -76,11 +76,14 @@ jobs:
           command -v jq >/dev/null 2>&1 || sudo apt-get install -y jq
 
       - name: Build extension packages
+        env:
+          GITHUB_REF_NAME: ${{ steps.version.outputs.VERSION }}
         run: bash scripts/build.sh
 
       - name: Publish Forgejo release + copy to GitHub
         env:
           VERSION: ${{ steps.version.outputs.VERSION }}
+          GITHUB_REF_NAME: ${{ steps.version.outputs.VERSION }}
           PRERELEASE: ${{ steps.prerelease.outputs.prerelease }}
           FORGEJO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FORGEJO_API: ${{ github.api_url }}
