@@ -114,6 +114,8 @@ Create a **Poll** in [Discussions → Polls](https://github.com/d0dg3r/GitSyncMa
 
 **CI SoT:** Builds, E2E, and screenshots run on **forgejo.lan** under `.forgejo/workflows/`. GitHub workflow stubs under `.github/workflows/{ci,test-e2e,release,screenshots}.yml` are no-ops so a push mirror cannot double-build. GitHub still hosts CodeQL, Dependabot, Pages, and the user-facing `add-bookmark.yml` template.
 
+**GitHub mirror health:** Forgejo push-mirrors `main` (and tags) to `github.com/d0dg3r/GitSyncMarks`. Dependabot and CodeQL only see what is on GitHub `main` — after a Forgejo push, confirm GitHub `main` tip matches Forgejo (repo → Settings → Mirror Settings → last sync / no `last_error`, or `gh api repos/d0dg3r/GitSyncMarks/commits/main --jq .sha`). If the mirror stalls on GitHub ruleset CodeQL waits, the repo ruleset **Basis** allows Repository Admin bypass; re-run **Synchronize Now** or one-shot push with an admin PAT. Open Dependabot alerts clear only after the patched `package-lock.json` is on GitHub `main`.
+
 **Forgejo Actions secrets / variables** (release + E2E): see `.env.example`. Tokens are Secrets (`GITSYNCMARKS_GITHUB_PAT`, `GITSYNCMARKS_FORGEJO_TOKEN`, `GITSYNCMARKS_RELEASE_PAT`); owner/repo/URL are Variables. Secret names must not start with `GITHUB_`, `FORGEJO_`, or `GITEA_`.
 
 ### 3.1.0 Preparation Checklist
