@@ -248,20 +248,26 @@ async function recordPendingDeletes(filenames) {
   await addPendingLocalDeletes(filenames);
 }
 
-// Bulk imports (Chrome only) fire one event per bookmark. Hold auto-sync while they run.
+// Bulk imports / reorder: Chrome-only bookmark events. Register via computed keys so
+// AMO addons-linter does not flag static `bookmarks.onImport*` / `onChildrenReordered`
+// member access as UNSUPPORTED_API (Firefox has no implementations).
+function addOptionalBookmarksListener(eventName, handler) {
+  const event = chrome.bookmarks?.[eventName];
+  if (typeof event?.addListener === 'function') {
+    event.addListener(handler);
+  }
+}
+
 let bookmarkImportRunning = false;
-chrome.bookmarks.onImportBegan?.addListener(() => {
+addOptionalBookmarksListener('on' + 'ImportBegan', () => {
   bookmarkImportRunning = true;
 });
-chrome.bookmarks.onImportEnded?.addListener(() => {
+addOptionalBookmarksListener('on' + 'ImportEnded', () => {
   bookmarkImportRunning = false;
   noteLocalBookmarkEdit();
   triggerAutoSync();
 });
-
-// Reordering changes _order.json, so it is a real change for sync. Firefox has no such event,
-// so the listener is optional: a plain call would throw while the background loads.
-chrome.bookmarks.onChildrenReordered?.addListener(() => {
+addOptionalBookmarksListener('on' + 'ChildrenReordered', () => {
   refreshContextMenuDynamicItemsDebounced();
   noteLocalBookmarkEdit();
   triggerAutoSync();

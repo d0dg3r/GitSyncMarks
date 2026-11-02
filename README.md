@@ -21,7 +21,7 @@
 > — **Linus Torvalds** (Git creator)
 
 > [!IMPORTANT]
-> **GitSyncMarks 3.1.0 is stable** — latest release [v3.1.0](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.1.0) adds **sync integrity** (per-bookmark conflicts, push/pull preview, local backup, encrypted settings v2) on top of **multi-provider Git sync** (see [docs/PROVIDERS.md](docs/PROVIDERS.md)), **Bitwarden backup to Git**, **profile transfer**, and **push mirrors**. **Upgrade note:** update every device before syncing settings or Bitwarden backups — 3.0.10 and older cannot read the new encrypted format.
+> **GitSyncMarks 3.1.1 is stable** — latest release [v3.1.1](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.1.1) (AMO packaging clean-up on top of **3.1.0** sync integrity: per-bookmark conflicts, push/pull preview, local backup, encrypted settings v2). See [docs/PROVIDERS.md](docs/PROVIDERS.md) for Git hosts. **Upgrade note:** update every device before syncing settings or Bitwarden backups — 3.0.10 and older cannot read the new encrypted format.
 
 ---
 

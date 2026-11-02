@@ -64,6 +64,8 @@ No shared account needed. Create a GitHub PAT at github.com/settings/tokens (rep
 
 **Reviewer note (3.0.3):** Listing copy and permission justifications reworded so that no field lists more than five platform names; the full list of supported Git hosts is linked to docs/PROVIDERS.md. No functional change.
 
+**Reviewer note (3.1.0):** Optional Chrome-only bookmark listeners (import began/ended, children reordered) are registered only when the browser exposes them. Firefox ignores those hooks; sync still reacts to create/remove/change/move.
+
 ---
 
 ## Distribution
