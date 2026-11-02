@@ -21,7 +21,7 @@
 > — **Linus Torvalds** (Git creator)
 
 > [!IMPORTANT]
-> **GitSyncMarks 3.0 is stable** — latest release [v3.0.10](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.0.10) includes **multi-provider Git sync** (see [docs/PROVIDERS.md](docs/PROVIDERS.md)), **Bitwarden backup to Git**, **profile transfer**, **push mirrors**, **live sync progress**, and a refreshed **nested-card UI**. Existing GitHub profiles keep working — no breaking bookmark format changes.
+> **GitSyncMarks 3.1.0 is stable** — latest release [v3.1.0](https://github.com/d0dg3r/GitSyncMarks/releases/tag/v3.1.0) adds **sync integrity** (per-bookmark conflicts, push/pull preview, local backup, encrypted settings v2) on top of **multi-provider Git sync** (see [docs/PROVIDERS.md](docs/PROVIDERS.md)), **Bitwarden backup to Git**, **profile transfer**, and **push mirrors**. **Upgrade note:** update every device before syncing settings or Bitwarden backups — 3.0.10 and older cannot read the new encrypted format.
 
 ---
 

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.0] - 2026-11-02
+
 ### Upgrade note
 - **Update every device before syncing settings or Bitwarden backups.** `settings.enc` and Bitwarden backups are now written in the encrypted format v2 (PBKDF2-SHA256, 600,000 iterations). Version 3.0.10 and older cannot read v2: on a device that is not updated yet, settings sync and backup restore fail until it is updated. This version still reads v1 files.
 
@@ -14,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Forgejo Actions SoT** (`.forgejo/workflows/`): CI, full E2E + dual-host onboarding, screenshots, and tag release build on forgejo.lan; GitHub receives copied release ZIPs via `GITSYNCMARKS_RELEASE_PAT` (`scripts/publish-release.sh`).
 - **Wizard bootstrap E2E matrix A–D**: documents and covers structure-ready (C), empty path on fixture (B), autoCreate (A), and zero-commit existing repo via `createEmptyRepo` + manual flow (D) in `connection.spec` / `onboarding-hosts`. Connection wizard helpers advance through the provider step.
 - **Dual-host onboarding E2E harness** (GitHub + Homelab Forgejo): stable `GitSyncMarks-test-sync` fixtures, ephemeral `gitsyncmarks-e2e-*` repos with random suffixes, `npm run test:e2e:onboarding`, `npm run create:test-repo -- --host=github|forgejo|all`, and dual-host `cleanup:e2e-repos`.
+- Pre-releases: `v3.1.0-beta.1`, `v3.1.0-beta.2`.
 
 ### Changed
 - E2E env vars renamed: `GITSYNCMARKS_TEST_PAT` / `REPO_OWNER` / `REPO` → `GITSYNCMARKS_GITHUB_PAT` / `OWNER` / `REPO` (`.env.example`, helpers, docs). Tokens are Forgejo Actions Secrets; owner/repo/URL are Variables.
@@ -614,7 +617,8 @@ Reliability, performance and quality release (code-analysis Tiers 1–3). First 
 
 - Initial release: bookmark sync with GitHub
 
-[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.7.0...HEAD
+[Unreleased]: https://github.com/d0dg3r/GitSyncMarks/compare/v3.1.0...HEAD
+[3.1.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v3.0.10...v3.1.0
 [2.7.0]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.6.2...v2.7.0
 [2.6.2]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.6.1...v2.6.2
 [2.6.1]: https://github.com/d0dg3r/GitSyncMarks/compare/v2.6.0...v2.6.1
